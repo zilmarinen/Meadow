@@ -11,8 +11,11 @@ Pod::Spec.new do |s|
   s.default_subspec = 'Core'
   s.pod_target_xcconfig = { 'SWIFT_VERSION' => '4' }
 
+  s.ios.deployment_target = '10.0'
+  s.osx.deployment_target = '10.10'
+
   s.subspec 'Core' do |cs|
-    cs.source_files = "Meadow/Core/*.{h,m,swift}"
+    cs.source_files = "Meadow/Core/**/*.{h,m,swift}"
   end
 
 end

@@ -29,6 +29,8 @@
 		18496C95209373AD00992AF3 /* PolytopeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C94209373AD00992AF3 /* PolytopeTests.swift */; };
 		18496C97209373B800992AF3 /* PolyhedronTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C96209373B800992AF3 /* PolyhedronTests.swift */; };
 		18496C9920937A3400992AF3 /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C9820937A3400992AF3 /* World.swift */; };
+		185200F52096094400D3ACC6 /* WorldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185200F42096094400D3ACC6 /* WorldTests.swift */; };
+		185200F820960CBE00D3ACC6 /* GridTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185200F720960CBE00D3ACC6 /* GridTests.swift */; };
 		187121EA20931C77002488E0 /* Meadow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 187121E020931C77002488E0 /* Meadow.framework */; };
 		187121F120931C77002488E0 /* Meadow.h in Headers */ = {isa = PBXBuildFile; fileRef = 187121E320931C77002488E0 /* Meadow.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		427E880BAFD2FF0BF35AFEB1 /* Pods_MeadowTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35FDC4E9F3727471EA2160BC /* Pods_MeadowTests.framework */; };
@@ -69,6 +71,8 @@
 		18496C94209373AD00992AF3 /* PolytopeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolytopeTests.swift; sourceTree = "<group>"; };
 		18496C96209373B800992AF3 /* PolyhedronTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolyhedronTests.swift; sourceTree = "<group>"; };
 		18496C9820937A3400992AF3 /* World.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = World.swift; sourceTree = "<group>"; };
+		185200F42096094400D3ACC6 /* WorldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldTests.swift; sourceTree = "<group>"; };
+		185200F720960CBE00D3ACC6 /* GridTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridTests.swift; sourceTree = "<group>"; };
 		187121E020931C77002488E0 /* Meadow.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Meadow.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		187121E320931C77002488E0 /* Meadow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Meadow.h; sourceTree = "<group>"; };
 		187121E420931C77002488E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -218,6 +222,22 @@
 			path = Controllers;
 			sourceTree = "<group>";
 		};
+		185200F32096092E00D3ACC6 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				185200F42096094400D3ACC6 /* WorldTests.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		185200F620960CB300D3ACC6 /* Grid */ = {
+			isa = PBXGroup;
+			children = (
+				185200F720960CBE00D3ACC6 /* GridTests.swift */,
+			);
+			path = Grid;
+			sourceTree = "<group>";
+		};
 		187121D620931C77002488E0 = {
 			isa = PBXGroup;
 			children = (
@@ -251,6 +271,8 @@
 		187121ED20931C77002488E0 /* Meadow Tests */ = {
 			isa = PBXGroup;
 			children = (
+				185200F620960CB300D3ACC6 /* Grid */,
+				185200F32096092E00D3ACC6 /* Controllers */,
 				18496C80209366ED00992AF3 /* Data Structures */,
 				187121F020931C77002488E0 /* Info.plist */,
 			);
@@ -455,7 +477,9 @@
 			files = (
 				18496C97209373B800992AF3 /* PolyhedronTests.swift in Sources */,
 				18496C822093670800992AF3 /* CoordinateTests.swift in Sources */,
+				185200F52096094400D3ACC6 /* WorldTests.swift in Sources */,
 				18496C95209373AD00992AF3 /* PolytopeTests.swift in Sources */,
+				185200F820960CBE00D3ACC6 /* GridTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

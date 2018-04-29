@@ -10,7 +10,6 @@ import SceneKit
 
 public class Grid<Chunk: GridChunk<Tile, Node>, Tile: GridTile<Node>, Node: GridNode>: SCNNode {
     
-    var chunks: Set<Chunk> = []
 }
 
 extension Grid {

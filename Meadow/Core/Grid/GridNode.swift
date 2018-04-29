@@ -10,6 +10,6 @@ public class GridNode {
     
     var polyhedron: Polyhedron {
         
-        return Polyhedron(upperPolytope: Polytope(vertices: []), lowerPolytope: Polytope(vertices: []))
+        return Polyhedron(upperPolytope: Polytope(x: 0.0, y: 0.0, z: 0.0), lowerPolytope: Polytope(x: 0.0, y: World.UnitY, z: 0.0))
     }
 }

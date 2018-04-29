@@ -10,5 +10,9 @@ import SceneKit
 
 public class GridChunk<Tile: GridTile<Node>, Node: GridNode>: SCNNode {
     
+    var tiles: Set<Tile> = []
+}
+
+extension GridChunk {
     
 }

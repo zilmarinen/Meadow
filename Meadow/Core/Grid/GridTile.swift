@@ -8,4 +8,23 @@
 
 public class GridTile<Node: GridNode> {
     
+    let coordinate: Coordinate
+    
+    init(coordinate: Coordinate) {
+        
+        self.coordinate = coordinate
+    }
+}
+
+extension GridTile: Hashable {
+    
+    public static func == (lhs: GridTile<Node>, rhs: GridTile<Node>) -> Bool {
+        
+        return lhs.coordinate == rhs.coordinate
+    }
+    
+    public var hashValue: Int {
+        
+        return coordinate.x ^ coordinate.y ^ coordinate.z
+    }
 }

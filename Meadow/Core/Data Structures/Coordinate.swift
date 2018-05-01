@@ -8,11 +8,24 @@
 
 import  SceneKit
 
-public struct Coordinate: Equatable {
+public struct Coordinate {
     
     let x: Int
     let y: Int
     let z: Int
+}
+
+extension Coordinate: Hashable {
+    
+    public static func == (lhs: Coordinate, rhs: Coordinate) -> Bool {
+        
+        return lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z
+    }
+    
+    public var hashValue: Int {
+        
+        return x ^ y ^ z
+    }
 }
 
 extension Coordinate {

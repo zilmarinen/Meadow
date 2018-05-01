@@ -12,6 +12,33 @@ import SceneKit
 
 class PolytopeTests: XCTestCase {
     
+    func testPolytopeVertices() {
+        
+        let expect = expectation(description: "Polytope vertices are correctly calculated using world unit length")
+        
+        let reference = Polytope(x: 10, y: 10, z: 10)
+        
+        XCTAssertEqual(reference.vertices[0].x, (10.0 + -World.UnitXZ))
+        XCTAssertEqual(reference.vertices[0].y, 10.0)
+        XCTAssertEqual(reference.vertices[0].z, (10.0 + World.UnitXZ))
+        
+        XCTAssertEqual(reference.vertices[1].x, (10.0 + World.UnitXZ))
+        XCTAssertEqual(reference.vertices[1].y, 10.0)
+        XCTAssertEqual(reference.vertices[1].z, (10.0 + World.UnitXZ))
+        
+        XCTAssertEqual(reference.vertices[2].x, (10.0 + World.UnitXZ))
+        XCTAssertEqual(reference.vertices[2].y, 10.0)
+        XCTAssertEqual(reference.vertices[2].z, (10.0 + -World.UnitXZ))
+        
+        XCTAssertEqual(reference.vertices[3].x, (10.0 + -World.UnitXZ))
+        XCTAssertEqual(reference.vertices[3].y, 10.0)
+        XCTAssertEqual(reference.vertices[3].z, (10.0 + -World.UnitXZ))
+        
+        expect.fulfill()
+        
+        waitForExpectations(timeout: 1)
+    }
+    
     func testPolytopeEquality() {
         
         let expect = expectation(description: "Polytopes are considered equal when all x, y and z components are equal")

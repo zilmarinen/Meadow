@@ -8,10 +8,14 @@
 
 public enum World {
     
-    static var Ceiling: Coordinate { return Coordinate(x: 0, y: 10, z: 0) }
-    static var Floor: Coordinate { return Coordinate(x: 0, y: -10, z: 0) }
+    static var Ceiling: Int = 10
+    static var Floor: Int = -10
+    
     static var UnitXZ: CGFloat = 0.5
     static var UnitY: CGFloat = 0.25
+    
+    static var ChunkSize: Int = 5
+    static var TileSize: Int = 1
 }
 
 extension World {

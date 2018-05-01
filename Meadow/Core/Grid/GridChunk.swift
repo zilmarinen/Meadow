@@ -33,15 +33,28 @@ public class GridChunk<Tile: GridTile<Node>, Node: GridNode>: SCNNode, Soilable 
 
 extension GridChunk {
     
+    public func becomeDirty() {
+        
+        if isDirty { return }
+        
+        isDirty = true
+        
+        tiles.forEach { tile in
+            
+            tile.becomeDirty()
+        }
+    }
+    
     public func clean() {
         
-        if isDirty {
+        if !isDirty { return }
+        
+        tiles.forEach { tile in
             
-            tiles.forEach { tile in
-                
-                tile.clean()
-            }
+            tile.clean()
         }
+        
+        isDirty = false
     }
 }
 
@@ -55,11 +68,16 @@ extension GridChunk {
         }
         
         tiles.insert(tile)
+        
+        becomeDirty()
     }
     
     func remove(tile: Tile) {
         
-        tiles.remove(tile)
+        if let _ = tiles.remove(tile) {
+        
+            becomeDirty()
+        }
     }
     
     func find(tile coordinate: Coordinate) -> Tile? {

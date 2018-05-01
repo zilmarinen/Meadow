@@ -10,6 +10,19 @@ import SceneKit
 
 public class Meadow: SCNScene {
     
+    let areas = Area()
+    let foliage = Foliage()
     let footpaths = Footpath()
+    let scaffolds = Scaffold()
     let terrain = Terrain()
+    let tunnels = Tunnel()
+    let water = Water()
+}
+
+extension Meadow: SCNSceneRendererDelegate {
+    
+    public func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
+        
+        //
+    }
 }

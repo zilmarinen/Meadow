@@ -6,13 +6,22 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
+public protocol GridNodeDelegate: Soilable {
+    
+    func didBecomeDirty(node: GridNode)
+}
+
 public class GridNode: Soilable {
     
     public var isDirty: Bool = false
     
+    let delegate: GridNodeDelegate
+    
     let volume: Volume
     
-    public required init(volume: Volume) {
+    public required init(delegate: GridNodeDelegate, volume: Volume) {
+        
+        self.delegate = delegate
         
         self.volume = volume
     }
@@ -32,6 +41,11 @@ extension GridNode: Hashable {
 }
 
 extension GridNode {
+    
+    public func becomeDirty() {
+        
+        //
+    }
     
     public func clean() {
         

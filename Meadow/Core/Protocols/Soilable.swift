@@ -10,5 +10,6 @@ public protocol Soilable {
     
     var isDirty: Bool { get }
     
+    func becomeDirty()
     func clean()
 }

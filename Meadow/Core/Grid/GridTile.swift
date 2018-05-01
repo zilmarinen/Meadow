@@ -39,15 +39,28 @@ extension GridTile: Hashable {
 
 extension GridTile {
     
+    public func becomeDirty() {
+        
+        if isDirty { return }
+        
+        isDirty = true
+        
+        nodes.forEach { node in
+            
+            node.becomeDirty()
+        }
+    }
+    
     public func clean() {
         
-        if isDirty {
+        if !isDirty { return }
+        
+        nodes.forEach { node in
             
-            nodes.forEach { node in
-                
-                node.clean()
-            }
+            node.clean()
         }
+        
+        isDirty = false
     }
 }
 
@@ -61,11 +74,16 @@ extension GridTile {
         }
         
         nodes.insert(node)
+        
+        becomeDirty()
     }
     
     func remove(node: Node) {
         
-        nodes.remove(node)
+        if let _ = nodes.remove(node) {
+        
+            becomeDirty()
+        }
     }
     
     func find(node coordinate: Coordinate) -> Node? {

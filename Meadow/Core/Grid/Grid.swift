@@ -15,15 +15,28 @@ public class Grid<Chunk: GridChunk<Tile, Node>, Tile: GridTile<Node>, Node: Grid
 
 extension Grid {
     
+    public func becomeDirty() {
+        
+        if isDirty { return }
+        
+        isDirty = true
+        
+        chunks.forEach { chunk in
+            
+            chunk.becomeDirty()
+        }
+    }
+    
     public func clean() {
         
-        if isDirty {
+        if !isDirty { return }
             
-            chunks.forEach { chunk in
-                
-                chunk.clean()
-            }
+        chunks.forEach { chunk in
+            
+            chunk.clean()
         }
+        
+        isDirty = false
     }
 }
 
@@ -52,7 +65,7 @@ extension Grid {
         
         let chunk = find(chunk: chunkCoordinate) ?? Chunk(volume: Volume(coordinate: chunkCoordinate, size: chunkSize))
         let tile = find(tile: tileCoordinate) ?? Tile(volume: Volume(coordinate: tileCoordinate, size: tileSize))
-        let node = Node(volume: volume)
+        let node = Node(delegate: self, volume: volume)
         
         if chunk.parent == nil {
             
@@ -63,6 +76,8 @@ extension Grid {
         
         tile.add(node: node)
         
+        becomeDirty()
+        
         return node
     }
     
@@ -71,6 +86,8 @@ extension Grid {
         if let chunk = find(chunk: coordinate) {
             
             chunk.removeFromParentNode()
+            
+            becomeDirty()
         }
     }
     
@@ -84,6 +101,8 @@ extension Grid {
                 
                 chunk.removeFromParentNode()
             }
+            
+            becomeDirty()
         }
     }
     
@@ -105,6 +124,8 @@ extension Grid {
                     }
                 }
             }
+            
+            becomeDirty()
         }
     }
     
@@ -134,5 +155,16 @@ extension Grid {
         }
         
         return nil
+    }
+}
+
+extension Grid: GridNodeDelegate {
+    
+    public func didBecomeDirty(node: GridNode) {
+        
+        if let chunk = find(chunk: node.volume.coordinate) {
+            
+            chunk.becomeDirty()
+        }
     }
 }

@@ -12,6 +12,12 @@ public struct Volume {
     
     let coordinate: Coordinate
     let size: Size
+    
+    public init(coordinate: Coordinate, size: Size) {
+        
+        self.coordinate = coordinate
+        self.size = size
+    }
 }
 
 extension Volume: Hashable {

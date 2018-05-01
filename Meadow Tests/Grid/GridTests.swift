@@ -191,4 +191,69 @@ class GridTests: XCTestCase {
         
         waitForExpectations(timeout: 1)
     }
+    
+    func testGridChunkVolume() {
+        
+        let expect = expectation(description: "Chunk volume is correctly calculated when chunks are created")
+        
+        let v0 = Volume(coordinate: Coordinate.Zero, size: Size.One)
+        let v1 = Volume(coordinate: Coordinate(x: 13, y: 0, z: 37), size: Size.One)
+        
+        let n0 = grid.add(node: v0)
+        let n1 = grid.add(node: v1)
+        
+        let c0 = grid.find(chunk: v0.coordinate)
+        let c1 = grid.find(chunk: v1.coordinate)
+        
+        XCTAssertNotNil(n0)
+        XCTAssertNotNil(n1)
+        XCTAssertNotNil(c0)
+        XCTAssertNotNil(c1)
+        XCTAssertEqual(c0!.volume.coordinate.x, 0)
+        XCTAssertEqual(c0!.volume.coordinate.y, World.Floor)
+        XCTAssertEqual(c0!.volume.coordinate.z, 0)
+        XCTAssertEqual(c0!.volume.size.width, World.ChunkSize)
+        XCTAssertEqual(c0!.volume.size.height, (World.Ceiling - World.Floor))
+        XCTAssertEqual(c0!.volume.size.depth, World.ChunkSize)
+        XCTAssertEqual(c1!.volume.coordinate.x, 10)
+        XCTAssertEqual(c1!.volume.coordinate.y, World.Floor)
+        XCTAssertEqual(c1!.volume.coordinate.z, 35)
+        
+        expect.fulfill()
+        
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testGridTileVolume() {
+        
+        let expect = expectation(description: "Tile volume is correctly calculated when chunks are created")
+        
+        let v0 = Volume(coordinate: Coordinate.Zero, size: Size.One)
+        let v1 = Volume(coordinate: Coordinate(x: 13, y: 0, z: 37), size: Size.One)
+        
+        let n0 = grid.add(node: v0)
+        let n1 = grid.add(node: v1)
+        
+        let t0 = grid.find(tile: v0.coordinate)
+        let t1 = grid.find(tile: v1.coordinate)
+        
+        XCTAssertNotNil(n0)
+        XCTAssertNotNil(n1)
+        XCTAssertNotNil(t0)
+        XCTAssertNotNil(t1)
+        XCTAssertEqual(t0!.volume.coordinate.x, 0)
+        XCTAssertEqual(t0!.volume.coordinate.y, World.Floor)
+        XCTAssertEqual(t0!.volume.coordinate.z, 0)
+        XCTAssertEqual(t0!.volume.size.width, World.TileSize)
+        XCTAssertEqual(t0!.volume.size.height, (World.Ceiling - World.Floor))
+        XCTAssertEqual(t0!.volume.size.depth, World.TileSize)
+        XCTAssertEqual(t1!.volume.coordinate.x, 13)
+        XCTAssertEqual(t1!.volume.coordinate.y, World.Floor)
+        XCTAssertEqual(t1!.volume.coordinate.z, 37)
+        
+        expect.fulfill()
+        
+        waitForExpectations(timeout: 1)
+    }
+        
 }

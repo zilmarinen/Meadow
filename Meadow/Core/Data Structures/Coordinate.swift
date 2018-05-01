@@ -13,6 +13,13 @@ public struct Coordinate {
     let x: Int
     let y: Int
     let z: Int
+    
+    public init(x: Int, y: Int, z: Int) {
+        
+        self.x = x
+        self.y = y
+        self.z = z
+    }
 }
 
 extension Coordinate: Hashable {
@@ -41,7 +48,7 @@ extension Coordinate {
     }
 }
 
-extension Coordinate {
+public extension Coordinate {
     
     static var Zero: Coordinate { return Coordinate(x: 0, y: 0, z: 0) }
     static var One: Coordinate { return Coordinate(x: 1, y: 1, z: 1) }

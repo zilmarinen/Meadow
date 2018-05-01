@@ -87,15 +87,15 @@ extension Grid {
         return childNodes as! [Chunk]
     }
     
-    func add(node volume: Volume) -> Node? {
+    public func add(node volume: Volume) -> Node? {
         
         if let _ = find(node: volume.coordinate) {
         
             return nil
         }
         
-        let x = Int(round(Double(volume.coordinate.x) / Double(World.ChunkSize))) * World.ChunkSize
-        let z = Int(round(Double(volume.coordinate.z) / Double(World.ChunkSize))) * World.ChunkSize
+        let x = Int(Double(volume.coordinate.x) / Double(World.ChunkSize)) * World.ChunkSize
+        let z = Int(Double(volume.coordinate.z) / Double(World.ChunkSize)) * World.ChunkSize
         
         let chunkCoordinate = Coordinate(x: x, y: World.Floor, z: z)
         let tileCoordinate = Coordinate(x: volume.coordinate.x, y: World.Floor, z: volume.coordinate.z)

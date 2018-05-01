@@ -11,6 +11,13 @@ public struct Size {
     let width: Int
     let height: Int
     let depth: Int
+    
+    public init(width: Int, height: Int, depth: Int) {
+        
+        self.width = width
+        self.height = height
+        self.depth = depth
+    }
 }
 
 extension Size: Hashable {
@@ -28,6 +35,6 @@ extension Size: Hashable {
 
 extension Size {
     
-    static var Zero: Size { return Size(width: 0, height: 0, depth: 0) }
-    static var One: Size { return Size(width: 1, height: 1, depth: 1) }
+    public static var Zero: Size { return Size(width: 0, height: 0, depth: 0) }
+    public static var One: Size { return Size(width: 1, height: 1, depth: 1) }
 }

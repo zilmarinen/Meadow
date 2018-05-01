@@ -10,7 +10,7 @@ import SceneKit
 
 public class Meadow: SCNScene {
     
-    lazy var areas = { () -> Area in
+    public lazy var areas = { () -> Area in
        
         let grid = Area(delegate: self)
         
@@ -19,7 +19,7 @@ public class Meadow: SCNScene {
         return grid
     }()
     
-    lazy var foliage = { () -> Foliage in
+    public lazy var foliage = { () -> Foliage in
         
         let grid = Foliage(delegate: self)
         
@@ -28,7 +28,7 @@ public class Meadow: SCNScene {
         return grid
     }()
     
-    lazy var footpaths = { () -> Footpath in
+    public lazy var footpaths = { () -> Footpath in
         
         let grid = Footpath(delegate: self)
         
@@ -37,7 +37,7 @@ public class Meadow: SCNScene {
         return grid
     }()
     
-    lazy var scaffolds = { () -> Scaffold in
+    public lazy var scaffolds = { () -> Scaffold in
         
         let grid = Scaffold(delegate: self)
         
@@ -46,7 +46,7 @@ public class Meadow: SCNScene {
         return grid
     }()
     
-    lazy var terrain = { () -> Terrain in
+    public lazy var terrain = { () -> Terrain in
         
         let grid = Terrain(delegate: self)
         
@@ -55,7 +55,7 @@ public class Meadow: SCNScene {
         return grid
     }()
     
-    lazy var tunnels = { () -> Tunnel in
+    public lazy var tunnels = { () -> Tunnel in
         
         let grid = Tunnel(delegate: self)
         
@@ -64,7 +64,7 @@ public class Meadow: SCNScene {
         return grid
     }()
     
-    lazy var water = { () -> Water in
+    public lazy var water = { () -> Water in
         
         let grid = Water(delegate: self)
         

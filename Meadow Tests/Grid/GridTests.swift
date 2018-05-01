@@ -17,7 +17,9 @@ class GridTests: XCTestCase {
         
         super.setUp()
         
-        grid = Grid()
+        let meadow = Meadow()
+        
+        grid = Grid(delegate: meadow)
     }
 
     func testGridNodeAddition() {

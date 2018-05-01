@@ -8,7 +8,15 @@
 
 public class GridTile<Node: GridNode>: Soilable {
     
-    public var isDirty: Bool = false
+    public var isDirty: Bool {
+        
+        get {
+            
+            return dirty
+        }
+    }
+    
+    private var dirty: Bool = false
     
     private var nodes: Set<Node> = []
     
@@ -43,7 +51,7 @@ extension GridTile {
         
         if isDirty { return }
         
-        isDirty = true
+        dirty = true
         
         nodes.forEach { node in
             
@@ -60,7 +68,7 @@ extension GridTile {
             node.clean()
         }
         
-        isDirty = false
+        dirty = false
     }
 }
 

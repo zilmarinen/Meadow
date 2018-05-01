@@ -8,9 +8,36 @@
 
 import SceneKit
 
+public protocol GridDelegate {
+ 
+    func didBecomeDirty(node: GridNode)
+}
+
 public class Grid<Chunk: GridChunk<Tile, Node>, Tile: GridTile<Node>, Node: GridNode>: SCNNode, Soilable {
     
-    public var isDirty: Bool = false
+    public var isDirty: Bool {
+        
+        get {
+            
+            return dirty
+        }
+    }
+    
+    private var dirty: Bool = false
+    
+    private let delegate: GridDelegate
+    
+    public required init(delegate: GridDelegate) {
+        
+        self.delegate = delegate
+        
+        super.init()
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        
+        fatalError("init(coder:) has not been implemented")
+    }
 }
 
 extension Grid {
@@ -19,7 +46,7 @@ extension Grid {
         
         if isDirty { return }
         
-        isDirty = true
+        dirty = true
         
         chunks.forEach { chunk in
             
@@ -36,7 +63,20 @@ extension Grid {
             chunk.clean()
         }
         
-        isDirty = false
+        dirty = false
+    }
+}
+
+extension Grid: GridNodeDelegate {
+    
+    public func didBecomeDirty(node: GridNode) {
+        
+        if let chunk = find(chunk: node.volume.coordinate) {
+            
+            chunk.becomeDirty()
+            
+            delegate.didBecomeDirty(node: node)
+        }
     }
 }
 
@@ -76,7 +116,7 @@ extension Grid {
         
         tile.add(node: node)
         
-        becomeDirty()
+        node.becomeDirty()
         
         return node
     }
@@ -155,16 +195,5 @@ extension Grid {
         }
         
         return nil
-    }
-}
-
-extension Grid: GridNodeDelegate {
-    
-    public func didBecomeDirty(node: GridNode) {
-        
-        if let chunk = find(chunk: node.volume.coordinate) {
-            
-            chunk.becomeDirty()
-        }
     }
 }

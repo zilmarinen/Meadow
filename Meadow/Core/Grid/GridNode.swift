@@ -13,9 +13,17 @@ public protocol GridNodeDelegate: Soilable {
 
 public class GridNode: Soilable {
     
-    public var isDirty: Bool = false
+    public var isDirty: Bool {
+        
+        get {
+            
+            return dirty
+        }
+    }
     
-    let delegate: GridNodeDelegate
+    private var dirty: Bool = false
+    
+    private let delegate: GridNodeDelegate
     
     let volume: Volume
     
@@ -44,14 +52,19 @@ extension GridNode {
     
     public func becomeDirty() {
         
-        //
+        if isDirty { return }
+        
+        dirty = true
+        
+        delegate.didBecomeDirty(node: self)
     }
     
     public func clean() {
         
-        if isDirty {
-            
-            //
-        }
+        if !isDirty { return }
+        
+        //
+        
+        dirty = false
     }
 }

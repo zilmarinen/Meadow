@@ -34,7 +34,7 @@ public class Grid<Chunk: GridChunk<Tile, Node>, Tile: GridTile<Node>, Node: Grid
 
 extension Grid {
     
-    func becomeDirty() {
+    private func becomeDirty() {
         
         if isDirty { return }
         
@@ -76,24 +76,17 @@ extension Grid {
         return childNodes as! [Chunk]
     }
     
-    public func add(node volume: Volume) -> Node? {
+    func add(node volume: Volume) -> Node? {
         
         if let _ = find(node: volume.coordinate) {
         
             return nil
         }
         
-        let x = Int(Double(volume.coordinate.x) / Double(World.ChunkSize)) * World.ChunkSize
-        let z = Int(Double(volume.coordinate.z) / Double(World.ChunkSize)) * World.ChunkSize
+        let chunk = find(chunk: volume.coordinate) ?? Chunk(volume: Volume(coordinate: Chunk.ChunkCoordinate(volume.coordinate), size: GridChunk.ChunkSize))
         
-        let chunkCoordinate = Coordinate(x: x, y: World.Floor, z: z)
-        let tileCoordinate = Coordinate(x: volume.coordinate.x, y: World.Floor, z: volume.coordinate.z)
+        let tile = find(tile: volume.coordinate) ?? Tile(volume: Volume(coordinate: Tile.TileCoordinate(volume.coordinate), size: Tile.TileSize))
         
-        let chunkSize = Size(width: World.ChunkSize, height: (World.Ceiling - World.Floor), depth: World.ChunkSize)
-        let tileSize = Size(width: World.TileSize, height: (World.Ceiling - World.Floor), depth: World.TileSize)
-        
-        let chunk = find(chunk: chunkCoordinate) ?? Chunk(volume: Volume(coordinate: chunkCoordinate, size: chunkSize))
-        let tile = find(tile: tileCoordinate) ?? Tile(volume: Volume(coordinate: tileCoordinate, size: tileSize))
         let node = Node(delegate: self, volume: volume)
         
         if chunk.parent == nil {

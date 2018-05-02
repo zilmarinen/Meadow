@@ -116,42 +116,42 @@ class CoordinateTests: XCTestCase {
         
         let expect = expectation(description: "Coordinate adjacency along the x and z axis can be determined for both diagonal and adjacent coordinates.")
         
-        let zero = Coordinate.Zero
-        let up = Coordinate.Up
-        let down = Coordinate.Down
-        let left = Coordinate.Left
-        let right = Coordinate.Right
-        let forward = Coordinate.Forward
-        let backward = Coordinate.Backward
-        let d0 = Coordinate(x: -1, y: 0, z: 1)
-        let d1 = Coordinate(x: 1, y: 1, z: 1)
-        let d2 = Coordinate(x: 1, y: 2, z: -1)
-        let d3 = Coordinate(x: -1, y: 3, z: -1)
-        let detached = Coordinate(x: 7, y: 0, z: 7)
-        let upperLeft = Coordinate(x: -1, y: 1, z: 0)
-        let lowerRight = Coordinate(x: 1, y: -1, z: 0)
-        let upperForward = Coordinate(x: 0, y: 1, z: 1)
-        let lowerBackward = Coordinate(x: 0, y: -1, z: -1)
+        let reference = Coordinate(x: 13, y: 0, z: 37)
+        let up = reference + Coordinate.Up
+        let down = reference + Coordinate.Down
+        let left = reference + Coordinate.Left
+        let right = reference + Coordinate.Right
+        let forward = reference + Coordinate.Forward
+        let backward = reference + Coordinate.Backward
+        let d0 = reference + Coordinate(x: -1, y: 0, z: 1)
+        let d1 = reference + Coordinate(x: 1, y: 1, z: 1)
+        let d2 = reference + Coordinate(x: 1, y: 2, z: -1)
+        let d3 = reference + Coordinate(x: -1, y: 3, z: -1)
+        let detached = reference + Coordinate(x: 7, y: 0, z: 7)
+        let upperLeft = reference + Coordinate(x: -1, y: 1, z: 0)
+        let lowerRight = reference + Coordinate(x: 1, y: -1, z: 0)
+        let upperForward = reference + Coordinate(x: 0, y: 1, z: 1)
+        let lowerBackward = reference + Coordinate(x: 0, y: -1, z: -1)
         
-        XCTAssertEqual(left.adjacency(to: zero), .adjacent)
-        XCTAssertEqual(right.adjacency(to: zero), .adjacent)
-        XCTAssertEqual(forward.adjacency(to: zero), .adjacent)
-        XCTAssertEqual(backward.adjacency(to: zero), .adjacent)
+        XCTAssertEqual(left.adjacency(to: reference), .adjacent)
+        XCTAssertEqual(right.adjacency(to: reference), .adjacent)
+        XCTAssertEqual(forward.adjacency(to: reference), .adjacent)
+        XCTAssertEqual(backward.adjacency(to: reference), .adjacent)
         
-        XCTAssertEqual(d0.adjacency(to: zero), .diagonal)
-        XCTAssertEqual(d1.adjacency(to: zero), .diagonal)
-        XCTAssertEqual(d2.adjacency(to: zero), .diagonal)
-        XCTAssertEqual(d3.adjacency(to: zero), .diagonal)
+        XCTAssertEqual(d0.adjacency(to: reference), .diagonal)
+        XCTAssertEqual(d1.adjacency(to: reference), .diagonal)
+        XCTAssertEqual(d2.adjacency(to: reference), .diagonal)
+        XCTAssertEqual(d3.adjacency(to: reference), .diagonal)
         
-        XCTAssertEqual(upperLeft.adjacency(to: zero), .adjacent)
-        XCTAssertEqual(lowerRight.adjacency(to: zero), .adjacent)
-        XCTAssertEqual(upperForward.adjacency(to: zero), .adjacent)
-        XCTAssertEqual(lowerBackward.adjacency(to: zero), .adjacent)
+        XCTAssertEqual(upperLeft.adjacency(to: reference), .adjacent)
+        XCTAssertEqual(lowerRight.adjacency(to: reference), .adjacent)
+        XCTAssertEqual(upperForward.adjacency(to: reference), .adjacent)
+        XCTAssertEqual(lowerBackward.adjacency(to: reference), .adjacent)
         
-        XCTAssertEqual(detached.adjacency(to: zero), .detached)
-        XCTAssertEqual(zero.adjacency(to: zero), .equal)
-        XCTAssertEqual(up.adjacency(to: zero), .equal)
-        XCTAssertEqual(down.adjacency(to: zero), .equal)
+        XCTAssertEqual(detached.adjacency(to: reference), .detached)
+        XCTAssertEqual(reference.adjacency(to: reference), .equal)
+        XCTAssertEqual(up.adjacency(to: reference), .equal)
+        XCTAssertEqual(down.adjacency(to: reference), .equal)
         
         expect.fulfill()
         

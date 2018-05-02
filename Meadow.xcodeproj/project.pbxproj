@@ -38,6 +38,7 @@
 		18713242209720120084565F /* Volume.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18713241209720120084565F /* Volume.swift */; };
 		18713244209723050084565F /* Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18713243209723050084565F /* Size.swift */; };
 		18713246209735DF0084565F /* SizeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18713245209735DF0084565F /* SizeTests.swift */; };
+		18A8AB242099D6DA00AF30BB /* TerrainTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A8AB232099D6DA00AF30BB /* TerrainTests.swift */; };
 		18B58B822098600800402410 /* Area.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B812098600800402410 /* Area.swift */; };
 		18B58B842098601000402410 /* AreaChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B832098601000402410 /* AreaChunk.swift */; };
 		18B58B862098601700402410 /* AreaTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B852098601700402410 /* AreaTile.swift */; };
@@ -108,6 +109,7 @@
 		18713241209720120084565F /* Volume.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Volume.swift; sourceTree = "<group>"; };
 		18713243209723050084565F /* Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Size.swift; sourceTree = "<group>"; };
 		18713245209735DF0084565F /* SizeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeTests.swift; sourceTree = "<group>"; };
+		18A8AB232099D6DA00AF30BB /* TerrainTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrainTests.swift; sourceTree = "<group>"; };
 		18B58B812098600800402410 /* Area.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Area.swift; sourceTree = "<group>"; };
 		18B58B832098601000402410 /* AreaChunk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaChunk.swift; sourceTree = "<group>"; };
 		18B58B852098601700402410 /* AreaTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaTile.swift; sourceTree = "<group>"; };
@@ -400,6 +402,7 @@
 		18B58BAE2098624E00402410 /* Terrain */ = {
 			isa = PBXGroup;
 			children = (
+				18A8AB232099D6DA00AF30BB /* TerrainTests.swift */,
 			);
 			path = Terrain;
 			sourceTree = "<group>";
@@ -642,6 +645,7 @@
 				18713240209720080084565F /* VolumeTests.swift in Sources */,
 				18496C822093670800992AF3 /* CoordinateTests.swift in Sources */,
 				185200F52096094400D3ACC6 /* WorldTests.swift in Sources */,
+				18A8AB242099D6DA00AF30BB /* TerrainTests.swift in Sources */,
 				18496C95209373AD00992AF3 /* PolytopeTests.swift in Sources */,
 				185200F820960CBE00D3ACC6 /* GridTests.swift in Sources */,
 			);

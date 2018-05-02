@@ -32,21 +32,20 @@ class VolumeTests: XCTestCase {
         
         let expect = expectation(description: "Coordinate is considered intersecting when the coordinate is contained within the volume")
         
-        let v0 = Volume(coordinate: Coordinate.Zero, size: Size(width: 2, height: 2, depth: 2))
-        let v1 = Volume(coordinate: Coordinate.Zero, size: Size(width: 4, height: 4, depth: 4))
-        let v2 = Volume(coordinate: Coordinate(x: 2, y: 0, z: 5), size: Size(width: 2, height: 2, depth: 2))
+        let v0 = Volume(coordinate: Coordinate(x: 13, y: 0, z: 37), size: Size(width: 2, height: 2, depth: 2))
+        let v1 = Volume(coordinate: Coordinate(x: 13, y: 0, z: 37), size: Size(width: 4, height: 4, depth: 4))
+        let v2 = Volume(coordinate: Coordinate(x: 15, y: 0, z: 42), size: Size(width: 2, height: 2, depth: 2))
         
-        XCTAssertTrue(v0.contains(coordinate: Coordinate.Zero))
-        XCTAssertTrue(v0.contains(coordinate: Coordinate.One))
-        XCTAssertTrue(v1.contains(coordinate: Coordinate.Zero))
-        XCTAssertTrue(v1.contains(coordinate: Coordinate.One))
-        XCTAssertTrue(v2.contains(coordinate: Coordinate(x: 3, y: 0, z: 6)))
-        XCTAssertFalse(v0.contains(coordinate: Coordinate(x: 0, y: 0, z: 2)))
-        XCTAssertFalse(v1.contains(coordinate: Coordinate(x: 0, y: 0, z: 6)))
-        XCTAssertFalse(v2.contains(coordinate: Coordinate(x: 0, y: 0, z: 6)))
-        XCTAssertFalse(v0.contains(coordinate: Coordinate(x: 0, y: 2, z: 0)))
-        XCTAssertFalse(v1.contains(coordinate: Coordinate(x: 0, y: 4, z: 0)))
-        XCTAssertFalse(v2.contains(coordinate: Coordinate(x: 3, y: 2, z: 6)))
+        XCTAssertTrue(v0.contains(coordinate: v0.coordinate))
+        XCTAssertTrue(v0.contains(coordinate: v1.coordinate))
+        XCTAssertTrue(v1.contains(coordinate: v0.coordinate))
+        XCTAssertTrue(v1.contains(coordinate: v1.coordinate))
+        XCTAssertTrue(v2.contains(coordinate: v2.coordinate))
+        
+        XCTAssertFalse(v0.contains(coordinate: v2.coordinate))
+        XCTAssertFalse(v1.contains(coordinate: v2.coordinate))
+        XCTAssertFalse(v2.contains(coordinate: v0.coordinate))
+        XCTAssertFalse(v2.contains(coordinate: v1.coordinate))
         
         expect.fulfill()
         

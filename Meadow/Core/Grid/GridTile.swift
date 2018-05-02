@@ -10,8 +10,6 @@ public class GridTile<Node: GridNode> {
     
     private var nodes: Set<Node> = []
     
-    private var neighbours: [GridTile] = []
-    
     let volume: Volume
     
     var isEmpty: Bool { return nodes.isEmpty }
@@ -32,6 +30,16 @@ extension GridTile: Hashable {
     public var hashValue: Int {
         
         return volume.hashValue
+    }
+}
+
+extension GridTile {
+    
+    static var TileSize: Size { return Size(width: World.TileSize, height: (World.Ceiling - World.Floor), depth: World.TileSize) }
+    
+    static func TileCoordinate(_ coordinate: Coordinate) -> Coordinate {
+        
+        return Coordinate(x: coordinate.x, y: World.Floor, z: coordinate.z)
     }
 }
 
@@ -60,5 +68,3 @@ extension GridTile {
         }
     }
 }
-
-

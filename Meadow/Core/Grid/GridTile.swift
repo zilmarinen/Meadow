@@ -6,21 +6,11 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-public class GridTile<Node: GridNode>: Soilable {
-    
-    public var isDirty: Bool {
-        
-        get {
-            
-            return dirty
-        }
-    }
-    
-    private var dirty: Bool = false
+public class GridTile<Node: GridNode> {
     
     private var nodes: Set<Node> = []
     
-    private var neighbours: [Node] = []
+    private var neighbours: [GridTile] = []
     
     let volume: Volume
     
@@ -47,33 +37,6 @@ extension GridTile: Hashable {
 
 extension GridTile {
     
-    public func becomeDirty() {
-        
-        if isDirty { return }
-        
-        dirty = true
-        
-        nodes.forEach { node in
-            
-            node.becomeDirty()
-        }
-    }
-    
-    public func clean() {
-        
-        if !isDirty { return }
-        
-        nodes.forEach { node in
-            
-            node.clean()
-        }
-        
-        dirty = false
-    }
-}
-
-extension GridTile {
-    
     func add(node: Node) {
         
         if let _ = find(node: node.volume.coordinate) {
@@ -82,16 +45,11 @@ extension GridTile {
         }
         
         nodes.insert(node)
-        
-        becomeDirty()
     }
     
     func remove(node: Node) {
         
-        if let _ = nodes.remove(node) {
-        
-            becomeDirty()
-        }
+        nodes.remove(node)
     }
     
     func find(node coordinate: Coordinate) -> Node? {

@@ -9,21 +9,13 @@
 import SceneKit
 
 public protocol GridDelegate {
- 
+    
     func didBecomeDirty(node: GridNode)
 }
 
-public class Grid<Chunk: GridChunk<Tile, Node>, Tile: GridTile<Node>, Node: GridNode>: SCNNode, Soilable {
+public class Grid<Chunk: GridChunk<Tile, Node>, Tile: GridTile<Node>, Node: GridNode>: SCNNode {
     
-    public var isDirty: Bool {
-        
-        get {
-            
-            return dirty
-        }
-    }
-    
-    private var dirty: Bool = false
+    private var isDirty: Bool = false
     
     private let delegate: GridDelegate
     
@@ -42,19 +34,14 @@ public class Grid<Chunk: GridChunk<Tile, Node>, Tile: GridTile<Node>, Node: Grid
 
 extension Grid {
     
-    public func becomeDirty() {
+    func becomeDirty() {
         
         if isDirty { return }
         
-        dirty = true
-        
-        chunks.forEach { chunk in
-            
-            chunk.becomeDirty()
-        }
+        isDirty = true
     }
     
-    public func clean() {
+    func clean() {
         
         if !isDirty { return }
             
@@ -63,7 +50,7 @@ extension Grid {
             chunk.clean()
         }
         
-        dirty = false
+        isDirty = false
     }
 }
 
@@ -74,6 +61,8 @@ extension Grid: GridNodeDelegate {
         if let chunk = find(chunk: node.volume.coordinate) {
             
             chunk.becomeDirty()
+            
+            becomeDirty()
             
             delegate.didBecomeDirty(node: node)
         }
@@ -133,7 +122,7 @@ extension Grid {
     
     func remove(tile coordinate: Coordinate) {
         
-        if let chunk = find(chunk: coordinate), let tile = find(tile: coordinate) {
+        if let chunk = find(chunk: coordinate), let tile = chunk.find(tile: coordinate) {
             
             chunk.remove(tile: tile)
             
@@ -148,22 +137,21 @@ extension Grid {
     
     func remove(node coordinate: Coordinate) {
         
-        if let tile = find(tile: coordinate), let node = find(node: coordinate) {
+        if let chunk = find(chunk: coordinate), let tile = chunk.find(tile: coordinate), let node = tile.find(node: coordinate) {
             
             tile.remove(node: node)
             
             if tile.isEmpty {
                 
-                if let chunk = find(chunk: coordinate) {
+                chunk.remove(tile: tile)
+                
+                if chunk.isEmpty {
                     
-                    chunk.remove(tile: tile)
-                    
-                    if chunk.isEmpty {
-                        
-                        chunk.removeFromParentNode()
-                    }
+                    chunk.removeFromParentNode()
                 }
             }
+            
+            chunk.becomeDirty()
             
             becomeDirty()
         }

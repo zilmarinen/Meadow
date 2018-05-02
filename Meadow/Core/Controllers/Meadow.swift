@@ -92,6 +92,13 @@ extension Meadow: GridDelegate {
     
     public func didBecomeDirty(node: GridNode) {
         
-        //
+        switch type(of: node) {
+            
+        case is TerrainNode.Type:
+            
+            break
+            
+        default: break
+        }
     }
 }

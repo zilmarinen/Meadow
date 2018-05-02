@@ -8,17 +8,9 @@
 
 import SceneKit
 
-public class GridChunk<Tile: GridTile<Node>, Node: GridNode>: SCNNode, Soilable {
+public class GridChunk<Tile: GridTile<Node>, Node: GridNode>: SCNNode {
     
-    public var isDirty: Bool {
-        
-        get {
-            
-            return dirty
-        }
-    }
-    
-    private var dirty: Bool = false
+    private var isDirty: Bool = false
     
     private var tiles: Set<Tile> = []
 
@@ -41,28 +33,20 @@ public class GridChunk<Tile: GridTile<Node>, Node: GridNode>: SCNNode, Soilable 
 
 extension GridChunk {
     
-    public func becomeDirty() {
+    func becomeDirty() {
         
         if isDirty { return }
         
-        dirty = true
-        
-        tiles.forEach { tile in
-            
-            tile.becomeDirty()
-        }
+        isDirty = true
     }
     
-    public func clean() {
+    func clean() {
         
         if !isDirty { return }
         
-        tiles.forEach { tile in
-            
-            tile.clean()
-        }
+        //
         
-        dirty = false
+        isDirty = false
     }
 }
 

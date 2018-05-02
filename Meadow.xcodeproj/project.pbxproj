@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		182B22F02098BDDB003D1309 /* MeshFace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B22EF2098BDDB003D1309 /* MeshFace.swift */; };
 		18496C5D2093234300992AF3 /* GridNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C592093234300992AF3 /* GridNode.swift */; };
 		18496C5E2093234300992AF3 /* GridChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C5A2093234300992AF3 /* GridChunk.swift */; };
 		18496C5F2093234300992AF3 /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C5B2093234300992AF3 /* Grid.swift */; };
@@ -33,7 +34,6 @@
 		185200F820960CBE00D3ACC6 /* GridTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185200F720960CBE00D3ACC6 /* GridTests.swift */; };
 		187121EA20931C77002488E0 /* Meadow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 187121E020931C77002488E0 /* Meadow.framework */; };
 		187121F120931C77002488E0 /* Meadow.h in Headers */ = {isa = PBXBuildFile; fileRef = 187121E320931C77002488E0 /* Meadow.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1871323D209717AE0084565F /* Soilable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1871323C209717AE0084565F /* Soilable.swift */; };
 		18713240209720080084565F /* VolumeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1871323E20971FE30084565F /* VolumeTests.swift */; };
 		18713242209720120084565F /* Volume.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18713241209720120084565F /* Volume.swift */; };
 		18713244209723050084565F /* Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18713243209723050084565F /* Size.swift */; };
@@ -74,6 +74,7 @@
 
 /* Begin PBXFileReference section */
 		14A74BE995E1DD6F159F97B0 /* Pods-Meadow.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Meadow.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Meadow/Pods-Meadow.debug.xcconfig"; sourceTree = "<group>"; };
+		182B22EF2098BDDB003D1309 /* MeshFace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeshFace.swift; sourceTree = "<group>"; };
 		18496C592093234300992AF3 /* GridNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridNode.swift; sourceTree = "<group>"; };
 		18496C5A2093234300992AF3 /* GridChunk.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridChunk.swift; sourceTree = "<group>"; };
 		18496C5B2093234300992AF3 /* Grid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
@@ -103,7 +104,6 @@
 		187121E420931C77002488E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		187121E920931C77002488E0 /* MeadowTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MeadowTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		187121F020931C77002488E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1871323C209717AE0084565F /* Soilable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Soilable.swift; sourceTree = "<group>"; };
 		1871323E20971FE30084565F /* VolumeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeTests.swift; sourceTree = "<group>"; };
 		18713241209720120084565F /* Volume.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Volume.swift; sourceTree = "<group>"; };
 		18713243209723050084565F /* Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Size.swift; sourceTree = "<group>"; };
@@ -156,16 +156,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		182B22EE2098BDCD003D1309 /* Mesh */ = {
+			isa = PBXGroup;
+			children = (
+				182B22EF2098BDDB003D1309 /* MeshFace.swift */,
+			);
+			path = Mesh;
+			sourceTree = "<group>";
+		};
 		18496C572093230900992AF3 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				182B22EE2098BDCD003D1309 /* Mesh */,
 				18496C83209368AB00992AF3 /* Area */,
 				18496C912093699900992AF3 /* Controllers */,
 				18496C71209327B900992AF3 /* Data Structures */,
 				18496C85209368B800992AF3 /* Foliage */,
 				18496C84209368B300992AF3 /* Footpath */,
 				18496C582093231500992AF3 /* Grid */,
-				1871323B2097179A0084565F /* Protocols */,
 				18496C88209368CD00992AF3 /* Scaffold */,
 				18496C642093267000992AF3 /* Terrain */,
 				18496C87209368C200992AF3 /* Tunnel */,
@@ -359,14 +367,6 @@
 				18B58BB02098625900402410 /* Water */,
 			);
 			path = "Meadow Tests";
-			sourceTree = "<group>";
-		};
-		1871323B2097179A0084565F /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-				1871323C209717AE0084565F /* Soilable.swift */,
-			);
-			path = Protocols;
 			sourceTree = "<group>";
 		};
 		18B58BAA2098623200402410 /* Area */ = {
@@ -589,13 +589,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				18713244209723050084565F /* Size.swift in Sources */,
-				1871323D209717AE0084565F /* Soilable.swift in Sources */,
 				18B58B922098611C00402410 /* Scaffold.swift in Sources */,
 				18496C7D20934A4900992AF3 /* GridCorner.swift in Sources */,
 				18496C5D2093234300992AF3 /* GridNode.swift in Sources */,
 				18496C90209368FF00992AF3 /* FootpathNode.swift in Sources */,
 				18B58B8C209860BF00402410 /* FoliageChunk.swift in Sources */,
 				18B58BA4209861D300402410 /* WaterChunk.swift in Sources */,
+				182B22F02098BDDB003D1309 /* MeshFace.swift in Sources */,
 				18496C682093269500992AF3 /* TerrainChunk.swift in Sources */,
 				18496C6A2093269C00992AF3 /* TerrainNode.swift in Sources */,
 				18B58B942098612400402410 /* ScaffoldChunk.swift in Sources */,

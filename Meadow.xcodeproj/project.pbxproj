@@ -38,6 +38,8 @@
 		18713242209720120084565F /* Volume.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18713241209720120084565F /* Volume.swift */; };
 		18713244209723050084565F /* Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18713243209723050084565F /* Size.swift */; };
 		18713246209735DF0084565F /* SizeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18713245209735DF0084565F /* SizeTests.swift */; };
+		188B3C15209E1B9F0034F4BB /* TerrainType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188B3C14209E1B9F0034F4BB /* TerrainType.swift */; };
+		188B3C17209E1BF70034F4BB /* TerrainLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188B3C16209E1BF70034F4BB /* TerrainLayer.swift */; };
 		18A8AB242099D6DA00AF30BB /* TerrainTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A8AB232099D6DA00AF30BB /* TerrainTests.swift */; };
 		18B58B822098600800402410 /* Area.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B812098600800402410 /* Area.swift */; };
 		18B58B842098601000402410 /* AreaChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B832098601000402410 /* AreaChunk.swift */; };
@@ -109,6 +111,8 @@
 		18713241209720120084565F /* Volume.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Volume.swift; sourceTree = "<group>"; };
 		18713243209723050084565F /* Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Size.swift; sourceTree = "<group>"; };
 		18713245209735DF0084565F /* SizeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeTests.swift; sourceTree = "<group>"; };
+		188B3C14209E1B9F0034F4BB /* TerrainType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrainType.swift; sourceTree = "<group>"; };
+		188B3C16209E1BF70034F4BB /* TerrainLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrainLayer.swift; sourceTree = "<group>"; };
 		18A8AB232099D6DA00AF30BB /* TerrainTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrainTests.swift; sourceTree = "<group>"; };
 		18B58B812098600800402410 /* Area.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Area.swift; sourceTree = "<group>"; };
 		18B58B832098601000402410 /* AreaChunk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaChunk.swift; sourceTree = "<group>"; };
@@ -204,6 +208,8 @@
 				18496C672093269500992AF3 /* TerrainChunk.swift */,
 				18496C692093269C00992AF3 /* TerrainNode.swift */,
 				18496C6B209326A300992AF3 /* TerrainTile.swift */,
+				188B3C14209E1B9F0034F4BB /* TerrainType.swift */,
+				188B3C16209E1BF70034F4BB /* TerrainLayer.swift */,
 			);
 			path = Terrain;
 			sourceTree = "<group>";
@@ -626,9 +632,11 @@
 				18496C6E2093270F00992AF3 /* Meadow.swift in Sources */,
 				18496C8C209368ED00992AF3 /* FootpathChunk.swift in Sources */,
 				18496C6C209326A300992AF3 /* TerrainTile.swift in Sources */,
+				188B3C17209E1BF70034F4BB /* TerrainLayer.swift in Sources */,
 				18B58B842098601000402410 /* AreaChunk.swift in Sources */,
 				18B58B862098601700402410 /* AreaTile.swift in Sources */,
 				18496C7F20934A5100992AF3 /* GridEdge.swift in Sources */,
+				188B3C15209E1B9F0034F4BB /* TerrainType.swift in Sources */,
 				18496C7B2093473600992AF3 /* Polyhedron.swift in Sources */,
 				18B58BA9209861E900402410 /* WaterNode.swift in Sources */,
 				18B58B9E2098618700402410 /* TunnelTile.swift in Sources */,

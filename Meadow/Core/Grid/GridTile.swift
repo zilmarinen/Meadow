@@ -35,11 +35,12 @@ extension GridTile: Hashable {
 
 extension GridTile {
     
-    static var TileSize: Size { return Size(width: World.TileSize, height: (World.Ceiling - World.Floor), depth: World.TileSize) }
-    
-    static func TileCoordinate(_ coordinate: Coordinate) -> Coordinate {
+    static func FixedVolume(_ coordinate: Coordinate) -> Volume {
         
-        return Coordinate(x: coordinate.x, y: World.Floor, z: coordinate.z)
+        let coordinate = Coordinate(x: coordinate.x, y: World.Floor, z: coordinate.z)
+        let size = Size(width: World.TileSize, height: (World.Ceiling - World.Floor), depth: World.TileSize)
+        
+        return Volume(coordinate: coordinate, size: size)
     }
 }
 

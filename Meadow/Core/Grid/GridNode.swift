@@ -13,6 +13,12 @@ public protocol GridNodeDelegate {
 
 public class GridNode {
     
+    public struct GridNodeNeighbour: Hashable {
+        
+        let edge: GridEdge
+        let node: GridNode
+    }
+    
     private let delegate: GridNodeDelegate
     
     private var isDirty: Bool = false

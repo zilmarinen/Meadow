@@ -16,6 +16,21 @@ public enum GridEdge: Int {
 
 extension GridEdge {
     
+    static var Edges: [GridEdge] { return Opposite.reversed() }
+    
+    private static var Cardinal: [Coordinate] { return [
+        
+        Coordinate.Forward,
+        Coordinate.Right,
+        Coordinate.Backward,
+        Coordinate.Left
+    ]}
+    
+    static func Cardinal(edge: GridEdge) -> Coordinate {
+        
+        return Cardinal[edge.rawValue]
+    }
+    
     private static var Opposite: [GridEdge] { return [
     
         .south,

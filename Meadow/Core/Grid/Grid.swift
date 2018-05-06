@@ -15,9 +15,9 @@ public protocol GridDelegate {
 
 public class Grid<Chunk: GridChunk<Tile, Node>, Tile: GridTile<Node>, Node: GridNode>: SCNNode {
     
-    private var isDirty: Bool = false
-    
     private let delegate: GridDelegate
+    
+    private var isDirty: Bool = false
     
     public required init(delegate: GridDelegate) {
         
@@ -34,7 +34,7 @@ public class Grid<Chunk: GridChunk<Tile, Node>, Tile: GridTile<Node>, Node: Grid
 
 extension Grid {
     
-    private func becomeDirty() {
+    func becomeDirty() {
         
         if isDirty { return }
         
@@ -83,9 +83,9 @@ extension Grid {
             return nil
         }
         
-        let chunk = find(chunk: volume.coordinate) ?? Chunk(volume: Volume(coordinate: Chunk.ChunkCoordinate(volume.coordinate), size: GridChunk.ChunkSize))
+        let chunk = find(chunk: volume.coordinate) ?? Chunk(volume: Chunk.FixedVolume(volume.coordinate))
         
-        let tile = find(tile: volume.coordinate) ?? Tile(volume: Volume(coordinate: Tile.TileCoordinate(volume.coordinate), size: Tile.TileSize))
+        let tile = find(tile: volume.coordinate) ?? Tile(volume: Tile.FixedVolume(volume.coordinate))
         
         let node = Node(delegate: self, volume: volume)
         

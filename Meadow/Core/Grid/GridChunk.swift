@@ -33,14 +33,15 @@ public class GridChunk<Tile: GridTile<Node>, Node: GridNode>: SCNNode {
 
 extension GridChunk {
     
-    static var ChunkSize: Size { return Size(width: World.ChunkSize, height: (World.Ceiling - World.Floor), depth: World.ChunkSize) }
-    
-    static func ChunkCoordinate(_ coordinate: Coordinate) -> Coordinate {
+    static func FixedVolume(_ coordinate: Coordinate) -> Volume {
         
         let x = Int(floor(Double(coordinate.x) / Double(World.ChunkSize))) * World.ChunkSize
         let z = Int(floor(Double(coordinate.z) / Double(World.ChunkSize))) * World.ChunkSize
         
-        return Coordinate(x: x, y: World.Floor, z: z)
+        let coordinate = Coordinate(x: x, y: World.Floor, z: z)
+        let size = Size(width: World.ChunkSize, height: (World.Ceiling - World.Floor), depth: World.ChunkSize)
+        
+        return Volume(coordinate: coordinate, size: size)
     }
 }
 

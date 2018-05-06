@@ -11,30 +11,73 @@ import XCTest
 
 class TerrainTests: XCTestCase {
 
-    var grid: Terrain!
+    var meadow: Meadow!
     
     override func setUp() {
         
         super.setUp()
         
-        let meadow = Meadow()
-        
-        grid = Terrain(delegate: meadow)
+        meadow = Meadow()
     }
     
     func testGridNodeAddition() {
         
         let expect = expectation(description: "Nodes can be added to a grid if the volume they define is not already occupied")
         
-        let v0 = Volume(coordinate: Coordinate.Zero, size: TerrainTile.TileSize)
-        let v1 = Volume(coordinate: Coordinate.Left, size: TerrainTile.TileSize)
-        
-        let n0 = grid.add(node: v0)
-        let n1 = grid.add(node: v1)
-        let n2 = grid.add(node: v0)
+        let n0 = meadow.terrain.add(node: Coordinate.Zero)
+        let n1 = meadow.terrain.add(node: Coordinate.Left)
+        let n2 = meadow.terrain.add(node: Coordinate.Zero)
         
         XCTAssertNotNil(n0)
         XCTAssertNotNil(n1)
+        XCTAssertNil(n2)
+        
+        expect.fulfill()
+        
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testGridNodeNeighbourAddition() {
+        
+        let expect = expectation(description: "Nodes are connected together when added to the grid")
+        
+        let n0 = meadow.terrain.add(node: Coordinate.Zero)
+        let n1 = meadow.terrain.add(node: Coordinate.Left)
+        
+        XCTAssertNotNil(n0)
+        XCTAssertNotNil(n1)
+        
+        let n2 = n0!.find(neighbour: .west)
+        let n3 = n1!.find(neighbour: .east)
+        
+        XCTAssertNotNil(n2)
+        XCTAssertNotNil(n2!.node)
+        XCTAssertEqual(n2!.node, n1)
+        XCTAssertEqual(n2!.edge, .west)
+        XCTAssertNotNil(n3)
+        XCTAssertNotNil(n3!.node)
+        XCTAssertEqual(n3!.node, n0)
+        XCTAssertEqual(n3!.edge, .east)
+        
+        expect.fulfill()
+        
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testGridNodeNeighbourRemoval() {
+        
+        let expect = expectation(description: "Nodes are disconnected when removed from the grid")
+        
+        let n0 = meadow.terrain.add(node: Coordinate.Zero)
+        let n1 = meadow.terrain.add(node: Coordinate.Left)
+        
+        XCTAssertNotNil(n0)
+        XCTAssertNotNil(n1)
+        
+        meadow.terrain.remove(node: n1!)
+        
+        let n2 = n0!.find(neighbour: .west)
+        
         XCTAssertNil(n2)
         
         expect.fulfill()

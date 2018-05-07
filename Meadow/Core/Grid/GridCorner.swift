@@ -16,6 +16,14 @@ public enum GridCorner: Int {
 
 extension GridCorner {
     
+    static var Corners: [GridCorner] { return [
+    
+        .northWest,
+        .northEast,
+        .southEast,
+        .southWest
+    ]}
+    
     private static var Connected: [[GridCorner]] { return [
         
         [.northEast, .southWest],

@@ -6,25 +6,124 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-public struct TerrainLayer {
+import SceneKit
+
+public class TerrainLayer {
     
-    let terrainType: TerrainType
+    public struct TerrainLayerHierarchy {
+        
+        var upper: TerrainLayer?
+        var lower: TerrainLayer?
+    }
+    
+    private var isDirty: Bool = true
+    
+    private var corners: [Int]
+    
+    private var cachedPolyhedron: Polyhedron?
+    
+    unowned let node: TerrainNode
+    
+    let type: TerrainType
+    
+    var hierarchy: TerrainLayerHierarchy
     
     var polyhedron: Polyhedron {
         
-        return Polyhedron(upperPolytope: Polytope.Unit, lowerPolytope: Polytope.Unit)
+        if !isDirty {
+            
+            return cachedPolyhedron!
+        }
+        
+        let unit = Polytope.Unit
+        
+        var vertices: [SCNVector3] = []
+        
+        for index in 0..<corners.count {
+            
+            vertices.append(SCNVector3(x: CGFloat(node.volume.coordinate.x) + unit.vertices[index].x, y: World.Y(y: corners[index]), z: CGFloat(node.volume.coordinate.z) + unit.vertices[index].z))
+        }
+        
+        let upperPolytope = Polytope(vertices: vertices)
+        
+        var lowerPolytope: Polytope
+        
+        if hierarchy.lower != nil {
+            
+            lowerPolytope = hierarchy.lower!.polyhedron.upperPolytope
+        }
+        else {
+            
+            lowerPolytope = Polytope(x: CGFloat(node.volume.coordinate.x), y: World.Y(y: node.volume.coordinate.y), z: CGFloat(node.volume.coordinate.z))
+        }
+        
+        cachedPolyhedron = Polyhedron(upperPolytope: upperPolytope, lowerPolytope: lowerPolytope)
+        
+        return cachedPolyhedron!
+    }
+    
+    init(node: TerrainNode, terrainType: TerrainType) {
+        
+        self.node = node
+        
+        self.type = terrainType
+        
+        self.corners = [0, 0, 0, 0]
+        
+        self.hierarchy = TerrainLayerHierarchy(upper: nil, lower: nil)
     }
 }
 
-extension TerrainLayer: Hashable {
+extension TerrainLayer: Equatable {
     
     public static func == (lhs: TerrainLayer, rhs: TerrainLayer) -> Bool {
         
-        return lhs.terrainType == rhs.terrainType && lhs.polyhedron == rhs.polyhedron
+        return lhs.type == rhs.type && lhs.polyhedron == rhs.polyhedron
+    }
+}
+
+extension TerrainLayer {
+    
+    func becomeDirty() {
+        
+        if isDirty { return }
+        
+        isDirty = true
+        
+        node.becomeDirty()
+    }
+}
+
+
+extension TerrainLayer {
+    
+    func set(height: Int, corner: GridCorner) {
+        
+        var cornerHeight = height
+        
+        cornerHeight = max(cornerHeight, World.Floor)
+        cornerHeight = min(cornerHeight, World.Ceiling)
+        
+        if let lower = hierarchy.lower {
+            
+            cornerHeight = max(cornerHeight, lower.get(height: corner))
+        }
+        
+        if let upper = hierarchy.upper {
+            
+            cornerHeight = min(cornerHeight, upper.get(height: corner))
+        }
+        
+        if corners[corner.rawValue] != cornerHeight {
+         
+            corners[corner.rawValue] = cornerHeight
+            
+            becomeDirty()
+        }
     }
     
-    public var hashValue: Int {
+    func get(height corner: GridCorner) -> Int {
         
-        return terrainType.hashValue
+        return corners[corner.rawValue]
     }
 }

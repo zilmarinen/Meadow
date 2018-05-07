@@ -24,9 +24,9 @@ class TerrainTests: XCTestCase {
         
         let expect = expectation(description: "Nodes can be added to a grid if the volume they define is not already occupied")
         
-        let n0 = meadow.terrain.add(node: Coordinate.Zero)
-        let n1 = meadow.terrain.add(node: Coordinate.Left)
-        let n2 = meadow.terrain.add(node: Coordinate.Zero)
+        let n0 = meadow.terrain.add(node: Coordinate(x: 13, y: 0, z: 37))
+        let n1 = meadow.terrain.add(node: n0!.volume.coordinate + Coordinate.Left)
+        let n2 = meadow.terrain.add(node: n0!.volume.coordinate)
         
         XCTAssertNotNil(n0)
         XCTAssertNotNil(n1)
@@ -41,8 +41,8 @@ class TerrainTests: XCTestCase {
         
         let expect = expectation(description: "Nodes are connected together when added to the grid")
         
-        let n0 = meadow.terrain.add(node: Coordinate.Zero)
-        let n1 = meadow.terrain.add(node: Coordinate.Left)
+        let n0 = meadow.terrain.add(node: Coordinate(x: 13, y: 0, z: 37))
+        let n1 = meadow.terrain.add(node: n0!.volume.coordinate + Coordinate.Left)
         
         XCTAssertNotNil(n0)
         XCTAssertNotNil(n1)
@@ -68,16 +68,17 @@ class TerrainTests: XCTestCase {
         
         let expect = expectation(description: "Nodes are disconnected when removed from the grid")
         
-        let n0 = meadow.terrain.add(node: Coordinate.Zero)
-        let n1 = meadow.terrain.add(node: Coordinate.Left)
+        let n0 = meadow.terrain.add(node: Coordinate(x: 13, y: 0, z: 37))
+        let n1 = meadow.terrain.add(node: n0!.volume.coordinate + Coordinate.Left)
         
         XCTAssertNotNil(n0)
         XCTAssertNotNil(n1)
         
-        meadow.terrain.remove(node: n1!)
+        let result = meadow.terrain.remove(node: n1!)
         
         let n2 = n0!.find(neighbour: .west)
         
+        XCTAssertTrue(result)
         XCTAssertNil(n2)
         
         expect.fulfill()

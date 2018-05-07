@@ -10,7 +10,15 @@ public class TerrainNode: GridNode {
     
     private var neighbours: Set<GridNodeNeighbour> = []
     
-    private var layers: Set<TerrainLayer> = []
+    private var layers: [TerrainLayer] = []
+    
+    public var topLayer: TerrainLayer? {
+        
+        return layers.max(by: { (lhs, rhs) -> Bool in
+            
+            return lhs.polyhedron.upperPolytope.peak < rhs.polyhedron.upperPolytope.peak
+        })
+    }
 }
 
 extension TerrainNode {
@@ -58,7 +66,7 @@ extension TerrainNode {
     func find(neighbour edge: GridEdge) -> GridNodeNeighbour? {
         
         return neighbours.first { neighbour -> Bool in
-            
+        
             return neighbour.edge == edge
         }
     }
@@ -66,13 +74,58 @@ extension TerrainNode {
 
 extension TerrainNode {
     
-    func add(layer: TerrainLayer) {
+    public func add(layer terrainType: TerrainType) -> TerrainLayer? {
         
-        //
+        let upper = topLayer
+        
+        if let upper = upper {
+            
+            if World.Y(y: upper.polyhedron.upperPolytope.base) == World.Ceiling {
+                
+                return nil
+            }
+        }
+        
+        let layer = TerrainLayer(node: self, terrainType: terrainType)
+        
+        layer.hierarchy.lower = upper
+        
+        layers.append(layer)
+        
+        upper?.hierarchy.upper = layer
+        
+        let height = (layer.hierarchy.lower != nil ? World.Y(y: layer.hierarchy.lower!.polyhedron.upperPolytope.peak) : World.Floor) + 1
+        
+        GridCorner.Corners.forEach { corner in
+            
+            layer.set(height: height, corner: corner)
+        }
+        
+        becomeDirty()
+        
+        return layer
     }
     
-    func remove(layer: TerrainLayer) {
+    public func remove(layer: TerrainLayer) {
         
-        //
+        if let index = layers.index(of: layer) {
+            
+            layers.remove(at: index)
+            
+            if let upper = layer.hierarchy.upper {
+                
+                upper.hierarchy.lower = layer.hierarchy.lower
+            }
+            
+            if let lower = layer.hierarchy.lower {
+                
+                lower.hierarchy.upper = layer.hierarchy.upper
+            }
+            
+            layer.hierarchy.upper = nil
+            layer.hierarchy.lower = nil
+            
+            becomeDirty()
+        }
     }
 }

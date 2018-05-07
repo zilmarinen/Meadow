@@ -87,4 +87,36 @@ class PolytopeTests: XCTestCase {
         
         waitForExpectations(timeout: 1)
     }
+    
+    func testPolytopePeakHeight() {
+        
+        let expect = expectation(description: "Polytopes peak height is determined by greatest y axis value")
+        
+        let reference = Polytope(vertices: [SCNVector3(x: -0.5, y: 2.0, z: 0.5),
+                                            SCNVector3(x: 0.5, y: 1.0, z: 0.5),
+                                            SCNVector3(x: 0.5, y: 0.0, z: -0.5),
+                                            SCNVector3(x: -0.5, y: -1.0, z: -0.5)])
+        
+        XCTAssertEqual(reference.peak, 2.0)
+        
+        expect.fulfill()
+        
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testPolytopeBaseHeight() {
+        
+        let expect = expectation(description: "Polytopes peak height is determined by lowest y axis value")
+        
+        let reference = Polytope(vertices: [SCNVector3(x: -0.5, y: 2.0, z: 0.5),
+                                            SCNVector3(x: 0.5, y: 1.0, z: 0.5),
+                                            SCNVector3(x: 0.5, y: 0.0, z: -0.5),
+                                            SCNVector3(x: -0.5, y: -1.0, z: -0.5)])
+        
+        XCTAssertEqual(reference.base, -1.0)
+        
+        expect.fulfill()
+        
+        waitForExpectations(timeout: 1)
+    }
 }

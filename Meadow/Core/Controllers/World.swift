@@ -24,4 +24,9 @@ extension World {
         
         return CGFloat(y) * UnitY
     }
+    
+    static func Y(y: CGFloat) -> Int {
+        
+        return Int(y / UnitY)
+    }
 }

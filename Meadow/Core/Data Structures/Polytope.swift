@@ -12,6 +12,16 @@ public struct Polytope {
     
     let vertices: [SCNVector3]
     
+    var peak: CGFloat {
+        
+        return vertices.map{ $0.y }.max()!
+    }
+    
+    var base: CGFloat {
+        
+        return vertices.map{ $0.y }.min()!
+    }
+    
     init(vertices: [SCNVector3]) {
         
         self.vertices = vertices

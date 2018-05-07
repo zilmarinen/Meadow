@@ -6,28 +6,19 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-public protocol GridNodeDelegate {
+public struct GridNodeNeighbour: Hashable {
     
-    func didBecomeDirty(node: GridNode)
+    let edge: GridEdge
+    let node: GridNode
 }
 
 public class GridNode {
-    
-    public struct GridNodeNeighbour: Hashable {
-        
-        let edge: GridEdge
-        let node: GridNode
-    }
-    
-    private let delegate: GridNodeDelegate
     
     private var isDirty: Bool = false
     
     let volume: Volume
     
-    public required init(delegate: GridNodeDelegate, volume: Volume) {
-        
-        self.delegate = delegate
+    public required init(volume: Volume) {
         
         self.volume = volume
     }
@@ -54,6 +45,6 @@ extension GridNode {
         
         isDirty = true
         
-        delegate.didBecomeDirty(node: self)
+        //
     }
 }

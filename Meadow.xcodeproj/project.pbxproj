@@ -38,6 +38,7 @@
 		18713242209720120084565F /* Volume.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18713241209720120084565F /* Volume.swift */; };
 		18713244209723050084565F /* Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18713243209723050084565F /* Size.swift */; };
 		18713246209735DF0084565F /* SizeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18713245209735DF0084565F /* SizeTests.swift */; };
+		1880694620A071D6002F6EC0 /* TerrainLayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1880694520A071D6002F6EC0 /* TerrainLayerTests.swift */; };
 		188B3C15209E1B9F0034F4BB /* TerrainType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188B3C14209E1B9F0034F4BB /* TerrainType.swift */; };
 		188B3C17209E1BF70034F4BB /* TerrainLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188B3C16209E1BF70034F4BB /* TerrainLayer.swift */; };
 		18A8AB242099D6DA00AF30BB /* TerrainTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A8AB232099D6DA00AF30BB /* TerrainTests.swift */; };
@@ -111,6 +112,7 @@
 		18713241209720120084565F /* Volume.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Volume.swift; sourceTree = "<group>"; };
 		18713243209723050084565F /* Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Size.swift; sourceTree = "<group>"; };
 		18713245209735DF0084565F /* SizeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeTests.swift; sourceTree = "<group>"; };
+		1880694520A071D6002F6EC0 /* TerrainLayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrainLayerTests.swift; sourceTree = "<group>"; };
 		188B3C14209E1B9F0034F4BB /* TerrainType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrainType.swift; sourceTree = "<group>"; };
 		188B3C16209E1BF70034F4BB /* TerrainLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrainLayer.swift; sourceTree = "<group>"; };
 		18A8AB232099D6DA00AF30BB /* TerrainTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrainTests.swift; sourceTree = "<group>"; };
@@ -409,6 +411,7 @@
 			isa = PBXGroup;
 			children = (
 				18A8AB232099D6DA00AF30BB /* TerrainTests.swift */,
+				1880694520A071D6002F6EC0 /* TerrainLayerTests.swift */,
 			);
 			path = Terrain;
 			sourceTree = "<group>";
@@ -648,6 +651,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1880694620A071D6002F6EC0 /* TerrainLayerTests.swift in Sources */,
 				18713246209735DF0084565F /* SizeTests.swift in Sources */,
 				18496C97209373B800992AF3 /* PolyhedronTests.swift in Sources */,
 				18713240209720080084565F /* VolumeTests.swift in Sources */,

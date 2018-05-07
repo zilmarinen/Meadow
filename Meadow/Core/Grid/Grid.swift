@@ -54,21 +54,6 @@ extension Grid {
     }
 }
 
-extension Grid: GridNodeDelegate {
-    
-    public func didBecomeDirty(node: GridNode) {
-        
-        if let chunk = find(chunk: node.volume.coordinate) {
-            
-            chunk.becomeDirty()
-            
-            becomeDirty()
-            
-            delegate.didBecomeDirty(node: node)
-        }
-    }
-}
-
 extension Grid {
     
     private var chunks: [Chunk] {
@@ -87,7 +72,7 @@ extension Grid {
         
         let tile = find(tile: volume.coordinate) ?? Tile(volume: Tile.FixedVolume(volume.coordinate))
         
-        let node = Node(delegate: self, volume: volume)
+        let node = Node(volume: volume)
         
         if chunk.parent == nil {
             
@@ -103,17 +88,21 @@ extension Grid {
         return node
     }
     
-    func remove(chunk coordinate: Coordinate) {
+    func remove(chunk coordinate: Coordinate) -> Bool {
         
         if let chunk = find(chunk: coordinate) {
             
             chunk.removeFromParentNode()
             
             becomeDirty()
+            
+            return true
         }
+        
+        return false
     }
     
-    func remove(tile coordinate: Coordinate) {
+    func remove(tile coordinate: Coordinate) -> Bool {
         
         if let chunk = find(chunk: coordinate), let tile = chunk.find(tile: coordinate) {
             
@@ -125,10 +114,14 @@ extension Grid {
             }
             
             becomeDirty()
+            
+            return true
         }
+        
+        return false
     }
     
-    func remove(node coordinate: Coordinate) {
+    func remove(node coordinate: Coordinate) -> Bool {
         
         if let chunk = find(chunk: coordinate), let tile = chunk.find(tile: coordinate), let node = tile.find(node: coordinate) {
             
@@ -147,7 +140,11 @@ extension Grid {
             chunk.becomeDirty()
             
             becomeDirty()
+            
+            return true
         }
+        
+        return false
     }
     
     func find(chunk coordinate: Coordinate) -> Chunk? {

@@ -16,7 +16,13 @@ public enum GridEdge: Int {
 
 extension GridEdge {
     
-    static var Edges: [GridEdge] { return Opposite.reversed() }
+    static var Edges: [GridEdge] { return [
+    
+        .north,
+        .east,
+        .south,
+        .west
+    ]}
     
     private static var Cardinal: [Coordinate] { return [
         
@@ -32,7 +38,7 @@ extension GridEdge {
     }
     
     private static var Opposite: [GridEdge] { return [
-    
+        
         .south,
         .west,
         .north,

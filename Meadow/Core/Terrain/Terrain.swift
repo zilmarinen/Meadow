@@ -32,13 +32,18 @@ extension Terrain {
         return nil
     }
     
-    func remove(node: TerrainNode) {
+    public func remove(node: TerrainNode) -> Bool {
         
-        remove(node: node.volume.coordinate)
+        if remove(node: node.volume.coordinate) {
         
-        GridEdge.Edges.forEach({ edge in
+            GridEdge.Edges.forEach({ edge in
             
-            node.remove(neighbour: edge)
-        })
+                node.remove(neighbour: edge)
+            })
+            
+            return true
+        }
+        
+        return false
     }
 }

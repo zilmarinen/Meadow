@@ -8,6 +8,19 @@
 
 public class Terrain: Grid<TerrainChunk, TerrainTile, TerrainNode> {
 
+    var terrainTypes: [TerrainType] = []
+    
+    public required init(delegate: GridDelegate) {
+        
+        super.init(delegate: delegate)
+        
+        loadTerrainTypes()
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        
+        fatalError("init(coder:) has not been implemented")
+    }
 }
 
 extension Terrain {
@@ -45,5 +58,29 @@ extension Terrain {
         }
         
         return false
+    }
+}
+
+extension Terrain {
+    
+    func loadTerrainTypes() {
+        
+        let bundle = Bundle(for: type(of: self))
+        
+        let path = bundle.path(forResource: "terrain_types", ofType: "json")!
+        
+        let jsonData = try! NSData(contentsOfFile: path) as Data
+        
+        let decoder = JSONDecoder()
+        
+        terrainTypes = try! decoder.decode([TerrainType].self, from: jsonData)
+    }
+    
+    func find(terrainType name: String) -> TerrainType? {
+        
+        return terrainTypes.first { terrainType -> Bool in
+            
+            return terrainType.name == name
+        }
     }
 }

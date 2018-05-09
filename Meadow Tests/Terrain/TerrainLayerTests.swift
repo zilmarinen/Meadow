@@ -26,20 +26,20 @@ class TerrainLayerTests: XCTestCase {
         
         let n0 = meadow.terrain.add(node: Coordinate(x: 13, y: 0, z: 37))
         
-        let terrainType = TerrainType(name: "l33t")
+        let terrainType = meadow.terrain.find(terrainType: "Bedrock")
         
         XCTAssertNotNil(n0)
         XCTAssertNotNil(terrainType)
         
-        let l0 = n0!.add(layer: terrainType)
-        let l1 = n0!.add(layer: terrainType)
+        let l0 = n0!.add(layer: terrainType!)
+        let l1 = n0!.add(layer: terrainType!)
         
         l1!.set(height: World.Ceiling, corner: .northWest)
         l1!.set(height: World.Ceiling, corner: .northEast)
         l1!.set(height: World.Ceiling, corner: .southEast)
         l1!.set(height: World.Ceiling, corner: .southWest)
         
-        let l2 = n0!.add(layer: terrainType)
+        let l2 = n0!.add(layer: terrainType!)
         
         XCTAssertNotNil(l0)
         XCTAssertNotNil(l1)
@@ -60,13 +60,13 @@ class TerrainLayerTests: XCTestCase {
         
         let n0 = meadow.terrain.add(node: Coordinate(x: 13, y: 0, z: 37))
         
-        let terrainType = TerrainType(name: "l33t")
+        let terrainType = meadow.terrain.find(terrainType: "Bedrock")
         
         XCTAssertNotNil(n0)
         XCTAssertNotNil(terrainType)
         
-        let l0 = n0!.add(layer: terrainType)
-        let l1 = n0!.add(layer: terrainType)
+        let l0 = n0!.add(layer: terrainType!)
+        let l1 = n0!.add(layer: terrainType!)
         
         XCTAssertNotNil(l0)
         XCTAssertNotNil(l1)
@@ -84,14 +84,14 @@ class TerrainLayerTests: XCTestCase {
         
         let n0 = meadow.terrain.add(node: Coordinate(x: 13, y: 0, z: 37))
         
-        let terrainType = TerrainType(name: "l33t")
+        let terrainType = meadow.terrain.find(terrainType: "Bedrock")
         
         XCTAssertNotNil(n0)
         XCTAssertNotNil(terrainType)
         
-        let l0 = n0!.add(layer: terrainType)
-        let l1 = n0!.add(layer: terrainType)
-        let l2 = n0!.add(layer: terrainType)
+        let l0 = n0!.add(layer: terrainType!)
+        let l1 = n0!.add(layer: terrainType!)
+        let l2 = n0!.add(layer: terrainType!)
         
         XCTAssertNotNil(l0)
         XCTAssertNotNil(l1)
@@ -117,20 +117,104 @@ class TerrainLayerTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
     
+    func testTerrainLayerCornerHeightConstraints() {
+        
+        let expect = expectation(description: "Corner heights for layers are constrained to the grid")
+        
+        let n0 = meadow.terrain.add(node: Coordinate(x: 13, y: 0, z: 37))
+        
+        let terrainType = meadow.terrain.find(terrainType: "Bedrock")
+        
+        XCTAssertNotNil(n0)
+        XCTAssertNotNil(terrainType)
+        
+        let l0 = n0!.add(layer: terrainType!)
+        
+        XCTAssertNotNil(l0)
+        
+        l0!.set(height: (World.Floor * 2), corner: .northWest)
+        l0!.set(height: (World.Floor * 2), corner: .northEast)
+        l0!.set(height: (World.Floor * 2), corner: .southEast)
+        l0!.set(height: (World.Floor * 2), corner: .southWest)
+        
+        XCTAssertEqual(l0!.get(height: .northWest), World.Floor)
+        XCTAssertEqual(l0!.get(height: .northEast), World.Floor)
+        XCTAssertEqual(l0!.get(height: .southEast), World.Floor)
+        XCTAssertEqual(l0!.get(height: .southWest), World.Floor)
+        
+        l0!.set(height: (World.Ceiling * 2), corner: .northWest)
+        l0!.set(height: (World.Ceiling * 2), corner: .northEast)
+        l0!.set(height: (World.Ceiling * 2), corner: .southEast)
+        l0!.set(height: (World.Ceiling * 2), corner: .southWest)
+        
+        XCTAssertEqual(l0!.get(height: .northWest), World.Ceiling)
+        XCTAssertEqual(l0!.get(height: .northEast), World.Ceiling)
+        XCTAssertEqual(l0!.get(height: .southEast), World.Ceiling)
+        XCTAssertEqual(l0!.get(height: .southWest), World.Ceiling)
+        
+        expect.fulfill()
+        
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testTerrainLayerCornerHierarchyHeightConstraints() {
+        
+        let expect = expectation(description: "Corner heights for layers are constrained by upper and lower nodes")
+        
+        let n0 = meadow.terrain.add(node: Coordinate(x: 13, y: 0, z: 37))
+        
+        let terrainType = meadow.terrain.find(terrainType: "Bedrock")
+        
+        XCTAssertNotNil(n0)
+        XCTAssertNotNil(terrainType)
+        
+        let l0 = n0!.add(layer: terrainType!)
+        let l1 = n0!.add(layer: terrainType!)
+        let l2 = n0!.add(layer: terrainType!)
+        
+        XCTAssertNotNil(l0)
+        XCTAssertNotNil(l1)
+        XCTAssertNotNil(l2)
+        
+        l1!.set(height: (World.Floor * 2), corner: .northWest)
+        l1!.set(height: (World.Floor * 2), corner: .northEast)
+        l1!.set(height: (World.Floor * 2), corner: .southEast)
+        l1!.set(height: (World.Floor * 2), corner: .southWest)
+        
+        XCTAssertEqual(l1!.get(height: .northWest), (World.Floor + 1))
+        XCTAssertEqual(l1!.get(height: .northEast), (World.Floor + 1))
+        XCTAssertEqual(l1!.get(height: .southEast), (World.Floor + 1))
+        XCTAssertEqual(l1!.get(height: .southWest), (World.Floor + 1))
+        
+        l1!.set(height: (World.Ceiling * 2), corner: .northWest)
+        l1!.set(height: (World.Ceiling * 2), corner: .northEast)
+        l1!.set(height: (World.Ceiling * 2), corner: .southEast)
+        l1!.set(height: (World.Ceiling * 2), corner: .southWest)
+        
+        XCTAssertEqual(l1!.get(height: .northWest), (World.Floor + 3))
+        XCTAssertEqual(l1!.get(height: .northEast), (World.Floor + 3))
+        XCTAssertEqual(l1!.get(height: .southEast), (World.Floor + 3))
+        XCTAssertEqual(l1!.get(height: .southWest), (World.Floor + 3))
+        
+        expect.fulfill()
+        
+        waitForExpectations(timeout: 1)
+    }
+    
     func testTerrainLayerPolygons() {
         
         let expect = expectation(description: "Corner heights for layers are set to the height of the lower node +1 when created")
         
         let n0 = meadow.terrain.add(node: Coordinate(x: 13, y: 0, z: 37))
         
-        let terrainType = TerrainType(name: "l33t")
+        let terrainType = meadow.terrain.find(terrainType: "Bedrock")
         
         XCTAssertNotNil(n0)
         XCTAssertNotNil(terrainType)
         
-        let l0 = n0!.add(layer: terrainType)
-        let l1 = n0!.add(layer: terrainType)
-        let l2 = n0!.add(layer: terrainType)
+        let l0 = n0!.add(layer: terrainType!)
+        let l1 = n0!.add(layer: terrainType!)
+        let l2 = n0!.add(layer: terrainType!)
         
         XCTAssertNotNil(l0)
         XCTAssertNotNil(l1)
@@ -225,14 +309,14 @@ class TerrainLayerTests: XCTestCase {
         
         let n0 = meadow.terrain.add(node: Coordinate(x: 13, y: 0, z: 37))
         
-        let terrainType = TerrainType(name: "l33t")
+        let terrainType = meadow.terrain.find(terrainType: "Bedrock")
         
         XCTAssertNotNil(n0)
         XCTAssertNotNil(terrainType)
         
-        let l0 = n0!.add(layer: terrainType)
-        let l1 = n0!.add(layer: terrainType)
-        let l2 = n0!.add(layer: terrainType)
+        let l0 = n0!.add(layer: terrainType!)
+        let l1 = n0!.add(layer: terrainType!)
+        let l2 = n0!.add(layer: terrainType!)
         
         XCTAssertNotNil(l0)
         XCTAssertNotNil(l1)
@@ -251,18 +335,18 @@ class TerrainLayerTests: XCTestCase {
     
     func testTerrainLayerHierarchyRemoval() {
         
-        let expect = expectation(description: "Layers can be removed from a grid node and are stacked correctly")
+        let expect = expectation(description: "Layers can be removed from a grid node and are re-stacked correctly")
         
         let n0 = meadow.terrain.add(node: Coordinate(x: 13, y: 0, z: 37))
         
-        let terrainType = TerrainType(name: "l33t")
+        let terrainType = meadow.terrain.find(terrainType: "Bedrock")
         
         XCTAssertNotNil(n0)
         XCTAssertNotNil(terrainType)
         
-        let l0 = n0!.add(layer: terrainType)
-        let l1 = n0!.add(layer: terrainType)
-        let l2 = n0!.add(layer: terrainType)
+        let l0 = n0!.add(layer: terrainType!)
+        let l1 = n0!.add(layer: terrainType!)
+        let l2 = n0!.add(layer: terrainType!)
         
         XCTAssertNotNil(l0)
         XCTAssertNotNil(l1)
@@ -274,6 +358,55 @@ class TerrainLayerTests: XCTestCase {
         XCTAssertEqual(l0!.hierarchy.upper, l2)
         XCTAssertEqual(l2!.hierarchy.lower, l0)
         XCTAssertNil(l2!.hierarchy.upper)
+        
+        expect.fulfill()
+        
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testTerrainLayerSmoothTerraforming() {
+        
+        let expect = expectation(description: "Adjacent tiles are correctly updated when the height of a layer is changed")
+        
+        let n0 = meadow.terrain.add(node: Coordinate(x: 13, y: 0, z: 37))
+        let n1 = meadow.terrain.add(node: n0!.volume.coordinate + Coordinate.Forward)
+        let n2 = meadow.terrain.add(node: n0!.volume.coordinate + Coordinate.Left)
+        let n3 = meadow.terrain.add(node: n0!.volume.coordinate + Coordinate.Forward + Coordinate.Left)
+        
+        let terrainType = meadow.terrain.find(terrainType: "Bedrock")
+        
+        XCTAssertNotNil(n0)
+        XCTAssertNotNil(n1)
+        XCTAssertNotNil(n2)
+        XCTAssertNotNil(n3)
+        XCTAssertNotNil(terrainType)
+        
+        let l0 = n0!.add(layer: terrainType!)
+        let l1 = n1!.add(layer: terrainType!)
+        let l2 = n2!.add(layer: terrainType!)
+        let l3 = n3!.add(layer: terrainType!)
+        
+        XCTAssertNotNil(l0)
+        XCTAssertNotNil(l1)
+        XCTAssertNotNil(l2)
+        XCTAssertNotNil(l3)
+    
+        l0?.set(height: (World.Floor - 2), corner: .northWest)
+        
+        XCTAssertEqual(l1!.get(height: .northWest), (World.Floor + 1))
+        XCTAssertEqual(l1!.get(height: .northEast), (World.Floor + 1))
+        XCTAssertEqual(l1!.get(height: .southEast), (World.Floor + 1))
+        XCTAssertEqual(l1!.get(height: .southWest), (World.Floor + 2))
+        
+        XCTAssertEqual(l2!.get(height: .northWest), (World.Floor + 1))
+        XCTAssertEqual(l2!.get(height: .northEast), (World.Floor + 2))
+        XCTAssertEqual(l2!.get(height: .southEast), (World.Floor + 1))
+        XCTAssertEqual(l2!.get(height: .southWest), (World.Floor + 1))
+        
+        XCTAssertEqual(l3!.get(height: .northWest), (World.Floor + 1))
+        XCTAssertEqual(l3!.get(height: .northEast), (World.Floor + 1))
+        XCTAssertEqual(l3!.get(height: .southEast), (World.Floor + 2))
+        XCTAssertEqual(l3!.get(height: .southWest), (World.Floor + 1))
         
         expect.fulfill()
         

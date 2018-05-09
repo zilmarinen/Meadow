@@ -24,16 +24,42 @@ extension GridCorner {
         .southWest
     ]}
     
-    private static var Connected: [[GridCorner]] { return [
+    static var Edges: [[GridCorner]] { return [
         
-        [.northEast, .southWest],
-        [.northWest, .southEast],
-        [.northEast, .southWest],
-        [.northWest, .southEast],
+        [.northWest, .northEast],
+        [.northEast, .southEast],
+        [.southEast, .southWest],
+        [.northWest, .southWest]
     ]}
     
-    static func Connected(corner: GridCorner) -> [GridCorner] {
+    static var Connected: [[GridCorner]] { return [
+    
+        [.northEast, .southWest],
+        [.northWest, .southEast],
+        [.northEast, .southWest],
+        [.northWest, .southEast]
+    ]}
+    
+    static func Corners(corner: GridCorner) -> [GridCorner] {
         
         return Connected[corner.rawValue]
+    }
+    
+    static func Corners(edge: GridEdge) -> [GridCorner] {
+        
+        return Edges[edge.rawValue]
+    }
+    
+    private static var Opposite: [GridCorner] { return [
+    
+        .southEast,
+        .southWest,
+        .northWest,
+        .northEast
+    ]}
+    
+    static func Opposite(corner: GridCorner) -> GridCorner {
+        
+        return Opposite[corner.rawValue]
     }
 }

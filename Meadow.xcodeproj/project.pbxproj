@@ -32,6 +32,8 @@
 		18496C9920937A3400992AF3 /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C9820937A3400992AF3 /* World.swift */; };
 		185200F52096094400D3ACC6 /* WorldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185200F42096094400D3ACC6 /* WorldTests.swift */; };
 		185200F820960CBE00D3ACC6 /* GridTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185200F720960CBE00D3ACC6 /* GridTests.swift */; };
+		18538B6420A311FF00077CE2 /* terrain_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 18538B6320A311FF00077CE2 /* terrain_types.json */; };
+		18538B6620A3122700077CE2 /* ColorPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18538B6520A3122700077CE2 /* ColorPalette.swift */; };
 		187121EA20931C77002488E0 /* Meadow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 187121E020931C77002488E0 /* Meadow.framework */; };
 		187121F120931C77002488E0 /* Meadow.h in Headers */ = {isa = PBXBuildFile; fileRef = 187121E320931C77002488E0 /* Meadow.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		18713240209720080084565F /* VolumeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1871323E20971FE30084565F /* VolumeTests.swift */; };
@@ -103,6 +105,8 @@
 		18496C9820937A3400992AF3 /* World.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = World.swift; sourceTree = "<group>"; };
 		185200F42096094400D3ACC6 /* WorldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldTests.swift; sourceTree = "<group>"; };
 		185200F720960CBE00D3ACC6 /* GridTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridTests.swift; sourceTree = "<group>"; };
+		18538B6320A311FF00077CE2 /* terrain_types.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = terrain_types.json; sourceTree = "<group>"; };
+		18538B6520A3122700077CE2 /* ColorPalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPalette.swift; sourceTree = "<group>"; };
 		187121E020931C77002488E0 /* Meadow.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Meadow.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		187121E320931C77002488E0 /* Meadow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Meadow.h; sourceTree = "<group>"; };
 		187121E420931C77002488E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -175,6 +179,7 @@
 		18496C572093230900992AF3 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				18538B6120A311DB00077CE2 /* Assets */,
 				182B22EE2098BDCD003D1309 /* Mesh */,
 				18496C83209368AB00992AF3 /* Area */,
 				18496C912093699900992AF3 /* Controllers */,
@@ -224,6 +229,7 @@
 				18496C7A2093473500992AF3 /* Polyhedron.swift */,
 				18713241209720120084565F /* Volume.swift */,
 				18713243209723050084565F /* Size.swift */,
+				18538B6520A3122700077CE2 /* ColorPalette.swift */,
 			);
 			path = "Data Structures";
 			sourceTree = "<group>";
@@ -329,6 +335,22 @@
 				185200F720960CBE00D3ACC6 /* GridTests.swift */,
 			);
 			path = Grid;
+			sourceTree = "<group>";
+		};
+		18538B6120A311DB00077CE2 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				18538B6220A311E300077CE2 /* Terrain */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		18538B6220A311E300077CE2 /* Terrain */ = {
+			isa = PBXGroup;
+			children = (
+				18538B6320A311FF00077CE2 /* terrain_types.json */,
+			);
+			path = Terrain;
 			sourceTree = "<group>";
 		};
 		187121D620931C77002488E0 = {
@@ -544,6 +566,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18538B6420A311FF00077CE2 /* terrain_types.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -620,6 +643,7 @@
 				18496C792093472B00992AF3 /* Polytope.swift in Sources */,
 				18B58BA7209861E000402410 /* WaterTile.swift in Sources */,
 				18B58B982098613400402410 /* ScaffoldNode.swift in Sources */,
+				18538B6620A3122700077CE2 /* ColorPalette.swift in Sources */,
 				18B58B962098612C00402410 /* ScaffoldTile.swift in Sources */,
 				18496C9920937A3400992AF3 /* World.swift in Sources */,
 				18B58B9A2098617800402410 /* Tunnel.swift in Sources */,

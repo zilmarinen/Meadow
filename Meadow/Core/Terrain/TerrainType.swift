@@ -6,9 +6,11 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-public struct TerrainType {
+public struct TerrainType: Decodable {
     
     let name: String
+    
+    let colorPalette: ColorPalette
 }
 
 extension TerrainType: Hashable {
@@ -21,5 +23,14 @@ extension TerrainType: Hashable {
     public var hashValue: Int {
         
         return name.hashValue
+    }
+}
+
+extension TerrainType {
+    
+    enum CodingKeys: String, CodingKey {
+        
+        case name = "name"
+        case colorPalette = "color_palette"
     }
 }

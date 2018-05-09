@@ -94,32 +94,11 @@ extension TerrainLayer {
     }
 }
 
-
 extension TerrainLayer {
     
-    func set(height: Int, corner: GridCorner) {
+    func set(height: Int, corner: GridCorner, smooth: Bool = false) {
         
-        var cornerHeight = height
-        
-        cornerHeight = max(cornerHeight, World.Floor)
-        cornerHeight = min(cornerHeight, World.Ceiling)
-        
-        if let lower = hierarchy.lower {
-            
-            cornerHeight = max(cornerHeight, lower.get(height: corner))
-        }
-        
-        if let upper = hierarchy.upper {
-            
-            cornerHeight = min(cornerHeight, upper.get(height: corner))
-        }
-        
-        if corners[corner.rawValue] != cornerHeight {
-         
-            corners[corner.rawValue] = cornerHeight
-            
-            becomeDirty()
-        }
+        //
     }
     
     func get(height corner: GridCorner) -> Int {

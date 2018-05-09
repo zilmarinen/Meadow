@@ -58,6 +58,14 @@ public extension Coordinate {
     static var Right: Coordinate { return Coordinate(x: 1, y: 0, z: 0) }
     static var Forward: Coordinate { return Coordinate(x: 0, y: 0, z: 1) }
     static var Backward: Coordinate { return Coordinate(x: 0, y: 0, z: -1) }
+    
+    static var Cardinal: [Coordinate] { return [
+        
+        Coordinate.Forward,
+        Coordinate.Right,
+        Coordinate.Backward,
+        Coordinate.Left
+    ]}
 }
 
 extension Coordinate {

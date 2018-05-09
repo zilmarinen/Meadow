@@ -24,17 +24,17 @@ extension GridEdge {
         .west
     ]}
     
-    private static var Cardinal: [Coordinate] { return [
-        
-        Coordinate.Forward,
-        Coordinate.Right,
-        Coordinate.Backward,
-        Coordinate.Left
+    static var Corners: [[GridEdge]] { return [
+    
+        [.north, .west],
+        [.north, .east],
+        [.east, .south],
+        [.south, .west]
     ]}
     
-    static func Cardinal(edge: GridEdge) -> Coordinate {
+    static func Edges(corner: GridCorner) -> [GridEdge] {
         
-        return Cardinal[edge.rawValue]
+        return Corners[corner.rawValue]
     }
     
     private static var Opposite: [GridEdge] { return [
@@ -48,5 +48,10 @@ extension GridEdge {
     static func Opposite(edge: GridEdge) -> GridEdge {
         
         return Opposite[edge.rawValue]
+    }
+    
+    static func Cardinal(edge: GridEdge) -> Coordinate {
+        
+        return Coordinate.Cardinal[edge.rawValue]
     }
 }

@@ -44,7 +44,5 @@ extension GridNode {
         if isDirty { return }
         
         isDirty = true
-        
-        //
     }
 }

@@ -1,5 +1,5 @@
-platform :ios, '10.0'
-platform :osx, '10.10'
+source 'https://github.com/CocoaPods/Specs.git'
+source 'git@gitlab.3squared.com:iOSLibraries/CocoaPodSpecs.git'
 
 target 'Meadow' do
   

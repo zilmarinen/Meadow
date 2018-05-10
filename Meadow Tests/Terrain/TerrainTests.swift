@@ -20,7 +20,7 @@ class TerrainTests: XCTestCase {
         meadow = Meadow()
     }
     
-    func testGridNodeAddition() {
+    func testTerrainNodeAddition() {
         
         let expect = expectation(description: "Nodes can be added to a grid if the volume they define is not already occupied")
         
@@ -47,17 +47,31 @@ class TerrainTests: XCTestCase {
         XCTAssertNotNil(n0)
         XCTAssertNotNil(n1)
         
-        let n2 = n0!.find(neighbour: .west)
-        let n3 = n1!.find(neighbour: .east)
+        let n2 = n0!.find(neighbour: .north)
+        let n3 = n0!.find(neighbour: .east)
+        let n4 = n0!.find(neighbour: .south)
+        let n5 = n0!.find(neighbour: .west)
         
-        XCTAssertNotNil(n2)
-        XCTAssertNotNil(n2!.node)
-        XCTAssertEqual(n2!.node, n1)
-        XCTAssertEqual(n2!.edge, .west)
-        XCTAssertNotNil(n3)
-        XCTAssertNotNil(n3!.node)
-        XCTAssertEqual(n3!.node, n0)
-        XCTAssertEqual(n3!.edge, .east)
+        let n6 = n1!.find(neighbour: .north)
+        let n7 = n1!.find(neighbour: .east)
+        let n8 = n1!.find(neighbour: .south)
+        let n9 = n1!.find(neighbour: .west)
+        
+        XCTAssertNil(n2)
+        XCTAssertNil(n3)
+        XCTAssertNil(n4)
+        XCTAssertNotNil(n5)
+        XCTAssertNotNil(n5!.node)
+        XCTAssertEqual(n5!.node, n1)
+        XCTAssertEqual(n5!.edge, .west)
+        
+        XCTAssertNil(n6)
+        XCTAssertNotNil(n7)
+        XCTAssertNil(n8)
+        XCTAssertNil(n9)
+        XCTAssertNotNil(n7!.node)
+        XCTAssertEqual(n7!.node, n0)
+        XCTAssertEqual(n7!.edge, .east)
         
         expect.fulfill()
         
@@ -76,10 +90,16 @@ class TerrainTests: XCTestCase {
         
         let result = meadow.terrain.remove(node: n1!)
         
-        let n2 = n0!.find(neighbour: .west)
+        let n2 = n0!.find(neighbour: .north)
+        let n3 = n0!.find(neighbour: .east)
+        let n4 = n0!.find(neighbour: .south)
+        let n5 = n0!.find(neighbour: .west)
         
         XCTAssertTrue(result)
         XCTAssertNil(n2)
+        XCTAssertNil(n3)
+        XCTAssertNil(n4)
+        XCTAssertNil(n5)
         
         expect.fulfill()
         

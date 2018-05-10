@@ -8,25 +8,53 @@
 
 import SceneKit
 
+/*!
+ @struct Polytope
+ @abstract Defines a Polytope with an array of vertices.
+ */
 public struct Polytope {
     
+    /*!
+     @property vertices
+     @abstract The vertices defining the Polytope.
+     */
     let vertices: [SCNVector3]
     
+    /*!
+     @property peak
+     @abstract The greatest y axis value of the Polytopes vertices.
+     */
     var peak: CGFloat {
         
         return vertices.map{ $0.y }.max()!
     }
     
+    /*!
+     @property base
+     @abstract The lowest y axis value of the Polytopes vertices.
+     */
     var base: CGFloat {
         
         return vertices.map{ $0.y }.min()!
     }
     
+    /*!
+     @method init:vertices
+     @abstract Creates and initialises a Polytope with the specified vertices.
+     @param vertices The vertices defining the Polytope.
+     */
     init(vertices: [SCNVector3]) {
         
         self.vertices = vertices
     }
     
+    /*!
+     @method init:x:y:z
+     @abstract Creates and initialises a Polytope with unit length at the specified x, y and z coordinates.
+     @param x The value defining the Polytopes alignment along the x axis.
+     @param y The value defining the Polytopes alignment along the y axis.
+     @param z The value defining the Polytopes alignment along the z axis.
+     */
     init(x: CGFloat, y: CGFloat, z: CGFloat) {
         
         self.vertices = [SCNVector3(x: (x + -World.UnitXZ), y: y, z: (z + World.UnitXZ)),
@@ -62,11 +90,19 @@ extension Polytope: Equatable {
 
 extension Polytope {
     
+    /*!
+     @property Unit
+     @abstract Returns a Polytope with unit grid length defined by `World.UnitXZ`.
+     */
     static var Unit: Polytope { return Polytope(x: 0.0, y: 0.0, z: 0.0) }
 }
 
 extension Polytope {
     
+    /*!
+     @enum Elevation
+     @abstract Defines the relative elevation of one Polytope to another along the y axis.
+     */
     enum Elevation {
         
         case above
@@ -75,6 +111,11 @@ extension Polytope {
         case intersecting
     }
     
+    /*!
+     @method elevation:referencing
+     @abstract Determines the elevation of the Polytope in reference to another Polytope.
+     @discussion Polytope elevation is determined by checking the y axis values of each Polytope.
+     */
     func elevation(referencing polytope: Polytope) -> Elevation {
         
         var equal = true

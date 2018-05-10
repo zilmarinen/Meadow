@@ -6,6 +6,10 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
+/*!
+ @enum World
+ @abstract Defines various constant values for constraining world grid coordinates.
+ */
 public enum World {
     
     static var Ceiling: Int = 10
@@ -20,11 +24,19 @@ public enum World {
 
 extension World {
     
+    /*!
+     @method Y:y
+     @abstract Convert from integer value grid coordinates to floating point world coordinates.
+     */
     static func Y(y: Int) -> CGFloat {
         
         return CGFloat(y) * UnitY
     }
     
+    /*!
+     @method Y:y
+     @abstract Convert from floating point world coordinates to integer value grid coordinates.
+     */
     static func Y(y: CGFloat) -> Int {
         
         return Int(y / UnitY)

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1819B72220A45E8400BEE585 /* terrain_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 18538B6320A311FF00077CE2 /* terrain_types.json */; };
+		1819B72520A45EE600BEE585 /* Collection+Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1819B72420A45EE600BEE585 /* Collection+Bundle.swift */; };
 		182B22F02098BDDB003D1309 /* MeshFace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B22EF2098BDDB003D1309 /* MeshFace.swift */; };
 		18496C5D2093234300992AF3 /* GridNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C592093234300992AF3 /* GridNode.swift */; };
 		18496C5E2093234300992AF3 /* GridChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C5A2093234300992AF3 /* GridChunk.swift */; };
@@ -81,6 +83,7 @@
 
 /* Begin PBXFileReference section */
 		14A74BE995E1DD6F159F97B0 /* Pods-Meadow.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Meadow.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Meadow/Pods-Meadow.debug.xcconfig"; sourceTree = "<group>"; };
+		1819B72420A45EE600BEE585 /* Collection+Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Bundle.swift"; sourceTree = "<group>"; };
 		182B22EF2098BDDB003D1309 /* MeshFace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeshFace.swift; sourceTree = "<group>"; };
 		18496C592093234300992AF3 /* GridNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridNode.swift; sourceTree = "<group>"; };
 		18496C5A2093234300992AF3 /* GridChunk.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridChunk.swift; sourceTree = "<group>"; };
@@ -170,6 +173,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1819B72320A45EBB00BEE585 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				1819B72420A45EE600BEE585 /* Collection+Bundle.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		182B22EE2098BDCD003D1309 /* Mesh */ = {
 			isa = PBXGroup;
 			children = (
@@ -181,6 +192,7 @@
 		18496C572093230900992AF3 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				1819B72320A45EBB00BEE585 /* Extensions */,
 				18538B6120A311DB00077CE2 /* Assets */,
 				182B22EE2098BDCD003D1309 /* Mesh */,
 				18496C83209368AB00992AF3 /* Area */,
@@ -577,6 +589,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1819B72220A45E8400BEE585 /* terrain_types.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -653,6 +666,7 @@
 				18B58B8E209860C700402410 /* FoliageTile.swift in Sources */,
 				18538B6A20A3241A00077CE2 /* Color.swift in Sources */,
 				18B58BA2209861CB00402410 /* Water.swift in Sources */,
+				1819B72520A45EE600BEE585 /* Collection+Bundle.swift in Sources */,
 				18496C662093267E00992AF3 /* Terrain.swift in Sources */,
 				18B58B9C2098618000402410 /* TunnelChunk.swift in Sources */,
 				18713242209720120084565F /* Volume.swift in Sources */,

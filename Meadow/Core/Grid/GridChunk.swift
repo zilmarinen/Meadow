@@ -15,14 +15,35 @@ import SceneKit
  */
 public class GridChunk<Tile: GridTile<Node>, Node: GridNode>: SCNNode {
     
+    /*!
+     @property isDirty
+     @abstract Represents staleness of the chunk.
+     */
     private var isDirty: Bool = false
     
+    /*!
+     @property tiles
+     @abstract Set of tiles contained within the chunk.
+     */
     private var tiles: Set<Tile> = []
 
+    /*!
+     @property volume
+     @abstract Fixed bounding volume of the chunk.
+     */
     let volume: Volume
     
+    /*!
+     @property isEmpty
+     @abstract Determines whether the chunk has any child tiles.
+     */
     var isEmpty: Bool { return tiles.isEmpty }
     
+    /*!
+     @method init:volume
+     @abstract Creates and initialises a chunk with the specified volume.
+     @param volume The bounding volume occupied by the chunk.
+     */
     public required init(volume: Volume) {
         
         self.volume = volume
@@ -30,6 +51,10 @@ public class GridChunk<Tile: GridTile<Node>, Node: GridNode>: SCNNode {
         super.init()
     }
     
+    /*!
+     @method initWithCoder
+     @abstract Support coding and decoding via NSKeyedArchiver.
+     */
     public required init?(coder aDecoder: NSCoder) {
         
         fatalError("init(coder:) has not been implemented")
@@ -38,6 +63,11 @@ public class GridChunk<Tile: GridTile<Node>, Node: GridNode>: SCNNode {
 
 extension GridChunk {
     
+    /*!
+     @method FixedVolume:coordinate
+     @abstract Clamp and return a fixed volume for a given coordinate.
+     @discussion This method will return a volume with a fixed height defined by `World.Floor` and `World.Ceiling` as well as a fixed width and depth defined by `World.ChunkSize`.
+     */
     static func FixedVolume(_ coordinate: Coordinate) -> Volume {
         
         let x = Int(floor(Double(coordinate.x) / Double(World.ChunkSize))) * World.ChunkSize
@@ -52,6 +82,10 @@ extension GridChunk {
 
 extension GridChunk {
     
+    /*!
+     @method becomeDirty
+     @abstract If not already true, toggle the isDirty flag to true.
+     */
     func becomeDirty() {
         
         if isDirty { return }
@@ -59,6 +93,10 @@ extension GridChunk {
         isDirty = true
     }
     
+    /*!
+     @method clean
+     @abstract Enumerate through children and clean each tile.
+     */
     func clean() {
         
         if !isDirty { return }
@@ -74,6 +112,11 @@ extension GridChunk {
 
 extension GridChunk {
     
+    /*!
+     @method add:tile
+     @abstract Attempt to add given tile to array of children.
+     @param tile The tile to be added as a child.
+     */
     func add(tile: Tile) {
         
         if let _ = find(tile: tile.volume.coordinate) {
@@ -86,6 +129,11 @@ extension GridChunk {
         becomeDirty()
     }
     
+    /*!
+     @method remove:tile
+     @abstract Attempt to remove given tile from array of children.
+     @param tile The tile to be removed as a child.
+     */
     func remove(tile: Tile) {
         
         if let _ = tiles.remove(tile) {
@@ -94,6 +142,12 @@ extension GridChunk {
         }
     }
     
+    /*!
+     @method find:tile
+     @abstract Attempt to find and return the appropriate tile at the specified coordinate
+     @param coordinate: Coordinate of the tile to be found and returned.
+     @discussion The coordinate provided will be used to find the tile matching both the x and z axis irrelevant of the y axis value.
+     */
     func find(tile coordinate: Coordinate) -> Tile? {
         
         return tiles.first { tile -> Bool in

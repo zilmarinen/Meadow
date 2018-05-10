@@ -23,10 +23,23 @@ public class GridNode {
         let node: GridNode
     }
     
+    /*!
+     @property isDirty
+     @abstract Represents staleness of the node.
+     */
     private var isDirty: Bool = false
     
+    /*!
+     @property volume
+     @abstract Fixed bounding volume of the node.
+     */
     let volume: Volume
     
+    /*!
+     @method init:volume
+     @abstract Creates and initialises a node with the specified volume.
+     @param volume The bounding volume occupied by the node.
+     */
     public required init(volume: Volume) {
         
         self.volume = volume
@@ -48,6 +61,10 @@ extension GridNode: Hashable {
 
 extension GridNode {
     
+    /*!
+     @method becomeDirty
+     @abstract If not already true, toggle the isDirty flag to true.
+     */
     func becomeDirty() {
         
         if isDirty { return }

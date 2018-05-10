@@ -38,7 +38,7 @@ public class Grid<Chunk: GridChunk<Tile, Node>, Tile: GridTile<Node>, Node: Grid
     private var isDirty: Bool = false
     
     /*!
-     @method init
+     @method init:delegate
      @abstract Creates and initialises a grid with the specified delegate.
      @param delegate The delegate to call out to when grid becomes dirty.
      */

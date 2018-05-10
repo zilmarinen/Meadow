@@ -6,6 +6,10 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
+/*!
+ @struct Color
+ @abstract Defines a Color with red, green, blue and alpha components.
+ */
 public struct Color: Decodable {
     
     let red: CGFloat

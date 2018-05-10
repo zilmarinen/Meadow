@@ -34,6 +34,7 @@
 		185200F820960CBE00D3ACC6 /* GridTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185200F720960CBE00D3ACC6 /* GridTests.swift */; };
 		18538B6420A311FF00077CE2 /* terrain_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 18538B6320A311FF00077CE2 /* terrain_types.json */; };
 		18538B6620A3122700077CE2 /* ColorPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18538B6520A3122700077CE2 /* ColorPalette.swift */; };
+		18538B6A20A3241A00077CE2 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18538B6920A3241A00077CE2 /* Color.swift */; };
 		187121EA20931C77002488E0 /* Meadow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 187121E020931C77002488E0 /* Meadow.framework */; };
 		187121F120931C77002488E0 /* Meadow.h in Headers */ = {isa = PBXBuildFile; fileRef = 187121E320931C77002488E0 /* Meadow.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		18713240209720080084565F /* VolumeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1871323E20971FE30084565F /* VolumeTests.swift */; };
@@ -107,6 +108,7 @@
 		185200F720960CBE00D3ACC6 /* GridTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridTests.swift; sourceTree = "<group>"; };
 		18538B6320A311FF00077CE2 /* terrain_types.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = terrain_types.json; sourceTree = "<group>"; };
 		18538B6520A3122700077CE2 /* ColorPalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPalette.swift; sourceTree = "<group>"; };
+		18538B6920A3241A00077CE2 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		187121E020931C77002488E0 /* Meadow.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Meadow.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		187121E320931C77002488E0 /* Meadow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Meadow.h; sourceTree = "<group>"; };
 		187121E420931C77002488E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -230,6 +232,7 @@
 				18713241209720120084565F /* Volume.swift */,
 				18713243209723050084565F /* Size.swift */,
 				18538B6520A3122700077CE2 /* ColorPalette.swift */,
+				18538B6920A3241A00077CE2 /* Color.swift */,
 			);
 			path = "Data Structures";
 			sourceTree = "<group>";
@@ -648,6 +651,7 @@
 				18496C9920937A3400992AF3 /* World.swift in Sources */,
 				18B58B9A2098617800402410 /* Tunnel.swift in Sources */,
 				18B58B8E209860C700402410 /* FoliageTile.swift in Sources */,
+				18538B6A20A3241A00077CE2 /* Color.swift in Sources */,
 				18B58BA2209861CB00402410 /* Water.swift in Sources */,
 				18496C662093267E00992AF3 /* Terrain.swift in Sources */,
 				18B58B9C2098618000402410 /* TunnelChunk.swift in Sources */,
@@ -832,6 +836,7 @@
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = Meadow/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -840,6 +845,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.script-orchard.Meadow";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 			};
@@ -860,6 +866,7 @@
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = Meadow/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -868,6 +875,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.script-orchard.Meadow";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator";
 				SWIFT_VERSION = 4.0;
 			};
 			name = Release;

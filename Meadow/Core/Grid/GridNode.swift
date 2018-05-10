@@ -6,13 +6,22 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-public struct GridNodeNeighbour: Hashable {
-    
-    let edge: GridEdge
-    let node: GridNode
-}
-
+/*!
+ @class GridNode
+ @abstract Grid nodes are the base class and fundamental building blocks of a grid.
+ @discussion Grid nodes define a fixed volume which they occupy within a grid. This provides a bear bones implementation and any additional functionality should be added by subclassing.
+ */
 public class GridNode {
+    
+    /*!
+     @struct GridNodeNeighbour
+     @abstract Defines a relationship between two grid nodes along an edge.
+     */
+    public struct GridNodeNeighbour: Hashable {
+        
+        let edge: GridEdge
+        let node: GridNode
+    }
     
     private var isDirty: Bool = false
     

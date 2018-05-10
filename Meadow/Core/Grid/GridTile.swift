@@ -6,13 +6,32 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
+import SceneKit
+
+/*!
+ @class GridTile
+ @abstract Grid tiles are the parent class for any child nodes.
+ @discussion Grid tiles allow nodes to be partitioned into smaller, more managable entities which can be updated separately from other tiles and nodes in the same grid. Tiles have a fixed volume with a fixed height defined by `World.Floor` and `World.Ceiling`.
+ */
 public class GridTile<Node: GridNode> {
+    
+    /*!
+     @struct GridTileNeighbour
+     @abstract Defines a relationship between two grid tiles along an edge.
+     */
+    public struct GridTileNeighbour: Hashable {
+        
+        let edge: GridEdge
+        let tile: GridTile
+    }
     
     private var nodes: Set<Node> = []
     
     let volume: Volume
     
     var isEmpty: Bool { return nodes.isEmpty }
+    
+    var geometry: SCNGeometry { return SCNBox(width: CGFloat(volume.size.width), height: CGFloat(volume.size.height), length: CGFloat(volume.size.depth), chamferRadius: 1.0) }
     
     public required init(volume: Volume) {
         

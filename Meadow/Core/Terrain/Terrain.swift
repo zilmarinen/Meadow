@@ -6,7 +6,7 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-public class Terrain: Grid<TerrainChunk, TerrainTile, TerrainNode> {
+public final class Terrain: Grid<TerrainChunk, TerrainTile, TerrainNode> {
 
     var terrainTypes: [TerrainType] = []
     
@@ -65,18 +65,25 @@ extension Terrain {
     
     func loadTerrainTypes() {
         
-        let bundle = Bundle(for: type(of: self))
-        
-        let path = bundle.path(forResource: "terrain_types", ofType: "json")!
-        
-        let jsonData = try! NSData(contentsOfFile: path) as Data
-        
-        let decoder = JSONDecoder()
-        
-        terrainTypes = try! decoder.decode([TerrainType].self, from: jsonData)
+        do {
+            
+            let bundle = Bundle(for: type(of: self))
+            
+            let path = bundle.path(forResource: "terrain_types", ofType: "json")!
+            
+            let jsonData = try NSData(contentsOfFile: path) as Data
+            
+            let decoder = JSONDecoder()
+            
+            terrainTypes = try decoder.decode([TerrainType].self, from: jsonData)
+        }
+        catch {
+            
+            fatalError("Unable to load terrain types")
+        }
     }
     
-    func find(terrainType name: String) -> TerrainType? {
+    public func find(terrainType name: String) -> TerrainType? {
         
         return terrainTypes.first { terrainType -> Bool in
             

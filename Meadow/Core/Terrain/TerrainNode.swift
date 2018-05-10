@@ -76,11 +76,9 @@ extension TerrainNode {
     
     public func add(layer terrainType: TerrainType) -> TerrainLayer? {
         
-        let upper = topLayer
-        
-        if let upper = upper {
+        if let topLayer = topLayer {
             
-            if World.Y(y: upper.polyhedron.upperPolytope.base) == World.Ceiling {
+            if World.Y(y: topLayer.polyhedron.upperPolytope.base) == World.Ceiling {
                 
                 return nil
             }
@@ -88,11 +86,13 @@ extension TerrainNode {
         
         let layer = TerrainLayer(node: self, terrainType: terrainType)
         
-        layer.hierarchy.lower = upper
+        let currentTopLayer = topLayer
+        
+        layer.hierarchy.lower = currentTopLayer
         
         layers.append(layer)
         
-        upper?.hierarchy.upper = layer
+        currentTopLayer?.hierarchy.upper = layer
         
         let height = (layer.hierarchy.lower != nil ? World.Y(y: layer.hierarchy.lower!.polyhedron.upperPolytope.peak) : World.Floor) + 1
         

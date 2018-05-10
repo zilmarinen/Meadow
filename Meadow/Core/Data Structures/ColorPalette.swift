@@ -6,10 +6,10 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-struct ColorPalette: Decodable {
+public struct ColorPalette: Decodable {
     
-}
-
-extension ColorPalette {
-    
+    let primary: Color
+    let secondary: Color
+    let tertiary: Color
+    let quaternary: Color
 }

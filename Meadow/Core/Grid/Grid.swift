@@ -27,7 +27,7 @@ public class Grid<Chunk: GridChunk<Tile, Node>, Tile: GridTile<Node>, Node: Grid
     
     /*!
      @property delegate
-     @abstract Delegate to call out to when grid becomes dirty.
+     @abstract Delegate to inform when grid nodes become dirty.
      */
     private let delegate: GridDelegate
     

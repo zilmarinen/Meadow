@@ -39,6 +39,11 @@ class TerrainLayerTests: XCTestCase {
         l1!.set(height: World.Ceiling, corner: .southEast)
         l1!.set(height: World.Ceiling, corner: .southWest)
         
+        XCTAssertEqual(l1!.get(height: .northWest), World.Ceiling)
+        XCTAssertEqual(l1!.get(height: .northEast), World.Ceiling)
+        XCTAssertEqual(l1!.get(height: .southEast), World.Ceiling)
+        XCTAssertEqual(l1!.get(height: .southWest), World.Ceiling)
+        
         let l2 = n0!.add(layer: terrainType!)
         
         XCTAssertNotNil(l0)
@@ -391,7 +396,12 @@ class TerrainLayerTests: XCTestCase {
         XCTAssertNotNil(l2)
         XCTAssertNotNil(l3)
     
-        l0?.set(height: (World.Floor - 2), corner: .northWest)
+        l0?.set(height: (World.Floor + 2), corner: .northWest, smooth: true)
+        
+        XCTAssertEqual(l0!.get(height: .northWest), (World.Floor + 2))
+        XCTAssertEqual(l0!.get(height: .northEast), (World.Floor + 1))
+        XCTAssertEqual(l0!.get(height: .southEast), (World.Floor + 1))
+        XCTAssertEqual(l0!.get(height: .southWest), (World.Floor + 1))
         
         XCTAssertEqual(l1!.get(height: .northWest), (World.Floor + 1))
         XCTAssertEqual(l1!.get(height: .northEast), (World.Floor + 1))
@@ -407,6 +417,50 @@ class TerrainLayerTests: XCTestCase {
         XCTAssertEqual(l3!.get(height: .northEast), (World.Floor + 1))
         XCTAssertEqual(l3!.get(height: .southEast), (World.Floor + 2))
         XCTAssertEqual(l3!.get(height: .southWest), (World.Floor + 1))
+        
+        l0?.set(height: (World.Floor + 5), corner: .northWest)
+        
+        XCTAssertEqual(l0!.get(height: .northWest), (World.Floor + 5))
+        XCTAssertEqual(l0!.get(height: .northEast), (World.Floor + 4))
+        XCTAssertEqual(l0!.get(height: .southEast), (World.Floor + 3))
+        XCTAssertEqual(l0!.get(height: .southWest), (World.Floor + 4))
+        
+        XCTAssertEqual(l1!.get(height: .northWest), (World.Floor + 1))
+        XCTAssertEqual(l1!.get(height: .northEast), (World.Floor + 1))
+        XCTAssertEqual(l1!.get(height: .southEast), (World.Floor + 1))
+        XCTAssertEqual(l1!.get(height: .southWest), (World.Floor + 2))
+        
+        XCTAssertEqual(l2!.get(height: .northWest), (World.Floor + 1))
+        XCTAssertEqual(l2!.get(height: .northEast), (World.Floor + 2))
+        XCTAssertEqual(l2!.get(height: .southEast), (World.Floor + 1))
+        XCTAssertEqual(l2!.get(height: .southWest), (World.Floor + 1))
+        
+        XCTAssertEqual(l3!.get(height: .northWest), (World.Floor + 1))
+        XCTAssertEqual(l3!.get(height: .northEast), (World.Floor + 1))
+        XCTAssertEqual(l3!.get(height: .southEast), (World.Floor + 2))
+        XCTAssertEqual(l3!.get(height: .southWest), (World.Floor + 1))
+        
+        l0?.set(height: (World.Floor + 5), corner: .northWest, smooth: true)
+        
+        XCTAssertEqual(l0!.get(height: .northWest), (World.Floor + 5))
+        XCTAssertEqual(l0!.get(height: .northEast), (World.Floor + 4))
+        XCTAssertEqual(l0!.get(height: .southEast), (World.Floor + 3))
+        XCTAssertEqual(l0!.get(height: .southWest), (World.Floor + 4))
+        
+        XCTAssertEqual(l1!.get(height: .northWest), (World.Floor + 4))
+        XCTAssertEqual(l1!.get(height: .northEast), (World.Floor + 3))
+        XCTAssertEqual(l1!.get(height: .southEast), (World.Floor + 4))
+        XCTAssertEqual(l1!.get(height: .southWest), (World.Floor + 5))
+        
+        XCTAssertEqual(l2!.get(height: .northWest), (World.Floor + 4))
+        XCTAssertEqual(l2!.get(height: .northEast), (World.Floor + 5))
+        XCTAssertEqual(l2!.get(height: .southEast), (World.Floor + 4))
+        XCTAssertEqual(l2!.get(height: .southWest), (World.Floor + 3))
+        
+        XCTAssertEqual(l3!.get(height: .northWest), (World.Floor + 3))
+        XCTAssertEqual(l3!.get(height: .northEast), (World.Floor + 4))
+        XCTAssertEqual(l3!.get(height: .southEast), (World.Floor + 5))
+        XCTAssertEqual(l3!.get(height: .southWest), (World.Floor + 4))
         
         expect.fulfill()
         

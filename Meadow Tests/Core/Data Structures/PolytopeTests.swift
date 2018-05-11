@@ -8,7 +8,6 @@
 
 import XCTest
 import SceneKit
-@testable import Meadow
 
 class PolytopeTests: XCTestCase {
     

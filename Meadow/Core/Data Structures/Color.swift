@@ -6,6 +6,8 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
+import CoreGraphics
+
 /*!
  @struct Color
  @abstract Defines a Color with red, green, blue and alpha components.

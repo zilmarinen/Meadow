@@ -7,7 +7,6 @@
 //
 
 import XCTest
-@testable import Meadow
 
 class PolyhedronTests: XCTestCase {
     

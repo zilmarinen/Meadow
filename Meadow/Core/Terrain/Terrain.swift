@@ -6,6 +6,8 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
+import Foundation
+
 public final class Terrain: Grid<TerrainChunk, TerrainTile, TerrainNode> {
 
     var terrainTypes: [TerrainType] = []

@@ -6,6 +6,8 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
+import CoreGraphics
+
 /*!
  @enum World
  @abstract Defines various constant values for constraining world grid coordinates.

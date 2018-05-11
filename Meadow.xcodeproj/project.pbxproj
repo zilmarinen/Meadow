@@ -7,79 +7,248 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1819B72220A45E8400BEE585 /* terrain_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 18538B6320A311FF00077CE2 /* terrain_types.json */; };
-		1819B72520A45EE600BEE585 /* Collection+Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1819B72420A45EE600BEE585 /* Collection+Bundle.swift */; };
-		1819B72820A4814000BEE585 /* area_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 1819B72720A4814000BEE585 /* area_types.json */; };
-		1819B72B20A4815300BEE585 /* footpath_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 1819B72A20A4815300BEE585 /* footpath_types.json */; };
-		182B22F02098BDDB003D1309 /* MeshFace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B22EF2098BDDB003D1309 /* MeshFace.swift */; };
-		18496C5D2093234300992AF3 /* GridNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C592093234300992AF3 /* GridNode.swift */; };
-		18496C5E2093234300992AF3 /* GridChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C5A2093234300992AF3 /* GridChunk.swift */; };
-		18496C5F2093234300992AF3 /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C5B2093234300992AF3 /* Grid.swift */; };
-		18496C602093234300992AF3 /* GridTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C5C2093234300992AF3 /* GridTile.swift */; };
-		18496C662093267E00992AF3 /* Terrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C652093267E00992AF3 /* Terrain.swift */; };
-		18496C682093269500992AF3 /* TerrainChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C672093269500992AF3 /* TerrainChunk.swift */; };
-		18496C6A2093269C00992AF3 /* TerrainNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C692093269C00992AF3 /* TerrainNode.swift */; };
-		18496C6C209326A300992AF3 /* TerrainTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C6B209326A300992AF3 /* TerrainTile.swift */; };
-		18496C6E2093270F00992AF3 /* Meadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C6D2093270F00992AF3 /* Meadow.swift */; };
-		18496C73209327C500992AF3 /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C72209327C500992AF3 /* Coordinate.swift */; };
-		18496C792093472B00992AF3 /* Polytope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C782093472B00992AF3 /* Polytope.swift */; };
-		18496C7B2093473600992AF3 /* Polyhedron.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C7A2093473500992AF3 /* Polyhedron.swift */; };
-		18496C7D20934A4900992AF3 /* GridCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C7C20934A4900992AF3 /* GridCorner.swift */; };
-		18496C7F20934A5100992AF3 /* GridEdge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C7E20934A5100992AF3 /* GridEdge.swift */; };
-		18496C822093670800992AF3 /* CoordinateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C812093670800992AF3 /* CoordinateTests.swift */; };
-		18496C8A209368E400992AF3 /* Footpath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C89209368E400992AF3 /* Footpath.swift */; };
-		18496C8C209368ED00992AF3 /* FootpathChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C8B209368ED00992AF3 /* FootpathChunk.swift */; };
-		18496C8E209368F600992AF3 /* FootpathTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C8D209368F600992AF3 /* FootpathTile.swift */; };
-		18496C90209368FF00992AF3 /* FootpathNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C8F209368FF00992AF3 /* FootpathNode.swift */; };
-		18496C95209373AD00992AF3 /* PolytopeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C94209373AD00992AF3 /* PolytopeTests.swift */; };
-		18496C97209373B800992AF3 /* PolyhedronTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C96209373B800992AF3 /* PolyhedronTests.swift */; };
-		18496C9920937A3400992AF3 /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C9820937A3400992AF3 /* World.swift */; };
-		185200F52096094400D3ACC6 /* WorldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185200F42096094400D3ACC6 /* WorldTests.swift */; };
-		185200F820960CBE00D3ACC6 /* GridTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185200F720960CBE00D3ACC6 /* GridTests.swift */; };
-		18538B6420A311FF00077CE2 /* terrain_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 18538B6320A311FF00077CE2 /* terrain_types.json */; };
-		18538B6620A3122700077CE2 /* ColorPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18538B6520A3122700077CE2 /* ColorPalette.swift */; };
-		18538B6A20A3241A00077CE2 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18538B6920A3241A00077CE2 /* Color.swift */; };
-		187121EA20931C77002488E0 /* Meadow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 187121E020931C77002488E0 /* Meadow.framework */; };
-		187121F120931C77002488E0 /* Meadow.h in Headers */ = {isa = PBXBuildFile; fileRef = 187121E320931C77002488E0 /* Meadow.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		18713240209720080084565F /* VolumeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1871323E20971FE30084565F /* VolumeTests.swift */; };
-		18713242209720120084565F /* Volume.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18713241209720120084565F /* Volume.swift */; };
-		18713244209723050084565F /* Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18713243209723050084565F /* Size.swift */; };
-		18713246209735DF0084565F /* SizeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18713245209735DF0084565F /* SizeTests.swift */; };
-		1880694620A071D6002F6EC0 /* TerrainLayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1880694520A071D6002F6EC0 /* TerrainLayerTests.swift */; };
-		188B3C15209E1B9F0034F4BB /* TerrainType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188B3C14209E1B9F0034F4BB /* TerrainType.swift */; };
-		188B3C17209E1BF70034F4BB /* TerrainLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188B3C16209E1BF70034F4BB /* TerrainLayer.swift */; };
-		18A8AB242099D6DA00AF30BB /* TerrainTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A8AB232099D6DA00AF30BB /* TerrainTests.swift */; };
-		18B58B822098600800402410 /* Area.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B812098600800402410 /* Area.swift */; };
-		18B58B842098601000402410 /* AreaChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B832098601000402410 /* AreaChunk.swift */; };
-		18B58B862098601700402410 /* AreaTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B852098601700402410 /* AreaTile.swift */; };
-		18B58B882098602000402410 /* AreaNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B872098602000402410 /* AreaNode.swift */; };
-		18B58B8A209860B600402410 /* Foliage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B89209860B600402410 /* Foliage.swift */; };
-		18B58B8C209860BF00402410 /* FoliageChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B8B209860BF00402410 /* FoliageChunk.swift */; };
-		18B58B8E209860C700402410 /* FoliageTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B8D209860C700402410 /* FoliageTile.swift */; };
-		18B58B90209860CF00402410 /* FoliageNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B8F209860CF00402410 /* FoliageNode.swift */; };
-		18B58B922098611C00402410 /* Scaffold.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B912098611C00402410 /* Scaffold.swift */; };
-		18B58B942098612400402410 /* ScaffoldChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B932098612400402410 /* ScaffoldChunk.swift */; };
-		18B58B962098612C00402410 /* ScaffoldTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B952098612C00402410 /* ScaffoldTile.swift */; };
-		18B58B982098613400402410 /* ScaffoldNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B972098613400402410 /* ScaffoldNode.swift */; };
-		18B58B9A2098617800402410 /* Tunnel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B992098617800402410 /* Tunnel.swift */; };
-		18B58B9C2098618000402410 /* TunnelChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B9B2098618000402410 /* TunnelChunk.swift */; };
-		18B58B9E2098618700402410 /* TunnelTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B9D2098618700402410 /* TunnelTile.swift */; };
-		18B58BA02098618F00402410 /* TunnelNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B9F2098618F00402410 /* TunnelNode.swift */; };
-		18B58BA2209861CB00402410 /* Water.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58BA1209861CB00402410 /* Water.swift */; };
-		18B58BA4209861D300402410 /* WaterChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58BA3209861D300402410 /* WaterChunk.swift */; };
-		18B58BA7209861E000402410 /* WaterTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58BA6209861E000402410 /* WaterTile.swift */; };
-		18B58BA9209861E900402410 /* WaterNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58BA8209861E900402410 /* WaterNode.swift */; };
-		427E880BAFD2FF0BF35AFEB1 /* Pods_MeadowTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35FDC4E9F3727471EA2160BC /* Pods_MeadowTests.framework */; };
-		42884A0096E4816717905A9D /* Pods_Meadow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E17802DB66C8D754A0BF002F /* Pods_Meadow.framework */; };
+		1819B73A20A574F800BEE585 /* Meadow_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1819B73120A574F800BEE585 /* Meadow_iOS.framework */; };
+		1819B74120A574F800BEE585 /* Meadow_iOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 1819B73320A574F800BEE585 /* Meadow_iOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1819B75620A5752000BEE585 /* Meadow_macOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1819B74D20A5752000BEE585 /* Meadow_macOS.framework */; };
+		1819B75D20A5752000BEE585 /* Meadow_macOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 1819B74F20A5752000BEE585 /* Meadow_macOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		18EE500420A576350059829C /* Area.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B812098600800402410 /* Area.swift */; };
+		18EE500520A576350059829C /* AreaChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B832098601000402410 /* AreaChunk.swift */; };
+		18EE500620A576350059829C /* AreaTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B852098601700402410 /* AreaTile.swift */; };
+		18EE500720A576350059829C /* AreaNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B872098602000402410 /* AreaNode.swift */; };
+		18EE500820A576360059829C /* Area.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B812098600800402410 /* Area.swift */; };
+		18EE500920A576360059829C /* AreaChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B832098601000402410 /* AreaChunk.swift */; };
+		18EE500A20A576360059829C /* AreaTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B852098601700402410 /* AreaTile.swift */; };
+		18EE500B20A576360059829C /* AreaNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B872098602000402410 /* AreaNode.swift */; };
+		18EE500C20A5763F0059829C /* area_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 1819B72720A4814000BEE585 /* area_types.json */; };
+		18EE500D20A576400059829C /* area_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 1819B72720A4814000BEE585 /* area_types.json */; };
+		18EE500E20A576430059829C /* footpath_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 1819B72A20A4815300BEE585 /* footpath_types.json */; };
+		18EE500F20A576430059829C /* footpath_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 1819B72A20A4815300BEE585 /* footpath_types.json */; };
+		18EE501020A576470059829C /* terrain_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 18538B6320A311FF00077CE2 /* terrain_types.json */; };
+		18EE501120A576480059829C /* terrain_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 18538B6320A311FF00077CE2 /* terrain_types.json */; };
+		18EE501220A5764F0059829C /* Meadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C6D2093270F00992AF3 /* Meadow.swift */; };
+		18EE501320A5764F0059829C /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C9820937A3400992AF3 /* World.swift */; };
+		18EE501420A5764F0059829C /* Meadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C6D2093270F00992AF3 /* Meadow.swift */; };
+		18EE501520A5764F0059829C /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C9820937A3400992AF3 /* World.swift */; };
+		18EE501620A576540059829C /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18538B6920A3241A00077CE2 /* Color.swift */; };
+		18EE501720A576540059829C /* ColorPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18538B6520A3122700077CE2 /* ColorPalette.swift */; };
+		18EE501820A576540059829C /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C72209327C500992AF3 /* Coordinate.swift */; };
+		18EE501920A576540059829C /* Polyhedron.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C7A2093473500992AF3 /* Polyhedron.swift */; };
+		18EE501A20A576540059829C /* Polytope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C782093472B00992AF3 /* Polytope.swift */; };
+		18EE501B20A576540059829C /* Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18713243209723050084565F /* Size.swift */; };
+		18EE501C20A576540059829C /* Volume.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18713241209720120084565F /* Volume.swift */; };
+		18EE501D20A576550059829C /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18538B6920A3241A00077CE2 /* Color.swift */; };
+		18EE501E20A576550059829C /* ColorPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18538B6520A3122700077CE2 /* ColorPalette.swift */; };
+		18EE501F20A576550059829C /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C72209327C500992AF3 /* Coordinate.swift */; };
+		18EE502020A576550059829C /* Polyhedron.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C7A2093473500992AF3 /* Polyhedron.swift */; };
+		18EE502120A576550059829C /* Polytope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C782093472B00992AF3 /* Polytope.swift */; };
+		18EE502220A576550059829C /* Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18713243209723050084565F /* Size.swift */; };
+		18EE502320A576550059829C /* Volume.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18713241209720120084565F /* Volume.swift */; };
+		18EE502420A576590059829C /* Collection+Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1819B72420A45EE600BEE585 /* Collection+Bundle.swift */; };
+		18EE502520A5765A0059829C /* Collection+Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1819B72420A45EE600BEE585 /* Collection+Bundle.swift */; };
+		18EE502620A5765F0059829C /* Foliage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B89209860B600402410 /* Foliage.swift */; };
+		18EE502720A5765F0059829C /* FoliageChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B8B209860BF00402410 /* FoliageChunk.swift */; };
+		18EE502820A5765F0059829C /* FoliageTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B8D209860C700402410 /* FoliageTile.swift */; };
+		18EE502920A5765F0059829C /* FoliageNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B8F209860CF00402410 /* FoliageNode.swift */; };
+		18EE502A20A576600059829C /* Foliage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B89209860B600402410 /* Foliage.swift */; };
+		18EE502B20A576600059829C /* FoliageChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B8B209860BF00402410 /* FoliageChunk.swift */; };
+		18EE502C20A576600059829C /* FoliageTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B8D209860C700402410 /* FoliageTile.swift */; };
+		18EE502D20A576600059829C /* FoliageNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B8F209860CF00402410 /* FoliageNode.swift */; };
+		18EE502E20A576660059829C /* Footpath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C89209368E400992AF3 /* Footpath.swift */; };
+		18EE502F20A576660059829C /* FootpathChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C8B209368ED00992AF3 /* FootpathChunk.swift */; };
+		18EE503020A576660059829C /* FootpathTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C8D209368F600992AF3 /* FootpathTile.swift */; };
+		18EE503120A576660059829C /* FootpathNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C8F209368FF00992AF3 /* FootpathNode.swift */; };
+		18EE503220A576660059829C /* Footpath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C89209368E400992AF3 /* Footpath.swift */; };
+		18EE503320A576660059829C /* FootpathChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C8B209368ED00992AF3 /* FootpathChunk.swift */; };
+		18EE503420A576660059829C /* FootpathTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C8D209368F600992AF3 /* FootpathTile.swift */; };
+		18EE503520A576660059829C /* FootpathNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C8F209368FF00992AF3 /* FootpathNode.swift */; };
+		18EE503620A5766C0059829C /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C5B2093234300992AF3 /* Grid.swift */; };
+		18EE503720A5766C0059829C /* GridChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C5A2093234300992AF3 /* GridChunk.swift */; };
+		18EE503820A5766C0059829C /* GridCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C7C20934A4900992AF3 /* GridCorner.swift */; };
+		18EE503920A5766C0059829C /* GridEdge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C7E20934A5100992AF3 /* GridEdge.swift */; };
+		18EE503A20A5766C0059829C /* GridNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C592093234300992AF3 /* GridNode.swift */; };
+		18EE503B20A5766C0059829C /* GridTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C5C2093234300992AF3 /* GridTile.swift */; };
+		18EE503C20A5766D0059829C /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C5B2093234300992AF3 /* Grid.swift */; };
+		18EE503D20A5766D0059829C /* GridChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C5A2093234300992AF3 /* GridChunk.swift */; };
+		18EE503E20A5766D0059829C /* GridCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C7C20934A4900992AF3 /* GridCorner.swift */; };
+		18EE503F20A5766D0059829C /* GridEdge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C7E20934A5100992AF3 /* GridEdge.swift */; };
+		18EE504020A5766D0059829C /* GridNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C592093234300992AF3 /* GridNode.swift */; };
+		18EE504120A5766D0059829C /* GridTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C5C2093234300992AF3 /* GridTile.swift */; };
+		18EE504220A576710059829C /* MeshFace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B22EF2098BDDB003D1309 /* MeshFace.swift */; };
+		18EE504320A576710059829C /* MeshFace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B22EF2098BDDB003D1309 /* MeshFace.swift */; };
+		18EE504420A576770059829C /* Scaffold.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B912098611C00402410 /* Scaffold.swift */; };
+		18EE504520A576770059829C /* ScaffoldChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B932098612400402410 /* ScaffoldChunk.swift */; };
+		18EE504620A576770059829C /* ScaffoldTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B952098612C00402410 /* ScaffoldTile.swift */; };
+		18EE504720A576770059829C /* ScaffoldNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B972098613400402410 /* ScaffoldNode.swift */; };
+		18EE504820A576780059829C /* Scaffold.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B912098611C00402410 /* Scaffold.swift */; };
+		18EE504920A576780059829C /* ScaffoldChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B932098612400402410 /* ScaffoldChunk.swift */; };
+		18EE504A20A576780059829C /* ScaffoldTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B952098612C00402410 /* ScaffoldTile.swift */; };
+		18EE504B20A576780059829C /* ScaffoldNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B972098613400402410 /* ScaffoldNode.swift */; };
+		18EE504C20A5767D0059829C /* Terrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C652093267E00992AF3 /* Terrain.swift */; };
+		18EE504D20A5767D0059829C /* TerrainChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C672093269500992AF3 /* TerrainChunk.swift */; };
+		18EE504E20A5767D0059829C /* TerrainNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C692093269C00992AF3 /* TerrainNode.swift */; };
+		18EE504F20A5767D0059829C /* TerrainTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C6B209326A300992AF3 /* TerrainTile.swift */; };
+		18EE505020A5767D0059829C /* TerrainType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188B3C14209E1B9F0034F4BB /* TerrainType.swift */; };
+		18EE505120A5767D0059829C /* TerrainLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188B3C16209E1BF70034F4BB /* TerrainLayer.swift */; };
+		18EE505220A5767E0059829C /* Terrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C652093267E00992AF3 /* Terrain.swift */; };
+		18EE505320A5767E0059829C /* TerrainChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C672093269500992AF3 /* TerrainChunk.swift */; };
+		18EE505420A5767E0059829C /* TerrainNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C692093269C00992AF3 /* TerrainNode.swift */; };
+		18EE505520A5767E0059829C /* TerrainTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C6B209326A300992AF3 /* TerrainTile.swift */; };
+		18EE505620A5767E0059829C /* TerrainType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188B3C14209E1B9F0034F4BB /* TerrainType.swift */; };
+		18EE505720A5767E0059829C /* TerrainLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188B3C16209E1BF70034F4BB /* TerrainLayer.swift */; };
+		18EE505820A576830059829C /* Tunnel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B992098617800402410 /* Tunnel.swift */; };
+		18EE505920A576830059829C /* TunnelChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B9B2098618000402410 /* TunnelChunk.swift */; };
+		18EE505A20A576830059829C /* TunnelTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B9D2098618700402410 /* TunnelTile.swift */; };
+		18EE505B20A576830059829C /* TunnelNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B9F2098618F00402410 /* TunnelNode.swift */; };
+		18EE505C20A576830059829C /* Tunnel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B992098617800402410 /* Tunnel.swift */; };
+		18EE505D20A576830059829C /* TunnelChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B9B2098618000402410 /* TunnelChunk.swift */; };
+		18EE505E20A576830059829C /* TunnelTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B9D2098618700402410 /* TunnelTile.swift */; };
+		18EE505F20A576830059829C /* TunnelNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B9F2098618F00402410 /* TunnelNode.swift */; };
+		18EE506020A576880059829C /* Water.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58BA1209861CB00402410 /* Water.swift */; };
+		18EE506120A576880059829C /* WaterChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58BA3209861D300402410 /* WaterChunk.swift */; };
+		18EE506220A576880059829C /* WaterTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58BA6209861E000402410 /* WaterTile.swift */; };
+		18EE506320A576880059829C /* WaterNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58BA8209861E900402410 /* WaterNode.swift */; };
+		18EE506420A576890059829C /* Water.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58BA1209861CB00402410 /* Water.swift */; };
+		18EE506520A576890059829C /* WaterChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58BA3209861D300402410 /* WaterChunk.swift */; };
+		18EE506620A576890059829C /* WaterTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58BA6209861E000402410 /* WaterTile.swift */; };
+		18EE506720A576890059829C /* WaterNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58BA8209861E900402410 /* WaterNode.swift */; };
+		18EE508D20A57A5C0059829C /* GridTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185200F720960CBE00D3ACC6 /* GridTests.swift */; };
+		18EE508E20A57A960059829C /* WorldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185200F42096094400D3ACC6 /* WorldTests.swift */; };
+		18EE508F20A57A960059829C /* CoordinateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C812093670800992AF3 /* CoordinateTests.swift */; };
+		18EE509020A57A960059829C /* PolytopeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C94209373AD00992AF3 /* PolytopeTests.swift */; };
+		18EE509120A57A960059829C /* PolyhedronTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C96209373B800992AF3 /* PolyhedronTests.swift */; };
+		18EE509220A57A960059829C /* VolumeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1871323E20971FE30084565F /* VolumeTests.swift */; };
+		18EE509320A57A960059829C /* SizeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18713245209735DF0084565F /* SizeTests.swift */; };
+		18EE509420A57A960059829C /* TerrainTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A8AB232099D6DA00AF30BB /* TerrainTests.swift */; };
+		18EE509520A57A960059829C /* TerrainLayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1880694520A071D6002F6EC0 /* TerrainLayerTests.swift */; };
+		18EE509620A57B9E0059829C /* WorldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185200F42096094400D3ACC6 /* WorldTests.swift */; };
+		18EE509720A57B9E0059829C /* CoordinateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C812093670800992AF3 /* CoordinateTests.swift */; };
+		18EE509820A57B9E0059829C /* PolytopeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C94209373AD00992AF3 /* PolytopeTests.swift */; };
+		18EE509920A57B9E0059829C /* PolyhedronTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C96209373B800992AF3 /* PolyhedronTests.swift */; };
+		18EE509A20A57B9E0059829C /* VolumeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1871323E20971FE30084565F /* VolumeTests.swift */; };
+		18EE509B20A57B9E0059829C /* SizeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18713245209735DF0084565F /* SizeTests.swift */; };
+		18EE509C20A57B9E0059829C /* GridTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185200F720960CBE00D3ACC6 /* GridTests.swift */; };
+		18EE509D20A57B9E0059829C /* TerrainTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A8AB232099D6DA00AF30BB /* TerrainTests.swift */; };
+		18EE509E20A57B9E0059829C /* TerrainLayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1880694520A071D6002F6EC0 /* TerrainLayerTests.swift */; };
+		18EE509F20A57BC20059829C /* Area.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B812098600800402410 /* Area.swift */; };
+		18EE50A020A57BC20059829C /* AreaChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B832098601000402410 /* AreaChunk.swift */; };
+		18EE50A120A57BC20059829C /* AreaTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B852098601700402410 /* AreaTile.swift */; };
+		18EE50A220A57BC20059829C /* AreaNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B872098602000402410 /* AreaNode.swift */; };
+		18EE50A320A57BC30059829C /* Area.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B812098600800402410 /* Area.swift */; };
+		18EE50A420A57BC30059829C /* AreaChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B832098601000402410 /* AreaChunk.swift */; };
+		18EE50A520A57BC30059829C /* AreaTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B852098601700402410 /* AreaTile.swift */; };
+		18EE50A620A57BC30059829C /* AreaNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B872098602000402410 /* AreaNode.swift */; };
+		18EE50A720A57BC80059829C /* area_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 1819B72720A4814000BEE585 /* area_types.json */; };
+		18EE50A820A57BC80059829C /* footpath_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 1819B72A20A4815300BEE585 /* footpath_types.json */; };
+		18EE50A920A57BC80059829C /* terrain_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 18538B6320A311FF00077CE2 /* terrain_types.json */; };
+		18EE50AA20A57BC90059829C /* area_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 1819B72720A4814000BEE585 /* area_types.json */; };
+		18EE50AB20A57BC90059829C /* footpath_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 1819B72A20A4815300BEE585 /* footpath_types.json */; };
+		18EE50AC20A57BC90059829C /* terrain_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 18538B6320A311FF00077CE2 /* terrain_types.json */; };
+		18EE50AD20A57BCC0059829C /* Meadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C6D2093270F00992AF3 /* Meadow.swift */; };
+		18EE50AE20A57BCC0059829C /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C9820937A3400992AF3 /* World.swift */; };
+		18EE50AF20A57BCD0059829C /* Meadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C6D2093270F00992AF3 /* Meadow.swift */; };
+		18EE50B020A57BCD0059829C /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C9820937A3400992AF3 /* World.swift */; };
+		18EE50B120A57BD40059829C /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18538B6920A3241A00077CE2 /* Color.swift */; };
+		18EE50B220A57BD40059829C /* ColorPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18538B6520A3122700077CE2 /* ColorPalette.swift */; };
+		18EE50B320A57BD40059829C /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C72209327C500992AF3 /* Coordinate.swift */; };
+		18EE50B420A57BD40059829C /* Polyhedron.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C7A2093473500992AF3 /* Polyhedron.swift */; };
+		18EE50B520A57BD40059829C /* Polytope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C782093472B00992AF3 /* Polytope.swift */; };
+		18EE50B620A57BD40059829C /* Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18713243209723050084565F /* Size.swift */; };
+		18EE50B720A57BD40059829C /* Volume.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18713241209720120084565F /* Volume.swift */; };
+		18EE50B820A57BD50059829C /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18538B6920A3241A00077CE2 /* Color.swift */; };
+		18EE50B920A57BD50059829C /* ColorPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18538B6520A3122700077CE2 /* ColorPalette.swift */; };
+		18EE50BA20A57BD50059829C /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C72209327C500992AF3 /* Coordinate.swift */; };
+		18EE50BB20A57BD50059829C /* Polyhedron.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C7A2093473500992AF3 /* Polyhedron.swift */; };
+		18EE50BC20A57BD50059829C /* Polytope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C782093472B00992AF3 /* Polytope.swift */; };
+		18EE50BD20A57BD50059829C /* Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18713243209723050084565F /* Size.swift */; };
+		18EE50BE20A57BD50059829C /* Volume.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18713241209720120084565F /* Volume.swift */; };
+		18EE50BF20A57BD90059829C /* Collection+Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1819B72420A45EE600BEE585 /* Collection+Bundle.swift */; };
+		18EE50C020A57BD90059829C /* Collection+Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1819B72420A45EE600BEE585 /* Collection+Bundle.swift */; };
+		18EE50C120A57BDC0059829C /* Foliage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B89209860B600402410 /* Foliage.swift */; };
+		18EE50C220A57BDC0059829C /* FoliageChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B8B209860BF00402410 /* FoliageChunk.swift */; };
+		18EE50C320A57BDC0059829C /* FoliageTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B8D209860C700402410 /* FoliageTile.swift */; };
+		18EE50C420A57BDC0059829C /* FoliageNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B8F209860CF00402410 /* FoliageNode.swift */; };
+		18EE50C520A57BDD0059829C /* Foliage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B89209860B600402410 /* Foliage.swift */; };
+		18EE50C620A57BDD0059829C /* FoliageChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B8B209860BF00402410 /* FoliageChunk.swift */; };
+		18EE50C720A57BDD0059829C /* FoliageTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B8D209860C700402410 /* FoliageTile.swift */; };
+		18EE50C820A57BDD0059829C /* FoliageNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B8F209860CF00402410 /* FoliageNode.swift */; };
+		18EE50C920A57BE20059829C /* Footpath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C89209368E400992AF3 /* Footpath.swift */; };
+		18EE50CA20A57BE20059829C /* FootpathChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C8B209368ED00992AF3 /* FootpathChunk.swift */; };
+		18EE50CB20A57BE20059829C /* FootpathTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C8D209368F600992AF3 /* FootpathTile.swift */; };
+		18EE50CC20A57BE20059829C /* FootpathNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C8F209368FF00992AF3 /* FootpathNode.swift */; };
+		18EE50CD20A57BE20059829C /* Footpath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C89209368E400992AF3 /* Footpath.swift */; };
+		18EE50CE20A57BE20059829C /* FootpathChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C8B209368ED00992AF3 /* FootpathChunk.swift */; };
+		18EE50CF20A57BE20059829C /* FootpathTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C8D209368F600992AF3 /* FootpathTile.swift */; };
+		18EE50D020A57BE20059829C /* FootpathNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C8F209368FF00992AF3 /* FootpathNode.swift */; };
+		18EE50D120A57BE60059829C /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C5B2093234300992AF3 /* Grid.swift */; };
+		18EE50D220A57BE60059829C /* GridChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C5A2093234300992AF3 /* GridChunk.swift */; };
+		18EE50D320A57BE60059829C /* GridCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C7C20934A4900992AF3 /* GridCorner.swift */; };
+		18EE50D420A57BE60059829C /* GridEdge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C7E20934A5100992AF3 /* GridEdge.swift */; };
+		18EE50D520A57BE60059829C /* GridNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C592093234300992AF3 /* GridNode.swift */; };
+		18EE50D620A57BE60059829C /* GridTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C5C2093234300992AF3 /* GridTile.swift */; };
+		18EE50D720A57BE60059829C /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C5B2093234300992AF3 /* Grid.swift */; };
+		18EE50D820A57BE60059829C /* GridChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C5A2093234300992AF3 /* GridChunk.swift */; };
+		18EE50D920A57BE60059829C /* GridCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C7C20934A4900992AF3 /* GridCorner.swift */; };
+		18EE50DA20A57BE70059829C /* GridEdge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C7E20934A5100992AF3 /* GridEdge.swift */; };
+		18EE50DB20A57BE70059829C /* GridNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C592093234300992AF3 /* GridNode.swift */; };
+		18EE50DC20A57BE70059829C /* GridTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C5C2093234300992AF3 /* GridTile.swift */; };
+		18EE50DD20A57BE90059829C /* MeshFace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B22EF2098BDDB003D1309 /* MeshFace.swift */; };
+		18EE50DE20A57BEA0059829C /* MeshFace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B22EF2098BDDB003D1309 /* MeshFace.swift */; };
+		18EE50DF20A57BED0059829C /* Scaffold.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B912098611C00402410 /* Scaffold.swift */; };
+		18EE50E020A57BED0059829C /* ScaffoldChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B932098612400402410 /* ScaffoldChunk.swift */; };
+		18EE50E120A57BED0059829C /* ScaffoldTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B952098612C00402410 /* ScaffoldTile.swift */; };
+		18EE50E220A57BED0059829C /* ScaffoldNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B972098613400402410 /* ScaffoldNode.swift */; };
+		18EE50E320A57BEE0059829C /* Scaffold.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B912098611C00402410 /* Scaffold.swift */; };
+		18EE50E420A57BEE0059829C /* ScaffoldChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B932098612400402410 /* ScaffoldChunk.swift */; };
+		18EE50E520A57BEE0059829C /* ScaffoldTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B952098612C00402410 /* ScaffoldTile.swift */; };
+		18EE50E620A57BEE0059829C /* ScaffoldNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B972098613400402410 /* ScaffoldNode.swift */; };
+		18EE50E720A57BF20059829C /* Terrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C652093267E00992AF3 /* Terrain.swift */; };
+		18EE50E820A57BF20059829C /* TerrainChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C672093269500992AF3 /* TerrainChunk.swift */; };
+		18EE50E920A57BF20059829C /* TerrainNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C692093269C00992AF3 /* TerrainNode.swift */; };
+		18EE50EA20A57BF20059829C /* TerrainTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C6B209326A300992AF3 /* TerrainTile.swift */; };
+		18EE50EB20A57BF20059829C /* TerrainType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188B3C14209E1B9F0034F4BB /* TerrainType.swift */; };
+		18EE50EC20A57BF20059829C /* TerrainLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188B3C16209E1BF70034F4BB /* TerrainLayer.swift */; };
+		18EE50ED20A57BF30059829C /* Terrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C652093267E00992AF3 /* Terrain.swift */; };
+		18EE50EE20A57BF30059829C /* TerrainChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C672093269500992AF3 /* TerrainChunk.swift */; };
+		18EE50EF20A57BF30059829C /* TerrainNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C692093269C00992AF3 /* TerrainNode.swift */; };
+		18EE50F020A57BF30059829C /* TerrainTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C6B209326A300992AF3 /* TerrainTile.swift */; };
+		18EE50F120A57BF30059829C /* TerrainType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188B3C14209E1B9F0034F4BB /* TerrainType.swift */; };
+		18EE50F220A57BF30059829C /* TerrainLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188B3C16209E1BF70034F4BB /* TerrainLayer.swift */; };
+		18EE50F320A57BF60059829C /* Tunnel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B992098617800402410 /* Tunnel.swift */; };
+		18EE50F420A57BF60059829C /* TunnelChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B9B2098618000402410 /* TunnelChunk.swift */; };
+		18EE50F520A57BF60059829C /* TunnelTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B9D2098618700402410 /* TunnelTile.swift */; };
+		18EE50F620A57BF60059829C /* TunnelNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B9F2098618F00402410 /* TunnelNode.swift */; };
+		18EE50F720A57BF60059829C /* Tunnel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B992098617800402410 /* Tunnel.swift */; };
+		18EE50F820A57BF60059829C /* TunnelChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B9B2098618000402410 /* TunnelChunk.swift */; };
+		18EE50F920A57BF60059829C /* TunnelTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B9D2098618700402410 /* TunnelTile.swift */; };
+		18EE50FA20A57BF60059829C /* TunnelNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B9F2098618F00402410 /* TunnelNode.swift */; };
+		18EE50FB20A57BFA0059829C /* Water.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58BA1209861CB00402410 /* Water.swift */; };
+		18EE50FC20A57BFA0059829C /* WaterChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58BA3209861D300402410 /* WaterChunk.swift */; };
+		18EE50FD20A57BFA0059829C /* WaterTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58BA6209861E000402410 /* WaterTile.swift */; };
+		18EE50FE20A57BFA0059829C /* WaterNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58BA8209861E900402410 /* WaterNode.swift */; };
+		18EE50FF20A57BFB0059829C /* Water.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58BA1209861CB00402410 /* Water.swift */; };
+		18EE510020A57BFB0059829C /* WaterChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58BA3209861D300402410 /* WaterChunk.swift */; };
+		18EE510120A57BFB0059829C /* WaterTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58BA6209861E000402410 /* WaterTile.swift */; };
+		18EE510220A57BFB0059829C /* WaterNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58BA8209861E900402410 /* WaterNode.swift */; };
+		261220385552C035ACB07E34 /* Pods_Meadow_macOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0BF7B8F96AE79E5F0C14686 /* Pods_Meadow_macOSTests.framework */; };
+		43D2989E90677048D90DC800 /* Pods_Meadow_macOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90B68442C88B62B2E0B93A50 /* Pods_Meadow_macOS.framework */; };
+		60C462C59D0F61890549C873 /* Pods_Meadow_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A164DDE42EBEE4B231DF4A2A /* Pods_Meadow_iOS.framework */; };
+		9FD9B9B86109E4162D1C3D40 /* Pods_Meadow_iOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D902CD5ACA01D555CF5A89DC /* Pods_Meadow_iOSTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		187121EB20931C77002488E0 /* PBXContainerItemProxy */ = {
+		1819B73B20A574F800BEE585 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 187121D720931C77002488E0 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 187121DF20931C77002488E0;
-			remoteInfo = Meadow;
+			remoteGlobalIDString = 1819B73020A574F800BEE585;
+			remoteInfo = "Meadow-iOS";
+		};
+		1819B75720A5752000BEE585 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 187121D720931C77002488E0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1819B74C20A5752000BEE585;
+			remoteInfo = "Meadow-macOS";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -88,6 +257,16 @@
 		1819B72420A45EE600BEE585 /* Collection+Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Bundle.swift"; sourceTree = "<group>"; };
 		1819B72720A4814000BEE585 /* area_types.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = area_types.json; sourceTree = "<group>"; };
 		1819B72A20A4815300BEE585 /* footpath_types.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = footpath_types.json; sourceTree = "<group>"; };
+		1819B73120A574F800BEE585 /* Meadow_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Meadow_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1819B73320A574F800BEE585 /* Meadow_iOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Meadow_iOS.h; sourceTree = "<group>"; };
+		1819B73420A574F800BEE585 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1819B73920A574F800BEE585 /* Meadow-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Meadow-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1819B74020A574F800BEE585 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1819B74D20A5752000BEE585 /* Meadow_macOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Meadow_macOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1819B74F20A5752000BEE585 /* Meadow_macOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Meadow_macOS.h; sourceTree = "<group>"; };
+		1819B75020A5752000BEE585 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1819B75520A5752000BEE585 /* Meadow-macOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Meadow-macOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1819B75C20A5752000BEE585 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		182B22EF2098BDDB003D1309 /* MeshFace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeshFace.swift; sourceTree = "<group>"; };
 		18496C592093234300992AF3 /* GridNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridNode.swift; sourceTree = "<group>"; };
 		18496C5A2093234300992AF3 /* GridChunk.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridChunk.swift; sourceTree = "<group>"; };
@@ -116,10 +295,6 @@
 		18538B6320A311FF00077CE2 /* terrain_types.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = terrain_types.json; sourceTree = "<group>"; };
 		18538B6520A3122700077CE2 /* ColorPalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPalette.swift; sourceTree = "<group>"; };
 		18538B6920A3241A00077CE2 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
-		187121E020931C77002488E0 /* Meadow.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Meadow.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		187121E320931C77002488E0 /* Meadow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Meadow.h; sourceTree = "<group>"; };
-		187121E420931C77002488E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		187121E920931C77002488E0 /* MeadowTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MeadowTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		187121F020931C77002488E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1871323E20971FE30084565F /* VolumeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeTests.swift; sourceTree = "<group>"; };
 		18713241209720120084565F /* Volume.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Volume.swift; sourceTree = "<group>"; };
@@ -151,26 +326,55 @@
 		18B58BA8209861E900402410 /* WaterNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterNode.swift; sourceTree = "<group>"; };
 		1A97612B550B166B0831FC9A /* Pods-MeadowTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeadowTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MeadowTests/Pods-MeadowTests.release.xcconfig"; sourceTree = "<group>"; };
 		35FDC4E9F3727471EA2160BC /* Pods_MeadowTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MeadowTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4B35CC9A2B4D0CE6C525831F /* Pods-Meadow-iOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Meadow-iOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Meadow-iOSTests/Pods-Meadow-iOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		4B593656DAE43AE767449361 /* Pods-Meadow-macOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Meadow-macOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Meadow-macOSTests/Pods-Meadow-macOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		82F5F34E1A212472BCBED43F /* Pods-Meadow-macOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Meadow-macOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Meadow-macOS/Pods-Meadow-macOS.release.xcconfig"; sourceTree = "<group>"; };
+		90B68442C88B62B2E0B93A50 /* Pods_Meadow_macOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Meadow_macOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		95CA003B80C69F6F0B76DA7B /* Pods-Meadow-macOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Meadow-macOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Meadow-macOS/Pods-Meadow-macOS.debug.xcconfig"; sourceTree = "<group>"; };
+		A164DDE42EBEE4B231DF4A2A /* Pods_Meadow_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Meadow_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5E9543EE7C3772BE98B8C91 /* Pods-MeadowTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeadowTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MeadowTests/Pods-MeadowTests.debug.xcconfig"; sourceTree = "<group>"; };
+		C2CC349B0B0595F31A91855C /* Pods-Meadow-iOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Meadow-iOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Meadow-iOSTests/Pods-Meadow-iOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		C4DFC12260F62F5244575156 /* Pods-Meadow-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Meadow-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Meadow-iOS/Pods-Meadow-iOS.release.xcconfig"; sourceTree = "<group>"; };
+		D902CD5ACA01D555CF5A89DC /* Pods_Meadow_iOSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Meadow_iOSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E17802DB66C8D754A0BF002F /* Pods_Meadow.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Meadow.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E98FADB84933C02A52D44A10 /* Pods-Meadow-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Meadow-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Meadow-iOS/Pods-Meadow-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		EB32A0F3181023D988DCC3D4 /* Pods-Meadow.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Meadow.release.xcconfig"; path = "Pods/Target Support Files/Pods-Meadow/Pods-Meadow.release.xcconfig"; sourceTree = "<group>"; };
+		F0BF7B8F96AE79E5F0C14686 /* Pods_Meadow_macOSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Meadow_macOSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FCF2E4DCFDB9FE7123F2576E /* Pods-Meadow-macOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Meadow-macOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Meadow-macOSTests/Pods-Meadow-macOSTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		187121DC20931C77002488E0 /* Frameworks */ = {
+		1819B72D20A574F800BEE585 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				42884A0096E4816717905A9D /* Pods_Meadow.framework in Frameworks */,
+				60C462C59D0F61890549C873 /* Pods_Meadow_iOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		187121E620931C77002488E0 /* Frameworks */ = {
+		1819B73620A574F800BEE585 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				187121EA20931C77002488E0 /* Meadow.framework in Frameworks */,
-				427E880BAFD2FF0BF35AFEB1 /* Pods_MeadowTests.framework in Frameworks */,
+				1819B73A20A574F800BEE585 /* Meadow_iOS.framework in Frameworks */,
+				9FD9B9B86109E4162D1C3D40 /* Pods_Meadow_iOSTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1819B74920A5752000BEE585 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43D2989E90677048D90DC800 /* Pods_Meadow_macOS.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1819B75220A5752000BEE585 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1819B75620A5752000BEE585 /* Meadow_macOS.framework in Frameworks */,
+				261220385552C035ACB07E34 /* Pods_Meadow_macOSTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -199,6 +403,40 @@
 				1819B72A20A4815300BEE585 /* footpath_types.json */,
 			);
 			path = Footpath;
+			sourceTree = "<group>";
+		};
+		1819B73220A574F800BEE585 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				1819B73320A574F800BEE585 /* Meadow_iOS.h */,
+				1819B73420A574F800BEE585 /* Info.plist */,
+			);
+			path = iOS;
+			sourceTree = "<group>";
+		};
+		1819B73D20A574F800BEE585 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				1819B74020A574F800BEE585 /* Info.plist */,
+			);
+			path = iOS;
+			sourceTree = "<group>";
+		};
+		1819B74E20A5752000BEE585 /* macOS */ = {
+			isa = PBXGroup;
+			children = (
+				1819B74F20A5752000BEE585 /* Meadow_macOS.h */,
+				1819B75020A5752000BEE585 /* Info.plist */,
+			);
+			path = macOS;
+			sourceTree = "<group>";
+		};
+		1819B75920A5752000BEE585 /* macOS */ = {
+			isa = PBXGroup;
+			children = (
+				1819B75C20A5752000BEE585 /* Info.plist */,
+			);
+			path = macOS;
 			sourceTree = "<group>";
 		};
 		182B22EE2098BDCD003D1309 /* Mesh */ = {
@@ -404,8 +642,10 @@
 		187121E120931C77002488E0 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				187121E020931C77002488E0 /* Meadow.framework */,
-				187121E920931C77002488E0 /* MeadowTests.xctest */,
+				1819B73120A574F800BEE585 /* Meadow_iOS.framework */,
+				1819B73920A574F800BEE585 /* Meadow-iOSTests.xctest */,
+				1819B74D20A5752000BEE585 /* Meadow_macOS.framework */,
+				1819B75520A5752000BEE585 /* Meadow-macOSTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -414,8 +654,7 @@
 			isa = PBXGroup;
 			children = (
 				18496C572093230900992AF3 /* Core */,
-				187121E320931C77002488E0 /* Meadow.h */,
-				187121E420931C77002488E0 /* Info.plist */,
+				18EE506A20A578840059829C /* Platforms */,
 			);
 			path = Meadow;
 			sourceTree = "<group>";
@@ -423,17 +662,8 @@
 		187121ED20931C77002488E0 /* Meadow Tests */ = {
 			isa = PBXGroup;
 			children = (
-				18B58BAA2098623200402410 /* Area */,
-				185200F32096092E00D3ACC6 /* Controllers */,
-				18496C80209366ED00992AF3 /* Data Structures */,
-				18B58BAB2098623A00402410 /* Foliage */,
-				18B58BAC2098624000402410 /* Footpath */,
-				185200F620960CB300D3ACC6 /* Grid */,
-				187121F020931C77002488E0 /* Info.plist */,
-				18B58BAD2098624700402410 /* Scaffold */,
-				18B58BAE2098624E00402410 /* Terrain */,
-				18B58BAF2098625500402410 /* Tunnel */,
-				18B58BB02098625900402410 /* Water */,
+				18EE510320A57C9F0059829C /* Core */,
+				18EE510420A57CBA0059829C /* Platforms */,
 			);
 			path = "Meadow Tests";
 			sourceTree = "<group>";
@@ -489,11 +719,51 @@
 			path = Water;
 			sourceTree = "<group>";
 		};
+		18EE506A20A578840059829C /* Platforms */ = {
+			isa = PBXGroup;
+			children = (
+				1819B73220A574F800BEE585 /* iOS */,
+				1819B74E20A5752000BEE585 /* macOS */,
+			);
+			path = Platforms;
+			sourceTree = "<group>";
+		};
+		18EE510320A57C9F0059829C /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				18B58BAA2098623200402410 /* Area */,
+				185200F32096092E00D3ACC6 /* Controllers */,
+				18496C80209366ED00992AF3 /* Data Structures */,
+				18B58BAB2098623A00402410 /* Foliage */,
+				18B58BAC2098624000402410 /* Footpath */,
+				185200F620960CB300D3ACC6 /* Grid */,
+				187121F020931C77002488E0 /* Info.plist */,
+				18B58BAD2098624700402410 /* Scaffold */,
+				18B58BAE2098624E00402410 /* Terrain */,
+				18B58BAF2098625500402410 /* Tunnel */,
+				18B58BB02098625900402410 /* Water */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		18EE510420A57CBA0059829C /* Platforms */ = {
+			isa = PBXGroup;
+			children = (
+				1819B73D20A574F800BEE585 /* iOS */,
+				1819B75920A5752000BEE585 /* macOS */,
+			);
+			path = Platforms;
+			sourceTree = "<group>";
+		};
 		7EAFC8007E656043D995F23B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				E17802DB66C8D754A0BF002F /* Pods_Meadow.framework */,
 				35FDC4E9F3727471EA2160BC /* Pods_MeadowTests.framework */,
+				A164DDE42EBEE4B231DF4A2A /* Pods_Meadow_iOS.framework */,
+				D902CD5ACA01D555CF5A89DC /* Pods_Meadow_iOSTests.framework */,
+				90B68442C88B62B2E0B93A50 /* Pods_Meadow_macOS.framework */,
+				F0BF7B8F96AE79E5F0C14686 /* Pods_Meadow_macOSTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -505,6 +775,14 @@
 				EB32A0F3181023D988DCC3D4 /* Pods-Meadow.release.xcconfig */,
 				B5E9543EE7C3772BE98B8C91 /* Pods-MeadowTests.debug.xcconfig */,
 				1A97612B550B166B0831FC9A /* Pods-MeadowTests.release.xcconfig */,
+				E98FADB84933C02A52D44A10 /* Pods-Meadow-iOS.debug.xcconfig */,
+				C4DFC12260F62F5244575156 /* Pods-Meadow-iOS.release.xcconfig */,
+				C2CC349B0B0595F31A91855C /* Pods-Meadow-iOSTests.debug.xcconfig */,
+				4B35CC9A2B4D0CE6C525831F /* Pods-Meadow-iOSTests.release.xcconfig */,
+				95CA003B80C69F6F0B76DA7B /* Pods-Meadow-macOS.debug.xcconfig */,
+				82F5F34E1A212472BCBED43F /* Pods-Meadow-macOS.release.xcconfig */,
+				4B593656DAE43AE767449361 /* Pods-Meadow-macOSTests.debug.xcconfig */,
+				FCF2E4DCFDB9FE7123F2576E /* Pods-Meadow-macOSTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -512,53 +790,99 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		187121DD20931C77002488E0 /* Headers */ = {
+		1819B72E20A574F800BEE585 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				187121F120931C77002488E0 /* Meadow.h in Headers */,
+				1819B74120A574F800BEE585 /* Meadow_iOS.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1819B74A20A5752000BEE585 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1819B75D20A5752000BEE585 /* Meadow_macOS.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		187121DF20931C77002488E0 /* Meadow */ = {
+		1819B73020A574F800BEE585 /* Meadow-iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 187121F420931C77002488E0 /* Build configuration list for PBXNativeTarget "Meadow" */;
+			buildConfigurationList = 1819B74220A574F800BEE585 /* Build configuration list for PBXNativeTarget "Meadow-iOS" */;
 			buildPhases = (
-				303B8DF78789939BDDAD1A9B /* [CP] Check Pods Manifest.lock */,
-				187121DB20931C77002488E0 /* Sources */,
-				187121DC20931C77002488E0 /* Frameworks */,
-				187121DD20931C77002488E0 /* Headers */,
-				187121DE20931C77002488E0 /* Resources */,
+				AAAB45AC819791F7E6AC8D64 /* [CP] Check Pods Manifest.lock */,
+				1819B72C20A574F800BEE585 /* Sources */,
+				1819B72D20A574F800BEE585 /* Frameworks */,
+				1819B72E20A574F800BEE585 /* Headers */,
+				1819B72F20A574F800BEE585 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = Meadow;
-			productName = Meadow;
-			productReference = 187121E020931C77002488E0 /* Meadow.framework */;
+			name = "Meadow-iOS";
+			productName = "Meadow-iOS";
+			productReference = 1819B73120A574F800BEE585 /* Meadow_iOS.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		187121E820931C77002488E0 /* MeadowTests */ = {
+		1819B73820A574F800BEE585 /* Meadow-iOSTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 187121F720931C77002488E0 /* Build configuration list for PBXNativeTarget "MeadowTests" */;
+			buildConfigurationList = 1819B74520A574F800BEE585 /* Build configuration list for PBXNativeTarget "Meadow-iOSTests" */;
 			buildPhases = (
-				4ACFBF4F38FE6AF3D07A58DE /* [CP] Check Pods Manifest.lock */,
-				187121E520931C77002488E0 /* Sources */,
-				187121E620931C77002488E0 /* Frameworks */,
-				187121E720931C77002488E0 /* Resources */,
+				E3326568EA5A58E3D162688B /* [CP] Check Pods Manifest.lock */,
+				1819B73520A574F800BEE585 /* Sources */,
+				1819B73620A574F800BEE585 /* Frameworks */,
+				1819B73720A574F800BEE585 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				187121EC20931C77002488E0 /* PBXTargetDependency */,
+				1819B73C20A574F800BEE585 /* PBXTargetDependency */,
 			);
-			name = MeadowTests;
-			productName = MeadowTests;
-			productReference = 187121E920931C77002488E0 /* MeadowTests.xctest */;
+			name = "Meadow-iOSTests";
+			productName = "Meadow-iOSTests";
+			productReference = 1819B73920A574F800BEE585 /* Meadow-iOSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		1819B74C20A5752000BEE585 /* Meadow-macOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1819B75E20A5752000BEE585 /* Build configuration list for PBXNativeTarget "Meadow-macOS" */;
+			buildPhases = (
+				C6FF6E081A26A8FB35D82F58 /* [CP] Check Pods Manifest.lock */,
+				1819B74820A5752000BEE585 /* Sources */,
+				1819B74920A5752000BEE585 /* Frameworks */,
+				1819B74A20A5752000BEE585 /* Headers */,
+				1819B74B20A5752000BEE585 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Meadow-macOS";
+			productName = "Meadow-macOS";
+			productReference = 1819B74D20A5752000BEE585 /* Meadow_macOS.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		1819B75420A5752000BEE585 /* Meadow-macOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1819B76120A5752000BEE585 /* Build configuration list for PBXNativeTarget "Meadow-macOSTests" */;
+			buildPhases = (
+				2747B8D0A68407DACBEC4AEA /* [CP] Check Pods Manifest.lock */,
+				1819B75120A5752000BEE585 /* Sources */,
+				1819B75220A5752000BEE585 /* Frameworks */,
+				1819B75320A5752000BEE585 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1819B75820A5752000BEE585 /* PBXTargetDependency */,
+			);
+			name = "Meadow-macOSTests";
+			productName = "Meadow-macOSTests";
+			productReference = 1819B75520A5752000BEE585 /* Meadow-macOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -571,11 +895,16 @@
 				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "Script Orchard";
 				TargetAttributes = {
-					187121DF20931C77002488E0 = {
+					1819B73020A574F800BEE585 = {
 						CreatedOnToolsVersion = 9.3;
-						LastSwiftMigration = 0930;
 					};
-					187121E820931C77002488E0 = {
+					1819B73820A574F800BEE585 = {
+						CreatedOnToolsVersion = 9.3;
+					};
+					1819B74C20A5752000BEE585 = {
+						CreatedOnToolsVersion = 9.3;
+					};
+					1819B75420A5752000BEE585 = {
 						CreatedOnToolsVersion = 9.3;
 					};
 				};
@@ -592,35 +921,59 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				187121DF20931C77002488E0 /* Meadow */,
-				187121E820931C77002488E0 /* MeadowTests */,
+				1819B73020A574F800BEE585 /* Meadow-iOS */,
+				1819B73820A574F800BEE585 /* Meadow-iOSTests */,
+				1819B74C20A5752000BEE585 /* Meadow-macOS */,
+				1819B75420A5752000BEE585 /* Meadow-macOSTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		187121DE20931C77002488E0 /* Resources */ = {
+		1819B72F20A574F800BEE585 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1819B72820A4814000BEE585 /* area_types.json in Resources */,
-				18538B6420A311FF00077CE2 /* terrain_types.json in Resources */,
-				1819B72B20A4815300BEE585 /* footpath_types.json in Resources */,
+				18EE500E20A576430059829C /* footpath_types.json in Resources */,
+				18EE501020A576470059829C /* terrain_types.json in Resources */,
+				18EE500C20A5763F0059829C /* area_types.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		187121E720931C77002488E0 /* Resources */ = {
+		1819B73720A574F800BEE585 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1819B72220A45E8400BEE585 /* terrain_types.json in Resources */,
+				18EE50A820A57BC80059829C /* footpath_types.json in Resources */,
+				18EE50A920A57BC80059829C /* terrain_types.json in Resources */,
+				18EE50A720A57BC80059829C /* area_types.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1819B74B20A5752000BEE585 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				18EE500F20A576430059829C /* footpath_types.json in Resources */,
+				18EE501120A576480059829C /* terrain_types.json in Resources */,
+				18EE500D20A576400059829C /* area_types.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1819B75320A5752000BEE585 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				18EE50AB20A57BC90059829C /* footpath_types.json in Resources */,
+				18EE50AC20A57BC90059829C /* terrain_types.json in Resources */,
+				18EE50AA20A57BC90059829C /* area_types.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		303B8DF78789939BDDAD1A9B /* [CP] Check Pods Manifest.lock */ = {
+		2747B8D0A68407DACBEC4AEA /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -631,14 +984,14 @@
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Meadow-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Meadow-macOSTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		4ACFBF4F38FE6AF3D07A58DE /* [CP] Check Pods Manifest.lock */ = {
+		AAAB45AC819791F7E6AC8D64 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -649,7 +1002,43 @@
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-MeadowTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Meadow-iOS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C6FF6E081A26A8FB35D82F58 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Meadow-macOS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E3326568EA5A58E3D162688B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Meadow-iOSTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -659,87 +1048,446 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		187121DB20931C77002488E0 /* Sources */ = {
+		1819B72C20A574F800BEE585 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				18713244209723050084565F /* Size.swift in Sources */,
-				18B58B922098611C00402410 /* Scaffold.swift in Sources */,
-				18496C7D20934A4900992AF3 /* GridCorner.swift in Sources */,
-				18496C5D2093234300992AF3 /* GridNode.swift in Sources */,
-				18496C90209368FF00992AF3 /* FootpathNode.swift in Sources */,
-				18B58B8C209860BF00402410 /* FoliageChunk.swift in Sources */,
-				18B58BA4209861D300402410 /* WaterChunk.swift in Sources */,
-				182B22F02098BDDB003D1309 /* MeshFace.swift in Sources */,
-				18496C682093269500992AF3 /* TerrainChunk.swift in Sources */,
-				18496C6A2093269C00992AF3 /* TerrainNode.swift in Sources */,
-				18B58B942098612400402410 /* ScaffoldChunk.swift in Sources */,
-				18496C8A209368E400992AF3 /* Footpath.swift in Sources */,
-				18B58B8A209860B600402410 /* Foliage.swift in Sources */,
-				18496C602093234300992AF3 /* GridTile.swift in Sources */,
-				18B58B90209860CF00402410 /* FoliageNode.swift in Sources */,
-				18496C73209327C500992AF3 /* Coordinate.swift in Sources */,
-				18B58B882098602000402410 /* AreaNode.swift in Sources */,
-				18496C792093472B00992AF3 /* Polytope.swift in Sources */,
-				18B58BA7209861E000402410 /* WaterTile.swift in Sources */,
-				18B58B982098613400402410 /* ScaffoldNode.swift in Sources */,
-				18538B6620A3122700077CE2 /* ColorPalette.swift in Sources */,
-				18B58B962098612C00402410 /* ScaffoldTile.swift in Sources */,
-				18496C9920937A3400992AF3 /* World.swift in Sources */,
-				18B58B9A2098617800402410 /* Tunnel.swift in Sources */,
-				18B58B8E209860C700402410 /* FoliageTile.swift in Sources */,
-				18538B6A20A3241A00077CE2 /* Color.swift in Sources */,
-				18B58BA2209861CB00402410 /* Water.swift in Sources */,
-				1819B72520A45EE600BEE585 /* Collection+Bundle.swift in Sources */,
-				18496C662093267E00992AF3 /* Terrain.swift in Sources */,
-				18B58B9C2098618000402410 /* TunnelChunk.swift in Sources */,
-				18713242209720120084565F /* Volume.swift in Sources */,
-				18B58B822098600800402410 /* Area.swift in Sources */,
-				18496C5E2093234300992AF3 /* GridChunk.swift in Sources */,
-				18B58BA02098618F00402410 /* TunnelNode.swift in Sources */,
-				18496C5F2093234300992AF3 /* Grid.swift in Sources */,
-				18496C6E2093270F00992AF3 /* Meadow.swift in Sources */,
-				18496C8C209368ED00992AF3 /* FootpathChunk.swift in Sources */,
-				18496C6C209326A300992AF3 /* TerrainTile.swift in Sources */,
-				188B3C17209E1BF70034F4BB /* TerrainLayer.swift in Sources */,
-				18B58B842098601000402410 /* AreaChunk.swift in Sources */,
-				18B58B862098601700402410 /* AreaTile.swift in Sources */,
-				18496C7F20934A5100992AF3 /* GridEdge.swift in Sources */,
-				188B3C15209E1B9F0034F4BB /* TerrainType.swift in Sources */,
-				18496C7B2093473600992AF3 /* Polyhedron.swift in Sources */,
-				18B58BA9209861E900402410 /* WaterNode.swift in Sources */,
-				18B58B9E2098618700402410 /* TunnelTile.swift in Sources */,
-				18496C8E209368F600992AF3 /* FootpathTile.swift in Sources */,
+				18EE501520A5764F0059829C /* World.swift in Sources */,
+				18EE502E20A576660059829C /* Footpath.swift in Sources */,
+				18EE500B20A576360059829C /* AreaNode.swift in Sources */,
+				18EE504520A576770059829C /* ScaffoldChunk.swift in Sources */,
+				18EE504220A576710059829C /* MeshFace.swift in Sources */,
+				18EE506220A576880059829C /* WaterTile.swift in Sources */,
+				18EE505820A576830059829C /* Tunnel.swift in Sources */,
+				18EE505020A5767D0059829C /* TerrainType.swift in Sources */,
+				18EE505B20A576830059829C /* TunnelNode.swift in Sources */,
+				18EE502A20A576600059829C /* Foliage.swift in Sources */,
+				18EE502F20A576660059829C /* FootpathChunk.swift in Sources */,
+				18EE501D20A576550059829C /* Color.swift in Sources */,
+				18EE504420A576770059829C /* Scaffold.swift in Sources */,
+				18EE503920A5766C0059829C /* GridEdge.swift in Sources */,
+				18EE506020A576880059829C /* Water.swift in Sources */,
+				18EE505120A5767D0059829C /* TerrainLayer.swift in Sources */,
+				18EE501E20A576550059829C /* ColorPalette.swift in Sources */,
+				18EE502220A576550059829C /* Size.swift in Sources */,
+				18EE501420A5764F0059829C /* Meadow.swift in Sources */,
+				18EE501F20A576550059829C /* Coordinate.swift in Sources */,
+				18EE502320A576550059829C /* Volume.swift in Sources */,
+				18EE505920A576830059829C /* TunnelChunk.swift in Sources */,
+				18EE500920A576360059829C /* AreaChunk.swift in Sources */,
+				18EE503120A576660059829C /* FootpathNode.swift in Sources */,
+				18EE505A20A576830059829C /* TunnelTile.swift in Sources */,
+				18EE502020A576550059829C /* Polyhedron.swift in Sources */,
+				18EE506320A576880059829C /* WaterNode.swift in Sources */,
+				18EE502D20A576600059829C /* FoliageNode.swift in Sources */,
+				18EE503620A5766C0059829C /* Grid.swift in Sources */,
+				18EE502C20A576600059829C /* FoliageTile.swift in Sources */,
+				18EE504C20A5767D0059829C /* Terrain.swift in Sources */,
+				18EE504F20A5767D0059829C /* TerrainTile.swift in Sources */,
+				18EE503720A5766C0059829C /* GridChunk.swift in Sources */,
+				18EE503A20A5766C0059829C /* GridNode.swift in Sources */,
+				18EE503020A576660059829C /* FootpathTile.swift in Sources */,
+				18EE503B20A5766C0059829C /* GridTile.swift in Sources */,
+				18EE502120A576550059829C /* Polytope.swift in Sources */,
+				18EE502420A576590059829C /* Collection+Bundle.swift in Sources */,
+				18EE502B20A576600059829C /* FoliageChunk.swift in Sources */,
+				18EE506120A576880059829C /* WaterChunk.swift in Sources */,
+				18EE504720A576770059829C /* ScaffoldNode.swift in Sources */,
+				18EE503820A5766C0059829C /* GridCorner.swift in Sources */,
+				18EE504620A576770059829C /* ScaffoldTile.swift in Sources */,
+				18EE500820A576360059829C /* Area.swift in Sources */,
+				18EE500A20A576360059829C /* AreaTile.swift in Sources */,
+				18EE504D20A5767D0059829C /* TerrainChunk.swift in Sources */,
+				18EE504E20A5767D0059829C /* TerrainNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		187121E520931C77002488E0 /* Sources */ = {
+		1819B73520A574F800BEE585 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1880694620A071D6002F6EC0 /* TerrainLayerTests.swift in Sources */,
-				18713246209735DF0084565F /* SizeTests.swift in Sources */,
-				18496C97209373B800992AF3 /* PolyhedronTests.swift in Sources */,
-				18713240209720080084565F /* VolumeTests.swift in Sources */,
-				18496C822093670800992AF3 /* CoordinateTests.swift in Sources */,
-				185200F52096094400D3ACC6 /* WorldTests.swift in Sources */,
-				18A8AB242099D6DA00AF30BB /* TerrainTests.swift in Sources */,
-				18496C95209373AD00992AF3 /* PolytopeTests.swift in Sources */,
-				185200F820960CBE00D3ACC6 /* GridTests.swift in Sources */,
+				18EE50B220A57BD40059829C /* ColorPalette.swift in Sources */,
+				18EE50DB20A57BE70059829C /* GridNode.swift in Sources */,
+				18EE50FF20A57BFB0059829C /* Water.swift in Sources */,
+				18EE50B620A57BD40059829C /* Size.swift in Sources */,
+				18EE50BF20A57BD90059829C /* Collection+Bundle.swift in Sources */,
+				18EE509F20A57BC20059829C /* Area.swift in Sources */,
+				18EE50DC20A57BE70059829C /* GridTile.swift in Sources */,
+				18EE509E20A57B9E0059829C /* TerrainLayerTests.swift in Sources */,
+				18EE50E320A57BEE0059829C /* Scaffold.swift in Sources */,
+				18EE50EF20A57BF30059829C /* TerrainNode.swift in Sources */,
+				18EE50DA20A57BE70059829C /* GridEdge.swift in Sources */,
+				18EE510220A57BFB0059829C /* WaterNode.swift in Sources */,
+				18EE50AF20A57BCD0059829C /* Meadow.swift in Sources */,
+				18EE50D920A57BE60059829C /* GridCorner.swift in Sources */,
+				18EE510120A57BFB0059829C /* WaterTile.swift in Sources */,
+				18EE50CD20A57BE20059829C /* Footpath.swift in Sources */,
+				18EE50F720A57BF60059829C /* Tunnel.swift in Sources */,
+				18EE509820A57B9E0059829C /* PolytopeTests.swift in Sources */,
+				18EE50C320A57BDC0059829C /* FoliageTile.swift in Sources */,
+				18EE50DD20A57BE90059829C /* MeshFace.swift in Sources */,
+				18EE50B320A57BD40059829C /* Coordinate.swift in Sources */,
+				18EE510020A57BFB0059829C /* WaterChunk.swift in Sources */,
+				18EE509620A57B9E0059829C /* WorldTests.swift in Sources */,
+				18EE50D720A57BE60059829C /* Grid.swift in Sources */,
+				18EE50B120A57BD40059829C /* Color.swift in Sources */,
+				18EE50EE20A57BF30059829C /* TerrainChunk.swift in Sources */,
+				18EE50E620A57BEE0059829C /* ScaffoldNode.swift in Sources */,
+				18EE50C420A57BDC0059829C /* FoliageNode.swift in Sources */,
+				18EE50F020A57BF30059829C /* TerrainTile.swift in Sources */,
+				18EE50F820A57BF60059829C /* TunnelChunk.swift in Sources */,
+				18EE509B20A57B9E0059829C /* SizeTests.swift in Sources */,
+				18EE50B520A57BD40059829C /* Polytope.swift in Sources */,
+				18EE509C20A57B9E0059829C /* GridTests.swift in Sources */,
+				18EE509720A57B9E0059829C /* CoordinateTests.swift in Sources */,
+				18EE50D020A57BE20059829C /* FootpathNode.swift in Sources */,
+				18EE50E420A57BEE0059829C /* ScaffoldChunk.swift in Sources */,
+				18EE50B420A57BD40059829C /* Polyhedron.swift in Sources */,
+				18EE50D820A57BE60059829C /* GridChunk.swift in Sources */,
+				18EE50CF20A57BE20059829C /* FootpathTile.swift in Sources */,
+				18EE50A020A57BC20059829C /* AreaChunk.swift in Sources */,
+				18EE50E520A57BEE0059829C /* ScaffoldTile.swift in Sources */,
+				18EE50B020A57BCD0059829C /* World.swift in Sources */,
+				18EE50A120A57BC20059829C /* AreaTile.swift in Sources */,
+				18EE50C220A57BDC0059829C /* FoliageChunk.swift in Sources */,
+				18EE50ED20A57BF30059829C /* Terrain.swift in Sources */,
+				18EE509D20A57B9E0059829C /* TerrainTests.swift in Sources */,
+				18EE50F920A57BF60059829C /* TunnelTile.swift in Sources */,
+				18EE50FA20A57BF60059829C /* TunnelNode.swift in Sources */,
+				18EE50A220A57BC20059829C /* AreaNode.swift in Sources */,
+				18EE50B720A57BD40059829C /* Volume.swift in Sources */,
+				18EE509920A57B9E0059829C /* PolyhedronTests.swift in Sources */,
+				18EE509A20A57B9E0059829C /* VolumeTests.swift in Sources */,
+				18EE50C120A57BDC0059829C /* Foliage.swift in Sources */,
+				18EE50F120A57BF30059829C /* TerrainType.swift in Sources */,
+				18EE50CE20A57BE20059829C /* FootpathChunk.swift in Sources */,
+				18EE50F220A57BF30059829C /* TerrainLayer.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1819B74820A5752000BEE585 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				18EE501320A5764F0059829C /* World.swift in Sources */,
+				18EE503220A576660059829C /* Footpath.swift in Sources */,
+				18EE500720A576350059829C /* AreaNode.swift in Sources */,
+				18EE504920A576780059829C /* ScaffoldChunk.swift in Sources */,
+				18EE504320A576710059829C /* MeshFace.swift in Sources */,
+				18EE506620A576890059829C /* WaterTile.swift in Sources */,
+				18EE505C20A576830059829C /* Tunnel.swift in Sources */,
+				18EE505620A5767E0059829C /* TerrainType.swift in Sources */,
+				18EE505F20A576830059829C /* TunnelNode.swift in Sources */,
+				18EE502620A5765F0059829C /* Foliage.swift in Sources */,
+				18EE503320A576660059829C /* FootpathChunk.swift in Sources */,
+				18EE501620A576540059829C /* Color.swift in Sources */,
+				18EE504820A576780059829C /* Scaffold.swift in Sources */,
+				18EE503F20A5766D0059829C /* GridEdge.swift in Sources */,
+				18EE506420A576890059829C /* Water.swift in Sources */,
+				18EE505720A5767E0059829C /* TerrainLayer.swift in Sources */,
+				18EE501720A576540059829C /* ColorPalette.swift in Sources */,
+				18EE501B20A576540059829C /* Size.swift in Sources */,
+				18EE501220A5764F0059829C /* Meadow.swift in Sources */,
+				18EE501820A576540059829C /* Coordinate.swift in Sources */,
+				18EE501C20A576540059829C /* Volume.swift in Sources */,
+				18EE505D20A576830059829C /* TunnelChunk.swift in Sources */,
+				18EE500520A576350059829C /* AreaChunk.swift in Sources */,
+				18EE503520A576660059829C /* FootpathNode.swift in Sources */,
+				18EE505E20A576830059829C /* TunnelTile.swift in Sources */,
+				18EE501920A576540059829C /* Polyhedron.swift in Sources */,
+				18EE506720A576890059829C /* WaterNode.swift in Sources */,
+				18EE502920A5765F0059829C /* FoliageNode.swift in Sources */,
+				18EE503C20A5766D0059829C /* Grid.swift in Sources */,
+				18EE502820A5765F0059829C /* FoliageTile.swift in Sources */,
+				18EE505220A5767E0059829C /* Terrain.swift in Sources */,
+				18EE505520A5767E0059829C /* TerrainTile.swift in Sources */,
+				18EE503D20A5766D0059829C /* GridChunk.swift in Sources */,
+				18EE504020A5766D0059829C /* GridNode.swift in Sources */,
+				18EE503420A576660059829C /* FootpathTile.swift in Sources */,
+				18EE504120A5766D0059829C /* GridTile.swift in Sources */,
+				18EE501A20A576540059829C /* Polytope.swift in Sources */,
+				18EE502520A5765A0059829C /* Collection+Bundle.swift in Sources */,
+				18EE502720A5765F0059829C /* FoliageChunk.swift in Sources */,
+				18EE506520A576890059829C /* WaterChunk.swift in Sources */,
+				18EE504B20A576780059829C /* ScaffoldNode.swift in Sources */,
+				18EE503E20A5766D0059829C /* GridCorner.swift in Sources */,
+				18EE504A20A576780059829C /* ScaffoldTile.swift in Sources */,
+				18EE500420A576350059829C /* Area.swift in Sources */,
+				18EE500620A576350059829C /* AreaTile.swift in Sources */,
+				18EE505320A5767E0059829C /* TerrainChunk.swift in Sources */,
+				18EE505420A5767E0059829C /* TerrainNode.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1819B75120A5752000BEE585 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				18EE50B920A57BD50059829C /* ColorPalette.swift in Sources */,
+				18EE50D520A57BE60059829C /* GridNode.swift in Sources */,
+				18EE50FB20A57BFA0059829C /* Water.swift in Sources */,
+				18EE50BD20A57BD50059829C /* Size.swift in Sources */,
+				18EE50C020A57BD90059829C /* Collection+Bundle.swift in Sources */,
+				18EE50A320A57BC30059829C /* Area.swift in Sources */,
+				18EE50D620A57BE60059829C /* GridTile.swift in Sources */,
+				18EE509520A57A960059829C /* TerrainLayerTests.swift in Sources */,
+				18EE50DF20A57BED0059829C /* Scaffold.swift in Sources */,
+				18EE50E920A57BF20059829C /* TerrainNode.swift in Sources */,
+				18EE50D420A57BE60059829C /* GridEdge.swift in Sources */,
+				18EE50FE20A57BFA0059829C /* WaterNode.swift in Sources */,
+				18EE50AD20A57BCC0059829C /* Meadow.swift in Sources */,
+				18EE50D320A57BE60059829C /* GridCorner.swift in Sources */,
+				18EE50FD20A57BFA0059829C /* WaterTile.swift in Sources */,
+				18EE50C920A57BE20059829C /* Footpath.swift in Sources */,
+				18EE50F320A57BF60059829C /* Tunnel.swift in Sources */,
+				18EE509320A57A960059829C /* SizeTests.swift in Sources */,
+				18EE50C720A57BDD0059829C /* FoliageTile.swift in Sources */,
+				18EE50DE20A57BEA0059829C /* MeshFace.swift in Sources */,
+				18EE50BA20A57BD50059829C /* Coordinate.swift in Sources */,
+				18EE50FC20A57BFA0059829C /* WaterChunk.swift in Sources */,
+				18EE508E20A57A960059829C /* WorldTests.swift in Sources */,
+				18EE50D120A57BE60059829C /* Grid.swift in Sources */,
+				18EE50B820A57BD50059829C /* Color.swift in Sources */,
+				18EE50E820A57BF20059829C /* TerrainChunk.swift in Sources */,
+				18EE50E220A57BED0059829C /* ScaffoldNode.swift in Sources */,
+				18EE50C820A57BDD0059829C /* FoliageNode.swift in Sources */,
+				18EE50EA20A57BF20059829C /* TerrainTile.swift in Sources */,
+				18EE50F420A57BF60059829C /* TunnelChunk.swift in Sources */,
+				18EE509220A57A960059829C /* VolumeTests.swift in Sources */,
+				18EE50BC20A57BD50059829C /* Polytope.swift in Sources */,
+				18EE509120A57A960059829C /* PolyhedronTests.swift in Sources */,
+				18EE509020A57A960059829C /* PolytopeTests.swift in Sources */,
+				18EE50CC20A57BE20059829C /* FootpathNode.swift in Sources */,
+				18EE50E020A57BED0059829C /* ScaffoldChunk.swift in Sources */,
+				18EE50BB20A57BD50059829C /* Polyhedron.swift in Sources */,
+				18EE50D220A57BE60059829C /* GridChunk.swift in Sources */,
+				18EE50CB20A57BE20059829C /* FootpathTile.swift in Sources */,
+				18EE50A420A57BC30059829C /* AreaChunk.swift in Sources */,
+				18EE50E120A57BED0059829C /* ScaffoldTile.swift in Sources */,
+				18EE50AE20A57BCC0059829C /* World.swift in Sources */,
+				18EE50A520A57BC30059829C /* AreaTile.swift in Sources */,
+				18EE50C620A57BDD0059829C /* FoliageChunk.swift in Sources */,
+				18EE50E720A57BF20059829C /* Terrain.swift in Sources */,
+				18EE509420A57A960059829C /* TerrainTests.swift in Sources */,
+				18EE50F520A57BF60059829C /* TunnelTile.swift in Sources */,
+				18EE50F620A57BF60059829C /* TunnelNode.swift in Sources */,
+				18EE50A620A57BC30059829C /* AreaNode.swift in Sources */,
+				18EE50BE20A57BD50059829C /* Volume.swift in Sources */,
+				18EE508F20A57A960059829C /* CoordinateTests.swift in Sources */,
+				18EE508D20A57A5C0059829C /* GridTests.swift in Sources */,
+				18EE50C520A57BDD0059829C /* Foliage.swift in Sources */,
+				18EE50EB20A57BF20059829C /* TerrainType.swift in Sources */,
+				18EE50CA20A57BE20059829C /* FootpathChunk.swift in Sources */,
+				18EE50EC20A57BF20059829C /* TerrainLayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		187121EC20931C77002488E0 /* PBXTargetDependency */ = {
+		1819B73C20A574F800BEE585 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 187121DF20931C77002488E0 /* Meadow */;
-			targetProxy = 187121EB20931C77002488E0 /* PBXContainerItemProxy */;
+			target = 1819B73020A574F800BEE585 /* Meadow-iOS */;
+			targetProxy = 1819B73B20A574F800BEE585 /* PBXContainerItemProxy */;
+		};
+		1819B75820A5752000BEE585 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1819B74C20A5752000BEE585 /* Meadow-macOS */;
+			targetProxy = 1819B75720A5752000BEE585 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		1819B74320A574F800BEE585 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E98FADB84933C02A52D44A10 /* Pods-Meadow-iOS.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Meadow/Platforms/iOS/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.script-orchard.Meadow-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		1819B74420A574F800BEE585 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C4DFC12260F62F5244575156 /* Pods-Meadow-iOS.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Meadow/Platforms/iOS/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.script-orchard.Meadow-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		1819B74620A574F800BEE585 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C2CC349B0B0595F31A91855C /* Pods-Meadow-iOSTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = "Meadow Tests/Platforms/iOS/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.script-orchard.Meadow-iOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		1819B74720A574F800BEE585 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4B35CC9A2B4D0CE6C525831F /* Pods-Meadow-iOSTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = "Meadow Tests/Platforms/iOS/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.script-orchard.Meadow-iOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		1819B75F20A5752000BEE585 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 95CA003B80C69F6F0B76DA7B /* Pods-Meadow-macOS.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = Meadow/Platforms/macOS/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.script-orchard.Meadow-macOS";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+			};
+			name = Debug;
+		};
+		1819B76020A5752000BEE585 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 82F5F34E1A212472BCBED43F /* Pods-Meadow-macOS.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = Meadow/Platforms/macOS/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.script-orchard.Meadow-macOS";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+			};
+			name = Release;
+		};
+		1819B76220A5752000BEE585 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4B593656DAE43AE767449361 /* Pods-Meadow-macOSTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "Meadow Tests/Platforms/macOS/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.script-orchard.Meadow-macOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Debug;
+		};
+		1819B76320A5752000BEE585 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FCF2E4DCFDB9FE7123F2576E /* Pods-Meadow-macOSTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "Meadow Tests/Platforms/macOS/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.script-orchard.Meadow-macOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Release;
+		};
 		187121F220931C77002488E0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -792,6 +1540,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -849,6 +1598,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
@@ -859,131 +1609,50 @@
 			};
 			name = Release;
 		};
-		187121F520931C77002488E0 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 14A74BE995E1DD6F159F97B0 /* Pods-Meadow.debug.xcconfig */;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = Meadow/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.script-orchard.Meadow";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
-			};
-			name = Debug;
-		};
-		187121F620931C77002488E0 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = EB32A0F3181023D988DCC3D4 /* Pods-Meadow.release.xcconfig */;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = Meadow/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.script-orchard.Meadow";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator";
-				SWIFT_VERSION = 4.0;
-			};
-			name = Release;
-		};
-		187121F820931C77002488E0 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = B5E9543EE7C3772BE98B8C91 /* Pods-MeadowTests.debug.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = "Meadow Tests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.script-orchard.MeadowTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-			};
-			name = Debug;
-		};
-		187121F920931C77002488E0 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1A97612B550B166B0831FC9A /* Pods-MeadowTests.release.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = "Meadow Tests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.script-orchard.MeadowTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		1819B74220A574F800BEE585 /* Build configuration list for PBXNativeTarget "Meadow-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1819B74320A574F800BEE585 /* Debug */,
+				1819B74420A574F800BEE585 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1819B74520A574F800BEE585 /* Build configuration list for PBXNativeTarget "Meadow-iOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1819B74620A574F800BEE585 /* Debug */,
+				1819B74720A574F800BEE585 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1819B75E20A5752000BEE585 /* Build configuration list for PBXNativeTarget "Meadow-macOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1819B75F20A5752000BEE585 /* Debug */,
+				1819B76020A5752000BEE585 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1819B76120A5752000BEE585 /* Build configuration list for PBXNativeTarget "Meadow-macOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1819B76220A5752000BEE585 /* Debug */,
+				1819B76320A5752000BEE585 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		187121DA20931C77002488E0 /* Build configuration list for PBXProject "Meadow" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				187121F220931C77002488E0 /* Debug */,
 				187121F320931C77002488E0 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		187121F420931C77002488E0 /* Build configuration list for PBXNativeTarget "Meadow" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				187121F520931C77002488E0 /* Debug */,
-				187121F620931C77002488E0 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		187121F720931C77002488E0 /* Build configuration list for PBXNativeTarget "MeadowTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				187121F820931C77002488E0 /* Debug */,
-				187121F920931C77002488E0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

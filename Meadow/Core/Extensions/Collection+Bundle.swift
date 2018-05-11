@@ -6,6 +6,8 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
+import Foundation
+
 extension Collection where Iterator.Element: Bundle {
     
     func path(forResource resource: String, ofType type: String) -> String? {

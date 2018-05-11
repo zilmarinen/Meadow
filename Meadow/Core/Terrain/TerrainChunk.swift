@@ -6,7 +6,10 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-
+/*!
+ @class TerrainChunk
+ @abstract Grid chunks are the parent class for all grid tiles and nodes.
+ */
 public class TerrainChunk: GridChunk<TerrainTile, TerrainNode> {
     
 }

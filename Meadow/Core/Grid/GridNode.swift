@@ -44,10 +44,10 @@ public class GridNode {
     let volume: Volume
     
     /*!
-     @property geometry
-     @abstract Returns the geometry of the node.
+     @property mesh
+     @abstract Returns the mesh of the node.
      */
-    var geometry: SCNGeometry { return SCNBox(width: CGFloat(volume.size.width), height: CGFloat(volume.size.height), length: CGFloat(volume.size.depth), chamferRadius: 1.0) }
+    var mesh: Mesh { return Mesh(faces: [], triangles: []) }
     
     /*!
      @method init:volume

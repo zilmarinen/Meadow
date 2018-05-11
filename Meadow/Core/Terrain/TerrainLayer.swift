@@ -8,26 +8,62 @@
 
 import SceneKit
 
+/*!
+ @class TerrainLayer
+ @abstract TerrainLayers define a volume of space within a TerrainNode represented as a Polyhedron.
+ */
 public class TerrainLayer {
     
+    /*!
+     @struct TerrainLayerHierarchy
+     @abstract Defines the relationship between upper and lower nodes when stacked.
+     */
     public struct TerrainLayerHierarchy {
         
         var upper: TerrainLayer?
         var lower: TerrainLayer?
     }
     
+    /*!
+     @property isDirty
+     @abstract Represents staleness of the layer.
+     */
     private var isDirty: Bool = true
     
+    /*!
+     @property corners
+     @abstract Defines the world height values of the layers corners.
+     */
     private var corners: [Int]
     
+    /*!
+     @property cachedPolyhedron
+     @abstract Cached version of the Polyhedron calculated after becoming dirty.
+     */
     private var cachedPolyhedron: Polyhedron?
     
+    /*!
+     @property node
+     @param node The parent node for the layer.
+     */
     unowned let node: TerrainNode
     
+    /*!
+     @property type
+     @param terrainType The terrain type used to paint the layer.
+     */
     let type: TerrainType
     
+    /*!
+     @property hierarchy
+     @abstract Defines the relationship between upper and lower nodes when stacked.
+     */
     var hierarchy: TerrainLayerHierarchy
     
+    /*!
+     @property polyhedron
+     @abstract Returns a Polyhedron calculated from the world corner heights in relation to any upper and/or lower layers.
+     */
     var polyhedron: Polyhedron {
         
         if !isDirty {
@@ -62,6 +98,13 @@ public class TerrainLayer {
         return cachedPolyhedron!
     }
     
+    /*!
+     @method init:node:terrainType
+     @abstract Creates and initialises a layer with the specified node and terrain type.
+     @param node The parent node for the layer.
+     @param terrainType The terrain type used to paint the layer.
+     */
+    
     init(node: TerrainNode, terrainType: TerrainType) {
         
         self.node = node
@@ -76,6 +119,10 @@ public class TerrainLayer {
 
 extension TerrainLayer: Equatable {
     
+    /*!
+     @method ==
+     @abstract Determine the equality of two TerrainLayers.
+     */
     public static func == (lhs: TerrainLayer, rhs: TerrainLayer) -> Bool {
         
         return lhs.type == rhs.type && lhs.polyhedron == rhs.polyhedron
@@ -84,6 +131,10 @@ extension TerrainLayer: Equatable {
 
 extension TerrainLayer {
     
+    /*!
+     @method becomeDirty
+     @abstract If not already true, toggle the isDirty flag to true.
+     */
     func becomeDirty() {
         
         if isDirty { return }
@@ -96,6 +147,14 @@ extension TerrainLayer {
 
 extension TerrainLayer {
     
+    /*!
+     @method set:height:corner:smooth
+     @abstract Clamp and set the height of the specified corner to be both within the world bounds and relative to any upper and/or lower nodes.
+     @discussion Setting the height of a corner will also constrain any connected corner heights for the layer. Smooth adjustments to neighbouring nodes can also be propagated by setting the `smooth` parameter to `true`.
+     @param height The world height of the corner.
+     @param corner The corner for which the height should be set.
+     @param smooth Determines whether neighbouring nodes should be updated of changes in height.
+     */
     func set(height: Int, corner: GridCorner, smooth: Bool = false) {
         
         var value = min(max(height, World.Floor), World.Ceiling)
@@ -115,44 +174,42 @@ extension TerrainLayer {
             corners[corner.rawValue] = value
             
             node.becomeDirty()
-        }
-        
-        let connectedCorners = GridCorner.Corners(corner: corner)
-        let oppositeCorner = GridCorner.Opposite(corner: corner)
-        
-        resolve(height: value, corner: connectedCorners[0], clamp: 1)
-        resolve(height: value, corner: connectedCorners[1], clamp: 1)
-        resolve(height: value, corner: oppositeCorner, clamp: 2)
-        
-        if smooth {
             
-            let connectedEdges = GridEdge.Edges(corner: corner)
+            let connectedCorners = GridCorner.Corners(corner: corner)
+            let oppositeCorner = GridCorner.Opposite(corner: corner)
             
-            let ce0 = connectedEdges[0]
-            let ce1 = connectedEdges[1]
+            resolve(height: value, corner: connectedCorners[0], clamp: 1)
+            resolve(height: value, corner: connectedCorners[1], clamp: 1)
+            resolve(height: value, corner: oppositeCorner, clamp: 2)
             
-            let ac0 = GridCorner.Adjacent(corner: corner, edge: ce0)
-            let ac1 = GridCorner.Adjacent(corner: corner, edge: ce1)
-            
-            let n0 = node.find(neighbour: ce0)?.node as? TerrainNode
-            let n1 = node.find(neighbour: ce1)?.node as? TerrainNode
-            
-            let n2 = (n0 != nil ? n0!.find(neighbour: ce1) : (n1 != nil ? n1!.find(neighbour: ce0) : nil))?.node as? TerrainNode
-            
-            if let n0 = n0, let topLayer = n0.topLayer { topLayer.propagate(height: value, corner: ac0, smooth: smooth) }
-            if let n1 = n1, let topLayer = n1.topLayer { topLayer.propagate(height: value, corner: ac1, smooth: smooth) }
-            if let n2 = n2, let topLayer = n2.topLayer { topLayer.propagate(height: value, corner: oppositeCorner, smooth: smooth) }
-        }
-    }
-    
-    func propagate(height: Int, corner: GridCorner, smooth: Bool) {
-        
-        if get(height: corner) != height {
-            
-            set(height: height, corner: corner, smooth: smooth)
+            if smooth {
+                
+                let connectedEdges = GridEdge.Edges(corner: corner)
+                
+                let ce0 = connectedEdges[0]
+                let ce1 = connectedEdges[1]
+                
+                let ac0 = GridCorner.Adjacent(corner: corner, edge: ce0)
+                let ac1 = GridCorner.Adjacent(corner: corner, edge: ce1)
+                
+                let n0 = node.find(neighbour: ce0)?.node as? TerrainNode
+                let n1 = node.find(neighbour: ce1)?.node as? TerrainNode
+                let n2 = (n0 != nil ? n0!.find(neighbour: ce1) : (n1 != nil ? n1!.find(neighbour: ce0) : nil))?.node as? TerrainNode
+                
+                if let n0 = n0, let topLayer = n0.topLayer { topLayer.set(height: value, corner: ac0, smooth: smooth) }
+                if let n1 = n1, let topLayer = n1.topLayer { topLayer.set(height: value, corner: ac1, smooth: smooth) }
+                if let n2 = n2, let topLayer = n2.topLayer { topLayer.set(height: value, corner: oppositeCorner, smooth: smooth) }
+            }
         }
     }
     
+    /*!
+     @method resolve:height:corner:clamp
+     @abstract Resolve the height of a corner within the degree of tolerance defined by `clamp`.
+     @param height The world height of the corner.
+     @param corner The corner for which the height should be set.
+     @param clamp Defines a level of tolerance for constraining differences in height.
+     */
     func resolve(height: Int, corner: GridCorner, clamp: Int) {
      
         let delta = get(height: corner) - height
@@ -163,6 +220,11 @@ extension TerrainLayer {
         }
     }
     
+    /*!
+     @method get:corner
+     @abstract Returns the world height of the given corner.
+     @param corner The corner to return the world height for.
+     */
     func get(height corner: GridCorner) -> Int {
         
         return corners[corner.rawValue]

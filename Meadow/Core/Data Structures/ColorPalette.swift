@@ -12,8 +12,27 @@
  */
 public struct ColorPalette: Decodable {
     
+    /*!
+     @property primary
+     @abstract The primary Color of the ColorPalette.
+     */
     let primary: Color
+    
+    /*!
+     @property secondary
+     @abstract The secondary Color of the ColorPalette.
+     */
     let secondary: Color
+    
+    /*!
+     @property tertiary
+     @abstract The tertiary Color of the ColorPalette.
+     */
     let tertiary: Color
+    
+    /*!
+     @property quaternary
+     @abstract The quaternary Color of the ColorPalette.
+     */
     let quaternary: Color
 }

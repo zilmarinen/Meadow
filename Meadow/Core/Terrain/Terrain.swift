@@ -8,10 +8,23 @@
 
 import Foundation
 
+/*!
+ @class Terrain
+ @abstract Terrain is a Grid type that manages the addition and removal of TerrainNodes.
+ */
 public final class Terrain: Grid<TerrainChunk, TerrainTile, TerrainNode> {
 
+    /*!
+     @property terrainTypes
+     @abstract Array of TerrainTypes loaded from disc.
+     */
     var terrainTypes: [TerrainType] = []
     
+    /*!
+     @method init:delegate
+     @abstract Creates and initialises a grid with the specified delegate.
+     @param delegate The delegate to call out to when grid becomes dirty.
+     */
     public required init(delegate: GridDelegate) {
         
         super.init(delegate: delegate)
@@ -19,6 +32,10 @@ public final class Terrain: Grid<TerrainChunk, TerrainTile, TerrainNode> {
         loadTerrainTypes()
     }
     
+    /*!
+     @method initWithCoder
+     @abstract Support coding and decoding via NSKeyedArchiver.
+     */
     public required init?(coder aDecoder: NSCoder) {
         
         fatalError("init(coder:) has not been implemented")
@@ -27,6 +44,11 @@ public final class Terrain: Grid<TerrainChunk, TerrainTile, TerrainNode> {
 
 extension Terrain {
     
+    /*!
+     @method add:node
+     @abstract Attempt to create and return a new grid node at the requested coordinate.
+     @param coordinate The coordinate used to define the volume the grid node should occupy.
+     */
     public func add(node coordinate: Coordinate) -> TerrainNode? {
         
         let volume = TerrainTile.FixedVolume(coordinate)
@@ -47,6 +69,11 @@ extension Terrain {
         return nil
     }
     
+    /*!
+     @method remove:node
+     @abstract Attempt to find and remove the specified node.
+     @param node The node to be removed.
+     */
     public func remove(node: TerrainNode) -> Bool {
         
         if remove(node: node.volume.coordinate) {
@@ -65,6 +92,10 @@ extension Terrain {
 
 extension Terrain {
     
+    /*!
+     @method loadTerrainTypes
+     @abstract Load TerrainTypes from disc.
+     */
     func loadTerrainTypes() {
         
         do {
@@ -83,6 +114,11 @@ extension Terrain {
         }
     }
     
+    /*!
+     @method find:terrainType
+     @abstract Attempt to find and return the appropriate TerrainType with a matching name.
+     @param name The name of the TerrainType to be found and returned.
+     */
     public func find(terrainType name: String) -> TerrainType? {
         
         return terrainTypes.first { terrainType -> Bool in

@@ -6,12 +6,28 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
+/*!
+ @class TerrainNode
+ @abstract TerrainNodes are used to define regions within a Grid upon which TerrainLayers can be added.
+ */
 public class TerrainNode: GridNode {
     
+    /*!
+     @property neighbours
+     @abstract An array of neighbouring grid nodes.
+     */
     private var neighbours: Set<GridNodeNeighbour> = []
     
+    /*!
+     @property layers
+     @abstract Holds instances of TerrainLayers added to the node.
+     */
     private var layers: [TerrainLayer] = []
     
+    /*!
+     @property topLayer
+     @abstract Returns the upper most TerrainLayer with the highest elevation.
+     */
     public var topLayer: TerrainLayer? {
         
         return layers.max(by: { (lhs, rhs) -> Bool in
@@ -23,6 +39,12 @@ public class TerrainNode: GridNode {
 
 extension TerrainNode {
     
+    /*!
+     @method add:neighbour:edge
+     @abstract Attempt to create a relationship between two nodes along the specified edge.
+     @param neighbour The node to become neighbours with.
+     @param edge The edge shared between the two nodes.
+     */
     func add(neighbour node: TerrainNode, edge: GridEdge) {
         
         if node.volume.coordinate.adjacency(to: volume.coordinate) != .adjacent {
@@ -44,6 +66,11 @@ extension TerrainNode {
         becomeDirty()
     }
     
+    /*!
+     @method remove:neighbour:edge
+     @abstract Attempt to remove the relationship between two nodes along the specified edge.
+     @param edge The edge shared between the two nodes.
+     */
     func remove(neighbour edge: GridEdge) {
         
         if let neighbour = find(neighbour: edge) {
@@ -63,6 +90,11 @@ extension TerrainNode {
         }
     }
     
+    /*!
+     @method find:neighbour
+     @abstract Attempt to find and return the neighbouring node along the specified edge.
+     @param edge The edge shared between the two nodes.
+     */
     func find(neighbour edge: GridEdge) -> GridNodeNeighbour? {
         
         return neighbours.first { neighbour -> Bool in
@@ -74,6 +106,11 @@ extension TerrainNode {
 
 extension TerrainNode {
     
+    /*!
+     @method add:layer
+     @abstract Attempt to create and return a new layer with the specified terrain type.
+     @param terrainType The terrain type for the layer.
+     */
     public func add(layer terrainType: TerrainType) -> TerrainLayer? {
         
         if let topLayer = topLayer {
@@ -106,6 +143,11 @@ extension TerrainNode {
         return layer
     }
     
+    /*!
+     @method remove:layer
+     @abstract Attempt to find and remove the specified layer.
+     @param layer The layer to be found and removed.
+     */
     public func remove(layer: TerrainLayer) {
         
         if let index = layers.index(of: layer) {

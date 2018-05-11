@@ -439,6 +439,7 @@ class TerrainLayerTests: XCTestCase {
         XCTAssertEqual(l3!.get(height: .southEast), (World.Floor + 2))
         XCTAssertEqual(l3!.get(height: .southWest), (World.Floor + 1))
         
+        l0?.set(height: (World.Floor + 4), corner: .northWest, smooth: true)
         l0?.set(height: (World.Floor + 5), corner: .northWest, smooth: true)
         
         XCTAssertEqual(l0!.get(height: .northWest), (World.Floor + 5))

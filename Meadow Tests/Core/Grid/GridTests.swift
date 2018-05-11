@@ -63,7 +63,7 @@ class GridTests: XCTestCase {
         XCTAssertNotNil(t0)
         XCTAssertNotNil(c0)
         
-        grid.remove(chunk: c0!.volume.coordinate)
+        let result = grid.remove(chunk: c0!.volume.coordinate)
         
         let n1 = grid.find(node: n0!.volume.coordinate)
         let t1 = grid.find(tile: t0!.volume.coordinate)
@@ -72,6 +72,7 @@ class GridTests: XCTestCase {
         XCTAssertNil(n1)
         XCTAssertNil(t1)
         XCTAssertNil(c1)
+        XCTAssertTrue(result)
         
         expect.fulfill()
         
@@ -94,7 +95,7 @@ class GridTests: XCTestCase {
         XCTAssertNotNil(t0)
         XCTAssertNotNil(c0)
         
-        grid.remove(tile: t0!.volume.coordinate)
+        let result = grid.remove(tile: t0!.volume.coordinate)
         
         let n1 = grid.find(node: n0!.volume.coordinate)
         let t1 = grid.find(tile: t0!.volume.coordinate)
@@ -103,6 +104,7 @@ class GridTests: XCTestCase {
         XCTAssertNil(n1)
         XCTAssertNil(t1)
         XCTAssertNil(c1)
+        XCTAssertTrue(result)
         
         expect.fulfill()
         
@@ -125,7 +127,7 @@ class GridTests: XCTestCase {
         XCTAssertNotNil(t0)
         XCTAssertNotNil(c0)
         
-        grid.remove(node: n0!.volume.coordinate)
+        let result = grid.remove(node: n0!.volume.coordinate)
         
         let n1 = grid.find(node: n0!.volume.coordinate)
         let t1 = grid.find(tile: t0!.volume.coordinate)
@@ -134,6 +136,7 @@ class GridTests: XCTestCase {
         XCTAssertNil(n1)
         XCTAssertNil(t1)
         XCTAssertNil(c1)
+        XCTAssertTrue(result)
         
         expect.fulfill()
         

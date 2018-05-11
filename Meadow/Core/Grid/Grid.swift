@@ -116,7 +116,7 @@ extension Grid {
     /*!
      @method add:node
      @abstract Attempt to create and return a new grid node with the requested volume.
-     @param volume The volume the grid node should occupy
+     @param volume The volume the grid node should occupy.
      */
     func add(node volume: Volume) -> Node? {
         
@@ -148,7 +148,7 @@ extension Grid {
     /*!
      @method remove:chunk
      @abstract Attempt to find and remove the appropriate chunk at the specified coordinate.
-     @param coordinate: Coordinate of the chunk to be found and removed.
+     @param coordinate Coordinate of the chunk to be found and removed.
      @discussion The coordinate provided will be used to find the nearest enclosing bounds along the x and z axis irrelevant of the y axis value.
      */
     func remove(chunk coordinate: Coordinate) -> Bool {
@@ -167,8 +167,8 @@ extension Grid {
     
     /*!
      @method remove:tile
-     @abstract Attempt to find and remove the appropriate tile at the specified coordinate
-     @param coordinate: Coordinate of the tile to be found and removed.
+     @abstract Attempt to find and remove the appropriate tile at the specified coordinate.
+     @param coordinate Coordinate of the tile to be found and removed.
      @discussion The coordinate provided will be used to find the tile matching both the x and z axis irrelevant of the y axis value.
      */
     func remove(tile coordinate: Coordinate) -> Bool {
@@ -192,8 +192,8 @@ extension Grid {
     
     /*!
      @method remove:node
-     @abstract Attempt to find and remove the appropriate node at the specified coordinate
-     @param coordinate: Coordinate of the node to be found and removed.
+     @abstract Attempt to find and remove the appropriate node at the specified coordinate.
+     @param coordinate Coordinate of the node to be found and removed.
      @discussion The coordinate provided will be used to find the nearest enclosing bounds matching both the x and z axis where the y axis value also intersects with the nodes bounds.
      */
     func remove(node coordinate: Coordinate) -> Bool {
@@ -225,7 +225,7 @@ extension Grid {
     /*!
      @method find:chunk
      @abstract Attempt to find and return the appropriate chunk at the specified coordinate.
-     @param coordinate: Coordinate of the chunk to be found and returned.
+     @param coordinate Coordinate of the chunk to be found and returned.
      @discussion The coordinate provided will be used to find the nearest enclosing bounds along the x and z axis irrelevant of the y axis value.
      */
     func find(chunk coordinate: Coordinate) -> Chunk? {
@@ -238,8 +238,8 @@ extension Grid {
     
     /*!
      @method find:tile
-     @abstract Attempt to find and return the appropriate tile at the specified coordinate
-     @param coordinate: Coordinate of the tile to be found and returned.
+     @abstract Attempt to find and return the appropriate tile at the specified coordinate.
+     @param coordinate Coordinate of the tile to be found and returned.
      @discussion The coordinate provided will be used to find the tile matching both the x and z axis irrelevant of the y axis value.
      */
     func find(tile coordinate: Coordinate) -> Tile? {
@@ -254,8 +254,8 @@ extension Grid {
     
     /*!
      @method find:node
-     @abstract Attempt to find and return the appropriate node at the specified coordinate
-     @param coordinate: Coordinate of the node to be found and returned.
+     @abstract Attempt to find and return the appropriate node at the specified coordinate.
+     @param coordinate Coordinate of the node to be found and returned.
      @discussion The coordinate provided will be used to find the nearest enclosing bounds matching both the x and z axis where the y axis value also intersects with the nodes bounds.
      */
     func find(node coordinate: Coordinate) -> Node? {

@@ -101,10 +101,14 @@ extension GridChunk {
         
         if !isDirty { return }
         
-        if let tile = tiles.first {
-        
-            geometry = tile.geometry
+        let meshes = tiles.compactMap { tile -> Mesh? in
+            
+            return tile.mesh
         }
+        
+        let mesh = Mesh(meshes: meshes)
+        
+        geometry = SCNGeometry(mesh: mesh)
         
         isDirty = false
     }

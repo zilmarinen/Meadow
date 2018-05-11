@@ -6,12 +6,10 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-import SceneKit
-
+/*!
+ @class TerrainTile
+ @abstract Grid tiles are the parent class for any child nodes.
+ */
 public class TerrainTile: GridTile<TerrainNode> {
     
-    override var geometry: SCNGeometry {
-        
-        return SCNBox(width: 1.0, height: 1.0, length: 1.0, chamferRadius: 1.0)
-    }
 }

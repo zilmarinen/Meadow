@@ -12,9 +12,28 @@
  */
 public struct Color: Decodable {
     
+    /*!
+     @property red
+     @abstract The red component of the Color.
+     */
     let red: SCNFloat
+    
+    /*!
+     @property green
+     @abstract The green component of the Color.
+     */
     let green: SCNFloat
+    
+    /*!
+     @property blue
+     @abstract The blue component of the Color.
+     */
     let blue: SCNFloat
+    
+    /*!
+     @property alpha
+     @abstract The alpha component of the Color.
+     */
     let alpha: SCNFloat
     
     /*!

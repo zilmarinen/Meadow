@@ -44,10 +44,18 @@ public class GridTile<Node: GridNode> {
     var isEmpty: Bool { return nodes.isEmpty }
     
     /*!
-     @property geometry
-     @abstract Returns the geometry of the tiles child nodes.
+     @property mesh
+     @abstract Returns the compound mesh of the tiles child nodes.
      */
-    var geometry: SCNGeometry { return SCNBox(width: CGFloat(volume.size.width), height: CGFloat(volume.size.height), length: CGFloat(volume.size.depth), chamferRadius: 1.0) }
+    var mesh: Mesh {
+        
+        let meshes = nodes.compactMap { node -> Mesh? in
+            
+            return node.mesh
+        }
+        
+        return Mesh(meshes: meshes)
+    }
     
     /*!
      @method init:volume

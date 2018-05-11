@@ -6,8 +6,6 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-import  SceneKit
-
 /*!
  @struct Coordinate
  @abstract Defines a Coordinate with x, y and z components as an integer value.

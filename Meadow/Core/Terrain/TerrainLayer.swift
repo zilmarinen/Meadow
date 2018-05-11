@@ -41,7 +41,7 @@ public class TerrainLayer {
         
         for index in 0..<corners.count {
             
-            vertices.append(SCNVector3(x: CGFloat(node.volume.coordinate.x) + CGFloat(unit.vertices[index].x), y: World.Y(y: corners[index]), z: CGFloat(node.volume.coordinate.z) + unit.vertices[index].z))
+            vertices.append(SCNVector3(x: SCNFloat(node.volume.coordinate.x) + unit.vertices[index].x, y: World.Y(y: corners[index]), z: SCNFloat(node.volume.coordinate.z) + unit.vertices[index].z))
         }
         
         let upperPolytope = Polytope(vertices: vertices)
@@ -54,7 +54,7 @@ public class TerrainLayer {
         }
         else {
             
-            lowerPolytope = Polytope(x: CGFloat(node.volume.coordinate.x), y: World.Y(y: node.volume.coordinate.y), z: CGFloat(node.volume.coordinate.z))
+            lowerPolytope = Polytope(x: SCNFloat(node.volume.coordinate.x), y: World.Y(y: node.volume.coordinate.y), z: SCNFloat(node.volume.coordinate.z))
         }
         
         cachedPolyhedron = Polyhedron(upperPolytope: upperPolytope, lowerPolytope: lowerPolytope)

@@ -15,5 +15,3 @@ FOUNDATION_EXPORT double Meadow_iOSVersionNumber;
 FOUNDATION_EXPORT const unsigned char Meadow_iOSVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <Meadow_iOS/PublicHeader.h>
-
-

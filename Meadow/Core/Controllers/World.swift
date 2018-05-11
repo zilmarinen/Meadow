@@ -17,8 +17,8 @@ public enum World {
     static var Ceiling: Int = 10
     static var Floor: Int = -10
     
-    static var UnitXZ: CGFloat = 0.5
-    static var UnitY: CGFloat = 0.25
+    static var UnitXZ: SCNFloat = 0.5
+    static var UnitY: SCNFloat = 0.25
     
     static var ChunkSize: Int = 5
     static var TileSize: Int = 1
@@ -30,16 +30,16 @@ extension World {
      @method Y:y
      @abstract Convert from integer value grid coordinates to floating point world coordinates.
      */
-    static func Y(y: Int) -> CGFloat {
+    static func Y(y: Int) -> SCNFloat {
         
-        return CGFloat(y) * UnitY
+        return SCNFloat(y) * UnitY
     }
     
     /*!
      @method Y:y
      @abstract Convert from floating point world coordinates to integer value grid coordinates.
      */
-    static func Y(y: CGFloat) -> Int {
+    static func Y(y: SCNFloat) -> Int {
         
         return Int(y / UnitY)
     }

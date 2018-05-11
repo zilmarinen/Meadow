@@ -6,8 +6,6 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-import SceneKit
-
 /*!
  @struct Volume
  @abstract Defines a Volume with a Coordinate and a Size.

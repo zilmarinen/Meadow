@@ -15,5 +15,3 @@ FOUNDATION_EXPORT double Meadow_macOSVersionNumber;
 FOUNDATION_EXPORT const unsigned char Meadow_macOSVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <Meadow_macOS/PublicHeader.h>
-
-

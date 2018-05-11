@@ -24,7 +24,7 @@ public struct Polytope {
      @property peak
      @abstract The greatest y axis value of the Polytopes vertices.
      */
-    var peak: CGFloat {
+    var peak: SCNFloat {
         
         return vertices.map{ $0.y }.max()!
     }
@@ -33,7 +33,7 @@ public struct Polytope {
      @property base
      @abstract The lowest y axis value of the Polytopes vertices.
      */
-    var base: CGFloat {
+    var base: SCNFloat {
         
         return vertices.map{ $0.y }.min()!
     }
@@ -55,7 +55,7 @@ public struct Polytope {
      @param y The value defining the Polytopes alignment along the y axis.
      @param z The value defining the Polytopes alignment along the z axis.
      */
-    init(x: CGFloat, y: CGFloat, z: CGFloat) {
+    init(x: SCNFloat, y: SCNFloat, z: SCNFloat) {
         
         self.vertices = [SCNVector3(x: (x + -World.UnitXZ), y: y, z: (z + World.UnitXZ)),
                          SCNVector3(x: (x + World.UnitXZ), y: y, z: (z + World.UnitXZ)),

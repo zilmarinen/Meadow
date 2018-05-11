@@ -11,7 +11,7 @@ import SceneKit
 /*!
  @protocol GridDelegate
  @abstract Delegate resolution of dirty nodes to an external handler.
- @discussion As a means to update the grid in which this node is contained, resolution of dirty nodes must be delegated upwards to inform the parent grid of any pending changes.
+ @discussion As a means to update the grid in which the node is contained, resolution of dirty nodes must be passed upwards to inform the delegate of any changes.
  */
 public protocol GridDelegate {
     
@@ -56,6 +56,19 @@ public class Grid<Chunk: GridChunk<Tile, Node>, Tile: GridTile<Node>, Node: Grid
     public required init?(coder aDecoder: NSCoder) {
         
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension Grid: GridDelegate {
+    
+    /*!
+     @method didBecomeDirty:node
+     @abstract GridDelegate callback to delegate grid node resultion upwards.
+     @discussion As a means to update the grid in which the node is contained, resolution of dirty nodes must be passed upwards to inform the delegate of any changes.
+     */
+    public func didBecomeDirty(node: GridNode) {
+        
+        delegate.didBecomeDirty(node: node)
     }
 }
 
@@ -116,7 +129,7 @@ extension Grid {
         
         let tile = find(tile: volume.coordinate) ?? Tile(volume: Tile.FixedVolume(volume.coordinate))
         
-        let node = Node(volume: volume)
+        let node = Node(delegate: self, volume: volume)
         
         if chunk.parent == nil {
             

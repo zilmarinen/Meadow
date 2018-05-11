@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		1819B72220A45E8400BEE585 /* terrain_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 18538B6320A311FF00077CE2 /* terrain_types.json */; };
 		1819B72520A45EE600BEE585 /* Collection+Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1819B72420A45EE600BEE585 /* Collection+Bundle.swift */; };
+		1819B72820A4814000BEE585 /* area_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 1819B72720A4814000BEE585 /* area_types.json */; };
+		1819B72B20A4815300BEE585 /* footpath_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 1819B72A20A4815300BEE585 /* footpath_types.json */; };
 		182B22F02098BDDB003D1309 /* MeshFace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B22EF2098BDDB003D1309 /* MeshFace.swift */; };
 		18496C5D2093234300992AF3 /* GridNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C592093234300992AF3 /* GridNode.swift */; };
 		18496C5E2093234300992AF3 /* GridChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C5A2093234300992AF3 /* GridChunk.swift */; };
@@ -84,6 +86,8 @@
 /* Begin PBXFileReference section */
 		14A74BE995E1DD6F159F97B0 /* Pods-Meadow.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Meadow.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Meadow/Pods-Meadow.debug.xcconfig"; sourceTree = "<group>"; };
 		1819B72420A45EE600BEE585 /* Collection+Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Bundle.swift"; sourceTree = "<group>"; };
+		1819B72720A4814000BEE585 /* area_types.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = area_types.json; sourceTree = "<group>"; };
+		1819B72A20A4815300BEE585 /* footpath_types.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = footpath_types.json; sourceTree = "<group>"; };
 		182B22EF2098BDDB003D1309 /* MeshFace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeshFace.swift; sourceTree = "<group>"; };
 		18496C592093234300992AF3 /* GridNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridNode.swift; sourceTree = "<group>"; };
 		18496C5A2093234300992AF3 /* GridChunk.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridChunk.swift; sourceTree = "<group>"; };
@@ -181,6 +185,22 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		1819B72620A4812B00BEE585 /* Area */ = {
+			isa = PBXGroup;
+			children = (
+				1819B72720A4814000BEE585 /* area_types.json */,
+			);
+			path = Area;
+			sourceTree = "<group>";
+		};
+		1819B72920A4814700BEE585 /* Footpath */ = {
+			isa = PBXGroup;
+			children = (
+				1819B72A20A4815300BEE585 /* footpath_types.json */,
+			);
+			path = Footpath;
+			sourceTree = "<group>";
+		};
 		182B22EE2098BDCD003D1309 /* Mesh */ = {
 			isa = PBXGroup;
 			children = (
@@ -192,15 +212,15 @@
 		18496C572093230900992AF3 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				1819B72320A45EBB00BEE585 /* Extensions */,
-				18538B6120A311DB00077CE2 /* Assets */,
-				182B22EE2098BDCD003D1309 /* Mesh */,
 				18496C83209368AB00992AF3 /* Area */,
+				18538B6120A311DB00077CE2 /* Assets */,
 				18496C912093699900992AF3 /* Controllers */,
 				18496C71209327B900992AF3 /* Data Structures */,
+				1819B72320A45EBB00BEE585 /* Extensions */,
 				18496C85209368B800992AF3 /* Foliage */,
 				18496C84209368B300992AF3 /* Footpath */,
 				18496C582093231500992AF3 /* Grid */,
+				182B22EE2098BDCD003D1309 /* Mesh */,
 				18496C88209368CD00992AF3 /* Scaffold */,
 				18496C642093267000992AF3 /* Terrain */,
 				18496C87209368C200992AF3 /* Tunnel */,
@@ -238,13 +258,13 @@
 		18496C71209327B900992AF3 /* Data Structures */ = {
 			isa = PBXGroup;
 			children = (
-				18496C72209327C500992AF3 /* Coordinate.swift */,
-				18496C782093472B00992AF3 /* Polytope.swift */,
-				18496C7A2093473500992AF3 /* Polyhedron.swift */,
-				18713241209720120084565F /* Volume.swift */,
-				18713243209723050084565F /* Size.swift */,
-				18538B6520A3122700077CE2 /* ColorPalette.swift */,
 				18538B6920A3241A00077CE2 /* Color.swift */,
+				18538B6520A3122700077CE2 /* ColorPalette.swift */,
+				18496C72209327C500992AF3 /* Coordinate.swift */,
+				18496C7A2093473500992AF3 /* Polyhedron.swift */,
+				18496C782093472B00992AF3 /* Polytope.swift */,
+				18713243209723050084565F /* Size.swift */,
+				18713241209720120084565F /* Volume.swift */,
 			);
 			path = "Data Structures";
 			sourceTree = "<group>";
@@ -355,6 +375,8 @@
 		18538B6120A311DB00077CE2 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				1819B72620A4812B00BEE585 /* Area */,
+				1819B72920A4814700BEE585 /* Footpath */,
 				18538B6220A311E300077CE2 /* Terrain */,
 			);
 			path = Assets;
@@ -581,7 +603,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1819B72820A4814000BEE585 /* area_types.json in Resources */,
 				18538B6420A311FF00077CE2 /* terrain_types.json in Resources */,
+				1819B72B20A4815300BEE585 /* footpath_types.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -858,6 +882,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.script-orchard.Meadow";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -888,6 +913,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.script-orchard.Meadow";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator";
 				SWIFT_VERSION = 4.0;

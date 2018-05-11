@@ -8,6 +8,11 @@
 
 import SceneKit
 
+/*!
+ @class Meadow
+ @abstract Meadow is the top level parent class for all grid types.
+ @discussion Meadow instantiates and manages a scene comprising various grid types.
+ */
 public class Meadow: SCNScene {
     
     public lazy var areas = { () -> Area in
@@ -90,6 +95,11 @@ extension Meadow: SCNSceneRendererDelegate {
 
 extension Meadow: GridDelegate {
     
+    /*!
+     @method didBecomeDirty:node
+     @abstract GridDelegate callback to delegate grid node resultion upwards.
+     @discussion As a means to update the grid in which the node is contained, resolution of dirty nodes must be passed upwards to inform the delegate of any changes.
+     */
     public func didBecomeDirty(node: GridNode) {
         
         switch type(of: node) {

@@ -67,7 +67,7 @@ extension Terrain {
         
         do {
             
-            let path = Bundle.allBundles.path(forResource: "terrain_types", ofType: "json")!
+            let path = Bundle(for: type(of: self)).path(forResource: "terrain_types", ofType: "json")!
             
             let jsonData = try NSData(contentsOfFile: path) as Data
             

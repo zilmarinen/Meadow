@@ -62,11 +62,19 @@ public class GridTile<Node: GridNode> {
 
 extension GridTile: Hashable {
     
+    /*!
+     @method ==
+     @abstract Determine the equality of two GridTiles.
+     */
     public static func == (lhs: GridTile<Node>, rhs: GridTile<Node>) -> Bool {
         
         return lhs.volume == rhs.volume
     }
     
+    /*!
+     @property hashValue
+     @abstract Return the has value of the GridTile.
+     */
     public var hashValue: Int {
         
         return volume.hashValue

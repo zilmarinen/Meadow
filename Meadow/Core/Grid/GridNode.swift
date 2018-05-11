@@ -6,6 +6,8 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
+import SceneKit
+
 /*!
  @class GridNode
  @abstract Grid nodes are the base class and fundamental building blocks of a grid.
@@ -30,17 +32,32 @@ public class GridNode {
     private var isDirty: Bool = false
     
     /*!
+     @property delegate
+     @abstract Delegate to inform when the node become dirty.
+     */
+    private let delegate: GridDelegate
+    
+    /*!
      @property volume
      @abstract Fixed bounding volume of the node.
      */
     let volume: Volume
     
     /*!
+     @property geometry
+     @abstract Returns the geometry of the node.
+     */
+    var geometry: SCNGeometry { return SCNBox(width: CGFloat(volume.size.width), height: CGFloat(volume.size.height), length: CGFloat(volume.size.depth), chamferRadius: 1.0) }
+    
+    /*!
      @method init:volume
-     @abstract Creates and initialises a node with the specified volume.
+     @abstract Creates and initialises a node with the specified delegate and volume.
+     @param delegate The delegate to call out to when node becomes dirty.
      @param volume The bounding volume occupied by the node.
      */
-    public required init(volume: Volume) {
+    public required init(delegate: GridDelegate, volume: Volume) {
+        
+        self.delegate = delegate
         
         self.volume = volume
     }
@@ -48,11 +65,19 @@ public class GridNode {
 
 extension GridNode: Hashable {
     
+    /*!
+     @method ==
+     @abstract Determine the equality of two GridNodes.
+     */
     public static func == (lhs: GridNode, rhs: GridNode) -> Bool {
         
         return lhs.volume == rhs.volume
     }
     
+    /*!
+     @property hashValue
+     @abstract Return the has value of the GridNode.
+     */
     public var hashValue: Int {
         
         return volume.hashValue
@@ -70,5 +95,7 @@ extension GridNode {
         if isDirty { return }
         
         isDirty = true
+        
+        delegate.didBecomeDirty(node: self)
     }
 }

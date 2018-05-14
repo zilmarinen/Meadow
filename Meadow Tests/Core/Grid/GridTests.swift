@@ -8,6 +8,11 @@
 
 import XCTest
 
+extension GridTests: GridDelegate {
+    
+    func didBecomeDirty(node: GridNode) {}
+}
+
 class GridTests: XCTestCase {
     
     var grid: Grid<GridChunk<GridTile<GridNode>, GridNode>, GridTile<GridNode>, GridNode>!
@@ -16,7 +21,7 @@ class GridTests: XCTestCase {
         
         super.setUp()
         
-        let meadow = Meadow()
+        let meadow = Meadow(delegate: self)
         
         grid = Grid(delegate: meadow)
     }

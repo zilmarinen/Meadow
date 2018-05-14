@@ -68,6 +68,13 @@ extension Grid: GridDelegate {
      */
     public func didBecomeDirty(node: GridNode) {
         
+        if let chunk = find(chunk: node.volume.coordinate) {
+            
+            chunk.becomeDirty()
+            
+            becomeDirty()
+        }
+        
         delegate.didBecomeDirty(node: node)
     }
 }

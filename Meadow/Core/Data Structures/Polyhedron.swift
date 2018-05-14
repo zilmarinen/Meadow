@@ -27,6 +27,10 @@ public struct Polyhedron {
 
 extension Polyhedron: Equatable {
     
+    /*!
+     @method ==
+     @abstract Determine the equality of two Polyhedrons.
+     */
     public static func ==(lhs: Polyhedron, rhs: Polyhedron) -> Bool {
         
         return lhs.upperPolytope == rhs.upperPolytope && lhs.lowerPolytope == rhs.lowerPolytope

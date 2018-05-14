@@ -8,6 +8,11 @@
 
 import XCTest
 
+extension TerrainTests: GridDelegate {
+    
+    func didBecomeDirty(node: GridNode) {}
+}
+
 class TerrainTests: XCTestCase {
 
     var meadow: Meadow!
@@ -16,7 +21,7 @@ class TerrainTests: XCTestCase {
         
         super.setUp()
         
-        meadow = Meadow()
+        meadow = Meadow(delegate: self)
     }
     
     func testTerrainNodeAddition() {

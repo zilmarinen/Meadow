@@ -15,6 +15,12 @@ import SceneKit
  */
 public class Meadow: SCNScene {
     
+    /*!
+     @property delegate
+     @abstract Delegate to inform when grid nodes become dirty.
+     */
+    private let delegate: GridDelegate
+    
     public lazy var areas = { () -> Area in
        
         let grid = Area(delegate: self)
@@ -77,10 +83,37 @@ public class Meadow: SCNScene {
         
         return grid
     }()
+    
+    /*!
+     @method init:delegate
+     @abstract Creates and initialises a grid with the specified delegate.
+     @param delegate The delegate to call out to when grid becomes dirty.
+     */
+    public required init(delegate: GridDelegate) {
+        
+        self.delegate = delegate
+        
+        super.init()
+    }
+    
+    /*!
+     @method initWithCoder
+     @abstract Support coding and decoding via NSKeyedArchiver.
+     */
+    public required init?(coder aDecoder: NSCoder) {
+        
+        fatalError("init(coder:) has not been implemented")
+    }
 }
 
 extension Meadow: SCNSceneRendererDelegate {
     
+    /*!
+     @method renderer:updateAtTime:
+     @abstract Called exactly once per frame before any animation and actions are evaluated and any physics are simulated.
+     @param renderer The renderer that will render the scene.
+     @param time The time at which to update the scene.
+     */
     public func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
         
         areas.clean()
@@ -110,5 +143,7 @@ extension Meadow: GridDelegate {
             
         default: break
         }
+        
+        delegate.didBecomeDirty(node: node)
     }
 }

@@ -25,6 +25,12 @@ public class TerrainNode: GridNode {
     private var layers: [TerrainLayer] = []
     
     /*!
+     @property cutaways
+     @abstract An array of cutaways within the node.
+     */
+    private var cutaways: [TerrainCutaway] = []
+    
+    /*!
      @property topLayer
      @abstract Returns the upper most TerrainLayer with the highest elevation.
      */

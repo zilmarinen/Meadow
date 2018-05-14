@@ -10,7 +10,7 @@ import SceneKit
 
 /*!
  @class TerrainLayer
- @abstract TerrainLayers define a volume of space within a TerrainNode represented as a Polyhedron.
+ @abstract TerrainLayers define an area of space within a TerrainNode represented as a Polyhedron.
  */
 public class TerrainLayer {
     

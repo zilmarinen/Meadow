@@ -13,7 +13,7 @@ import SceneKit
  @abstract Grid chunks are the parent class for all grid tiles and nodes.
  @discussion Grid chunks allow tiles and nodes to be partitioned into smaller, more managable entities which can be updated separately from other chunks, tiles and nodes in the same grid. Chunks have a fixed volume and are anchored to the grid along the x and z axis with a fixed height defined by `World.Floor` and `World.Ceiling`.
  */
-public class GridChunk<Tile: GridTile<Node>, Node: GridNode>: SCNNode {
+public class GridChunk<Tile: GridTile<Node>, Node: GridNode>: SCNNode, SceneGraphNode {
     
     /*!
      @property isDirty
@@ -40,6 +40,18 @@ public class GridChunk<Tile: GridTile<Node>, Node: GridNode>: SCNNode {
     var isEmpty: Bool { return tiles.isEmpty }
     
     /*!
+     @property nodeName
+     @abstract Returns the name of the SceneGraphNode.
+     */
+    public var nodeName: String { return name! }
+    
+    /*!
+     @property totalChildren
+     @abstract Returns the total number of child SceneGraphNodes for the SceneGraphNode.
+     */
+    public var totalChildren: Int { return tiles.count }
+    
+    /*!
      @method init:volume
      @abstract Creates and initialises a chunk with the specified volume.
      @param volume The bounding volume occupied by the chunk.
@@ -49,6 +61,8 @@ public class GridChunk<Tile: GridTile<Node>, Node: GridNode>: SCNNode {
         self.volume = volume
         
         super.init()
+        
+        self.name = "Chunk"
     }
     
     /*!
@@ -58,6 +72,20 @@ public class GridChunk<Tile: GridTile<Node>, Node: GridNode>: SCNNode {
     public required init?(coder aDecoder: NSCoder) {
         
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    /*!
+     @method sceneGraph:childAtIndex
+     @abstract Attempt to find and return a child SceneGraphNode at the specified index.
+     @property index The index of the child SceneGraphNode to be found and returned.
+     */
+    public func sceneGraph(childAtIndex index: Int) -> SceneGraphNode? {
+        
+        return tiles.sorted { (lhs, rhs) -> Bool in
+            
+            return lhs.volume.coordinate.x < rhs.volume.coordinate.x && lhs.volume.coordinate.z < rhs.volume.coordinate.z
+            
+        }[index]
     }
 }
 

@@ -41,6 +41,22 @@ public class TerrainNode: GridNode {
             return lhs.polyhedron.upperPolytope.peak < rhs.polyhedron.upperPolytope.peak
         })
     }
+    
+    /*!
+     @property totalChildren
+     @abstract Returns the total number of child SceneGraphNodes for the SceneGraphNode.
+     */
+    override public var totalChildren: Int { return layers.count }
+    
+    /*!
+     @method sceneGraph:childAtIndex
+     @abstract Attempt to find and return a child SceneGraphNode at the specified index.
+     @property index The index of the child SceneGraphNode to be found and returned.
+     */
+    override public func sceneGraph(childAtIndex index: Int) -> SceneGraphNode? {
+        
+        return layers[index]
+    }
 }
 
 extension TerrainNode {

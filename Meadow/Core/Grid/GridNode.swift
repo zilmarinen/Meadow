@@ -13,7 +13,7 @@ import SceneKit
  @abstract Grid nodes are the base class and fundamental building blocks of a grid.
  @discussion Grid nodes define a fixed volume which they occupy within a grid. This provides a bear bones implementation and any additional functionality should be added by subclassing.
  */
-public class GridNode {
+public class GridNode: SceneGraphNode {
     
     /*!
      @struct GridNodeNeighbour
@@ -36,7 +36,7 @@ public class GridNode {
      @abstract Delegate to inform when the node become dirty.
      */
     private let delegate: GridDelegate
-    
+
     /*!
      @property volume
      @abstract Fixed bounding volume of the node.
@@ -50,6 +50,18 @@ public class GridNode {
     var mesh: Mesh { return Mesh(faces: [], triangles: []) }
     
     /*!
+     @property nodeName
+     @abstract Returns the name of the SceneGraphNode.
+     */
+    public var nodeName: String { return "Node" }
+    
+    /*!
+     @property totalChildren
+     @abstract Returns the total number of child SceneGraphNodes for the SceneGraphNode.
+     */
+    public var totalChildren: Int { return 0 }
+    
+    /*!
      @method init:volume
      @abstract Creates and initialises a node with the specified delegate and volume.
      @param delegate The delegate to call out to when node becomes dirty.
@@ -60,6 +72,16 @@ public class GridNode {
         self.delegate = delegate
         
         self.volume = volume
+    }
+    
+    /*!
+     @method sceneGraph:childAtIndex
+     @abstract Attempt to find and return a child SceneGraphNode at the specified index.
+     @property index The index of the child SceneGraphNode to be found and returned.
+     */
+    public func sceneGraph(childAtIndex index: Int) -> SceneGraphNode? {
+        
+        return nil
     }
 }
 

@@ -21,25 +21,10 @@ public final class Terrain: Grid<TerrainChunk, TerrainTile, TerrainNode> {
     var terrainTypes: [TerrainType] = []
     
     /*!
-     @method init:delegate
-     @abstract Creates and initialises a grid with the specified delegate.
-     @param delegate The delegate to call out to when grid becomes dirty.
+     @property nodeName
+     @abstract Returns the name of the SceneGraphNode.
      */
-    public required init(delegate: GridDelegate) {
-        
-        super.init(delegate: delegate)
-        
-        loadTerrainTypes()
-    }
-    
-    /*!
-     @method initWithCoder
-     @abstract Support coding and decoding via NSKeyedArchiver.
-     */
-    public required init?(coder aDecoder: NSCoder) {
-        
-        fatalError("init(coder:) has not been implemented")
-    }
+    override public var nodeName: String { return "Terrain" }
 }
 
 extension Terrain {

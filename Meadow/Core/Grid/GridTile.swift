@@ -13,7 +13,7 @@ import SceneKit
  @abstract Grid tiles are the parent class for any child nodes.
  @discussion Grid tiles allow nodes to be partitioned into smaller, more managable entities which can be updated separately from other tiles and nodes in the same grid. Tiles have a fixed volume with a height defined by `World.Floor` and `World.Ceiling`.
  */
-public class GridTile<Node: GridNode> {
+public class GridTile<Node: GridNode>: SceneGraphNode {
     
     /*!
      @struct GridTileNeighbour
@@ -44,6 +44,18 @@ public class GridTile<Node: GridNode> {
     var isEmpty: Bool { return nodes.isEmpty }
     
     /*!
+     @property nodeName
+     @abstract Returns the name of the SceneGraphNode.
+     */
+    public var nodeName: String { return "Tile" }
+    
+    /*!
+     @property totalChildren
+     @abstract Returns the total number of child SceneGraphNodes for the SceneGraphNode.
+     */
+    public var totalChildren: Int { return nodes.count }
+    
+    /*!
      @property mesh
      @abstract Returns the compound mesh of the tiles child nodes.
      */
@@ -65,6 +77,20 @@ public class GridTile<Node: GridNode> {
     public required init(volume: Volume) {
         
         self.volume = volume
+    }
+    
+    /*!
+     @method sceneGraph:childAtIndex
+     @abstract Attempt to find and return a child SceneGraphNode at the specified index.
+     @property index The index of the child SceneGraphNode to be found and returned.
+     */
+    public func sceneGraph(childAtIndex index: Int) -> SceneGraphNode? {
+        
+        return nodes.sorted { (lhs, rhs) -> Bool in
+            
+            return lhs.volume.coordinate.y < rhs.volume.coordinate.y
+            
+        }[index]
     }
 }
 

@@ -230,3 +230,28 @@ extension TerrainLayer {
         return corners[corner.rawValue]
     }
 }
+
+extension TerrainLayer: SceneGraphNode {
+    
+    /*!
+     @property nodeName
+     @abstract Returns the name of the SceneGraphNode.
+     */
+    public var nodeName: String { return "Layer" }
+    
+    /*!
+     @property totalChildren
+     @abstract Returns the total number of child SceneGraphNodes for the SceneGraphNode.
+     */
+    public var totalChildren: Int { return 0 }
+    
+    /*!
+     @method sceneGraph:childAtIndex
+     @abstract Attempt to find and return a child SceneGraphNode at the specified index.
+     @property index The index of the child SceneGraphNode to be found and returned.
+     */
+    public func sceneGraph(childAtIndex index: Int) -> SceneGraphNode? {
+        
+        return nil
+    }
+}

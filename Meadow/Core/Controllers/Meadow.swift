@@ -61,6 +61,8 @@ public class Meadow: SCNScene {
         
         let grid = Terrain(delegate: self)
         
+        grid.loadTerrainTypes()
+        
         rootNode.addChildNode(grid)
         
         return grid

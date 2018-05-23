@@ -8,4 +8,9 @@
 
 public final class Area: Grid<AreaChunk, AreaTile, AreaNode> {
     
+    /*!
+     @property nodeName
+     @abstract Returns the name of the SceneGraphNode.
+     */
+    override public var nodeName: String { return "Areas" }
 }

@@ -15,16 +15,25 @@ import Foundation
 public final class Terrain: Grid<TerrainChunk, TerrainTile, TerrainNode> {
 
     /*!
+     @property nodeName
+     @abstract Returns the name of the SceneGraphNode.
+     */
+    override public var nodeName: String { return "Terrain" }
+    
+    /*!
      @property terrainTypes
      @abstract Array of TerrainTypes loaded from disc.
      */
     var terrainTypes: [TerrainType] = []
     
     /*!
-     @property nodeName
-     @abstract Returns the name of the SceneGraphNode.
+     @property availableTerrainTypes
+     @abstract Returns a reference to the terrain types currently loaded.
      */
-    override public var nodeName: String { return "Terrain" }
+    public var availableTerrainTypes: [TerrainType] {
+        
+        return terrainTypes
+    }
 }
 
 extension Terrain {

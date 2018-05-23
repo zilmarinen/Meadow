@@ -16,13 +16,13 @@ public struct TerrainType: Decodable {
      @property name
      @abstract THe unique name of the terrain type.
      */
-    let name: String
+    public let name: String
     
     /*!
      @property colorPalette
      @abstract The color palette used to paint the terrain.
      */
-    let colorPalette: ColorPalette
+    public let colorPalette: ColorPalette
 }
 
 extension TerrainType: Hashable {

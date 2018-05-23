@@ -23,7 +23,9 @@ class GridTests: XCTestCase {
         
         let meadow = Meadow(delegate: self)
         
-        grid = Grid(delegate: meadow)
+        grid = Grid()
+        
+        grid.delegate = meadow
     }
 
     func testGridNodeAddition() {

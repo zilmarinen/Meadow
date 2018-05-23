@@ -31,18 +31,3 @@ public protocol SceneGraphNode {
      */
     func sceneGraph(childAtIndex index: Int) -> SceneGraphNode?
 }
-
-protocol TestThing {
-    
-    func aMethod()
-}
-
-class aClass<T>: TestThing {
-    
-    func aMethod() {}
-}
-
-class bClass: aClass<Int> {
-    
-    override func aMethod() {}
-}

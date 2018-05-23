@@ -46,7 +46,7 @@ public class TerrainLayer {
      @property node
      @param node The parent node for the layer.
      */
-    unowned let node: TerrainNode
+    public unowned let node: TerrainNode
     
     /*!
      @property type

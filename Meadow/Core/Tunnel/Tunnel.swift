@@ -7,5 +7,10 @@
 //
 
 public class Tunnel: Grid<TunnelChunk, TunnelTile, TunnelNode> {
-    
+ 
+    /*!
+     @property nodeName
+     @abstract Returns the name of the SceneGraphNode.
+     */
+    override public var nodeName: String { return "Tunnels" }
 }

@@ -7,5 +7,10 @@
 //
 
 public class Scaffold: Grid<ScaffoldChunk, ScaffoldTile, ScaffoldNode> {
-    
+ 
+    /*!
+     @property nodeName
+     @abstract Returns the name of the SceneGraphNode.
+     */
+    override public var nodeName: String { return "Scaffolds" }
 }

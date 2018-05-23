@@ -26,51 +26,28 @@ public protocol GridDelegate {
 public class Grid<Chunk: GridChunk<Tile, Node>, Tile: GridTile<Node>, Node: GridNode>: SCNNode, SceneGraphNode {
     
     /*!
-     @property delegate
-     @abstract Delegate to inform when GridNodes become dirty.
-     */
-    private let delegate: GridDelegate
-    
-    /*!
      @property isDirty
      @abstract Represents staleness of the Grid.
      */
     private var isDirty: Bool = false
     
     /*!
+     @property delegate
+     @abstract Delegate to inform when GridNodes become dirty.
+     */
+    var delegate: GridDelegate?
+    
+    /*!
      @property nodeName
      @abstract Returns the name of the SceneGraphNode.
      */
-    public var nodeName: String { return name! }
+    public var nodeName: String { return "Grid" }
     
     /*!
      @property totalChildren
      @abstract Returns the total number of child SceneGraphNodes for the SceneGraphNode.
      */
     public var totalChildren: Int { return childNodes.count }
-    
-    /*!
-     @method init:delegate
-     @abstract Creates and initialises a Grid with the specified delegate.
-     @param delegate The delegate to call out to when Grid becomes dirty.
-     */
-    public required init(delegate: GridDelegate) {
-        
-        self.delegate = delegate
-        
-        super.init()
-        
-        self.name = "Grid"
-    }
-    
-    /*!
-     @method initWithCoder
-     @abstract Support coding and decoding via NSKeyedArchiver.
-     */
-    public required init?(coder aDecoder: NSCoder) {
-        
-        fatalError("init(coder:) has not been implemented")
-    }
     
     /*!
      @method sceneGraph:childAtIndex
@@ -99,7 +76,7 @@ extension Grid: GridDelegate {
             becomeDirty()
         }
         
-        delegate.didBecomeDirty(node: node)
+        delegate?.didBecomeDirty(node: node)
     }
 }
 

@@ -16,32 +16,32 @@ public struct Color: Decodable {
      @property red
      @abstract The red component of the Color.
      */
-    let red: SCNFloat
+    let red: MDWFloat
     
     /*!
      @property green
      @abstract The green component of the Color.
      */
-    let green: SCNFloat
+    let green: MDWFloat
     
     /*!
      @property blue
      @abstract The blue component of the Color.
      */
-    let blue: SCNFloat
+    let blue: MDWFloat
     
     /*!
      @property alpha
      @abstract The alpha component of the Color.
      */
-    let alpha: SCNFloat
+    let alpha: MDWFloat
     
     /*!
      @property color
      @abstract Defines a color with the red, green, blue and alpha components.
      */
-    var color: SCNColor {
+    var color: MDWColor {
         
-        return SCNColor(red: red, green: green, blue: blue, alpha: alpha)
+        return MDWColor(red: red, green: green, blue: blue, alpha: alpha)
     }
 }

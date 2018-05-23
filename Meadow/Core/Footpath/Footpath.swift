@@ -8,4 +8,9 @@
 
 public class Footpath: Grid<FootpathChunk, FootpathTile, FootpathNode> {
     
+    /*!
+     @property nodeName
+     @abstract Returns the name of the SceneGraphNode.
+     */
+    override public var nodeName: String { return "Footpaths" }
 }

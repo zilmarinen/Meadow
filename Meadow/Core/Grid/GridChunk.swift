@@ -43,7 +43,7 @@ public class GridChunk<Tile: GridTile<Node>, Node: GridNode>: SCNNode, SceneGrap
      @property nodeName
      @abstract Returns the name of the SceneGraphNode.
      */
-    public var nodeName: String { return name! }
+    public var nodeName: String { return "Chunk" }
     
     /*!
      @property totalChildren
@@ -61,8 +61,6 @@ public class GridChunk<Tile: GridTile<Node>, Node: GridNode>: SCNNode, SceneGrap
         self.volume = volume
         
         super.init()
-        
-        self.name = "Chunk"
     }
     
     /*!

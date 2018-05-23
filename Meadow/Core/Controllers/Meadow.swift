@@ -21,70 +21,53 @@ public class Meadow: SCNScene {
      */
     private let delegate: GridDelegate
     
-    public lazy var areas = { () -> Area in
-       
-        let grid = Area(delegate: self)
-        
-        rootNode.addChildNode(grid)
-        
-        return grid
-    }()
+    /*!
+     @property cameraJib
+     @abstract Main world camera parent node.
+     */
+    public let cameraJib = CameraJib()
     
-    public lazy var foliage = { () -> Foliage in
-        
-        let grid = Foliage(delegate: self)
-        
-        rootNode.addChildNode(grid)
-        
-        return grid
-    }()
+    /*!
+     @property areas
+     @abstract Area Grid type.
+     */
+    public let areas = Area()
     
-    public lazy var footpaths = { () -> Footpath in
-        
-        let grid = Footpath(delegate: self)
-        
-        rootNode.addChildNode(grid)
-        
-        return grid
-    }()
+    /*!
+     @property foliage
+     @abstract Foliage Grid type.
+     */
+    public let foliage = Foliage()
     
-    public lazy var scaffolds = { () -> Scaffold in
-        
-        let grid = Scaffold(delegate: self)
-        
-        rootNode.addChildNode(grid)
-        
-        return grid
-    }()
+    /*!
+     @property footpaths
+     @abstract Footpath Grid type.
+     */
+    public let footpaths = Footpath()
     
-    public lazy var terrain = { () -> Terrain in
-        
-        let grid = Terrain(delegate: self)
-        
-        grid.loadTerrainTypes()
-        
-        rootNode.addChildNode(grid)
-        
-        return grid
-    }()
+    /*!
+     @property scaffolds
+     @abstract Scaffold Grid type.
+     */
+    public let scaffolds = Scaffold()
     
-    public lazy var tunnels = { () -> Tunnel in
-        
-        let grid = Tunnel(delegate: self)
-        
-        rootNode.addChildNode(grid)
-        
-        return grid
-    }()
+    /*!
+     @property terrain
+     @abstract Terrain Grid type.
+     */
+    public let terrain = Terrain()
     
-    public lazy var water = { () -> Water in
-        
-        let grid = Water(delegate: self)
-        
-        rootNode.addChildNode(grid)
-        
-        return grid
-    }()
+    /*!
+     @property tunnels
+     @abstract Tunnel Grid type.
+     */
+    public let tunnels = Tunnel()
+    
+    /*!
+     @property water
+     @abstract Water Grid type.
+     */
+    public let water = Water()
     
     /*!
      @method init:delegate
@@ -96,6 +79,26 @@ public class Meadow: SCNScene {
         self.delegate = delegate
         
         super.init()
+        
+        areas.delegate = self
+        foliage.delegate = self
+        footpaths.delegate = self
+        scaffolds.delegate = self
+        terrain.delegate = self
+        tunnels.delegate = self
+        water.delegate = self
+        
+        terrain.loadTerrainTypes()
+        
+        rootNode.name = "Meadow"
+        rootNode.addChildNode(cameraJib)
+        rootNode.addChildNode(areas)
+        rootNode.addChildNode(foliage)
+        rootNode.addChildNode(footpaths)
+        rootNode.addChildNode(scaffolds)
+        rootNode.addChildNode(terrain)
+        rootNode.addChildNode(tunnels)
+        rootNode.addChildNode(water)
     }
     
     /*!

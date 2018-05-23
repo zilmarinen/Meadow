@@ -6,7 +6,7 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-extension SCNColor {
+extension MDWColor {
     
     /*!
      @method init:red:green:blue:alpha
@@ -16,7 +16,7 @@ extension SCNColor {
      @param blue The blue component of the color.
      @param alpha The alpha component of the color.
      */
-    convenience init(red: SCNFloat, green: SCNFloat, blue: SCNFloat, alpha: SCNFloat) {
+    convenience init(red: MDWFloat, green: MDWFloat, blue: MDWFloat, alpha: MDWFloat) {
         
         #if os(iOS)
         

@@ -10,9 +10,14 @@ import Foundation
 
 extension Bundle {
     
-    static var meadow: Bundle {
+    static var meadow: [Bundle] {
         
-        return bundle(forPod: "Meadow")!
+        if ProcessInfo.processInfo.environment.keys.contains("XCTestConfigurationFilePath") {
+            
+            return Bundle.allBundles
+        }
+        
+        return [bundle(forPod: "Meadow")!]
     }
     
     static func bundle(forPod pod: String) -> Bundle? {

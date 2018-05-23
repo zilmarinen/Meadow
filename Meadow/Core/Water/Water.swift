@@ -8,4 +8,9 @@
 
 public class Water: Grid<WaterChunk, WaterTile, WaterNode> {
     
+    /*!
+     @property nodeName
+     @abstract Returns the name of the SceneGraphNode.
+     */
+    override public var nodeName: String { return "Water" }
 }

@@ -10,7 +10,7 @@
  @struct Size
  @abstract Defines a Size with width, height and depth components as an integer value.
  */
-public struct Size {
+public struct Size: Codable {
     
     /*!
      @property width

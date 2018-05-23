@@ -9,11 +9,49 @@
 import SceneKit
 
 /*!
+ @struct MeadowJSON
+ @abstract
+ */
+public struct MeadowJSON: Decodable {
+    
+    /*!
+     @property areas
+     @abstract The areas in world.
+     */
+    let areas: GridJSON
+    
+    /*!
+     @property foliage
+     @abstract The foliage in world.
+     */
+    let foliage: GridJSON
+    
+    /*!
+     @property footpaths
+     @abstract The footpaths in world.
+     */
+    let footpaths: GridJSON
+    
+    /*!
+     @property terrain
+     @abstract The terrain in world.
+     */
+    let terrain: GridJSON
+    
+    /*!
+     @property water
+     @abstract The water in world.
+     */
+    let water: GridJSON
+}
+
+/*!
  @class Meadow
  @abstract Meadow is the top level parent class for all grid types.
  @discussion Meadow instantiates and manages a scene comprising various grid types.
  */
-public class Meadow: SCNScene {
+
+public class Meadow: SCNScene, Encodable {
     
     /*!
      @property delegate
@@ -108,6 +146,46 @@ public class Meadow: SCNScene {
     public required init?(coder aDecoder: NSCoder) {
         
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension Meadow {
+    
+    /*!
+     @enum CodingKeys
+     @abstract Defines the coding keys used when encoding this object.
+     */
+    private enum CodingKeys: CodingKey {
+        
+        case areas
+        case foliage
+        case footpaths
+        case terrain
+        case water
+    }
+    
+    /*!
+     @method encode:to
+     @abstract Encodes this object into the given encoder.
+     @property encoder The encoder to use when encoding this object.
+     */
+    public func encode(to encoder: Encoder) throws {
+        
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(areas, forKey: .areas)
+        try container.encode(foliage, forKey: .foliage)
+        try container.encode(footpaths, forKey: .footpaths)
+        try container.encode(terrain, forKey: .terrain)
+        try container.encode(water, forKey: .water)
+    }
+}
+
+extension Meadow {
+    
+    public func load(json: MeadowJSON) {
+        
+        //
     }
 }
 

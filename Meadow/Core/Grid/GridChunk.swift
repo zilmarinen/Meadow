@@ -9,11 +9,24 @@
 import SceneKit
 
 /*!
+ @struct GridChunkJSON
+ @abstract
+ */
+public struct GridChunkJSON: Decodable {
+    
+    /*!
+     @property tiles
+     @abstract Set of tiles contained within the chunk.
+     */
+    let tiles: [GridTileJSON]
+}
+
+/*!
  @class GridChunk
  @abstract Grid chunks are the parent class for all grid tiles and nodes.
  @discussion Grid chunks allow tiles and nodes to be partitioned into smaller, more managable entities which can be updated separately from other chunks, tiles and nodes in the same grid. Chunks have a fixed volume and are anchored to the grid along the x and z axis with a fixed height defined by `World.Floor` and `World.Ceiling`.
  */
-public class GridChunk<Tile: GridTile<Node>, Node: GridNode>: SCNNode, SceneGraphNode {
+public class GridChunk<Tile: GridTile<Node>, Node: GridNode>: SCNNode, SceneGraphNode, Encodable {
     
     /*!
      @property isDirty
@@ -84,6 +97,27 @@ public class GridChunk<Tile: GridTile<Node>, Node: GridNode>: SCNNode, SceneGrap
             return lhs.volume.coordinate.x < rhs.volume.coordinate.x && lhs.volume.coordinate.z < rhs.volume.coordinate.z
             
         }[index]
+    }
+    
+    /*!
+     @enum CodingKeys
+     @abstract Defines the coding keys used when encoding this object.
+     */
+    private enum CodingKeys: CodingKey {
+        
+        case tiles
+    }
+    
+    /*!
+     @method encode:to
+     @abstract Encodes this object into the given encoder.
+     @property encoder The encoder to use when encoding this object.
+     */
+    public func encode(to encoder: Encoder) throws {
+        
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(tiles, forKey: .tiles)
     }
 }
 

@@ -9,11 +9,24 @@
 import SceneKit
 
 /*!
+ @class GridNodeJSON
+ @abstract
+ */
+public class GridNodeJSON: Decodable {
+    
+    /*!
+     @property volume
+     @abstract Fixed bounding volume of the node.
+     */
+    let volume: Volume = Volume(coordinate: Coordinate.Zero, size: Size.Zero)
+}
+
+/*!
  @class GridNode
  @abstract Grid nodes are the base class and fundamental building blocks of a grid.
  @discussion Grid nodes define a fixed volume which they occupy within a grid. This provides a bear bones implementation and any additional functionality should be added by subclassing.
  */
-public class GridNode: SceneGraphNode {
+public class GridNode: SceneGraphNode, Encodable {
     
     /*!
      @struct GridNodeNeighbour
@@ -82,6 +95,27 @@ public class GridNode: SceneGraphNode {
     public func sceneGraph(childAtIndex index: Int) -> SceneGraphNode? {
         
         return nil
+    }
+    
+    /*!
+     @enum CodingKeys
+     @abstract Defines the coding keys used when encoding this object.
+     */
+    private enum CodingKeys: CodingKey {
+        
+        case volume
+    }
+    
+    /*!
+     @method encode:to
+     @abstract Encodes this object into the given encoder.
+     @property encoder The encoder to use when encoding this object.
+     */
+    public func encode(to encoder: Encoder) throws {
+        
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(volume, forKey: .volume)
     }
 }
 

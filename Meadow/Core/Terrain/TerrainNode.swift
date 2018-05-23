@@ -7,6 +7,19 @@
 //
 
 /*!
+ @class TerrainNodeJSON
+ @abstract
+ */
+public class TerrainNodeJSON: GridNodeJSON {
+    
+    /*!
+     @property layers
+     @abstract Holds instances of TerrainLayers added to the node.
+     */
+    private var layers: [TerrainLayerJSON] = []
+}
+
+/*!
  @class TerrainNode
  @abstract TerrainNodes are used to define regions within a Grid upon which TerrainLayers can be added.
  */
@@ -56,6 +69,29 @@ public class TerrainNode: GridNode {
     override public func sceneGraph(childAtIndex index: Int) -> SceneGraphNode? {
         
         return layers[index]
+    }
+    
+    /*!
+     @enum CodingKeys
+     @abstract Defines the coding keys used when encoding this object.
+     */
+    private enum CodingKeys: CodingKey {
+        
+        case layers
+    }
+    
+    /*!
+     @method encode:to
+     @abstract Encodes this object into the given encoder.
+     @property encoder The encoder to use when encoding this object.
+     */
+    override public func encode(to encoder: Encoder) throws {
+        
+        try super.encode(to: encoder)
+        
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(layers, forKey: .layers)
     }
 }
 

@@ -10,7 +10,7 @@
  @struct Coordinate
  @abstract Defines a Coordinate with x, y and z components as an integer value.
  */
-public struct Coordinate {
+public struct Coordinate: Codable {
     
     /*!
      @property x

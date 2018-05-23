@@ -52,7 +52,7 @@ extension TerrainType {
      @enum CodingKeys
      @abstract Defines the key value pairs for Codable types.
      */
-    enum CodingKeys: String, CodingKey {
+    private enum CodingKeys: String, CodingKey {
         
         case name = "name"
         case colorPalette = "color_palette"

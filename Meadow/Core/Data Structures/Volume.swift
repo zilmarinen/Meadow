@@ -10,7 +10,7 @@
  @struct Volume
  @abstract Defines a Volume with a Coordinate and a Size.
  */
-public struct Volume {
+public struct Volume: Codable {
     
     /*!
      @property coordinate

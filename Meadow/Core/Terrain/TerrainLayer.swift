@@ -9,10 +9,29 @@
 import SceneKit
 
 /*!
+ @struct TerrainLayerJSON
+ @abstract
+ */
+public struct TerrainLayerJSON: Decodable {
+    
+    /*!
+     @property corners
+     @abstract Defines the world height values of the layers corners.
+     */
+    private var corners: [Int]
+    
+    /*!
+     @property type
+     @param terrainType The terrain type used to paint the layer.
+     */
+    let type: String
+}
+
+/*!
  @class TerrainLayer
  @abstract TerrainLayers define an area of space within a TerrainNode represented as a Polyhedron.
  */
-public class TerrainLayer {
+public class TerrainLayer: Encodable {
     
     /*!
      @struct TerrainLayerHierarchy
@@ -114,6 +133,29 @@ public class TerrainLayer {
         self.corners = [0, 0, 0, 0]
         
         self.hierarchy = TerrainLayerHierarchy(upper: nil, lower: nil)
+    }
+    
+    /*!
+     @enum CodingKeys
+     @abstract Defines the coding keys used when encoding this object.
+     */
+    private enum CodingKeys: CodingKey {
+        
+        case corners
+        case type
+    }
+    
+    /*!
+     @method encode:to
+     @abstract Encodes this object into the given encoder.
+     @property encoder The encoder to use when encoding this object.
+     */
+    public func encode(to encoder: Encoder) throws {
+        
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(corners, forKey: .corners)
+        try container.encode(type.name, forKey: .type)
     }
 }
 

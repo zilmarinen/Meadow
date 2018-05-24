@@ -18,7 +18,7 @@ public struct TerrainLayerJSON: Decodable {
      @property corners
      @abstract Defines the world height values of the layers corners.
      */
-    private var corners: [Int]
+    let corners: [Int]
     
     /*!
      @property type

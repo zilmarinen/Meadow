@@ -13,10 +13,33 @@
 public class TerrainNodeJSON: GridNodeJSON {
     
     /*!
+     @enum CodingKeys
+     @abstract Defines the coding keys used when encoding this object.
+     */
+    private enum CodingKeys: CodingKey {
+        
+        case layers
+    }
+    
+    /*!
      @property layers
      @abstract Holds instances of TerrainLayers added to the node.
      */
-    private var layers: [TerrainLayerJSON] = []
+    var layers: [TerrainLayerJSON] = []
+    
+    /*!
+     @method init:from
+     @abstract Creates and initialises a node, decoded by the provided decoder.
+     @param decoder The decoder to read data from.
+     */
+    public required init(from decoder: Decoder) throws {
+        
+        try super.init(from: decoder)
+        
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        layers = try container.decode([TerrainLayerJSON].self, forKey: .layers)
+    }
 }
 
 /*!

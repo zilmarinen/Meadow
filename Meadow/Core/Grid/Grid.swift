@@ -12,13 +12,13 @@ import SceneKit
  @struct GridJSON
  @abstract
  */
-public struct GridJSON: Decodable {
+public struct GridJSON<NodeJSON: GridNodeJSON>: Decodable {
     
     /*!
      @property chunks
      @abstract Set of chunks contained within the grid.
      */
-    let chunks: [GridChunkJSON]
+    let chunks: [GridChunkJSON<NodeJSON>]
 }
 
 /*!
@@ -141,6 +141,20 @@ extension Grid {
         }
         
         isDirty = false
+    }
+    
+    /*!
+     @method clear
+     @abstract Removes all child Chunks, Tiles and Nodes.
+     */
+    func clear() {
+        
+        chunks.forEach { chunk in
+            
+            chunk.clear()
+            
+            chunk.removeFromParentNode()
+        }
     }
 }
 

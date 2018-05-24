@@ -12,13 +12,22 @@ import SceneKit
  @struct GridTileJSON
  @abstract
  */
-public struct GridTileJSON: Decodable {
+public struct GridTileJSON<NodeJSON: GridNodeJSON>: Decodable {
+    
+    /*!
+     @enum CodingKeys
+     @abstract Defines the coding keys used when encoding this object.
+     */
+    private enum CodingKeys: CodingKey {
+        
+        case nodes
+    }
     
     /*!
      @property nodes
      @abstract Set of nodes contained within the tile.
      */
-    let nodes: [GridNodeJSON]
+    let nodes: [NodeJSON]
 }
 
 /*!

@@ -10,7 +10,7 @@
  @enum GridEdge
  @abstract Defines the 4 edges of a grid tile/node.
  */
-public enum GridEdge: Int {
+public enum GridEdge: Int, Encodable {
     
     case north
     case east

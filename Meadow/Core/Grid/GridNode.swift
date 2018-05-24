@@ -54,13 +54,7 @@ public class GridNode: SceneGraphNode, Encodable {
      @property volume
      @abstract Fixed bounding volume of the node.
      */
-    let volume: Volume
-    
-    /*!
-     @property mesh
-     @abstract Returns the mesh of the node.
-     */
-    var mesh: Mesh { return Mesh(faces: [], triangles: []) }
+    public let volume: Volume
     
     /*!
      @property nodeName
@@ -117,6 +111,12 @@ public class GridNode: SceneGraphNode, Encodable {
         
         try container.encode(volume, forKey: .volume)
     }
+    
+    /*!
+     @property mesh
+     @abstract Returns the mesh of the node.
+     */
+    var mesh: Mesh { return Mesh(faces: [], triangles: []) }
 }
 
 extension GridNode: Hashable {

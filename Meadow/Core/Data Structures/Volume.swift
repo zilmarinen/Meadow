@@ -16,13 +16,13 @@ public struct Volume: Codable {
      @property coordinate
      @abstract The coordinate of the Volume.
      */
-    let coordinate: Coordinate
+    public let coordinate: Coordinate
     
     /*!
      @property size
      @abstract The size of the Volume.
      */
-    let size: Size
+    public let size: Size
     
     /*!
      @method init:coordinate:size

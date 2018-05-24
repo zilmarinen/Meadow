@@ -183,32 +183,16 @@ extension Meadow {
 
 extension Meadow {
     
+    /*!
+     @method load:json
+     @abstract Load all grid types from supplied data.
+     @property json MeadowJSON struct containing grid data.
+     */
     public func load(json: MeadowJSON) {
-        
-        areas.clear()
-        foliage.clear()
-        footpaths.clear()
-        scaffolds.clear()
-        terrain.clear()
-        tunnels.clear()
-        water.clear()
         
         let terrainNodes = json.terrain.chunks.flatMap { $0.tiles.flatMap { $0.nodes } }
         
-        terrainNodes.forEach { nodeJSON in
-            
-            guard let terrainNode = terrain.add(node: nodeJSON.volume.coordinate) else { return }
-            
-            nodeJSON.layers.forEach({ terrainLayerJSON in
-                
-                guard let terrainType = terrain.find(terrainType: terrainLayerJSON.type), let terrainLayer = terrainNode.add(layer: terrainType) else { return }
-                
-                for index in 0..<terrainLayerJSON.corners.count {
-                    
-                    terrainLayer.set(height: terrainLayerJSON.corners[index], corner: GridCorner(rawValue: index)!)
-                }
-            })
-        }
+        terrain.load(nodes: terrainNodes)
     }
 }
 

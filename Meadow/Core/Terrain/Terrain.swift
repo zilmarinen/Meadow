@@ -39,6 +39,34 @@ public final class Terrain: Grid<TerrainChunk, TerrainTile, TerrainNode> {
 extension Terrain {
     
     /*!
+     @method load:nodes
+     @abstract Load all grid nodes from supplied data.
+     @property nodes TerrainNodeJSON struct containing grid data.
+     */
+    public func load(nodes: [TerrainNodeJSON]) {
+        
+        clear()
+        
+        nodes.forEach { nodeJSON in
+            
+            guard let terrainNode = add(node: nodeJSON.volume.coordinate) else { return }
+            
+            nodeJSON.layers.forEach({ terrainLayerJSON in
+                
+                guard let terrainType = find(terrainType: terrainLayerJSON.type), let terrainLayer = terrainNode.add(layer: terrainType) else { return }
+                
+                for index in 0..<terrainLayerJSON.corners.count {
+                    
+                    terrainLayer.set(height: terrainLayerJSON.corners[index], corner: GridCorner(rawValue: index)!)
+                }
+            })
+        }
+    }
+}
+
+extension Terrain {
+    
+    /*!
      @method add:node
      @abstract Attempt to create and return a new grid node at the requested coordinate.
      @param coordinate The coordinate used to define the volume the grid node should occupy.

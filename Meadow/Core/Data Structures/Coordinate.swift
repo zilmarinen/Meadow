@@ -16,19 +16,19 @@ public struct Coordinate: Codable {
      @property x
      @abstract The x component of the Coordinate.
      */
-    let x: Int
+    public let x: Int
     
     /*!
      @property y
      @abstract The y component of the Coordinate.
      */
-    let y: Int
+    public let y: Int
     
     /*!
      @property z
      @abstract The z component of the Coordinate.
      */
-    let z: Int
+    public let z: Int
     
     /*!
      @method init:x:y:z

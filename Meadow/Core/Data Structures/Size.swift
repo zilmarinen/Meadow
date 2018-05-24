@@ -16,19 +16,19 @@ public struct Size: Codable {
      @property width
      @abstract The width component of the Size.
      */
-    let width: Int
+    public let width: Int
     
     /*!
      @property height
      @abstract The height component of the Size.
      */
-    let height: Int
+    public let height: Int
     
     /*!
      @property depth
      @abstract The depth component of the Size.
      */
-    let depth: Int
+    public let depth: Int
     
     /*!
      @method init:width:height:depth

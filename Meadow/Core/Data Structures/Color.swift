@@ -10,7 +10,7 @@
  @struct Color
  @abstract Defines a Color with red, green, blue and alpha components.
  */
-public struct Color: Decodable {
+public struct Color: Codable {
     
     /*!
      @property red

@@ -10,7 +10,7 @@
  @struct ColorPalette
  @abstract Defines a ColorPalette with four Colors.
  */
-public struct ColorPalette: Decodable {
+public struct ColorPalette: Codable {
     
     /*!
      @property primary

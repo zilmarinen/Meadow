@@ -10,7 +10,7 @@
  @class TerrainType
  @abstract Named TerrainTypes are used to paint TerrainLayers with the appropriate ColorPalette.
  */
-public struct TerrainType: Decodable {
+public struct TerrainType: Codable {
     
     /*!
      @property name

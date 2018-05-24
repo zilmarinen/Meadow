@@ -34,6 +34,16 @@ public struct TerrainLayerJSON: Decodable {
 public class TerrainLayer: Encodable {
     
     /*!
+     @struct TerrainLayerEdge
+     @abstract Defines a relationship between an edge and a TerrainType.
+     */
+    public struct TerrainLayerEdge: Hashable, Encodable {
+        
+       public let edge: GridEdge
+       public let terrainType: TerrainType
+    }
+    
+    /*!
      @struct TerrainLayerHierarchy
      @abstract Defines the relationship between upper and lower nodes when stacked.
      */
@@ -56,6 +66,12 @@ public class TerrainLayer: Encodable {
     private var corners: [Int]
     
     /*!
+     @property terrainTypes
+     @abstract Holds the terrain types for each edge.
+     */
+    private var terrainTypes: Set<TerrainLayerEdge> = []
+    
+    /*!
      @property cachedPolyhedron
      @abstract Cached version of the Polyhedron calculated after becoming dirty.
      */
@@ -66,12 +82,6 @@ public class TerrainLayer: Encodable {
      @param node The parent node for the layer.
      */
     public unowned let node: TerrainNode
-    
-    /*!
-     @property type
-     @param terrainType The terrain type used to paint the layer.
-     */
-    let type: TerrainType
     
     /*!
      @property hierarchy
@@ -128,11 +138,14 @@ public class TerrainLayer: Encodable {
         
         self.node = node
         
-        self.type = terrainType
-        
         self.corners = [0, 0, 0, 0]
         
         self.hierarchy = TerrainLayerHierarchy(upper: nil, lower: nil)
+        
+        set(terrainType: terrainType, edge: .north)
+        set(terrainType: terrainType, edge: .east)
+        set(terrainType: terrainType, edge: .south)
+        set(terrainType: terrainType, edge: .west)
     }
     
     /*!
@@ -142,7 +155,7 @@ public class TerrainLayer: Encodable {
     private enum CodingKeys: CodingKey {
         
         case corners
-        case type
+        case terrainTypes
     }
     
     /*!
@@ -155,7 +168,7 @@ public class TerrainLayer: Encodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         try container.encode(corners, forKey: .corners)
-        try container.encode(type.name, forKey: .type)
+        try container.encode(terrainTypes, forKey: .terrainTypes)
     }
 }
 
@@ -167,7 +180,7 @@ extension TerrainLayer: Equatable {
      */
     public static func == (lhs: TerrainLayer, rhs: TerrainLayer) -> Bool {
         
-        return lhs.type == rhs.type && lhs.polyhedron == rhs.polyhedron
+        return lhs.node == rhs.node && lhs.polyhedron == rhs.polyhedron
     }
 }
 
@@ -197,7 +210,7 @@ extension TerrainLayer {
      @param corner The corner for which the height should be set.
      @param smooth Determines whether neighbouring nodes should be updated of changes in height.
      */
-    func set(height: Int, corner: GridCorner, smooth: Bool = false) {
+    public func set(height: Int, corner: GridCorner, smooth: Bool = false) {
         
         var value = min(max(height, World.Floor), World.Ceiling)
         
@@ -267,9 +280,43 @@ extension TerrainLayer {
      @abstract Returns the world height of the given corner.
      @param corner The corner to return the world height for.
      */
-    func get(height corner: GridCorner) -> Int {
+    public func get(height corner: GridCorner) -> Int {
         
         return corners[corner.rawValue]
+    }
+}
+
+extension TerrainLayer {
+    
+    /*!
+     @method set:terrainType:edge
+     @abstract Set the TerrainType for the given edge.
+     @param terrainType The TerrainType to set for the given edge.
+     @param edge The edge to be painted with the given TerrainType.
+     */
+    public func set(terrainType: TerrainType, edge: GridEdge) {
+        
+        if let existingType = get(terrainType: edge) {
+        
+            terrainTypes.remove(existingType)
+        }
+        
+        terrainTypes.insert(TerrainLayerEdge(edge: edge, terrainType: terrainType))
+        
+        becomeDirty()
+    }
+    
+    /*!
+     @method get:terrainType
+     @abstract Returns the TerrainType of the given edge.
+     @param edge The edge to search and return the TerrainType for.
+     */
+    public func get(terrainType edge: GridEdge) -> TerrainLayerEdge? {
+        
+        return terrainTypes.first { terrainLayerEdge -> Bool in
+            
+            return terrainLayerEdge.edge == edge
+        }
     }
 }
 

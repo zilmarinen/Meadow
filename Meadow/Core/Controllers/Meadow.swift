@@ -15,6 +15,12 @@ import SceneKit
 public struct MeadowJSON: Decodable {
     
     /*!
+     @property name
+     @abstract The name of the scene.
+     */
+    let name: String
+    
+    /*!
      @property areas
      @abstract The areas in world.
      */
@@ -157,6 +163,7 @@ extension Meadow {
      */
     private enum CodingKeys: CodingKey {
         
+        case name
         case areas
         case foliage
         case footpaths
@@ -173,6 +180,7 @@ extension Meadow {
         
         var container = encoder.container(keyedBy: CodingKeys.self)
         
+        try container.encode((rootNode.name ?? "Meadow"), forKey: .name)
         try container.encode(areas, forKey: .areas)
         try container.encode(foliage, forKey: .foliage)
         try container.encode(footpaths, forKey: .footpaths)
@@ -189,6 +197,8 @@ extension Meadow {
      @property json MeadowJSON struct containing grid data.
      */
     public func load(json: MeadowJSON) {
+        
+        rootNode.name = json.name
         
         let terrainNodes = json.terrain.chunks.flatMap { $0.tiles.flatMap { $0.nodes } }
         

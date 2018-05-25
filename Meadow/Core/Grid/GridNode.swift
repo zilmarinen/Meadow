@@ -34,7 +34,16 @@ public class GridNode: SceneGraphNode, Encodable {
      */
     public struct GridNodeNeighbour: Hashable {
         
+        /*!
+         @property edge
+         @abstract The shared edge between the two nodes.
+         */
         let edge: GridEdge
+        
+        /*!
+         @property node
+         @abstract The opposite node along the edge.
+         */
         let node: GridNode
     }
     

@@ -16,15 +16,95 @@ public struct TerrainLayerJSON: Decodable {
     
     /*!
      @property corners
-     @abstract Defines the world height values of the layers corners.
+     @abstract Defines the world height values of the layer corners.
      */
     let corners: [Int]
     
     /*!
-     @property type
-     @param terrainType The terrain type used to paint the layer.
+     @property terrainTypes
+     @abstract Holds the terrain types for each edge.
      */
-    let type: String
+    let terrainTypes: [TerrainLayerEdgeJSON]
+}
+
+/*!
+ @struct TerrainLayerEdgeJSON
+ @abstract
+ */
+public struct TerrainLayerEdgeJSON: Decodable {
+    
+    /*!
+     @property edge
+     @abstract The edge of the layer to be painted.
+     */
+    public let edge: GridEdge
+    
+    /*!
+     @property terrainType
+     @abstract The TerrainType used to paint the edge of the layer.
+     */
+    public let terrainType: String
+}
+
+/*!
+ @struct TerrainLayerEdge
+ @abstract Defines a relationship between an edge and a TerrainType.
+ */
+public struct TerrainLayerEdge: Hashable, Encodable {
+    
+    /*!
+     @enum CodingKeys
+     @abstract Defines the coding keys used when encoding this object.
+     */
+    private enum CodingKeys: CodingKey {
+        
+        case edge
+        case terrainType
+    }
+    
+    /*!
+     @property edge
+     @abstract The edge of the layer to be painted.
+     */
+    public let edge: GridEdge
+    
+    /*!
+     @property terrainType
+     @abstract The TerrainType used to paint the edge of the layer.
+     */
+    public let terrainType: TerrainType
+    
+    /*!
+     @method encode:to
+     @abstract Encodes this object into the given encoder.
+     @property encoder The encoder to use when encoding this object.
+     */
+    public func encode(to encoder: Encoder) throws {
+        
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(edge, forKey: .edge)
+        try container.encode(terrainType.name, forKey: .terrainType)
+    }
+}
+
+/*!
+ @struct TerrainLayerHierarchy
+ @abstract Defines the relationship between upper and lower nodes when stacked.
+ */
+public struct TerrainLayerHierarchy {
+    
+    /*!
+     @property upper
+     @abstract The layer directly above the layer.
+     */
+    var upper: TerrainLayer?
+    
+    /*!
+     @property lower
+     @abstract The layer directly below the layer.
+     */
+    var lower: TerrainLayer?
 }
 
 /*!
@@ -34,26 +114,6 @@ public struct TerrainLayerJSON: Decodable {
 public class TerrainLayer: Encodable {
     
     /*!
-     @struct TerrainLayerEdge
-     @abstract Defines a relationship between an edge and a TerrainType.
-     */
-    public struct TerrainLayerEdge: Hashable, Encodable {
-        
-       public let edge: GridEdge
-       public let terrainType: TerrainType
-    }
-    
-    /*!
-     @struct TerrainLayerHierarchy
-     @abstract Defines the relationship between upper and lower nodes when stacked.
-     */
-    public struct TerrainLayerHierarchy {
-        
-        var upper: TerrainLayer?
-        var lower: TerrainLayer?
-    }
-    
-    /*!
      @property isDirty
      @abstract Represents staleness of the layer.
      */
@@ -61,7 +121,7 @@ public class TerrainLayer: Encodable {
     
     /*!
      @property corners
-     @abstract Defines the world height values of the layers corners.
+     @abstract Defines the world height values of the layer corners.
      */
     private var corners: [Int]
     
@@ -142,10 +202,7 @@ public class TerrainLayer: Encodable {
         
         self.hierarchy = TerrainLayerHierarchy(upper: nil, lower: nil)
         
-        set(terrainType: terrainType, edge: .north)
-        set(terrainType: terrainType, edge: .east)
-        set(terrainType: terrainType, edge: .south)
-        set(terrainType: terrainType, edge: .west)
+        set(terrainType: terrainType)
     }
     
     /*!
@@ -287,6 +344,19 @@ extension TerrainLayer {
 }
 
 extension TerrainLayer {
+    
+    /*!
+     @method set:terrainType
+     @abstract Set the TerrainType for all edges.
+     @param terrainType The TerrainType to set for all edges.
+     */
+    public func set(terrainType: TerrainType) {
+        
+        set(terrainType: terrainType, edge: .north)
+        set(terrainType: terrainType, edge: .east)
+        set(terrainType: terrainType, edge: .south)
+        set(terrainType: terrainType, edge: .west)
+    }
     
     /*!
      @method set:terrainType:edge

@@ -51,15 +51,26 @@ extension Terrain {
             
             guard let terrainNode = add(node: nodeJSON.volume.coordinate) else { return }
             
-            nodeJSON.layers.forEach({ terrainLayerJSON in
+            if let terrainType = terrainTypes.first {
+            
+                nodeJSON.layers.forEach({ terrainLayerJSON in
                 
-                guard let terrainType = find(terrainType: terrainLayerJSON.type), let terrainLayer = terrainNode.add(layer: terrainType) else { return }
+                    guard let terrainLayer = terrainNode.add(layer: terrainType) else { return }
                 
-                for index in 0..<terrainLayerJSON.corners.count {
+                    for index in 0..<terrainLayerJSON.corners.count {
                     
-                    terrainLayer.set(height: terrainLayerJSON.corners[index], corner: GridCorner(rawValue: index)!)
-                }
-            })
+                        terrainLayer.set(height: terrainLayerJSON.corners[index], corner: GridCorner(rawValue: index)!)
+                    }
+                    
+                    for index in 0..<terrainLayerJSON.terrainTypes.count {
+                        
+                        if let edgeTerrainType = find(terrainType: terrainLayerJSON.terrainTypes[index].terrainType) {
+                        
+                            terrainLayer.set(terrainType: edgeTerrainType, edge: terrainLayerJSON.terrainTypes[index].edge)
+                        }
+                    }
+                })
+            }
         }
     }
 }

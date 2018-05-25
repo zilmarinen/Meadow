@@ -63,6 +63,15 @@ public class Grid<Chunk: GridChunk<Tile, Node>, Tile: GridTile<Node>, Node: Grid
     public var totalChildren: Int { return childNodes.count }
     
     /*!
+     @property chunks
+     @abstract Cast and return child nodes to array of Chunks.
+     */
+    private var chunks: [Chunk] {
+        
+        return childNodes as! [Chunk]
+    }
+    
+    /*!
      @method sceneGraph:childAtIndex
      @abstract Attempt to find and return a child SceneGraphNode at the specified index.
      @property index The index of the child SceneGraphNode to be found and returned.
@@ -159,15 +168,6 @@ extension Grid {
 }
 
 extension Grid {
-    
-    /*!
-     @property chunks
-     @abstract Cast and return child nodes to array of Chunks.
-     */
-    private var chunks: [Chunk] {
-        
-        return childNodes as! [Chunk]
-    }
     
     /*!
      @method add:node

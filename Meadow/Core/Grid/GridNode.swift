@@ -122,10 +122,13 @@ public class GridNode: SceneGraphNode, Encodable {
     }
     
     /*!
-     @property mesh
-     @abstract Returns the mesh of the node.
+     @method compactMesh
+     @abstract Returns the compound mesh of the node.
      */
-    var mesh: Mesh { return Mesh(faces: [], triangles: []) }
+    func compactMesh() -> Mesh {
+        
+        return Mesh(faces: [], triangles: [])
+    }
 }
 
 extension GridNode: Hashable {

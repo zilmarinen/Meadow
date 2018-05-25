@@ -22,12 +22,12 @@ extension SCNGeometry {
         let normals = mesh.faces.flatMap { $0.normals }
         let colors = mesh.faces.flatMap { $0.colors }
         
-        let floatSize = MemoryLayout<SCNFloat>.size
-        let vectorSize = MemoryLayout<SCNVector3>.size
+        let floatSize = MemoryLayout<MDWFloat>.size
+        let colorSize = MemoryLayout<SCNVector4>.size
         
-        let colorData = Data(bytes: colors, count: vectorSize * colors.count)
+        let colorData = Data(bytes: colors, count: colorSize * colors.count)
         
-        let colorSource = SCNGeometrySource(data: colorData, semantic: .color, vectorCount: colors.count, usesFloatComponents: true, componentsPerVector: 3, bytesPerComponent: floatSize, dataOffset: 0, dataStride: vectorSize)
+        let colorSource = SCNGeometrySource(data: colorData, semantic: .color, vectorCount: colors.count, usesFloatComponents: true, componentsPerVector: 4, bytesPerComponent: floatSize, dataOffset: 0, dataStride: colorSize)
         
         let vertexSource = SCNGeometrySource(vertices: vertices)
         

@@ -78,20 +78,6 @@ public class GridTile<Node: GridNode>: SceneGraphNode, Encodable {
     public var totalChildren: Int { return nodes.count }
     
     /*!
-     @property mesh
-     @abstract Returns the compound mesh of the tiles child nodes.
-     */
-    var mesh: Mesh {
-        
-        let meshes = nodes.compactMap { node -> Mesh? in
-            
-            return node.mesh
-        }
-        
-        return Mesh(meshes: meshes)
-    }
-    
-    /*!
      @method init:volume
      @abstract Creates and initialises a tile with the specified volume.
      @param volume The bounding volume occupied by the tile.
@@ -134,6 +120,17 @@ public class GridTile<Node: GridNode>: SceneGraphNode, Encodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         try container.encode(nodes, forKey: .nodes)
+    }
+    
+    /*!
+     @method compactMesh
+     @abstract Returns the compound mesh of the tiles child nodes.
+     */
+    func compactMesh() -> Mesh {
+        
+        let meshes = nodes.compactMap { $0.compactMesh() }
+        
+        return Mesh(meshes: meshes)
     }
 }
 

@@ -30,5 +30,5 @@ public struct MeshFace {
      @property faces
      @abstract Defines an array of colors used to create the MeshFace.
      */
-    let colors: [SCNVector3]
+    let colors: [SCNVector4]
 }

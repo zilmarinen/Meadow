@@ -62,9 +62,9 @@ public class TerrainNode: GridNode {
     
     /*!
      @property cutaways
-     @abstract An array of cutaways within the node.
+     @abstract An array of cutaways within the layers of the node.
      */
-    private var cutaways: [TerrainCutaway] = []
+    private var cutaways: [Polyhedron] = []
     
     /*!
      @property topLayer
@@ -116,6 +116,15 @@ public class TerrainNode: GridNode {
         
         try container.encode(layers, forKey: .layers)
     }
+    
+    /*!
+     @method compactMesh
+     @abstract Returns the compound mesh of the node.
+     */
+    override func compactMesh() -> Mesh {
+        
+        return Mesh.Quad
+    }
 }
 
 extension TerrainNode {
@@ -128,10 +137,7 @@ extension TerrainNode {
      */
     func add(neighbour node: TerrainNode, edge: GridEdge) {
         
-        if node.volume.coordinate.adjacency(to: volume.coordinate) != .adjacent {
-            
-            return
-        }
+        guard node.volume.coordinate.adjacency(to: volume.coordinate) == .adjacent else { return }
      
         remove(neighbour: edge)
         
@@ -154,21 +160,20 @@ extension TerrainNode {
      */
     func remove(neighbour edge: GridEdge) {
         
-        if let neighbour = find(neighbour: edge) {
+        guard let neighbour = find(neighbour: edge) else { return }
             
-            neighbours.remove(neighbour)
+        neighbours.remove(neighbour)
+        
+        guard let neighbouringNode = neighbour.node as? TerrainNode else { return }
+        
+        let oppositeEdge = GridEdge.Opposite(edge: edge)
+        
+        if let _ = neighbouringNode.find(neighbour: oppositeEdge) {
             
-            guard let neighbouringNode = neighbour.node as? TerrainNode else { return }
-            
-            let oppositeEdge = GridEdge.Opposite(edge: edge)
-            
-            if let _ = neighbouringNode.find(neighbour: oppositeEdge) {
-                
-                neighbouringNode.remove(neighbour: oppositeEdge)
-            }
-            
-            becomeDirty()
+            neighbouringNode.remove(neighbour: oppositeEdge)
         }
+        
+        becomeDirty()
     }
     
     /*!
@@ -231,25 +236,24 @@ extension TerrainNode {
      */
     public func remove(layer: TerrainLayer) {
         
-        if let index = layers.index(of: layer) {
+        guard let index = layers.index(of: layer) else { return }
             
-            layers.remove(at: index)
+        layers.remove(at: index)
+        
+        if let upper = layer.hierarchy.upper {
             
-            if let upper = layer.hierarchy.upper {
-                
-                upper.hierarchy.lower = layer.hierarchy.lower
-            }
-            
-            if let lower = layer.hierarchy.lower {
-                
-                lower.hierarchy.upper = layer.hierarchy.upper
-            }
-            
-            layer.hierarchy.upper = nil
-            layer.hierarchy.lower = nil
-            
-            becomeDirty()
+            upper.hierarchy.lower = layer.hierarchy.lower
         }
+        
+        if let lower = layer.hierarchy.lower {
+            
+            lower.hierarchy.upper = layer.hierarchy.upper
+        }
+        
+        layer.hierarchy.upper = nil
+        layer.hierarchy.lower = nil
+        
+        becomeDirty()
     }
     
     /*!
@@ -260,5 +264,49 @@ extension TerrainNode {
     public func index(of layer: TerrainLayer) -> Int? {
         
         return layers.index(of: layer)
+    }
+}
+
+extension TerrainNode {
+    
+    /*!
+     @method add:cutaway
+     @abstract Attempt to add a cutaway with the specified Polyhedron.
+     @param polyhedron The Polyhedron the cutaway occupies.
+     */
+    func add(cutaway polyhedron: Polyhedron) {
+        
+        guard find(cutaways: polyhedron)?.count == 0 else { return }
+        
+        cutaways.append(polyhedron)
+    }
+    
+    /*!
+     @method remove:cutaway
+     @abstract Attempt to find and remove the cutaway with the specified Polyhedron.
+     @param polyhedron The Polyhedron the to find and remove.
+     */
+    func remove(cutaway polyhedron: Polyhedron) {
+        
+        guard let index = cutaways.index(of: polyhedron) else { return }
+            
+        cutaways.remove(at: index)
+            
+        becomeDirty()
+    }
+    
+    /*!
+     @method find:cutaways
+     @abstract Attempt to find and return any cutaways that intersect with the specified Polyhedron.
+     @param polyhedron The Polyhedron to check for intersections against.
+     */
+    func find(cutaways polyhedron: Polyhedron) -> [Polyhedron]? {
+        
+        return cutaways.filter { cutaway -> Bool in
+            
+            let elevation = cutaway.elevation(referencing: polyhedron)
+            
+            return elevation == .equal || elevation == .intersecting
+        }
     }
 }

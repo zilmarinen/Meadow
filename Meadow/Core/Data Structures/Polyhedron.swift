@@ -80,3 +80,45 @@ extension Polyhedron {
         return .intersecting
     }
 }
+
+extension Polyhedron {
+    
+    /*!
+     @method subtract
+     @astract Attempts to subtract the volume of one Polyhedron from another.
+     @param subtract The Polyhedron to subtract from the source Polyhedron.
+     @param from The source Polyhedon to be divided into parts.
+     */
+    static func subtract(subtract: Polyhedron, from: Polyhedron) -> [Polyhedron]? {
+        
+        switch subtract.elevation(referencing: from) {
+            
+        case .intersecting:
+            
+            if subtract.upperPolytope.elevation(referencing: from.upperPolytope) == .below && subtract.lowerPolytope.elevation(referencing: from.lowerPolytope) == .above {
+                
+                return [ Polyhedron(upperPolytope: from.upperPolytope, lowerPolytope: subtract.upperPolytope),
+                         Polyhedron(upperPolytope: subtract.lowerPolytope, lowerPolytope: from.lowerPolytope) ]
+            }
+            
+            switch subtract.upperPolytope.elevation(referencing: from.upperPolytope) {
+                
+            case .above,
+                 .equal:
+                
+                return [ Polyhedron(upperPolytope: subtract.lowerPolytope, lowerPolytope: from.lowerPolytope) ]
+                
+            default:
+                
+                if subtract.upperPolytope.elevation(referencing: from.lowerPolytope) == .above {
+                
+                    return [ Polyhedron(upperPolytope: from.upperPolytope, lowerPolytope: subtract.upperPolytope) ]
+                }
+            }
+            
+        default: break
+        }
+        
+        return nil
+    }
+}

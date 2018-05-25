@@ -155,16 +155,13 @@ extension GridChunk {
     
     /*!
      @method clean
-     @abstract Enumerate through children and clean each tile.
+     @abstract Loop through children and clean each tile.
      */
     func clean() {
         
         if !isDirty { return }
         
-        let meshes = tiles.compactMap { tile -> Mesh? in
-            
-            return tile.mesh
-        }
+        let meshes = tiles.compactMap { $0.compactMesh() }
         
         let mesh = Mesh(meshes: meshes)
         

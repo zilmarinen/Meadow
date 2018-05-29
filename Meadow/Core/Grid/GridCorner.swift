@@ -16,6 +16,21 @@ public enum GridCorner: Int {
     case northEast
     case southEast
     case southWest
+    
+    /*!
+     @property description
+     @abstract Returns the string value of the GridCorner.
+     */
+    var description: String {
+        
+        switch self {
+            
+        case .northWest: return "North West"
+        case .northEast: return "North East"
+        case .southEast: return "South East"
+        case .southWest: return "South West"
+        }
+    }
 }
 
 extension GridCorner {

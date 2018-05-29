@@ -16,23 +16,23 @@ public struct ColorPalette: Codable {
      @property primary
      @abstract The primary Color of the ColorPalette.
      */
-    let primary: Color
+    public let primary: Color
     
     /*!
      @property secondary
      @abstract The secondary Color of the ColorPalette.
      */
-    let secondary: Color
+    public let secondary: Color
     
     /*!
      @property tertiary
      @abstract The tertiary Color of the ColorPalette.
      */
-    let tertiary: Color
+    public let tertiary: Color
     
     /*!
      @property quaternary
      @abstract The quaternary Color of the ColorPalette.
      */
-    let quaternary: Color
+    public let quaternary: Color
 }

@@ -54,10 +54,23 @@ public class GridTile<Node: GridNode>: SceneGraphNode, Encodable {
     private var nodes: Set<Node> = []
     
     /*!
+     @property sortedNodes
+     @abstract Array of nodes, sorted by coordinate.
+     */
+    private var sortedNodes: [Node] {
+        
+        return nodes.sorted { (lhs, rhs) -> Bool in
+            
+            return lhs.volume.coordinate.y < rhs.volume.coordinate.y
+            
+        }
+    }
+    
+    /*!
      @property volume
      @abstract Fixed bounding volume of the tile.
      */
-    let volume: Volume
+    public let volume: Volume
     
     /*!
      @property isEmpty
@@ -94,11 +107,19 @@ public class GridTile<Node: GridNode>: SceneGraphNode, Encodable {
      */
     public func sceneGraph(childAtIndex index: Int) -> SceneGraphNode? {
         
-        return nodes.sorted { (lhs, rhs) -> Bool in
-            
-            return lhs.volume.coordinate.y < rhs.volume.coordinate.y
-            
-        }[index]
+        return sortedNodes[index]
+    }
+    
+    /*!
+     @method sceneGraph:indexOf
+     @abstract Attempt to find and return the index of the specified child.
+     @param child The child for which the index should be found and returned.
+     */
+    public func sceneGraph(indexOf child: SceneGraphNode) -> Int? {
+        
+        guard let child = child as? Node else { return nil }
+        
+        return sortedNodes.index(of: child)
     }
     
     /*!
@@ -147,7 +168,7 @@ extension GridTile: Hashable {
     
     /*!
      @property hashValue
-     @abstract Return the has value of the GridTile.
+     @abstract Return the hash value of the GridTile.
      */
     public var hashValue: Int {
         

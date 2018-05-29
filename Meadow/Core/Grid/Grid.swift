@@ -63,6 +63,13 @@ public class Grid<Chunk: GridChunk<Tile, Node>, Tile: GridTile<Node>, Node: Grid
     public var totalChildren: Int { return childNodes.count }
     
     /*!
+     @property volume
+     @abstract Fixed bounding volume of the SceneGraphNode.
+     @discussion Returns a bounding volume with a coordinate and size of zero.
+     */
+    public var volume: Volume { return Volume(coordinate: Coordinate.Zero, size: Size.Zero) }
+    
+    /*!
      @property chunks
      @abstract Cast and return child nodes to array of Chunks.
      */
@@ -79,6 +86,18 @@ public class Grid<Chunk: GridChunk<Tile, Node>, Tile: GridTile<Node>, Node: Grid
     public func sceneGraph(childAtIndex index: Int) -> SceneGraphNode? {
         
         return chunks[index]
+    }
+    
+    /*!
+     @method sceneGraph:indexOf
+     @abstract Attempt to find and return the index of the specified child.
+     @param child The child for which the index should be found and returned.
+     */
+    public func sceneGraph(indexOf child: SceneGraphNode) -> Int? {
+        
+        guard let child = child as? Chunk else { return nil }
+        
+        return chunks.index(of: child)
     }
     
     /*!
@@ -298,7 +317,7 @@ extension Grid {
      @param coordinate Coordinate of the tile to be found and returned.
      @discussion The coordinate provided will be used to find the tile matching both the x and z axis irrelevant of the y axis value.
      */
-    func find(tile coordinate: Coordinate) -> Tile? {
+    public func find(tile coordinate: Coordinate) -> Tile? {
         
         if let chunk = find(chunk: coordinate), let tile = chunk.find(tile: coordinate) {
             

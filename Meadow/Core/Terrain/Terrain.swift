@@ -6,8 +6,6 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-import Foundation
-
 /*!
  @class Terrain
  @abstract Terrain is a Grid type that manages the addition and removal of TerrainNodes.
@@ -28,7 +26,7 @@ public final class Terrain: Grid<TerrainChunk, TerrainTile, TerrainNode> {
     
     /*!
      @property availableTerrainTypes
-     @abstract Returns a reference to the terrain types currently loaded.
+     @abstract Returns a reference to the TerrainTypes currently loaded.
      */
     public var availableTerrainTypes: [TerrainType] {
         
@@ -105,7 +103,7 @@ extension Terrain {
     /*!
      @method remove:node
      @abstract Attempt to find and remove the specified node.
-     @param node The node to be removed.
+     @param node The node to be found and removed.
      */
     public func remove(node: TerrainNode) -> Bool {
         

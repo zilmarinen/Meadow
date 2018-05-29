@@ -1,44 +1,44 @@
 //
-//  TerrainType.swift
-//  Meadow
+//  FootpathType.swift
+//  Meadow-iOS
 //
-//  Created by Zack Brown on 05/05/2018.
+//  Created by Zack Brown on 28/05/2018.
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
 /*!
- @class TerrainType
- @abstract Named TerrainTypes are used to paint TerrainLayers with the appropriate ColorPalette.
+ @class FootpathType
+ @abstract Named FootpathTypes are used to paint FootpathNodes with the appropriate ColorPalette.
  */
-public struct TerrainType: Codable {
+public struct FootpathType: Codable {
     
     /*!
      @property name
-     @abstract THe unique name of the TerrainType.
+     @abstract The unique name of the FootpathType.
      */
     public let name: String
     
     /*!
      @property colorPalette
-     @abstract The color palette used to paint the TerrainLayer.
+     @abstract The color palette used to paint the FootpathNode.
      */
     public let colorPalette: ColorPalette
 }
 
-extension TerrainType: Hashable {
+extension FootpathType: Hashable {
     
     /*!
      @method ==
-     @abstract Determine the equality of two TerrainTypes.
+     @abstract Determine the equality of two FootpathTypes.
      */
-    public static func == (lhs: TerrainType, rhs: TerrainType) -> Bool {
+    public static func == (lhs: FootpathType, rhs: FootpathType) -> Bool {
         
         return lhs.name == rhs.name
     }
     
     /*!
      @property hashValue
-     @abstract Return the hash value of the TerrainType.
+     @abstract Return the hash value of the FootpathType.
      */
     public var hashValue: Int {
         
@@ -46,7 +46,7 @@ extension TerrainType: Hashable {
     }
 }
 
-extension TerrainType {
+extension FootpathType {
     
     /*!
      @enum CodingKeys

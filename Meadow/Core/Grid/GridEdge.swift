@@ -16,6 +16,21 @@ public enum GridEdge: Int, Codable {
     case east
     case south
     case west
+    
+    /*!
+     @property description
+     @abstract Returns the string value of the GridEdge.
+     */
+    var description: String {
+        
+        switch self {
+            
+        case .north: return "North"
+        case .east: return "East"
+        case .south: return "South"
+        case .west: return "West"
+        }
+    }
 }
 
 extension GridEdge {

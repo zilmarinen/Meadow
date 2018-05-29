@@ -14,13 +14,40 @@ import CoreGraphics
  */
 public enum World {
     
+    /*!
+     @property Ceiling
+     @abstract The highest y axis value allowed.
+     */
     static var Ceiling: Int = 10
+    
+    /*!
+     @property Floor
+     @abstract The lowest y axis value allowed.
+     */
     static var Floor: Int = -10
     
+    /*!
+     @property UnitXZ
+     @abstract The unit length for both x and z axis along which a GridTile vertices extend.
+     */
     static var UnitXZ: MDWFloat = 0.5
+    
+    /*!
+     @property UnitY
+     @abstract The unit length for a single y axis value increment.
+     */
     static var UnitY: MDWFloat = 0.25
     
+    /*!
+     @property ChunkSize
+     @abstract The square root of the number of GridTiles contained in a GridChunk.
+     */
     static var ChunkSize: Int = 5
+    
+    /*!
+     @property TileSize
+     @abstract The maximum size for a GridTile.
+     */
     static var TileSize: Int = 1
 }
 

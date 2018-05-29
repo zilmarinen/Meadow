@@ -95,10 +95,14 @@ public class GridNode: SceneGraphNode, Encodable {
      @abstract Attempt to find and return a child SceneGraphNode at the specified index.
      @property index The index of the child SceneGraphNode to be found and returned.
      */
-    public func sceneGraph(childAtIndex index: Int) -> SceneGraphNode? {
-        
-        return nil
-    }
+    public func sceneGraph(childAtIndex index: Int) -> SceneGraphNode? { return nil }
+    
+    /*!
+     @method sceneGraph:indexOf
+     @abstract Attempt to find and return the index of the specified child.
+     @param child The child for which the index should be found and returned.
+     */
+    public func sceneGraph(indexOf child: SceneGraphNode) -> Int? { return nil }
     
     /*!
      @enum CodingKeys
@@ -144,7 +148,7 @@ extension GridNode: Hashable {
     
     /*!
      @property hashValue
-     @abstract Return the has value of the GridNode.
+     @abstract Return the hash value of the GridNode.
      */
     public var hashValue: Int {
         

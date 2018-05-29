@@ -39,12 +39,24 @@ public class GridChunk<Tile: GridTile<Node>, Node: GridNode>: SCNNode, SceneGrap
      @abstract Set of tiles contained within the chunk.
      */
     private var tiles: Set<Tile> = []
+    
+    /*!
+     @property sortedTiles
+     @abstract Array of tiles, sorted by coordinate.
+     */
+    private var sortedTiles: [Tile] {
+        
+        return tiles.sorted { (lhs, rhs) -> Bool in
+            
+            return lhs.volume.coordinate.x < rhs.volume.coordinate.x && lhs.volume.coordinate.z < rhs.volume.coordinate.z
+        }
+    }
 
     /*!
      @property volume
      @abstract Fixed bounding volume of the chunk.
      */
-    let volume: Volume
+    public let volume: Volume
     
     /*!
      @property isEmpty
@@ -92,11 +104,19 @@ public class GridChunk<Tile: GridTile<Node>, Node: GridNode>: SCNNode, SceneGrap
      */
     public func sceneGraph(childAtIndex index: Int) -> SceneGraphNode? {
         
-        return tiles.sorted { (lhs, rhs) -> Bool in
-            
-            return lhs.volume.coordinate.x < rhs.volume.coordinate.x && lhs.volume.coordinate.z < rhs.volume.coordinate.z
-            
-        }[index]
+        return sortedTiles[index]
+    }
+    
+    /*!
+     @method sceneGraph:indexOf
+     @abstract Attempt to find and return the index of the specified child.
+     @param child The child for which the index should be found and returned.
+     */
+    public func sceneGraph(indexOf child: SceneGraphNode) -> Int? {
+        
+        guard let child = child as? Tile else { return nil }
+        
+        return sortedTiles.index(of: child)
     }
     
     /*!

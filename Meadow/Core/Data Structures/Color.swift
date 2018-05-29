@@ -16,31 +16,31 @@ public struct Color: Codable {
      @property red
      @abstract The red component of the Color.
      */
-    let red: MDWFloat
+    public let red: MDWFloat
     
     /*!
      @property green
      @abstract The green component of the Color.
      */
-    let green: MDWFloat
+    public let green: MDWFloat
     
     /*!
      @property blue
      @abstract The blue component of the Color.
      */
-    let blue: MDWFloat
+    public let blue: MDWFloat
     
     /*!
      @property alpha
      @abstract The alpha component of the Color.
      */
-    let alpha: MDWFloat
+    public let alpha: MDWFloat
     
     /*!
      @property color
      @abstract Defines a color with the red, green, blue and alpha components.
      */
-    var color: MDWColor {
+    public var color: MDWColor {
         
         return MDWColor(red: red, green: green, blue: blue, alpha: alpha)
     }

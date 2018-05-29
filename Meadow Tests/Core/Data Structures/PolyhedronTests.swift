@@ -163,21 +163,31 @@ class PolyhedronTests: XCTestCase {
         
         XCTAssertNotNil(r0)
         XCTAssertEqual(r0?.count, 1)
+        XCTAssertEqual(r0?.first?.upperPolytope, upper.lowerPolytope)
+        XCTAssertEqual(r0?.first?.lowerPolytope, reference.lowerPolytope)
         
         let r1 = Polyhedron.subtract(subtract: lower, from: reference)
         
         XCTAssertNotNil(r1)
         XCTAssertEqual(r1?.count, 1)
+        XCTAssertEqual(r1?.first?.upperPolytope, reference.upperPolytope)
+        XCTAssertEqual(r1?.first?.lowerPolytope, lower.upperPolytope)
         
         let r2 = Polyhedron.subtract(subtract: intersecting0, from: reference)
         
         XCTAssertNotNil(r2)
         XCTAssertEqual(r2?.count, 2)
+        XCTAssertEqual(r2?[0].upperPolytope, reference.upperPolytope)
+        XCTAssertEqual(r2?[0].lowerPolytope, intersecting0.upperPolytope)
+        XCTAssertEqual(r2?[1].upperPolytope, intersecting0.lowerPolytope)
+        XCTAssertEqual(r2?[1].lowerPolytope, reference.lowerPolytope)
         
         let r3 = Polyhedron.subtract(subtract: intersecting1, from: reference)
         
         XCTAssertNotNil(r3)
         XCTAssertEqual(r3?.count, 1)
+        XCTAssertEqual(r3?.first?.upperPolytope, reference.upperPolytope)
+        XCTAssertEqual(r3?.first?.lowerPolytope, intersecting1.upperPolytope)
         
         let r4 = Polyhedron.subtract(subtract: above, from: reference)
         

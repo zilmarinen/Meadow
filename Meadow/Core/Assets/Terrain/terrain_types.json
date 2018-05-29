@@ -3,27 +3,27 @@
 		"name": "Bedrock",
 		"color_palette": {
 			"primary": {
-				"red": 0.0,
+				"red": 0.984,
 				"green": 0.0,
-				"blue": 0.0,
+				"blue": 0.333,
 				"alpha": 1.0
 			},
 			"secondary": {
-				"red": 0.0,
-				"green": 0.0,
-				"blue": 0.0,
+				"red": 0.992,
+				"green": 0.686,
+				"blue": 0.784,
 				"alpha": 1.0
 			},
 			"tertiary": {
-				"red": 0.0,
-				"green": 0.0,
-				"blue": 0.0,
+				"red": 0.188,
+				"green": 0.513,
+				"blue": 0.984,
 				"alpha": 1.0
 			},
 			"quaternary": {
-				"red": 0.0,
-				"green": 0.0,
-				"blue": 0.0,
+				"red": 0.325,
+				"green": 0.317,
+				"blue": 0.529,
 				"alpha": 1.0
 			}
 		}
@@ -32,27 +32,27 @@
 		"name": "Grass",
 		"color_palette": {
 			"primary": {
-				"red": 0.0,
+				"red": 0.5,
 				"green": 0.0,
 				"blue": 0.0,
 				"alpha": 1.0
 			},
 			"secondary": {
 				"red": 0.0,
-				"green": 0.0,
+				"green": 0.5,
 				"blue": 0.0,
 				"alpha": 1.0
 			},
 			"tertiary": {
 				"red": 0.0,
 				"green": 0.0,
-				"blue": 0.0,
+				"blue": 0.5,
 				"alpha": 1.0
 			},
 			"quaternary": {
-				"red": 0.0,
-				"green": 0.0,
-				"blue": 0.0,
+				"red": 0.5,
+				"green": 0.5,
+				"blue": 0.5,
 				"alpha": 1.0
 			}
 		}

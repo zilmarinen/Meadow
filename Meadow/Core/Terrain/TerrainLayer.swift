@@ -405,12 +405,23 @@ extension TerrainLayer: SceneGraphNode {
     public var totalChildren: Int { return 0 }
     
     /*!
+     @property volume
+     @abstract Fixed bounding volume of the SceneGraphNode.
+     @discussion Returns the fixed bounding volume of the parent TerrainNode.
+     */
+    public var volume: Volume { return node.volume }
+    
+    /*!
      @method sceneGraph:childAtIndex
      @abstract Attempt to find and return a child SceneGraphNode at the specified index.
      @property index The index of the child SceneGraphNode to be found and returned.
      */
-    public func sceneGraph(childAtIndex index: Int) -> SceneGraphNode? {
-        
-        return nil
-    }
+    public func sceneGraph(childAtIndex index: Int) -> SceneGraphNode? { return nil }
+    
+    /*!
+     @method sceneGraph:indexOf
+     @abstract Attempt to find and return the index of the specified child.
+     @param child The child for which the index should be found and returned.
+     */
+    public func sceneGraph(indexOf child: SceneGraphNode) -> Int? { return nil }
 }

@@ -25,9 +25,22 @@ public protocol SceneGraphNode {
     var totalChildren: Int { get }
     
     /*!
+     @property volume
+     @abstract Fixed bounding volume of the SceneGraphNode.
+     */
+    var volume: Volume { get }
+    
+    /*!
      @method sceneGraph:childAtIndex
      @abstract Attempt to find and return a child SceneGraphNode at the specified index.
      @property index The index of the child SceneGraphNode to be found and returned.
      */
     func sceneGraph(childAtIndex index: Int) -> SceneGraphNode?
+    
+    /*!
+     @method sceneGraph:indexOf
+     @abstract Attempt to find and return the index of the specified child.
+     @param child The child for which the index should be found and returned.
+     */
+    func sceneGraph(indexOf child: SceneGraphNode) -> Int?
 }

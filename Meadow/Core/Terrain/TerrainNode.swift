@@ -255,16 +255,6 @@ extension TerrainNode {
         
         becomeDirty()
     }
-    
-    /*!
-     @method index:of
-     @abstract Attempt to find and return the index of the specified layer.
-     @param layer The layer for which the index should be found and returned.
-     */
-    public func index(of layer: TerrainLayer) -> Int? {
-        
-        return layers.index(of: layer)
-    }
 }
 
 extension TerrainNode {

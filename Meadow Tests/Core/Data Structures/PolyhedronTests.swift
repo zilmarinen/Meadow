@@ -159,21 +159,21 @@ class PolyhedronTests: XCTestCase {
         
         let below = Polyhedron(upperPolytope: p10, lowerPolytope: p11)
         
-        let r0 = Polyhedron.subtract(subtract: upper, from: reference)
+        let r0 = Polyhedron.subtract(polyhedron: upper, from: reference)
         
         XCTAssertNotNil(r0)
         XCTAssertEqual(r0?.count, 1)
         XCTAssertEqual(r0?.first?.upperPolytope, upper.lowerPolytope)
         XCTAssertEqual(r0?.first?.lowerPolytope, reference.lowerPolytope)
         
-        let r1 = Polyhedron.subtract(subtract: lower, from: reference)
+        let r1 = Polyhedron.subtract(polyhedron: lower, from: reference)
         
         XCTAssertNotNil(r1)
         XCTAssertEqual(r1?.count, 1)
         XCTAssertEqual(r1?.first?.upperPolytope, reference.upperPolytope)
         XCTAssertEqual(r1?.first?.lowerPolytope, lower.upperPolytope)
         
-        let r2 = Polyhedron.subtract(subtract: intersecting0, from: reference)
+        let r2 = Polyhedron.subtract(polyhedron: intersecting0, from: reference)
         
         XCTAssertNotNil(r2)
         XCTAssertEqual(r2?.count, 2)
@@ -182,24 +182,84 @@ class PolyhedronTests: XCTestCase {
         XCTAssertEqual(r2?[1].upperPolytope, intersecting0.lowerPolytope)
         XCTAssertEqual(r2?[1].lowerPolytope, reference.lowerPolytope)
         
-        let r3 = Polyhedron.subtract(subtract: intersecting1, from: reference)
+        let r3 = Polyhedron.subtract(polyhedron: intersecting1, from: reference)
         
         XCTAssertNotNil(r3)
         XCTAssertEqual(r3?.count, 1)
         XCTAssertEqual(r3?.first?.upperPolytope, reference.upperPolytope)
         XCTAssertEqual(r3?.first?.lowerPolytope, intersecting1.upperPolytope)
         
-        let r4 = Polyhedron.subtract(subtract: above, from: reference)
+        let r4 = Polyhedron.subtract(polyhedron: above, from: reference)
         
         XCTAssertNil(r4)
         
-        let r5 = Polyhedron.subtract(subtract: below, from: reference)
+        let r5 = Polyhedron.subtract(polyhedron: below, from: reference)
         
         XCTAssertNil(r5)
         
-        let r6 = Polyhedron.subtract(subtract: reference, from: reference)
+        let r6 = Polyhedron.subtract(polyhedron: reference, from: reference)
         
         XCTAssertNil(r6)
+        
+        expect.fulfill()
+        
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testPolyhedronSubdivision() {
+        
+        let expect = expectation(description: "Subtracting Polyhedrons from each other results in an array of the remaining volumes")
+        
+        let unit = Polytope.Unit
+        
+        let v0 = unit.vertices[0]
+        let v1 = unit.vertices[1]
+        let v2 = unit.vertices[2]
+        let v3 = unit.vertices[3]
+        
+        let p0 = Polytope(vertices: [SCNVector3(x: v0.x, y: World.Y(y: 5), z: v0.z),
+                                     SCNVector3(x: v1.x, y: World.Y(y: 4), z: v1.z),
+                                     SCNVector3(x: v2.x, y: World.Y(y: 4), z: v2.z),
+                                     SCNVector3(x: v3.x, y: World.Y(y: 5), z: v3.z)])
+        let p1 = Polytope(vertices: [SCNVector3(x: v0.x, y: World.Y(y: 0), z: v0.z),
+                                     SCNVector3(x: v1.x, y: World.Y(y: 1), z: v1.z),
+                                     SCNVector3(x: v2.x, y: World.Y(y: 1), z: v2.z),
+                                     SCNVector3(x: v3.x, y: World.Y(y: 0), z: v3.z)])
+        
+        let p2 = Polytope(vertices: [SCNVector3(x: v0.x, y: World.Y(y: 4), z: v0.z),
+                                     SCNVector3(x: v1.x, y: World.Y(y: 4), z: v1.z),
+                                     SCNVector3(x: v2.x, y: World.Y(y: 4), z: v2.z),
+                                     SCNVector3(x: v3.x, y: World.Y(y: 4), z: v3.z)])
+        let p3 = Polytope(vertices: [SCNVector3(x: v0.x, y: World.Y(y: 3), z: v0.z),
+                                     SCNVector3(x: v1.x, y: World.Y(y: 3), z: v1.z),
+                                     SCNVector3(x: v2.x, y: World.Y(y: 3), z: v2.z),
+                                     SCNVector3(x: v3.x, y: World.Y(y: 3), z: v3.z)])
+        
+        let p4 = Polytope(vertices: [SCNVector3(x: v0.x, y: World.Y(y: 2), z: v0.z),
+                                     SCNVector3(x: v1.x, y: World.Y(y: 2), z: v1.z),
+                                     SCNVector3(x: v2.x, y: World.Y(y: 2), z: v2.z),
+                                     SCNVector3(x: v3.x, y: World.Y(y: 2), z: v3.z)])
+        let p5 = Polytope(vertices: [SCNVector3(x: v0.x, y: World.Y(y: 1), z: v0.z),
+                                     SCNVector3(x: v1.x, y: World.Y(y: 1), z: v1.z),
+                                     SCNVector3(x: v2.x, y: World.Y(y: 1), z: v2.z),
+                                     SCNVector3(x: v3.x, y: World.Y(y: 1), z: v3.z)])
+        
+        let reference = Polyhedron(upperPolytope: p0, lowerPolytope: p1)
+        
+        let upper = Polyhedron(upperPolytope: p2, lowerPolytope: p3)
+        
+        let lower = Polyhedron(upperPolytope: p4, lowerPolytope: p5)
+        
+        let result = Polyhedron.subtract(polyhedrons: [upper, lower], from: reference)
+        
+        XCTAssertNotNil(result)
+        XCTAssertEqual(result.count, 3)
+        XCTAssertEqual(result[0].upperPolytope, reference.upperPolytope)
+        XCTAssertEqual(result[0].lowerPolytope, upper.upperPolytope)
+        XCTAssertEqual(result[1].upperPolytope, upper.lowerPolytope)
+        XCTAssertEqual(result[1].lowerPolytope, lower.upperPolytope)
+        XCTAssertEqual(result[2].upperPolytope, lower.lowerPolytope)
+        XCTAssertEqual(result[2].lowerPolytope, reference.lowerPolytope)
         
         expect.fulfill()
         

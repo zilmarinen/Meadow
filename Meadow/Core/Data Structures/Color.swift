@@ -6,6 +6,8 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
+import SceneKit
+
 /*!
  @struct Color
  @abstract Defines a Color with red, green, blue and alpha components.
@@ -43,5 +45,14 @@ public struct Color: Codable {
     public var color: MDWColor {
         
         return MDWColor(red: red, green: green, blue: blue, alpha: alpha)
+    }
+    
+    /*!
+     @property vector
+     @abstract Defines a color with the red, green, blue and alpha components.
+     */
+    public var vector: SCNVector4 {
+        
+        return SCNVector4(x: red, y: green, z: blue, w: alpha)
     }
 }

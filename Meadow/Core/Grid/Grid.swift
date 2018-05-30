@@ -303,7 +303,7 @@ extension Grid {
      @param coordinate Coordinate of the chunk to be found and returned.
      @discussion The coordinate provided will be used to find the nearest enclosing bounds along the x and z axis irrelevant of the y axis value.
      */
-    func find(chunk coordinate: Coordinate) -> Chunk? {
+    public func find(chunk coordinate: Coordinate) -> Chunk? {
      
         return chunks.first { chunk -> Bool in
             
@@ -333,7 +333,7 @@ extension Grid {
      @param coordinate Coordinate of the node to be found and returned.
      @discussion The coordinate provided will be used to find the nearest enclosing bounds matching both the x and z axis where the y axis value also intersects with the nodes bounds.
      */
-    func find(node coordinate: Coordinate) -> Node? {
+    public func find(node coordinate: Coordinate) -> Node? {
         
         if let tile = find(tile: coordinate), let node = tile.find(node: coordinate) {
             

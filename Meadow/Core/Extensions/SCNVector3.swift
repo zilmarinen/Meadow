@@ -1,0 +1,115 @@
+//
+//  SCNVector3.swift
+//  Meadow-iOS
+//
+//  Created by Zack Brown on 30/05/2018.
+//  Copyright © 2018 Script Orchard. All rights reserved.
+//
+
+import SceneKit
+
+extension SCNVector3 {
+    
+    public static func +(lhs: SCNVector3, rhs: SCNVector3) -> SCNVector3 {
+        
+        let x = lhs.x + rhs.x
+        let y = lhs.y + rhs.y
+        let z = lhs.z + rhs.z
+        
+        return SCNVector3(x: x, y: y, z: z)
+    }
+    
+    public static func +=(lhs: inout SCNVector3, rhs: SCNVector3) {
+        
+        lhs = lhs + rhs
+    }
+    
+    public static func -(lhs: SCNVector3, rhs: SCNVector3) -> SCNVector3 {
+        
+        let x = lhs.x - rhs.x
+        let y = lhs.y - rhs.y
+        let z = lhs.z - rhs.z
+        
+        return SCNVector3(x: x, y: y, z: z)
+    }
+    
+    public static func -=(lhs: inout SCNVector3, rhs: SCNVector3) {
+        
+        lhs = lhs - rhs
+    }
+    
+    /*!
+     @method magnitude
+     @abstract Returns the length of the SCNVector3.
+     */
+    public func magnitude() -> MDWFloat {
+        
+        let x0 = x * x
+        let y0 = y * y
+        let z0 = z * z
+        
+        let length = Float(x0 + y0 + z0)
+        
+        return MDWFloat(sqrtf(length))
+    }
+    
+    /*!
+     @method normalised
+     @abstract Returns a normalised SCNVector3 of the SCNVector3.
+     */
+    public func normalised() -> SCNVector3 {
+        
+        let length = magnitude()
+        
+        let x0 = x / length
+        let y0 = y / length
+        let z0 = z / length
+    
+        return SCNVector3(x: x0, y: y0, z: z0)
+    }
+    
+    /*!
+     @method negated
+     @abstract Returns a negated SCNVector3 of the SCNVector3.
+     */
+    public func negated() -> SCNVector3 {
+        
+        return SCNVector3(x: -x, y: -y, z: -z)
+    }
+    
+    /*!
+     @method Dot:lhs:rhs
+     @abstract Calculates and returns the dot product of two SCNVector3.
+     @property lhs A SCNVector3 to be used to calculate to dot product.
+     @property rhs A SCNVector3 to be used to calculate to dot product.
+     */
+    public static func Dot(lhs: SCNVector3, rhs: SCNVector3) -> MDWFloat {
+        
+        let x = (lhs.x * rhs.x)
+        let y = (lhs.y * rhs.y)
+        let z = (lhs.z * rhs.z)
+        
+        return MDWFloat(x + y + z)
+    }
+    
+    /*!
+     @method Cross:lhs:rhs
+     @abstract Calculates and returns the cross product of two SCNVector3.
+     @property lhs A SCNVector3 to be used to calculate to cross product.
+     @property rhs A SCNVector3 to be used to calculate to cross product.
+     */
+    public static func Cross(lhs: SCNVector3, rhs: SCNVector3) -> SCNVector3 {
+        
+        let x = (lhs.y * rhs.z) - (lhs.z * rhs.y)
+        let y = (lhs.z * rhs.x) - (lhs.x * rhs.z)
+        let z = (lhs.x * rhs.y) - (lhs.y * rhs.x)
+        
+        return SCNVector3(x: x, y: y, z: z)
+    }
+    
+    /*!
+     @var Up
+     @abstract Returns a SCNVector3 with the x, y and z components set to 0, 1, 0.
+     */
+    public static var Up: SCNVector3 { return SCNVector3(x: 0.0, y: 1.0, z: 0.0) }
+}

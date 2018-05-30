@@ -150,6 +150,18 @@ public class TerrainLayer: Encodable {
     var hierarchy: TerrainLayerHierarchy
     
     /*!
+     @property upper
+     @abstract The layer directly above the layer.
+     */
+    public var upper: TerrainLayer? { return hierarchy.upper }
+    
+    /*!
+     @property lower
+     @abstract The layer directly below the layer.
+     */
+    public var lower: TerrainLayer? { return hierarchy.lower }
+    
+    /*!
      @property polyhedron
      @abstract Returns a Polyhedron calculated from the world corner heights in relation to any upper and/or lower layers.
      */
@@ -285,7 +297,7 @@ extension TerrainLayer {
          
             corners[corner.rawValue] = value
             
-            node.becomeDirty()
+            becomeDirty()
             
             let connectedCorners = GridCorner.Corners(corner: corner)
             let oppositeCorner = GridCorner.Opposite(corner: corner)
@@ -424,4 +436,61 @@ extension TerrainLayer: SceneGraphNode {
      @param child The child for which the index should be found and returned.
      */
     public func sceneGraph(indexOf child: SceneGraphNode) -> Int? { return nil }
+}
+
+extension TerrainLayer {
+    
+    func mesh(cutaways: [Polyhedron]) -> Mesh {
+        
+        var meshes: [Mesh] = []
+        
+        let polyhedrons = Polyhedron.subtract(polyhedrons: cutaways, from: polyhedron)
+        
+        polyhedrons.forEach { division in
+            
+            var faces: [MeshFace] = []
+            var triangles: [MeshTriangle] = []
+            
+            let center = division.upperPolytope.center
+            
+            for index in 0..<4 {
+                
+                let edge = GridEdge(rawValue: index)!
+                
+                let corners = GridCorner.Corners(edge: edge)
+                
+                let referenceNormal = center + SCNVector3.Up
+                let color = get(terrainType: edge)!.terrainType.colorPalette.primary.vector
+                
+                let colors: [SCNVector4] = [color, color, color]
+                
+                let c0 = corners.first!.rawValue
+                let c1 = corners.last!.rawValue
+                
+                var v0 = division.upperPolytope.vertices[c0]
+                var v1 = division.upperPolytope.vertices[c1]
+                
+                let plane = Plane(v0: v0, v1: v1, v2: center)
+                
+                var normal = plane.normal
+                
+                if plane.side(vector: referenceNormal) {
+                    
+                    normal = plane.normal.negated()
+                    
+                    v0 = division.upperPolytope.vertices[c1]
+                    v1 = division.upperPolytope.vertices[c0]
+                }
+                
+                let offset = Int32(index * 3)
+                
+                faces.append(MeshFace(vertices: [v0, v1, center], normals: [normal, normal, normal], colors: colors))
+                triangles.append(MeshTriangle(i0: offset, i1: offset + 1, i2: offset + 2))
+            }
+            
+            meshes.append(Mesh(faces: faces, triangles: triangles))
+        }
+        
+        return Mesh(meshes: meshes)
+    }
 }

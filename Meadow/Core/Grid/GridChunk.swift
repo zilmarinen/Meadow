@@ -42,7 +42,7 @@ public class GridChunk<Tile: GridTile<Node>, Node: GridNode>: SCNNode, SceneGrap
     
     /*!
      @property sortedTiles
-     @abstract Array of tiles, sorted by coordinate.
+     @abstract Array of tiles, sorted by coordinate x and z axis values.
      */
     private var sortedTiles: [Tile] {
         

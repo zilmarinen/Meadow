@@ -21,7 +21,7 @@ public enum GridCorner: Int {
      @property description
      @abstract Returns the string value of the GridCorner.
      */
-    var description: String {
+    public var description: String {
         
         switch self {
             

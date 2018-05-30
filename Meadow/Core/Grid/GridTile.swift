@@ -55,14 +55,13 @@ public class GridTile<Node: GridNode>: SceneGraphNode, Encodable {
     
     /*!
      @property sortedNodes
-     @abstract Array of nodes, sorted by coordinate.
+     @abstract Array of nodes, sorted by y axis value.
      */
     private var sortedNodes: [Node] {
         
         return nodes.sorted { (lhs, rhs) -> Bool in
             
             return lhs.volume.coordinate.y < rhs.volume.coordinate.y
-            
         }
     }
     

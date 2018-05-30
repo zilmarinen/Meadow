@@ -18,13 +18,13 @@ public enum World {
      @property Ceiling
      @abstract The highest y axis value allowed.
      */
-    static var Ceiling: Int = 10
+    public static var Ceiling: Int = 10
     
     /*!
      @property Floor
      @abstract The lowest y axis value allowed.
      */
-    static var Floor: Int = -10
+    public static var Floor: Int = -10
     
     /*!
      @property UnitXZ

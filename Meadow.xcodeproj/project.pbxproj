@@ -11,6 +11,14 @@
 		1819B74120A574F800BEE585 /* Meadow_iOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 1819B73320A574F800BEE585 /* Meadow_iOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1819B75620A5752000BEE585 /* Meadow_macOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1819B74D20A5752000BEE585 /* Meadow_macOS.framework */; };
 		1819B75D20A5752000BEE585 /* Meadow_macOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 1819B74F20A5752000BEE585 /* Meadow_macOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1831501920BECE5B004317E0 /* Plane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1831501820BECE5B004317E0 /* Plane.swift */; };
+		1831501A20BECE5E004317E0 /* Plane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1831501820BECE5B004317E0 /* Plane.swift */; };
+		1831501B20BECE5E004317E0 /* Plane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1831501820BECE5B004317E0 /* Plane.swift */; };
+		1831501C20BECE5F004317E0 /* Plane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1831501820BECE5B004317E0 /* Plane.swift */; };
+		1831501F20BED0D8004317E0 /* SCNVector3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1831501E20BED0D8004317E0 /* SCNVector3.swift */; };
+		1831502020BED0E9004317E0 /* SCNVector3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1831501E20BED0D8004317E0 /* SCNVector3.swift */; };
+		1831502120BED0EA004317E0 /* SCNVector3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1831501E20BED0D8004317E0 /* SCNVector3.swift */; };
+		1831502220BED0EA004317E0 /* SCNVector3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1831501E20BED0D8004317E0 /* SCNVector3.swift */; };
 		185E587820A878CD00139565 /* Bundle+Pod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185E587720A878CD00139565 /* Bundle+Pod.swift */; };
 		185E587920A878EC00139565 /* Bundle+Pod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185E587720A878CD00139565 /* Bundle+Pod.swift */; };
 		185E587A20A878ED00139565 /* Bundle+Pod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185E587720A878CD00139565 /* Bundle+Pod.swift */; };
@@ -304,6 +312,8 @@
 		1819B75520A5752000BEE585 /* Meadow-macOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Meadow-macOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1819B75C20A5752000BEE585 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		182B22EF2098BDDB003D1309 /* MeshFace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeshFace.swift; sourceTree = "<group>"; };
+		1831501820BECE5B004317E0 /* Plane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plane.swift; sourceTree = "<group>"; };
+		1831501E20BED0D8004317E0 /* SCNVector3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCNVector3.swift; sourceTree = "<group>"; };
 		18496C592093234300992AF3 /* GridNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridNode.swift; sourceTree = "<group>"; };
 		18496C5A2093234300992AF3 /* GridChunk.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridChunk.swift; sourceTree = "<group>"; };
 		18496C5B2093234300992AF3 /* Grid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
@@ -434,6 +444,7 @@
 				18EE513920A599000059829C /* SCNColor.swift */,
 				18EE514820A5B6A30059829C /* SCNGeometry+Mesh.swift */,
 				185E587720A878CD00139565 /* Bundle+Pod.swift */,
+				1831501E20BED0D8004317E0 /* SCNVector3.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -555,6 +566,7 @@
 				18496C782093472B00992AF3 /* Polytope.swift */,
 				18713243209723050084565F /* Size.swift */,
 				18713241209720120084565F /* Volume.swift */,
+				1831501820BECE5B004317E0 /* Plane.swift */,
 			);
 			path = "Data Structures";
 			sourceTree = "<group>";
@@ -954,7 +966,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0930;
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = "Script Orchard";
 				TargetAttributes = {
 					1819B73020A574F800BEE585 = {
@@ -1157,11 +1169,13 @@
 				18EE503020A576660059829C /* FootpathTile.swift in Sources */,
 				18EE514420A59F8E0059829C /* MeshTriangle.swift in Sources */,
 				18EE503B20A5766C0059829C /* GridTile.swift in Sources */,
+				1831501920BECE5B004317E0 /* Plane.swift in Sources */,
 				18EE502120A576550059829C /* Polytope.swift in Sources */,
 				18EE502420A576590059829C /* Collection+Bundle.swift in Sources */,
 				18EE502B20A576600059829C /* FoliageChunk.swift in Sources */,
 				18EE506120A576880059829C /* WaterChunk.swift in Sources */,
 				18EE504720A576770059829C /* ScaffoldNode.swift in Sources */,
+				1831501F20BED0D8004317E0 /* SCNVector3.swift in Sources */,
 				185E587E20A97F6400139565 /* SceneGraphNode.swift in Sources */,
 				18EE503820A5766C0059829C /* GridCorner.swift in Sources */,
 				18EE504620A576770059829C /* ScaffoldTile.swift in Sources */,
@@ -1187,6 +1201,7 @@
 				18EE509E20A57B9E0059829C /* TerrainLayerTests.swift in Sources */,
 				18EE50E320A57BEE0059829C /* Scaffold.swift in Sources */,
 				18EE50EF20A57BF30059829C /* TerrainNode.swift in Sources */,
+				1831501A20BECE5E004317E0 /* Plane.swift in Sources */,
 				18EE50DA20A57BE70059829C /* GridEdge.swift in Sources */,
 				18EE510220A57BFB0059829C /* WaterNode.swift in Sources */,
 				18EE514A20A5B6A30059829C /* SCNGeometry+Mesh.swift in Sources */,
@@ -1242,6 +1257,7 @@
 				18EE50F120A57BF30059829C /* TerrainType.swift in Sources */,
 				18EE50CE20A57BE20059829C /* FootpathChunk.swift in Sources */,
 				18EE50F220A57BF30059829C /* TerrainLayer.swift in Sources */,
+				1831502020BED0E9004317E0 /* SCNVector3.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1292,11 +1308,13 @@
 				18EE503420A576660059829C /* FootpathTile.swift in Sources */,
 				18EE514620A59F8E0059829C /* MeshTriangle.swift in Sources */,
 				18EE504120A5766D0059829C /* GridTile.swift in Sources */,
+				1831501B20BECE5E004317E0 /* Plane.swift in Sources */,
 				18EE501A20A576540059829C /* Polytope.swift in Sources */,
 				18EE502520A5765A0059829C /* Collection+Bundle.swift in Sources */,
 				18EE502720A5765F0059829C /* FoliageChunk.swift in Sources */,
 				18EE506520A576890059829C /* WaterChunk.swift in Sources */,
 				18EE504B20A576780059829C /* ScaffoldNode.swift in Sources */,
+				1831502120BED0EA004317E0 /* SCNVector3.swift in Sources */,
 				185E588020A9808300139565 /* SceneGraphNode.swift in Sources */,
 				18EE503E20A5766D0059829C /* GridCorner.swift in Sources */,
 				18EE504A20A576780059829C /* ScaffoldTile.swift in Sources */,
@@ -1322,6 +1340,7 @@
 				18EE509520A57A960059829C /* TerrainLayerTests.swift in Sources */,
 				18EE50DF20A57BED0059829C /* Scaffold.swift in Sources */,
 				18EE50E920A57BF20059829C /* TerrainNode.swift in Sources */,
+				1831501C20BECE5F004317E0 /* Plane.swift in Sources */,
 				18EE50D420A57BE60059829C /* GridEdge.swift in Sources */,
 				18EE50FE20A57BFA0059829C /* WaterNode.swift in Sources */,
 				18EE514C20A5B6A30059829C /* SCNGeometry+Mesh.swift in Sources */,
@@ -1377,6 +1396,7 @@
 				18EE50EB20A57BF20059829C /* TerrainType.swift in Sources */,
 				18EE50CA20A57BE20059829C /* FootpathChunk.swift in Sources */,
 				18EE50EC20A57BF20059829C /* TerrainLayer.swift in Sources */,
+				1831502220BED0EA004317E0 /* SCNVector3.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1400,7 +1420,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E98FADB84933C02A52D44A10 /* Pods-Meadow-iOS.debug.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1427,7 +1447,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C4DFC12260F62F5244575156 /* Pods-Meadow-iOS.release.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;

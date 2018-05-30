@@ -84,35 +84,35 @@ extension Polyhedron {
 extension Polyhedron {
     
     /*!
-     @method subtract
+     @method subtract:from
      @astract Attempts to subtract the volume of one Polyhedron from another.
      @param subtract The Polyhedron to subtract from the source Polyhedron.
      @param from The source Polyhedon to be divided into parts.
      */
-    static func subtract(subtract: Polyhedron, from: Polyhedron) -> [Polyhedron]? {
+    static func subtract(polyhedron: Polyhedron, from: Polyhedron) -> [Polyhedron]? {
         
-        switch subtract.elevation(referencing: from) {
+        switch polyhedron.elevation(referencing: from) {
             
         case .intersecting:
             
-            if subtract.upperPolytope.elevation(referencing: from.upperPolytope) == .below && subtract.lowerPolytope.elevation(referencing: from.lowerPolytope) == .above {
+            if polyhedron.upperPolytope.elevation(referencing: from.upperPolytope) == .below && polyhedron.lowerPolytope.elevation(referencing: from.lowerPolytope) == .above {
                 
-                return [ Polyhedron(upperPolytope: from.upperPolytope, lowerPolytope: subtract.upperPolytope),
-                         Polyhedron(upperPolytope: subtract.lowerPolytope, lowerPolytope: from.lowerPolytope) ]
+                return [ Polyhedron(upperPolytope: from.upperPolytope, lowerPolytope: polyhedron.upperPolytope),
+                         Polyhedron(upperPolytope: polyhedron.lowerPolytope, lowerPolytope: from.lowerPolytope) ]
             }
             
-            switch subtract.upperPolytope.elevation(referencing: from.upperPolytope) {
+            switch polyhedron.upperPolytope.elevation(referencing: from.upperPolytope) {
                 
             case .above,
                  .equal:
                 
-                return [ Polyhedron(upperPolytope: subtract.lowerPolytope, lowerPolytope: from.lowerPolytope) ]
+                return [ Polyhedron(upperPolytope: polyhedron.lowerPolytope, lowerPolytope: from.lowerPolytope) ]
                 
             default:
                 
-                if subtract.upperPolytope.elevation(referencing: from.lowerPolytope) == .above {
+                if polyhedron.upperPolytope.elevation(referencing: from.lowerPolytope) == .above {
                 
-                    return [ Polyhedron(upperPolytope: from.upperPolytope, lowerPolytope: subtract.upperPolytope) ]
+                    return [ Polyhedron(upperPolytope: from.upperPolytope, lowerPolytope: polyhedron.upperPolytope) ]
                 }
             }
             
@@ -120,5 +120,37 @@ extension Polyhedron {
         }
         
         return nil
+    }
+    
+    /*!
+     @method subtract:from
+     @astract Attempts to subtract the volumes of an array of Polyhedrons from a single Polyhedron.
+     @param subtract An array of Polyhedrons to subtract from the source Polyhedron.
+     @param from The source Polyhedon to be divided into parts.
+     */
+    static func subtract(polyhedrons: [Polyhedron], from: Polyhedron) -> [Polyhedron] {
+        
+        var divisions = [from]
+        
+        polyhedrons.forEach { polyhedron in
+            
+            var remainder: [Polyhedron] = []
+            
+            divisions.forEach { division in
+            
+                if let result = subtract(polyhedron: polyhedron, from: division) {
+                    
+                    remainder.append(contentsOf: result)
+                }
+                else {
+                    
+                    remainder.append(division)
+                }
+            }
+            
+            divisions = remainder
+        }
+        
+        return divisions
     }
 }

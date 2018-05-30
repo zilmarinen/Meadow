@@ -10,7 +10,7 @@
  @struct MeshTriangle
  @abstract Defines an array of MeshFace triangle indices.
  */
-struct MeshTriangle {
+public struct MeshTriangle {
     
     /*!
      @property i0
@@ -34,6 +34,6 @@ struct MeshTriangle {
      @property indices
      @abstract Defines an array of triangle indices that define a MeshFace.
      */
-    var indices: [Int32] { return [i0, i1, i2] }
+    public var indices: [Int32] { return [i0, i1, i2] }
 }
 

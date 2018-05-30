@@ -21,7 +21,7 @@ public enum GridEdge: Int, Codable {
      @property description
      @abstract Returns the string value of the GridEdge.
      */
-    var description: String {
+    public var description: String {
         
         switch self {
             

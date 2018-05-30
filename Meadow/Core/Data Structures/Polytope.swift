@@ -39,6 +39,27 @@ public struct Polytope {
     }
     
     /*!
+     @property center
+     @abstract The calculated center of the Polytope vertices.
+     */
+    var center: SCNVector3 {
+        
+        let count = MDWFloat(vertices.count)
+        var x: MDWFloat = 0
+        var y: MDWFloat = 0
+        var z: MDWFloat = 0
+        
+        vertices.forEach { vertex in
+            
+            x += vertex.x
+            y += vertex.y
+            z += vertex.z
+        }
+        
+        return SCNVector3(x: (x / count), y: (y / count), z: (z / count))
+    }
+    
+    /*!
      @method init:vertices
      @abstract Creates and initialises a Polytope with the specified vertices.
      @param vertices The vertices defining the Polytope.

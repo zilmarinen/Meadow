@@ -95,6 +95,18 @@ public class TerrainNode: GridNode {
     }
     
     /*!
+     @method sceneGraph:indexOf
+     @abstract Attempt to find and return the index of the specified child.
+     @param child The child for which the index should be found and returned.
+     */
+    override public func sceneGraph(indexOf child: SceneGraphNode) -> Int? {
+        
+        guard let child = child as? TerrainLayer else { return nil }
+        
+        return layers.index(of: child)
+    }
+    
+    /*!
      @enum CodingKeys
      @abstract Defines the coding keys used when encoding this object.
      */
@@ -123,7 +135,9 @@ public class TerrainNode: GridNode {
      */
     override func compactMesh() -> Mesh {
         
-        return Mesh.Quad
+        let meshes = layers.compactMap { $0.mesh(cutaways: cutaways) }
+        
+        return Mesh(meshes: meshes)
     }
 }
 

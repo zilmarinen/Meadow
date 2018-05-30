@@ -6,6 +6,8 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
+import Foundation
+
 /*!
  @class Terrain
  @abstract Terrain is a Grid type that manages the addition and removal of TerrainNodes.

@@ -8,9 +8,9 @@
 
 import XCTest
 
-extension TerrainLayerTests: GridDelegate {
+extension TerrainLayerTests: SoilableDelegate {
     
-    func didBecomeDirty(node: GridNode) {}
+    func didBecomeDirty(soilable: Soilable) {}
 }
 
 class TerrainLayerTests: XCTestCase {

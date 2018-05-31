@@ -48,6 +48,18 @@ public class GridTile<Node: GridNode>: SceneGraphNode, Encodable {
     }
     
     /*!
+     @property isDirty
+     @abstract Represents staleness of the chunk.
+     */
+    private var isDirty: Bool = false
+    
+    /*!
+     @property delegate
+     @abstract The SoilableDelegate to inform when the tile becomes dirty.
+     */
+    private let delegate: SoilableDelegate
+    
+    /*!
      @property nodes
      @abstract Set of nodes contained within the tile.
      */
@@ -107,9 +119,12 @@ public class GridTile<Node: GridNode>: SceneGraphNode, Encodable {
     /*!
      @method init:volume
      @abstract Creates and initialises a tile with the specified volume.
+     @param delegate The SoilableDelegate to inform when the tile becomes dirty.
      @param volume The bounding volume occupied by the tile.
      */
-    public required init(volume: Volume) {
+    public required init(delegate: SoilableDelegate, volume: Volume) {
+        
+        self.delegate = delegate
         
         self.volume = volume
     }
@@ -203,6 +218,54 @@ extension GridTile {
         let size = Size(width: World.TileSize, height: (World.Ceiling - World.Floor), depth: World.TileSize)
         
         return Volume(coordinate: coordinate, size: size)
+    }
+}
+
+extension GridTile: SoilableDelegate {
+    
+    /*!
+     @method didBecomeDirty:soilable
+     @abstract Callback for soilable item to delegate change resolution upwards.
+     */
+    public func didBecomeDirty(soilable: Soilable) {
+        
+        delegate.didBecomeDirty(soilable: soilable)
+        
+        becomeDirty()
+    }
+}
+
+extension GridTile: Soilable {
+    
+    /*!
+     @method becomeDirty
+     @abstract Record that the item is dirty and should be cleaned.
+     */
+    public func becomeDirty() {
+        
+        if isDirty { return }
+        
+        isDirty = true
+        
+        delegate.didBecomeDirty(soilable: self)
+    }
+    
+    /*!
+     @method clean
+     @abstract Perform any clean up operations required to clean the item.
+     */
+    public func clean() -> Bool {
+        
+        if !isDirty { return false}
+        
+        nodes.forEach { node in
+            
+            let _ = node.clean()
+        }
+        
+        isDirty = false
+        
+        return true
     }
 }
 

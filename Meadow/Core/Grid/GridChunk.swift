@@ -35,6 +35,12 @@ public class GridChunk<Tile: GridTile<Node>, Node: GridNode>: SCNNode, SceneGrap
     private var isDirty: Bool = false
     
     /*!
+     @property delegate
+     @abstract The SoilableDelegate to inform when the chunk becomes dirty.
+     */
+    private let delegate: SoilableDelegate
+    
+    /*!
      @property tiles
      @abstract Set of tiles contained within the chunk.
      */
@@ -92,11 +98,14 @@ public class GridChunk<Tile: GridTile<Node>, Node: GridNode>: SCNNode, SceneGrap
     }
     
     /*!
-     @method init:volume
+     @method init:delegate:volume
      @abstract Creates and initialises a chunk with the specified volume.
+     @param delegate The SoilableDelegate to inform when the chunk becomes dirty.
      @param volume The bounding volume occupied by the chunk.
      */
-    public required init(volume: Volume) {
+    public required init(delegate: SoilableDelegate, volume: Volume) {
+        
+        self.delegate = delegate
         
         self.volume = volume
         
@@ -175,43 +184,60 @@ extension GridChunk {
     }
 }
 
-extension GridChunk {
+extension GridChunk: SoilableDelegate {
+    
+    /*!
+     @method didBecomeDirty:soilable
+     @abstract Callback for soilable item to delegate change resolution upwards.
+     */
+    public func didBecomeDirty(soilable: Soilable) {
+        
+        delegate.didBecomeDirty(soilable: soilable)
+        
+        becomeDirty()
+    }
+}
+
+extension GridChunk: Soilable {
     
     /*!
      @method becomeDirty
-     @abstract If not already true, toggle the isDirty flag to true.
+     @abstract Record that the item is dirty and should be cleaned.
      */
-    func becomeDirty() {
+    public func becomeDirty() {
         
         if isDirty { return }
         
         isDirty = true
+        
+        delegate.didBecomeDirty(soilable: self)
     }
     
     /*!
      @method clean
-     @abstract Loop through children and clean each tile.
+     @abstract Perform any clean up operations required to clean the item.
      */
-    func clean() {
+    public func clean() -> Bool {
         
-        if !isDirty { return }
+        if !isDirty { return false }
         
-        let meshes = tiles.filter { !$0.isHidden }.compactMap { $0.compactMesh() }
+        var meshes: [Mesh] = []
         
-        let mesh = Mesh(meshes: meshes)
+        tiles.forEach { tile in
+            
+            let _ = tile.clean()
+            
+            if !tile.isHidden {
+                
+                meshes.append(tile.compactMesh())
+            }
+        }
         
-        geometry = SCNGeometry(mesh: mesh)
+        geometry = SCNGeometry(mesh: Mesh(meshes: meshes))
         
         isDirty = false
-    }
-    
-    /*!
-     @method clear
-     @abstract Removes all child Chunks, Tiles and Nodes.
-     */
-    func clear() {
-        
-        tiles.removeAll()
+            
+        return true
     }
 }
 
@@ -259,5 +285,14 @@ extension GridChunk {
             
             return tile.volume.coordinate.adjacency(to: coordinate) == .equal
         }
+    }
+    
+    /*!
+     @method clear
+     @abstract Removes all child Chunks, Tiles and Nodes.
+     */
+    func clear() {
+        
+        tiles.removeAll()
     }
 }

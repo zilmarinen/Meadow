@@ -154,6 +154,22 @@ public class TerrainNode: GridNode {
         
         return Mesh(meshes: meshes)
     }
+    
+    /*!
+     @method clean
+     @abstract Enumerate through children and clean each layer.
+     */
+    override public func clean() -> Bool {
+    
+        if !super.clean() { return false }
+        
+        layers.forEach { layer in
+            
+            let _ = layer.clean()
+        }
+        
+        return true
+    }
 }
 
 extension TerrainNode {

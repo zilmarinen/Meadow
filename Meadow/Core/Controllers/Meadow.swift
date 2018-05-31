@@ -63,7 +63,7 @@ public class Meadow: SCNScene, Encodable {
      @property delegate
      @abstract Delegate to inform when grid nodes become dirty.
      */
-    private let delegate: GridDelegate
+    private let delegate: SoilableDelegate
     
     /*!
      @property cameraJib
@@ -118,7 +118,7 @@ public class Meadow: SCNScene, Encodable {
      @abstract Creates and initialises a grid with the specified delegate.
      @param delegate The delegate to call out to when grid becomes dirty.
      */
-    public required init(delegate: GridDelegate) {
+    public required init(delegate: SoilableDelegate) {
         
         self.delegate = delegate
         
@@ -219,26 +219,25 @@ extension Meadow: SCNSceneRendererDelegate {
      */
     public func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
         
-        areas.clean()
-        foliage.clean()
-        footpaths.clean()
-        scaffolds.clean()
-        terrain.clean()
-        tunnels.clean()
-        water.clean()
+        areas.update()
+        foliage.update()
+        footpaths.update()
+        scaffolds.update()
+        terrain.update()
+        tunnels.update()
+        water.update()
     }
 }
 
-extension Meadow: GridDelegate {
+extension Meadow: SoilableDelegate {
     
     /*!
-     @method didBecomeDirty:node
-     @abstract GridDelegate callback to delegate grid node resultion upwards.
-     @discussion As a means to update the grid in which the node is contained, resolution of dirty nodes must be passed upwards to inform the delegate of any changes.
+     @method didBecomeDirty:soilable
+     @abstract Callback for soilable item to delegate change resolution upwards.
      */
-    public func didBecomeDirty(node: GridNode) {
+    public func didBecomeDirty(soilable: Soilable) {
         
-        switch type(of: node) {
+        switch type(of: soilable) {
             
         case is TerrainNode.Type:
             
@@ -247,6 +246,6 @@ extension Meadow: GridDelegate {
         default: break
         }
         
-        delegate.didBecomeDirty(node: node)
+        delegate.didBecomeDirty(soilable: soilable)
     }
 }

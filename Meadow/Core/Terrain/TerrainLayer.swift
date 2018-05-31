@@ -179,9 +179,9 @@ public class TerrainLayer: Encodable {
      */
     var polyhedron: Polyhedron {
         
-        if !isDirty {
+        if !isDirty, let cachedPolyhedron = cachedPolyhedron {
             
-            return cachedPolyhedron!
+            return cachedPolyhedron
         }
         
         let unit = Polytope.Unit
@@ -265,19 +265,32 @@ extension TerrainLayer: Equatable {
     }
 }
 
-extension TerrainLayer {
+extension TerrainLayer: Soilable {
     
     /*!
      @method becomeDirty
      @abstract If not already true, toggle the isDirty flag to true.
      */
-    func becomeDirty() {
+    public func becomeDirty() {
         
         if isDirty { return }
         
         isDirty = true
         
         node.becomeDirty()
+    }
+    
+    /*!
+     @method clean
+     @abstract Enumerate through children and clean.
+     */
+    public func clean() -> Bool {
+        
+        if !isDirty { return false }
+        
+        isDirty = false
+        
+        return true
     }
 }
 

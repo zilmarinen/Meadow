@@ -26,7 +26,7 @@ public class GridNodeJSON: Decodable {
  @abstract Grid nodes are the base class and fundamental building blocks of a grid.
  @discussion Grid nodes define a fixed volume which they occupy within a grid. This provides a bear bones implementation and any additional functionality should be added by subclassing.
  */
-public class GridNode: SceneGraphNode, Encodable {
+public class GridNode: SceneGraphNode, Encodable, Soilable {
     
     /*!
      @struct GridNodeNeighbour
@@ -55,9 +55,9 @@ public class GridNode: SceneGraphNode, Encodable {
     
     /*!
      @property delegate
-     @abstract Delegate to inform when the node become dirty.
+     @abstract The SoilableDelegate to inform when the node becomes dirty.
      */
-    private let delegate: GridDelegate
+    private let delegate: SoilableDelegate
     
     /*!
      @property isHidden
@@ -92,10 +92,10 @@ public class GridNode: SceneGraphNode, Encodable {
     /*!
      @method init:volume
      @abstract Creates and initialises a node with the specified delegate and volume.
-     @param delegate The delegate to call out to when node becomes dirty.
+     @param delegate The SoilableDelegate to inform when the node becomes dirty.
      @param volume The bounding volume occupied by the node.
      */
-    public required init(delegate: GridDelegate, volume: Volume) {
+    public required init(delegate: SoilableDelegate, volume: Volume) {
         
         self.delegate = delegate
         
@@ -145,6 +145,32 @@ public class GridNode: SceneGraphNode, Encodable {
         
         return Mesh(faces: [], triangles: [])
     }
+    
+    /*!
+     @method becomeDirty
+     @abstract Record that the item is dirty and should be cleaned.
+     */
+    public func becomeDirty() {
+        
+        if isDirty { return }
+        
+        isDirty = true
+        
+        delegate.didBecomeDirty(soilable: self)
+    }
+    
+    /*!
+     @method clean
+     @abstract Perform any clean up operations required to clean the item.
+     */
+    public func clean() -> Bool {
+        
+        if !isDirty { return false }
+        
+        isDirty = false
+        
+        return true
+    }
 }
 
 extension GridNode: Hashable {
@@ -165,32 +191,5 @@ extension GridNode: Hashable {
     public var hashValue: Int {
         
         return volume.hashValue
-    }
-}
-
-extension GridNode {
-    
-    /*!
-     @method becomeDirty
-     @abstract If not already true, toggle the isDirty flag to true.
-     */
-    func becomeDirty() {
-        
-        if isDirty { return }
-        
-        isDirty = true
-        
-        delegate.didBecomeDirty(node: self)
-    }
-    
-    /*!
-     @method clean
-     @abstract Enumerate through children and clean each chunk.
-     */
-    func clean() {
-        
-        if !isDirty { return }
-        
-        isDirty = false
     }
 }

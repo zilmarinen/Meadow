@@ -27,7 +27,7 @@ extension SCNGeometry {
         
         let colorData = Data(bytes: colors, count: colorSize * colors.count)
         
-        let colorSource = SCNGeometrySource(data: colorData, semantic: .color, vectorCount: colors.count, usesFloatComponents: true, componentsPerVector: 4, bytesPerComponent: floatSize, dataOffset: 0, dataStride: colorSize)
+        let colorSource = SCNGeometrySource(data: colorData, semantic: .color, vectorCount: colors.count, usesFloatComponents: true, componentsPerVector: 4, bytesPerComponent: floatSize, dataOffset: 0, dataStride: 0)
         
         let vertexSource = SCNGeometrySource(vertices: vertices)
         

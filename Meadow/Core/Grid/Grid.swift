@@ -135,7 +135,7 @@ extension Grid {
      */
     func update() {
         
-        clean()
+        let _ = clean()
     }
 }
 

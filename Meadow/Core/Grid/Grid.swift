@@ -70,15 +70,6 @@ public class Grid<Chunk: GridChunk<Tile, Node>, Tile: GridTile<Node>, Node: Grid
     public var volume: Volume { return Volume(coordinate: Coordinate.Zero, size: Size.Zero) }
     
     /*!
-     @property chunks
-     @abstract Cast and return child nodes to array of Chunks.
-     */
-    private var chunks: [Chunk] {
-        
-        return childNodes as! [Chunk]
-    }
-    
-    /*!
      @method sceneGraph:childAtIndex
      @abstract Attempt to find and return a child SceneGraphNode at the specified index.
      @property index The index of the child SceneGraphNode to be found and returned.
@@ -98,6 +89,30 @@ public class Grid<Chunk: GridChunk<Tile, Node>, Tile: GridTile<Node>, Node: Grid
         guard let child = child as? Chunk else { return nil }
         
         return chunks.index(of: child)
+    }
+    
+    /*!
+     @property isHidden
+     @abstract Determines whether the grid is displayed
+     */
+    override public var isHidden: Bool {
+        
+        didSet {
+            
+            childNodes.forEach { chunk in
+                
+                chunk.isHidden = isHidden
+            }
+        }
+    }
+    
+    /*!
+     @property chunks
+     @abstract Cast and return child nodes to array of Chunks.
+     */
+    private var chunks: [Chunk] {
+        
+        return childNodes as! [Chunk]
     }
     
     /*!

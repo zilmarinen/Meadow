@@ -58,6 +58,18 @@ public class GridNode: SceneGraphNode, Encodable {
      @abstract Delegate to inform when the node become dirty.
      */
     private let delegate: GridDelegate
+    
+    /*!
+     @property isHidden
+     @abstract Determines whether the node is displayed
+     */
+    public var isHidden: Bool = false {
+        
+        didSet {
+            
+            becomeDirty()
+        }
+    }
 
     /*!
      @property volume
@@ -169,5 +181,16 @@ extension GridNode {
         isDirty = true
         
         delegate.didBecomeDirty(node: self)
+    }
+    
+    /*!
+     @method clean
+     @abstract Enumerate through children and clean each chunk.
+     */
+    func clean() {
+        
+        if !isDirty { return }
+        
+        isDirty = false
     }
 }

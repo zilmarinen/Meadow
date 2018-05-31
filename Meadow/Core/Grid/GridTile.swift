@@ -78,6 +78,21 @@ public class GridTile<Node: GridNode>: SceneGraphNode, Encodable {
     var isEmpty: Bool { return nodes.isEmpty }
     
     /*!
+     @property isHidden
+     @abstract Determines whether the tile is displayed
+     */
+    public var isHidden: Bool = false {
+        
+        didSet {
+            
+            nodes.forEach { node in
+                
+                node.isHidden = isHidden
+            }
+        }
+    }
+    
+    /*!
      @property nodeName
      @abstract Returns the name of the SceneGraphNode.
      */
@@ -148,7 +163,7 @@ public class GridTile<Node: GridNode>: SceneGraphNode, Encodable {
      */
     func compactMesh() -> Mesh {
         
-        let meshes = nodes.compactMap { $0.compactMesh() }
+        let meshes = nodes.filter { !$0.isHidden }.compactMap { $0.compactMesh() }
         
         return Mesh(meshes: meshes)
     }

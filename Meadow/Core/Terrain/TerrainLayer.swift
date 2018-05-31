@@ -144,6 +144,18 @@ public class TerrainLayer: Encodable {
     public unowned let node: TerrainNode
     
     /*!
+     @property isHidden
+     @abstract Determines whether the layer is displayed
+     */
+    public var isHidden: Bool = false {
+        
+        didSet {
+            
+            becomeDirty()
+        }
+    }
+    
+    /*!
      @property hierarchy
      @abstract Defines the relationship between upper and lower nodes when stacked.
      */

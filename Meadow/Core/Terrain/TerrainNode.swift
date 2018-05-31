@@ -79,6 +79,21 @@ public class TerrainNode: GridNode {
     }
     
     /*!
+     @property isHidden
+     @abstract Determines whether the node is displayed
+     */
+    override public var isHidden: Bool {
+        
+        didSet {
+            
+            layers.forEach { layer in
+                
+                layer.isHidden = isHidden
+            }
+        }
+    }
+    
+    /*!
      @property totalChildren
      @abstract Returns the total number of child SceneGraphNodes for the SceneGraphNode.
      */
@@ -135,7 +150,7 @@ public class TerrainNode: GridNode {
      */
     override func compactMesh() -> Mesh {
         
-        let meshes = layers.compactMap { $0.mesh(cutaways: cutaways) }
+        let meshes = layers.filter { !$0.isHidden }.compactMap { $0.mesh(cutaways: cutaways) }
         
         return Mesh(meshes: meshes)
     }

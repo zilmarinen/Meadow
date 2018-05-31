@@ -77,6 +77,21 @@ public class GridChunk<Tile: GridTile<Node>, Node: GridNode>: SCNNode, SceneGrap
     public var totalChildren: Int { return tiles.count }
     
     /*!
+     @property isHidden
+     @abstract Determines whether the grid is displayed
+     */
+    override public var isHidden: Bool {
+        
+        didSet {
+            
+            tiles.forEach { tile in
+                
+                tile.isHidden = isHidden
+            }
+        }
+    }
+    
+    /*!
      @method init:volume
      @abstract Creates and initialises a chunk with the specified volume.
      @param volume The bounding volume occupied by the chunk.
@@ -181,7 +196,7 @@ extension GridChunk {
         
         if !isDirty { return }
         
-        let meshes = tiles.compactMap { $0.compactMesh() }
+        let meshes = tiles.filter { !$0.isHidden }.compactMap { $0.compactMesh() }
         
         let mesh = Mesh(meshes: meshes)
         

@@ -6,6 +6,8 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
+import SceneKit
+
 /*!
  @enum GridEdge
  @abstract Defines the 4 edges of a grid tile/node.
@@ -84,6 +86,18 @@ extension GridEdge {
     ]}
     
     /*!
+     @property Normal
+     @abstract An array of SCNVector3 defining the normal for each edge.
+     */
+    private static var Normal: [SCNVector3] { return [
+        
+        SCNVector3.Forward,
+        SCNVector3.Right,
+        SCNVector3.Backward,
+        SCNVector3.Left
+    ]}
+    
+    /*!
      @method Edges:corner
      @abstract Return the two edges connected to a given corner.
      */
@@ -108,6 +122,15 @@ extension GridEdge {
     static func Opposite(edge: GridEdge) -> GridEdge {
         
         return Opposite[edge.rawValue]
+    }
+    
+    /*!
+     @method Normal:edge
+     @abstract Return the SCNVector3 defining the normal for a given edge.
+     */
+    static func Normal(edge: GridEdge) -> SCNVector3 {
+        
+        return Normal[edge.rawValue]
     }
     
     /*!

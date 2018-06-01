@@ -97,10 +97,7 @@ public class GridTile<Node: GridNode>: SceneGraphNode, Encodable {
         
         didSet {
             
-            nodes.forEach { node in
-                
-                node.isHidden = isHidden
-            }
+            becomeDirty()
         }
     }
     

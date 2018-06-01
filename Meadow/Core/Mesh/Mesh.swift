@@ -39,27 +39,31 @@ public struct Mesh {
     }
     
     /*!
+     @method init:faces
+     @abstract Creates and instantiates a Mesh with the specified faces.
+     @param faces An array of MeshFaces that define the Mesh.
+     */
+    init(faces: [MeshFace]) {
+        
+        var meshTriangles: [MeshTriangle] = []
+        
+        for index in 0..<faces.count {
+            
+            let offset = Int32(index * 3)
+            
+            meshTriangles.append(MeshTriangle(i0: offset, i1: offset + 1, i2: offset + 2))
+        }
+        
+        self.init(faces: faces, triangles: meshTriangles)
+    }
+    
+    /*!
      @method init:meshes
      @abstract Creates and instantiates a compound Mesh by combining the specified Meshes.
      @param meshes An array of Meshes to be combined.
      */
     init(meshes: [Mesh]) {
         
-        var meshTriangles: [MeshTriangle] = []
-        
-        var offset: Int32 = 0
-        
-        meshes.forEach { mesh in
-            
-            mesh.triangles.forEach({ triangle in
-                
-                meshTriangles.append(MeshTriangle(i0: triangle.i0 + offset, i1: triangle.i1 + offset, i2: triangle.i2 + offset))
-            })
-            
-            offset = Int32(meshTriangles.count * 3)
-        }
-        
-        self.faces = meshes.flatMap { $0.faces }
-        self.triangles = meshTriangles
+        self.init(faces: meshes.flatMap { $0.faces })
     }
 }

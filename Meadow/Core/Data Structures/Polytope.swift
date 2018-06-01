@@ -64,7 +64,7 @@ public struct Polytope {
      @abstract Creates and initialises a Polytope with the specified vertices.
      @param vertices The vertices defining the Polytope.
      */
-    init(vertices: [SCNVector3]) {
+    public init(vertices: [SCNVector3]) {
         
         self.vertices = vertices
     }
@@ -76,7 +76,7 @@ public struct Polytope {
      @param y The value defining the Polytopes alignment along the y axis.
      @param z The value defining the Polytopes alignment along the z axis.
      */
-    init(x: SCNFloat, y: SCNFloat, z: SCNFloat) {
+    public init(x: SCNFloat, y: SCNFloat, z: SCNFloat) {
         
         self.vertices = [SCNVector3(x: (x + -World.UnitXZ), y: y, z: (z + World.UnitXZ)),
                          SCNVector3(x: (x + World.UnitXZ), y: y, z: (z + World.UnitXZ)),
@@ -170,5 +170,24 @@ extension Polytope {
         if below { return .below }
         
         return .intersecting
+    }
+}
+
+extension Polytope {
+    
+    /*!
+     @method Project:
+     @astract Project the x and z axis one Polytope along the y axis of another.
+     @param project The Polytope to be projected along the x and z axis of the reference Polytope.
+     @param against The reference Polytope whose x and z axis values should be projected.
+     */
+    static func Project(project: Polytope, against: Polytope) -> Polytope {
+        
+        let v0 = SCNVector3(x: against.vertices[0].x, y: project.vertices[0].y, z: against.vertices[0].z)
+        let v1 = SCNVector3(x: against.vertices[1].x, y: project.vertices[1].y, z: against.vertices[1].z)
+        let v2 = SCNVector3(x: against.vertices[2].x, y: project.vertices[2].y, z: against.vertices[2].z)
+        let v3 = SCNVector3(x: against.vertices[3].x, y: project.vertices[3].y, z: against.vertices[3].z)
+        
+        return Polytope(vertices: [ v0, v1, v2, v3 ])
     }
 }

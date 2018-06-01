@@ -146,10 +146,10 @@ class TerrainLayerTests: XCTestCase {
         l0?.set(height: (World.Floor * 2), corner: .southEast)
         l0?.set(height: (World.Floor * 2), corner: .southWest)
         
-        XCTAssertEqual(l0?.get(height: .northWest), World.Floor)
-        XCTAssertEqual(l0?.get(height: .northEast), World.Floor)
-        XCTAssertEqual(l0?.get(height: .southEast), World.Floor)
-        XCTAssertEqual(l0?.get(height: .southWest), World.Floor)
+        XCTAssertEqual(l0?.get(height: .northWest), (World.Floor + 1))
+        XCTAssertEqual(l0?.get(height: .northEast), (World.Floor + 1))
+        XCTAssertEqual(l0?.get(height: .southEast), (World.Floor + 1))
+        XCTAssertEqual(l0?.get(height: .southWest), (World.Floor + 1))
         
         l0?.set(height: (World.Ceiling * 2), corner: .northWest)
         l0?.set(height: (World.Ceiling * 2), corner: .northEast)

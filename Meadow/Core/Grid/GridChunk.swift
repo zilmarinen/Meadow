@@ -90,10 +90,7 @@ public class GridChunk<Tile: GridTile<Node>, Node: GridNode>: SCNNode, SceneGrap
         
         didSet {
             
-            tiles.forEach { tile in
-                
-                tile.isHidden = isHidden
-            }
+            becomeDirty()
         }
     }
     

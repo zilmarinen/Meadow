@@ -79,6 +79,18 @@ public class TerrainNode: GridNode {
     }
     
     /*!
+     @property sortedLayers
+     @abstract Array of layers, sorted by y axis value.
+     */
+    private var sortedLayers: [TerrainLayer] {
+        
+        return layers.sorted { (lhs, rhs) -> Bool in
+            
+            return lhs.polyhedron.upperPolytope.peak < rhs.polyhedron.upperPolytope.peak
+        }
+    }
+    
+    /*!
      @property isHidden
      @abstract Determines whether the node is displayed
      */
@@ -86,10 +98,7 @@ public class TerrainNode: GridNode {
         
         didSet {
             
-            layers.forEach { layer in
-                
-                layer.isHidden = isHidden
-            }
+            becomeDirty()
         }
     }
     
@@ -106,7 +115,7 @@ public class TerrainNode: GridNode {
      */
     override public func sceneGraph(childAtIndex index: Int) -> SceneGraphNode? {
         
-        return layers[index]
+        return sortedLayers[index]
     }
     
     /*!
@@ -118,7 +127,7 @@ public class TerrainNode: GridNode {
         
         guard let child = child as? TerrainLayer else { return nil }
         
-        return layers.index(of: child)
+        return sortedLayers.index(of: child)
     }
     
     /*!

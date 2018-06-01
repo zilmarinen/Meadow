@@ -197,9 +197,9 @@ public class TerrainLayer: Encodable {
         
         var lowerPolytope: Polytope
         
-        if hierarchy.lower != nil {
+        if let lower = lower {
             
-            lowerPolytope = hierarchy.lower!.polyhedron.upperPolytope
+            lowerPolytope = lower.polyhedron.upperPolytope
         }
         else {
             
@@ -265,6 +265,15 @@ extension TerrainLayer: Equatable {
     }
 }
 
+extension TerrainLayer {
+    
+    /*!
+     @property Ceiling
+     @abstract The highest y axis value allowed.
+     */
+    public static var Crown: MDWFloat = (World.UnitY / 2.0)
+}
+
 extension TerrainLayer: Soilable {
     
     /*!
@@ -306,14 +315,14 @@ extension TerrainLayer {
      */
     public func set(height: Int, corner: GridCorner, smooth: Bool = false) {
         
-        var value = min(max(height, World.Floor), World.Ceiling)
+        var value = min(max(height, World.Floor + 1), World.Ceiling)
         
-        if let upper = hierarchy.upper {
+        if let upper = upper {
             
             value = min(value, upper.get(height: corner))
         }
         
-        if let lower = hierarchy.lower {
+        if let lower = lower {
             
             value = max(value, lower.get(height: corner))
         }
@@ -465,57 +474,123 @@ extension TerrainLayer: SceneGraphNode {
 
 extension TerrainLayer {
     
+    /*!
+     @method mesh:cutaways
+     @abstract Returns a mesh of the layer after all of the applicable intersecting Polyhedrons have been subtracted.
+     @param cutaways An array of Polyhedrons that should be subtracted from the layer Polyhedron.
+     */
     func mesh(cutaways: [Polyhedron]) -> Mesh {
         
-        var meshes: [Mesh] = []
+        var faces: [MeshFace] = []
         
-        let polyhedrons = Polyhedron.subtract(polyhedrons: cutaways, from: polyhedron)
+        let polyhedrons = Polyhedron.Subtract(polyhedrons: cutaways, from: polyhedron)
         
-        polyhedrons.forEach { division in
+        let edges: [GridEdge] = [ .north, .east, .south, .west ]
+        
+        let crown = SCNVector3(x: 0.0, y: TerrainLayer.Crown, z: 0.0)
+        
+        edges.forEach { edge in
             
-            var faces: [MeshFace] = []
-            var triangles: [MeshTriangle] = []
+            let corners = GridCorner.Corners(edge: edge)
             
-            let center = division.upperPolytope.center
+            let nodeNeighbour = node.find(neighbour: edge)
             
-            for index in 0..<4 {
+            if let c0 = corners.first, let c1 = corners.last, let terrainLayerEdge = get(terrainType: edge) {
                 
-                let edge = GridEdge(rawValue: index)!
+                let edgeNormal = GridEdge.Normal(edge: edge)
                 
-                let corners = GridCorner.Corners(edge: edge)
+                let apexColor = terrainLayerEdge.terrainType.colorPalette.primary.vector
+                let edgeColor = terrainLayerEdge.terrainType.colorPalette.secondary.vector
                 
-                let referenceNormal = center + SCNVector3.Up
-                let color = get(terrainType: edge)!.terrainType.colorPalette.primary.vector
+                let primaryColors = [ apexColor, apexColor, apexColor ]
+                let secondaryColors = [ edgeColor, edgeColor, edgeColor ]
+
+                var edgeIntersections: [Polyhedron] = []
                 
-                let colors: [SCNVector4] = [color, color, color]
-                
-                let c0 = corners.first!.rawValue
-                let c1 = corners.last!.rawValue
-                
-                var v0 = division.upperPolytope.vertices[c0]
-                var v1 = division.upperPolytope.vertices[c1]
-                
-                let plane = Plane(v0: v0, v1: v1, v2: center)
-                
-                var normal = plane.normal
-                
-                if plane.side(vector: referenceNormal) {
+                if let neighbour = nodeNeighbour?.node as? TerrainNode {
                     
-                    normal = plane.normal.negated()
-                    
-                    v0 = division.upperPolytope.vertices[c1]
-                    v1 = division.upperPolytope.vertices[c0]
+                    for index in 0..<neighbour.totalChildren {
+                        
+                        if let layer = neighbour.sceneGraph(childAtIndex: index) as? TerrainLayer {
+                            
+                            if let cutaways = neighbour.find(cutaways: layer.polyhedron) {
+                            
+                                let intersections = Polyhedron.Subtract(polyhedrons: cutaways, from: layer.polyhedron)
+                                    
+                                edgeIntersections.append(contentsOf: intersections)
+                            }
+                        }
+                    }
                 }
-                
-                let offset = Int32(index * 3)
-                
-                faces.append(MeshFace(vertices: [v0, v1, center], normals: [normal, normal, normal], colors: colors))
-                triangles.append(MeshTriangle(i0: offset, i1: offset + 1, i2: offset + 2))
-            }
             
-            meshes.append(Mesh(faces: faces, triangles: triangles))
+                polyhedrons.forEach { division in
+                    
+                    let apexCenter = division.upperPolytope.center
+                  
+                    if (upper == nil && division.upperPolytope == polyhedron.upperPolytope) || division.upperPolytope != polyhedron.upperPolytope {
+                        
+                        let apexNormal = apexCenter + SCNVector3.Up
+                        
+                        let v0 = division.upperPolytope.vertices[c0.rawValue]
+                        let v1 = division.upperPolytope.vertices[c1.rawValue]
+                        
+                        let plane = Plane(v0: v0, v1: v1, v2: apexCenter)
+                        
+                        var normal = plane.normal
+                        
+                        if plane.side(vector: apexNormal) {
+                            
+                            normal = plane.normal.negated()
+                        }
+                        
+                        faces.append(MeshFace(vertices: [v0, v1, apexCenter], normals: [normal, normal, normal], colors: primaryColors))
+                    }
+                    
+                    let remainingEdges = Polyhedron.Subtract(polyhedrons: edgeIntersections, from: division)
+                    
+                    remainingEdges.forEach { edgePolyhedron in
+                        
+                        let v0 = edgePolyhedron.upperPolytope.vertices[c0.rawValue]
+                        let v1 = edgePolyhedron.upperPolytope.vertices[c1.rawValue]
+                        let v2 = edgePolyhedron.lowerPolytope.vertices[c1.rawValue]
+                        let v3 = edgePolyhedron.lowerPolytope.vertices[c0.rawValue]
+                        let v4 = v0 - crown
+                        let v5 = v1 - crown
+                        
+                        let c0equal = v0.y == v3.y
+                        let c1equal = v1.y == v2.y
+
+                        if c0equal && !c1equal {
+
+                            let v6 = SCNVector3.Lerp(from: v5, to: v4, scalar: World.UnitXZ)
+                            
+                            faces.append(MeshFace(vertices: [v0, v5, v1], normals: [edgeNormal, edgeNormal, edgeNormal], colors: primaryColors))
+                            faces.append(MeshFace(vertices: [v0, v4, v5], normals: [edgeNormal, edgeNormal, edgeNormal], colors: primaryColors))
+                            
+                            faces.append(MeshFace(vertices: [v6, v2, v5], normals: [edgeNormal, edgeNormal, edgeNormal], colors: secondaryColors))
+                        }
+                        else if !c0equal && c1equal {
+                            
+                            let v6 = SCNVector3.Lerp(from: v4, to: v5, scalar: World.UnitXZ)
+                            
+                            faces.append(MeshFace(vertices: [v0, v5, v1], normals: [edgeNormal, edgeNormal, edgeNormal], colors: primaryColors))
+                            faces.append(MeshFace(vertices: [v0, v4, v5], normals: [edgeNormal, edgeNormal, edgeNormal], colors: primaryColors))
+
+                            faces.append(MeshFace(vertices: [v4, v3, v6], normals: [edgeNormal, edgeNormal, edgeNormal], colors: secondaryColors))
+                        }
+                        else if !c0equal && !c1equal {
+                            
+                            faces.append(MeshFace(vertices: [v0, v5, v1], normals: [edgeNormal, edgeNormal, edgeNormal], colors: primaryColors))
+                            faces.append(MeshFace(vertices: [v0, v4, v5], normals: [edgeNormal, edgeNormal, edgeNormal], colors: primaryColors))
+                            
+                            faces.append(MeshFace(vertices: [v4, v2, v5], normals: [edgeNormal, edgeNormal, edgeNormal], colors: secondaryColors))
+                            faces.append(MeshFace(vertices: [v4, v3, v2], normals: [edgeNormal, edgeNormal, edgeNormal], colors: secondaryColors))
+                        }
+                    }
+                }
+            }
         }
         
-        return Mesh(meshes: meshes)
+        return Mesh(faces: faces)
     }
 }

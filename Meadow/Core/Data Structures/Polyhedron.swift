@@ -6,6 +6,8 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
+import SceneKit
+
 /*!
  @struct Polyhedron
  @abstract Defines a Polyhedron with an upper and lower Polytope.
@@ -16,13 +18,13 @@ public struct Polyhedron {
      @property upperPolytope
      @abstract The upper Polytope of the Polyhedron.
      */
-    let upperPolytope: Polytope
+    public let upperPolytope: Polytope
     
     /*!
      @property lowerPolytope
      @abstract The lower Polytope of the Polyhedron.
      */
-    let lowerPolytope: Polytope
+    public let lowerPolytope: Polytope
 }
 
 extension Polyhedron: Equatable {
@@ -89,7 +91,7 @@ extension Polyhedron {
      @param subtract The Polyhedron to subtract from the source Polyhedron.
      @param from The source Polyhedon to be divided into parts.
      */
-    static func subtract(polyhedron: Polyhedron, from: Polyhedron) -> [Polyhedron]? {
+    static func Subtract(polyhedron: Polyhedron, from: Polyhedron) -> [Polyhedron]? {
         
         switch polyhedron.elevation(referencing: from) {
             
@@ -97,8 +99,11 @@ extension Polyhedron {
             
             if polyhedron.upperPolytope.elevation(referencing: from.upperPolytope) == .below && polyhedron.lowerPolytope.elevation(referencing: from.lowerPolytope) == .above {
                 
-                return [ Polyhedron(upperPolytope: from.upperPolytope, lowerPolytope: polyhedron.upperPolytope),
-                         Polyhedron(upperPolytope: polyhedron.lowerPolytope, lowerPolytope: from.lowerPolytope) ]
+                let upperPolytope = Polytope.Project(project: polyhedron.upperPolytope, against: from.upperPolytope)
+                let lowerPolytope = Polytope.Project(project: polyhedron.lowerPolytope, against: from.lowerPolytope)
+                
+                return [ Polyhedron(upperPolytope: from.upperPolytope, lowerPolytope: upperPolytope),
+                         Polyhedron(upperPolytope: lowerPolytope, lowerPolytope: from.lowerPolytope) ]
             }
             
             switch polyhedron.upperPolytope.elevation(referencing: from.upperPolytope) {
@@ -106,13 +111,17 @@ extension Polyhedron {
             case .above,
                  .equal:
                 
-                return [ Polyhedron(upperPolytope: polyhedron.lowerPolytope, lowerPolytope: from.lowerPolytope) ]
+                let upperPolytope = Polytope.Project(project: polyhedron.lowerPolytope, against: from.lowerPolytope)
+                
+                return [ Polyhedron(upperPolytope: upperPolytope, lowerPolytope: from.lowerPolytope) ]
                 
             default:
                 
                 if polyhedron.upperPolytope.elevation(referencing: from.lowerPolytope) == .above {
                 
-                    return [ Polyhedron(upperPolytope: from.upperPolytope, lowerPolytope: polyhedron.upperPolytope) ]
+                    let lowerPolytope = Polytope.Project(project: polyhedron.upperPolytope, against: from.upperPolytope)
+                    
+                    return [ Polyhedron(upperPolytope: from.upperPolytope, lowerPolytope: lowerPolytope) ]
                 }
             }
             
@@ -128,7 +137,7 @@ extension Polyhedron {
      @param subtract An array of Polyhedrons to subtract from the source Polyhedron.
      @param from The source Polyhedon to be divided into parts.
      */
-    static func subtract(polyhedrons: [Polyhedron], from: Polyhedron) -> [Polyhedron] {
+    static func Subtract(polyhedrons: [Polyhedron], from: Polyhedron) -> [Polyhedron] {
         
         var divisions = [from]
         
@@ -138,7 +147,7 @@ extension Polyhedron {
             
             divisions.forEach { division in
             
-                if let result = subtract(polyhedron: polyhedron, from: division) {
+                if let result = Subtract(polyhedron: polyhedron, from: division) {
                     
                     remainder.append(contentsOf: result)
                 }

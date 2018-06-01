@@ -108,8 +108,48 @@ extension SCNVector3 {
     }
     
     /*!
+     @method Lerp:from:to:scalar
+     @astract Linear interpolation of one vector toward another.
+     @property from A SCNVector3 to interpolate from.
+     @property from A SCNVector3 to interpolate toward.
+     @property scalar A value between 0 and 1 determining the amount of interpolation.
+     */
+    public static func Lerp(from: SCNVector3, to: SCNVector3, scalar: MDWFloat) -> SCNVector3 {
+        
+        let d = min(max(scalar, 0), 1)
+        
+        let t = (1 - d)
+        
+        return SCNVector3(from.x * d + to.x * t, from.y * d + to.y * t, from.z * d + to.z * t)
+    }
+    
+    /*!
      @var Up
      @abstract Returns a SCNVector3 with the x, y and z components set to 0, 1, 0.
      */
     public static var Up: SCNVector3 { return SCNVector3(x: 0.0, y: 1.0, z: 0.0) }
+    
+    /*!
+     @property Left
+     @abstract Returns a SCNVector3 with the x, y and z components set to -1, 0, 0.
+     */
+    static var Left: SCNVector3 { return SCNVector3(x: -1.0, y: 0.0, z: 0.0) }
+    
+    /*!
+     @property Right
+     @abstract Returns a SCNVector3 with the x, y and z components set to 1, 0, 0.
+     */
+    static var Right: SCNVector3 { return SCNVector3(x: 1.0, y: 0.0, z: 0.0) }
+    
+    /*!
+     @property Forward
+     @abstract Returns a SCNVector3 with the x, y and z components set to 0, 0, 1.
+     */
+    static var Forward: SCNVector3 { return SCNVector3(x: 0.0, y: 0.0, z: 1.0) }
+    
+    /*!
+     @property Backward
+     @abstract Returns a SCNVector3 with the x, y and z components set to 0, 0, -1.
+     */
+    static var Backward: SCNVector3 { return SCNVector3(x: 0.0, y: 0.0, z: -1.0) }
 }

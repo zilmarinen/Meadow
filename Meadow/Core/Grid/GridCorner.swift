@@ -56,7 +56,7 @@ extension GridCorner {
         [.northWest, .northEast],
         [.northEast, .southEast],
         [.southEast, .southWest],
-        [.northWest, .southWest]
+        [.southWest, .northWest]
     ]}
     
     /*!

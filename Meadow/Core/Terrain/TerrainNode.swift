@@ -157,7 +157,7 @@ public class TerrainNode: GridNode {
      @method compactMesh
      @abstract Returns the compound mesh of the node.
      */
-    override func compactMesh() -> Mesh {
+    override public func compactMesh() -> Mesh {
         
         let meshes = layers.filter { !$0.isHidden }.compactMap { $0.mesh(cutaways: cutaways) }
         

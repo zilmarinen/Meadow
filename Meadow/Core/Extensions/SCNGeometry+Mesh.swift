@@ -15,7 +15,7 @@ extension SCNGeometry {
      @abstract Creates and instantiates SCNGeometry with the specified Mesh.
      @param mesh The Mesh defining the vertices, normals, colors and triangle indicies of the geometry.
      */
-    convenience init(mesh: Mesh) {
+    public convenience init(mesh: Mesh) {
         
         let indices = mesh.triangles.flatMap { $0.indices }
         let vertices = mesh.faces.flatMap { $0.vertices }

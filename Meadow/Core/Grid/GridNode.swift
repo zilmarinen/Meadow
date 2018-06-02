@@ -141,7 +141,7 @@ public class GridNode: SceneGraphNode, Encodable, Soilable {
      @method compactMesh
      @abstract Returns the compound mesh of the node.
      */
-    func compactMesh() -> Mesh {
+    public func compactMesh() -> Mesh {
         
         return Mesh(faces: [], triangles: [])
     }

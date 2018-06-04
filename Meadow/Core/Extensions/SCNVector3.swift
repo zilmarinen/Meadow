@@ -120,7 +120,7 @@ extension SCNVector3 {
         
         let t = (1 - d)
         
-        return SCNVector3(from.x * d + to.x * t, from.y * d + to.y * t, from.z * d + to.z * t)
+        return SCNVector3(to.x * d + from.x * t, to.y * d + from.y * t, to.z * d + from.z * t)
     }
     
     /*!

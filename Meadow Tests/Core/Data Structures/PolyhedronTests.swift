@@ -76,7 +76,7 @@ class PolyhedronTests: XCTestCase {
         
         let expect = expectation(description: "Subtracting Polyhedrons from each other results in an array of the remaining volumes")
         
-        let unit = Polytope.Unit
+        let unit = Polytope(x: 0.0, y: 0.0, z: 0.0)
         
         let v0 = unit.vertices[0]
         let v1 = unit.vertices[1]
@@ -210,7 +210,7 @@ class PolyhedronTests: XCTestCase {
         
         let expect = expectation(description: "Subtracting Polyhedrons from each other results in an array of the remaining volumes")
         
-        let unit = Polytope.Unit
+        let unit = Polytope(x: 0.0, y: 0.0, z: 0.0)
         
         let v0 = unit.vertices[0]
         let v1 = unit.vertices[1]

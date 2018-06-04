@@ -116,15 +116,12 @@ extension GridCorner {
      */
     static func Adjacent(corner: GridCorner, edge: GridEdge) -> GridCorner {
         
-        let edges = GridEdge.Edges(corner: corner)
+        let oppositeEdge = GridEdge.Opposite(edge: edge)
         
-        if edges.contains(edge) {
-            
-            let perpendicularEdge = edges.filter { $0 != edge }.first!
-            
-            return Corners(edge: perpendicularEdge).filter { $0 != corner }.first!
-        }
+        let oppositeCorner = GridCorner.Opposite(corner: corner)
         
-        return Opposite(corner: corner)
+        let corners = GridCorner.Corners(edge: oppositeEdge)
+        
+        return corners.filter { $0 != oppositeCorner }.first!
     }
 }

@@ -24,7 +24,7 @@ public struct Polytope {
      @property peak
      @abstract The greatest y axis value of the Polytopes vertices.
      */
-    var peak: SCNFloat {
+    var peak: MDWFloat {
         
         return vertices.map{ $0.y }.max()!
     }
@@ -33,7 +33,7 @@ public struct Polytope {
      @property base
      @abstract The lowest y axis value of the Polytopes vertices.
      */
-    var base: SCNFloat {
+    var base: MDWFloat {
         
         return vertices.map{ $0.y }.min()!
     }
@@ -76,12 +76,27 @@ public struct Polytope {
      @param y The value defining the Polytopes alignment along the y axis.
      @param z The value defining the Polytopes alignment along the z axis.
      */
-    public init(x: SCNFloat, y: SCNFloat, z: SCNFloat) {
+    public init(x: MDWFloat, y: MDWFloat, z: MDWFloat) {
         
         self.vertices = [SCNVector3(x: (x + -World.UnitXZ), y: y, z: (z + World.UnitXZ)),
                          SCNVector3(x: (x + World.UnitXZ), y: y, z: (z + World.UnitXZ)),
                          SCNVector3(x: (x + World.UnitXZ), y: y, z: (z + -World.UnitXZ)),
                          SCNVector3(x: (x + -World.UnitXZ), y: y, z: (z + -World.UnitXZ))]
+    }
+    
+    /*!
+     @method init:x:y:z
+     @abstract Creates and initialises a Polytope with unit length at the specified x, y and z coordinates.
+     @param x The value defining the Polytopes alignment along the x axis.
+     @param y An array of Integer values defining the Polytopes alignment along the y axis.
+     @param z The value defining the Polytopes alignment along the z axis.
+     */
+    public init(x: MDWFloat, y: [Int], z: MDWFloat) {
+        
+        self.vertices = [SCNVector3(x: (x + -World.UnitXZ), y: World.Y(y: y[0]), z: (z + World.UnitXZ)),
+                         SCNVector3(x: (x + World.UnitXZ), y: World.Y(y: y[1]), z: (z + World.UnitXZ)),
+                         SCNVector3(x: (x + World.UnitXZ), y: World.Y(y: y[2]), z: (z + -World.UnitXZ)),
+                         SCNVector3(x: (x + -World.UnitXZ), y: World.Y(y: y[3]), z: (z + -World.UnitXZ))]
     }
 }
 
@@ -107,15 +122,6 @@ extension Polytope: Equatable {
         
         return true
     }
-}
-
-extension Polytope {
-    
-    /*!
-     @property Unit
-     @abstract Returns a Polytope with unit grid length defined by `World.UnitXZ`.
-     */
-    static var Unit: Polytope { return Polytope(x: 0.0, y: 0.0, z: 0.0) }
 }
 
 extension Polytope {

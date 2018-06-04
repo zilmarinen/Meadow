@@ -6,6 +6,8 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
+import SceneKit
+
 /*!
  @class FootpathNodeJSON
  @abstract
@@ -32,7 +34,7 @@ public class FootpathNodeJSON: GridNodeJSON {
      @property slope
      @abstract The edge from which the FootpathNode slopes upwards.
      */
-    public var slope: GridEdge?
+    public var slope: FootpathNodeSlope?
     
     /*!
      @method init:from
@@ -47,7 +49,39 @@ public class FootpathNodeJSON: GridNodeJSON {
         
         footpathType = try container.decodeIfPresent(String.self, forKey: .footpathType)
         
-        slope = try container.decodeIfPresent(GridEdge.self, forKey: .slope)
+        slope = try container.decodeIfPresent(FootpathNodeSlope.self, forKey: .slope)
+    }
+}
+
+/*!
+ @struct FootpathNodeSlope
+ @abstract Stores the edge towards which the FootpathNode is sloped and its inclination.
+ */
+public struct FootpathNodeSlope: Codable {
+    
+    /*!
+     @property edge
+     @abstract The edge from which the FootpathNode slopes upwards.
+     */
+    public let edge: GridEdge
+    
+    /*!
+     @property steepInclination
+     @abstract Determines the inclination of the slope.
+     @discussion By default, a FootpathNodeSlope will have an inclination of `1 * World.UnitY`. Steep inclinations are double this value.
+     */
+    public let steepInclination: Bool
+    
+    /*!
+     @method init:edge:steepInclination
+     @abstract Creates and initialises a FootpathNodeSlope with the specified edge and inclination.
+     @param edge The edge from which the FootpathNode slopes upwards.
+     @param steepInclination Determines the inclination of the slope.
+     */
+    public init(edge: GridEdge, steepInclination: Bool) {
+        
+        self.edge = edge
+        self.steepInclination = steepInclination
     }
 }
 
@@ -56,6 +90,12 @@ public class FootpathNodeJSON: GridNodeJSON {
  @abstract FootpathNodes are used to define regions within a Grid which can be traversed.
  */
 public class FootpathNode: GridNode {
+    
+    /*!
+     @property cachedPolyhedron
+     @abstract Cached version of the Polyhedron calculated after being cleaned.
+     */
+    private var cachedPolyhedron: Polyhedron?
     
     /*!
      @property neighbours
@@ -79,12 +119,50 @@ public class FootpathNode: GridNode {
      @property slope
      @abstract The edge from which the FootpathNode slopes upwards.
      */
-    public var slope: GridEdge? {
+    public var slope: FootpathNodeSlope? {
         
         didSet {
             
             becomeDirty()
         }
+    }
+    
+    /*!
+     @property polyhedron
+     @abstract Returns a Polyhedron calculated from the edge slope and inclination.
+     */
+    var polyhedron: Polyhedron {
+        
+        if let cachedPolyhedron = cachedPolyhedron {
+            
+            return cachedPolyhedron
+        }
+        
+        let lowerY = volume.coordinate.y
+        let upperY = (volume.coordinate.y + volume.size.height - 2)
+        
+        var lowerCornerHeights = [ lowerY, lowerY, lowerY, lowerY ]
+        var upperCornerHeights = [ upperY, upperY, upperY, upperY ]
+        
+        if let slope = slope {
+            
+            let corners = GridCorner.Corners(edge: slope.edge)
+            
+            let inclination = 1 + (slope.steepInclination ? 1 : 0)
+            
+            lowerCornerHeights[corners.first!.rawValue] += inclination
+            lowerCornerHeights[corners.last!.rawValue] += inclination
+            
+            upperCornerHeights[corners.first!.rawValue] += inclination
+            upperCornerHeights[corners.last!.rawValue] += inclination
+        }
+        
+        let upperPolytope = Polytope(x: MDWFloat(volume.coordinate.x), y: upperCornerHeights, z: MDWFloat(volume.coordinate.z))
+        let lowerPolytope = Polytope(x: MDWFloat(volume.coordinate.x), y: lowerCornerHeights, z: MDWFloat(volume.coordinate.z))
+        
+        cachedPolyhedron = Polyhedron(upperPolytope: upperPolytope, lowerPolytope: lowerPolytope)
+        
+        return cachedPolyhedron!
     }
     
     /*!
@@ -111,15 +189,127 @@ public class FootpathNode: GridNode {
         try container.encodeIfPresent(footpathType?.name, forKey: .footpathType)
         try container.encodeIfPresent(slope, forKey: .slope)
     }
+    
+    /*!
+     @method compactMesh
+     @abstract Returns the compound mesh of the node.
+     */
+    override public func compactMesh() -> Mesh {
+        
+        var faces: [MeshFace] = []
+        
+        let throne = SCNVector3(x: 0.0, y: FootpathNode.Throne, z: 0.0)
+        
+        if let apexColor = footpathType?.colorPalette.primary.vector, let edgeColor = footpathType?.colorPalette.secondary.vector {
+        
+            let apexCenter = polyhedron.lowerPolytope.center
+            
+            let apexNormal = apexCenter + SCNVector3.Up
+            
+            let primaryColors = [ apexColor, apexColor, apexColor ]
+            let secondaryColors = [ edgeColor, edgeColor, edgeColor ]
+            
+            var insetVertices: [SCNVector3] = []
+            
+            let length = Double(FootpathNode.Furrow)
+            
+            let scalar = sqrt((length * length) + (length * length))
+            
+            polyhedron.lowerPolytope.vertices.forEach { vertex in
+                
+                insetVertices.append(SCNVector3.Lerp(from: vertex, to: apexCenter, scalar: MDWFloat(scalar)) + throne)
+            }
+            
+            let plane = Plane(v0: insetVertices[0], v1: insetVertices[1], v2: insetVertices[2])
+            
+            var normal = plane.normal
+            
+            if plane.side(vector: apexNormal) {
+                
+                normal = plane.normal.negated()
+            }
+            
+            let normals = [normal, normal, normal]
+            
+            faces.append(MeshFace(vertices: [insetVertices[0], insetVertices[1], insetVertices[2]], normals: normals, colors: primaryColors))
+            faces.append(MeshFace(vertices: [insetVertices[0], insetVertices[2], insetVertices[3]], normals: normals, colors: primaryColors))
+            
+            let edges: [GridEdge] = [ .north, .east, .south, .west ]
+            
+            edges.forEach { edge in
+             
+                let corners = GridCorner.Corners(edge: edge)
+                
+                if let c0 = corners.first, let c1 = corners.last, let nodeNeighbour = find(neighbour: edge), let neighbour = nodeNeighbour.node as? FootpathNode {
+                    
+                    let v0 = polyhedron.lowerPolytope.vertices[c0.rawValue] + throne
+                    let v1 = polyhedron.lowerPolytope.vertices[c1.rawValue] + throne
+                    let v2 = insetVertices[c1.rawValue]
+                    let v3 = insetVertices[c0.rawValue]
+                    var v4 = v0
+                    var v5 = v1
+                    
+                    let e0 = GridEdge.Edges(corner: c0).first { $0 != edge }!
+                    let e1 = GridEdge.Edges(corner: c1).first { $0 != edge }!
+                    
+                    let a0 = find(neighbour: e0)?.node as? FootpathNode
+                    let a1 = find(neighbour: e1)?.node as? FootpathNode
+                    
+                    let d0 = neighbour.find(neighbour: e0)?.node as? FootpathNode
+                    let d1 = neighbour.find(neighbour: e1)?.node as? FootpathNode
+                    
+                    if a0 == nil || (a0 != nil && d0 == nil) {
+                        
+                        v4 = SCNVector3.Lerp(from: v0, to: v1, scalar: FootpathNode.Furrow)
+                    }
+                    
+                    if a1 == nil || (a1 != nil && d1 == nil) {
+                        
+                        v5 = SCNVector3.Lerp(from: v1, to: v0, scalar: FootpathNode.Furrow)
+                    }
+                    
+                    faces.append(MeshFace(vertices: [v4, v5, v2], normals: normals, colors: secondaryColors))
+                    faces.append(MeshFace(vertices: [v4, v2, v3], normals: normals, colors: secondaryColors))
+                }
+            }
+        }
+        
+        return Mesh(faces: faces)
+    }
+    
+    /*!
+     @method clean
+     @abstract Enumerate through children and clean each layer.
+     */
+    override public func clean() -> Bool {
+        
+        if !super.clean() { return false }
+        
+        cachedPolyhedron = nil
+        
+        return true
+    }
 }
 
 extension FootpathNode {
     
     /*!
+     @property Furrow
+     @abstract Defines the inset of the FootpathNode from the edge of the tile along the x and z axis.
+     */
+    static let Furrow: MDWFloat = 0.1
+    
+    /*!
+     @property Throne
+     @abstract Defines the inset of the FootpathNode from the base of the node along the y axis.
+     */
+    static let Throne: MDWFloat = 0.1
+    
+    /*!
      @property FixedHeight
      @abstract Returns the fixed height value for a FootpathNode Volume.
      */
-    static var FixedHeight: Int = 6
+    static let FixedHeight: Int = 6
     
     /*!
      @method FixedVolume:coordinate
@@ -128,7 +318,6 @@ extension FootpathNode {
      */
     static func FixedVolume(_ coordinate: Coordinate) -> Volume {
         
-        let coordinate = Coordinate(x: coordinate.x, y: World.Floor, z: coordinate.z)
         let size = Size(width: World.TileSize, height: FixedHeight, depth: World.TileSize)
         
         return Volume(coordinate: coordinate, size: size)

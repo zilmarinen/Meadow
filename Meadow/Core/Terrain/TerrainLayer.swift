@@ -133,7 +133,7 @@ public class TerrainLayer: Encodable {
     
     /*!
      @property cachedPolyhedron
-     @abstract Cached version of the Polyhedron calculated after becoming dirty.
+     @abstract Cached version of the Polyhedron calculated after being cleaned.
      */
     private var cachedPolyhedron: Polyhedron?
     
@@ -184,16 +184,7 @@ public class TerrainLayer: Encodable {
             return cachedPolyhedron
         }
         
-        let unit = Polytope.Unit
-        
-        var vertices: [SCNVector3] = []
-        
-        for index in 0..<corners.count {
-            
-            vertices.append(SCNVector3(x: SCNFloat(node.volume.coordinate.x) + unit.vertices[index].x, y: World.Y(y: corners[index]), z: SCNFloat(node.volume.coordinate.z) + unit.vertices[index].z))
-        }
-        
-        let upperPolytope = Polytope(vertices: vertices)
+        let upperPolytope = Polytope(x: MDWFloat(volume.coordinate.x), y: corners, z: MDWFloat(volume.coordinate.z))
         
         var lowerPolytope: Polytope
         
@@ -271,7 +262,7 @@ extension TerrainLayer {
      @property Ceiling
      @abstract The highest y axis value allowed.
      */
-    public static var Crown: MDWFloat = (World.UnitY / 2.0)
+    public static let Crown: MDWFloat = (World.UnitY / 2.0)
 }
 
 extension TerrainLayer: Soilable {
@@ -301,6 +292,8 @@ extension TerrainLayer: Soilable {
         if !isDirty { return false }
         
         isDirty = false
+        
+        cachedPolyhedron = nil
         
         return true
     }
@@ -602,7 +595,6 @@ extension TerrainLayer {
                                 faces.append(MeshFace(vertices: [v0, v5, v1], normals: [edgeNormal, edgeNormal, edgeNormal], colors: primaryColors))
                                 faces.append(MeshFace(vertices: [v0, v4, v5], normals: [edgeNormal, edgeNormal, edgeNormal], colors: primaryColors))
                             }
-                            
                             
                             faces.append(MeshFace(vertices: [v4, v2, v5], normals: [edgeNormal, edgeNormal, edgeNormal], colors: secondaryColors))
                             faces.append(MeshFace(vertices: [v4, v3, v2], normals: [edgeNormal, edgeNormal, edgeNormal], colors: secondaryColors))

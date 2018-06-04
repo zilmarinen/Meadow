@@ -51,7 +51,7 @@ public class GridNode: SceneGraphNode, Encodable, Soilable {
      @property isDirty
      @abstract Represents staleness of the node.
      */
-    private var isDirty: Bool = false
+    internal var isDirty: Bool = false
     
     /*!
      @property delegate

@@ -42,12 +42,12 @@ class PolytopeTests: XCTestCase {
         
         let expect = expectation(description: "Polytopes are considered equal when all x, y and z components are equal")
         
-        let reference = Polytope.Unit
+        let unit = Polytope(x: 0.0, y: 0.0, z: 0.0)
         
         let above = Polytope(x: 0.0, y: World.UnitY, z: 0.0)
         
-        XCTAssertEqual(reference, reference)
-        XCTAssertNotEqual(reference, above)
+        XCTAssertEqual(unit, unit)
+        XCTAssertNotEqual(unit, above)
         
         expect.fulfill()
         

@@ -6,6 +6,10 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
+/*!
+ @class AreaNode
+ @abstract AreaNodes are used to define regions within a Grid which can be traversed.
+ */
 public class TunnelNode: GridNode {
     
 }

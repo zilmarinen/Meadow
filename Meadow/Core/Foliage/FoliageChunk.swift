@@ -6,6 +6,10 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
+/*!
+ @class FoliageChunk
+ @abstract Grid chunks are the parent class for all grid tiles and nodes.
+ */
 public class FoliageChunk: GridChunk<FoliageTile, FoliageNode> {
     
 }

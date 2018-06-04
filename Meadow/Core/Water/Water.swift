@@ -6,6 +6,10 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
+/*!
+ @class Water
+ @abstract Water is a Grid type that manages the addition and removal of WaterNodes.
+ */
 public class Water: Grid<WaterChunk, WaterTile, WaterNode> {
     
     /*!

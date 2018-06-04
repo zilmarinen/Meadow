@@ -6,7 +6,11 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-public final class Area: Grid<AreaChunk, AreaTile, AreaNode> {
+/*!
+ @class Area
+ @abstract Area is a Grid type that manages the addition and removal of AreaNodes.
+ */
+public class Area: Grid<AreaChunk, AreaTile, AreaNode> {
     
     /*!
      @property nodeName

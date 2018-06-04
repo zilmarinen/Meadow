@@ -6,6 +6,10 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
+/*!
+ @class Foliage
+ @abstract Foliage is a Grid type that manages the addition and removal of FoliageNodes.
+ */
 public class Foliage: Grid<FoliageChunk, FoliageTile, FoliageNode> {
     
     /*!

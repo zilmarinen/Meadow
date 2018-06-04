@@ -6,6 +6,10 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
+/*!
+ @class WaterNode
+ @abstract WaterNode are used to define regions within a Grid are bodies of water.
+ */
 public class WaterNode: GridNode {
     
 }

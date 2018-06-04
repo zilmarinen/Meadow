@@ -311,37 +311,36 @@ extension TerrainLayer {
      */
     public func set(height: Int, corner: GridCorner, smooth: Bool = false) {
         
-        var value = min(max(height, World.Floor + 1), World.Ceiling)
+        var cornerHeight = min(max(height, World.Floor + 1), World.Ceiling)
         
         if let upper = upper {
             
-            value = min(value, upper.get(height: corner))
+            cornerHeight = min(cornerHeight, upper.get(height: corner))
         }
         
         if let lower = lower {
             
-            value = max(value, lower.get(height: corner))
+            cornerHeight = max(cornerHeight, lower.get(height: corner))
         }
         
-        if get(height: corner) != value {
+        if get(height: corner) != cornerHeight {
          
-            corners[corner.rawValue] = value
-            
-            becomeDirty()
-            
             let connectedCorners = GridCorner.Corners(corner: corner)
             let oppositeCorner = GridCorner.Opposite(corner: corner)
             
-            resolve(height: value, corner: connectedCorners[0], clamp: 1)
-            resolve(height: value, corner: connectedCorners[1], clamp: 1)
-            resolve(height: value, corner: oppositeCorner, clamp: 2)
+            resolve(height: cornerHeight, corner: connectedCorners.first!, clamp: 1, smooth: smooth)
+            resolve(height: cornerHeight, corner: connectedCorners.last!, clamp: 1, smooth: smooth)
+            
+            corners[corner.rawValue] = cornerHeight
+            
+            becomeDirty()
             
             if smooth {
                 
                 let connectedEdges = GridEdge.Edges(corner: corner)
                 
-                let ce0 = connectedEdges[0]
-                let ce1 = connectedEdges[1]
+                let ce0 = connectedEdges.first!
+                let ce1 = connectedEdges.last!
                 
                 let ac0 = GridCorner.Adjacent(corner: corner, edge: ce0)
                 let ac1 = GridCorner.Adjacent(corner: corner, edge: ce1)
@@ -350,9 +349,9 @@ extension TerrainLayer {
                 let n1 = node.find(neighbour: ce1)?.node as? TerrainNode
                 let n2 = (n0 != nil ? n0!.find(neighbour: ce1) : (n1 != nil ? n1!.find(neighbour: ce0) : nil))?.node as? TerrainNode
                 
-                if let n0 = n0, let topLayer = n0.topLayer { topLayer.set(height: value, corner: ac0, smooth: smooth) }
-                if let n1 = n1, let topLayer = n1.topLayer { topLayer.set(height: value, corner: ac1, smooth: smooth) }
-                if let n2 = n2, let topLayer = n2.topLayer { topLayer.set(height: value, corner: oppositeCorner, smooth: smooth) }
+                if let n0 = n0, let topLayer = n0.topLayer { topLayer.set(height: cornerHeight, corner: ac0, smooth: smooth) }
+                if let n1 = n1, let topLayer = n1.topLayer { topLayer.set(height: cornerHeight, corner: ac1, smooth: smooth) }
+                if let n2 = n2, let topLayer = n2.topLayer { topLayer.set(height: cornerHeight, corner: oppositeCorner, smooth: smooth) }
             }
         }
     }
@@ -364,13 +363,15 @@ extension TerrainLayer {
      @param corner The corner for which the height should be set.
      @param clamp Defines a level of tolerance for constraining differences in height.
      */
-    func resolve(height: Int, corner: GridCorner, clamp: Int) {
+    func resolve(height: Int, corner: GridCorner, clamp: Int, smooth: Bool) {
      
         let delta = get(height: corner) - height
         
         if abs(delta) > clamp {
             
-            corners[corner.rawValue] = height + (delta <= -clamp ? -clamp : (delta >= clamp ? clamp : delta))
+            let cornerHeight = height + (delta <= -clamp ? -clamp : (delta >= clamp ? clamp : delta))
+            
+            set(height: cornerHeight, corner: corner, smooth: smooth)
         }
     }
     

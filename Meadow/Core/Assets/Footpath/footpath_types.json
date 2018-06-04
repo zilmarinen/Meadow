@@ -1,58 +1,58 @@
 [
 	{
-		"name": "Asphalt",
+		"name": "Concrete",
 		"color_palette": {
 			"primary": {
-				"red": 0.984,
-				"green": 0.0,
-				"blue": 0.333,
+				"red": 0.45,
+				"green": 0.415,
+				"blue": 0.384,
 				"alpha": 1.0
 			},
 			"secondary": {
-				"red": 0.992,
-				"green": 0.686,
-				"blue": 0.784,
+				"red": 0.349,
+				"green": 0.321,
+				"blue": 0.298,
 				"alpha": 1.0
 			},
 			"tertiary": {
-				"red": 0.188,
-				"green": 0.513,
-				"blue": 0.984,
+				"red": 0.501,
+				"green": 0.462,
+				"blue": 0.427,
 				"alpha": 1.0
 			},
 			"quaternary": {
-				"red": 0.325,
-				"green": 0.317,
-				"blue": 0.529,
+				"red": 0.749,
+				"green": 0.694,
+				"blue": 0.639,
 				"alpha": 1.0
 			}
 		}
 	},
 	{
-		"name": "Concrete",
+		"name": "Earth",
 		"color_palette": {
 			"primary": {
-				"red": 0.5,
-				"green": 0.0,
-				"blue": 0.0,
+				"red": 0.686,
+				"green": 0.349,
+				"blue": 0.243,
 				"alpha": 1.0
 			},
 			"secondary": {
-				"red": 0.0,
-				"green": 0.5,
-				"blue": 0.0,
+				"red": 0.584,
+				"green": 0.298,
+				"blue": 0.207,
 				"alpha": 1.0
 			},
 			"tertiary": {
-				"red": 0.0,
-				"green": 0.0,
-				"blue": 0.5,
+				"red": 0.737,
+				"green": 0.372,
+				"blue": 0.262,
 				"alpha": 1.0
 			},
 			"quaternary": {
-				"red": 0.5,
-				"green": 0.5,
-				"blue": 0.5,
+				"red": 0.984,
+				"green": 0.501,
+				"blue": 0.349,
 				"alpha": 1.0
 			}
 		}

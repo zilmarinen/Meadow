@@ -6,6 +6,10 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
+/*!
+ @class Tunnel
+ @abstract Tunnel is a Grid type that manages the addition and removal of TunnelNodes.
+ */
 public class Tunnel: Grid<TunnelChunk, TunnelTile, TunnelNode> {
  
     /*!

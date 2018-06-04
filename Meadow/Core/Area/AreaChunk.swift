@@ -6,6 +6,10 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
+/*!
+ @class AreaChunk
+ @abstract Grid chunks are the parent class for all grid tiles and nodes.
+ */
 public class AreaChunk: GridChunk<AreaTile, AreaNode> {
     
 }

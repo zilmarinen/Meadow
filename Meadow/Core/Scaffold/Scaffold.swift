@@ -6,6 +6,10 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
+/*!
+ @class Scaffold
+ @abstract Scaffold is a Grid type that manages the addition and removal of ScaffoldNodes.
+ */
 public class Scaffold: Grid<ScaffoldChunk, ScaffoldTile, ScaffoldNode> {
  
     /*!

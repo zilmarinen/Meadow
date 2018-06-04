@@ -200,24 +200,21 @@ public class FootpathNode: GridNode {
         
         let throne = SCNVector3(x: 0.0, y: FootpathNode.Throne, z: 0.0)
         
-        if let apexColor = footpathType?.colorPalette.primary.vector, let edgeColor = footpathType?.colorPalette.secondary.vector {
+        if let apexColor = footpathType?.colorPalette.primary.vector {
         
             let apexCenter = polyhedron.lowerPolytope.center
             
             let apexNormal = apexCenter + SCNVector3.Up
             
             let primaryColors = [ apexColor, apexColor, apexColor ]
-            let secondaryColors = [ edgeColor, edgeColor, edgeColor ]
             
             var insetVertices: [SCNVector3] = []
             
-            let length = Double(FootpathNode.Furrow)
-            
-            let scalar = sqrt((length * length) + (length * length))
+            let length = (FootpathNode.Furrow * 2.0)
             
             polyhedron.lowerPolytope.vertices.forEach { vertex in
                 
-                insetVertices.append(SCNVector3.Lerp(from: vertex, to: apexCenter, scalar: MDWFloat(scalar)) + throne)
+                insetVertices.append(SCNVector3.Lerp(from: vertex, to: apexCenter, scalar: length) + throne)
             }
             
             let plane = Plane(v0: insetVertices[0], v1: insetVertices[1], v2: insetVertices[2])
@@ -268,8 +265,8 @@ public class FootpathNode: GridNode {
                         v5 = SCNVector3.Lerp(from: v1, to: v0, scalar: FootpathNode.Furrow)
                     }
                     
-                    faces.append(MeshFace(vertices: [v4, v5, v2], normals: normals, colors: secondaryColors))
-                    faces.append(MeshFace(vertices: [v4, v2, v3], normals: normals, colors: secondaryColors))
+                    faces.append(MeshFace(vertices: [v4, v5, v2], normals: normals, colors: primaryColors))
+                    faces.append(MeshFace(vertices: [v4, v2, v3], normals: normals, colors: primaryColors))
                 }
             }
         }
@@ -297,13 +294,13 @@ extension FootpathNode {
      @property Furrow
      @abstract Defines the inset of the FootpathNode from the edge of the tile along the x and z axis.
      */
-    static let Furrow: MDWFloat = 0.1
+    static let Furrow: MDWFloat = 0.05
     
     /*!
      @property Throne
      @abstract Defines the inset of the FootpathNode from the base of the node along the y axis.
      */
-    static let Throne: MDWFloat = 0.1
+    static let Throne: MDWFloat = 0.01
     
     /*!
      @property FixedHeight

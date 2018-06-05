@@ -67,10 +67,10 @@ extension GridEdge {
      */
     private static var Connected: [[GridEdge]] { return [
         
-        [.east, .west],
+        [.west, .east],
         [.north, .south],
         [.east, .west],
-        [.north, .south]
+        [.south, .north]
     ]}
     
     /*!

@@ -65,10 +65,10 @@ extension GridCorner {
      */
     private static var Connected: [[GridCorner]] { return [
     
-        [.northEast, .southWest],
+        [.southWest, .northEast],
         [.northWest, .southEast],
         [.northEast, .southWest],
-        [.northWest, .southEast]
+        [.southEast, .northWest]
     ]}
     
     /*!

@@ -78,10 +78,10 @@ public struct Polytope {
      */
     public init(x: MDWFloat, y: MDWFloat, z: MDWFloat) {
         
-        self.vertices = [SCNVector3(x: (x + -World.UnitXZ), y: y, z: (z + World.UnitXZ)),
-                         SCNVector3(x: (x + World.UnitXZ), y: y, z: (z + World.UnitXZ)),
+        self.vertices = [SCNVector3(x: (x + -World.UnitXZ), y: y, z: (z + -World.UnitXZ)),
                          SCNVector3(x: (x + World.UnitXZ), y: y, z: (z + -World.UnitXZ)),
-                         SCNVector3(x: (x + -World.UnitXZ), y: y, z: (z + -World.UnitXZ))]
+                         SCNVector3(x: (x + World.UnitXZ), y: y, z: (z + World.UnitXZ)),
+                         SCNVector3(x: (x + -World.UnitXZ), y: y, z: (z + World.UnitXZ))]
     }
     
     /*!
@@ -93,10 +93,10 @@ public struct Polytope {
      */
     public init(x: MDWFloat, y: [Int], z: MDWFloat) {
         
-        self.vertices = [SCNVector3(x: (x + -World.UnitXZ), y: World.Y(y: y[0]), z: (z + World.UnitXZ)),
-                         SCNVector3(x: (x + World.UnitXZ), y: World.Y(y: y[1]), z: (z + World.UnitXZ)),
-                         SCNVector3(x: (x + World.UnitXZ), y: World.Y(y: y[2]), z: (z + -World.UnitXZ)),
-                         SCNVector3(x: (x + -World.UnitXZ), y: World.Y(y: y[3]), z: (z + -World.UnitXZ))]
+        self.vertices = [SCNVector3(x: (x + -World.UnitXZ), y: World.Y(y: y[0]), z: (z + -World.UnitXZ)),
+                         SCNVector3(x: (x + World.UnitXZ), y: World.Y(y: y[1]), z: (z + -World.UnitXZ)),
+                         SCNVector3(x: (x + World.UnitXZ), y: World.Y(y: y[2]), z: (z + World.UnitXZ)),
+                         SCNVector3(x: (x + -World.UnitXZ), y: World.Y(y: y[3]), z: (z + World.UnitXZ))]
     }
 }
 

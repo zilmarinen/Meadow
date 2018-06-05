@@ -228,8 +228,8 @@ public class FootpathNode: GridNode {
             
             let normals = [normal, normal, normal]
             
-            faces.append(MeshFace(vertices: [insetVertices[0], insetVertices[1], insetVertices[2]], normals: normals, colors: primaryColors))
-            faces.append(MeshFace(vertices: [insetVertices[0], insetVertices[2], insetVertices[3]], normals: normals, colors: primaryColors))
+            faces.append(MeshFace(vertices: [insetVertices[0], insetVertices[2], insetVertices[1]], normals: normals, colors: primaryColors))
+            faces.append(MeshFace(vertices: [insetVertices[0], insetVertices[3], insetVertices[2]], normals: normals, colors: primaryColors))
             
             let edges: [GridEdge] = [ .north, .east, .south, .west ]
             
@@ -265,8 +265,8 @@ public class FootpathNode: GridNode {
                         v5 = SCNVector3.Lerp(from: v1, to: v0, scalar: FootpathNode.Furrow)
                     }
                     
-                    faces.append(MeshFace(vertices: [v4, v5, v2], normals: normals, colors: primaryColors))
-                    faces.append(MeshFace(vertices: [v4, v2, v3], normals: normals, colors: primaryColors))
+                    faces.append(MeshFace(vertices: [v4, v2, v5], normals: normals, colors: primaryColors))
+                    faces.append(MeshFace(vertices: [v4, v3, v2], normals: normals, colors: primaryColors))
                 }
             }
         }

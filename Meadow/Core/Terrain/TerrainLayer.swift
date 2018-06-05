@@ -179,7 +179,7 @@ public class TerrainLayer: Encodable {
      */
     var polyhedron: Polyhedron {
         
-        if !isDirty, let cachedPolyhedron = cachedPolyhedron {
+        if let cachedPolyhedron = cachedPolyhedron {
             
             return cachedPolyhedron
         }
@@ -339,19 +339,19 @@ extension TerrainLayer {
                 
                 let connectedEdges = GridEdge.Edges(corner: corner)
                 
-                let ce0 = connectedEdges.first!
-                let ce1 = connectedEdges.last!
+                let e0 = connectedEdges.first!
+                let e1 = connectedEdges.last!
                 
-                let ac0 = GridCorner.Adjacent(corner: corner, edge: ce0)
-                let ac1 = GridCorner.Adjacent(corner: corner, edge: ce1)
+                let c0 = GridCorner.Adjacent(corner: corner, edge: e0)
+                let c1 = GridCorner.Adjacent(corner: corner, edge: e1)
                 
-                let n0 = node.find(neighbour: ce0)?.node as? TerrainNode
-                let n1 = node.find(neighbour: ce1)?.node as? TerrainNode
-                let n2 = (n0 != nil ? n0!.find(neighbour: ce1) : (n1 != nil ? n1!.find(neighbour: ce0) : nil))?.node as? TerrainNode
+                let a0 = node.find(neighbour: e0)?.node as? TerrainNode
+                let a1 = node.find(neighbour: e1)?.node as? TerrainNode
+                let d = (a0 != nil ? a0!.find(neighbour: e1) : (a1 != nil ? a1!.find(neighbour: e0) : nil))?.node as? TerrainNode
                 
-                if let n0 = n0, let topLayer = n0.topLayer { topLayer.set(height: cornerHeight, corner: ac0, smooth: smooth) }
-                if let n1 = n1, let topLayer = n1.topLayer { topLayer.set(height: cornerHeight, corner: ac1, smooth: smooth) }
-                if let n2 = n2, let topLayer = n2.topLayer { topLayer.set(height: cornerHeight, corner: oppositeCorner, smooth: smooth) }
+                if let a0 = a0, let topLayer = a0.topLayer { topLayer.set(height: cornerHeight, corner: c0, smooth: smooth) }
+                if let a1 = a1, let topLayer = a1.topLayer { topLayer.set(height: cornerHeight, corner: c1, smooth: smooth) }
+                if let d = d, let topLayer = d.topLayer { topLayer.set(height: cornerHeight, corner: oppositeCorner, smooth: smooth) }
             }
         }
     }
@@ -488,13 +488,19 @@ extension TerrainLayer {
         
         edges.forEach { edge in
             
+            let oppositeEdge = GridEdge.Opposite(edge: edge)
+            
             let corners = GridCorner.Corners(edge: edge)
+            
+            let oppositeCorners = GridCorner.Corners(edge: oppositeEdge)
             
             let nodeNeighbour = node.find(neighbour: edge)
             
-            if let c0 = corners.first, let c1 = corners.last, let terrainLayerEdge = get(terrainType: edge) {
+            if let c0 = corners.first, let c1 = corners.last, let c2 = oppositeCorners.first, let c3 = oppositeCorners.last, let terrainLayerEdge = get(terrainType: edge) {
                 
                 let edgeNormal = GridEdge.Normal(edge: edge)
+                
+                let edgeNormals = [edgeNormal, edgeNormal, edgeNormal]
                 
                 let apexColor = terrainLayerEdge.terrainType.colorPalette.primary.vector
                 let edgeColor = terrainLayerEdge.terrainType.colorPalette.secondary.vector
@@ -540,17 +546,17 @@ extension TerrainLayer {
                             normal = plane.normal.negated()
                         }
                         
-                        faces.append(MeshFace(vertices: [v0, v1, apexCenter], normals: [normal, normal, normal], colors: primaryColors))
+                        faces.append(MeshFace(vertices: [v1, v0, apexCenter], normals: [normal, normal, normal], colors: primaryColors))
                     }
                     
                     let remainingEdges = Polyhedron.Subtract(polyhedrons: edgeIntersections, from: division)
                     
                     remainingEdges.forEach { edgePolyhedron in
                         
-                        let v0 = edgePolyhedron.upperPolytope.vertices[c0.rawValue]
-                        let v1 = edgePolyhedron.upperPolytope.vertices[c1.rawValue]
-                        let v2 = edgePolyhedron.lowerPolytope.vertices[c1.rawValue]
-                        let v3 = edgePolyhedron.lowerPolytope.vertices[c0.rawValue]
+                        let v0 = edgePolyhedron.upperPolytope.vertices[c2.rawValue]
+                        let v1 = edgePolyhedron.upperPolytope.vertices[c3.rawValue]
+                        let v2 = edgePolyhedron.lowerPolytope.vertices[c3.rawValue]
+                        let v3 = edgePolyhedron.lowerPolytope.vertices[c2.rawValue]
                         let v4 = v0 - crown
                         let v5 = v1 - crown
                         let v6 = SCNVector3.Lerp(from: v0, to: v1, scalar: World.UnitXZ)
@@ -561,17 +567,17 @@ extension TerrainLayer {
 
                         if c0equal && !c1equal {
 
-                            faces.append(MeshFace(vertices: [v0, v5, v1], normals: [edgeNormal, edgeNormal, edgeNormal], colors: primaryColors))
-                            faces.append(MeshFace(vertices: [v0, v4, v5], normals: [edgeNormal, edgeNormal, edgeNormal], colors: primaryColors))
+                            faces.append(MeshFace(vertices: [v0, v1, v5], normals: edgeNormals, colors: primaryColors))
+                            faces.append(MeshFace(vertices: [v0, v5, v4], normals: edgeNormals, colors: primaryColors))
                             
-                            faces.append(MeshFace(vertices: [v7, v2, v5], normals: [edgeNormal, edgeNormal, edgeNormal], colors: secondaryColors))
+                            faces.append(MeshFace(vertices: [v7, v5, v2], normals: edgeNormals, colors: secondaryColors))
                         }
                         else if !c0equal && c1equal {
                             
-                            faces.append(MeshFace(vertices: [v0, v5, v1], normals: [edgeNormal, edgeNormal, edgeNormal], colors: primaryColors))
-                            faces.append(MeshFace(vertices: [v0, v4, v5], normals: [edgeNormal, edgeNormal, edgeNormal], colors: primaryColors))
+                            faces.append(MeshFace(vertices: [v0, v1, v5], normals: edgeNormals, colors: primaryColors))
+                            faces.append(MeshFace(vertices: [v0, v5, v4], normals: edgeNormals, colors: primaryColors))
 
-                            faces.append(MeshFace(vertices: [v4, v3, v7], normals: [edgeNormal, edgeNormal, edgeNormal], colors: secondaryColors))
+                            faces.append(MeshFace(vertices: [v4, v7, v3], normals: edgeNormals, colors: secondaryColors))
                         }
                         else if !c0equal && !c1equal {
                             
@@ -582,23 +588,23 @@ extension TerrainLayer {
                                 
                                 if c0upperEqual {
                                     
-                                    faces.append(MeshFace(vertices: [v6, v5, v1], normals: [edgeNormal, edgeNormal, edgeNormal], colors: primaryColors))
+                                    faces.append(MeshFace(vertices: [v6, v1, v5], normals: edgeNormals, colors: primaryColors))
                                 }
                                 else {
                                     
-                                    faces.append(MeshFace(vertices: [v6, v0, v4], normals: [edgeNormal, edgeNormal, edgeNormal], colors: primaryColors))
+                                    faces.append(MeshFace(vertices: [v6, v4, v0], normals: edgeNormals, colors: primaryColors))
                                 }
                                 
-                                faces.append(MeshFace(vertices: [v6, v4, v5], normals: [edgeNormal, edgeNormal, edgeNormal], colors: primaryColors))
+                                faces.append(MeshFace(vertices: [v6, v5, v4], normals: edgeNormals, colors: primaryColors))
                             }
                             else {
                                 
-                                faces.append(MeshFace(vertices: [v0, v5, v1], normals: [edgeNormal, edgeNormal, edgeNormal], colors: primaryColors))
-                                faces.append(MeshFace(vertices: [v0, v4, v5], normals: [edgeNormal, edgeNormal, edgeNormal], colors: primaryColors))
+                                faces.append(MeshFace(vertices: [v0, v1, v5], normals: edgeNormals, colors: primaryColors))
+                                faces.append(MeshFace(vertices: [v0, v5, v4], normals: edgeNormals, colors: primaryColors))
                             }
                             
-                            faces.append(MeshFace(vertices: [v4, v2, v5], normals: [edgeNormal, edgeNormal, edgeNormal], colors: secondaryColors))
-                            faces.append(MeshFace(vertices: [v4, v3, v2], normals: [edgeNormal, edgeNormal, edgeNormal], colors: secondaryColors))
+                            faces.append(MeshFace(vertices: [v4, v5, v2], normals: edgeNormals, colors: secondaryColors))
+                            faces.append(MeshFace(vertices: [v4, v2, v3], normals: edgeNormals, colors: secondaryColors))
                         }
                     }
                 }

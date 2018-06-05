@@ -127,9 +127,9 @@ public extension Coordinate {
      */
     static var Cardinal: [Coordinate] { return [
         
-        Coordinate.Forward,
-        Coordinate.Right,
         Coordinate.Backward,
+        Coordinate.Right,
+        Coordinate.Forward,
         Coordinate.Left
     ]}
 }

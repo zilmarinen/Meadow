@@ -48,7 +48,7 @@ public struct MeadowJSON: Decodable {
      @property water
      @abstract The water in world.
      */
-    let water: GridJSON<GridNodeJSON>
+    let water: GridJSON<WaterNodeJSON>
 }
 
 /*!
@@ -134,6 +134,7 @@ public class Meadow: SCNScene, Encodable {
         
         footpaths.loadFootpathTypes()
         terrain.loadTerrainTypes()
+        water.loadWaterTypes()
         
         rootNode.name = "Meadow"
         rootNode.addChildNode(cameraJib)
@@ -201,11 +202,13 @@ extension Meadow {
         
         rootNode.name = json.name
         
-        let footpathNodes = json.footpaths.chunks.flatMap { $0.tiles.flatMap { $0.nodes }}
+        let footpathNodes = json.footpaths.chunks.flatMap { $0.tiles.flatMap { $0.nodes } }
         let terrainNodes = json.terrain.chunks.flatMap { $0.tiles.flatMap { $0.nodes } }
+        let waterNodes = json.water.chunks.flatMap { $0.tiles.flatMap { $0.nodes } }
         
         footpaths.load(nodes: footpathNodes)
         terrain.load(nodes: terrainNodes)
+        water.load(nodes: waterNodes)
     }
 }
 

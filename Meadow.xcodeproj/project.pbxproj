@@ -27,6 +27,14 @@
 		185E587F20A9808200139565 /* SceneGraphNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185E587D20A97F6400139565 /* SceneGraphNode.swift */; };
 		185E588020A9808300139565 /* SceneGraphNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185E587D20A97F6400139565 /* SceneGraphNode.swift */; };
 		185E588120A9808300139565 /* SceneGraphNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185E587D20A97F6400139565 /* SceneGraphNode.swift */; };
+		188DDC5720C6789B006B96A9 /* water_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 188DDC5620C6789B006B96A9 /* water_types.json */; };
+		188DDC5920C67C55006B96A9 /* WaterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188DDC5820C67C55006B96A9 /* WaterType.swift */; };
+		188DDC5A20C67C98006B96A9 /* WaterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188DDC5820C67C55006B96A9 /* WaterType.swift */; };
+		188DDC5B20C67C98006B96A9 /* WaterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188DDC5820C67C55006B96A9 /* WaterType.swift */; };
+		188DDC5C20C67C99006B96A9 /* WaterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188DDC5820C67C55006B96A9 /* WaterType.swift */; };
+		188DDC5D20C67CA5006B96A9 /* water_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 188DDC5620C6789B006B96A9 /* water_types.json */; };
+		188DDC5E20C67CA5006B96A9 /* water_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 188DDC5620C6789B006B96A9 /* water_types.json */; };
+		188DDC5F20C67CA5006B96A9 /* water_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 188DDC5620C6789B006B96A9 /* water_types.json */; };
 		18B13D2720BC0F5B007437DC /* FootpathType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B13D2620BC0F5B007437DC /* FootpathType.swift */; };
 		18B13D2820BC101E007437DC /* FootpathType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B13D2620BC0F5B007437DC /* FootpathType.swift */; };
 		18B13D2920BC101E007437DC /* FootpathType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B13D2620BC0F5B007437DC /* FootpathType.swift */; };
@@ -355,6 +363,8 @@
 		1880694520A071D6002F6EC0 /* TerrainLayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrainLayerTests.swift; sourceTree = "<group>"; };
 		188B3C14209E1B9F0034F4BB /* TerrainType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrainType.swift; sourceTree = "<group>"; };
 		188B3C16209E1BF70034F4BB /* TerrainLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrainLayer.swift; sourceTree = "<group>"; };
+		188DDC5620C6789B006B96A9 /* water_types.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = water_types.json; sourceTree = "<group>"; };
+		188DDC5820C67C55006B96A9 /* WaterType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterType.swift; sourceTree = "<group>"; };
 		18A8AB232099D6DA00AF30BB /* TerrainTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrainTests.swift; sourceTree = "<group>"; };
 		18B13D2620BC0F5B007437DC /* FootpathType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FootpathType.swift; sourceTree = "<group>"; };
 		18B58B812098600800402410 /* Area.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Area.swift; sourceTree = "<group>"; };
@@ -630,6 +640,7 @@
 				18B58BA3209861D300402410 /* WaterChunk.swift */,
 				18B58BA6209861E000402410 /* WaterTile.swift */,
 				18B58BA8209861E900402410 /* WaterNode.swift */,
+				188DDC5820C67C55006B96A9 /* WaterType.swift */,
 			);
 			path = Water;
 			sourceTree = "<group>";
@@ -685,6 +696,7 @@
 		18538B6120A311DB00077CE2 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				188DDC5520C67828006B96A9 /* Water */,
 				1819B72620A4812B00BEE585 /* Area */,
 				1819B72920A4814700BEE585 /* Footpath */,
 				18538B6220A311E300077CE2 /* Terrain */,
@@ -746,6 +758,14 @@
 				18EE510420A57CBA0059829C /* Platforms */,
 			);
 			path = "Meadow Tests";
+			sourceTree = "<group>";
+		};
+		188DDC5520C67828006B96A9 /* Water */ = {
+			isa = PBXGroup;
+			children = (
+				188DDC5620C6789B006B96A9 /* water_types.json */,
+			);
+			path = Water;
 			sourceTree = "<group>";
 		};
 		18B58BAA2098623200402410 /* Area */ = {
@@ -1017,6 +1037,7 @@
 				18EE500E20A576430059829C /* footpath_types.json in Resources */,
 				18EE501020A576470059829C /* terrain_types.json in Resources */,
 				18EE500C20A5763F0059829C /* area_types.json in Resources */,
+				188DDC5720C6789B006B96A9 /* water_types.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1027,6 +1048,7 @@
 				18EE50A820A57BC80059829C /* footpath_types.json in Resources */,
 				18EE50A920A57BC80059829C /* terrain_types.json in Resources */,
 				18EE50A720A57BC80059829C /* area_types.json in Resources */,
+				188DDC5D20C67CA5006B96A9 /* water_types.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1037,6 +1059,7 @@
 				18EE500F20A576430059829C /* footpath_types.json in Resources */,
 				18EE501120A576480059829C /* terrain_types.json in Resources */,
 				18EE500D20A576400059829C /* area_types.json in Resources */,
+				188DDC5E20C67CA5006B96A9 /* water_types.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1047,6 +1070,7 @@
 				18EE50AB20A57BC90059829C /* footpath_types.json in Resources */,
 				18EE50AC20A57BC90059829C /* terrain_types.json in Resources */,
 				18EE50AA20A57BC90059829C /* area_types.json in Resources */,
+				188DDC5F20C67CA5006B96A9 /* water_types.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1187,6 +1211,7 @@
 				18EE503820A5766C0059829C /* GridCorner.swift in Sources */,
 				18EE504620A576770059829C /* ScaffoldTile.swift in Sources */,
 				18EE500820A576360059829C /* Area.swift in Sources */,
+				188DDC5920C67C55006B96A9 /* WaterType.swift in Sources */,
 				18EE500A20A576360059829C /* AreaTile.swift in Sources */,
 				185E587820A878CD00139565 /* Bundle+Pod.swift in Sources */,
 				18EE504D20A5767D0059829C /* TerrainChunk.swift in Sources */,
@@ -1253,6 +1278,7 @@
 				18EE50C220A57BDC0059829C /* FoliageChunk.swift in Sources */,
 				18EE50ED20A57BF30059829C /* Terrain.swift in Sources */,
 				18EE510820A589A50059829C /* Meadow+Types.swift in Sources */,
+				188DDC5A20C67C98006B96A9 /* WaterType.swift in Sources */,
 				185E587A20A878ED00139565 /* Bundle+Pod.swift in Sources */,
 				18EE509D20A57B9E0059829C /* TerrainTests.swift in Sources */,
 				18EE50F920A57BF60059829C /* TunnelTile.swift in Sources */,
@@ -1328,6 +1354,7 @@
 				18EE503E20A5766D0059829C /* GridCorner.swift in Sources */,
 				18EE504A20A576780059829C /* ScaffoldTile.swift in Sources */,
 				18EE500420A576350059829C /* Area.swift in Sources */,
+				188DDC5B20C67C98006B96A9 /* WaterType.swift in Sources */,
 				18EE500620A576350059829C /* AreaTile.swift in Sources */,
 				185E587920A878EC00139565 /* Bundle+Pod.swift in Sources */,
 				18EE505320A5767E0059829C /* TerrainChunk.swift in Sources */,
@@ -1394,6 +1421,7 @@
 				18EE50C620A57BDD0059829C /* FoliageChunk.swift in Sources */,
 				18EE50E720A57BF20059829C /* Terrain.swift in Sources */,
 				18EE510920A589A60059829C /* Meadow+Types.swift in Sources */,
+				188DDC5C20C67C99006B96A9 /* WaterType.swift in Sources */,
 				185E587B20A878ED00139565 /* Bundle+Pod.swift in Sources */,
 				18EE509420A57A960059829C /* TerrainTests.swift in Sources */,
 				18EE50F520A57BF60059829C /* TunnelTile.swift in Sources */,

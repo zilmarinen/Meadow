@@ -1,0 +1,32 @@
+
+[
+	{
+		"name": "Water",
+		"color_palette": {
+			"primary": {
+				"red": 0.137,
+				"green": 0.415,
+				"blue": 0.549,
+				"alpha": 1.0
+			},
+			"secondary": {
+				"red": 0.2,
+				"green": 0.603,
+				"blue": 0.8,
+				"alpha": 1.0
+			},
+			"tertiary": {
+				"red": 0.207,
+				"green": 0.627,
+				"blue": 0.831,
+				"alpha": 1.0
+			},
+			"quaternary": {
+				"red": 0.25,
+				"green": 0.752,
+				"blue": 1.0,
+				"alpha": 1.0
+			}
+		}
+	}
+]

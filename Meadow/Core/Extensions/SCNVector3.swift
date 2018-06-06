@@ -131,15 +131,15 @@ extension SCNVector3 {
     
     /*!
      @property Left
-     @abstract Returns a SCNVector3 with the x, y and z components set to -1, 0, 0.
+     @abstract Returns a SCNVector3 with the x, y and z components set to 1, 0, 0.
      */
-    static var Left: SCNVector3 { return SCNVector3(x: -1.0, y: 0.0, z: 0.0) }
+    static var Left: SCNVector3 { return SCNVector3(x: 1.0, y: 0.0, z: 0.0) }
     
     /*!
      @property Right
-     @abstract Returns a SCNVector3 with the x, y and z components set to 1, 0, 0.
+     @abstract Returns a SCNVector3 with the x, y and z components set to -1, 0, 0.
      */
-    static var Right: SCNVector3 { return SCNVector3(x: 1.0, y: 0.0, z: 0.0) }
+    static var Right: SCNVector3 { return SCNVector3(x: -1.0, y: 0.0, z: 0.0) }
     
     /*!
      @property Forward

@@ -39,11 +39,11 @@ class CoordinateTests: XCTestCase {
         XCTAssertEqual(-1, down.y)
         XCTAssertEqual(0, down.z)
         
-        XCTAssertEqual(-1, left.x)
+        XCTAssertEqual(1, left.x)
         XCTAssertEqual(0, left.y)
         XCTAssertEqual(0, left.z)
         
-        XCTAssertEqual(1, right.x)
+        XCTAssertEqual(-1, right.x)
         XCTAssertEqual(0, right.y)
         XCTAssertEqual(0, right.z)
         

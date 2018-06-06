@@ -6,6 +6,8 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
+import Foundation
+
 /*!
  @class Scaffold
  @abstract Scaffold is a Grid type that manages the addition and removal of ScaffoldNodes.

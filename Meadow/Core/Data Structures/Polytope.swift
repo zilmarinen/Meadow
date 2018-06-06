@@ -78,10 +78,7 @@ public struct Polytope {
      */
     public init(x: MDWFloat, y: MDWFloat, z: MDWFloat) {
         
-        self.vertices = [SCNVector3(x: (x + -World.UnitXZ), y: y, z: (z + -World.UnitXZ)),
-                         SCNVector3(x: (x + World.UnitXZ), y: y, z: (z + -World.UnitXZ)),
-                         SCNVector3(x: (x + World.UnitXZ), y: y, z: (z + World.UnitXZ)),
-                         SCNVector3(x: (x + -World.UnitXZ), y: y, z: (z + World.UnitXZ))]
+        self.init(x: x, y: [y, y, y, y], z: z)
     }
     
     /*!
@@ -93,10 +90,22 @@ public struct Polytope {
      */
     public init(x: MDWFloat, y: [Int], z: MDWFloat) {
         
-        self.vertices = [SCNVector3(x: (x + -World.UnitXZ), y: World.Y(y: y[0]), z: (z + -World.UnitXZ)),
-                         SCNVector3(x: (x + World.UnitXZ), y: World.Y(y: y[1]), z: (z + -World.UnitXZ)),
-                         SCNVector3(x: (x + World.UnitXZ), y: World.Y(y: y[2]), z: (z + World.UnitXZ)),
-                         SCNVector3(x: (x + -World.UnitXZ), y: World.Y(y: y[3]), z: (z + World.UnitXZ))]
+        self.init(x: x, y: [World.Y(y: y[0]), World.Y(y: y[1]), World.Y(y: y[2]), World.Y(y: y[3])], z: z)
+    }
+    
+    /*!
+     @method init:x:y:z
+     @abstract Creates and initialises a Polytope with unit length at the specified x, y and z coordinates.
+     @param x The value defining the Polytopes alignment along the x axis.
+     @param y An array of Float values defining the Polytopes alignment along the y axis.
+     @param z The value defining the Polytopes alignment along the z axis.
+     */
+    public init(x: MDWFloat, y: [MDWFloat], z: MDWFloat) {
+        
+        self.vertices = [SCNVector3(x: (x + World.UnitXZ), y:y[0], z: (z + World.UnitXZ)),
+                         SCNVector3(x: (x + -World.UnitXZ), y: y[1], z: (z + World.UnitXZ)),
+                         SCNVector3(x: (x + -World.UnitXZ), y: y[2], z: (z + -World.UnitXZ)),
+                         SCNVector3(x: (x + World.UnitXZ), y: y[3], z: (z + -World.UnitXZ))]
     }
 }
 
@@ -182,10 +191,10 @@ extension Polytope {
 extension Polytope {
     
     /*!
-     @method Project:
-     @astract Project the x and z axis one Polytope along the y axis of another.
+     @method Project:project:against
+     @abstract Combine the x and z components of one Polytope with the y components of another.
      @param project The Polytope to be projected along the x and z axis of the reference Polytope.
-     @param against The reference Polytope whose x and z axis values should be projected.
+     @param against The reference Polytope whose x and z axis values should be referenced.
      */
     static func Project(project: Polytope, against: Polytope) -> Polytope {
         
@@ -195,5 +204,32 @@ extension Polytope {
         let v3 = SCNVector3(x: against.vertices[3].x, y: project.vertices[3].y, z: against.vertices[3].z)
         
         return Polytope(vertices: [ v0, v1, v2, v3 ])
+    }
+    
+    /*!
+     @method Invert:polytope:edge
+     @abstract Invert the vertices of a Polytope along the specified edge.
+     @param polytope The Polytope to be inverted.
+     @param edge The edge along which the vertices should be inverted.
+     */
+    static func Invert(polytope: Polytope, edge: GridEdge) -> Polytope {
+        
+        let v0 = polytope.vertices[0]
+        let v1 = polytope.vertices[1]
+        let v2 = polytope.vertices[2]
+        let v3 = polytope.vertices[3]
+        
+        switch edge {
+            
+            case .north,
+                 .south:
+                
+            return Polytope(vertices: [v3, v2, v1, v0])
+            
+            case .east,
+                 .west:
+                
+            return Polytope(vertices: [v1, v0, v3, v2])
+        }
     }
 }

@@ -86,7 +86,32 @@ extension Polyhedron {
 extension Polyhedron {
     
     /*!
-     @method subtract:from
+     @method Invert:polyhedron:edge
+     @abstract Invert the vertices of a Polyhedron along the specified edge.
+     @param polyhedron The Polyhedron to be inverted.
+     @param edge The edge along which the vertices should be inverted.
+     */
+    static func Invert(polyhedron: Polyhedron, edge: GridEdge) -> Polyhedron {
+        
+        return Polyhedron(upperPolytope: Polytope.Invert(polytope: polyhedron.upperPolytope, edge: edge), lowerPolytope: Polytope.Invert(polytope: polyhedron.lowerPolytope, edge: edge))
+    }
+    
+    /*!
+     @method Stencil:polyhedrons:from:edge
+     @astract Attempts to subtract the volumes of an array of Polyhedrons from a single Polyhedron.
+     @param subtract An array of Polyhedrons to subtract from the source Polyhedron.
+     @param against The source Polyhedon to be divided into parts.
+     @param edge The edge along which the Polyhedrons should be inverted.
+     */
+    static func Stencil(polyhedrons: [Polyhedron], against: Polyhedron, edge: GridEdge) -> [Polyhedron] {
+        
+        let invertedPolyhedrons = polyhedrons.map { Polyhedron.Invert(polyhedron: $0, edge: edge) }
+        
+        return Subtract(polyhedrons: invertedPolyhedrons, from: against)
+    }
+    
+    /*!
+     @method subtract:polyhedron:from
      @astract Attempts to subtract the volume of one Polyhedron from another.
      @param subtract The Polyhedron to subtract from the source Polyhedron.
      @param from The source Polyhedon to be divided into parts.
@@ -132,7 +157,7 @@ extension Polyhedron {
     }
     
     /*!
-     @method subtract:from
+     @method subtract:polyhedrons:from
      @astract Attempts to subtract the volumes of an array of Polyhedrons from a single Polyhedron.
      @param subtract An array of Polyhedrons to subtract from the source Polyhedron.
      @param from The source Polyhedon to be divided into parts.

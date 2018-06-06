@@ -99,15 +99,15 @@ public extension Coordinate {
     
     /*!
      @property Left
-     @abstract Returns a Coordinate with the x, y and z components set to -1, 0, 0.
+     @abstract Returns a Coordinate with the x, y and z components set to 1, 0, 0.
      */
-    static var Left: Coordinate { return Coordinate(x: -1, y: 0, z: 0) }
+    static var Left: Coordinate { return Coordinate(x: 1, y: 0, z: 0) }
     
     /*!
      @property Right
-     @abstract Returns a Coordinate with the x, y and z components set to 1, 0, 0.
+     @abstract Returns a Coordinate with the x, y and z components set to -1, 0, 0.
      */
-    static var Right: Coordinate { return Coordinate(x: 1, y: 0, z: 0) }
+    static var Right: Coordinate { return Coordinate(x: -1, y: 0, z: 0) }
     
     /*!
      @property Forward
@@ -127,9 +127,9 @@ public extension Coordinate {
      */
     static var Cardinal: [Coordinate] { return [
         
-        Coordinate.Backward,
-        Coordinate.Right,
         Coordinate.Forward,
+        Coordinate.Right,
+        Coordinate.Backward,
         Coordinate.Left
     ]}
 }

@@ -76,75 +76,20 @@ class PolyhedronTests: XCTestCase {
         
         let expect = expectation(description: "Subtracting Polyhedrons from each other results in an array of the remaining volumes")
         
-        let unit = Polytope(x: 0.0, y: 0.0, z: 0.0)
-        
-        let v0 = unit.vertices[0]
-        let v1 = unit.vertices[1]
-        let v2 = unit.vertices[2]
-        let v3 = unit.vertices[3]
-        
-        let p0 = Polytope(vertices: [SCNVector3(x: v0.x, y: World.Y(y: 5), z: v0.z),
-                                     SCNVector3(x: v1.x, y: World.Y(y: 4), z: v1.z),
-                                     SCNVector3(x: v2.x, y: World.Y(y: 4), z: v2.z),
-                                     SCNVector3(x: v3.x, y: World.Y(y: 5), z: v3.z)])
-        let p1 = Polytope(vertices: [SCNVector3(x: v0.x, y: World.Y(y: 1), z: v0.z),
-                                     SCNVector3(x: v1.x, y: World.Y(y: 2), z: v1.z),
-                                     SCNVector3(x: v2.x, y: World.Y(y: 2), z: v2.z),
-                                     SCNVector3(x: v3.x, y: World.Y(y: 1), z: v3.z)])
-        
-        let p2 = Polytope(vertices: [SCNVector3(x: v0.x, y: World.Y(y: 5), z: v0.z),
-                                     SCNVector3(x: v1.x, y: World.Y(y: 5), z: v1.z),
-                                     SCNVector3(x: v2.x, y: World.Y(y: 5), z: v2.z),
-                                     SCNVector3(x: v3.x, y: World.Y(y: 5), z: v3.z)])
-        let p3 = Polytope(vertices: [SCNVector3(x: v0.x, y: World.Y(y: 4), z: v0.z),
-                                     SCNVector3(x: v1.x, y: World.Y(y: 4), z: v1.z),
-                                     SCNVector3(x: v2.x, y: World.Y(y: 4), z: v2.z),
-                                     SCNVector3(x: v3.x, y: World.Y(y: 4), z: v3.z)])
-        
-        let p4 = Polytope(vertices: [SCNVector3(x: v0.x, y: World.Y(y: 2), z: v0.z),
-                                     SCNVector3(x: v1.x, y: World.Y(y: 2), z: v1.z),
-                                     SCNVector3(x: v2.x, y: World.Y(y: 2), z: v2.z),
-                                     SCNVector3(x: v3.x, y: World.Y(y: 2), z: v3.z)])
-        let p5 = Polytope(vertices: [SCNVector3(x: v0.x, y: World.Y(y: 1), z: v0.z),
-                                     SCNVector3(x: v1.x, y: World.Y(y: 1), z: v1.z),
-                                     SCNVector3(x: v2.x, y: World.Y(y: 1), z: v2.z),
-                                     SCNVector3(x: v3.x, y: World.Y(y: 1), z: v3.z)])
-        
-        let p6 = Polytope(vertices: [SCNVector3(x: v0.x, y: World.Y(y: 3), z: v0.z),
-                                     SCNVector3(x: v1.x, y: World.Y(y: 3), z: v1.z),
-                                     SCNVector3(x: v2.x, y: World.Y(y: 3), z: v2.z),
-                                     SCNVector3(x: v3.x, y: World.Y(y: 3), z: v3.z)])
-        let p7 = Polytope(vertices: [SCNVector3(x: v0.x, y: World.Y(y: 2), z: v0.z),
-                                     SCNVector3(x: v1.x, y: World.Y(y: 2), z: v1.z),
-                                     SCNVector3(x: v2.x, y: World.Y(y: 2), z: v2.z),
-                                     SCNVector3(x: v3.x, y: World.Y(y: 2), z: v3.z)])
-        
-        let p8 = Polytope(vertices: [SCNVector3(x: v0.x, y: World.Y(y: 7), z: v0.z),
-                                     SCNVector3(x: v1.x, y: World.Y(y: 7), z: v1.z),
-                                     SCNVector3(x: v2.x, y: World.Y(y: 7), z: v2.z),
-                                     SCNVector3(x: v3.x, y: World.Y(y: 7), z: v3.z)])
-        let p9 = Polytope(vertices: [SCNVector3(x: v0.x, y: World.Y(y: 6), z: v0.z),
-                                     SCNVector3(x: v1.x, y: World.Y(y: 6), z: v1.z),
-                                     SCNVector3(x: v2.x, y: World.Y(y: 6), z: v2.z),
-                                     SCNVector3(x: v3.x, y: World.Y(y: 6), z: v3.z)])
-        
-        let p10 = Polytope(vertices: [SCNVector3(x: v0.x, y: World.Y(y: -1), z: v0.z),
-                                     SCNVector3(x: v1.x, y: World.Y(y: -1), z: v1.z),
-                                     SCNVector3(x: v2.x, y: World.Y(y: -1), z: v2.z),
-                                     SCNVector3(x: v3.x, y: World.Y(y: -1), z: v3.z)])
-        let p11 = Polytope(vertices: [SCNVector3(x: v0.x, y: World.Y(y: -2), z: v0.z),
-                                     SCNVector3(x: v1.x, y: World.Y(y: -2), z: v1.z),
-                                     SCNVector3(x: v2.x, y: World.Y(y: -2), z: v2.z),
-                                     SCNVector3(x: v3.x, y: World.Y(y: -2), z: v3.z)])
-        
-        let p12 = Polytope(vertices: [SCNVector3(x: v0.x, y: World.Y(y: 3), z: v0.z),
-                                      SCNVector3(x: v1.x, y: World.Y(y: 3), z: v1.z),
-                                      SCNVector3(x: v2.x, y: World.Y(y: 3), z: v2.z),
-                                      SCNVector3(x: v3.x, y: World.Y(y: 3), z: v3.z)])
-        let p13 = Polytope(vertices: [SCNVector3(x: v0.x, y: World.Y(y: 1), z: v0.z),
-                                      SCNVector3(x: v1.x, y: World.Y(y: 2), z: v1.z),
-                                      SCNVector3(x: v2.x, y: World.Y(y: 2), z: v2.z),
-                                      SCNVector3(x: v3.x, y: World.Y(y: 1), z: v3.z)])
+        let p0 = Polytope(x: 0, y: [5, 4, 4, 5], z: 0)
+        let p1 = Polytope(x: 0, y: [1, 2, 2, 1], z: 0)
+        let p2 = Polytope(x: 0, y: [5, 5, 5, 5], z: 0)
+        let p3 = Polytope(x: 0, y: [4, 4, 4, 4], z: 0)
+        let p4 = Polytope(x: 0, y: [2, 2, 2, 2], z: 0)
+        let p5 = Polytope(x: 0, y: [1, 1, 1, 1], z: 0)
+        let p6 = Polytope(x: 0, y: [3, 3, 3, 3], z: 0)
+        let p7 = Polytope(x: 0, y: [2, 2, 2, 2], z: 0)
+        let p8 = Polytope(x: 0, y: [7, 7, 7, 7], z: 0)
+        let p9 = Polytope(x: 0, y: [6, 6, 6, 6], z: 0)
+        let p10 = Polytope(x: 0, y: [-1, -1, -1, -1], z: 0)
+        let p11 = Polytope(x: 0, y: [-2, -2, -2, -2], z: 0)
+        let p12 = Polytope(x: 0, y: [3, 3, 3, 3], z: 0)
+        let p13 = Polytope(x: 0, y: [1, 2, 2, 1], z: 0)
         
         let reference = Polyhedron(upperPolytope: p0, lowerPolytope: p1)
         
@@ -210,39 +155,12 @@ class PolyhedronTests: XCTestCase {
         
         let expect = expectation(description: "Subtracting Polyhedrons from each other results in an array of the remaining volumes")
         
-        let unit = Polytope(x: 0.0, y: 0.0, z: 0.0)
-        
-        let v0 = unit.vertices[0]
-        let v1 = unit.vertices[1]
-        let v2 = unit.vertices[2]
-        let v3 = unit.vertices[3]
-        
-        let p0 = Polytope(vertices: [SCNVector3(x: v0.x, y: World.Y(y: 5), z: v0.z),
-                                     SCNVector3(x: v1.x, y: World.Y(y: 4), z: v1.z),
-                                     SCNVector3(x: v2.x, y: World.Y(y: 4), z: v2.z),
-                                     SCNVector3(x: v3.x, y: World.Y(y: 5), z: v3.z)])
-        let p1 = Polytope(vertices: [SCNVector3(x: v0.x, y: World.Y(y: 0), z: v0.z),
-                                     SCNVector3(x: v1.x, y: World.Y(y: 1), z: v1.z),
-                                     SCNVector3(x: v2.x, y: World.Y(y: 1), z: v2.z),
-                                     SCNVector3(x: v3.x, y: World.Y(y: 0), z: v3.z)])
-        
-        let p2 = Polytope(vertices: [SCNVector3(x: v0.x, y: World.Y(y: 4), z: v0.z),
-                                     SCNVector3(x: v1.x, y: World.Y(y: 4), z: v1.z),
-                                     SCNVector3(x: v2.x, y: World.Y(y: 4), z: v2.z),
-                                     SCNVector3(x: v3.x, y: World.Y(y: 4), z: v3.z)])
-        let p3 = Polytope(vertices: [SCNVector3(x: v0.x, y: World.Y(y: 3), z: v0.z),
-                                     SCNVector3(x: v1.x, y: World.Y(y: 3), z: v1.z),
-                                     SCNVector3(x: v2.x, y: World.Y(y: 3), z: v2.z),
-                                     SCNVector3(x: v3.x, y: World.Y(y: 3), z: v3.z)])
-        
-        let p4 = Polytope(vertices: [SCNVector3(x: v0.x, y: World.Y(y: 2), z: v0.z),
-                                     SCNVector3(x: v1.x, y: World.Y(y: 2), z: v1.z),
-                                     SCNVector3(x: v2.x, y: World.Y(y: 2), z: v2.z),
-                                     SCNVector3(x: v3.x, y: World.Y(y: 2), z: v3.z)])
-        let p5 = Polytope(vertices: [SCNVector3(x: v0.x, y: World.Y(y: 1), z: v0.z),
-                                     SCNVector3(x: v1.x, y: World.Y(y: 1), z: v1.z),
-                                     SCNVector3(x: v2.x, y: World.Y(y: 1), z: v2.z),
-                                     SCNVector3(x: v3.x, y: World.Y(y: 1), z: v3.z)])
+        let p0 = Polytope(x: 0, y: [5, 4, 4, 5], z: 0)
+        let p1 = Polytope(x: 0, y: [0, 1, 1, 0], z: 0)
+        let p2 = Polytope(x: 0, y: [4, 4, 4, 4], z: 0)
+        let p3 = Polytope(x: 0, y: [3, 3, 3, 3], z: 0)
+        let p4 = Polytope(x: 0, y: [2, 2, 2, 2], z: 0)
+        let p5 = Polytope(x: 0, y: [1, 1, 1, 1], z: 0)
         
         let reference = Polyhedron(upperPolytope: p0, lowerPolytope: p1)
         
@@ -260,6 +178,101 @@ class PolyhedronTests: XCTestCase {
         XCTAssertEqual(result[1].lowerPolytope, lower.upperPolytope)
         XCTAssertEqual(result[2].upperPolytope, lower.lowerPolytope)
         XCTAssertEqual(result[2].lowerPolytope, reference.lowerPolytope)
+        
+        expect.fulfill()
+        
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testPolyhedronStencil() {
+        
+        let expect = expectation(description: "Subtracting inverted Polyhedrons from each other along a specified edge results in an array of the remaining volumes")
+        
+        let p0 = Polytope(x: 0, y: [-10, -10, -10, -10], z: 0)
+        let p1 = Polytope(x: 0, y: [-6, -6, -6, -6], z: 0)
+        
+        let p2 = Polytope(x: MDWFloat(Coordinate.Forward.x), y: [-10, -10, -10, -10], z: MDWFloat(Coordinate.Forward.z))
+        let p3 = Polytope(x: MDWFloat(Coordinate.Forward.x), y: [-7, -8, -8, -7], z: MDWFloat(Coordinate.Forward.z))
+        
+        let p4 = Polytope(x: MDWFloat(Coordinate.Right.x), y: [-7, -7, -7, -7], z: MDWFloat(Coordinate.Right.x))
+        let p5 = Polytope(x: MDWFloat(Coordinate.Right.x), y: [-6, -6, -6, -6], z: MDWFloat(Coordinate.Right.x))
+        
+        let p6 = Polytope(x: MDWFloat(Coordinate.Right.x), y: [-10, -10, -10, -10], z: MDWFloat(Coordinate.Right.x))
+        let p7 = Polytope(x: MDWFloat(Coordinate.Right.x), y: [-9, -9, -9, -9], z: MDWFloat(Coordinate.Right.x))
+        
+        let p8 = Polytope(x: MDWFloat(Coordinate.Backward.x), y: [-10, -10, -10, -10], z: MDWFloat(Coordinate.Backward.x))
+        let p9 = Polytope(x: MDWFloat(Coordinate.Backward.x), y: [-6, -7, -8, -7], z: MDWFloat(Coordinate.Backward.x))
+        
+        let p10 = Polytope(x: MDWFloat(Coordinate.Left.x), y: [-9, -9, -9, -9], z: MDWFloat(Coordinate.Left.x))
+        let p11 = Polytope(x: MDWFloat(Coordinate.Left.x), y: [-6, -6, -7, -7], z: MDWFloat(Coordinate.Left.x))
+        
+        let reference = Polyhedron(upperPolytope: p1, lowerPolytope: p0)
+        
+        let northPolyhedron = Polyhedron(upperPolytope: p3, lowerPolytope: p2)
+        
+        let eastPolyhedronLower = Polyhedron(upperPolytope: p7, lowerPolytope: p6)
+        let eastPolyhedronUpper = Polyhedron(upperPolytope: p5, lowerPolytope: p4)
+        
+        let southPolyhedron = Polyhedron(upperPolytope: p9, lowerPolytope: p8)
+        
+        let westPolyhedron = Polyhedron(upperPolytope: p11, lowerPolytope: p10)
+        
+        let northInverted = Polyhedron.Stencil(polyhedrons: [northPolyhedron], against: reference, edge: .north)
+        let eastInverted = Polyhedron.Stencil(polyhedrons: [eastPolyhedronLower, eastPolyhedronUpper], against: reference, edge: .east)
+        let southInverted = Polyhedron.Stencil(polyhedrons: [southPolyhedron], against: reference, edge: .south)
+        let westInverted = Polyhedron.Stencil(polyhedrons: [westPolyhedron], against: reference, edge: .west)
+        
+        XCTAssertNotNil(northInverted)
+        XCTAssertEqual(northInverted.count, 1)
+        XCTAssertEqual(northInverted.first!.upperPolytope.vertices[0].y, World.Y(y: -6))
+        XCTAssertEqual(northInverted.first!.upperPolytope.vertices[1].y, World.Y(y: -6))
+        XCTAssertEqual(northInverted.first!.upperPolytope.vertices[2].y, World.Y(y: -6))
+        XCTAssertEqual(northInverted.first!.upperPolytope.vertices[3].y, World.Y(y: -6))
+        XCTAssertEqual(northInverted.first!.lowerPolytope.vertices[0].y, World.Y(y: -7))
+        XCTAssertEqual(northInverted.first!.lowerPolytope.vertices[1].y, World.Y(y: -8))
+        XCTAssertEqual(northInverted.first!.lowerPolytope.vertices[2].y, World.Y(y: -8))
+        XCTAssertEqual(northInverted.first!.lowerPolytope.vertices[3].y, World.Y(y: -7))
+        
+        XCTAssertNotNil(eastInverted)
+        XCTAssertEqual(eastInverted.count, 1)
+        XCTAssertEqual(eastInverted.first!.upperPolytope.vertices[0].y, World.Y(y: -7))
+        XCTAssertEqual(eastInverted.first!.upperPolytope.vertices[1].y, World.Y(y: -7))
+        XCTAssertEqual(eastInverted.first!.upperPolytope.vertices[2].y, World.Y(y: -7))
+        XCTAssertEqual(eastInverted.first!.upperPolytope.vertices[3].y, World.Y(y: -7))
+        XCTAssertEqual(eastInverted.first!.lowerPolytope.vertices[0].y, World.Y(y: -9))
+        XCTAssertEqual(eastInverted.first!.lowerPolytope.vertices[1].y, World.Y(y: -9))
+        XCTAssertEqual(eastInverted.first!.lowerPolytope.vertices[2].y, World.Y(y: -9))
+        XCTAssertEqual(eastInverted.first!.lowerPolytope.vertices[3].y, World.Y(y: -9))
+        
+        XCTAssertNotNil(southInverted)
+        XCTAssertEqual(southInverted.count, 1)
+        XCTAssertEqual(southInverted.first!.upperPolytope.vertices[0].y, World.Y(y: -6))
+        XCTAssertEqual(southInverted.first!.upperPolytope.vertices[1].y, World.Y(y: -6))
+        XCTAssertEqual(southInverted.first!.upperPolytope.vertices[2].y, World.Y(y: -6))
+        XCTAssertEqual(southInverted.first!.upperPolytope.vertices[3].y, World.Y(y: -6))
+        XCTAssertEqual(southInverted.first!.lowerPolytope.vertices[0].y, World.Y(y: -7))
+        XCTAssertEqual(southInverted.first!.lowerPolytope.vertices[1].y, World.Y(y: -8))
+        XCTAssertEqual(southInverted.first!.lowerPolytope.vertices[2].y, World.Y(y: -7))
+        XCTAssertEqual(southInverted.first!.lowerPolytope.vertices[3].y, World.Y(y: -6))
+        
+        XCTAssertNotNil(westInverted)
+        XCTAssertEqual(westInverted.count, 2)
+        XCTAssertEqual(westInverted.first!.upperPolytope.vertices[0].y, World.Y(y: -6))
+        XCTAssertEqual(westInverted.first!.upperPolytope.vertices[1].y, World.Y(y: -6))
+        XCTAssertEqual(westInverted.first!.upperPolytope.vertices[2].y, World.Y(y: -6))
+        XCTAssertEqual(westInverted.first!.upperPolytope.vertices[3].y, World.Y(y: -6))
+        XCTAssertEqual(westInverted.first!.lowerPolytope.vertices[0].y, World.Y(y: -6))
+        XCTAssertEqual(westInverted.first!.lowerPolytope.vertices[1].y, World.Y(y: -6))
+        XCTAssertEqual(westInverted.first!.lowerPolytope.vertices[2].y, World.Y(y: -7))
+        XCTAssertEqual(westInverted.first!.lowerPolytope.vertices[3].y, World.Y(y: -7))
+        XCTAssertEqual(westInverted.last!.upperPolytope.vertices[0].y, World.Y(y: -9))
+        XCTAssertEqual(westInverted.last!.upperPolytope.vertices[1].y, World.Y(y: -9))
+        XCTAssertEqual(westInverted.last!.upperPolytope.vertices[2].y, World.Y(y: -9))
+        XCTAssertEqual(westInverted.last!.upperPolytope.vertices[3].y, World.Y(y: -9))
+        XCTAssertEqual(westInverted.last!.lowerPolytope.vertices[0].y, World.Y(y: -10))
+        XCTAssertEqual(westInverted.last!.lowerPolytope.vertices[1].y, World.Y(y: -10))
+        XCTAssertEqual(westInverted.last!.lowerPolytope.vertices[2].y, World.Y(y: -10))
+        XCTAssertEqual(westInverted.last!.lowerPolytope.vertices[3].y, World.Y(y: -10))
         
         expect.fulfill()
         

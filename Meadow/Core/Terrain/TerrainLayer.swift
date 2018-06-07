@@ -636,7 +636,10 @@ extension TerrainLayer {
             let v1 = (acuteCorner == corners.first ? vertices[2] : vertices[3])
             let v2 = SCNVector3.Lerp(from: vertices[acuteCorner.rawValue], to: v1, scalar: TerrainLayer.Crown)
             
-            return [MeshFace(vertices: [v0, v1, v2], normals: normals, colors: colors)]
+            let i0 = (acuteCorner == corners.first ? v0 : v1)
+            let i1 = (acuteCorner == corners.first ? v1 : v0)
+            
+            return [MeshFace(vertices: [i0, i1, v2], normals: normals, colors: colors)]
         }
         
         return [    MeshFace(vertices: [vertices[0] - crown, vertices[1] - crown, vertices[2]], normals: normals, colors: colors),

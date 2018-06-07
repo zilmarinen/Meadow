@@ -15,6 +15,18 @@ import SceneKit
 public class CameraJib: SCNNode {
     
     /*!
+     @property stateMachine
+     @abstract Creates and initialises a state machine.
+     */
+    public lazy var stateMachine = {
+        
+        return CameraJibStateMachine(.focus(SCNVector3Zero), transition: { (from, to) in
+            
+            self.stateDidChange(from: from, to: to)
+        })
+    }()
+    
+    /*!
      @method init
      @abstract Creates and initialises a SCNNode with a SCNCamera attached.
      */
@@ -32,5 +44,18 @@ public class CameraJib: SCNNode {
     public required init?(coder aDecoder: NSCoder) {
         
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension CameraJib {
+    
+    func stateDidChange(from: CameraState?, to: CameraState) {
+        
+        switch to {
+            
+        case .focus(let vector):
+            
+            print("focus: \(vector)")
+        }
     }
 }

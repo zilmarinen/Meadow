@@ -57,7 +57,7 @@ extension World {
      @method Y:y
      @abstract Convert from integer value grid coordinates to floating point world coordinates.
      */
-    static func Y(y: Int) -> MDWFloat {
+    public static func Y(y: Int) -> MDWFloat {
         
         return MDWFloat(y) * UnitY
     }
@@ -66,7 +66,7 @@ extension World {
      @method Y:y
      @abstract Convert from floating point world coordinates to integer value grid coordinates.
      */
-    static func Y(y: MDWFloat) -> Int {
+    public static func Y(y: MDWFloat) -> Int {
         
         return Int(y / UnitY)
     }

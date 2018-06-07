@@ -344,7 +344,7 @@ extension TerrainNode {
      @abstract Attempt to find and return any cutaways that intersect with the specified Polyhedron.
      @param polyhedron The Polyhedron to check for intersections against.
      */
-    func find(cutaways polyhedron: Polyhedron) -> [Polyhedron]? {
+    public func find(cutaways polyhedron: Polyhedron) -> [Polyhedron]? {
         
         return cutaways.filter { cutaway -> Bool in
             

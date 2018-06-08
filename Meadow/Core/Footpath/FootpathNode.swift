@@ -223,7 +223,7 @@ public class FootpathNode: GridNode {
             
             if plane.side(vector: apexNormal) {
                 
-                normal = plane.normal.negated()
+                normal = SCNVector3.Negate(vector: plane.normal)
             }
             
             let normals = [normal, normal, normal]

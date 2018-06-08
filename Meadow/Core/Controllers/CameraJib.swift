@@ -20,7 +20,7 @@ public class CameraJib: SCNNode {
      */
     public lazy var stateMachine = {
         
-        return CameraJibStateMachine(.focus(SCNVector3Zero), transition: { (from, to) in
+        return CameraJibStateMachine(.focus(SCNVector3Zero, .north), transition: { (from, to) in
             
             self.stateDidChange(from: from, to: to)
         })
@@ -34,7 +34,11 @@ public class CameraJib: SCNNode {
         
         super.init()
         
-        self.camera = SCNCamera()
+        let camera = SCNCamera()
+        
+        //camera.usesOrthographicProjection = false
+        
+        self.camera = camera
     }
     
     /*!
@@ -49,13 +53,67 @@ public class CameraJib: SCNNode {
 
 extension CameraJib {
     
+    /*!
+     @method stateDidChange:from:to
+     @abstract Callback function to handle state machine state transitions.
+     */
     func stateDidChange(from: CameraState?, to: CameraState) {
         
         switch to {
             
-        case .focus(let vector):
-            
-            print("focus: \(vector)")
+        default: break
         }
+    }
+}
+
+extension CameraJib {
+    
+    /*!
+     @method update:deltaTime
+     @abstract Update the camera, cleaning its position and rotation as necessary.
+     @param deltaTime The time elapsed since the last update.
+     */
+    func update(deltaTime: TimeInterval) {
+        
+        switch stateMachine.state {
+            
+        case .focus(let vector, let edge):
+            
+            focus(focus: vector, edge: edge, deltaTime: deltaTime)
+        }
+    }
+}
+
+extension CameraJib {
+    
+    /*!
+     @method focus:focus:edge:deltaTime
+     @abstract Update the camera, cleaning its position and rotation as necessary to focus on a specified vector aligned with the given edge.
+     @param focus The vector to focus to camera toward.
+     @param edge The edge along which the camera should be aligned.
+     @param deltaTime The time elapsed since the last update.
+     */
+    func focus(focus: SCNVector3, edge: GridEdge, deltaTime: TimeInterval) {
+        
+        let offset = SCNVector3(x: 7.0, y: 7.0, z: 7.0)
+        
+        let vector = focus + offset
+        
+        look(at: focus)
+        position = vector
+        //rotation = quaternion
+        /*
+        
+        let planarPosition = SCNVector3(x: position.x, y: focus.y, z: position.z)
+        
+        let forward = SCNVector3.Normalise(vector: planarPosition - focus)
+        
+        let cross = SCNVector3.Cross(lhs: SCNVector3.Forward, rhs: forward)
+        
+        let dot = SCNVector3.Dot(lhs: SCNVector3.Forward, rhs: forward)
+        
+        let quaternion = SCNQuaternion(x: cross.x, y: cross.y, z: cross.z, w: dot + 1)
+        
+        rotation = SCNQuaternion.Normalise(vector: quaternion)*/
     }
 }

@@ -577,7 +577,7 @@ extension TerrainLayer {
         
         if plane.side(vector: apexNormal) {
             
-            normal = plane.normal.negated()
+            normal = SCNVector3.Negate(vector: plane.normal)
         }
         
         return MeshFace(vertices: [v1, v0, apexCenter], normals: [normal, normal, normal], colors: [color, color, color])

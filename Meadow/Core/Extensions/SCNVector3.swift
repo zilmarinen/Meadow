@@ -10,6 +10,39 @@ import SceneKit
 
 extension SCNVector3 {
     
+    /*!
+     @var Up
+     @abstract Returns a SCNVector3 with the x, y and z components set to 0, 1, 0.
+     */
+    public static var Up: SCNVector3 { return SCNVector3(x: 0.0, y: 1.0, z: 0.0) }
+    
+    /*!
+     @property Left
+     @abstract Returns a SCNVector3 with the x, y and z components set to 1, 0, 0.
+     */
+    static var Left: SCNVector3 { return SCNVector3(x: 1.0, y: 0.0, z: 0.0) }
+    
+    /*!
+     @property Right
+     @abstract Returns a SCNVector3 with the x, y and z components set to -1, 0, 0.
+     */
+    static var Right: SCNVector3 { return SCNVector3(x: -1.0, y: 0.0, z: 0.0) }
+    
+    /*!
+     @property Forward
+     @abstract Returns a SCNVector3 with the x, y and z components set to 0, 0, 1.
+     */
+    static var Forward: SCNVector3 { return SCNVector3(x: 0.0, y: 0.0, z: 1.0) }
+    
+    /*!
+     @property Backward
+     @abstract Returns a SCNVector3 with the x, y and z components set to 0, 0, -1.
+     */
+    static var Backward: SCNVector3 { return SCNVector3(x: 0.0, y: 0.0, z: -1.0) }
+}
+
+extension SCNVector3 {
+    
     public static func +(lhs: SCNVector3, rhs: SCNVector3) -> SCNVector3 {
         
         let x = lhs.x + rhs.x
@@ -39,42 +72,45 @@ extension SCNVector3 {
     }
     
     /*!
-     @method magnitude
+     @method Magnitude:vector
      @abstract Returns the length of the SCNVector3.
+     @param vector The SCNVector3 whose magnitude should be calculated and returned.
      */
-    public func magnitude() -> MDWFloat {
+    public static func Magnitude(vector: SCNVector3) -> MDWFloat {
         
-        let x0 = x * x
-        let y0 = y * y
-        let z0 = z * z
+        let x = vector.x * vector.x
+        let y = vector.y * vector.y
+        let z = vector.z * vector.z
         
-        let length = Float(x0 + y0 + z0)
+        let length = Float(x + y + z)
         
         return MDWFloat(sqrtf(length))
     }
     
     /*!
-     @method normalised
+     @method Normalise:vector
      @abstract Returns a normalised SCNVector3 of the SCNVector3.
+     @param vector The SCNVector3 to be normalised.
      */
-    public func normalised() -> SCNVector3 {
+    public static func Normalise(vector: SCNVector3) -> SCNVector3 {
         
-        let length = magnitude()
+        let length = SCNVector3.Magnitude(vector: vector)
         
-        let x0 = x / length
-        let y0 = y / length
-        let z0 = z / length
-    
-        return SCNVector3(x: x0, y: y0, z: z0)
+        let x = vector.x / length
+        let y = vector.y / length
+        let z = vector.z / length
+        
+        return SCNVector3(x: x, y: y, z: z)
     }
     
     /*!
-     @method negated
+     @method Negate:vector
      @abstract Returns a negated SCNVector3 of the SCNVector3.
+     @param vector The SCNVector3 whose components should be negated and returned.
      */
-    public func negated() -> SCNVector3 {
+    public static func Negate(vector: SCNVector3) -> SCNVector3 {
         
-        return SCNVector3(x: -x, y: -y, z: -z)
+        return SCNVector3(x: -vector.x, y: -vector.y, z: -vector.z)
     }
     
     /*!
@@ -122,34 +158,4 @@ extension SCNVector3 {
         
         return SCNVector3(to.x * d + from.x * t, to.y * d + from.y * t, to.z * d + from.z * t)
     }
-    
-    /*!
-     @var Up
-     @abstract Returns a SCNVector3 with the x, y and z components set to 0, 1, 0.
-     */
-    public static var Up: SCNVector3 { return SCNVector3(x: 0.0, y: 1.0, z: 0.0) }
-    
-    /*!
-     @property Left
-     @abstract Returns a SCNVector3 with the x, y and z components set to 1, 0, 0.
-     */
-    static var Left: SCNVector3 { return SCNVector3(x: 1.0, y: 0.0, z: 0.0) }
-    
-    /*!
-     @property Right
-     @abstract Returns a SCNVector3 with the x, y and z components set to -1, 0, 0.
-     */
-    static var Right: SCNVector3 { return SCNVector3(x: -1.0, y: 0.0, z: 0.0) }
-    
-    /*!
-     @property Forward
-     @abstract Returns a SCNVector3 with the x, y and z components set to 0, 0, 1.
-     */
-    static var Forward: SCNVector3 { return SCNVector3(x: 0.0, y: 0.0, z: 1.0) }
-    
-    /*!
-     @property Backward
-     @abstract Returns a SCNVector3 with the x, y and z components set to 0, 0, -1.
-     */
-    static var Backward: SCNVector3 { return SCNVector3(x: 0.0, y: 0.0, z: -1.0) }
 }

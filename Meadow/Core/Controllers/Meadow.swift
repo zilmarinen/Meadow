@@ -222,13 +222,17 @@ extension Meadow: SCNSceneRendererDelegate {
      */
     public func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
         
-        areas.update()
-        foliage.update()
-        footpaths.update()
-        scaffolds.update()
-        terrain.update()
-        tunnels.update()
-        water.update()
+        let deltaTime: TimeInterval = 0
+        
+        cameraJib.update(deltaTime: deltaTime)
+        
+        areas.update(deltaTime: deltaTime)
+        foliage.update(deltaTime: deltaTime)
+        footpaths.update(deltaTime: deltaTime)
+        scaffolds.update(deltaTime: deltaTime)
+        terrain.update(deltaTime: deltaTime)
+        tunnels.update(deltaTime: deltaTime)
+        water.update(deltaTime: deltaTime)
     }
 }
 

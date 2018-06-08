@@ -40,7 +40,7 @@ public struct Plane {
         
         let cross = SCNVector3.Cross(lhs: ab, rhs: ac)
         
-        self.normal = cross.normalised()
+        self.normal = SCNVector3.Normalise(vector: cross)
         
         self.direction = -SCNVector3.Dot(lhs: self.normal, rhs: v0)
     }

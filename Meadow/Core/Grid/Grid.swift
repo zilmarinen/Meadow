@@ -130,10 +130,11 @@ public class Grid<Chunk: GridChunk<Tile, Node>, Tile: GridTile<Node>, Node: Grid
 extension Grid {
     
     /*!
-     @method update
+     @method update:deltaTime
      @abstract Update the grid, cleaning and rendering any updates for chunks, tiles and nodes.
+     @param deltaTime The time elapsed since the last update.
      */
-    func update() {
+    func update(deltaTime: TimeInterval) {
         
         let _ = clean()
     }

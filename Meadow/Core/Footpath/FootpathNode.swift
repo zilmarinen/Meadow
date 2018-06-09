@@ -54,38 +54,6 @@ public class FootpathNodeJSON: GridNodeJSON {
 }
 
 /*!
- @struct FootpathNodeSlope
- @abstract Stores the edge towards which the FootpathNode is sloped and its inclination.
- */
-public struct FootpathNodeSlope: Codable {
-    
-    /*!
-     @property edge
-     @abstract The edge from which the FootpathNode slopes upwards.
-     */
-    public let edge: GridEdge
-    
-    /*!
-     @property steepInclination
-     @abstract Determines the inclination of the slope.
-     @discussion By default, a FootpathNodeSlope will have an inclination of `1 * World.UnitY`. Steep inclinations are double this value.
-     */
-    public let steepInclination: Bool
-    
-    /*!
-     @method init:edge:steepInclination
-     @abstract Creates and initialises a FootpathNodeSlope with the specified edge and inclination.
-     @param edge The edge from which the FootpathNode slopes upwards.
-     @param steepInclination Determines the inclination of the slope.
-     */
-    public init(edge: GridEdge, steepInclination: Bool) {
-        
-        self.edge = edge
-        self.steepInclination = steepInclination
-    }
-}
-
-/*!
  @class FootpathNode
  @abstract FootpathNodes are used to define regions within a Grid which can be traversed.
  */
@@ -198,9 +166,9 @@ public class FootpathNode: GridNode {
         
         var faces: [MeshFace] = []
         
-        let throne = SCNVector3(x: 0.0, y: FootpathNode.Throne, z: 0.0)
-        
         if let apexColor = footpathType?.colorPalette.primary.vector {
+            
+            let throne = SCNVector3(x: 0.0, y: FootpathNode.Throne, z: 0.0)
         
             let apexCenter = polyhedron.lowerPolytope.center
             

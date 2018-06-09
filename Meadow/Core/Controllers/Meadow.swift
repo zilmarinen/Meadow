@@ -24,7 +24,7 @@ public struct MeadowJSON: Decodable {
      @property areas
      @abstract The areas in world.
      */
-    let areas: GridJSON<GridNodeJSON>
+    let areas: GridJSON<AreaNodeJSON>
     
     /*!
      @property foliage
@@ -132,6 +132,7 @@ public class Meadow: SCNScene, Encodable {
         tunnels.delegate = self
         water.delegate = self
         
+        areas.loadSurfaceTypes()
         footpaths.loadFootpathTypes()
         terrain.loadTerrainTypes()
         water.loadWaterTypes()
@@ -202,10 +203,12 @@ extension Meadow {
         
         rootNode.name = json.name
         
+        let areaNodes = json.areas.chunks.flatMap { $0.tiles.flatMap { $0.nodes } }
         let footpathNodes = json.footpaths.chunks.flatMap { $0.tiles.flatMap { $0.nodes } }
         let terrainNodes = json.terrain.chunks.flatMap { $0.tiles.flatMap { $0.nodes } }
         let waterNodes = json.water.chunks.flatMap { $0.tiles.flatMap { $0.nodes } }
         
+        areas.load(nodes: areaNodes)
         footpaths.load(nodes: footpathNodes)
         terrain.load(nodes: terrainNodes)
         water.load(nodes: waterNodes)

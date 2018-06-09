@@ -16,13 +16,13 @@ public struct Plane {
     
     /*!
      @param normal
-     @abstract
+     @abstract The normal pointing outward from the plane.
      */
     public let normal: SCNVector3
     
     /*!
      @param direction
-     @abstract
+     @abstract The direction of the plane.
      */
     let direction: MDWFloat
     
@@ -46,9 +46,9 @@ public struct Plane {
     }
     
     /*!
-     @method
-     @abstract
-     @param
+     @method side:vector
+     @abstract Checks that a vector is on either side of a plane.
+     @param vector The vector to check which side of the plane it lies on.
      */
     public func side(vector: SCNVector3) -> Bool {
         

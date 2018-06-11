@@ -49,17 +49,27 @@ extension Area {
             
             guard let areaNode = add(node: nodeJSON.volume.coordinate) else { return }
             
-            if let surfaceType = nodeJSON.surfaceType {
-                
-                areaNode.surfaceType = find(surfaceType: surfaceType)
-            }
-            
             if let perimeterEdges = nodeJSON.perimeterEdges {
                 
                 perimeterEdges.forEach { perimeterEdge in
                     
                     areaNode.set(perimeterType: perimeterEdge.perimeterType, edge: perimeterEdge.edge)
                 }
+            }
+            
+            if let surfaceType = nodeJSON.surfaceType {
+                
+                areaNode.surfaceType = find(surfaceType: surfaceType)
+            }
+            
+            if let externalPrefabType = nodeJSON.externalPrefabType {
+                
+                areaNode.externalPrefabType = externalPrefabType
+            }
+            
+            if let internalPrefabType = nodeJSON.internalPrefabType {
+                
+                areaNode.internalPrefabType = internalPrefabType
             }
         }
     }

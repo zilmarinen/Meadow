@@ -199,9 +199,7 @@ public class FootpathNode: GridNode {
             faces.append(MeshFace(vertices: [insetVertices[0], insetVertices[2], insetVertices[1]], normals: normals, colors: primaryColors))
             faces.append(MeshFace(vertices: [insetVertices[0], insetVertices[3], insetVertices[2]], normals: normals, colors: primaryColors))
             
-            let edges: [GridEdge] = [ .north, .east, .south, .west ]
-            
-            edges.forEach { edge in
+            GridEdge.Edges.forEach { edge in
              
                 let corners = GridCorner.Corners(edge: edge)
                 

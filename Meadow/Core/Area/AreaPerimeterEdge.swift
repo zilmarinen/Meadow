@@ -16,11 +16,11 @@ public struct AreaPerimeterEdge: Codable, Hashable {
      @param edge
      @abstract The edge of the AreaNode perimeter.
      */
-    let edge: GridEdge
+    public let edge: GridEdge
     
     /*!
      @param perimeterType
      @abstract The AreaPerimeterType for the AreaPerimeterEdge.
      */
-    let perimeterType: AreaPerimeterType
+    public let perimeterType: AreaPerimeterType
 }

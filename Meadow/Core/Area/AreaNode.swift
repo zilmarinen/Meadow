@@ -22,7 +22,15 @@ public class AreaNodeJSON: GridNodeJSON {
         
         case surfaceType
         case perimeterEdges
+        case externalPrefabType
+        case internalPrefabType
     }
+    
+    /*!
+     @property perimeterEdges
+     @abstract An array of the stored AreaPerimeterEdge for each edge.
+     */
+    var perimeterEdges: [AreaPerimeterEdge]?
     
     /*!
      @property surfaceType
@@ -31,10 +39,16 @@ public class AreaNodeJSON: GridNodeJSON {
     var surfaceType: String?
     
     /*!
-     @property perimeterEdges
-     @abstract An array of the stored AreaPerimeterEdge for each edge.
+     @property externalPrefabType
+     @abstract Defines the AreaPrefabType that should be used to draw the external edges of the AreaNode.
      */
-    var perimeterEdges: [AreaPerimeterEdge]?
+    var externalPrefabType: AreaPrefabType?
+    
+    /*!
+     @property internalPrefabType
+     @abstract Defines the AreaPrefabType that should be used to draw the internal edges of the AreaNode.
+     */
+    var internalPrefabType: AreaPrefabType?
     
     /*!
      @method init:from
@@ -50,6 +64,9 @@ public class AreaNodeJSON: GridNodeJSON {
         surfaceType = try container.decodeIfPresent(String.self, forKey: .surfaceType)
         
         perimeterEdges = try container.decodeIfPresent([AreaPerimeterEdge].self, forKey: .perimeterEdges)
+        
+        externalPrefabType = try container.decodeIfPresent(AreaPrefabType.self, forKey: .externalPrefabType)
+        internalPrefabType = try container.decodeIfPresent(AreaPrefabType.self, forKey: .internalPrefabType)
     }
 }
 
@@ -90,6 +107,30 @@ public class AreaNode: GridNode {
     }
     
     /*!
+     @property externalPrefabType
+     @abstract Defines the AreaPrefabType that should be used to draw the external edges of the AreaNode.
+     */
+    public var externalPrefabType: AreaPrefabType = .concrete {
+        
+        didSet {
+            
+            becomeDirty()
+        }
+    }
+    
+    /*!
+     @property internalPrefabType
+     @abstract Defines the AreaPrefabType that should be used to draw the internal edges of the AreaNode.
+     */
+    public var internalPrefabType: AreaPrefabType = .concrete {
+        
+        didSet {
+            
+            becomeDirty()
+        }
+    }
+    
+    /*!
      @property polyhedron
      @abstract Returns a Polyhedron calculated from the edge slope and inclination.
      */
@@ -122,6 +163,8 @@ public class AreaNode: GridNode {
         
         case surfaceType
         case perimeterEdges
+        case externalPrefabType
+        case internalPrefabType
     }
     
     /*!
@@ -135,8 +178,10 @@ public class AreaNode: GridNode {
         
         var container = encoder.container(keyedBy: CodingKeys.self)
         
-        try container.encodeIfPresent(surfaceType?.name, forKey: .surfaceType)
         try container.encode(perimeterEdges, forKey: .perimeterEdges)
+        try container.encodeIfPresent(surfaceType?.name, forKey: .surfaceType)
+        try container.encodeIfPresent(externalPrefabType, forKey: .externalPrefabType)
+        try container.encodeIfPresent(internalPrefabType, forKey: .internalPrefabType)
     }
     
     /*!
@@ -153,9 +198,7 @@ public class AreaNode: GridNode {
             
             let primaryColors = [ apexColor, apexColor, apexColor ]
             
-            let edges: [GridEdge] = [ .north, .east, .south, .west ]
-            
-            edges.forEach { edge in
+            GridEdge.Edges.forEach { edge in
                 
                 let corners = GridCorner.Corners(edge: edge)
                 
@@ -283,7 +326,7 @@ extension AreaNode {
      */
     public func set(perimeterType: AreaPerimeterType, edge: GridEdge) {
         
-        if let existingType = get(perimeterType: edge) {
+        if let existingType = get(perimeterEdge: edge) {
             
             perimeterEdges.remove(existingType)
         }
@@ -294,11 +337,11 @@ extension AreaNode {
     }
     
     /*!
-     @method get:perimeterType
-     @abstract Returns the AreaPerimeterType of the given edge.
-     @param edge The edge to search and return the AreaPerimeterType for.
+     @method get:perimeterEdge
+     @abstract Returns the AreaPerimeterEdge of the given edge.
+     @param edge The edge to search and return the AreaPerimeterEdge for.
      */
-    public func get(perimeterType edge: GridEdge) -> AreaPerimeterEdge? {
+    public func get(perimeterEdge edge: GridEdge) -> AreaPerimeterEdge? {
         
         return perimeterEdges.first { perimeterEdge -> Bool in
             

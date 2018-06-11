@@ -348,7 +348,7 @@ extension TerrainLayer {
      */
     public func set(terrainType: TerrainType, edge: GridEdge) {
         
-        if let existingType = get(terrainType: edge) {
+        if let existingType = get(terrainEdge: edge) {
         
             terrainTypes.remove(existingType)
         }
@@ -359,11 +359,11 @@ extension TerrainLayer {
     }
     
     /*!
-     @method get:terrainType
-     @abstract Returns the TerrainType of the given edge.
-     @param edge The edge to search and return the TerrainType for.
+     @method get:terrainEdge
+     @abstract Returns the TerrainLayerEdge of the given edge.
+     @param edge The edge to search and return the TerrainLayerEdge for.
      */
-    public func get(terrainType edge: GridEdge) -> TerrainLayerEdge? {
+    public func get(terrainEdge edge: GridEdge) -> TerrainLayerEdge? {
         
         return terrainTypes.first { terrainLayerEdge -> Bool in
             
@@ -421,11 +421,9 @@ extension TerrainLayer {
         
         let polyhedrons = Polyhedron.Subtract(polyhedrons: cutaways, from: polyhedron)
         
-        let edges: [GridEdge] = [ .north, .east, .south, .west ]
-        
-        edges.forEach { edge in
+        GridEdge.Edges.forEach { edge in
             
-            if let terrainLayerEdge = get(terrainType: edge) {
+            if let terrainLayerEdge = get(terrainEdge: edge) {
                 
                 let nodeNeighbour = node.find(neighbour: edge)
 

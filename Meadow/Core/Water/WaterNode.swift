@@ -161,9 +161,7 @@ public class WaterNode: GridNode {
             let primaryColors = [ apexColor, apexColor, apexColor ]
             let secondaryColors = [ edgeColor, edgeColor, edgeColor ]
             
-            let edges: [GridEdge] = [ .north, .east, .south, .west ]
-            
-            edges.forEach { edge in
+            GridEdge.Edges.forEach { edge in
                 
                 let corners = GridCorner.Corners(edge: edge)
                 

@@ -18,13 +18,53 @@ public enum AreaPerimeterType: Codable, Hashable {
     case none
     case wall
     
-    var rawValue: Int {
+    /*!
+     @enum Identifier
+     @abstract Defines a unique identifier for each AreaPerimeterType.
+     */
+    public enum Identifier: Int, Codable {
+        
+        case door
+        case none
+        case wall
+        
+        /*!
+         @property description
+         @abstract Returns the String value of the AreaPrefabType.
+         */
+        public var description: String {
+            
+            switch self {
+                
+            case .door: return "Door"
+            case .none: return "None"
+            case .wall: return "Wall"
+            }
+        }
+        
+        /*!
+         @property All
+         @abstract An array of all available Identifiers for AreaPerimeterTypes.
+         */
+        public static var All: [Identifier] { return [
+            
+            .door,
+            .none,
+            .wall
+        ]}
+    }
+   
+    /*!
+     @property identifier
+     @abstract Returns the Identifier for the AreaPerimeterType.
+     */
+    public var identifier: Identifier {
         
         switch self {
             
-        case .door: return 0
-        case .none: return 1
-        case .wall: return 2
+        case .door: return .door
+        case .none: return .none
+        case .wall: return .wall
         }
     }
     
@@ -34,11 +74,34 @@ public enum AreaPerimeterType: Codable, Hashable {
      */
     private enum CodingKeys: Int, CodingKey {
         
-        case rawValue
+        case identifier
         
         case door
         case none
         case wall
+    }
+    
+    /*!
+     @method init:identifier
+     @abstract Creates and initialises a node with the specified Identifier.
+     @param identifier The identifier of the AreaPerimeterType.
+     */
+    public init(identifier: Identifier) {
+        
+        switch identifier {
+            
+        case .door:
+            
+            self = .door(false)
+            
+        case .none:
+            
+            self = .none
+            
+        case .wall:
+            
+            self = .wall
+        }
     }
     
     /*!
@@ -50,15 +113,15 @@ public enum AreaPerimeterType: Codable, Hashable {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        if let rawValue = try? container.decode(Int.self, forKey: .rawValue) {
+        if let identifier = try? container.decode(Identifier.self, forKey: .identifier) {
             
-            switch rawValue {
+            switch identifier {
                 
-            case 0:
+            case .door:
                 
-                let door = try container.decode(Bool.self, forKey: .door)
+                let doorState = try container.decode(Bool.self, forKey: .door)
                 
-                self = .door(door)
+                self = .door(doorState)
                 
             default: break
             }
@@ -76,13 +139,13 @@ public enum AreaPerimeterType: Codable, Hashable {
         
         var container = encoder.container(keyedBy: CodingKeys.self)
         
-        try container.encode(rawValue, forKey: .rawValue)
+        try container.encode(identifier, forKey: .identifier)
         
         switch self {
             
-        case .door(let door):
+        case .door(let doorState):
             
-            try container.encode(door, forKey: .door)
+            try container.encode(doorState, forKey: .door)
         
         default: break
         }

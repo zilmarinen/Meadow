@@ -24,6 +24,8 @@ public class AreaNodeJSON: GridNodeJSON {
         case perimeterEdges
         case externalPrefabType
         case internalPrefabType
+        case externalMaterialType
+        case internalMaterialType
     }
     
     /*!
@@ -51,6 +53,18 @@ public class AreaNodeJSON: GridNodeJSON {
     var internalPrefabType: AreaPrefabType?
     
     /*!
+     @property externalMaterialType
+     @abstract Defines the AreaMaterialType that should be used to paint the external edges of the AreaNode.
+     */
+    var externalMaterialType: AreaMaterialType?
+    
+    /*!
+     @property internalMaterialType
+     @abstract Defines the AreaMaterialType that should be used to paint the internal edges of the AreaNode.
+     */
+    var internalMaterialType: AreaMaterialType?
+    
+    /*!
      @method init:from
      @abstract Creates and initialises a node, decoded by the provided decoder.
      @param decoder The decoder to read data from.
@@ -67,6 +81,9 @@ public class AreaNodeJSON: GridNodeJSON {
         
         externalPrefabType = try container.decodeIfPresent(AreaPrefabType.self, forKey: .externalPrefabType)
         internalPrefabType = try container.decodeIfPresent(AreaPrefabType.self, forKey: .internalPrefabType)
+        
+        externalMaterialType = try container.decodeIfPresent(AreaMaterialType.self, forKey: .externalMaterialType)
+        internalMaterialType = try container.decodeIfPresent(AreaMaterialType.self, forKey: .internalMaterialType)
     }
 }
 
@@ -131,6 +148,30 @@ public class AreaNode: GridNode {
     }
     
     /*!
+     @property externalMaterialType
+     @abstract Defines the AreaMaterialType that should be used to paint the external edges of the AreaNode.
+     */
+    public var externalMaterialType: AreaMaterialType? {
+        
+        didSet {
+            
+            becomeDirty()
+        }
+    }
+    
+    /*!
+     @property internalMaterialType
+     @abstract Defines the AreaMaterialType that should be used to paint the internal edges of the AreaNode.
+     */
+    public var internalMaterialType: AreaMaterialType? {
+        
+        didSet {
+            
+            becomeDirty()
+        }
+    }
+    
+    /*!
      @property polyhedron
      @abstract Returns a Polyhedron calculated from the edge slope and inclination.
      */
@@ -165,6 +206,8 @@ public class AreaNode: GridNode {
         case perimeterEdges
         case externalPrefabType
         case internalPrefabType
+        case externalMaterialType
+        case internalMaterialType
     }
     
     /*!
@@ -182,6 +225,8 @@ public class AreaNode: GridNode {
         try container.encodeIfPresent(surfaceType?.name, forKey: .surfaceType)
         try container.encodeIfPresent(externalPrefabType, forKey: .externalPrefabType)
         try container.encodeIfPresent(internalPrefabType, forKey: .internalPrefabType)
+        try container.encodeIfPresent(externalMaterialType, forKey: .externalMaterialType)
+        try container.encodeIfPresent(internalMaterialType, forKey: .internalMaterialType)
     }
     
     /*!
@@ -190,6 +235,7 @@ public class AreaNode: GridNode {
      */
     override public func compactMesh() -> Mesh {
         
+        var meshes: [Mesh] = []
         var faces: [MeshFace] = []
         
         if let apexColor = surfaceType?.colorPalette.primary.vector {
@@ -219,10 +265,21 @@ public class AreaNode: GridNode {
                 }
                 
                 faces.append(MeshFace(vertices: [v1, v0, apexCenter], normals: [normal, normal, normal], colors: primaryColors))
+                
+                if let perimeterEdge = get(perimeterEdge: edge) {
+                    
+                    let externalMesh = externalPrefabType.mesh(polyhedron: polyhedron, perimeterEdge: perimeterEdge, colorPalette: surfaceType!.colorPalette)
+                    let internalMesh = internalPrefabType.mesh(polyhedron: polyhedron, perimeterEdge: perimeterEdge, colorPalette: surfaceType!.colorPalette)
+                    
+                    meshes.append(externalMesh)
+                    meshes.append(internalMesh)
+                }
             }
+            
+            meshes.append(Mesh(faces: faces))
         }
         
-        return Mesh(faces: faces)
+        return Mesh(meshes: meshes)
     }
 }
 

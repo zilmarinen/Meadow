@@ -43,10 +43,10 @@ public enum AreaPerimeterType: Codable, Hashable {
         }
         
         /*!
-         @property All
+         @property all
          @abstract An array of all available Identifiers for AreaPerimeterTypes.
          */
-        public static var All: [Identifier] { return [
+        public static var all: [Identifier] { return [
             
             .door,
             .none,

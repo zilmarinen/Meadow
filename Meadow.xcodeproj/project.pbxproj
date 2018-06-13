@@ -15,6 +15,14 @@
 		18069F1420C97E1C0041A858 /* StateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18069F1220C97E1C0041A858 /* StateMachine.swift */; };
 		18069F1520C97E1C0041A858 /* StateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18069F1220C97E1C0041A858 /* StateMachine.swift */; };
 		18069F1620C97E1C0041A858 /* StateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18069F1220C97E1C0041A858 /* StateMachine.swift */; };
+		180F84F620D0FAF100BA42D2 /* area_material_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 180F84F520D0FAF100BA42D2 /* area_material_types.json */; };
+		180F84F720D0FB0500BA42D2 /* area_material_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 180F84F520D0FAF100BA42D2 /* area_material_types.json */; };
+		180F84F820D0FB0600BA42D2 /* area_material_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 180F84F520D0FAF100BA42D2 /* area_material_types.json */; };
+		180F84F920D0FB0600BA42D2 /* area_material_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 180F84F520D0FAF100BA42D2 /* area_material_types.json */; };
+		180F84FB20D0FB1200BA42D2 /* AreaMaterialType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F84FA20D0FB1200BA42D2 /* AreaMaterialType.swift */; };
+		180F84FC20D0FB8C00BA42D2 /* AreaMaterialType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F84FA20D0FB1200BA42D2 /* AreaMaterialType.swift */; };
+		180F84FD20D0FB8D00BA42D2 /* AreaMaterialType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F84FA20D0FB1200BA42D2 /* AreaMaterialType.swift */; };
+		180F84FE20D0FB8D00BA42D2 /* AreaMaterialType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F84FA20D0FB1200BA42D2 /* AreaMaterialType.swift */; };
 		1819B73A20A574F800BEE585 /* Meadow_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1819B73120A574F800BEE585 /* Meadow_iOS.framework */; };
 		1819B74120A574F800BEE585 /* Meadow_iOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 1819B73320A574F800BEE585 /* Meadow_iOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1819B75620A5752000BEE585 /* Meadow_macOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1819B74D20A5752000BEE585 /* Meadow_macOS.framework */; };
@@ -71,6 +79,14 @@
 		18B13D2820BC101E007437DC /* FootpathType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B13D2620BC0F5B007437DC /* FootpathType.swift */; };
 		18B13D2920BC101E007437DC /* FootpathType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B13D2620BC0F5B007437DC /* FootpathType.swift */; };
 		18B13D2A20BC101F007437DC /* FootpathType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B13D2620BC0F5B007437DC /* FootpathType.swift */; };
+		18B199EB20CEB9DB003D5EFE /* AreaMesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B199EA20CEB9DB003D5EFE /* AreaMesh.swift */; };
+		18B199EC20CEBBEE003D5EFE /* AreaMesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B199EA20CEB9DB003D5EFE /* AreaMesh.swift */; };
+		18B199ED20CEBBEF003D5EFE /* AreaMesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B199EA20CEB9DB003D5EFE /* AreaMesh.swift */; };
+		18B199EE20CEBBEF003D5EFE /* AreaMesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B199EA20CEB9DB003D5EFE /* AreaMesh.swift */; };
+		18B199F020CEBC17003D5EFE /* ConcreteAreaMesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B199EF20CEBC17003D5EFE /* ConcreteAreaMesh.swift */; };
+		18B199F120CEBC4C003D5EFE /* ConcreteAreaMesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B199EF20CEBC17003D5EFE /* ConcreteAreaMesh.swift */; };
+		18B199F220CEBC4C003D5EFE /* ConcreteAreaMesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B199EF20CEBC17003D5EFE /* ConcreteAreaMesh.swift */; };
+		18B199F320CEBC4C003D5EFE /* ConcreteAreaMesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B199EF20CEBC17003D5EFE /* ConcreteAreaMesh.swift */; };
 		18DBCF0D20CAC41800BFF9C9 /* SCNQuaternion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DBCF0C20CAC41800BFF9C9 /* SCNQuaternion.swift */; };
 		18DBCF0E20CAC46600BFF9C9 /* SCNQuaternion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DBCF0C20CAC41800BFF9C9 /* SCNQuaternion.swift */; };
 		18DBCF1020CAC46700BFF9C9 /* SCNQuaternion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DBCF0C20CAC41800BFF9C9 /* SCNQuaternion.swift */; };
@@ -352,6 +368,8 @@
 		14A74BE995E1DD6F159F97B0 /* Pods-Meadow.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Meadow.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Meadow/Pods-Meadow.debug.xcconfig"; sourceTree = "<group>"; };
 		18069F0B20C978720041A858 /* CameraJibStateMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraJibStateMachine.swift; sourceTree = "<group>"; };
 		18069F1220C97E1C0041A858 /* StateMachine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateMachine.swift; sourceTree = "<group>"; };
+		180F84F520D0FAF100BA42D2 /* area_material_types.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = area_material_types.json; sourceTree = "<group>"; };
+		180F84FA20D0FB1200BA42D2 /* AreaMaterialType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaMaterialType.swift; sourceTree = "<group>"; };
 		1819B72420A45EE600BEE585 /* Collection+Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Bundle.swift"; sourceTree = "<group>"; };
 		1819B72A20A4815300BEE585 /* footpath_types.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = footpath_types.json; sourceTree = "<group>"; };
 		1819B73120A574F800BEE585 /* Meadow_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Meadow_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -414,6 +432,8 @@
 		188F483020CA6BAD007095CF /* SCNVector4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCNVector4.swift; sourceTree = "<group>"; };
 		18A8AB232099D6DA00AF30BB /* TerrainTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrainTests.swift; sourceTree = "<group>"; };
 		18B13D2620BC0F5B007437DC /* FootpathType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FootpathType.swift; sourceTree = "<group>"; };
+		18B199EA20CEB9DB003D5EFE /* AreaMesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaMesh.swift; sourceTree = "<group>"; };
+		18B199EF20CEBC17003D5EFE /* ConcreteAreaMesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcreteAreaMesh.swift; sourceTree = "<group>"; };
 		18B58B812098600800402410 /* Area.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Area.swift; sourceTree = "<group>"; };
 		18B58B832098601000402410 /* AreaChunk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaChunk.swift; sourceTree = "<group>"; };
 		18B58B852098601700402410 /* AreaTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaTile.swift; sourceTree = "<group>"; };
@@ -545,6 +565,7 @@
 			isa = PBXGroup;
 			children = (
 				18DBCF1720CAC8A700BFF9C9 /* area_surface_types.json */,
+				180F84F520D0FAF100BA42D2 /* area_material_types.json */,
 			);
 			path = Area;
 			sourceTree = "<group>";
@@ -681,6 +702,7 @@
 		18496C83209368AB00992AF3 /* Area */ = {
 			isa = PBXGroup;
 			children = (
+				18B199E920CEB998003D5EFE /* Meshes */,
 				18B58B812098600800402410 /* Area.swift */,
 				18B58B832098601000402410 /* AreaChunk.swift */,
 				18B58B852098601700402410 /* AreaTile.swift */,
@@ -689,6 +711,7 @@
 				1845343120CC0C2300E840D5 /* AreaPerimeterType.swift */,
 				1845343620CC117100E840D5 /* AreaPerimeterEdge.swift */,
 				18778C9720CE5F520080F49B /* AreaPrefabType.swift */,
+				180F84FA20D0FB1200BA42D2 /* AreaMaterialType.swift */,
 			);
 			path = Area;
 			sourceTree = "<group>";
@@ -850,6 +873,15 @@
 				188DDC5620C6789B006B96A9 /* water_types.json */,
 			);
 			path = Water;
+			sourceTree = "<group>";
+		};
+		18B199E920CEB998003D5EFE /* Meshes */ = {
+			isa = PBXGroup;
+			children = (
+				18B199EA20CEB9DB003D5EFE /* AreaMesh.swift */,
+				18B199EF20CEBC17003D5EFE /* ConcreteAreaMesh.swift */,
+			);
+			path = Meshes;
 			sourceTree = "<group>";
 		};
 		18B58BAA2098623200402410 /* Area */ = {
@@ -1118,6 +1150,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				180F84F620D0FAF100BA42D2 /* area_material_types.json in Resources */,
 				18DBCF1820CAC8A700BFF9C9 /* area_surface_types.json in Resources */,
 				18EE500E20A576430059829C /* footpath_types.json in Resources */,
 				18EE501020A576470059829C /* terrain_types.json in Resources */,
@@ -1129,6 +1162,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				180F84F720D0FB0500BA42D2 /* area_material_types.json in Resources */,
 				18DBCF1920CAC8B200BFF9C9 /* area_surface_types.json in Resources */,
 				18EE50A820A57BC80059829C /* footpath_types.json in Resources */,
 				18EE50A920A57BC80059829C /* terrain_types.json in Resources */,
@@ -1140,6 +1174,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				180F84F920D0FB0600BA42D2 /* area_material_types.json in Resources */,
 				18DBCF1A20CAC8B200BFF9C9 /* area_surface_types.json in Resources */,
 				18EE500F20A576430059829C /* footpath_types.json in Resources */,
 				18EE501120A576480059829C /* terrain_types.json in Resources */,
@@ -1151,6 +1186,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				180F84F820D0FB0600BA42D2 /* area_material_types.json in Resources */,
 				18DBCF1B20CAC8B300BFF9C9 /* area_surface_types.json in Resources */,
 				18EE50AB20A57BC90059829C /* footpath_types.json in Resources */,
 				18EE50AC20A57BC90059829C /* terrain_types.json in Resources */,
@@ -1246,6 +1282,7 @@
 				18EE500B20A576360059829C /* AreaNode.swift in Sources */,
 				1845343720CC117100E840D5 /* AreaPerimeterEdge.swift in Sources */,
 				18FCFFE520C02D3C009A423B /* Soilable.swift in Sources */,
+				18B199EB20CEB9DB003D5EFE /* AreaMesh.swift in Sources */,
 				18EE504520A576770059829C /* ScaffoldChunk.swift in Sources */,
 				18EE504220A576710059829C /* MeshFace.swift in Sources */,
 				18EE506220A576880059829C /* WaterTile.swift in Sources */,
@@ -1265,12 +1302,14 @@
 				18EE505120A5767D0059829C /* TerrainLayer.swift in Sources */,
 				18EE501E20A576550059829C /* ColorPalette.swift in Sources */,
 				18069F1320C97E1C0041A858 /* StateMachine.swift in Sources */,
+				18B199F020CEBC17003D5EFE /* ConcreteAreaMesh.swift in Sources */,
 				18EE502220A576550059829C /* Size.swift in Sources */,
 				18EE501420A5764F0059829C /* Meadow.swift in Sources */,
 				18EE501F20A576550059829C /* Coordinate.swift in Sources */,
 				1845343C20CC12EA00E840D5 /* FootpathNodeSlope.swift in Sources */,
 				18EE502320A576550059829C /* Volume.swift in Sources */,
 				18EE510620A5892C0059829C /* Meadow+Types.swift in Sources */,
+				180F84FB20D0FB1200BA42D2 /* AreaMaterialType.swift in Sources */,
 				18EE505920A576830059829C /* TunnelChunk.swift in Sources */,
 				18FF8E0C20AC29F900995462 /* CameraJib.swift in Sources */,
 				18EE500920A576360059829C /* AreaChunk.swift in Sources */,
@@ -1388,6 +1427,7 @@
 				188F483220CA6DED007095CF /* SCNVector4.swift in Sources */,
 				18EE50B720A57BD40059829C /* Volume.swift in Sources */,
 				18EE509920A57B9E0059829C /* PolyhedronTests.swift in Sources */,
+				180F84FC20D0FB8C00BA42D2 /* AreaMaterialType.swift in Sources */,
 				1845344220CC133B00E840D5 /* TerrainLayerEdge.swift in Sources */,
 				18EE509A20A57B9E0059829C /* VolumeTests.swift in Sources */,
 				18EE50C120A57BDC0059829C /* Foliage.swift in Sources */,
@@ -1396,6 +1436,8 @@
 				18EE50CE20A57BE20059829C /* FootpathChunk.swift in Sources */,
 				18EE50F220A57BF30059829C /* TerrainLayer.swift in Sources */,
 				1831502020BED0E9004317E0 /* SCNVector3.swift in Sources */,
+				18B199EC20CEBBEE003D5EFE /* AreaMesh.swift in Sources */,
+				18B199F120CEBC4C003D5EFE /* ConcreteAreaMesh.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1409,6 +1451,7 @@
 				18EE500720A576350059829C /* AreaNode.swift in Sources */,
 				1845343920CC11DF00E840D5 /* AreaPerimeterEdge.swift in Sources */,
 				18FCFFE720C02E40009A423B /* Soilable.swift in Sources */,
+				18B199EE20CEBBEF003D5EFE /* AreaMesh.swift in Sources */,
 				18EE504920A576780059829C /* ScaffoldChunk.swift in Sources */,
 				18EE504320A576710059829C /* MeshFace.swift in Sources */,
 				18EE506620A576890059829C /* WaterTile.swift in Sources */,
@@ -1428,12 +1471,14 @@
 				18EE505720A5767E0059829C /* TerrainLayer.swift in Sources */,
 				18EE501720A576540059829C /* ColorPalette.swift in Sources */,
 				18069F1520C97E1C0041A858 /* StateMachine.swift in Sources */,
+				18B199F220CEBC4C003D5EFE /* ConcreteAreaMesh.swift in Sources */,
 				18EE501B20A576540059829C /* Size.swift in Sources */,
 				18EE501220A5764F0059829C /* Meadow.swift in Sources */,
 				18EE501820A576540059829C /* Coordinate.swift in Sources */,
 				1845343F20CC12F600E840D5 /* FootpathNodeSlope.swift in Sources */,
 				18EE501C20A576540059829C /* Volume.swift in Sources */,
 				18EE510720A5899E0059829C /* Meadow+Types.swift in Sources */,
+				180F84FD20D0FB8D00BA42D2 /* AreaMaterialType.swift in Sources */,
 				18EE505D20A576830059829C /* TunnelChunk.swift in Sources */,
 				18FF8E0E20AC2A8F00995462 /* CameraJib.swift in Sources */,
 				18EE500520A576350059829C /* AreaChunk.swift in Sources */,
@@ -1551,6 +1596,7 @@
 				188F483420CA6DEE007095CF /* SCNVector4.swift in Sources */,
 				18EE50BE20A57BD50059829C /* Volume.swift in Sources */,
 				18EE508F20A57A960059829C /* CoordinateTests.swift in Sources */,
+				180F84FE20D0FB8D00BA42D2 /* AreaMaterialType.swift in Sources */,
 				1845344420CC133C00E840D5 /* TerrainLayerEdge.swift in Sources */,
 				18EE508D20A57A5C0059829C /* GridTests.swift in Sources */,
 				18EE50C520A57BDD0059829C /* Foliage.swift in Sources */,
@@ -1559,6 +1605,8 @@
 				18EE50CA20A57BE20059829C /* FootpathChunk.swift in Sources */,
 				18EE50EC20A57BF20059829C /* TerrainLayer.swift in Sources */,
 				1831502220BED0EA004317E0 /* SCNVector3.swift in Sources */,
+				18B199ED20CEBBEF003D5EFE /* AreaMesh.swift in Sources */,
+				18B199F320CEBC4C003D5EFE /* ConcreteAreaMesh.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

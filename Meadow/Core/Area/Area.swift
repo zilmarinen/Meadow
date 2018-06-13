@@ -32,6 +32,21 @@ public class Area: Grid<AreaChunk, AreaTile, AreaNode> {
         
         return surfaceTypes
     }
+    
+    /*!
+     @property materialTypes
+     @abstract Array of AreaMaterialTypes loaded from disc.
+     */
+    var materialTypes: [AreaMaterialType] = []
+    
+    /*!
+     @property availableMaterialTypes
+     @abstract Returns a reference to the AreaMaterialTypes currently loaded.
+     */
+    public var availableMaterialTypes: [AreaMaterialType] {
+        
+        return materialTypes
+    }
 }
 
 extension Area {
@@ -96,6 +111,10 @@ extension Area {
                 }
             }
             
+            node.surfaceType = availableSurfaceTypes.first
+            node.externalMaterialType = availableMaterialTypes.first
+            node.internalMaterialType = availableMaterialTypes.first
+            
             return node
         }
         
@@ -147,6 +166,44 @@ extension Area {
         return surfaceTypes.first { surfaceType -> Bool in
             
             return surfaceType.name == name
+        }
+    }
+}
+
+extension Area {
+    
+    /*!
+     @method loadMaterialTypes
+     @abstract Load AreaMaterialTypes from disc.
+     */
+    func loadMaterialTypes() {
+        
+        do {
+            
+            let path = Bundle.meadow.path(forResource: "area_material_types", ofType: "json")!
+            
+            let jsonData = try NSData(contentsOfFile: path) as Data
+            
+            let decoder = JSONDecoder()
+            
+            materialTypes = try decoder.decode([AreaMaterialType].self, from: jsonData)
+        }
+        catch {
+            
+            fatalError("Unable to load area material types")
+        }
+    }
+    
+    /*!
+     @method find:materialType
+     @abstract Attempt to find and return the appropriate AreaMaterialType with a matching name.
+     @param name The name of the AreaMaterialType to be found and returned.
+     */
+    public func find(materialType name: String) -> AreaMaterialType? {
+        
+        return materialTypes.first { materialType -> Bool in
+            
+            return materialType.name == name
         }
     }
 }

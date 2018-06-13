@@ -132,6 +132,7 @@ public class Meadow: SCNScene, Encodable {
         tunnels.delegate = self
         water.delegate = self
         
+        areas.loadMaterialTypes()
         areas.loadSurfaceTypes()
         footpaths.loadFootpathTypes()
         terrain.loadTerrainTypes()

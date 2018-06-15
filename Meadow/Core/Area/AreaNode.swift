@@ -127,7 +127,7 @@ public class AreaNode: GridNode {
      @property externalPrefabType
      @abstract Defines the AreaPrefabType that should be used to draw the external edges of the AreaNode.
      */
-    public var externalPrefabType: AreaPrefabType = .concrete {
+    public var externalPrefabType: AreaPrefabType = .prefab {
         
         didSet {
             
@@ -139,7 +139,7 @@ public class AreaNode: GridNode {
      @property internalPrefabType
      @abstract Defines the AreaPrefabType that should be used to draw the internal edges of the AreaNode.
      */
-    public var internalPrefabType: AreaPrefabType = .concrete {
+    public var internalPrefabType: AreaPrefabType = .prefab {
         
         didSet {
             
@@ -268,11 +268,21 @@ public class AreaNode: GridNode {
                 
                 if let perimeterEdge = get(perimeterEdge: edge) {
                     
-                    let externalMesh = externalPrefabType.mesh(polyhedron: polyhedron, perimeterEdge: perimeterEdge, colorPalette: surfaceType!.colorPalette)
-                    let internalMesh = internalPrefabType.mesh(polyhedron: polyhedron, perimeterEdge: perimeterEdge, colorPalette: surfaceType!.colorPalette)
+                    if let colorPalette = externalMaterialType?.colorPalette {
+                        
+                        let externalMesh = externalPrefabType.mesh(polyhedron: polyhedron, perimeterEdge: perimeterEdge, colorPalette: colorPalette)
+                        
+                        meshes.append(externalMesh)
+                    }
                     
-                    meshes.append(externalMesh)
-                    meshes.append(internalMesh)
+                    if let colorPalette = internalMaterialType?.colorPalette {
+                        
+                        let invertedPolyhedron = Polyhedron.Invert(polyhedron: polyhedron, edge: edge)
+                     
+                        let internalMesh = internalPrefabType.mesh(polyhedron: invertedPolyhedron, perimeterEdge: perimeterEdge, colorPalette: colorPalette)
+                        
+                        meshes.append(internalMesh)
+                    }
                 }
             }
             
@@ -391,6 +401,21 @@ extension AreaNode {
         perimeterEdges.insert(AreaPerimeterEdge(edge: edge, perimeterType: perimeterType))
         
         becomeDirty()
+    }
+    
+    /*!
+     @method remove:perimeterType:edge
+     @abstract Attempt to remove the relationship between two nodes along the specified edge.
+     @param edge The edge shared between the two nodes.
+     */
+    public func remove(perimeterType edge: GridEdge) {
+        
+        if let existingType = get(perimeterEdge: edge) {
+            
+            perimeterEdges.remove(existingType)
+            
+            becomeDirty()
+        }
     }
     
     /*!

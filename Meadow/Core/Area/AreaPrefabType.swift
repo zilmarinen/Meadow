@@ -12,9 +12,7 @@
  */
 public enum AreaPrefabType: Int, Codable {
     
-    case concrete
-    case sandstone
-    case steel
+    case prefab
     
     /*!
      @property description
@@ -24,9 +22,7 @@ public enum AreaPrefabType: Int, Codable {
         
         switch self {
         
-        case .concrete: return "Concrete"
-        case .sandstone: return "Sandstone"
-        case .steel: return "Steel"
+        case .prefab: return "Prefab"
         }
     }
 }
@@ -39,10 +35,23 @@ extension AreaPrefabType {
      */
     public static var all: [AreaPrefabType] { return [
         
-        .concrete,
-        .sandstone,
-        .steel
+        .prefab
     ]}
+}
+
+extension AreaPrefabType {
+    
+    /*!
+     @property meshProvider
+     @abstract The MeshProvider used to create the mesh for a given AreaPerimeterEdge.
+     */
+    var meshProvider: AreaMeshProvider {
+        
+        switch self {
+        
+        default: return PrefabAreaMeshProvider()
+        }
+    }
 }
 
 extension AreaPrefabType {
@@ -58,28 +67,17 @@ extension AreaPrefabType {
         
         switch perimeterEdge.perimeterType {
             
-        case .door(let doorState):
+        case .doorway:
             
-            return AreaMesh.wall(polyhedron: polyhedron, edge: perimeterEdge.edge, colorPalette: colorPalette)
+            return meshProvider.doorway(polyhedron: polyhedron, edge: perimeterEdge.edge, colorPalette: colorPalette)
             
         case .wall:
             
-            switch self {
-                
-            case .concrete:
-             
-                return ConcreteAreaMesh.wall(polyhedron: polyhedron, edge: perimeterEdge.edge, colorPalette: colorPalette)
-                
-            case .sandstone:
-                
-                return AreaMesh.wall(polyhedron: polyhedron, edge: perimeterEdge.edge, colorPalette: colorPalette)
-                
-            case .steel:
-                
-                return AreaMesh.wall(polyhedron: polyhedron, edge: perimeterEdge.edge, colorPalette: colorPalette)
-            }
+            return meshProvider.wall(polyhedron: polyhedron, edge: perimeterEdge.edge, colorPalette: colorPalette)
             
-        default: return Mesh(faces: [])
+        case .window:
+            
+            return meshProvider.window(polyhedron: polyhedron, edge: perimeterEdge.edge, colorPalette: colorPalette)
         }
     }
 }

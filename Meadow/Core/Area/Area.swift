@@ -6,6 +6,8 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
+import Foundation
+
 /*!
  @class Area
  @abstract Area is a Grid type that manages the addition and removal of AreaNodes.
@@ -102,14 +104,6 @@ extension Area {
         let volume = AreaNode.FixedVolume(coordinate)
         
         if let node = add(node: volume) {
-            
-            GridEdge.Edges.forEach { edge in
-                
-                if let neighbour = find(node: volume.coordinate + GridEdge.Cardinal(edge: edge)) {
-                    
-                    node.add(neighbour: neighbour, edge: edge)
-                }
-            }
             
             node.surfaceType = availableSurfaceTypes.first
             node.externalMaterialType = availableMaterialTypes.first

@@ -49,12 +49,6 @@ public class TerrainNodeJSON: GridNodeJSON {
 public class TerrainNode: GridNode {
     
     /*!
-     @property neighbours
-     @abstract An array of neighbouring grid nodes.
-     */
-    private var neighbours: Set<GridNodeNeighbour> = []
-    
-    /*!
      @property layers
      @abstract Holds instances of TerrainLayers added to the node.
      */
@@ -178,69 +172,6 @@ public class TerrainNode: GridNode {
         }
         
         return true
-    }
-}
-
-extension TerrainNode {
-    
-    /*!
-     @method add:neighbour:edge
-     @abstract Attempt to create a relationship between two nodes along the specified edge.
-     @param neighbour The node to become neighbours with.
-     @param edge The edge shared between the two nodes.
-     */
-    func add(neighbour node: TerrainNode, edge: GridEdge) {
-        
-        guard node.volume.coordinate.adjacency(to: volume.coordinate) == .adjacent else { return }
-     
-        remove(neighbour: edge)
-        
-        neighbours.insert(GridNodeNeighbour(edge: edge, node: node))
-        
-        let oppositeEdge = GridEdge.Opposite(edge: edge)
-        
-        if node.find(neighbour: oppositeEdge) == nil {
-            
-            node.add(neighbour: self, edge: oppositeEdge)
-        }
-        
-        becomeDirty()
-    }
-    
-    /*!
-     @method remove:neighbour:edge
-     @abstract Attempt to remove the relationship between two nodes along the specified edge.
-     @param edge The edge shared between the two nodes.
-     */
-    func remove(neighbour edge: GridEdge) {
-        
-        guard let neighbour = find(neighbour: edge) else { return }
-            
-        neighbours.remove(neighbour)
-        
-        guard let neighbouringNode = neighbour.node as? TerrainNode else { return }
-        
-        let oppositeEdge = GridEdge.Opposite(edge: edge)
-        
-        if let _ = neighbouringNode.find(neighbour: oppositeEdge) {
-            
-            neighbouringNode.remove(neighbour: oppositeEdge)
-        }
-        
-        becomeDirty()
-    }
-    
-    /*!
-     @method find:neighbour
-     @abstract Attempt to find and return the neighbouring node along the specified edge.
-     @param edge The edge shared between the two nodes.
-     */
-    func find(neighbour edge: GridEdge) -> GridNodeNeighbour? {
-        
-        return neighbours.first { neighbour -> Bool in
-        
-            return neighbour.edge == edge
-        }
     }
 }
 

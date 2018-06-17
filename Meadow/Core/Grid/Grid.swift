@@ -217,7 +217,13 @@ extension Grid {
         
         tile.add(node: node)
         
-        node.becomeDirty()
+        GridEdge.Edges.forEach { edge in
+            
+            if let neighbour = find(node: volume.coordinate + GridEdge.Cardinal(edge: edge)) {
+                
+                node.add(neighbour: neighbour, edge: edge)
+            }
+        }
         
         return node
     }
@@ -276,6 +282,11 @@ extension Grid {
     func remove(node coordinate: Coordinate) -> Bool {
         
         if let chunk = find(chunk: coordinate), let tile = chunk.find(tile: coordinate), let node = tile.find(node: coordinate) {
+            
+            node.remove(neighbour: .north)
+            node.remove(neighbour: .east)
+            node.remove(neighbour: .south)
+            node.remove(neighbour: .west)
             
             tile.remove(node: node)
             

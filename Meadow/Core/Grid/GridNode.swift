@@ -48,6 +48,12 @@ public class GridNode: SceneGraphNode, Encodable, Soilable {
     }
     
     /*!
+     @property neighbours
+     @abstract An array of neighbouring grid nodes.
+     */
+    private var neighbours: Set<GridNodeNeighbour> = []
+    
+    /*!
      @property isDirty
      @abstract Represents staleness of the node.
      */
@@ -191,5 +197,85 @@ extension GridNode: Hashable {
     public var hashValue: Int {
         
         return volume.hashValue
+    }
+}
+
+extension GridNode {
+    
+    /*!
+     @method add:neighbour:edge
+     @abstract Attempt to create a relationship between two nodes along the specified edge.
+     @param neighbour The node to become neighbours with.
+     @param edge The edge shared between the two nodes.
+     */
+    func add(neighbour node: GridNode, edge: GridEdge) {
+        
+        guard node.volume.coordinate.adjacency(to: volume.coordinate) == .adjacent else { return }
+        
+        remove(neighbour: edge)
+        
+        neighbours.insert(GridNodeNeighbour(edge: edge, node: node))
+        
+        let oppositeEdge = GridEdge.Opposite(edge: edge)
+        
+        if node.find(neighbour: oppositeEdge) == nil {
+            
+            node.add(neighbour: self, edge: oppositeEdge)
+        }
+        
+        becomeDirty()
+    }
+    
+    /*!
+     @method remove:neighbour:edge
+     @abstract Attempt to remove the relationship between two nodes along the specified edge.
+     @param edge The edge shared between the two nodes.
+     */
+    func remove(neighbour edge: GridEdge) {
+        
+        guard let neighbour = find(neighbour: edge) else { return }
+        
+        neighbours.remove(neighbour)
+        
+        let oppositeEdge = GridEdge.Opposite(edge: edge)
+        
+        if let _ = neighbour.node.find(neighbour: oppositeEdge) {
+            
+            neighbour.node.remove(neighbour: oppositeEdge)
+        }
+        
+        becomeDirty()
+    }
+    
+    /*!
+     @method find:neighbour:edge
+     @abstract Attempt to find and return the neighbouring node along the specified edge.
+     @param edge The GridEdge shared between the two nodes.
+     */
+    func find(neighbour edge: GridEdge) -> GridNodeNeighbour? {
+        
+        return neighbours.first { neighbour -> Bool in
+            
+            return neighbour.edge == edge
+        }
+    }
+    
+    /*!
+     @method find:neighbour:corner
+     @abstract Attempt to find and return the neighbouring node along the specified edge.
+     @param edge The GridEdge shared between the two nodes.
+     @param corner The GridCorner used to determine the diagonal corner shared between the two nodes.
+     */
+    func find(neighbour edge: GridEdge, corner: GridCorner) -> GridNodeNeighbour? {
+        
+        let connectedEdges = GridEdge.Edges(corner: corner)
+        
+        let e0 = connectedEdges.first!
+        let e1 = connectedEdges.last!
+        
+        let a0 = find(neighbour: e0)?.node
+        let a1 = find(neighbour: e1)?.node
+        
+        return (a0 != nil ? a0!.find(neighbour: e1) : (a1 != nil ? a1!.find(neighbour: e0) : nil))
     }
 }

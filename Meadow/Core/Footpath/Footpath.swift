@@ -74,14 +74,6 @@ extension Footpath {
         
         if let node = add(node: volume) {
             
-            GridEdge.Edges.forEach { edge in
-                
-                if let neighbour = find(node: volume.coordinate + GridEdge.Cardinal(edge: edge)) {
-                    
-                    node.add(neighbour: neighbour, edge: edge)
-                }
-            }
-            
             return node
         }
         

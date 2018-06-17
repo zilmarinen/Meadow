@@ -15,6 +15,16 @@ import SceneKit
 public struct Plane {
     
     /*!
+     @enum PlaneSide
+     @abstract Defines the two sides of a plane.
+     */
+    public enum PlaneSide {
+        
+        case exterior
+        case interior
+    }
+    
+    /*!
      @param normal
      @abstract The normal pointing outward from the plane.
      */
@@ -50,10 +60,10 @@ public struct Plane {
      @abstract Checks that a vector is on either side of a plane.
      @param vector The vector to check which side of the plane it lies on.
      */
-    public func side(vector: SCNVector3) -> Bool {
+    public func side(vector: SCNVector3) -> PlaneSide {
         
         let dot = SCNVector3.Dot(lhs: vector, rhs: normal)
         
-        return dot > 0
+        return dot > 0 ? .exterior : .interior
     }
 }

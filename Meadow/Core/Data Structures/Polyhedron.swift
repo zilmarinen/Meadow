@@ -188,3 +188,20 @@ extension Polyhedron {
         return divisions
     }
 }
+
+extension Polyhedron {
+    
+    /*!
+     @method translate:polyhedron:translation
+     @abstract Translates the vertices of a Polyhedrons Polytopes by the given translation vector.
+     @param polytope The Polyhedron whose Polytope vertices should be translated.
+     @param translation The vector defining the translation.
+     */
+    static func Translate(polyhedron: Polyhedron, translation: SCNVector3) -> Polyhedron {
+        
+        let upperPolytope = Polytope.Translate(polytope: polyhedron.upperPolytope, translation: translation)
+        let lowerPolytope = Polytope.Translate(polytope: polyhedron.lowerPolytope, translation: translation)
+        
+        return Polyhedron(upperPolytope: upperPolytope, lowerPolytope: lowerPolytope)
+    }
+}

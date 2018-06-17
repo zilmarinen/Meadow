@@ -233,3 +233,22 @@ extension Polytope {
         }
     }
 }
+
+extension Polytope {
+    
+    /*!
+     @method translate:polytope:translation
+     @abstract Translates the vertices of a Polytope by the given translation vector.
+     @param polytope The Polytope whose vertices should be translated.
+     @param translation The vector defining the translation.
+     */
+    static func Translate(polytope: Polytope, translation: SCNVector3) -> Polytope {
+        
+        let v0 = SCNVector3(x: polytope.vertices[0].x + translation.x, y: polytope.vertices[0].y + translation.y, z: polytope.vertices[0].z + translation.z)
+        let v1 = SCNVector3(x: polytope.vertices[1].x + translation.x, y: polytope.vertices[1].y + translation.y, z: polytope.vertices[1].z + translation.z)
+        let v2 = SCNVector3(x: polytope.vertices[2].x + translation.x, y: polytope.vertices[2].y + translation.y, z: polytope.vertices[2].z + translation.z)
+        let v3 = SCNVector3(x: polytope.vertices[3].x + translation.x, y: polytope.vertices[3].y + translation.y, z: polytope.vertices[3].z + translation.z)
+        
+        return Polytope(vertices: [ v0, v1, v2, v3 ])
+    }
+}

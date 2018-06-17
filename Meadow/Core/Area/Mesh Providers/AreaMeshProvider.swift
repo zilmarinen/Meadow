@@ -13,13 +13,24 @@
 public protocol AreaMeshProvider {
     
     /*!
+     @method corner:polyhedron:corner:colorPalette
+     @abstract Creates and returns a mesh along the given GridEdge painted with the specified ColorPalette.
+     @param polyhedron The Polyhedron of the AreaNode being drawn.
+     @param corner The GridCorner around which to render the mesh.
+     @param colorPalette The ColorPalette to use when painting the mesh.
+     @param side The side towards which the mesh should be drawn facing.
+     */
+    func corner(polyhedron: Polyhedron, corner: GridCorner, colorPalette: ColorPalette, side: Plane.PlaneSide) -> Mesh
+    
+    /*!
      @method doorway:polyhedron:edge:colorPalette
      @abstract Creates and returns a mesh along the given GridEdge painted with the specified ColorPalette.
      @param polyhedron The Polyhedron of the AreaNode being drawn.
      @param edge The GridEdge along which to render the mesh.
      @param colorPalette The ColorPalette to use when painting the mesh.
+     @param side The side towards which the mesh should be drawn facing.
      */
-    func doorway(polyhedron: Polyhedron, edge: GridEdge, colorPalette: ColorPalette) -> Mesh
+    func doorway(polyhedron: Polyhedron, edge: GridEdge, colorPalette: ColorPalette, side: Plane.PlaneSide) -> Mesh
     
     /*!
      @method wall:polyhedron:edge:colorPalette
@@ -27,8 +38,9 @@ public protocol AreaMeshProvider {
      @param polyhedron The Polyhedron of the AreaNode being drawn.
      @param edge The GridEdge along which to render the mesh.
      @param colorPalette The ColorPalette to use when painting the mesh.
+     @param side The side towards which the mesh should be drawn facing.
      */
-    func wall(polyhedron: Polyhedron, edge: GridEdge, colorPalette: ColorPalette) -> Mesh
+    func wall(polyhedron: Polyhedron, edge: GridEdge, colorPalette: ColorPalette, side: Plane.PlaneSide) -> Mesh
     
     /*!
      @method window:polyhedron:edge:colorPalette
@@ -36,6 +48,7 @@ public protocol AreaMeshProvider {
      @param polyhedron The Polyhedron of the AreaNode being drawn.
      @param edge The GridEdge along which to render the mesh.
      @param colorPalette The ColorPalette to use when painting the mesh.
+     @param side The side towards which the mesh should be drawn facing.
      */
-    func window(polyhedron: Polyhedron, edge: GridEdge, colorPalette: ColorPalette) -> Mesh
+    func window(polyhedron: Polyhedron, edge: GridEdge, colorPalette: ColorPalette, side: Plane.PlaneSide) -> Mesh
 }

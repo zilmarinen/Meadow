@@ -259,7 +259,7 @@ public class AreaNode: GridNode {
                 
                 var normal = plane.normal
                 
-                if plane.side(vector: apexNormal) {
+                if plane.side(vector: apexNormal) == .interior {
                     
                     normal = SCNVector3.Negate(vector: plane.normal)
                 }
@@ -270,19 +270,42 @@ public class AreaNode: GridNode {
                     
                     if let colorPalette = externalMaterialType?.colorPalette {
                         
-                        let externalMesh = externalPrefabType.mesh(polyhedron: polyhedron, perimeterEdge: perimeterEdge, colorPalette: colorPalette)
+                        let externalMesh = externalPrefabType.mesh(polyhedron: polyhedron, perimeterEdge: perimeterEdge, colorPalette: colorPalette, side: .exterior)
                         
                         meshes.append(externalMesh)
                     }
                     
                     if let colorPalette = internalMaterialType?.colorPalette {
                         
-                        let invertedPolyhedron = Polyhedron.Invert(polyhedron: polyhedron, edge: edge)
+                        let cardinal = GridEdge.Cardinal(edge: edge)
+                        
+                        let translation = SCNVector3(x: MDWFloat(cardinal.x), y: 0.0, z: MDWFloat(cardinal.z))
+                        
+                        let translatedPolyhedron = Polyhedron.Translate(polyhedron: polyhedron, translation: translation)
+                        
+                        let invertedPolyhedron = Polyhedron.Invert(polyhedron: translatedPolyhedron, edge: edge)
                      
-                        let internalMesh = internalPrefabType.mesh(polyhedron: invertedPolyhedron, perimeterEdge: perimeterEdge, colorPalette: colorPalette)
+                        let internalMesh = internalPrefabType.mesh(polyhedron: invertedPolyhedron, perimeterEdge: perimeterEdge, colorPalette: colorPalette, side: .interior)
                         
                         meshes.append(internalMesh)
                     }
+                }
+            }
+            
+            GridCorner.Corners.forEach { corner in
+                
+                if let colorPalette = externalMaterialType?.colorPalette {
+                    
+                    let externalMesh = externalPrefabType.mesh(polyhedron: polyhedron, corner: corner, colorPalette: colorPalette, side: .exterior)
+                    
+                    meshes.append(externalMesh)
+                }
+                
+                if let colorPalette = internalMaterialType?.colorPalette {
+                    
+                    let internalMesh = internalPrefabType.mesh(polyhedron: polyhedron, corner: corner, colorPalette: colorPalette, side: .interior)
+                    
+                    meshes.append(internalMesh)
                 }
             }
             

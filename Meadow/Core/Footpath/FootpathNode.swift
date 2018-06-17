@@ -189,7 +189,7 @@ public class FootpathNode: GridNode {
             
             var normal = plane.normal
             
-            if plane.side(vector: apexNormal) {
+            if plane.side(vector: apexNormal) == .interior {
                 
                 normal = SCNVector3.Negate(vector: plane.normal)
             }

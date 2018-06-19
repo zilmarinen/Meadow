@@ -268,24 +268,24 @@ public class AreaNode: GridNode {
                 
                 if let perimeterEdge = get(perimeterEdge: edge) {
                     
-                    if let colorPalette = externalMaterialType?.colorPalette {
-                        
-                        let externalMesh = externalPrefabType.mesh(polyhedron: polyhedron, perimeterEdge: perimeterEdge, colorPalette: colorPalette, side: .exterior)
-                        
-                        meshes.append(externalMesh)
-                    }
+//                    if let colorPalette = externalMaterialType?.colorPalette {
+//
+//                        let cardinal = GridEdge.Cardinal(edge: edge)
+//
+//                        let translation = SCNVector3(x: MDWFloat(cardinal.x), y: 0.0, z: MDWFloat(cardinal.z))
+//
+//                        let translatedPolyhedron = Polyhedron.Translate(polyhedron: polyhedron, translation: translation)
+//
+//                        let invertedPolyhedron = Polyhedron.Invert(polyhedron: translatedPolyhedron, edge: edge)
+//
+//                        let externalMesh = internalPrefabType.mesh(polyhedron: invertedPolyhedron, perimeterEdge: perimeterEdge, colorPalette: colorPalette, side: .interior)
+//
+//                        meshes.append(externalMesh)
+//                    }
                     
                     if let colorPalette = internalMaterialType?.colorPalette {
                         
-                        let cardinal = GridEdge.Cardinal(edge: edge)
-                        
-                        let translation = SCNVector3(x: MDWFloat(cardinal.x), y: 0.0, z: MDWFloat(cardinal.z))
-                        
-                        let translatedPolyhedron = Polyhedron.Translate(polyhedron: polyhedron, translation: translation)
-                        
-                        let invertedPolyhedron = Polyhedron.Invert(polyhedron: translatedPolyhedron, edge: edge)
-                     
-                        let internalMesh = internalPrefabType.mesh(polyhedron: invertedPolyhedron, perimeterEdge: perimeterEdge, colorPalette: colorPalette, side: .interior)
+                        let internalMesh = externalPrefabType.mesh(polyhedron: polyhedron, perimeterEdge: perimeterEdge, colorPalette: colorPalette, side: .exterior)
                         
                         meshes.append(internalMesh)
                     }

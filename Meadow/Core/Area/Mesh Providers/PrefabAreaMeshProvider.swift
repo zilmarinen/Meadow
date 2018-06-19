@@ -6,6 +6,8 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
+import SceneKit
+
 /*!
  @class PrefabAreaMeshProvider
  @abstract Defines the methods required to generate Meshes for AreaNodes.
@@ -50,22 +52,31 @@ public class PrefabAreaMeshProvider: AreaMeshProvider {
         
         let corners = GridCorner.Corners(edge: edge)
         
-        let normal = GridEdge.Normal(edge: edge)
+        let normal = GridEdge.Normal(edge: GridEdge.Opposite(edge: edge))
         
-        let normals = [normal, normal, normal]
+        let apexNormals = [SCNVector3.Up, SCNVector3.Up, SCNVector3.Up]
+        let edgeNormals = [normal, normal, normal]
         
-        let colors = [colorPalette.primary.vector, colorPalette.primary.vector, colorPalette.primary.vector]
+        let primaryColors = [colorPalette.primary.vector, colorPalette.primary.vector, colorPalette.primary.vector]
+        let secondaryColors = [colorPalette.secondary.vector, colorPalette.secondary.vector, colorPalette.secondary.vector]
         
         let c0 = corners.first!
         let c1 = corners.last!
         
-        let v0 = polyhedron.upperPolytope.vertices[c0.rawValue]
-        let v1 = polyhedron.upperPolytope.vertices[c1.rawValue]
-        let v2 = polyhedron.lowerPolytope.vertices[c1.rawValue]
-        let v3 = polyhedron.lowerPolytope.vertices[c0.rawValue]
+        let insetPolyhedron = Polyhedron.Inset(polyhedron: polyhedron, edge: edge, inset: 0.1)
         
-        return Mesh(faces: [MeshFace(vertices: [v0, v1, v2], normals: normals, colors: colors),
-                            MeshFace(vertices: [v0, v2, v3], normals: normals, colors: colors)])
+        let v0 = insetPolyhedron.upperPolytope.vertices[c0.rawValue]
+        let v1 = insetPolyhedron.upperPolytope.vertices[c1.rawValue]
+        let v2 = insetPolyhedron.lowerPolytope.vertices[c1.rawValue]
+        let v3 = insetPolyhedron.lowerPolytope.vertices[c0.rawValue]
+        
+        let v4 = polyhedron.upperPolytope.vertices[c0.rawValue]
+        let v5 = polyhedron.upperPolytope.vertices[c1.rawValue]
+        
+        return Mesh(faces: [MeshFace(vertices: [v5, v4, v0], normals: apexNormals, colors: secondaryColors),
+                            MeshFace(vertices: [v5, v0, v1], normals: apexNormals, colors: secondaryColors),
+                            MeshFace(vertices: [v0, v3, v1], normals: edgeNormals, colors: primaryColors),
+                            MeshFace(vertices: [v1, v3, v2], normals: edgeNormals, colors: primaryColors)])
     }
     
     /*!

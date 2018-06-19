@@ -118,4 +118,144 @@ class PolytopeTests: XCTestCase {
         
         waitForExpectations(timeout: 1)
     }
+    
+    func testPolytopeTranslation() {
+        
+        let expect = expectation(description: "Translating a Polytope will offset each vertices by the specified translation")
+        
+        let reference = Polytope(x: 10, y: -10, z: 10)
+        
+        let t0 = Polytope.Translate(polytope: reference, translation: SCNVector3.Up + SCNVector3.Forward)
+        let t1 = Polytope.Translate(polytope: reference, translation: SCNVector3.Up + SCNVector3.Forward + SCNVector3.Left)
+        
+        XCTAssertEqual(t0.vertices[0].x, (10.0 + World.UnitXZ))
+        XCTAssertEqual(t0.vertices[0].y, -9.0)
+        XCTAssertEqual(t0.vertices[0].z, (11.0 + World.UnitXZ))
+        
+        XCTAssertEqual(t0.vertices[1].x, (10.0 + -World.UnitXZ))
+        XCTAssertEqual(t0.vertices[1].y, -9.0)
+        XCTAssertEqual(t0.vertices[1].z, (11.0 + World.UnitXZ))
+        
+        XCTAssertEqual(t0.vertices[2].x, (10.0 + -World.UnitXZ))
+        XCTAssertEqual(t0.vertices[2].y, -9.0)
+        XCTAssertEqual(t0.vertices[2].z, (11.0 + -World.UnitXZ))
+        
+        XCTAssertEqual(t0.vertices[3].x, (10.0 + World.UnitXZ))
+        XCTAssertEqual(t0.vertices[3].y, -9.0)
+        XCTAssertEqual(t0.vertices[3].z, (11.0 + -World.UnitXZ))
+        
+        XCTAssertEqual(t1.vertices[0].x, (11.0 + World.UnitXZ))
+        XCTAssertEqual(t1.vertices[0].y, -9.0)
+        XCTAssertEqual(t1.vertices[0].z, (11.0 + World.UnitXZ))
+        
+        XCTAssertEqual(t1.vertices[1].x, (11.0 + -World.UnitXZ))
+        XCTAssertEqual(t1.vertices[1].y, -9.0)
+        XCTAssertEqual(t1.vertices[1].z, (11.0 + World.UnitXZ))
+        
+        XCTAssertEqual(t1.vertices[2].x, (11.0 + -World.UnitXZ))
+        XCTAssertEqual(t1.vertices[2].y, -9.0)
+        XCTAssertEqual(t1.vertices[2].z, (11.0 + -World.UnitXZ))
+        
+        XCTAssertEqual(t1.vertices[3].x, (11.0 + World.UnitXZ))
+        XCTAssertEqual(t1.vertices[3].y, -9.0)
+        XCTAssertEqual(t1.vertices[3].z, (11.0 + -World.UnitXZ))
+        
+        expect.fulfill()
+        
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testPolytopeInset() {
+        
+        let expect = expectation(description: "Insetting a Polytope will offset the appropriate vertices along a given GridEdge by the specified translation")
+        
+        let inset = MDWFloat(0.1)
+        
+        let reference = Polytope(x: 10, y: -10, z: 10)
+        
+        let t0 = Polytope.Inset(polytope: reference, edge: .north, inset: inset)
+        let t1 = Polytope.Inset(polytope: reference, edge: .west, inset: inset)
+        
+        XCTAssertEqual(t0.vertices[0].x, (10.0 + World.UnitXZ), accuracy: 0.01)
+        XCTAssertEqual(t0.vertices[0].y, -10.0)
+        XCTAssertEqual(t0.vertices[0].z, (10.0 + World.UnitXZ) - inset)
+        
+        XCTAssertEqual(t0.vertices[1].x, (10.0 + -World.UnitXZ))
+        XCTAssertEqual(t0.vertices[1].y, -10.0)
+        XCTAssertEqual(t0.vertices[1].z, (10.0 + World.UnitXZ) - inset)
+        
+        XCTAssertEqual(t0.vertices[2].x, (10.0 + -World.UnitXZ))
+        XCTAssertEqual(t0.vertices[2].y, -10.0)
+        XCTAssertEqual(t0.vertices[2].z, (10.0 + -World.UnitXZ))
+        
+        XCTAssertEqual(t0.vertices[3].x, (10.0 + World.UnitXZ))
+        XCTAssertEqual(t0.vertices[3].y, -10.0)
+        XCTAssertEqual(t0.vertices[3].z, (10.0 + -World.UnitXZ))
+        
+        XCTAssertEqual(t1.vertices[0].x, (10.0 + World.UnitXZ) - inset)
+        XCTAssertEqual(t1.vertices[0].y, -10.0)
+        XCTAssertEqual(t1.vertices[0].z, (10.0 + World.UnitXZ), accuracy: 0.01)
+        
+        XCTAssertEqual(t1.vertices[1].x, (10.0 + -World.UnitXZ))
+        XCTAssertEqual(t1.vertices[1].y, -10.0)
+        XCTAssertEqual(t1.vertices[1].z, (10.0 + World.UnitXZ))
+        
+        XCTAssertEqual(t1.vertices[2].x, (10.0 + -World.UnitXZ))
+        XCTAssertEqual(t1.vertices[2].y, -10.0)
+        XCTAssertEqual(t1.vertices[2].z, (10.0 + -World.UnitXZ))
+        
+        XCTAssertEqual(t1.vertices[3].x, (10.0 + World.UnitXZ) - inset)
+        XCTAssertEqual(t1.vertices[3].y, -10.0)
+        XCTAssertEqual(t1.vertices[3].z, (10.0 + -World.UnitXZ))
+        
+        expect.fulfill()
+        
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testPolytopeInversion() {
+        
+        let expect = expectation(description: "Inverting a Polytope will invert the appropriate vertices along a given GridEdge")
+        
+        let reference = Polytope(x: 10, y: -10, z: 10)
+        
+        let t0 = Polytope.Invert(polytope: reference, edge: .north)
+        let t1 = Polytope.Invert(polytope: reference, edge: .west)
+        
+        XCTAssertEqual(t0.vertices[0].x, (10.0 + World.UnitXZ))
+        XCTAssertEqual(t0.vertices[0].y, -10.0)
+        XCTAssertEqual(t0.vertices[0].z, (10.0 + -World.UnitXZ))
+        
+        XCTAssertEqual(t0.vertices[1].x, (10.0 + -World.UnitXZ))
+        XCTAssertEqual(t0.vertices[1].y, -10.0)
+        XCTAssertEqual(t0.vertices[1].z, (10.0 + -World.UnitXZ))
+        
+        XCTAssertEqual(t0.vertices[2].x, (10.0 + -World.UnitXZ))
+        XCTAssertEqual(t0.vertices[2].y, -10.0)
+        XCTAssertEqual(t0.vertices[2].z, (10.0 + World.UnitXZ))
+        
+        XCTAssertEqual(t0.vertices[3].x, (10.0 + World.UnitXZ))
+        XCTAssertEqual(t0.vertices[3].y, -10.0)
+        XCTAssertEqual(t0.vertices[3].z, (10.0 + World.UnitXZ))
+        
+        XCTAssertEqual(t1.vertices[0].x, (10.0 + -World.UnitXZ))
+        XCTAssertEqual(t1.vertices[0].y, -10.0)
+        XCTAssertEqual(t1.vertices[0].z, (10.0 + World.UnitXZ))
+        
+        XCTAssertEqual(t1.vertices[1].x, (10.0 + World.UnitXZ))
+        XCTAssertEqual(t1.vertices[1].y, -10.0)
+        XCTAssertEqual(t1.vertices[1].z, (10.0 + World.UnitXZ))
+        
+        XCTAssertEqual(t1.vertices[2].x, (10.0 + World.UnitXZ))
+        XCTAssertEqual(t1.vertices[2].y, -10.0)
+        XCTAssertEqual(t1.vertices[2].z, (10.0 + -World.UnitXZ))
+        
+        XCTAssertEqual(t1.vertices[3].x, (10.0 + -World.UnitXZ))
+        XCTAssertEqual(t1.vertices[3].y, -10.0)
+        XCTAssertEqual(t1.vertices[3].z, (10.0 + -World.UnitXZ))
+        
+        expect.fulfill()
+        
+        waitForExpectations(timeout: 1)
+    }
 }

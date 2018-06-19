@@ -205,3 +205,21 @@ extension Polyhedron {
         return Polyhedron(upperPolytope: upperPolytope, lowerPolytope: lowerPolytope)
     }
 }
+
+extension Polyhedron {
+    
+    /*!
+     @method inset:polyhedron:edge:inset
+     @abstract Adjust the vertices of a Polyhedrons Polytopes along the given GridEdge by the specified inset.
+     @param polyhedron The Polyhedron whose Polytope vertices should be inset.
+     @param edge The GridEdge to inset.
+     @param inset The amount by which the Polytope vertices should be inset.
+     */
+    static func Inset(polyhedron: Polyhedron, edge: GridEdge, inset: MDWFloat) -> Polyhedron {
+        
+        let upperPolytope = Polytope.Inset(polytope: polyhedron.upperPolytope, edge: edge, inset: inset)
+        let lowerPolytope = Polytope.Inset(polytope: polyhedron.lowerPolytope, edge: edge, inset: inset)
+        
+        return Polyhedron(upperPolytope: upperPolytope, lowerPolytope: lowerPolytope)
+    }
+}

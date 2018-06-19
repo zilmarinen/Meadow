@@ -122,15 +122,27 @@ public extension Coordinate {
     static var Backward: Coordinate { return Coordinate(x: 0, y: 0, z: -1) }
     
     /*!
-     @property Cardinal
-     @abstract Returns an array of Coordinates along each `GridEdge`.
+     @property GridEdgeExtents
+     @abstract Returns an array of Coordinates along each GridEdge.
      */
-    static var Cardinal: [Coordinate] { return [
+    static var GridEdgeExtents: [Coordinate] { return [
         
         Coordinate.Forward,
         Coordinate.Right,
         Coordinate.Backward,
         Coordinate.Left
+    ]}
+    
+    /*!
+     @property GridCornerExtents
+     @abstract Returns an array of Coordinates along each GridCorner.
+     */
+    static var GridCornerExtents: [Coordinate] { return [
+        
+        Coordinate.Forward + Coordinate.Left,
+        Coordinate.Forward + Coordinate.Right,
+        Coordinate.Backward + Coordinate.Right,
+        Coordinate.Backward + Coordinate.Left
     ]}
 }
 

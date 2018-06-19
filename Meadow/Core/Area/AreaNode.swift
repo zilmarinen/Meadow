@@ -268,44 +268,61 @@ public class AreaNode: GridNode {
                 
                 if let perimeterEdge = get(perimeterEdge: edge) {
                     
-//                    if let colorPalette = externalMaterialType?.colorPalette {
-//
-//                        let cardinal = GridEdge.Cardinal(edge: edge)
-//
-//                        let translation = SCNVector3(x: MDWFloat(cardinal.x), y: 0.0, z: MDWFloat(cardinal.z))
-//
-//                        let translatedPolyhedron = Polyhedron.Translate(polyhedron: polyhedron, translation: translation)
-//
-//                        let invertedPolyhedron = Polyhedron.Invert(polyhedron: translatedPolyhedron, edge: edge)
-//
-//                        let externalMesh = internalPrefabType.mesh(polyhedron: invertedPolyhedron, perimeterEdge: perimeterEdge, colorPalette: colorPalette, side: .interior)
-//
-//                        meshes.append(externalMesh)
-//                    }
+                    if find(neighbour: edge) == nil {
+                     
+                        if let colorPalette = externalMaterialType?.colorPalette {
+                            
+                            let mesh = externalPrefabType.mesh(node: self, perimeterEdge: perimeterEdge, colorPalette: colorPalette, side: .exterior)
+                            
+                            meshes.append(mesh)
+                        }
+                    }
                     
                     if let colorPalette = internalMaterialType?.colorPalette {
                         
-                        let internalMesh = externalPrefabType.mesh(polyhedron: polyhedron, perimeterEdge: perimeterEdge, colorPalette: colorPalette, side: .exterior)
+                        let mesh = internalPrefabType.mesh(node: self, perimeterEdge: perimeterEdge, colorPalette: colorPalette, side: .interior)
                         
-                        meshes.append(internalMesh)
+                        meshes.append(mesh)
                     }
                 }
             }
             
             GridCorner.Corners.forEach { corner in
                 
-                if let colorPalette = externalMaterialType?.colorPalette {
+                let edges = GridEdge.Edges(corner: corner)
+                
+                let e0 = edges.first!
+                let e1 = edges.last!
+                
+                let n0 = find(neighbour: e0)?.node as? AreaNode
+                let n1 = find(neighbour: e1)?.node as? AreaNode
+                let d = find(neighbour: corner)?.node as? AreaNode
+                
+                let p0 = get(perimeterEdge: e0)
+                let p1 = get(perimeterEdge: e1)
+                let p2 = n0?.get(perimeterEdge: e1)
+                let p3 = n1?.get(perimeterEdge: e0)
+                
+                if p0 != nil && p1 != nil && p2 == nil && p3 == nil && d == nil {
+                
+                    if let colorPalette = externalMaterialType?.colorPalette {
                     
-                    let externalMesh = externalPrefabType.mesh(polyhedron: polyhedron, corner: corner, colorPalette: colorPalette, side: .exterior)
+                        if let mesh = externalPrefabType.mesh(node: self, corner: corner, colorPalette: colorPalette, side: .exterior) {
                     
-                    meshes.append(externalMesh)
+                            meshes.append(mesh)
+                        }
+                    }
                 }
                 
-                if let colorPalette = internalMaterialType?.colorPalette {
+                if p0 == nil && p1 == nil && p2 != nil && p3 != nil {
                     
-                    let internalMesh = internalPrefabType.mesh(polyhedron: polyhedron, corner: corner, colorPalette: colorPalette, side: .interior)
+                    if let colorPalette = internalMaterialType?.colorPalette {
                     
-                    meshes.append(internalMesh)
+                        if let mesh = internalPrefabType.mesh(node: self, corner: corner, colorPalette: colorPalette, side: .interior) {
+                    
+                            meshes.append(mesh)
+                        }
+                    }
                 }
             }
             
@@ -360,6 +377,16 @@ extension AreaNode {
         
         perimeterEdges.insert(AreaPerimeterEdge(edge: edge, perimeterType: perimeterType))
         
+        if let neighbour = find(neighbour: edge)?.node as? AreaNode {
+            
+            let oppositeEdge = GridEdge.Opposite(edge: edge)
+            
+            if neighbour.get(perimeterEdge: oppositeEdge)?.perimeterType != perimeterType {
+                
+                neighbour.set(perimeterType: perimeterType, edge: oppositeEdge)
+            }
+        }
+        
         becomeDirty()
     }
     
@@ -373,6 +400,16 @@ extension AreaNode {
         if let existingType = get(perimeterEdge: edge) {
             
             perimeterEdges.remove(existingType)
+            
+            if let neighbour = find(neighbour: edge)?.node as? AreaNode {
+                
+                let oppositeEdge = GridEdge.Opposite(edge: edge)
+                
+                if neighbour.get(perimeterEdge: oppositeEdge) != nil {
+                
+                    neighbour.remove(perimeterType: oppositeEdge)
+                }
+            }
             
             becomeDirty()
         }

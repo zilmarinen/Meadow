@@ -204,9 +204,9 @@ extension GridNode {
     
     /*!
      @method add:neighbour:edge
-     @abstract Attempt to create a relationship between two nodes along the specified edge.
-     @param neighbour The node to become neighbours with.
-     @param edge The edge shared between the two nodes.
+     @abstract Attempt to create a relationship between two GridNodes along the specified GridEdge.
+     @param neighbour The GridNode to become neighbours with.
+     @param edge The GridEdge shared between the GridNodes nodes.
      */
     func add(neighbour node: GridNode, edge: GridEdge) {
         
@@ -228,8 +228,8 @@ extension GridNode {
     
     /*!
      @method remove:neighbour:edge
-     @abstract Attempt to remove the relationship between two nodes along the specified edge.
-     @param edge The edge shared between the two nodes.
+     @abstract Attempt to remove the relationship between two GridNodes along the specified GridEdge.
+     @param edge The GridEdge shared between the two GridNodes.
      */
     func remove(neighbour edge: GridEdge) {
         
@@ -249,8 +249,8 @@ extension GridNode {
     
     /*!
      @method find:neighbour:edge
-     @abstract Attempt to find and return the neighbouring node along the specified edge.
-     @param edge The GridEdge shared between the two nodes.
+     @abstract Attempt to find and return the neighbouring GridNode along the specified GridEdge.
+     @param edge The GridEdge shared between the two GridNodes.
      */
     func find(neighbour edge: GridEdge) -> GridNodeNeighbour? {
         
@@ -262,11 +262,10 @@ extension GridNode {
     
     /*!
      @method find:neighbour:corner
-     @abstract Attempt to find and return the neighbouring node along the specified edge.
-     @param edge The GridEdge shared between the two nodes.
+     @abstract Attempt to find and return the diagonal node along the specified edge.
      @param corner The GridCorner used to determine the diagonal corner shared between the two nodes.
      */
-    func find(neighbour edge: GridEdge, corner: GridCorner) -> GridNodeNeighbour? {
+    func find(neighbour corner: GridCorner) -> GridNodeNeighbour? {
         
         let connectedEdges = GridEdge.Edges(corner: corner)
         

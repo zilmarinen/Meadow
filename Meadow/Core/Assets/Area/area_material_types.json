@@ -56,5 +56,34 @@
 				"alpha": 1.0
 			}
 		}
+	},
+	{
+		"name": "Ceramic",
+		"color_palette": {
+			"primary": {
+				"red": 0.737,
+				"green": 0.372,
+				"blue": 0.262,
+				"alpha": 1.0
+			},
+			"secondary": {
+				"red": 0.984,
+				"green": 0.501,
+				"blue": 0.349,
+				"alpha": 1.0
+			},
+			"tertiary": {
+				"red": 0.686,
+				"green": 0.349,
+				"blue": 0.243,
+				"alpha": 1.0
+			},
+			"quaternary": {
+				"red": 0.584,
+				"green": 0.298,
+				"blue": 0.207,
+				"alpha": 1.0
+			}
+		}
 	}
 ]

@@ -264,33 +264,35 @@ extension Polytope {
      */
     static func Inset(polytope: Polytope, edge: GridEdge, inset: MDWFloat) -> Polytope {
         
+        let oppositeEdge = GridEdge.Opposite(edge: edge)
+        
         switch edge {
             
         case .north:
         
-            let v0 = SCNVector3.Lerp(from: polytope.vertices[0], to: polytope.vertices[3], scalar: inset)
-            let v1 = SCNVector3.Lerp(from: polytope.vertices[1], to: polytope.vertices[2], scalar: inset)
+            let v0 = GridEdge.Translate(vector: polytope.vertices[0], edge: oppositeEdge, translation: inset)
+            let v1 = GridEdge.Translate(vector: polytope.vertices[1], edge: oppositeEdge, translation: inset)
             
             return Polytope(vertices: [v0, v1, polytope.vertices[2], polytope.vertices[3]])
             
         case .east:
             
-            let v1 = SCNVector3.Lerp(from: polytope.vertices[1], to: polytope.vertices[0], scalar: inset)
-            let v2 = SCNVector3.Lerp(from: polytope.vertices[2], to: polytope.vertices[3], scalar: inset)
+            let v1 = GridEdge.Translate(vector: polytope.vertices[1], edge: oppositeEdge, translation: inset)
+            let v2 = GridEdge.Translate(vector: polytope.vertices[2], edge: oppositeEdge, translation: inset)
             
             return Polytope(vertices: [polytope.vertices[0], v1, v2, polytope.vertices[3]])
             
         case .south:
             
-            let v2 = SCNVector3.Lerp(from: polytope.vertices[2], to: polytope.vertices[1], scalar: inset)
-            let v3 = SCNVector3.Lerp(from: polytope.vertices[3], to: polytope.vertices[0], scalar: inset)
+            let v2 = GridEdge.Translate(vector: polytope.vertices[2], edge: oppositeEdge, translation: inset)
+            let v3 = GridEdge.Translate(vector: polytope.vertices[3], edge: oppositeEdge, translation: inset)
             
             return Polytope(vertices: [polytope.vertices[0], polytope.vertices[1], v2, v3])
             
         case .west:
             
-            let v0 = SCNVector3.Lerp(from: polytope.vertices[0], to: polytope.vertices[1], scalar: inset)
-            let v3 = SCNVector3.Lerp(from: polytope.vertices[3], to: polytope.vertices[2], scalar: inset)
+            let v0 = GridEdge.Translate(vector: polytope.vertices[0], edge: oppositeEdge, translation: inset)
+            let v3 = GridEdge.Translate(vector: polytope.vertices[3], edge: oppositeEdge, translation: inset)
             
             return Polytope(vertices: [v0, polytope.vertices[1], polytope.vertices[2], v3])
             

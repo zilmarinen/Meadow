@@ -39,7 +39,7 @@ extension GridEdge {
     
     /*!
      @property Edges
-     @abstract An array of grid edges in clockwise order.
+     @abstract An array of GridEdges in clockwise order.
      */
     static var Edges: [GridEdge] { return [
     
@@ -51,7 +51,7 @@ extension GridEdge {
     
     /*!
      @property Corners
-     @abstract An array of grid edges connected to a grid corner.
+     @abstract An array of GridEdges connected to a grid corner.
      */
     private static var Corners: [[GridEdge]] { return [
     
@@ -63,7 +63,7 @@ extension GridEdge {
     
     /*!
      @property Connected
-     @abstract An array of grid edges connected to each other in clockwise order.
+     @abstract An array of GridEdges connected to each other in clockwise order.
      */
     private static var Connected: [[GridEdge]] { return [
         
@@ -75,7 +75,7 @@ extension GridEdge {
     
     /*!
      @property Opposite
-     @abstract An array of grid edges opposite to those defined by `GridEdge.Edges`.
+     @abstract An array of GridEdges opposite to those defined by GridEdge.Edges.
      */
     private static var Opposite: [GridEdge] { return [
         
@@ -87,7 +87,7 @@ extension GridEdge {
     
     /*!
      @property Normal
-     @abstract An array of SCNVector3 defining the normal for each edge.
+     @abstract An array of SCNVector3 defining the normal for each GridEdge.
      */
     private static var Normal: [SCNVector3] { return [
         
@@ -99,7 +99,7 @@ extension GridEdge {
     
     /*!
      @method Edges:corner
-     @abstract Return the two edges connected to a given corner.
+     @abstract Return the two GridEdges connected to a given GridCorner.
      */
     static func Edges(corner: GridCorner) -> [GridEdge] {
         
@@ -108,7 +108,7 @@ extension GridEdge {
     
     /*!
      @method Edges:edge
-     @abstract Return the two edges connected to a given edge.
+     @abstract Return the two GridEdges connected to a given GridEdge.
      */
     static func Edges(edge: GridEdge) -> [GridEdge] {
         
@@ -117,7 +117,7 @@ extension GridEdge {
     
     /*!
      @method Opposite:edge
-     @abstract Return the opposite edge from a given edge.
+     @abstract Return the opposite GridEdges from a given GridEdge.
      */
     static func Opposite(edge: GridEdge) -> GridEdge {
         
@@ -126,7 +126,7 @@ extension GridEdge {
     
     /*!
      @method Normal:edge
-     @abstract Return the SCNVector3 defining the normal for a given edge.
+     @abstract Return the SCNVector3 defining the normal for a given GridEdge.
      */
     static func Normal(edge: GridEdge) -> SCNVector3 {
         
@@ -134,11 +134,28 @@ extension GridEdge {
     }
     
     /*!
-     @method Cardinal:edge
-     @abstract Return the cardinal coordinate along a given edge.
+     @method Extent:edge
+     @abstract Return the coordinate along a given GridEdge.
      */
-    static func Cardinal(edge: GridEdge) -> Coordinate {
+    static func Extent(edge: GridEdge) -> Coordinate {
         
-        return Coordinate.Cardinal[edge.rawValue]
+        return Coordinate.GridEdgeExtents[edge.rawValue]
+    }
+}
+
+extension GridEdge {
+    
+    /*!
+     @method Translate:vector:edge:translation
+     @abstract Translates a vertex along the given GridEdge by the translation.
+     @param vector The vector whose components should be translated.
+     @param edge The GridEdge along which the vertex should be translated.
+     @param translation The value defining the translation.
+     */
+    static func Translate(vector: SCNVector3, edge: GridEdge, translation: MDWFloat) -> SCNVector3 {
+        
+        let normal = Normal(edge: edge)
+        
+        return SCNVector3(x: vector.x + (normal.x * translation), y: vector.y, z: vector.z + (normal.z * translation))
     }
 }

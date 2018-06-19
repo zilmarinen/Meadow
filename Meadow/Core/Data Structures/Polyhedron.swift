@@ -111,7 +111,7 @@ extension Polyhedron {
     }
     
     /*!
-     @method subtract:polyhedron:from
+     @method Subtract:polyhedron:from
      @astract Attempts to subtract the volume of one Polyhedron from another.
      @param subtract The Polyhedron to subtract from the source Polyhedron.
      @param from The source Polyhedon to be divided into parts.
@@ -157,7 +157,7 @@ extension Polyhedron {
     }
     
     /*!
-     @method subtract:polyhedrons:from
+     @method Subtract:polyhedrons:from
      @astract Attempts to subtract the volumes of an array of Polyhedrons from a single Polyhedron.
      @param subtract An array of Polyhedrons to subtract from the source Polyhedron.
      @param from The source Polyhedon to be divided into parts.
@@ -192,7 +192,7 @@ extension Polyhedron {
 extension Polyhedron {
     
     /*!
-     @method translate:polyhedron:translation
+     @method Translate:polyhedron:translation
      @abstract Translates the vertices of a Polyhedrons Polytopes by the given translation vector.
      @param polytope The Polyhedron whose Polytope vertices should be translated.
      @param translation The vector defining the translation.
@@ -209,7 +209,7 @@ extension Polyhedron {
 extension Polyhedron {
     
     /*!
-     @method inset:polyhedron:edge:inset
+     @method Inset:polyhedron:edge:inset
      @abstract Adjust the vertices of a Polyhedrons Polytopes along the given GridEdge by the specified inset.
      @param polyhedron The Polyhedron whose Polytope vertices should be inset.
      @param edge The GridEdge to inset.

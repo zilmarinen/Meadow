@@ -37,7 +37,7 @@ extension GridCorner {
     
     /*!
      @property Corners
-     @abstract An array of grid corners in clockwise order.
+     @abstract An array of GridCorner in clockwise order.
      */
     static var Corners: [GridCorner] { return [
     
@@ -49,7 +49,7 @@ extension GridCorner {
     
     /*!
      @property Edges
-     @abstract An array of grid corners along each grid edge in clockwise order.
+     @abstract An array of GridCorner along each grid edge in clockwise order.
      */
     private static var Edges: [[GridCorner]] { return [
         
@@ -61,7 +61,7 @@ extension GridCorner {
     
     /*!
      @property Connected
-     @abstract An array of grid corners connected to each other in clockwise order.
+     @abstract An array of GridCorner connected to each other in clockwise order.
      */
     private static var Connected: [[GridCorner]] { return [
     
@@ -73,7 +73,7 @@ extension GridCorner {
     
     /*!
      @property Opposite
-     @abstract An array of grid corners opposite to those defined by `GridCorner.Corners`.
+     @abstract An array of GridCorners opposite to those defined by GridCorner.Corners.
      */
     private static var Opposite: [GridCorner] { return [
         
@@ -85,7 +85,7 @@ extension GridCorner {
     
     /*!
      @method Corners:edge
-     @abstract Return the two corners connected to a given edge.
+     @abstract Return the two GridCorners connected to a given GridEdge.
      */
     static func Corners(edge: GridEdge) -> [GridCorner] {
         
@@ -94,7 +94,7 @@ extension GridCorner {
     
     /*!
      @method Corners:corner
-     @abstract Return the two corners connected to a given corner.
+     @abstract Return the two GridCorners connected to a given GridCorner.
      */
     static func Corners(corner: GridCorner) -> [GridCorner] {
         
@@ -103,7 +103,7 @@ extension GridCorner {
     
     /*!
      @method Opposite:corner
-     @abstract Return the opposite corner diagonally from a given corner.
+     @abstract Return the opposite GridCorner diagonally from a given GridCorner.
      */
     static func Opposite(corner: GridCorner) -> GridCorner {
         
@@ -112,7 +112,7 @@ extension GridCorner {
     
     /*!
      @method Adjacent:corner:edge
-     @abstract Return the adjacent corner along a given edge.
+     @abstract Return the adjacent GridCorner along a given GridEdge.
      */
     static func Adjacent(corner: GridCorner, edge: GridEdge) -> GridCorner {
         
@@ -123,5 +123,14 @@ extension GridCorner {
         let corners = GridCorner.Corners(edge: oppositeEdge)
         
         return corners.filter { $0 != oppositeCorner }.first!
+    }
+    
+    /*!
+     @method Extent:corner
+     @abstract Return the coordinate along a given GridCorner.
+     */
+    static func Extent(corner: GridCorner) -> Coordinate {
+        
+        return Coordinate.GridCornerExtents[corner.rawValue]
     }
 }

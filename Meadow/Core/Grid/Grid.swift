@@ -219,7 +219,7 @@ extension Grid {
         
         GridEdge.Edges.forEach { edge in
             
-            if let neighbour = find(node: volume.coordinate + GridEdge.Cardinal(edge: edge)) {
+            if let neighbour = find(node: volume.coordinate + GridEdge.Extent(edge: edge)) {
                 
                 node.add(neighbour: neighbour, edge: edge)
             }

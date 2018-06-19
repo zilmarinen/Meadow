@@ -57,41 +57,41 @@ extension AreaPrefabType {
 extension AreaPrefabType {
     
     /*!
-     @method mesh:polyhedron:perimeterEdge:colorPalette
+     @method mesh:node:perimeterEdge:colorPalette
      @abstract Creates and returns a mesh for the given AreaPerimeterType along the specified GridEdge defined by the AreaPerimeterEdge.
-     @param polyhedron The Polyhedron of the AreaNode being drawn.
+     @param node The AreaNode being drawn.
      @param perimeterEdge The AreaPerimeterEdge PerimeterType and GridEdge.
      @param colorPalette The ColorPalette to paint the mesh with.
      @param side The side towards which the mesh should be drawn facing.
      */
-    func mesh(polyhedron: Polyhedron, perimeterEdge: AreaPerimeterEdge, colorPalette: ColorPalette, side: Plane.PlaneSide) -> Mesh {
+    func mesh(node: AreaNode, perimeterEdge: AreaPerimeterEdge, colorPalette: ColorPalette, side: Plane.PlaneSide) -> Mesh {
         
         switch perimeterEdge.perimeterType {
             
         case .doorway:
             
-            return meshProvider.doorway(polyhedron: polyhedron, edge: perimeterEdge.edge, colorPalette: colorPalette, side: side)
+            return meshProvider.doorway(node: node, edge: perimeterEdge.edge, colorPalette: colorPalette, side: side)
             
         case .wall:
             
-            return meshProvider.wall(polyhedron: polyhedron, edge: perimeterEdge.edge, colorPalette: colorPalette, side: side)
+            return meshProvider.wall(node: node, edge: perimeterEdge.edge, colorPalette: colorPalette, side: side)
             
         case .window:
             
-            return meshProvider.window(polyhedron: polyhedron, edge: perimeterEdge.edge, colorPalette: colorPalette, side: side)
+            return meshProvider.window(node: node, edge: perimeterEdge.edge, colorPalette: colorPalette, side: side)
         }
     }
     
     /*!
-     @method mesh:polyhedron:corner:colorPalette
+     @method mesh:node:corner:colorPalette
      @abstract Creates and returns a mesh for the given GridCorner.
-     @param polyhedron The Polyhedron of the AreaNode being drawn.
+     @param node The AreaNode being drawn.
      @param corner The GridCorner around which to render the mesh.
      @param colorPalette The ColorPalette to paint the mesh with.
      @param side The side towards which the mesh should be drawn facing.
      */
-    func mesh(polyhedron: Polyhedron, corner: GridCorner, colorPalette: ColorPalette, side: Plane.PlaneSide) -> Mesh {
+    func mesh(node: AreaNode, corner: GridCorner, colorPalette: ColorPalette, side: Plane.PlaneSide) -> Mesh? {
         
-        return meshProvider.corner(polyhedron: polyhedron, corner: corner, colorPalette: colorPalette, side: side)
+        return meshProvider.corner(node: node, corner: corner, colorPalette: colorPalette, side: side)
     }
 }

@@ -95,7 +95,7 @@ extension CameraJib {
      */
     func focus(focus: SCNVector3, edge: GridEdge, deltaTime: TimeInterval) {
         
-        let offset = SCNVector3(x: 7.0, y: 7.0, z: 7.0)
+        let offset = SCNVector3(x: 5.0, y: 5.0, z: 5.0)
         
         let vector = focus + offset
         

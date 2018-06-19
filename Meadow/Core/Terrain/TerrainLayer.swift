@@ -286,7 +286,7 @@ extension TerrainLayer {
                 
                 let a0 = node.find(neighbour: e0)?.node as? TerrainNode
                 let a1 = node.find(neighbour: e1)?.node as? TerrainNode
-                let d = (node.find(neighbour: e0, corner: corner) ?? node.find(neighbour: e1, corner: corner))?.node as? TerrainNode
+                let d = node.find(neighbour: corner)?.node as? TerrainNode
                 
                 if let a0 = a0, let topLayer = a0.topLayer { topLayer.set(height: cornerHeight, corner: c0, smooth: smooth) }
                 if let a1 = a1, let topLayer = a1.topLayer { topLayer.set(height: cornerHeight, corner: c1, smooth: smooth) }

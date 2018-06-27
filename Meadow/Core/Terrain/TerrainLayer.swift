@@ -540,8 +540,8 @@ extension TerrainLayer {
             
             let v0 = vertices[0]
             let v1 = vertices[1]
-            let v2 = (acuteCorner == corners.first ? vertices[1] - crown : SCNVector3.Lerp(from: vertices[2], to: vertices[3], scalar: TerrainLayer.Crown))
-            let v3 = (acuteCorner == corners.first ? SCNVector3.Lerp(from: vertices[3], to: vertices[2], scalar: TerrainLayer.Crown) : vertices[0] - crown)
+            let v2 = (acuteCorner == corners.first ? vertices[1] - crown : SCNVector3.Lerp(from: vertices[2], to: vertices[3], factor: TerrainLayer.Crown))
+            let v3 = (acuteCorner == corners.first ? SCNVector3.Lerp(from: vertices[3], to: vertices[2], factor: TerrainLayer.Crown) : vertices[0] - crown)
             
             return [    MeshFace(vertices: [v0, v1, v2], normals: normals, colors: colors),
                         MeshFace(vertices: [v0, v2, v3], normals: normals, colors: colors)]
@@ -571,7 +571,7 @@ extension TerrainLayer {
             
             let v0 = (acuteCorner == corners.first ? vertices[1] : vertices[0]) - crown
             let v1 = (acuteCorner == corners.first ? vertices[2] : vertices[3])
-            let v2 = SCNVector3.Lerp(from: vertices[acuteCorner.rawValue], to: v1, scalar: TerrainLayer.Crown)
+            let v2 = SCNVector3.Lerp(from: vertices[acuteCorner.rawValue], to: v1, factor: TerrainLayer.Crown)
             
             let i0 = (acuteCorner == corners.first ? v0 : v1)
             let i1 = (acuteCorner == corners.first ? v1 : v0)

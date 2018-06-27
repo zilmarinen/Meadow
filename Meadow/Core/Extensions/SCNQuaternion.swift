@@ -100,4 +100,21 @@ extension SCNQuaternion {
         
         return SCNQuaternion(x: MDWFloat(q.x), y: MDWFloat(q.y), z: MDWFloat(q.z), w: MDWFloat(q.w))
     }
+    
+    /*!
+     @method Slerp:from:to:scalar
+     @astract Spherical linear interpolation of one quaternion toward another.
+     @property from A SCNQuaternion to interpolate from.
+     @property from A SCNQuaternion to interpolate toward.
+     @property factor A value between 0 and 1 determining the amount of interpolation.
+     */
+    public static func Slerp(from: SCNQuaternion, to: SCNQuaternion, factor: MDWFloat) -> SCNQuaternion {
+        
+        let q0 = GLKQuaternionMake(Float(from.x), Float(from.y), Float(from.z), Float(from.w))
+        let q1 = GLKQuaternionMake(Float(to.x), Float(to.y), Float(to.z), Float(to.w))
+        
+        let s = GLKQuaternionSlerp(q0, q1, Float(factor))
+        
+        return SCNQuaternion(x: MDWFloat(s.x), y: MDWFloat(s.y), z: MDWFloat(s.z), w: MDWFloat(s.w))
+    }
 }

@@ -153,11 +153,11 @@ extension SCNVector3 {
      @astract Linear interpolation of one vector toward another.
      @property from A SCNVector3 to interpolate from.
      @property from A SCNVector3 to interpolate toward.
-     @property scalar A value between 0 and 1 determining the amount of interpolation.
+     @property factor A value between 0 and 1 determining the amount of interpolation.
      */
-    public static func Lerp(from: SCNVector3, to: SCNVector3, scalar: MDWFloat) -> SCNVector3 {
+    public static func Lerp(from: SCNVector3, to: SCNVector3, factor: MDWFloat) -> SCNVector3 {
         
-        let d = min(max(scalar, 0), 1)
+        let d = min(max(factor, 0), 1)
         
         let t = (1 - d)
         

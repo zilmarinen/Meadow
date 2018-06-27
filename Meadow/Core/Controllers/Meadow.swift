@@ -66,6 +66,12 @@ public class Meadow: SCNScene, Encodable {
     private let delegate: SoilableDelegate
     
     /*!
+     @property lastUpdateTime
+     @abstract TimeInterval of when the last update was performed.
+     */
+    private var lastUpdateTime: TimeInterval = -1
+    
+    /*!
      @property cameraJib
      @abstract Main world camera parent node.
      */
@@ -228,7 +234,7 @@ extension Meadow: SCNSceneRendererDelegate {
      */
     public func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
         
-        let deltaTime: TimeInterval = 0
+        let deltaTime = (lastUpdateTime == -1 ? 0 : (time - lastUpdateTime))
         
         cameraJib.update(deltaTime: deltaTime)
         
@@ -239,6 +245,8 @@ extension Meadow: SCNSceneRendererDelegate {
         terrain.update(deltaTime: deltaTime)
         tunnels.update(deltaTime: deltaTime)
         water.update(deltaTime: deltaTime)
+        
+        lastUpdateTime = time
     }
 }
 

@@ -182,7 +182,7 @@ public class FootpathNode: GridNode {
             
             polyhedron.lowerPolytope.vertices.forEach { vertex in
                 
-                insetVertices.append(SCNVector3.Lerp(from: vertex, to: apexCenter, scalar: length) + throne)
+                insetVertices.append(SCNVector3.Lerp(from: vertex, to: apexCenter, factor: length) + throne)
             }
             
             let plane = Plane(v0: insetVertices[0], v1: insetVertices[1], v2: insetVertices[2])
@@ -223,12 +223,12 @@ public class FootpathNode: GridNode {
                     
                     if a0 == nil || (a0 != nil && d0 == nil) {
                         
-                        v4 = SCNVector3.Lerp(from: v0, to: v1, scalar: FootpathNode.Furrow)
+                        v4 = SCNVector3.Lerp(from: v0, to: v1, factor: FootpathNode.Furrow)
                     }
                     
                     if a1 == nil || (a1 != nil && d1 == nil) {
                         
-                        v5 = SCNVector3.Lerp(from: v1, to: v0, scalar: FootpathNode.Furrow)
+                        v5 = SCNVector3.Lerp(from: v1, to: v0, factor: FootpathNode.Furrow)
                     }
                     
                     faces.append(MeshFace(vertices: [v4, v2, v5], normals: normals, colors: primaryColors))

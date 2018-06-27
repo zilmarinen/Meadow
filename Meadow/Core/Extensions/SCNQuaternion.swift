@@ -7,26 +7,97 @@
 //
 
 import SceneKit
+import GLKit
 
 extension SCNQuaternion {
     
     public static func *(lhs: SCNQuaternion, rhs: SCNQuaternion) -> SCNQuaternion {
         
-        let w = (lhs.w * rhs.w - lhs.x * rhs.x - lhs.y * rhs.y - lhs.z * rhs.z)
-        let x = (lhs.w * rhs.x + lhs.x * rhs.w + lhs.y * rhs.z - lhs.z * rhs.y)
-        let y = (lhs.w * rhs.y - lhs.x * rhs.z + lhs.y * rhs.w + lhs.z * rhs.x)
-        let z = (lhs.w * rhs.z + lhs.x * rhs.y - lhs.y * rhs.x + lhs.z * rhs.w)
+        let q0 = GLKQuaternionMake(Float(lhs.x), Float(lhs.y), Float(lhs.z), Float(lhs.w))
+        let q1 = GLKQuaternionMake(Float(rhs.x), Float(rhs.y), Float(rhs.z), Float(rhs.w))
         
-        return SCNQuaternion(x: x, y: y, z: z, w: w)
+        let m = GLKQuaternionMultiply(q0, q1)
+        
+        return SCNQuaternion(x: MDWFloat(m.x), y: MDWFloat(m.y), z: MDWFloat(m.z), w: MDWFloat(m.w))
+    }
+    
+    public static func *(lhs: SCNQuaternion, rhs: SCNVector3) -> SCNVector3 {
+        
+        let q = GLKQuaternionMake(Float(lhs.x), Float(lhs.y), Float(lhs.z), Float(lhs.w))
+        
+        let v = GLKVector3Make(Float(rhs.x), Float(rhs.y), Float(rhs.z))
+        
+        let r = GLKQuaternionRotateVector3(q, v)
+        
+        return SCNVector3(x: MDWFloat(r.x), y: MDWFloat(r.y), z: MDWFloat(r.z))
     }
     
     /*!
-     @method Negate:quaternion
-     @abstract Returns a negated SCNQuaternion of the SCNQuaternion.
-     @param vector The SCNQuaternion whose components should be negated and returned.
+     @method Normalise:quaternion
+     @abstract Returns a normalised SCNQuaternion of the SCNQuaternion.
+     @param vector The SCNQuaternion to be normalised.
      */
-    public static func Negate(quaternion: SCNQuaternion) -> SCNQuaternion {
+    public static func Normalise(quaternion: SCNQuaternion) -> SCNQuaternion {
         
-        return SCNQuaternion(x: -quaternion.x, y: -quaternion.y, z: -quaternion.z, w: quaternion.w)
+        let q = GLKQuaternionMake(Float(quaternion.x), Float(quaternion.y), Float(quaternion.z), Float(quaternion.w))
+        
+        let n = GLKQuaternionNormalize(q)
+        
+        return SCNQuaternion(x: MDWFloat(n.x), y: MDWFloat(n.y), z: MDWFloat(n.z), w: MDWFloat(n.w))
+    }
+    
+    /*!
+     @method Conjugate:quaternion
+     @abstract Returns the conjugate of a quaternion with the same scalar value, but the signs of the vector components are flipped.
+     @param quaternion The SCNQuaternion whose components should be conjugated and returned.
+     */
+    public static func Conjugate(quaternion: SCNQuaternion) -> SCNQuaternion {
+        
+        let q = GLKQuaternionMake(Float(quaternion.x), Float(quaternion.y), Float(quaternion.z), Float(quaternion.w))
+        
+        let c = GLKQuaternionConjugate(q)
+        
+        return SCNQuaternion(x: MDWFloat(c.x), y: MDWFloat(c.y), z: MDWFloat(c.z), w: MDWFloat(c.w))
+    }
+    
+    /*!
+     @method Invert:quaternion
+     @abstract Returns a negated SCNQuaternion of the SCNQuaternion.
+     @param quaternion The SCNQuaternion whose components should be negated and returned.
+     */
+    public static func Invert(quaternion: SCNQuaternion) -> SCNQuaternion {
+        
+        let q = GLKQuaternionMake(Float(quaternion.x), Float(quaternion.y), Float(quaternion.z), Float(quaternion.w))
+        
+        let i = GLKQuaternionInvert(q)
+        
+        return SCNQuaternion(x: MDWFloat(i.x), y: MDWFloat(i.y), z: MDWFloat(i.z), w: MDWFloat(i.w))
+    }
+    
+    /*!
+     @method Focus:vector:focus:up
+     @abstract Returns a SCNQuaternion rotated to face towards the specified focus point.
+     @param vector The SCNVector3 representing the position from which to rotate to face towards the focus point.
+     @param focus The SCNVector3 to rotate to face towards.
+     @param up A SCNVector3 representing the direction of the world y axis.
+     */
+    public static func Focus(vector: SCNVector3, focus: SCNVector3, up: SCNVector3) -> SCNQuaternion {
+        
+        let worldUp = SCNVector3.Normalise(vector: up)
+        
+        let forward = SCNVector3.Normalise(vector: vector - focus)
+        
+        let right = SCNVector3.Normalise(vector: SCNVector3.Cross(lhs: worldUp, rhs: forward))
+        
+        let localUp = SCNVector3.Normalise(vector: SCNVector3.Cross(lhs: forward, rhs: right))
+        
+        let m = GLKMatrix4Make(Float(right.x), Float(right.y), Float(right.z), 0.0,
+                               Float(localUp.x), Float(localUp.y), Float(localUp.z), 0.0,
+                               Float(forward.x), Float(forward.y), Float(forward.z), 0.0,
+                               Float(vector.x), Float(vector.y), Float(vector.z), 1.0)
+        
+        let q = GLKQuaternionMakeWithMatrix4(m)
+        
+        return SCNQuaternion(x: MDWFloat(q.x), y: MDWFloat(q.y), z: MDWFloat(q.z), w: MDWFloat(q.w))
     }
 }

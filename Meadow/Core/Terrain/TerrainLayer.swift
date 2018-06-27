@@ -514,7 +514,7 @@ extension TerrainLayer {
         
         if plane.side(vector: apexNormal) == .interior {
             
-            normal = SCNVector3.Negate(vector: plane.normal)
+            normal = SCNVector3.Invert(vector: plane.normal)
         }
         
         return MeshFace(vertices: [v1, v0, apexCenter], normals: [normal, normal, normal], colors: [color, color, color])

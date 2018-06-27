@@ -147,6 +147,8 @@ public class Meadow: SCNScene, Encodable {
         rootNode.addChildNode(terrain)
         rootNode.addChildNode(tunnels)
         rootNode.addChildNode(water)
+        
+        cameraJib.stateMachine.state = .focus(SCNVector3Zero, .north, (CameraJib.maximumZoomLevel / 2.0))
     }
     
     /*!

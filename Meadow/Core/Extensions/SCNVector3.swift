@@ -71,6 +71,11 @@ extension SCNVector3 {
         lhs = lhs - rhs
     }
     
+    public static func *(lhs: SCNVector3, rhs: MDWFloat) -> SCNVector3 {
+        
+        return SCNVector3(x: lhs.x * rhs, y: lhs.y * rhs, z: lhs.z * rhs)
+    }
+    
     /*!
      @method Magnitude:vector
      @abstract Returns the length of the SCNVector3.
@@ -104,11 +109,11 @@ extension SCNVector3 {
     }
     
     /*!
-     @method Negate:vector
+     @method Invert:vector
      @abstract Returns a negated SCNVector3 of the SCNVector3.
      @param vector The SCNVector3 whose components should be negated and returned.
      */
-    public static func Negate(vector: SCNVector3) -> SCNVector3 {
+    public static func Invert(vector: SCNVector3) -> SCNVector3 {
         
         return SCNVector3(x: -vector.x, y: -vector.y, z: -vector.z)
     }

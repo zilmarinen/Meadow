@@ -20,7 +20,7 @@ public class CameraJib: SCNNode {
      */
     public lazy var stateMachine = {
         
-        return CameraJibStateMachine(.focus(SCNVector3Zero, .north), transition: { (from, to) in
+        return CameraJibStateMachine(.focus(SCNVector3Zero, .north, CameraJib.minimumZoomLevel), transition: { (from, to) in
             
             self.stateDidChange(from: from, to: to)
         })
@@ -36,7 +36,7 @@ public class CameraJib: SCNNode {
         
         let camera = SCNCamera()
         
-        //camera.usesOrthographicProjection = false
+        camera.usesOrthographicProjection = true
         
         self.camera = camera
     }
@@ -77,11 +77,26 @@ extension CameraJib {
         
         switch stateMachine.state {
             
-        case .focus(let vector, let edge):
+        case .focus(let vector, let edge, let zoomLevel):
             
-            focus(focus: vector, edge: edge, deltaTime: deltaTime)
+            focus(focus: vector, edge: edge, zoomLevel: zoomLevel, deltaTime: deltaTime)
         }
     }
+}
+
+extension CameraJib {
+    
+    /*!
+     @property minimumZoomLevel
+     @abstract Defines the minimum zoom level of the CameraJib
+     */
+    static var minimumZoomLevel: MDWFloat = 1.0
+    
+    /*!
+     @property maximumZoomLevel
+     @abstract Defines the minimum zoom level of the CameraJib
+     */
+    static var maximumZoomLevel: MDWFloat = 20.0
 }
 
 extension CameraJib {
@@ -91,29 +106,36 @@ extension CameraJib {
      @abstract Update the camera, cleaning its position and rotation as necessary to focus on a specified vector aligned with the given edge.
      @param focus The vector to focus to camera toward.
      @param edge The edge along which the camera should be aligned.
+     @param zoomLevel The current zoom level, capped by CameraJib.minimumZoomLevel and CameraJib.maximumZoomLevel.
      @param deltaTime The time elapsed since the last update.
      */
-    func focus(focus: SCNVector3, edge: GridEdge, deltaTime: TimeInterval) {
+    func focus(focus: SCNVector3, edge: GridEdge, zoomLevel: MDWFloat, deltaTime: TimeInterval) {
         
-        let offset = SCNVector3(x: 5.0, y: 5.0, z: 5.0)
+        guard let camera = camera else { return }
         
-        let vector = focus + offset
+        let scale = Double(min(max(zoomLevel, CameraJib.minimumZoomLevel), CameraJib.maximumZoomLevel))
         
-        look(at: focus)
-        position = vector
-        //rotation = quaternion
-        /*
+        camera.orthographicScale = scale
         
-        let planarPosition = SCNVector3(x: position.x, y: focus.y, z: position.z)
+        let radius = Float(camera.zFar / 2.0)
+        let yAngle = Float(45.0)
+        let xzAngle = Float((edge.rawValue * 90) + 15)
+        let i = GLKMathDegreesToRadians(xzAngle)
+        let j = GLKMathDegreesToRadians(yAngle)
+        let k = GLKMathDegreesToRadians(xzAngle)
         
-        let forward = SCNVector3.Normalise(vector: planarPosition - focus)
+        let x = focus.x + MDWFloat(cos(i) * radius)
+        let y = focus.y + MDWFloat(sin(j) * radius)
+        let z = focus.z + MDWFloat(sin(k) * radius)
         
-        let cross = SCNVector3.Cross(lhs: SCNVector3.Forward, rhs: forward)
+        let targetPosition = SCNVector3(x: x, y: y, z: z)
         
-        let dot = SCNVector3.Dot(lhs: SCNVector3.Forward, rhs: forward)
+        let targetOrientation = SCNQuaternion.Focus(vector: targetPosition, focus: focus, up: SCNVector3.Up)
         
-        let quaternion = SCNQuaternion(x: cross.x, y: cross.y, z: cross.z, w: dot + 1)
+        //
         
-        rotation = SCNQuaternion.Normalise(vector: quaternion)*/
+        position = targetPosition
+        
+        orientation = targetOrientation
     }
 }

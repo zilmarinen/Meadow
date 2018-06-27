@@ -16,7 +16,7 @@ extension CameraJib {
      */
     public enum CameraState: State {
         
-        case focus(SCNVector3, GridEdge)
+        case focus(SCNVector3, GridEdge, MDWFloat)
         
         /*!
          @method shouldTransition:to

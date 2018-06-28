@@ -191,7 +191,7 @@ public class FootpathNode: GridNode {
             
             if plane.side(vector: apexNormal) == .interior {
                 
-                normal = SCNVector3.Invert(vector: plane.normal)
+                normal = SCNVector3.Negate(vector: plane.normal)
             }
             
             let normals = [normal, normal, normal]

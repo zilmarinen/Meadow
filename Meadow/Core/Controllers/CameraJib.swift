@@ -20,7 +20,7 @@ public class CameraJib: SCNNode {
      */
     public lazy var stateMachine = {
         
-        return CameraJibStateMachine(.focus(SCNVector3Zero, .north, CameraJib.minimumZoomLevel), transition: { (from, to) in
+        return CameraJibStateMachine(.focus(SCNVector3Zero, .north, CameraJib.maximumZoomLevel), transition: { (from, to) in
             
             self.stateDidChange(from: from, to: to)
         })
@@ -30,7 +30,7 @@ public class CameraJib: SCNNode {
      @method init
      @abstract Creates and initialises a SCNNode with a SCNCamera attached.
      */
-    override init() {
+    public override init() {
         
         super.init()
         
@@ -73,7 +73,7 @@ extension CameraJib {
      @abstract Update the camera, cleaning its position and rotation as necessary.
      @param deltaTime The time elapsed since the last update.
      */
-    func update(deltaTime: TimeInterval) {
+    public func update(deltaTime: TimeInterval) {
         
         switch stateMachine.state {
             

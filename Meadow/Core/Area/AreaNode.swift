@@ -261,7 +261,7 @@ public class AreaNode: GridNode {
                 
                 if plane.side(vector: apexNormal) == .interior {
                     
-                    normal = SCNVector3.Invert(vector: plane.normal)
+                    normal = SCNVector3.Negate(vector: plane.normal)
                 }
                 
                 faces.append(MeshFace(vertices: [v1, v0, apexCenter], normals: [normal, normal, normal], colors: primaryColors))

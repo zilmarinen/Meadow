@@ -11,20 +11,15 @@ import SceneKit
 extension SCNVector4 {
     
     /*!
-     @method magnitude
+     @method Length
      @abstract Returns the length of the SCNVector4.
-     @param vector The SCNVector4 whose magnitude should be calculated and returned.
+     @param vector The SCNVector4 whose length should be calculated and returned.
      */
-    public static func Magnitude(vector: SCNVector4) -> MDWFloat {
+    public static func Length(vector: SCNVector4) -> MDWFloat {
         
-        let x = vector.x * vector.x
-        let y = vector.y * vector.y
-        let z = vector.z * vector.z
-        let w = vector.w * vector.w
+        let v = GLKVector4Make(Float(vector.x), Float(vector.y), Float(vector.z), Float(vector.w))
         
-        let length = Float(x + y + z + w)
-        
-        return MDWFloat(sqrtf(length))
+        return MDWFloat(GLKVector4Length(v))
     }
     
     /*!
@@ -34,13 +29,10 @@ extension SCNVector4 {
      */
     public static func Normalise(vector: SCNVector4) -> SCNVector4 {
         
-        let length = SCNVector4.Magnitude(vector: vector)
+        let v = GLKVector4Make(Float(vector.x), Float(vector.y), Float(vector.z), Float(vector.w))
         
-        let x = vector.x / length
-        let y = vector.y / length
-        let z = vector.z / length
-        let w = vector.w / length
+        let n = GLKVector4Normalize(v)
         
-        return SCNVector4(x: x, y: y, z: z, w: w)
+        return SCNVector4(x: MDWFloat(n.x), y: MDWFloat(n.y), z: MDWFloat(n.z), w: MDWFloat(n.w))
     }
 }

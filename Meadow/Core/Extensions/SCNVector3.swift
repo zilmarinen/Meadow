@@ -77,19 +77,15 @@ extension SCNVector3 {
     }
     
     /*!
-     @method Magnitude:vector
+     @method Length:vector
      @abstract Returns the length of the SCNVector3.
-     @param vector The SCNVector3 whose magnitude should be calculated and returned.
+     @param vector The SCNVector3 whose length should be calculated and returned.
      */
-    public static func Magnitude(vector: SCNVector3) -> MDWFloat {
+    public static func Length(vector: SCNVector3) -> MDWFloat {
         
-        let x = vector.x * vector.x
-        let y = vector.y * vector.y
-        let z = vector.z * vector.z
+        let v = GLKVector3Make(Float(vector.x), Float(vector.y), Float(vector.z))
         
-        let length = Float(x + y + z)
-        
-        return MDWFloat(sqrtf(length))
+        return MDWFloat(GLKVector3Length(v))
     }
     
     /*!
@@ -99,23 +95,25 @@ extension SCNVector3 {
      */
     public static func Normalise(vector: SCNVector3) -> SCNVector3 {
         
-        let length = SCNVector3.Magnitude(vector: vector)
+        let v = GLKVector3Make(Float(vector.x), Float(vector.y), Float(vector.z))
         
-        let x = vector.x / length
-        let y = vector.y / length
-        let z = vector.z / length
+        let n = GLKVector3Normalize(v)
         
-        return SCNVector3(x: x, y: y, z: z)
+        return SCNVector3(x: MDWFloat(n.x), y: MDWFloat(n.y), z: MDWFloat(n.z))
     }
     
     /*!
-     @method Invert:vector
+     @method Negate:vector
      @abstract Returns a negated SCNVector3 of the SCNVector3.
      @param vector The SCNVector3 whose components should be negated and returned.
      */
-    public static func Invert(vector: SCNVector3) -> SCNVector3 {
+    public static func Negate(vector: SCNVector3) -> SCNVector3 {
         
-        return SCNVector3(x: -vector.x, y: -vector.y, z: -vector.z)
+        let v = GLKVector3Make(Float(vector.x), Float(vector.y), Float(vector.z))
+        
+        let n = GLKVector3Negate(v)
+        
+        return SCNVector3(x: MDWFloat(n.x), y: MDWFloat(n.y), z: MDWFloat(n.z))
     }
     
     /*!
@@ -126,11 +124,10 @@ extension SCNVector3 {
      */
     public static func Dot(lhs: SCNVector3, rhs: SCNVector3) -> MDWFloat {
         
-        let x = (lhs.x * rhs.x)
-        let y = (lhs.y * rhs.y)
-        let z = (lhs.z * rhs.z)
+        let v0 = GLKVector3Make(Float(lhs.x), Float(lhs.y), Float(lhs.z))
+        let v1 = GLKVector3Make(Float(rhs.x), Float(rhs.y), Float(rhs.z))
         
-        return MDWFloat(x + y + z)
+        return MDWFloat(GLKVector3DotProduct(v0, v1))
     }
     
     /*!
@@ -141,11 +138,12 @@ extension SCNVector3 {
      */
     public static func Cross(lhs: SCNVector3, rhs: SCNVector3) -> SCNVector3 {
         
-        let x = (lhs.y * rhs.z) - (lhs.z * rhs.y)
-        let y = (lhs.z * rhs.x) - (lhs.x * rhs.z)
-        let z = (lhs.x * rhs.y) - (lhs.y * rhs.x)
+        let v0 = GLKVector3Make(Float(lhs.x), Float(lhs.y), Float(lhs.z))
+        let v1 = GLKVector3Make(Float(rhs.x), Float(rhs.y), Float(rhs.z))
         
-        return SCNVector3(x: x, y: y, z: z)
+        let c = GLKVector3CrossProduct(v0, v1)
+        
+        return SCNVector3(x: MDWFloat(c.x), y: MDWFloat(c.y), z: MDWFloat(c.z))
     }
     
     /*!
@@ -157,10 +155,11 @@ extension SCNVector3 {
      */
     public static func Lerp(from: SCNVector3, to: SCNVector3, factor: MDWFloat) -> SCNVector3 {
         
-        let d = min(max(factor, 0), 1)
+        let v0 = GLKVector3Make(Float(from.x), Float(from.y), Float(from.z))
+        let v1 = GLKVector3Make(Float(to.x), Float(to.y), Float(to.z))
         
-        let t = (1 - d)
+        let l = GLKVector3Lerp(v0, v1, Float(factor))
         
-        return SCNVector3(to.x * d + from.x * t, to.y * d + from.y * t, to.z * d + from.z * t)
+        return SCNVector3(x: MDWFloat(l.x), y: MDWFloat(l.y), z: MDWFloat(l.z))
     }
 }

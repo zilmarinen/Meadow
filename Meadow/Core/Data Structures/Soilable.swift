@@ -13,8 +13,9 @@
 public protocol SoilableDelegate {
     
     /*!
-     @method didBecomeDirty:soilable
+     @method didBecomeDirty:volume
      @abstract Callback for soilable item to delegate change resolution upwards.
+     @param soilable The Soilable object that became dirty.
      */
     func didBecomeDirty(soilable: Soilable)
 }

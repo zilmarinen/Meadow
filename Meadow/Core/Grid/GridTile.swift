@@ -221,8 +221,9 @@ extension GridTile {
 extension GridTile: SoilableDelegate {
     
     /*!
-     @method didBecomeDirty:soilable
+     @method didBecomeDirty:volume
      @abstract Callback for soilable item to delegate change resolution upwards.
+     @param soilable The Soilable object that became dirty.
      */
     public func didBecomeDirty(soilable: Soilable) {
         

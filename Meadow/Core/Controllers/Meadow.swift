@@ -120,6 +120,30 @@ public class Meadow: SCNScene, Encodable {
     public let water = Water()
     
     /*!
+     @property foliageResolver
+     @abstract Foliage Grid Resolver.
+     */
+    private let foliageResolver: FoliageResolver
+    
+    /*!
+     @property scaffoldResolver
+     @abstract Scaffold Grid Resolver.
+     */
+    private let scaffoldResolver: ScaffoldResolver
+    
+    /*!
+     @property tunnelResolver
+     @abstract Tunnel Grid Resolver.
+     */
+    private let tunnelResolver: TunnelResolver
+    
+    /*!
+     @property waterResolver
+     @abstract Water Grid Resolver.
+     */
+    private let waterResolver: WaterResolver
+    
+    /*!
      @method init:delegate
      @abstract Creates and initialises a grid with the specified delegate.
      @param delegate The delegate to call out to when grid becomes dirty.
@@ -127,6 +151,11 @@ public class Meadow: SCNScene, Encodable {
     public required init(delegate: SoilableDelegate) {
         
         self.delegate = delegate
+        
+        foliageResolver = FoliageResolver(foliage: foliage)
+        scaffoldResolver = ScaffoldResolver(scaffolds: scaffolds)
+        tunnelResolver = TunnelResolver(tunnels: tunnels)
+        waterResolver = WaterResolver(water: water)
         
         super.init()
         
@@ -253,16 +282,38 @@ extension Meadow: SCNSceneRendererDelegate {
 extension Meadow: SoilableDelegate {
     
     /*!
-     @method didBecomeDirty:soilable
+     @method didBecomeDirty:volume
      @abstract Callback for soilable item to delegate change resolution upwards.
+     @param soilable The Soilable object that became dirty.
      */
     public func didBecomeDirty(soilable: Soilable) {
         
+        guard let node = soilable as? SceneGraphNode else { return }
+        
+        let volume = node.volume
+        
         switch type(of: soilable) {
+            
+        case is AreaNode.Type:
+            
+            scaffoldResolver.resolve(volume: volume)
+            
+        case is FootpathNode.Type:
+            
+            scaffoldResolver.resolve(volume: volume)
+            tunnelResolver.resolve(volume: volume)
             
         case is TerrainNode.Type:
             
-            break
+            foliageResolver.resolve(volume: volume)
+            scaffoldResolver.resolve(volume: volume)
+            tunnelResolver.resolve(volume: volume)
+            waterResolver.resolve(volume: volume)
+            
+        case is WaterNode.Type:
+            
+            tunnelResolver.resolve(volume: volume)
+            waterResolver.resolve(volume: volume)
             
         default: break
         }

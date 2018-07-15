@@ -10,7 +10,7 @@
  @protocol TunnelResolver
  @abstract A TunnelResolver is responsible for adding and removing TunnelNodes when TerrainNode and FootpathNode changes are propagated.
  */
-public struct TunnelResolver: GridResolver {
+public class TunnelResolver: GridResolver {
     
     /*!
      @property tunnels
@@ -19,11 +19,66 @@ public struct TunnelResolver: GridResolver {
     let tunnels: Tunnel
     
     /*!
-     @method resolve:volume
-     @astract Resolve any propagated Grid changes to the specified volume.
-     @param volume The Volume that has become dirty in the associated Grid type.
+     @property footpaths
+     @abstract Footpath Grid type.
      */
-    public func resolve(volume: Volume) {
+    let footpaths: Footpath
+    
+    /*!
+     @property terrain
+     @abstract Terrain Grid type.
+     */
+    let terrain: Terrain
+    
+    /*!
+     @property water
+     @abstract Water Grid type.
+     */
+    let water: Water
+    
+    /*!
+     @property volumes
+     @abstract A set of unique volumes to be resolved.
+     */
+    public var volumes: Set<Volume>
+    
+    /*!
+     @method init:tunnels:footpaths:terrain:water
+     @abstract Creates and initialises a resolver with the specified grid.
+     @param tunnels The Tunnel Grid to resolve.
+     @param footpaths The Footpath Grid data source.
+     @param terrain The Terrain Grid data source.
+     @param water The Water Grid data source.
+     */
+    init(tunnels: Tunnel, footpaths: Footpath, terrain: Terrain, water: Water) {
         
+        self.tunnels = tunnels
+        
+        self.footpaths = footpaths
+        self.terrain = terrain
+        self.water = water
+        
+        self.volumes = Set<Volume>()
+    }
+    
+    /*!
+     @method resolve
+     @astract Resolve any enqueued volume changes.
+     */
+    public func resolve() {
+        
+        volumes.forEach { volume in
+            
+            let footpathNodes = footpaths.find(tile: volume.coordinate)?.find(nodes: volume.coordinate)
+            
+            if footpathNodes == nil {
+                
+                tunnels.remove(tile: volume.coordinate)
+            }
+            
+            
+        }
+        
+        volumes.removeAll()
     }
 }

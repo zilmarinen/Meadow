@@ -77,7 +77,10 @@ public class WaterNode: GridNode {
         
         didSet {
             
-            becomeDirty()
+            if waterType != oldValue {
+             
+                becomeDirty()
+            }
         }
     }
     
@@ -89,13 +92,31 @@ public class WaterNode: GridNode {
         
         didSet {
             
-            becomeDirty()
+            if waterLevel != oldValue {
+                
+                becomeDirty()
+            }
+        }
+    }
+    
+    /*!
+     @property basePolytope
+     @abstract The lower Polytope of the WaterNode.
+     */
+    public var basePolytope: Polytope? {
+        
+        didSet {
+            
+            if basePolytope != oldValue {
+            
+                becomeDirty()
+            }
         }
     }
     
     /*!
      @property polyhedron
-     @abstract Returns a Polyhedron calculated from the edge slope and inclination.
+     @abstract Returns a Polyhedron calculated from the upper and lower polyhedrons.
      */
     var polyhedron: Polyhedron {
         
@@ -104,13 +125,11 @@ public class WaterNode: GridNode {
             return cachedPolyhedron
         }
         
-        let lowerY = volume.coordinate.y
-        
-        let lowerCornerHeights = [ lowerY, lowerY, lowerY, lowerY ]
         let upperCornerHeights = [ waterLevel, waterLevel, waterLevel, waterLevel ]
         
         let upperPolytope = Polytope(x: MDWFloat(volume.coordinate.x), y: upperCornerHeights, z: MDWFloat(volume.coordinate.z))
-        let lowerPolytope = Polytope(x: MDWFloat(volume.coordinate.x), y: lowerCornerHeights, z: MDWFloat(volume.coordinate.z))
+        
+        let lowerPolytope = basePolytope ?? Polytope(x: MDWFloat(volume.coordinate.x), y: upperCornerHeights, z: MDWFloat(volume.coordinate.z))
         
         cachedPolyhedron = Polyhedron(upperPolytope: upperPolytope, lowerPolytope: lowerPolytope)
         
@@ -173,8 +192,8 @@ public class WaterNode: GridNode {
                 
                     let v0 = polyhedron.upperPolytope.vertices[c0.rawValue]
                     let v1 = polyhedron.upperPolytope.vertices[c1.rawValue]
-                    let v2 = polyhedron.upperPolytope.vertices[c1.rawValue]
-                    let v3 = polyhedron.upperPolytope.vertices[c0.rawValue]
+                    let v2 = polyhedron.lowerPolytope.vertices[c1.rawValue]
+                    let v3 = polyhedron.lowerPolytope.vertices[c0.rawValue]
                     
                     faces.append(MeshFace(vertices: [v1, v0, apexCenter], normals: apexNormals, colors: primaryColors))
                     

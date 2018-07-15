@@ -90,7 +90,10 @@ public class GridChunk<Tile: GridTile<Node>, Node: GridNode>: SCNNode, SceneGrap
         
         didSet {
             
-            becomeDirty()
+            if isHidden != oldValue {
+             
+                becomeDirty()
+            }
         }
     }
     

@@ -10,7 +10,7 @@
  @struct FootpathNodeSlope
  @abstract Stores the edge towards which the FootpathNode is sloped and its inclination.
  */
-public struct FootpathNodeSlope: Codable {
+public struct FootpathNodeSlope: Codable, Equatable {
     
     /*!
      @property edge

@@ -119,7 +119,10 @@ public class AreaNode: GridNode {
         
         didSet {
             
-            becomeDirty()
+            if surfaceType != oldValue {
+            
+                becomeDirty()
+            }
         }
     }
     
@@ -131,7 +134,10 @@ public class AreaNode: GridNode {
         
         didSet {
             
-            becomeDirty()
+            if externalPrefabType != oldValue {
+             
+                becomeDirty()
+            }
         }
     }
     
@@ -143,7 +149,10 @@ public class AreaNode: GridNode {
         
         didSet {
             
-            becomeDirty()
+            if internalPrefabType != oldValue {
+            
+                becomeDirty()
+            }
         }
     }
     
@@ -155,7 +164,10 @@ public class AreaNode: GridNode {
         
         didSet {
             
-            becomeDirty()
+            if externalMaterialType != oldValue {
+            
+                becomeDirty()
+            }
         }
     }
     
@@ -167,7 +179,10 @@ public class AreaNode: GridNode {
         
         didSet {
             
-            becomeDirty()
+            if internalMaterialType != oldValue {
+            
+                becomeDirty()
+            }
         }
     }
     

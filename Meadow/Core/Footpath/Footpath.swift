@@ -74,6 +74,8 @@ extension Footpath {
         
         if let node = add(node: volume) {
             
+            node.footpathType = availableFootpathTypes.first
+            
             return node
         }
         

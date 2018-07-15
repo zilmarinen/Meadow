@@ -84,7 +84,7 @@ extension Water {
      @abstract Attempt to find and remove the specified node.
      @param node The node to be found and removed.
      */
-    public func remove(node: FootpathNode) -> Bool {
+    public func remove(node: WaterNode) -> Bool {
         
         return false
     }

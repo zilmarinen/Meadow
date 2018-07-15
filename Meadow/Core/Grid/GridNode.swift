@@ -73,7 +73,10 @@ public class GridNode: SceneGraphNode, Encodable, Soilable {
         
         didSet {
             
-            becomeDirty()
+            if isHidden != oldValue {
+            
+                becomeDirty()
+            }
         }
     }
 

@@ -235,6 +235,7 @@ extension Grid {
      @param coordinate Coordinate of the chunk to be found and removed.
      @discussion The coordinate provided will be used to find the nearest enclosing bounds along the x and z axis irrelevant of the y axis value.
      */
+    @discardableResult
     func remove(chunk coordinate: Coordinate) -> Bool {
         
         if let chunk = find(chunk: coordinate) {
@@ -255,6 +256,7 @@ extension Grid {
      @param coordinate Coordinate of the tile to be found and removed.
      @discussion The coordinate provided will be used to find the tile matching both the x and z axis irrelevant of the y axis value.
      */
+    @discardableResult
     func remove(tile coordinate: Coordinate) -> Bool {
         
         if let chunk = find(chunk: coordinate), let tile = chunk.find(tile: coordinate) {
@@ -280,14 +282,15 @@ extension Grid {
      @param coordinate Coordinate of the node to be found and removed.
      @discussion The coordinate provided will be used to find the nearest enclosing bounds matching both the x and z axis where the y axis value also intersects with the nodes bounds.
      */
+    @discardableResult
     func remove(node coordinate: Coordinate) -> Bool {
         
         if let chunk = find(chunk: coordinate), let tile = chunk.find(tile: coordinate), let node = tile.find(node: coordinate) {
             
-            node.remove(neighbour: .north)
-            node.remove(neighbour: .east)
-            node.remove(neighbour: .south)
-            node.remove(neighbour: .west)
+            GridEdge.Edges.forEach { edge in
+                
+                node.remove(neighbour: edge)
+            }
             
             tile.remove(node: node)
             

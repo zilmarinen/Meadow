@@ -97,7 +97,10 @@ public class GridTile<Node: GridNode>: SceneGraphNode, Encodable {
         
         didSet {
             
-            becomeDirty()
+            if isHidden != oldValue {
+            
+                becomeDirty()
+            }
         }
     }
     
@@ -305,6 +308,19 @@ extension GridTile {
         return nodes.first { node -> Bool in
             
             return node.volume.contains(coordinate: coordinate)
+        }
+    }
+    
+    /*!
+     @method find:nodes
+     @abstract Attempt to find and return any nodes whose Volume x and z components are equal to the specified coordinate.
+     @param coordinate: Coordinate of the nodes to be found and returned.
+     */
+    func find(nodes coordinate: Coordinate) -> Set<Node> {
+        
+        return nodes.filter { node -> Bool in
+            
+            return node.volume.coordinate.adjacency(to: coordinate) == .equal
         }
     }
 }

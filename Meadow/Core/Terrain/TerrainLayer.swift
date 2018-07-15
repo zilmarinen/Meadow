@@ -90,7 +90,10 @@ public class TerrainLayer: Encodable {
         
         didSet {
             
-            becomeDirty()
+            if isHidden != oldValue {
+            
+                becomeDirty()
+            }
         }
     }
     

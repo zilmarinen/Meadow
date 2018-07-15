@@ -152,10 +152,10 @@ public class Meadow: SCNScene, Encodable {
         
         self.delegate = delegate
         
-        foliageResolver = FoliageResolver(foliage: foliage)
-        scaffoldResolver = ScaffoldResolver(scaffolds: scaffolds)
-        tunnelResolver = TunnelResolver(tunnels: tunnels)
-        waterResolver = WaterResolver(water: water)
+        foliageResolver = FoliageResolver(foliage: foliage, terrain: terrain)
+        scaffoldResolver = ScaffoldResolver(scaffolds: scaffolds, areas: areas, footpaths: footpaths, terrain: terrain)
+        tunnelResolver = TunnelResolver(tunnels: tunnels, footpaths: footpaths, terrain: terrain, water: water)
+        waterResolver = WaterResolver(water: water, terrain: terrain)
         
         super.init()
         
@@ -275,6 +275,11 @@ extension Meadow: SCNSceneRendererDelegate {
         tunnels.update(deltaTime: deltaTime)
         water.update(deltaTime: deltaTime)
         
+        foliageResolver.resolve()
+        scaffoldResolver.resolve()
+        tunnelResolver.resolve()
+        waterResolver.resolve()
+        
         lastUpdateTime = time
     }
 }
@@ -296,24 +301,24 @@ extension Meadow: SoilableDelegate {
             
         case is AreaNode.Type:
             
-            scaffoldResolver.resolve(volume: volume)
+            scaffoldResolver.enqueue(volume: volume)
             
         case is FootpathNode.Type:
             
-            scaffoldResolver.resolve(volume: volume)
-            tunnelResolver.resolve(volume: volume)
+            scaffoldResolver.enqueue(volume: volume)
+            tunnelResolver.enqueue(volume: volume)
             
         case is TerrainNode.Type:
             
-            foliageResolver.resolve(volume: volume)
-            scaffoldResolver.resolve(volume: volume)
-            tunnelResolver.resolve(volume: volume)
-            waterResolver.resolve(volume: volume)
+            foliageResolver.enqueue(volume: volume)
+            scaffoldResolver.enqueue(volume: volume)
+            tunnelResolver.enqueue(volume: volume)
+            waterResolver.enqueue(volume: volume)
             
         case is WaterNode.Type:
             
-            tunnelResolver.resolve(volume: volume)
-            waterResolver.resolve(volume: volume)
+            tunnelResolver.enqueue(volume: volume)
+            waterResolver.enqueue(volume: volume)
             
         default: break
         }

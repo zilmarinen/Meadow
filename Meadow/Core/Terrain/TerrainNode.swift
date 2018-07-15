@@ -85,18 +85,6 @@ public class TerrainNode: GridNode {
     }
     
     /*!
-     @property isHidden
-     @abstract Determines whether the node is displayed
-     */
-    override public var isHidden: Bool {
-        
-        didSet {
-            
-            becomeDirty()
-        }
-    }
-    
-    /*!
      @property totalChildren
      @abstract Returns the total number of child SceneGraphNodes for the SceneGraphNode.
      */

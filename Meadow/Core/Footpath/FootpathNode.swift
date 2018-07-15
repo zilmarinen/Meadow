@@ -79,7 +79,10 @@ public class FootpathNode: GridNode {
         
         didSet {
             
-            becomeDirty()
+            if footpathType != oldValue {
+            
+                becomeDirty()
+            }
         }
     }
     
@@ -91,7 +94,10 @@ public class FootpathNode: GridNode {
         
         didSet {
             
-            becomeDirty()
+            if slope != oldValue {
+            
+                becomeDirty()
+            }
         }
     }
     

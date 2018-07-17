@@ -67,18 +67,11 @@ public class TunnelResolver: GridResolver {
      */
     public func resolve() {
         
-        volumes.forEach { volume in
+        while volumes.count > 0 {
             
-            let footpathNodes = footpaths.find(tile: volume.coordinate)?.find(nodes: volume.coordinate)
+            let volume = volumes.removeFirst()
             
-            if footpathNodes == nil {
-                
-                tunnels.remove(tile: volume.coordinate)
-            }
-            
-            
+            print("volume: \(volume)")
         }
-        
-        volumes.removeAll()
     }
 }

@@ -125,11 +125,13 @@ public class WaterNode: GridNode {
             return cachedPolyhedron
         }
         
-        let upperCornerHeights = [ waterLevel, waterLevel, waterLevel, waterLevel ]
+        let y = World.Y(y: waterLevel)
+        
+        let upperCornerHeights = [ y, y, y, y ]
         
         let upperPolytope = Polytope(x: MDWFloat(volume.coordinate.x), y: upperCornerHeights, z: MDWFloat(volume.coordinate.z))
         
-        let lowerPolytope = basePolytope ?? Polytope(x: MDWFloat(volume.coordinate.x), y: upperCornerHeights, z: MDWFloat(volume.coordinate.z))
+        let lowerPolytope = basePolytope ?? upperPolytope
         
         cachedPolyhedron = Polyhedron(upperPolytope: upperPolytope, lowerPolytope: lowerPolytope)
         
@@ -171,7 +173,7 @@ public class WaterNode: GridNode {
         
         if let apexColor = waterType?.colorPalette.primary.vector, let edgeColor = waterType?.colorPalette.primary.vector {
             
-            let apexCenter = polyhedron.lowerPolytope.center
+            let apexCenter = polyhedron.upperPolytope.center
             
             let apexNormal = apexCenter + SCNVector3.Up
             
@@ -199,8 +201,8 @@ public class WaterNode: GridNode {
                     
                     if find(neighbour: edge) == nil {
                     
-                        faces.append(MeshFace(vertices: [v0, v2, v1], normals: edgeNormals, colors: secondaryColors))
-                        faces.append(MeshFace(vertices: [v0, v3, v2], normals: edgeNormals, colors: secondaryColors))
+                        faces.append(MeshFace(vertices: [v0, v1, v2], normals: edgeNormals, colors: secondaryColors))
+                        faces.append(MeshFace(vertices: [v0, v2, v3], normals: edgeNormals, colors: secondaryColors))
                     }
                 }
             }

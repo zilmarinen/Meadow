@@ -51,69 +51,80 @@ public class WaterResolver: GridResolver {
      */
     public func resolve() {
         
-        volumes.forEach { volume in
+        if volumes.count > 0 {
             
-            if let terrainNode = terrain.find(node: volume.coordinate), let terrainLayer = terrainNode.topLayer {
+            let volume = volumes.removeFirst()
+            
+            let coordinate = volume.coordinate
+            
+            let terrainNode = terrain.find(node: coordinate)
+            
+            if terrainNode == nil {
                 
-                let existingWaterNode = water.find(node: volume.coordinate)
+                water.remove(node: coordinate)
                 
-                let terrainLevel = World.Y(y: terrainLayer.polyhedron.upperPolytope.base)
+                return
+            }
+            
+            if let waterNode = water.find(node: coordinate) {
                 
-                let surroundingWaterLevel = waterLevel(surrounding: volume.coordinate)
+                waterNode.waterLevel = max(waterNode.waterLevel, waterLevel(surrounding: coordinate))
+                waterNode.basePolytope = terrainNode?.topLayer?.polyhedron.upperPolytope
                 
-                let existingWaterLevel = existingWaterNode != nil ? existingWaterNode!.waterLevel : terrainLevel
-                
-                let maximumWaterLevel = max(existingWaterLevel, surroundingWaterLevel)
-                
-                if maximumWaterLevel > terrainLevel {
+                if let waterType = waterNode.waterType {
                     
-                    let waterNode = existingWaterNode ?? water.add(node: volume.coordinate)
+                    GridEdge.Edges.forEach { edge in
                     
-                    if let waterNode = waterNode {
+                        let waterNodeNeighbour = waterNode.find(neighbour: edge)?.node as? WaterNode
                         
-                        waterNode.waterLevel = maximumWaterLevel
-                        waterNode.basePolytope = terrainNode.topLayer?.polyhedron.upperPolytope
+                        if waterNodeNeighbour == nil || waterNodeNeighbour!.waterLevel < waterNode.waterLevel {
+                         
+                            flood(coordinate: coordinate + GridEdge.Extent(edge: edge), waterLevel: waterNode.waterLevel, waterType: waterType)
+                        }
                     }
                 }
-                else {
-                    
-                    water.remove(tile: volume.coordinate)
-                }
-            }
-            else {
-                
-                water.remove(tile: volume.coordinate)
             }
         }
-        
-        volumes.removeAll()
     }
 }
 
 extension WaterResolver {
     
     /*!
-     @method waterLevel:surrounding:coordinate
-     @abstract return the highest water level of any surrounding WaterNodes.
-     @param coordinate The Coordinate whose neighbouring GridNodes should be checked.
+     @method
+     @abstract
+     @param
+     */
+    func flood(coordinate: Coordinate, waterLevel: Int, waterType: WaterType) {
+        
+        if let terrainLayer = terrain.find(node: coordinate)?.topLayer, World.Y(y: terrainLayer.polyhedron.upperPolytope.base) < waterLevel {
+            
+            if let waterNode = water.find(node: coordinate) ?? water.add(node: coordinate) {
+                
+                waterNode.waterType = waterType
+                waterNode.waterLevel = waterLevel
+                waterNode.basePolytope = terrainLayer.polyhedron.upperPolytope
+            }
+        }
+    }
+    
+    /*!
+     @method
+     @abstract
+     @param
      */
     func waterLevel(surrounding coordinate: Coordinate) -> Int {
         
-        var waterLevel = World.Floor
+        var level = World.Floor
         
         GridEdge.Edges.forEach { edge in
-            
-            let neighbourCoordinate = coordinate + GridEdge.Extent(edge: edge)
-            
-            if terrain.find(node: neighbourCoordinate) != nil {
+         
+            if let waterNode = water.find(node: coordinate + GridEdge.Extent(edge: edge)) {
                 
-                if let waterNeighbour = water.find(node: neighbourCoordinate) {
-                    
-                    waterLevel = max(waterLevel, waterNeighbour.waterLevel)
-                }
+                level = max(level, waterNode.waterLevel)
             }
         }
         
-        return waterLevel
+        return level
     }
 }

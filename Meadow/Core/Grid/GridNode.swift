@@ -14,7 +14,7 @@ class GridNode: GridChild, GridMeshProvider, GridSoilable, Encodable {
     
     var name: String? { return "" }
     
-    let volume: Int
+    let volume: Volume
     
     var isDirty: Bool = true
     
@@ -32,14 +32,14 @@ class GridNode: GridChild, GridMeshProvider, GridSoilable, Encodable {
         try container.encode(self.volume, forKey: .volume)
     }
     
-    init(superNode: ParentType, volume: Int) {
+    init(superNode: ParentType, volume: Volume) {
         
         self.superNode = superNode
         
         self.volume = volume
     }
     
-    func becomeDirty() -> Bool {
+    open func becomeDirty() {
         
         if !isDirty {
             
@@ -47,21 +47,16 @@ class GridNode: GridChild, GridMeshProvider, GridSoilable, Encodable {
             
             superNode?.child(didBecomeDirty: self)
         }
-        
-        return isDirty
     }
     
-    func clean() -> Bool {
-        
-        return false
-    }
+    open func clean() {}
     
     var mesh: Int { return 0 }
 }
 
 extension GridNode: Hashable {
     
-    var hashValue: Int { return volume }
+    var hashValue: Int { return volume.hashValue }
     
     static func == (lhs: GridNode, rhs: GridNode) -> Bool {
         

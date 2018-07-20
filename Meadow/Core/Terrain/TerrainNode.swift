@@ -28,25 +28,24 @@ class TerrainNode<Layer: TerrainLayer>: GridNode, GridParent {
         try container.encode(self.children, forKey: .layers)
     }
     
-    override func becomeDirty() -> Bool {
+    override func becomeDirty() {
         
         if !isDirty {
             
             isDirty = true
         }
-        
-        return isDirty
     }
     
-    override func clean() -> Bool {
+    override func clean() {
         
-        if !isDirty { return false }
+        if !isDirty { return }
         
-        //
+        children.forEach { layer in
+            
+            layer.clean()
+        }
         
         isDirty = false
-        
-        return true
     }
     
     override var mesh: Int { return 0 }

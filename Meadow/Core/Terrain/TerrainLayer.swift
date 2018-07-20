@@ -14,11 +14,11 @@ class TerrainLayer: GridChild {
     
     var name: String? { return "" }
     
-    var volume: Int
+    var volume: Volume
     
     var isDirty: Bool = true
     
-    init(superNode: ParentType, volume: Int) {
+    init(superNode: ParentType, volume: Volume) {
         
         self.superNode = superNode
         
@@ -28,7 +28,7 @@ class TerrainLayer: GridChild {
 
 extension TerrainLayer: GridSoilable {
     
-    func becomeDirty() -> Bool {
+    func becomeDirty() {
         
         if !isDirty {
             
@@ -36,19 +36,15 @@ extension TerrainLayer: GridSoilable {
             
             superNode?.child(didBecomeDirty: self)
         }
-        
-        return isDirty
     }
     
-    func clean() -> Bool {
+    func clean() {
         
-        if !isDirty { return false }
+        if !isDirty { return }
         
         //
         
         isDirty = false
-        
-        return true
     }
 }
 
@@ -59,7 +55,7 @@ extension TerrainLayer: GridMeshProvider {
 
 extension TerrainLayer: Hashable {
     
-    var hashValue: Int { return volume }
+    var hashValue: Int { return volume.hashValue }
     
     static func == (lhs: TerrainLayer, rhs: TerrainLayer) -> Bool {
         

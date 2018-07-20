@@ -11,7 +11,13 @@ import SceneKit
 
 class Meadow: SCNScene, SceneGraphParent {
     
+    let areas = Area()
+    let foliage = Foliage()
+    let footpaths = Footpath()
+    let scaffolds = Scaffold()
     let terrain = Terrain()
+    let tunnels = Tunnel()
+    let water = Water()
     
     var totalChildren: Int { return rootNode.childNodes.count }
     
@@ -19,9 +25,20 @@ class Meadow: SCNScene, SceneGraphParent {
         
         super.init()
         
+        areas.observer = self
+        foliage.observer = self
+        footpaths.observer = self
         terrain.observer = self
+        water.observer = self
         
+        rootNode.name = "Meadow"
+        rootNode.addChildNode(areas)
+        rootNode.addChildNode(foliage)
+        rootNode.addChildNode(footpaths)
+        rootNode.addChildNode(scaffolds)
         rootNode.addChildNode(terrain)
+        rootNode.addChildNode(tunnels)
+        rootNode.addChildNode(water)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -60,3 +77,10 @@ extension Meadow: GridObserver {
     }
 }
 
+extension Meadow: SCNSceneRendererDelegate {
+    
+    public func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
+
+        
+    }
+}

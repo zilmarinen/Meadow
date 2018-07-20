@@ -23,25 +23,37 @@ class Grid<Chunk: GridChunk<Tile, Node>, Tile: GridTile<Node>, Node: GridNode>: 
 
 extension Grid: GridSoilable {
     
-    func becomeDirty() -> Bool {
+    func becomeDirty() {
         
         if !isDirty {
             
             isDirty = true
         }
-        
-        return isDirty
     }
     
-    func clean() -> Bool {
+    func clean() {
         
-        if !isDirty { return false }
+        if !isDirty { return }
         
-        //
+        children.forEach { chunk in
+            
+            chunk.clean()
+        }
         
         isDirty = false
+    }
+}
+
+extension Grid: GridUpdatable {
+    
+    func update(deltaTime: TimeInterval) {
         
-        return true
+        clean()
+        
+        children.forEach { chunk in
+            
+            chunk.update(deltaTime: deltaTime)
+        }
     }
 }
 

@@ -6,3 +6,6 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
+class WaterChunk: GridChunk<WaterTile, WaterNode> {
+    
+}

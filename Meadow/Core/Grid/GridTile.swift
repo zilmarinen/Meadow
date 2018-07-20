@@ -19,11 +19,11 @@ class GridTile<Node: GridNode>: GridChild, GridParent {
     
     var name: String? { return "" }
     
-    let volume: Int
+    let volume: Volume
     
     var isDirty: Bool = true
     
-    init(superNode: ParentType, volume: Int) {
+    init(superNode: ParentType, volume: Volume) {
         
         self.superNode = superNode
         
@@ -33,25 +33,40 @@ class GridTile<Node: GridNode>: GridChild, GridParent {
 
 extension GridTile: GridSoilable {
     
-    func becomeDirty() -> Bool {
+    func becomeDirty() {
         
         if !isDirty {
             
             isDirty = true
         }
-        
-        return isDirty
     }
     
-    func clean() -> Bool {
+    func clean() {
         
-        if !isDirty { return false }
+        if !isDirty { return }
         
-        //
+        children.forEach { node in
+            
+            node.clean()
+        }
         
         isDirty = false
+    }
+}
+
+extension GridTile: GridUpdatable {
+    
+    func update(deltaTime: TimeInterval) {
         
-        return true
+        clean()
+        
+        children.forEach { node in
+            
+            if let node = node as? GridUpdatable {
+            
+                node.update(deltaTime: deltaTime)
+            }
+        }
     }
 }
 
@@ -102,7 +117,7 @@ extension GridTile {
 
 extension GridTile: Hashable {
     
-    var hashValue: Int { return volume }
+    var hashValue: Int { return volume.hashValue }
     
     static func == (lhs: GridTile, rhs: GridTile) -> Bool {
         

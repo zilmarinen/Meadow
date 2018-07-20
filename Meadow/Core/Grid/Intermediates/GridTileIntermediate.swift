@@ -1,0 +1,16 @@
+//
+//  GridTileIntermediate.swift
+//  Meadow-iOS
+//
+//  Created by Zack Brown on 20/07/2018.
+//  Copyright © 2018 Script Orchard. All rights reserved.
+//
+
+public struct GridTileIntermediate<NodeIntermediate: GridNodeIntermediate> {
+    
+    let name: String?
+    
+    let volume: Volume
+    
+    let nodes: [NodeIntermediate]
+}

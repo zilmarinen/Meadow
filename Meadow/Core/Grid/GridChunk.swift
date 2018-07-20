@@ -19,11 +19,11 @@ class GridChunk<Tile: GridTile<Node>, Node: GridNode>: SCNNode, GridChild, GridP
     
     var children: [Tile] = []
     
-    let volume: Int
+    let volume: Volume
     
     var isDirty: Bool = true
     
-    init(superNode: ParentType, volume: Int) {
+    init(superNode: ParentType, volume: Volume) {
         
         self.superNode = superNode
         
@@ -40,25 +40,37 @@ class GridChunk<Tile: GridTile<Node>, Node: GridNode>: SCNNode, GridChild, GridP
 
 extension GridChunk: GridSoilable {
     
-    func becomeDirty() -> Bool {
+    func becomeDirty() {
         
         if !isDirty {
             
             isDirty = true
         }
-        
-        return isDirty
     }
     
-    func clean() -> Bool {
+    func clean() {
         
-        if !isDirty { return false }
+        if !isDirty { return }
         
-        //
+        children.forEach { tile in
+            
+            tile.clean()
+        }
         
         isDirty = false
+    }
+}
+
+extension GridChunk: GridUpdatable {
+    
+    func update(deltaTime: TimeInterval) {
         
-        return true
+        clean()
+        
+        children.forEach { tile in
+            
+            tile.update(deltaTime: deltaTime)
+        }
     }
 }
 

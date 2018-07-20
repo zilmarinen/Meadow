@@ -12,5 +12,5 @@ protocol GridChild: SceneGraphChild {
     
     var superNode: ParentType? { get }
     
-    var volume: Int { get }
+    var volume: Volume { get }
 }

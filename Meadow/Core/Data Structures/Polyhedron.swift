@@ -8,31 +8,15 @@
 
 import SceneKit
 
-/*!
- @struct Polyhedron
- @abstract Defines a Polyhedron with an upper and lower Polytope.
- */
 public struct Polyhedron {
  
-    /*!
-     @property upperPolytope
-     @abstract The upper Polytope of the Polyhedron.
-     */
     public let upperPolytope: Polytope
     
-    /*!
-     @property lowerPolytope
-     @abstract The lower Polytope of the Polyhedron.
-     */
     public let lowerPolytope: Polytope
 }
 
 extension Polyhedron: Equatable {
     
-    /*!
-     @method ==
-     @abstract Determine the equality of two Polyhedrons.
-     */
     public static func ==(lhs: Polyhedron, rhs: Polyhedron) -> Bool {
         
         return lhs.upperPolytope == rhs.upperPolytope && lhs.lowerPolytope == rhs.lowerPolytope
@@ -41,10 +25,6 @@ extension Polyhedron: Equatable {
 
 extension Polyhedron {
     
-    /*!
-     @enum Elevation
-     @abstract Defines the relative elevation of one Polyhedron to another along the y axis.
-     */
     enum Elevation {
         
         case above
@@ -53,11 +33,6 @@ extension Polyhedron {
         case intersecting
     }
     
-    /*!
-     @method elevation:referencing
-     @abstract Determines the elevation of the Polyhedron in reference to another Polyhedron.
-     @discussion Polyhedron elevation is determined by checking the elevations of both upper and lower Polytopes.
-     */
     func elevation(referencing polyhedron: Polyhedron) -> Elevation {
         
         if polyhedron.upperPolytope == upperPolytope && polyhedron.lowerPolytope == lowerPolytope {
@@ -85,24 +60,11 @@ extension Polyhedron {
 
 extension Polyhedron {
     
-    /*!
-     @method Invert:polyhedron:edge
-     @abstract Invert the vertices of a Polyhedron along the specified edge.
-     @param polyhedron The Polyhedron to be inverted.
-     @param edge The edge along which the vertices should be inverted.
-     */
     static func Invert(polyhedron: Polyhedron, edge: GridEdge) -> Polyhedron {
         
         return Polyhedron(upperPolytope: Polytope.Invert(polytope: polyhedron.upperPolytope, edge: edge), lowerPolytope: Polytope.Invert(polytope: polyhedron.lowerPolytope, edge: edge))
     }
     
-    /*!
-     @method Stencil:polyhedrons:from:edge
-     @astract Attempts to subtract the volumes of an array of Polyhedrons from a single Polyhedron.
-     @param subtract An array of Polyhedrons to subtract from the source Polyhedron.
-     @param against The source Polyhedon to be divided into parts.
-     @param edge The edge along which the Polyhedrons should be inverted.
-     */
     static func Stencil(polyhedrons: [Polyhedron], against: Polyhedron, edge: GridEdge) -> [Polyhedron] {
         
         let invertedPolyhedrons = polyhedrons.map { Polyhedron.Invert(polyhedron: $0, edge: edge) }
@@ -110,12 +72,6 @@ extension Polyhedron {
         return Subtract(polyhedrons: invertedPolyhedrons, from: against)
     }
     
-    /*!
-     @method Subtract:polyhedron:from
-     @astract Attempts to subtract the volume of one Polyhedron from another.
-     @param subtract The Polyhedron to subtract from the source Polyhedron.
-     @param from The source Polyhedon to be divided into parts.
-     */
     static func Subtract(polyhedron: Polyhedron, from: Polyhedron) -> [Polyhedron]? {
         
         switch polyhedron.elevation(referencing: from) {
@@ -156,12 +112,6 @@ extension Polyhedron {
         return nil
     }
     
-    /*!
-     @method Subtract:polyhedrons:from
-     @astract Attempts to subtract the volumes of an array of Polyhedrons from a single Polyhedron.
-     @param subtract An array of Polyhedrons to subtract from the source Polyhedron.
-     @param from The source Polyhedon to be divided into parts.
-     */
     static func Subtract(polyhedrons: [Polyhedron], from: Polyhedron) -> [Polyhedron] {
         
         var divisions = [from]
@@ -191,12 +141,6 @@ extension Polyhedron {
 
 extension Polyhedron {
     
-    /*!
-     @method Translate:polyhedron:translation
-     @abstract Translates the vertices of a Polyhedrons Polytopes by the given translation vector.
-     @param polytope The Polyhedron whose Polytope vertices should be translated.
-     @param translation The vector defining the translation.
-     */
     static func Translate(polyhedron: Polyhedron, translation: SCNVector3) -> Polyhedron {
         
         let upperPolytope = Polytope.Translate(polytope: polyhedron.upperPolytope, translation: translation)
@@ -208,13 +152,6 @@ extension Polyhedron {
 
 extension Polyhedron {
     
-    /*!
-     @method Inset:polyhedron:edge:inset
-     @abstract Adjust the vertices of a Polyhedrons Polytopes along the given GridEdge by the specified inset.
-     @param polyhedron The Polyhedron whose Polytope vertices should be inset.
-     @param edge The GridEdge to inset.
-     @param inset The amount by which the Polytope vertices should be inset.
-     */
     static func Inset(polyhedron: Polyhedron, edge: GridEdge, inset: MDWFloat) -> Polyhedron {
         
         let upperPolytope = Polytope.Inset(polytope: polyhedron.upperPolytope, edge: edge, inset: inset)

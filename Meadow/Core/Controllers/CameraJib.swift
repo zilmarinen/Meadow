@@ -8,28 +8,16 @@
 
 import SceneKit
 
-/*!
- @class CameraJib
- @abstract Parent SCNNode used to orient a SCNCamera within a scene.
- */
 public class CameraJib: SCNNode {
     
-    /*!
-     @property stateMachine
-     @abstract Creates and initialises a state machine.
-     */
     public lazy var stateMachine = {
         
-        return CameraJibStateMachine(.focus(SCNVector3Zero, .north, CameraJib.maximumZoomLevel), transition: { (from, to) in
+        return CameraJibStateMachine(.focus(SCNVector3Zero, .north, CameraJib.MaximumZoomLevel), transition: { (from, to) in
             
             self.stateDidChange(from: from, to: to)
         })
     }()
-    
-    /*!
-     @method init
-     @abstract Creates and initialises a SCNNode with a SCNCamera attached.
-     */
+
     public override init() {
         
         super.init()
@@ -40,11 +28,7 @@ public class CameraJib: SCNNode {
         
         self.camera = camera
     }
-    
-    /*!
-     @method initWithCoder
-     @abstract Support coding and decoding via NSKeyedArchiver.
-     */
+
     public required init?(coder aDecoder: NSCoder) {
         
         fatalError("init(coder:) has not been implemented")
@@ -52,11 +36,7 @@ public class CameraJib: SCNNode {
 }
 
 extension CameraJib {
-    
-    /*!
-     @method stateDidChange:from:to
-     @abstract Callback function to handle state machine state transitions.
-     */
+
     func stateDidChange(from: CameraState?, to: CameraState) {
         
         switch to {
@@ -67,12 +47,7 @@ extension CameraJib {
 }
 
 extension CameraJib {
-    
-    /*!
-     @method update:deltaTime
-     @abstract Update the camera, cleaning its position and rotation as necessary.
-     @param deltaTime The time elapsed since the last update.
-     */
+
     public func update(deltaTime: TimeInterval) {
         
         switch stateMachine.state {
@@ -86,34 +61,17 @@ extension CameraJib {
 
 extension CameraJib {
     
-    /*!
-     @property minimumZoomLevel
-     @abstract Defines the minimum zoom level of the CameraJib
-     */
-    static var minimumZoomLevel: MDWFloat = 1.0
-    
-    /*!
-     @property maximumZoomLevel
-     @abstract Defines the minimum zoom level of the CameraJib
-     */
-    static var maximumZoomLevel: MDWFloat = 20.0
+    static var MinimumZoomLevel: MDWFloat = 1.0
+    static var MaximumZoomLevel: MDWFloat = 20.0
 }
 
 extension CameraJib {
-    
-    /*!
-     @method focus:focus:edge:deltaTime
-     @abstract Update the camera, cleaning its position and rotation as necessary to focus on a specified vector aligned with the given edge.
-     @param focus The vector to focus to camera toward.
-     @param edge The edge along which the camera should be aligned.
-     @param zoomLevel The current zoom level, capped by CameraJib.minimumZoomLevel and CameraJib.maximumZoomLevel.
-     @param deltaTime The time elapsed since the last update.
-     */
+
     func focus(focus: SCNVector3, edge: GridEdge, zoomLevel: MDWFloat, deltaTime: TimeInterval) {
         
         guard let camera = camera else { return }
         
-        let scale = Double(min(max(zoomLevel, CameraJib.minimumZoomLevel), CameraJib.maximumZoomLevel))
+        let scale = Double(min(max(zoomLevel, CameraJib.MinimumZoomLevel), CameraJib.MaximumZoomLevel))
         
         camera.orthographicScale = scale
         

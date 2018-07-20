@@ -31,12 +31,7 @@ extension SCNQuaternion {
         
         return SCNVector3(x: MDWFloat(r.x), y: MDWFloat(r.y), z: MDWFloat(r.z))
     }
-    
-    /*!
-     @method Normalise:quaternion
-     @abstract Returns a normalised SCNQuaternion of the SCNQuaternion.
-     @param vector The SCNQuaternion to be normalised.
-     */
+
     public static func Normalise(quaternion: SCNQuaternion) -> SCNQuaternion {
         
         let q = GLKQuaternionMake(Float(quaternion.x), Float(quaternion.y), Float(quaternion.z), Float(quaternion.w))
@@ -45,12 +40,7 @@ extension SCNQuaternion {
         
         return SCNQuaternion(x: MDWFloat(n.x), y: MDWFloat(n.y), z: MDWFloat(n.z), w: MDWFloat(n.w))
     }
-    
-    /*!
-     @method Conjugate:quaternion
-     @abstract Returns the conjugate of a quaternion with the same scalar value, but the signs of the vector components are flipped.
-     @param quaternion The SCNQuaternion whose components should be conjugated and returned.
-     */
+
     public static func Conjugate(quaternion: SCNQuaternion) -> SCNQuaternion {
         
         let q = GLKQuaternionMake(Float(quaternion.x), Float(quaternion.y), Float(quaternion.z), Float(quaternion.w))
@@ -59,12 +49,7 @@ extension SCNQuaternion {
         
         return SCNQuaternion(x: MDWFloat(c.x), y: MDWFloat(c.y), z: MDWFloat(c.z), w: MDWFloat(c.w))
     }
-    
-    /*!
-     @method Invert:quaternion
-     @abstract Returns a negated SCNQuaternion of the SCNQuaternion.
-     @param quaternion The SCNQuaternion whose components should be negated and returned.
-     */
+
     public static func Invert(quaternion: SCNQuaternion) -> SCNQuaternion {
         
         let q = GLKQuaternionMake(Float(quaternion.x), Float(quaternion.y), Float(quaternion.z), Float(quaternion.w))
@@ -73,14 +58,7 @@ extension SCNQuaternion {
         
         return SCNQuaternion(x: MDWFloat(i.x), y: MDWFloat(i.y), z: MDWFloat(i.z), w: MDWFloat(i.w))
     }
-    
-    /*!
-     @method Focus:vector:focus:up
-     @abstract Returns a SCNQuaternion rotated to face towards the specified focus point.
-     @param vector The SCNVector3 representing the position from which to rotate to face towards the focus point.
-     @param focus The SCNVector3 to rotate to face towards.
-     @param up A SCNVector3 representing the direction of the world y axis.
-     */
+
     public static func Focus(vector: SCNVector3, focus: SCNVector3, up: SCNVector3) -> SCNQuaternion {
         
         let worldUp = SCNVector3.Normalise(vector: up)
@@ -100,14 +78,7 @@ extension SCNQuaternion {
         
         return SCNQuaternion(x: MDWFloat(q.x), y: MDWFloat(q.y), z: MDWFloat(q.z), w: MDWFloat(q.w))
     }
-    
-    /*!
-     @method Slerp:from:to:scalar
-     @astract Spherical linear interpolation of one quaternion toward another.
-     @property from A SCNQuaternion to interpolate from.
-     @property from A SCNQuaternion to interpolate toward.
-     @property factor A value between 0 and 1 determining the amount of interpolation.
-     */
+
     public static func Slerp(from: SCNQuaternion, to: SCNQuaternion, factor: MDWFloat) -> SCNQuaternion {
         
         let q0 = GLKQuaternionMake(Float(from.x), Float(from.y), Float(from.z), Float(from.w))

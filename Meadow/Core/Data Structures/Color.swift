@@ -8,49 +8,18 @@
 
 import SceneKit
 
-/*!
- @struct Color
- @abstract Defines a Color with red, green, blue and alpha components.
- */
 public struct Color: Codable {
     
-    /*!
-     @property red
-     @abstract The red component of the Color.
-     */
     public let red: MDWFloat
-    
-    /*!
-     @property green
-     @abstract The green component of the Color.
-     */
     public let green: MDWFloat
-    
-    /*!
-     @property blue
-     @abstract The blue component of the Color.
-     */
     public let blue: MDWFloat
-    
-    /*!
-     @property alpha
-     @abstract The alpha component of the Color.
-     */
     public let alpha: MDWFloat
     
-    /*!
-     @property color
-     @abstract Defines a color with the red, green, blue and alpha components.
-     */
     public var color: MDWColor {
         
         return MDWColor(red: red, green: green, blue: blue, alpha: alpha)
     }
     
-    /*!
-     @property vector
-     @abstract Defines a color with the red, green, blue and alpha components.
-     */
     public var vector: SCNVector4 {
         
         return SCNVector4(x: red, y: green, z: blue, w: alpha)

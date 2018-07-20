@@ -8,41 +8,18 @@
 
 import SceneKit
 
-/*!
- @struct Plane
- @abstract Defines a flat, two-dimensional surface that extends infinitely far.
- */
 public struct Plane {
     
-    /*!
-     @enum PlaneSide
-     @abstract Defines the two sides of a plane.
-     */
-    public enum PlaneSide {
+    public enum Side {
         
         case exterior
         case interior
     }
     
-    /*!
-     @param normal
-     @abstract The normal pointing outward from the plane.
-     */
     public let normal: SCNVector3
-    
-    /*!
-     @param direction
-     @abstract The direction of the plane.
-     */
+
     let direction: MDWFloat
     
-    /*!
-     @param direction
-     @abstract Create a plane from three SCNVector3.
-     @param v0 A SCNVector3 defining a point on the plane.
-     @param v1 A SCNVector3 defining a point on the plane.
-     @param v2 A SCNVector3 defining a point on the plane.
-     */
     init(v0: SCNVector3, v1: SCNVector3, v2: SCNVector3) {
         
         let ab = v1 - v0
@@ -55,12 +32,7 @@ public struct Plane {
         self.direction = -SCNVector3.Dot(lhs: self.normal, rhs: v0)
     }
     
-    /*!
-     @method side:vector
-     @abstract Checks that a vector is on either side of a plane.
-     @param vector The vector to check which side of the plane it lies on.
-     */
-    public func side(vector: SCNVector3) -> PlaneSide {
+    public func side(vector: SCNVector3) -> Side {
         
         let dot = SCNVector3.Dot(lhs: vector, rhs: normal)
         

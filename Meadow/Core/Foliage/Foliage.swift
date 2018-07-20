@@ -6,17 +6,3 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-import Foundation
-
-/*!
- @class Foliage
- @abstract Foliage is a Grid type that manages the addition and removal of FoliageNodes.
- */
-public class Foliage: Grid<FoliageChunk, FoliageTile, FoliageNode> {
-    
-    /*!
-     @property nodeName
-     @abstract Returns the name of the SceneGraphNode.
-     */
-    override public var nodeName: String { return "Foliage" }
-}

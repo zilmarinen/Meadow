@@ -6,6 +6,6 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-class TunnelChunk: GridChunk<TunnelTile, TunnelNode> {
+public class TunnelChunk: GridChunk<TunnelTile, TunnelNode> {
     
 }

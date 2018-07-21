@@ -6,6 +6,6 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-class Scaffold: Grid<ScaffoldChunk, ScaffoldTile, ScaffoldNode> {
+public class Scaffold: Grid<ScaffoldChunk, ScaffoldTile, ScaffoldNode> {
     
 }

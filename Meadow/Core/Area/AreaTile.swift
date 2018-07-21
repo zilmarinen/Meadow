@@ -6,6 +6,6 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-class AreaTile: GridTile<AreaNode> {
+public class AreaTile: GridTile<AreaNode> {
     
 }

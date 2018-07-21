@@ -6,6 +6,6 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-class TunnelTile: GridTile<TunnelNode> {
+public class TunnelTile: GridTile<TunnelNode> {
     
 }

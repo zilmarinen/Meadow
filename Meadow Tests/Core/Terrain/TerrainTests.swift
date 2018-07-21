@@ -8,11 +8,6 @@
 
 import XCTest
 
-extension TerrainTests: SoilableDelegate {
-    
-    func didBecomeDirty(soilable: Soilable) {}
-}
-
 class TerrainTests: XCTestCase {
 
     var meadow: Meadow!
@@ -21,7 +16,7 @@ class TerrainTests: XCTestCase {
         
         super.setUp()
         
-        meadow = Meadow(delegate: self)
+        meadow = Meadow()
     }
     
     func testTerrainNodeAddition() {

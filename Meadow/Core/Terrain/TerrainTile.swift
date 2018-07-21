@@ -6,6 +6,6 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-class TerrainTile: GridTile<TerrainNode<TerrainLayer>> {
+public class TerrainTile: GridTile<TerrainNode<TerrainLayer>> {
     
 }

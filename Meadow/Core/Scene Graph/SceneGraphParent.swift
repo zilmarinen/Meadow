@@ -6,7 +6,7 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-protocol SceneGraphParent: class {
+public protocol SceneGraphParent: class {
     
     var totalChildren: Int { get }
     

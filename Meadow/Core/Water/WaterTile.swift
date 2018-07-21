@@ -6,6 +6,6 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-class WaterTile: GridTile<WaterNode> {
+public class WaterTile: GridTile<WaterNode> {
     
 }

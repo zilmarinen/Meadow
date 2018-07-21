@@ -6,6 +6,6 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-class Foliage: Grid<FoliageChunk, FoliageTile, FoliageNode> {
+public class Foliage: Grid<FoliageChunk, FoliageTile, FoliageNode> {
     
 }

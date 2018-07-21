@@ -6,6 +6,6 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-class FoliageNode: GridNode {
+public class FoliageNode: GridNode {
     
 }

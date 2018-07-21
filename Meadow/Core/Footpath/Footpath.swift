@@ -6,6 +6,6 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-class Footpath: Grid<FootpathChunk, FootpathTile, FootpathNode> {
+public class Footpath: Grid<FootpathChunk, FootpathTile, FootpathNode> {
     
 }

@@ -1,12 +1,12 @@
 //
-//  GridObserver.swift
+//  TerrainType.swift
 //  Meadow-iOS
 //
 //  Created by Zack Brown on 20/07/2018.
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-public protocol GridObserver {
+public struct TerrainType: GridNodeType {
     
-    func child(didBecomeDirty child: SceneGraphChild)
+    public var name: String
 }

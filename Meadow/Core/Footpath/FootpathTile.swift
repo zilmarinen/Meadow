@@ -6,6 +6,6 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-class FootpathTile: GridTile<FootpathNode> {
+public class FootpathTile: GridTile<FootpathNode> {
     
 }

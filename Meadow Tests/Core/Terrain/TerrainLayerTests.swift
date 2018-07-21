@@ -8,11 +8,6 @@
 
 import XCTest
 
-extension TerrainLayerTests: SoilableDelegate {
-    
-    func didBecomeDirty(soilable: Soilable) {}
-}
-
 class TerrainLayerTests: XCTestCase {
 
     var meadow: Meadow!
@@ -21,7 +16,7 @@ class TerrainLayerTests: XCTestCase {
         
         super.setUp()
         
-        meadow = Meadow(delegate: self)
+        meadow = Meadow()
     }
     
     func testTerrainLayerAddition() {
@@ -229,35 +224,35 @@ class TerrainLayerTests: XCTestCase {
         XCTAssertNotNil(l1)
         XCTAssertNotNil(l2)
         
-        XCTAssertEqual(l0?.polyhedron.upperPolytope.vertices[0].y, World.Y(y: World.Floor + 1))
-        XCTAssertEqual(l0?.polyhedron.upperPolytope.vertices[1].y, World.Y(y: World.Floor + 1))
-        XCTAssertEqual(l0?.polyhedron.upperPolytope.vertices[2].y, World.Y(y: World.Floor + 1))
-        XCTAssertEqual(l0?.polyhedron.upperPolytope.vertices[3].y, World.Y(y: World.Floor + 1))
+        XCTAssertEqual(l0?.polyhedron.upperPolytope.vertices[0].y, Axis.Y(y: World.Floor + 1))
+        XCTAssertEqual(l0?.polyhedron.upperPolytope.vertices[1].y, Axis.Y(y: World.Floor + 1))
+        XCTAssertEqual(l0?.polyhedron.upperPolytope.vertices[2].y, Axis.Y(y: World.Floor + 1))
+        XCTAssertEqual(l0?.polyhedron.upperPolytope.vertices[3].y, Axis.Y(y: World.Floor + 1))
         
-        XCTAssertEqual(l0?.polyhedron.lowerPolytope.vertices[0].y, World.Y(y: World.Floor))
-        XCTAssertEqual(l0?.polyhedron.lowerPolytope.vertices[1].y, World.Y(y: World.Floor))
-        XCTAssertEqual(l0?.polyhedron.lowerPolytope.vertices[2].y, World.Y(y: World.Floor))
-        XCTAssertEqual(l0?.polyhedron.lowerPolytope.vertices[3].y, World.Y(y: World.Floor))
+        XCTAssertEqual(l0?.polyhedron.lowerPolytope.vertices[0].y, Axis.Y(y: World.Floor))
+        XCTAssertEqual(l0?.polyhedron.lowerPolytope.vertices[1].y, Axis.Y(y: World.Floor))
+        XCTAssertEqual(l0?.polyhedron.lowerPolytope.vertices[2].y, Axis.Y(y: World.Floor))
+        XCTAssertEqual(l0?.polyhedron.lowerPolytope.vertices[3].y, Axis.Y(y: World.Floor))
         
-        XCTAssertEqual(l1?.polyhedron.upperPolytope.vertices[0].y, World.Y(y: World.Floor + 2))
-        XCTAssertEqual(l1?.polyhedron.upperPolytope.vertices[1].y, World.Y(y: World.Floor + 2))
-        XCTAssertEqual(l1?.polyhedron.upperPolytope.vertices[2].y, World.Y(y: World.Floor + 2))
-        XCTAssertEqual(l1?.polyhedron.upperPolytope.vertices[3].y, World.Y(y: World.Floor + 2))
+        XCTAssertEqual(l1?.polyhedron.upperPolytope.vertices[0].y, Axis.Y(y: World.Floor + 2))
+        XCTAssertEqual(l1?.polyhedron.upperPolytope.vertices[1].y, Axis.Y(y: World.Floor + 2))
+        XCTAssertEqual(l1?.polyhedron.upperPolytope.vertices[2].y, Axis.Y(y: World.Floor + 2))
+        XCTAssertEqual(l1?.polyhedron.upperPolytope.vertices[3].y, Axis.Y(y: World.Floor + 2))
         
-        XCTAssertEqual(l1?.polyhedron.lowerPolytope.vertices[0].y, World.Y(y: World.Floor + 1))
-        XCTAssertEqual(l1?.polyhedron.lowerPolytope.vertices[1].y, World.Y(y: World.Floor + 1))
-        XCTAssertEqual(l1?.polyhedron.lowerPolytope.vertices[2].y, World.Y(y: World.Floor + 1))
-        XCTAssertEqual(l1?.polyhedron.lowerPolytope.vertices[3].y, World.Y(y: World.Floor + 1))
+        XCTAssertEqual(l1?.polyhedron.lowerPolytope.vertices[0].y, Axis.Y(y: World.Floor + 1))
+        XCTAssertEqual(l1?.polyhedron.lowerPolytope.vertices[1].y, Axis.Y(y: World.Floor + 1))
+        XCTAssertEqual(l1?.polyhedron.lowerPolytope.vertices[2].y, Axis.Y(y: World.Floor + 1))
+        XCTAssertEqual(l1?.polyhedron.lowerPolytope.vertices[3].y, Axis.Y(y: World.Floor + 1))
         
-        XCTAssertEqual(l2?.polyhedron.upperPolytope.vertices[0].y, World.Y(y: World.Floor + 3))
-        XCTAssertEqual(l2?.polyhedron.upperPolytope.vertices[1].y, World.Y(y: World.Floor + 3))
-        XCTAssertEqual(l2?.polyhedron.upperPolytope.vertices[2].y, World.Y(y: World.Floor + 3))
-        XCTAssertEqual(l2?.polyhedron.upperPolytope.vertices[3].y, World.Y(y: World.Floor + 3))
+        XCTAssertEqual(l2?.polyhedron.upperPolytope.vertices[0].y, Axis.Y(y: World.Floor + 3))
+        XCTAssertEqual(l2?.polyhedron.upperPolytope.vertices[1].y, Axis.Y(y: World.Floor + 3))
+        XCTAssertEqual(l2?.polyhedron.upperPolytope.vertices[2].y, Axis.Y(y: World.Floor + 3))
+        XCTAssertEqual(l2?.polyhedron.upperPolytope.vertices[3].y, Axis.Y(y: World.Floor + 3))
         
-        XCTAssertEqual(l2?.polyhedron.lowerPolytope.vertices[0].y, World.Y(y: World.Floor + 2))
-        XCTAssertEqual(l2?.polyhedron.lowerPolytope.vertices[1].y, World.Y(y: World.Floor + 2))
-        XCTAssertEqual(l2?.polyhedron.lowerPolytope.vertices[2].y, World.Y(y: World.Floor + 2))
-        XCTAssertEqual(l2?.polyhedron.lowerPolytope.vertices[3].y, World.Y(y: World.Floor + 2))
+        XCTAssertEqual(l2?.polyhedron.lowerPolytope.vertices[0].y, Axis.Y(y: World.Floor + 2))
+        XCTAssertEqual(l2?.polyhedron.lowerPolytope.vertices[1].y, Axis.Y(y: World.Floor + 2))
+        XCTAssertEqual(l2?.polyhedron.lowerPolytope.vertices[2].y, Axis.Y(y: World.Floor + 2))
+        XCTAssertEqual(l2?.polyhedron.lowerPolytope.vertices[3].y, Axis.Y(y: World.Floor + 2))
         
         expect.fulfill()
         
@@ -353,7 +348,7 @@ class TerrainLayerTests: XCTestCase {
         XCTAssertNotNil(l2)
         XCTAssertNotNil(l3)
     
-        l0?.set(height: (World.Floor + 2), corner: .northWest, smooth: true)
+        //l0?.set(height: (World.Floor + 2), corner: .northWest, smooth: true)
         
         XCTAssertEqual(l0?.get(height: .northWest), (World.Floor + 2))
         XCTAssertEqual(l0?.get(height: .northEast), (World.Floor + 1))
@@ -397,8 +392,8 @@ class TerrainLayerTests: XCTestCase {
         XCTAssertEqual(l3?.get(height: .southEast), (World.Floor + 2))
         XCTAssertEqual(l3?.get(height: .southWest), (World.Floor + 1))
         
-        l0?.set(height: (World.Floor + 4), corner: .northWest, smooth: true)
-        l0?.set(height: (World.Floor + 5), corner: .northWest, smooth: true)
+       // l0?.set(height: (World.Floor + 4), corner: .northWest, smooth: true)
+        //l0?.set(height: (World.Floor + 5), corner: .northWest, smooth: true)
         
         XCTAssertEqual(l0?.get(height: .northWest), (World.Floor + 5))
         XCTAssertEqual(l0?.get(height: .northEast), (World.Floor + 4))

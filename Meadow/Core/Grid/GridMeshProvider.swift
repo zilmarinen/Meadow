@@ -6,7 +6,7 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-protocol GridMeshProvider {
+public protocol GridMeshProvider {
     
-    var mesh: Int { get }
+    var mesh: Mesh { get }
 }

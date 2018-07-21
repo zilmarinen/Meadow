@@ -6,6 +6,6 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-class ScaffoldTile: GridTile<ScaffoldNode> {
+public class ScaffoldTile: GridTile<ScaffoldNode> {
     
 }

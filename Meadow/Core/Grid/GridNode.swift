@@ -6,17 +6,17 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-class GridNode: GridChild, GridMeshProvider, GridSoilable, Encodable {
+public class GridNode: GridChild, GridMeshProvider, GridSoilable, Encodable {
     
-    typealias ParentType = GridTile<GridNode>
+    public var observer: GridObserver?
     
-    var superNode: ParentType?
+    public var name: String? { return "" }
     
-    var name: String? { return "" }
-    
-    let volume: Volume
+    public let volume: Volume
     
     var isDirty: Bool = true
+    
+    var neighbours: [Neighbour] = []
     
     private enum CodingKeys: CodingKey {
         
@@ -24,7 +24,7 @@ class GridNode: GridChild, GridMeshProvider, GridSoilable, Encodable {
         case volume
     }
     
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         
         var container = encoder.container(keyedBy: CodingKeys.self)
         
@@ -32,9 +32,9 @@ class GridNode: GridChild, GridMeshProvider, GridSoilable, Encodable {
         try container.encode(self.volume, forKey: .volume)
     }
     
-    init(superNode: ParentType, volume: Volume) {
+    public required init(observer: GridObserver, volume: Volume) {
         
-        self.superNode = superNode
+        self.observer = observer
         
         self.volume = volume
     }
@@ -45,20 +45,70 @@ class GridNode: GridChild, GridMeshProvider, GridSoilable, Encodable {
             
             isDirty = true
             
-            superNode?.child(didBecomeDirty: self)
+            observer?.child(didBecomeDirty: self)
         }
     }
     
     open func clean() {}
     
-    var mesh: Int { return 0 }
+    public var mesh: Mesh { return Mesh(faces: []) }
+}
+
+extension GridNode {
+    
+    func add(neighbour node: GridNode, edge: GridEdge) {
+        
+        guard node.volume.coordinate.adjacency(to: volume.coordinate) == .adjacent else { return }
+        
+        let _ = remove(neighbour: edge)
+        
+        neighbours.append(Neighbour(edge: edge, node: node))
+        
+        let oppositeEdge = GridEdge.Opposite(edge: edge)
+        
+        if node.find(neighbour: oppositeEdge) == nil {
+            
+            node.add(neighbour: self, edge: oppositeEdge)
+        }
+        
+        becomeDirty()
+    }
+    
+    func find(neighbour edge: GridEdge) -> GridNode.Neighbour? {
+        
+        return neighbours.first { neighbour -> Bool in
+            
+            return neighbour.edge == edge
+        }
+    }
+    
+    func remove(neighbour edge: GridEdge) -> Bool {
+        
+        guard let neighbour = find(neighbour: edge) else { return false }
+        
+        if let index = neighbours.index(of: neighbour) {
+            
+            neighbours.remove(at: index)
+        }
+        
+        let oppositeEdge = GridEdge.Opposite(edge: edge)
+        
+        if let _ = neighbour.node.find(neighbour: oppositeEdge) {
+            
+            let _ = neighbour.node.remove(neighbour: oppositeEdge)
+        }
+        
+        becomeDirty()
+        
+        return true
+    }
 }
 
 extension GridNode: Hashable {
     
-    var hashValue: Int { return volume.hashValue }
+    public var hashValue: Int { return volume.hashValue }
     
-    static func == (lhs: GridNode, rhs: GridNode) -> Bool {
+    public static func == (lhs: GridNode, rhs: GridNode) -> Bool {
         
         return lhs.volume == rhs.volume
     }

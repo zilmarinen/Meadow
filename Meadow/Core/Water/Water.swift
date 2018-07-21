@@ -6,6 +6,6 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-class Water: Grid<WaterChunk, WaterTile, WaterNode> {
+public class Water: Grid<WaterChunk, WaterTile, WaterNode> {
     
 }

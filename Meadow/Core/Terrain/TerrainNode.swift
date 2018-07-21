@@ -6,20 +6,20 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-class TerrainNode<Layer: TerrainLayer>: GridNode, GridParent {
+public class TerrainNode<Layer: TerrainLayer>: GridNode, GridParent {
     
-    typealias ChildType = Layer
+    public typealias ChildType = Layer
     
-    var totalChildren: Int { return children.count }
+    public var totalChildren: Int { return children.count }
     
-    var children: [Layer] = []
+    public var children: [Layer] = []
     
     enum CodingKeys: CodingKey {
         
         case layers
     }
     
-    override func encode(to encoder: Encoder) throws {
+    public override func encode(to encoder: Encoder) throws {
         
         try super.encode(to: encoder)
         
@@ -28,7 +28,7 @@ class TerrainNode<Layer: TerrainLayer>: GridNode, GridParent {
         try container.encode(self.children, forKey: .layers)
     }
     
-    override func becomeDirty() {
+    public override func becomeDirty() {
         
         if !isDirty {
             
@@ -36,7 +36,7 @@ class TerrainNode<Layer: TerrainLayer>: GridNode, GridParent {
         }
     }
     
-    override func clean() {
+    public override func clean() {
         
         if !isDirty { return }
         
@@ -48,27 +48,47 @@ class TerrainNode<Layer: TerrainLayer>: GridNode, GridParent {
         isDirty = false
     }
     
-    override var mesh: Int { return 0 }
+    public override var mesh: Mesh { return Mesh(faces: []) }
 }
 
 extension TerrainNode {
     
-    func child(at index: Int) -> SceneGraphChild? {
+    public func child(at index: Int) -> SceneGraphChild? {
         
         return children[index]
     }
     
-    func index(of child: SceneGraphChild) -> Int? {
+    public func index(of child: SceneGraphChild) -> Int? {
         
-        guard let child = child as? Layer else { return nil }
+        guard let child = child as? ChildType else { return nil }
         
         return children.index(of: child)
     }
     
-    func child(didBecomeDirty child: SceneGraphChild) {
+    public func child(didBecomeDirty child: SceneGraphChild) {
         
         let _ = becomeDirty()
         
-        superNode?.child(didBecomeDirty: child)
+        observer?.child(didBecomeDirty: child)
+    }
+}
+
+extension TerrainNode {
+    
+    public func add(layer: TerrainType) -> TerrainLayer? {
+        
+        return nil
+    }
+    
+    public func remove(layer: TerrainLayer) -> Bool {
+        
+        if let index = index(of: layer) {
+        
+            children.remove(at: index)
+            
+            return true
+        }
+        
+        return false
     }
 }

@@ -8,31 +8,30 @@
 
 import SceneKit
 
-class GridChunk<Tile: GridTile<Node>, Node: GridNode>: SCNNode, GridChild, GridParent {
+public class GridChunk<Tile: GridTile<Node>, Node: GridNode>: SCNNode, GridChild, GridParent {
     
-    typealias ParentType = Grid<GridChunk, Tile, Node>
-    typealias ChildType = Tile
+    public typealias ChildType = Tile
     
-    var superNode: ParentType?
+    public var observer: GridObserver?
     
-    var totalChildren: Int { return children.count }
+    public var totalChildren: Int { return children.count }
     
-    var children: [Tile] = []
+    public var children: [Tile] = []
     
-    let volume: Volume
+    public let volume: Volume
     
     var isDirty: Bool = true
     
-    init(superNode: ParentType, volume: Volume) {
+    public required init(observer: GridObserver, volume: Volume) {
         
-        self.superNode = superNode
+        self.observer = observer
         
         self.volume = volume
         
         super.init()
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         
         fatalError("init(coder:) has not been implemented")
     }
@@ -40,7 +39,7 @@ class GridChunk<Tile: GridTile<Node>, Node: GridNode>: SCNNode, GridChild, GridP
 
 extension GridChunk: GridSoilable {
     
-    func becomeDirty() {
+    public func becomeDirty() {
         
         if !isDirty {
             
@@ -48,7 +47,7 @@ extension GridChunk: GridSoilable {
         }
     }
     
-    func clean() {
+    public func clean() {
         
         if !isDirty { return }
         
@@ -63,7 +62,7 @@ extension GridChunk: GridSoilable {
 
 extension GridChunk: GridUpdatable {
     
-    func update(deltaTime: TimeInterval) {
+    public func update(deltaTime: TimeInterval) {
         
         clean()
         
@@ -76,41 +75,62 @@ extension GridChunk: GridUpdatable {
 
 extension GridChunk {
     
-    func child(at index: Int) -> SceneGraphChild? {
+    public func child(at index: Int) -> SceneGraphChild? {
         
-        return childNodes[index] as? SceneGraphChild
+        return children[index]
     }
     
-    func index(of child: SceneGraphChild) -> Int? {
+    public func index(of child: SceneGraphChild) -> Int? {
         
-        guard let child = child as? SCNNode else { return nil }
+        guard let child = child as? ChildType else { return nil }
         
-        return childNodes.index(of: child)
+        return children.index(of: child)
     }
     
-    func child(didBecomeDirty child: SceneGraphChild) {
+    public func child(didBecomeDirty child: SceneGraphChild) {
         
         let _ = becomeDirty()
         
-        superNode?.child(didBecomeDirty: child)
+        observer?.child(didBecomeDirty: child)
     }
 }
 
 extension GridChunk {
     
-    func add(tile coordinate: Int) -> Tile? {
+    func add(tile volume: Volume) -> Tile? {
         
-        return nil
+        if let _ = find(tile: volume.coordinate) {
+            
+            return nil
+        }
+        
+        let tile = Tile(observer: self, volume: volume)
+        
+        children.append(tile)
+        
+        return tile
     }
     
-    func find(tile coordinate: Int) -> Tile? {
+    func find(tile coordinate: Coordinate) -> Tile? {
         
-        return nil
+        return children.first { tile -> Bool in
+            
+            return tile.volume.coordinate.adjacency(to: coordinate) == .equal
+        }
     }
     
-    func remove(tile coordinate: Int) -> Tile? {
+    func remove(tile: Tile) -> Bool {
         
-        return nil
+        if let index = index(of: tile) {
+            
+            children.remove(at: index)
+            
+            tile.observer = nil
+            
+            return true
+        }
+        
+        return false
     }
 }
 
@@ -123,12 +143,27 @@ extension GridChunk: Encodable {
         case children
     }
     
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         try container.encode(self.name, forKey: .name)
         try container.encode(self.volume, forKey: .volume)
         try container.encode(self.children, forKey: .children)
+    }
+}
+
+extension GridChunk {
+    
+    static func FixedVolume(_ coordinate: Coordinate) -> Volume {
+        
+        let x = Int(floor(Double(coordinate.x) / Double(World.ChunkSize))) * World.ChunkSize
+        let z = Int(floor(Double(coordinate.z) / Double(World.ChunkSize))) * World.ChunkSize
+        
+        let coordinate = Coordinate(x: x, y: World.Floor, z: z)
+        
+        let size = Size(width: World.ChunkSize, height: (World.Ceiling - World.Floor), depth: World.ChunkSize)
+        
+        return Volume(coordinate: coordinate, size: size)
     }
 }

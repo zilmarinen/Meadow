@@ -6,6 +6,6 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-class Area: Grid<AreaChunk, AreaTile, AreaNode> {
+public class Area: Grid<AreaChunk, AreaTile, AreaNode> {
     
 }

@@ -6,7 +6,7 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-protocol SceneGraphChild {
+public protocol SceneGraphChild {
     
     var name: String? { get }
 }

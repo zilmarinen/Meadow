@@ -6,12 +6,8 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
+import Foundation
 import XCTest
-
-extension GridTests: SoilableDelegate {
-    
-    func didBecomeDirty(soilable: Soilable) {}
-}
 
 class GridTests: XCTestCase {
     
@@ -21,11 +17,7 @@ class GridTests: XCTestCase {
         
         super.setUp()
         
-        let meadow = Meadow(delegate: self)
-        
-        grid = Grid()
-        
-        grid.delegate = meadow
+        self.grid = Grid()
     }
 
     func testGridNodeAddition() {
@@ -70,7 +62,7 @@ class GridTests: XCTestCase {
         XCTAssertNotNil(t0)
         XCTAssertNotNil(c0)
         
-        let result = grid.remove(chunk: c0!.volume.coordinate)
+        let result = grid.remove(chunk: c0!)
         
         let n1 = grid.find(node: n0!.volume.coordinate)
         let t1 = grid.find(tile: t0!.volume.coordinate)
@@ -102,7 +94,7 @@ class GridTests: XCTestCase {
         XCTAssertNotNil(t0)
         XCTAssertNotNil(c0)
         
-        let result = grid.remove(tile: t0!.volume.coordinate)
+        let result = grid.remove(tile: t0!)
         
         let n1 = grid.find(node: n0!.volume.coordinate)
         let t1 = grid.find(tile: t0!.volume.coordinate)
@@ -134,7 +126,7 @@ class GridTests: XCTestCase {
         XCTAssertNotNil(t0)
         XCTAssertNotNil(c0)
         
-        let result = grid.remove(node: n0!.volume.coordinate)
+        let result = grid.remove(node: n0!)
         
         let n1 = grid.find(node: n0!.volume.coordinate)
         let t1 = grid.find(tile: t0!.volume.coordinate)
@@ -348,7 +340,7 @@ class GridTests: XCTestCase {
         XCTAssertNotNil(n0)
         XCTAssertNotNil(n1)
         
-        let result = grid.remove(node: n1!.volume.coordinate)
+        let result = grid.remove(node: n1!)
         
         let n2 = n0?.find(neighbour: .north)
         let n3 = n0?.find(neighbour: .east)

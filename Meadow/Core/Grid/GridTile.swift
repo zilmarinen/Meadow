@@ -6,26 +6,27 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-class GridTile<Node: GridNode>: GridChild, GridParent {
+import Foundation
+
+public class GridTile<Node: GridNode>: GridChild, GridParent {
     
-    typealias ParentType = GridChunk<GridTile, Node>
-    typealias ChildType = Node
+    public typealias ChildType = Node
     
-    var superNode: ParentType?
+    public var observer: GridObserver?
     
-    var totalChildren: Int { return children.count }
+    public var totalChildren: Int { return children.count }
     
-    var children: [Node] = []
+    public var children: [Node] = []
     
-    var name: String? { return "" }
+    public var name: String? { return "" }
     
-    let volume: Volume
+    public let volume: Volume
     
     var isDirty: Bool = true
     
-    init(superNode: ParentType, volume: Volume) {
+    public required init(observer: GridObserver, volume: Volume) {
         
-        self.superNode = superNode
+        self.observer = observer
         
         self.volume = volume
     }
@@ -33,7 +34,7 @@ class GridTile<Node: GridNode>: GridChild, GridParent {
 
 extension GridTile: GridSoilable {
     
-    func becomeDirty() {
+    public func becomeDirty() {
         
         if !isDirty {
             
@@ -41,7 +42,7 @@ extension GridTile: GridSoilable {
         }
     }
     
-    func clean() {
+    public func clean() {
         
         if !isDirty { return }
         
@@ -56,7 +57,7 @@ extension GridTile: GridSoilable {
 
 extension GridTile: GridUpdatable {
     
-    func update(deltaTime: TimeInterval) {
+    public func update(deltaTime: TimeInterval) {
         
         clean()
         
@@ -72,54 +73,75 @@ extension GridTile: GridUpdatable {
 
 extension GridTile: GridMeshProvider {
     
-    var mesh: Int { return 0 }
+    public var mesh: Mesh { return Mesh(faces: []) }
 }
 
 extension GridTile {
     
-    func child(at index: Int) -> SceneGraphChild? {
+    public func child(at index: Int) -> SceneGraphChild? {
         
         return children[index]
     }
     
-    func index(of child: SceneGraphChild) -> Int? {
+    public func index(of child: SceneGraphChild) -> Int? {
         
-        guard let child = child as? Node else { return nil }
+        guard let child = child as? ChildType else { return nil }
         
         return children.index(of: child)
     }
     
-    func child(didBecomeDirty child: SceneGraphChild) {
+    public func child(didBecomeDirty child: SceneGraphChild) {
         
         let _ = becomeDirty()
         
-        superNode?.child(didBecomeDirty: child)
+        observer?.child(didBecomeDirty: child)
     }
 }
 
 extension GridTile {
     
-    func add(node coordinate: Int) -> Node? {
+    func add(node volume: Volume) -> Node? {
         
-        return nil
+        if let _ = find(node: volume.coordinate) {
+            
+            return nil
+        }
+        
+        let node = Node(observer: self, volume: volume)
+        
+        children.append(node)
+        
+        return node
     }
     
-    func find(node coordinate: Int) -> Node? {
+    func find(node coordinate: Coordinate) -> Node? {
         
-        return nil
+        return children.first { node -> Bool in
+            
+            return node.volume.contains(coordinate: coordinate)
+        }
     }
     
-    func remove(node coordinate: Int) -> Node? {
+    func remove(node: Node) -> Bool {
         
-        return nil
+        if let index = index(of: node) {
+            
+            children.remove(at: index)
+            
+            node.observer = nil
+            
+            return true
+        }
+        
+        return false
     }
 }
 
 extension GridTile: Hashable {
     
-    var hashValue: Int { return volume.hashValue }
+    public var hashValue: Int { return volume.hashValue }
     
-    static func == (lhs: GridTile, rhs: GridTile) -> Bool {
+    public static func == (lhs: GridTile, rhs: GridTile) -> Bool {
         
         return lhs.volume == rhs.volume
     }
@@ -134,12 +156,24 @@ extension GridTile: Encodable {
         case children
     }
     
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         try container.encode(self.name, forKey: .name)
         try container.encode(self.volume, forKey: .volume)
         try container.encode(self.children, forKey: .children)
+    }
+}
+
+extension GridTile {
+    
+    static func FixedVolume(_ coordinate: Coordinate) -> Volume {
+            
+        let coordinate = Coordinate(x: coordinate.x, y: World.Floor, z: coordinate.z)
+        
+        let size = Size(width: World.TileSize, height: (World.Ceiling - World.Floor), depth: World.TileSize)
+        
+        return Volume(coordinate: coordinate, size: size)
     }
 }

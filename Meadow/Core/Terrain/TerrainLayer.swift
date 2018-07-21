@@ -6,21 +6,21 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-class TerrainLayer: GridChild {
+public class TerrainLayer: GridChild {
     
-    typealias ParentType = TerrainNode<TerrainLayer>
+    public var observer: GridObserver?
     
-    var superNode: ParentType?
+    public var name: String? { return "" }
     
-    var name: String? { return "" }
-    
-    var volume: Volume
+    public var volume: Volume
     
     var isDirty: Bool = true
     
-    init(superNode: ParentType, volume: Volume) {
+    var hierarchy = Hierarchy()
+    
+    init(observer: GridObserver, volume: Volume) {
         
-        self.superNode = superNode
+        self.observer = observer
         
         self.volume = volume
     }
@@ -28,17 +28,17 @@ class TerrainLayer: GridChild {
 
 extension TerrainLayer: GridSoilable {
     
-    func becomeDirty() {
+    public func becomeDirty() {
         
         if !isDirty {
             
             isDirty = true
             
-            superNode?.child(didBecomeDirty: self)
+            observer?.child(didBecomeDirty: self)
         }
     }
     
-    func clean() {
+    public func clean() {
         
         if !isDirty { return }
         
@@ -50,14 +50,31 @@ extension TerrainLayer: GridSoilable {
 
 extension TerrainLayer: GridMeshProvider {
     
-    var mesh: Int { return 0 }
+    public var mesh: Mesh { return Mesh(faces: []) }
+}
+
+extension TerrainLayer: GridPolyhedronProvider {
+    
+    public var polyhedron: Polyhedron { return Polyhedron(upperPolytope: Polytope(x: 0, y: 0, z: 0), lowerPolytope: Polytope(x: 0, y: 0, z: 0)) }
+}
+
+extension TerrainLayer {
+    
+    func get(height corner: GridCorner) -> Int {
+        
+        return 0
+    }
+    
+    func set(height: Int, corner: GridCorner) {
+        
+    }
 }
 
 extension TerrainLayer: Hashable {
     
-    var hashValue: Int { return volume.hashValue }
+    public var hashValue: Int { return volume.hashValue }
     
-    static func == (lhs: TerrainLayer, rhs: TerrainLayer) -> Bool {
+    public static func == (lhs: TerrainLayer, rhs: TerrainLayer) -> Bool {
         
         return lhs.volume == rhs.volume
     }
@@ -71,7 +88,7 @@ extension TerrainLayer: Encodable {
         case volume
     }
     
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         
         var container = encoder.container(keyedBy: CodingKeys.self)
         

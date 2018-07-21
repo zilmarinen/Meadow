@@ -6,6 +6,6 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-class ScaffoldNode: GridNode {
+public class ScaffoldNode: GridNode {
     
 }

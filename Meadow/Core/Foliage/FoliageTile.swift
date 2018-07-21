@@ -6,6 +6,6 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-class FoliageTile: GridTile<FoliageNode> {
+public class FoliageTile: GridTile<FoliageNode> {
     
 }

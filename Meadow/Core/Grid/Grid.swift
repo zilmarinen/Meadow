@@ -1,4 +1,4 @@
-//
+ //
 //  Grid.swift
 //  Meadow
 //
@@ -8,13 +8,13 @@
 
 import SceneKit
 
-class Grid<Chunk: GridChunk<Tile, Node>, Tile: GridTile<Node>, Node: GridNode>: SCNNode, SceneGraphChild, GridParent {
+public class Grid<Chunk: GridChunk<Tile, Node>, Tile: GridTile<Node>, Node: GridNode>: SCNNode, SceneGraphChild, GridParent {
     
-    typealias ChildType = Chunk
+    public typealias ChildType = Chunk
     
-    var totalChildren: Int { return childNodes.count }
+    public var totalChildren: Int { return childNodes.count }
     
-    var children: [Chunk] { return childNodes as! [Chunk] }
+    public var children: [Chunk] { return childNodes as! [Chunk] }
     
     var isDirty: Bool = true
     
@@ -23,7 +23,7 @@ class Grid<Chunk: GridChunk<Tile, Node>, Tile: GridTile<Node>, Node: GridNode>: 
 
 extension Grid: GridSoilable {
     
-    func becomeDirty() {
+    public func becomeDirty() {
         
         if !isDirty {
             
@@ -31,7 +31,7 @@ extension Grid: GridSoilable {
         }
     }
     
-    func clean() {
+    public func clean() {
         
         if !isDirty { return }
         
@@ -46,7 +46,7 @@ extension Grid: GridSoilable {
 
 extension Grid: GridUpdatable {
     
-    func update(deltaTime: TimeInterval) {
+    public func update(deltaTime: TimeInterval) {
         
         clean()
         
@@ -59,19 +59,19 @@ extension Grid: GridUpdatable {
 
 extension Grid {
     
-    func child(at index: Int) -> SceneGraphChild? {
+    public func child(at index: Int) -> SceneGraphChild? {
         
         return childNodes[index] as? SceneGraphChild
     }
     
-    func index(of child: SceneGraphChild) -> Int? {
+    public func index(of child: SceneGraphChild) -> Int? {
         
-        guard let child = child as? SCNNode else { return nil }
+        guard let child = child as? ChildType else { return nil }
         
         return childNodes.index(of: child)
     }
     
-    func child(didBecomeDirty child: SceneGraphChild) {
+    public func child(didBecomeDirty child: SceneGraphChild) {
         
         let _ = becomeDirty()
         
@@ -81,39 +81,116 @@ extension Grid {
 
 extension Grid {
     
-    func add(node coordinate: Int) -> Node? {
+    func add(node volume: Volume) -> Node? {
+        
+        if let _ = find(node: volume.coordinate) {
+            
+            return nil
+        }
+        
+        let chunk = find(chunk: volume.coordinate) ?? Chunk(observer: self, volume: Chunk.FixedVolume(volume.coordinate))
+        
+        let tile = chunk.find(tile: volume.coordinate) ?? chunk.add(tile: Tile.FixedVolume(volume.coordinate))
+        
+        guard let node = tile?.add(node: volume) else { return nil }
+        
+        if chunk.parent == nil {
+            
+            addChildNode(chunk)
+        }
+        
+        GridEdge.Edges.forEach { edge in
+            
+            if let neighbour = find(node: volume.coordinate + GridEdge.Extent(edge: edge)) {
+                
+                node.add(neighbour: neighbour, edge: edge)
+            }
+        }
+        
+        return node
+    }
+    
+    func find(chunk coordinate: Coordinate) -> Chunk? {
+        
+        return children.first { chunk -> Bool in
+            
+            return chunk.volume.contains(coordinate: coordinate)
+        }
+    }
+    
+    func find(tile coordinate: Coordinate) -> Tile? {
+        
+        if let chunk = find(chunk: coordinate), let tile = chunk.find(tile: coordinate) {
+            
+            return tile
+        }
         
         return nil
     }
     
-    func find(chunk coordinate: Int) -> Chunk? {
+    func find(node coordinate: Coordinate) -> Node? {
+        
+        if let tile = find(tile: coordinate), let node = tile.find(node: coordinate) {
+            
+            return node
+        }
         
         return nil
     }
     
-    func find(tile coordinate: Int) -> Tile? {
+    func remove(chunk: Chunk) -> Bool {
         
-        return nil
+        if let _ = index(of: chunk) {
+            
+            chunk.removeFromParentNode()
+            
+            chunk.observer = nil
+            
+            while chunk.totalChildren > 0 {
+                
+                let _ = chunk.remove(tile: chunk.child(at: 0) as! Tile)
+            }
+            
+            return true
+        }
+        
+        return false
     }
     
-    func find(node coordinate: Int) -> Node? {
+    func remove(tile: Tile) -> Bool {
         
-        return nil
+        if let chunk = find(chunk: tile.volume.coordinate) {
+            
+            if chunk.remove(tile: tile) {
+                
+                while tile.totalChildren > 0 {
+                    
+                    let _ = tile.remove(node: tile.child(at: 0) as! Node)
+                }
+                
+                return true
+            }
+        }
+        
+        return false
     }
     
-    func remove(chunk coordinate: Int) -> Chunk? {
+    func remove(node: Node) -> Bool {
         
-        return nil
-    }
-    
-    func remove(tile coordinate: Int) -> Tile? {
+        if let tile = find(tile: node.volume.coordinate) {
+            
+            if tile.remove(node: node) {
+                
+                GridEdge.Edges.forEach { edge in
+                 
+                    let _ = node.remove(neighbour: edge)
+                }
+                
+                return true
+            }
+        }
         
-        return nil
-    }
-    
-    func remove(node coordinate: Int) -> Node? {
-        
-        return nil
+        return false
     }
 }
 
@@ -125,7 +202,7 @@ extension Grid: Encodable {
         case children
     }
     
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         
         var container = encoder.container(keyedBy: CodingKeys.self)
         

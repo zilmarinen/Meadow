@@ -6,6 +6,6 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-class FootpathNode: GridNode {
+public class FootpathNode: GridNode {
     
 }

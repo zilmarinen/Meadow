@@ -6,7 +6,9 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-protocol GridUpdatable {
+import Foundation
+
+public protocol GridUpdatable {
     
     func update(deltaTime: TimeInterval)
 }

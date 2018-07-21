@@ -6,6 +6,6 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-class WaterNode: GridNode {
+public class WaterNode: GridNode {
     
 }

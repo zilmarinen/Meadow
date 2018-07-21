@@ -6,6 +6,6 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-class AreaNode: GridNode {
+public class AreaNode: GridNode {
     
 }

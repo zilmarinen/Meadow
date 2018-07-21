@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol GridParent: SceneGraphParent, GridObserver {
+public protocol GridParent: SceneGraphParent, GridObserver {
     
     associatedtype ChildType: Hashable
     

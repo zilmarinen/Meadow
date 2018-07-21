@@ -6,11 +6,9 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-protocol GridChild: SceneGraphChild {
+public protocol GridChild: SceneGraphChild {
     
-    associatedtype ParentType
-    
-    var superNode: ParentType? { get }
+    var observer: GridObserver? { get }
     
     var volume: Volume { get }
 }

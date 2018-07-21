@@ -6,7 +6,7 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-protocol GridSoilable {
+public protocol GridSoilable {
     
     func becomeDirty()
     func clean()

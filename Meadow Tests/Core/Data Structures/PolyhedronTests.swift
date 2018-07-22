@@ -15,11 +15,11 @@ class PolyhedronTests: XCTestCase {
         
         let expect = expectation(description: "Polygons areconsider equal when both upper and lower polytopes are equal")
         
-        let p0 = Polytope(x: 0.0, y: Axis.Y(y: 4), z: 0.0)
-        let p1 = Polytope(x: 0.0, y: Axis.Y(y: 2), z: 0.0)
-        let p2 = Polytope(x: 0.0, y: Axis.Y(y: 0), z: 0.0)
-        let p3 = Polytope(x: 0.0, y: Axis.Y(y: -1), z: 0.0)
-        let p4 = Polytope(x: 0.0, y: Axis.Y(y: -3), z: 0.0)
+        let p0 = Polytope(x: 0.0, y: Axis.Y(y: 4), z: 0.0)!
+        let p1 = Polytope(x: 0.0, y: Axis.Y(y: 2), z: 0.0)!
+        let p2 = Polytope(x: 0.0, y: Axis.Y(y: 0), z: 0.0)!
+        let p3 = Polytope(x: 0.0, y: Axis.Y(y: -1), z: 0.0)!
+        let p4 = Polytope(x: 0.0, y: Axis.Y(y: -3), z: 0.0)!
         
         let reference = Polyhedron(upperPolytope: p1, lowerPolytope: p2)
         
@@ -41,12 +41,12 @@ class PolyhedronTests: XCTestCase {
         
         let expect = expectation(description: "Elevation of polygon is correctly determined based on polytope elevation")
         
-        let p0 = Polytope(x: 0.0, y: Axis.Y(y: 4), z: 0.0)
-        let p1 = Polytope(x: 0.0, y: Axis.Y(y: 2), z: 0.0)
-        let p2 = Polytope(x: 0.0, y: Axis.Y(y: 1), z: 0.0)
-        let p3 = Polytope(x: 0.0, y: Axis.Y(y: 0), z: 0.0)
-        let p4 = Polytope(x: 0.0, y: Axis.Y(y: -1), z: 0.0)
-        let p5 = Polytope(x: 0.0, y: Axis.Y(y: -3), z: 0.0)
+        let p0 = Polytope(x: 0.0, y: Axis.Y(y: 4), z: 0.0)!
+        let p1 = Polytope(x: 0.0, y: Axis.Y(y: 2), z: 0.0)!
+        let p2 = Polytope(x: 0.0, y: Axis.Y(y: 1), z: 0.0)!
+        let p3 = Polytope(x: 0.0, y: Axis.Y(y: 0), z: 0.0)!
+        let p4 = Polytope(x: 0.0, y: Axis.Y(y: -1), z: 0.0)!
+        let p5 = Polytope(x: 0.0, y: Axis.Y(y: -3), z: 0.0)!
         
         let reference = Polyhedron(upperPolytope: p1, lowerPolytope: p3)
         
@@ -76,20 +76,20 @@ class PolyhedronTests: XCTestCase {
         
         let expect = expectation(description: "Subtracting Polyhedrons from each other results in an array of the remaining volumes")
         
-        let p0 = Polytope(x: 0, y: [5, 4, 4, 5], z: 0)
-        let p1 = Polytope(x: 0, y: [1, 2, 2, 1], z: 0)
-        let p2 = Polytope(x: 0, y: [5, 5, 5, 5], z: 0)
-        let p3 = Polytope(x: 0, y: [4, 4, 4, 4], z: 0)
-        let p4 = Polytope(x: 0, y: [2, 2, 2, 2], z: 0)
-        let p5 = Polytope(x: 0, y: [1, 1, 1, 1], z: 0)
-        let p6 = Polytope(x: 0, y: [3, 3, 3, 3], z: 0)
-        let p7 = Polytope(x: 0, y: [2, 2, 2, 2], z: 0)
-        let p8 = Polytope(x: 0, y: [7, 7, 7, 7], z: 0)
-        let p9 = Polytope(x: 0, y: [6, 6, 6, 6], z: 0)
-        let p10 = Polytope(x: 0, y: [-1, -1, -1, -1], z: 0)
-        let p11 = Polytope(x: 0, y: [-2, -2, -2, -2], z: 0)
-        let p12 = Polytope(x: 0, y: [3, 3, 3, 3], z: 0)
-        let p13 = Polytope(x: 0, y: [1, 2, 2, 1], z: 0)
+        let p0 = Polytope(x: 0, corners: [5, 4, 4, 5], z: 0)!
+        let p1 = Polytope(x: 0, corners: [1, 2, 2, 1], z: 0)!
+        let p2 = Polytope(x: 0, corners: [5, 5, 5, 5], z: 0)!
+        let p3 = Polytope(x: 0, corners: [4, 4, 4, 4], z: 0)!
+        let p4 = Polytope(x: 0, corners: [2, 2, 2, 2], z: 0)!
+        let p5 = Polytope(x: 0, corners: [1, 1, 1, 1], z: 0)!
+        let p6 = Polytope(x: 0, corners: [3, 3, 3, 3], z: 0)!
+        let p7 = Polytope(x: 0, corners: [2, 2, 2, 2], z: 0)!
+        let p8 = Polytope(x: 0, corners: [7, 7, 7, 7], z: 0)!
+        let p9 = Polytope(x: 0, corners: [6, 6, 6, 6], z: 0)!
+        let p10 = Polytope(x: 0, corners: [-1, -1, -1, -1], z: 0)!
+        let p11 = Polytope(x: 0, corners: [-2, -2, -2, -2], z: 0)!
+        let p12 = Polytope(x: 0, corners: [3, 3, 3, 3], z: 0)!
+        let p13 = Polytope(x: 0, corners: [1, 2, 2, 1], z: 0)!
         
         let reference = Polyhedron(upperPolytope: p0, lowerPolytope: p1)
         
@@ -155,12 +155,12 @@ class PolyhedronTests: XCTestCase {
         
         let expect = expectation(description: "Subtracting Polyhedrons from each other results in an array of the remaining volumes")
         
-        let p0 = Polytope(x: 0, y: [5, 4, 4, 5], z: 0)
-        let p1 = Polytope(x: 0, y: [0, 1, 1, 0], z: 0)
-        let p2 = Polytope(x: 0, y: [4, 4, 4, 4], z: 0)
-        let p3 = Polytope(x: 0, y: [3, 3, 3, 3], z: 0)
-        let p4 = Polytope(x: 0, y: [2, 2, 2, 2], z: 0)
-        let p5 = Polytope(x: 0, y: [1, 1, 1, 1], z: 0)
+        let p0 = Polytope(x: 0, corners: [5, 4, 4, 5], z: 0)!
+        let p1 = Polytope(x: 0, corners: [0, 1, 1, 0], z: 0)!
+        let p2 = Polytope(x: 0, corners: [4, 4, 4, 4], z: 0)!
+        let p3 = Polytope(x: 0, corners: [3, 3, 3, 3], z: 0)!
+        let p4 = Polytope(x: 0, corners: [2, 2, 2, 2], z: 0)!
+        let p5 = Polytope(x: 0, corners: [1, 1, 1, 1], z: 0)!
         
         let reference = Polyhedron(upperPolytope: p0, lowerPolytope: p1)
         
@@ -188,23 +188,23 @@ class PolyhedronTests: XCTestCase {
         
         let expect = expectation(description: "Subtracting inverted Polyhedrons from each other along a specified edge results in an array of the remaining volumes")
         
-        let p0 = Polytope(x: 0, y: [-10, -10, -10, -10], z: 0)
-        let p1 = Polytope(x: 0, y: [-6, -6, -6, -6], z: 0)
+        let p0 = Polytope(x: 0, corners: [-10, -10, -10, -10], z: 0)!
+        let p1 = Polytope(x: 0, corners: [-6, -6, -6, -6], z: 0)!
         
-        let p2 = Polytope(x: MDWFloat(Coordinate.Forward.x), y: [-10, -10, -10, -10], z: MDWFloat(Coordinate.Forward.z))
-        let p3 = Polytope(x: MDWFloat(Coordinate.Forward.x), y: [-7, -8, -8, -7], z: MDWFloat(Coordinate.Forward.z))
+        let p2 = Polytope(x: MDWFloat(Coordinate.Forward.x), corners: [-10, -10, -10, -10], z: MDWFloat(Coordinate.Forward.z))!
+        let p3 = Polytope(x: MDWFloat(Coordinate.Forward.x), corners: [-7, -8, -8, -7], z: MDWFloat(Coordinate.Forward.z))!
         
-        let p4 = Polytope(x: MDWFloat(Coordinate.Right.x), y: [-7, -7, -7, -7], z: MDWFloat(Coordinate.Right.x))
-        let p5 = Polytope(x: MDWFloat(Coordinate.Right.x), y: [-6, -6, -6, -6], z: MDWFloat(Coordinate.Right.x))
+        let p4 = Polytope(x: MDWFloat(Coordinate.Right.x), corners: [-7, -7, -7, -7], z: MDWFloat(Coordinate.Right.x))!
+        let p5 = Polytope(x: MDWFloat(Coordinate.Right.x), corners: [-6, -6, -6, -6], z: MDWFloat(Coordinate.Right.x))!
         
-        let p6 = Polytope(x: MDWFloat(Coordinate.Right.x), y: [-10, -10, -10, -10], z: MDWFloat(Coordinate.Right.x))
-        let p7 = Polytope(x: MDWFloat(Coordinate.Right.x), y: [-9, -9, -9, -9], z: MDWFloat(Coordinate.Right.x))
+        let p6 = Polytope(x: MDWFloat(Coordinate.Right.x), corners: [-10, -10, -10, -10], z: MDWFloat(Coordinate.Right.x))!
+        let p7 = Polytope(x: MDWFloat(Coordinate.Right.x), corners: [-9, -9, -9, -9], z: MDWFloat(Coordinate.Right.x))!
         
-        let p8 = Polytope(x: MDWFloat(Coordinate.Backward.x), y: [-10, -10, -10, -10], z: MDWFloat(Coordinate.Backward.x))
-        let p9 = Polytope(x: MDWFloat(Coordinate.Backward.x), y: [-6, -7, -8, -7], z: MDWFloat(Coordinate.Backward.x))
+        let p8 = Polytope(x: MDWFloat(Coordinate.Backward.x), corners: [-10, -10, -10, -10], z: MDWFloat(Coordinate.Backward.x))!
+        let p9 = Polytope(x: MDWFloat(Coordinate.Backward.x), corners: [-6, -7, -8, -7], z: MDWFloat(Coordinate.Backward.x))!
         
-        let p10 = Polytope(x: MDWFloat(Coordinate.Left.x), y: [-9, -9, -9, -9], z: MDWFloat(Coordinate.Left.x))
-        let p11 = Polytope(x: MDWFloat(Coordinate.Left.x), y: [-6, -6, -7, -7], z: MDWFloat(Coordinate.Left.x))
+        let p10 = Polytope(x: MDWFloat(Coordinate.Left.x), corners: [-9, -9, -9, -9], z: MDWFloat(Coordinate.Left.x))!
+        let p11 = Polytope(x: MDWFloat(Coordinate.Left.x), corners: [-6, -6, -7, -7], z: MDWFloat(Coordinate.Left.x))!
         
         let reference = Polyhedron(upperPolytope: p1, lowerPolytope: p0)
         

@@ -10,19 +10,33 @@ public class TerrainLayer: GridChild {
     
     public var observer: GridObserver?
     
-    public var name: String? { return "" }
+    public var name: String?
     
-    public var volume: Volume
+    public var volume: Volume {
+        
+        let base = Axis.Y(y: polyhedron.lowerPolytope.base)
+        let peak = Axis.Y(y: polyhedron.upperPolytope.peak)
+        
+        return Volume(coordinate: Coordinate(x: coordinate.x, y: base, z: coordinate.z), size: Size(width: 1, height: (peak - base), depth: 1))
+    }
     
     var isDirty: Bool = true
     
+    let coordinate: Coordinate
+    
+    var corners: [Int]
+    
     var hierarchy = Hierarchy()
     
-    init(observer: GridObserver, volume: Volume) {
+    public required init?(observer: GridObserver, coordinate: Coordinate, corners: [Int]) {
+        
+        guard corners.count == 4 else { return nil }
         
         self.observer = observer
         
-        self.volume = volume
+        self.coordinate = coordinate
+        
+        self.corners = corners
     }
 }
 
@@ -55,18 +69,65 @@ extension TerrainLayer: GridMeshProvider {
 
 extension TerrainLayer: GridPolyhedronProvider {
     
-    public var polyhedron: Polyhedron { return Polyhedron(upperPolytope: Polytope(x: 0, y: 0, z: 0), lowerPolytope: Polytope(x: 0, y: 0, z: 0)) }
+    var upperPolytope: Polytope {
+        
+        return Polytope(x: MDWFloat(coordinate.x), y: corners, z: MDWFloat(coordinate.z))
+    }
+    
+    var lowerPolytope: Polytope {
+        
+        if let lowerLayer = hierarchy.lower {
+            
+            return lowerLayer.polyhedron.upperPolytope
+        }
+        
+        return Polytope(x: MDWFloat(coordinate.x), y: [World.Floor, World.Floor, World.Floor, World.Floor], z: MDWFloat(coordinate.z))
+    }
+    
+    public var polyhedron: Polyhedron { return Polyhedron(upperPolytope: upperPolytope, lowerPolytope: lowerPolytope) }
 }
 
 extension TerrainLayer {
     
     func get(height corner: GridCorner) -> Int {
         
-        return 0
+        return corners[corner.rawValue]
     }
     
     func set(height: Int, corner: GridCorner) {
         
+        var cornerHeight = min(max(height, World.Floor + 1), World.Ceiling)
+        
+        if let upperLayer = hierarchy.upper {
+            
+            cornerHeight = min(cornerHeight, upperLayer.get(height: corner))
+        }
+        
+        if let lowerLayer = hierarchy.lower {
+            
+            cornerHeight = max(cornerHeight, lowerLayer.get(height: corner))
+        }
+        
+        if get(height: corner) != cornerHeight {
+            
+            let clamp = 1
+            
+            GridCorner.Corners(corner: corner).forEach { connectedCorner in
+             
+                let delta = get(height: connectedCorner) - cornerHeight
+                
+                if abs(delta) > clamp {
+                    
+                    let connectedCornerHeight = cornerHeight + (delta <= -clamp ? -clamp : (delta >= clamp ? clamp : delta))
+                    
+                    set(height: connectedCornerHeight, corner: connectedCorner)
+                }
+            }
+            
+            corners[corner.rawValue] = cornerHeight
+            
+            becomeDirty()
+        }
     }
 }
 

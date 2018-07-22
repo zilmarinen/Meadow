@@ -42,9 +42,9 @@ class TerrainTests: XCTestCase {
         
         let expect = expectation(description: "Terrain types are loaded and can be found")
         
-        let BedrockTerrainType = meadow.terrain.find(terrainType: "Bedrock")
-        let grassTerrainType = meadow.terrain.find(terrainType: "Grass")
-        let unknownTerrainType = meadow.terrain.find(terrainType: "unknowm")
+        let BedrockTerrainType = meadow.terrain.find(nodeType: "Bedrock")
+        let grassTerrainType = meadow.terrain.find(nodeType: "Grass")
+        let unknownTerrainType = meadow.terrain.find(nodeType: "unknowm")
         
         XCTAssertNotNil(BedrockTerrainType)
         XCTAssertNotNil(grassTerrainType)

@@ -25,7 +25,7 @@ class TerrainLayerTests: XCTestCase {
         
         let n0 = meadow.terrain.add(node: Coordinate(x: 13, y: 0, z: 37))
         
-        let terrainType = meadow.terrain.find(terrainType: "Bedrock")
+        let terrainType = meadow.terrain.find(nodeType: "Bedrock")
         
         XCTAssertNotNil(n0)
         XCTAssertNotNil(terrainType)
@@ -64,7 +64,7 @@ class TerrainLayerTests: XCTestCase {
         
         let n0 = meadow.terrain.add(node: Coordinate(x: 13, y: 0, z: 37))
         
-        let terrainType = meadow.terrain.find(terrainType: "Bedrock")
+        let terrainType = meadow.terrain.find(nodeType: "Bedrock")
         
         XCTAssertNotNil(n0)
         XCTAssertNotNil(terrainType)
@@ -88,7 +88,7 @@ class TerrainLayerTests: XCTestCase {
         
         let n0 = meadow.terrain.add(node: Coordinate(x: 13, y: 0, z: 37))
         
-        let terrainType = meadow.terrain.find(terrainType: "Bedrock")
+        let terrainType = meadow.terrain.find(nodeType: "Bedrock")
         
         XCTAssertNotNil(n0)
         XCTAssertNotNil(terrainType)
@@ -127,7 +127,7 @@ class TerrainLayerTests: XCTestCase {
         
         let n0 = meadow.terrain.add(node: Coordinate(x: 13, y: 0, z: 37))
         
-        let terrainType = meadow.terrain.find(terrainType: "Bedrock")
+        let terrainType = meadow.terrain.find(nodeType: "Bedrock")
         
         XCTAssertNotNil(n0)
         XCTAssertNotNil(terrainType)
@@ -167,7 +167,7 @@ class TerrainLayerTests: XCTestCase {
         
         let n0 = meadow.terrain.add(node: Coordinate(x: 13, y: 0, z: 37))
         
-        let terrainType = meadow.terrain.find(terrainType: "Bedrock")
+        let terrainType = meadow.terrain.find(nodeType: "Bedrock")
         
         XCTAssertNotNil(n0)
         XCTAssertNotNil(terrainType)
@@ -211,7 +211,7 @@ class TerrainLayerTests: XCTestCase {
         
         let n0 = meadow.terrain.add(node: Coordinate(x: 13, y: 0, z: 37))
         
-        let terrainType = meadow.terrain.find(terrainType: "Bedrock")
+        let terrainType = meadow.terrain.find(nodeType: "Bedrock")
         
         XCTAssertNotNil(n0)
         XCTAssertNotNil(terrainType)
@@ -265,7 +265,7 @@ class TerrainLayerTests: XCTestCase {
         
         let n0 = meadow.terrain.add(node: Coordinate(x: 13, y: 0, z: 37))
         
-        let terrainType = meadow.terrain.find(terrainType: "Bedrock")
+        let terrainType = meadow.terrain.find(nodeType: "Bedrock")
         
         XCTAssertNotNil(n0)
         XCTAssertNotNil(terrainType)
@@ -295,7 +295,7 @@ class TerrainLayerTests: XCTestCase {
         
         let n0 = meadow.terrain.add(node: Coordinate(x: 13, y: 0, z: 37))
         
-        let terrainType = meadow.terrain.find(terrainType: "Bedrock")
+        let terrainType = meadow.terrain.find(nodeType: "Bedrock")
         
         XCTAssertNotNil(n0)
         XCTAssertNotNil(terrainType)
@@ -308,7 +308,7 @@ class TerrainLayerTests: XCTestCase {
         XCTAssertNotNil(l1)
         XCTAssertNotNil(l2)
         
-        n0?.remove(layer: l1!)
+        let _ = n0?.remove(layer: l1!)
         
         XCTAssertNil(l0?.hierarchy.lower)
         XCTAssertEqual(l0?.hierarchy.upper, l2)
@@ -330,7 +330,7 @@ class TerrainLayerTests: XCTestCase {
         let n2 = meadow.terrain.add(node: coordinate + Coordinate.Left)
         let n3 = meadow.terrain.add(node: coordinate + Coordinate.Forward + Coordinate.Left)
         
-        let terrainType = meadow.terrain.find(terrainType: "Bedrock")
+        let terrainType = meadow.terrain.find(nodeType: "Bedrock")
         
         XCTAssertNotNil(n0)
         XCTAssertNotNil(n1)

@@ -9,7 +9,7 @@
 import Foundation
 import SceneKit
 
-class Meadow: SCNScene, SceneGraphParent {
+class Meadow: SCNScene, GridObserver, SceneGraphParent {
     
     let areas = Area()
     let foliage = Foliage()
@@ -18,8 +18,6 @@ class Meadow: SCNScene, SceneGraphParent {
     let terrain = Terrain()
     let tunnels = Tunnel()
     let water = Water()
-    
-    var totalChildren: Int { return rootNode.childNodes.count }
     
     override init() {
         
@@ -49,6 +47,8 @@ class Meadow: SCNScene, SceneGraphParent {
 
 extension Meadow {
     
+    var totalChildren: Int { return rootNode.childNodes.count }
+    
     func child(at index: Int) -> SceneGraphChild? {
         
         return rootNode.childNodes[index] as? SceneGraphChild
@@ -60,9 +60,6 @@ extension Meadow {
         
         return rootNode.childNodes.index(of: child)
     }
-}
-
-extension Meadow: GridObserver {
     
     func child(didBecomeDirty child: SceneGraphChild) {
         
@@ -81,6 +78,6 @@ extension Meadow: SCNSceneRendererDelegate {
     
     public func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
 
-        
+        //
     }
 }

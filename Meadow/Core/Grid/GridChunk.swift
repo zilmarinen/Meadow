@@ -14,8 +14,6 @@ public class GridChunk<Tile: GridTile<Node>, Node: GridNode>: SCNNode, GridChild
     
     public var observer: GridObserver?
     
-    public var totalChildren: Int { return children.count }
-    
     public var children: [Tile] = []
     
     public let volume: Volume
@@ -74,6 +72,8 @@ extension GridChunk: GridUpdatable {
 }
 
 extension GridChunk {
+    
+    public var totalChildren: Int { return children.count }
     
     public func child(at index: Int) -> SceneGraphChild? {
         

@@ -14,11 +14,9 @@ public class GridTile<Node: GridNode>: GridChild, GridParent {
     
     public var observer: GridObserver?
     
-    public var totalChildren: Int { return children.count }
-    
     public var children: [Node] = []
     
-    public var name: String? { return "" }
+    public var name: String?
     
     public let volume: Volume
     
@@ -77,6 +75,8 @@ extension GridTile: GridMeshProvider {
 }
 
 extension GridTile {
+    
+    public var totalChildren: Int { return children.count }
     
     public func child(at index: Int) -> SceneGraphChild? {
         

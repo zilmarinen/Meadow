@@ -13,24 +13,10 @@ public class Terrain: Grid<TerrainChunk, TerrainTile, TerrainNode<TerrainLayer>>
     public typealias NodeType = TerrainType
     
     public var nodeTypes: [TerrainType] = []
-}
-
-extension Terrain {
     
-    func add(node coordinate: Coordinate) -> TerrainNode<TerrainLayer>? {
+    public required override init() {
         
-        return add(node: TerrainTile.FixedVolume(coordinate))
-    }
-}
-
-extension Terrain {
-    
-    func find(terrainType name: String) -> TerrainType? {
-        
-        return find(nodeType: name)
-    }
-    
-    func loadNodeTypes() {
+        super.init()
         
         do {
             
@@ -46,5 +32,18 @@ extension Terrain {
             
             fatalError("Unable to load terrain types")
         }
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension Terrain {
+    
+    func add(node coordinate: Coordinate) -> TerrainNode<TerrainLayer>? {
+        
+        return add(node: TerrainTile.FixedVolume(coordinate))
     }
 }

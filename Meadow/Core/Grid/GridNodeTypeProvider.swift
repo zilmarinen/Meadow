@@ -12,7 +12,7 @@ public protocol GridNodeTypeProvider {
     
     var nodeTypes: [NodeType] { get }
     
-    var totalChildren: Int { get }
+    var totalNodeTypes: Int { get }
     
     func nodeType(at index: Int) -> NodeType?
     func index(of nodeType: NodeType) -> Int?
@@ -20,6 +20,8 @@ public protocol GridNodeTypeProvider {
 }
 
 extension GridNodeTypeProvider {
+    
+    public var totalNodeTypes: Int { return nodeTypes.count }
     
     public func nodeType(at index: Int) -> NodeType? {
         

@@ -10,7 +10,7 @@ public class GridNode: GridChild, GridMeshProvider, GridSoilable, Encodable {
     
     public var observer: GridObserver?
     
-    public var name: String? { return "" }
+    public var name: String?
     
     public let volume: Volume
     

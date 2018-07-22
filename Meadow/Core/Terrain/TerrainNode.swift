@@ -10,8 +10,6 @@ public class TerrainNode<Layer: TerrainLayer>: GridNode, GridParent {
     
     public typealias ChildType = Layer
     
-    public var totalChildren: Int { return children.count }
-    
     public var children: [Layer] = []
     
     enum CodingKeys: CodingKey {
@@ -53,6 +51,8 @@ public class TerrainNode<Layer: TerrainLayer>: GridNode, GridParent {
 
 extension TerrainNode {
     
+    public var totalChildren: Int { return children.count }
+    
     public func child(at index: Int) -> SceneGraphChild? {
         
         return children[index]
@@ -75,16 +75,55 @@ extension TerrainNode {
 
 extension TerrainNode {
     
-    public func add(layer: TerrainType) -> TerrainLayer? {
+    public var topLayer: Layer? {
         
-        return nil
+        return children.first { layer -> Bool in
+            
+            return layer.hierarchy.upper == nil
+        }
+    }
+    
+    public func add(layer terrainType: TerrainType) -> TerrainLayer? {
+        
+        if let topLayer = topLayer, Axis.Y(y: topLayer.polyhedron.upperPolytope.base) == World.Ceiling {
+            
+            return nil
+        }
+        
+        let height = (World.Floor + 1)
+        
+        let corners = topLayer?.polyhedron.upperPolytope.vertices.map { Axis.Y(y: $0.y) + 1 } ?? [height, height, height, height]
+        
+        guard let layer = Layer(observer: self, coordinate: volume.coordinate, corners: corners) else { return nil }
+        
+        layer.hierarchy.lower = topLayer
+    
+        topLayer?.hierarchy.upper = layer
+    
+        children.append(layer)
+    
+        becomeDirty()
+    
+        return layer
     }
     
     public func remove(layer: TerrainLayer) -> Bool {
         
         if let index = index(of: layer) {
+            
+            let upper = layer.hierarchy.upper
+            let lower = layer.hierarchy.lower
+            
+            upper?.hierarchy.lower = lower
+            
+            lower?.hierarchy.upper = upper
+            
+            layer.hierarchy.upper = nil
+            layer.hierarchy.lower = nil
         
             children.remove(at: index)
+            
+            becomeDirty()
             
             return true
         }

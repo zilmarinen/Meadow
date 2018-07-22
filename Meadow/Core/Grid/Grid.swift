@@ -12,8 +12,6 @@ public class Grid<Chunk: GridChunk<Tile, Node>, Tile: GridTile<Node>, Node: Grid
     
     public typealias ChildType = Chunk
     
-    public var totalChildren: Int { return childNodes.count }
-    
     public var children: [Chunk] { return childNodes as! [Chunk] }
     
     var isDirty: Bool = true
@@ -58,6 +56,8 @@ extension Grid: GridUpdatable {
 }
 
 extension Grid {
+    
+    public var totalChildren: Int { return childNodes.count }
     
     public func child(at index: Int) -> SceneGraphChild? {
         
@@ -168,6 +168,11 @@ extension Grid {
                     let _ = tile.remove(node: tile.child(at: 0) as! Node)
                 }
                 
+                if chunk.totalChildren == 0 {
+                    
+                    let _ = remove(chunk: chunk)
+                }
+                
                 return true
             }
         }
@@ -184,6 +189,11 @@ extension Grid {
                 GridEdge.Edges.forEach { edge in
                  
                     let _ = node.remove(neighbour: edge)
+                }
+                
+                if tile.totalChildren == 0 {
+                    
+                    let _ = remove(tile: tile)
                 }
                 
                 return true

@@ -14,4 +14,12 @@ extension GridNode {
         
         let node: GridNode
     }
+    
+    public struct Neighbours {
+        
+        var north: Neighbour?
+        var east: Neighbour?
+        var south: Neighbour?
+        var west: Neighbour?
+    }
 }

@@ -50,9 +50,9 @@ public class TerrainNode<Layer: TerrainLayer>: GridNode, GridParent {
     
     public override var mesh: Mesh {
         
-        let visibleTiles = children.filter { !$0.isHidden }
+        let layers = children.filter { !$0.isHidden }
         
-        let meshes = visibleTiles.map { _ in Mesh(faces: []) }
+        let meshes = layers.map { _ in Mesh(faces: []) }
         
         return Mesh(meshes: meshes)
     }

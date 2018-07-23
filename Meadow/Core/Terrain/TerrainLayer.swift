@@ -22,16 +22,7 @@ public class TerrainLayer: GridChild {
         return Volume(coordinate: Coordinate(x: coordinate.x, y: base, z: coordinate.z), size: Size(width: 1, height: (peak - base), depth: 1))
     }
     
-    var terrainType: TerrainType {
-        
-        didSet {
-            
-            if terrainType != oldValue {
-                
-                becomeDirty()
-            }
-        }
-    }
+    var edges: Edges
     
     var isDirty: Bool = true
     
@@ -51,7 +42,7 @@ public class TerrainLayer: GridChild {
         
         self.corners = corners
         
-        self.terrainType = terrainType
+        self.edges = Edges(terrainType: terrainType)
     }
 }
 
@@ -141,6 +132,35 @@ extension TerrainLayer {
     }
 }
 
+extension TerrainLayer {
+    
+    func get(terrainType edge: GridEdge) -> TerrainType {
+        
+        switch edge {
+            
+        case .north: return edges.north.terrainType
+        case .east: return edges.east.terrainType
+        case .south: return edges.south.terrainType
+        case .west: return edges.west.terrainType
+        }
+    }
+    
+    func set(terrainType: TerrainType, edge: GridEdge) {
+        
+        let terrainEdge = Edge(edge: edge, terrainType: terrainType)
+        
+        switch edge {
+            
+        case .north: edges.north = terrainEdge
+        case .east: edges.east = terrainEdge
+        case .south: edges.south = terrainEdge
+        case .west: edges.west = terrainEdge
+        }
+        
+        becomeDirty()
+    }
+}
+
 extension TerrainLayer: Hashable {
     
     public var hashValue: Int { return volume.hashValue }
@@ -156,7 +176,8 @@ extension TerrainLayer: Encodable {
     enum CodingKeys: CodingKey {
         
         case name
-        case volume
+        case corners
+        case edges
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -164,6 +185,7 @@ extension TerrainLayer: Encodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         try container.encode(self.name, forKey: .name)
-        try container.encode(self.volume, forKey: .volume)
+        try container.encode(self.corners, forKey: .corners)
+        try container.encode(self.edges, forKey: .edges)
     }
 }

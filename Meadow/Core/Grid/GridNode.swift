@@ -18,7 +18,7 @@ public class GridNode: GridChild, GridMeshProvider, GridSoilable, Encodable {
     
     var isDirty: Bool = true
     
-    var neighbours: [Neighbour] = []
+    var neighbours = Neighbours()
     
     private enum CodingKeys: CodingKey {
         
@@ -64,7 +64,15 @@ extension GridNode {
         
         let _ = remove(neighbour: edge)
         
-        neighbours.append(Neighbour(edge: edge, node: node))
+        let neighbour = Neighbour(edge: edge, node: node)
+        
+        switch edge {
+            
+        case .north: neighbours.north = neighbour
+        case .east: neighbours.east = neighbour
+        case .south: neighbours.south = neighbour
+        case .west: neighbours.west = neighbour
+        }
         
         let oppositeEdge = GridEdge.opposite(edge: edge)
         
@@ -78,9 +86,12 @@ extension GridNode {
     
     func find(neighbour edge: GridEdge) -> GridNode.Neighbour? {
         
-        return neighbours.first { neighbour -> Bool in
+        switch edge {
             
-            return neighbour.edge == edge
+        case .north: return neighbours.north
+        case .east: return neighbours.east
+        case .south: return neighbours.south
+        case .west: return neighbours.west
         }
     }
     
@@ -88,9 +99,12 @@ extension GridNode {
         
         guard let neighbour = find(neighbour: edge) else { return false }
         
-        if let index = neighbours.index(of: neighbour) {
+        switch edge {
             
-            neighbours.remove(at: index)
+        case .north: neighbours.north = nil
+        case .east: neighbours.east = nil
+        case .south: neighbours.south = nil
+        case .west: neighbours.west = nil
         }
         
         let oppositeEdge = GridEdge.opposite(edge: edge)

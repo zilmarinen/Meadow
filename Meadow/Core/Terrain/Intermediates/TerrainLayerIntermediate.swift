@@ -9,4 +9,8 @@
 public struct TerrainLayerIntermediate: Decodable {
     
     let name: String?
+    
+    let corners: [Int]
+    
+    let edges: TerrainLayer.Edges
 }

@@ -1,15 +1,15 @@
 //
-//  TerrainTests.swift
-//  MeadowTests
+//  AreaTests.swift
+//  Meadow-iOSTests
 //
-//  Created by Zack Brown on 02/05/2018.
+//  Created by Zack Brown on 23/07/2018.
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
 import XCTest
 
-class TerrainTests: XCTestCase {
-
+class AreaTests: XCTestCase {
+ 
     var meadow: Meadow!
     
     override func setUp() {
@@ -19,15 +19,15 @@ class TerrainTests: XCTestCase {
         meadow = Meadow()
     }
     
-    func testTerrainNodeAddition() {
+    func testAreaNodeAddition() {
         
         let expect = expectation(description: "Nodes can be added to a grid if the volume they define is not already occupied")
         
         let coordinate = Coordinate(x: 13, y: 0, z: 37)
         
-        let n0 = meadow.terrain.add(node: Coordinate(x: 13, y: 0, z: 37))
-        let n1 = meadow.terrain.add(node: coordinate + Coordinate.left)
-        let n2 = meadow.terrain.add(node: coordinate)
+        let n0 = meadow.areas.add(node: Coordinate(x: 13, y: 0, z: 37))
+        let n1 = meadow.areas.add(node: coordinate + Coordinate.left)
+        let n2 = meadow.areas.add(node: coordinate)
         
         XCTAssertNotNil(n0)
         XCTAssertNotNil(n1)
@@ -40,10 +40,10 @@ class TerrainTests: XCTestCase {
     
     func testNodeTypesAreLoaded() {
         
-        let expect = expectation(description: "Terrain types are loaded and can be found")
+        let expect = expectation(description: "Area types are loaded and can be found")
         
-        let knownNodeType = meadow.terrain.find(nodeType: "Bedrock")
-        let unknownNodeType = meadow.terrain.find(nodeType: "unknown")
+        let knownNodeType = meadow.areas.find(nodeType: "Concrete")
+        let unknownNodeType = meadow.areas.find(nodeType: "unknown")
         
         XCTAssertNotNil(knownNodeType)
         XCTAssertNil(unknownNodeType)

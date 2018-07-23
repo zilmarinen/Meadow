@@ -6,6 +6,33 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-public class Footpath: Grid<FootpathChunk, FootpathTile, FootpathNode> {
+import Foundation
+
+public class Footpath: Grid<FootpathChunk, FootpathTile, FootpathNode>, GridNodeTypeProvider {
     
+    public typealias NodeType = FootpathType
+    
+    public var nodeTypes: [FootpathType] = []
+    
+    public required override init() {
+        
+        super.init()
+        
+        guard let nodeTypes = NodeType.load(filename: "footpath_types") else { fatalError() }
+        
+        self.nodeTypes = nodeTypes
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension Footpath {
+    
+    func add(node coordinate: Coordinate) -> FootpathNode? {
+        
+        return add(node: FootpathTile.fixedVolume(coordinate))
+    }
 }

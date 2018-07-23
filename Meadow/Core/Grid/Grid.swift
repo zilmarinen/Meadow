@@ -151,6 +151,8 @@ extension Grid {
                 let _ = chunk.remove(tile: chunk.child(at: 0) as! Tile)
             }
             
+            becomeDirty()
+            
             return true
         }
         

@@ -140,6 +140,8 @@ extension GridTile {
             
             node.observer = nil
             
+            becomeDirty()
+            
             return true
         }
         

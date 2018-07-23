@@ -22,6 +22,17 @@ public class TerrainLayer: GridChild {
         return Volume(coordinate: Coordinate(x: coordinate.x, y: base, z: coordinate.z), size: Size(width: 1, height: (peak - base), depth: 1))
     }
     
+    var terrainType: TerrainType {
+        
+        didSet {
+            
+            if terrainType != oldValue {
+                
+                becomeDirty()
+            }
+        }
+    }
+    
     var isDirty: Bool = true
     
     let coordinate: Coordinate
@@ -30,7 +41,7 @@ public class TerrainLayer: GridChild {
     
     var hierarchy = Hierarchy()
     
-    public required init?(observer: GridObserver, coordinate: Coordinate, corners: [Int]) {
+    public required init?(observer: GridObserver, coordinate: Coordinate, corners: [Int], terrainType: TerrainType) {
         
         guard corners.count == 4 else { return nil }
         
@@ -39,6 +50,8 @@ public class TerrainLayer: GridChild {
         self.coordinate = coordinate
         
         self.corners = corners
+        
+        self.terrainType = terrainType
     }
 }
 
@@ -62,11 +75,6 @@ extension TerrainLayer: GridSoilable {
         
         isDirty = false
     }
-}
-
-extension TerrainLayer: GridMeshProvider {
-    
-    public var mesh: Mesh { return Mesh(faces: []) }
 }
 
 extension TerrainLayer: GridPolyhedronProvider {

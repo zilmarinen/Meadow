@@ -19,6 +19,8 @@ class Meadow: SCNScene, GridObserver, SceneGraphParent {
     let tunnels = Tunnel()
     let water = Water()
     
+    var observer: GridObserver?
+    
     override init() {
         
         super.init()
@@ -26,7 +28,9 @@ class Meadow: SCNScene, GridObserver, SceneGraphParent {
         areas.observer = self
         foliage.observer = self
         footpaths.observer = self
+        scaffolds.observer = self
         terrain.observer = self
+        tunnels.observer = self
         water.observer = self
         
         rootNode.name = "Meadow"
@@ -71,6 +75,8 @@ extension Meadow {
             
         default: break
         }
+        
+        observer?.child(didBecomeDirty: child)
     }
 }
 
@@ -79,5 +85,32 @@ extension Meadow: SCNSceneRendererDelegate {
     public func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
 
         //
+    }
+}
+
+extension Meadow: Encodable {
+    
+    enum CodingKeys: CodingKey {
+        
+        case name
+        
+        case areas
+        case foliage
+        case footpaths
+        case terrain
+        case water
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encodeIfPresent(self.rootNode.name, forKey: .name)
+        
+        try container.encode(self.areas, forKey: .areas)
+        try container.encode(self.foliage, forKey: .foliage)
+        try container.encode(self.footpaths, forKey: .footpaths)
+        try container.encode(self.terrain, forKey: .terrain)
+        try container.encode(self.water, forKey: .water)
     }
 }

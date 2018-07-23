@@ -11,4 +11,6 @@ public protocol GridChild: SceneGraphChild {
     var observer: GridObserver? { get }
     
     var volume: Volume { get }
+    
+    var isHidden: Bool { get }
 }

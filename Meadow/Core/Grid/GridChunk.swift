@@ -142,6 +142,8 @@ extension GridChunk {
             
             tile.observer = nil
             
+            becomeDirty()
+            
             return true
         }
         

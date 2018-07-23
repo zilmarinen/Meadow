@@ -10,14 +10,14 @@ import SceneKit
 
 extension SCNVector4 {
     
-    public static func Length(vector: SCNVector4) -> MDWFloat {
+    public static func length(vector: SCNVector4) -> MDWFloat {
         
         let v = GLKVector4Make(Float(vector.x), Float(vector.y), Float(vector.z), Float(vector.w))
         
         return MDWFloat(GLKVector4Length(v))
     }
 
-    public static func Normalise(vector: SCNVector4) -> SCNVector4 {
+    public static func normalise(vector: SCNVector4) -> SCNVector4 {
         
         let v = GLKVector4Make(Float(vector.x), Float(vector.y), Float(vector.z), Float(vector.w))
         

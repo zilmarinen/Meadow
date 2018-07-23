@@ -104,21 +104,21 @@ class PolyhedronTests: XCTestCase {
         
         let below = Polyhedron(upperPolytope: p10, lowerPolytope: p11)
         
-        let r0 = Polyhedron.Subtract(polyhedron: upper, from: reference)
+        let r0 = Polyhedron.subtract(polyhedron: upper, from: reference)
         
         XCTAssertNotNil(r0)
         XCTAssertEqual(r0?.count, 1)
         XCTAssertEqual(r0?.first?.upperPolytope, upper.lowerPolytope)
         XCTAssertEqual(r0?.first?.lowerPolytope, reference.lowerPolytope)
         
-        let r1 = Polyhedron.Subtract(polyhedron: lower, from: reference)
+        let r1 = Polyhedron.subtract(polyhedron: lower, from: reference)
         
         XCTAssertNotNil(r1)
         XCTAssertEqual(r1?.count, 1)
         XCTAssertEqual(r1?.first?.upperPolytope, reference.upperPolytope)
         XCTAssertEqual(r1?.first?.lowerPolytope, lower.upperPolytope)
         
-        let r2 = Polyhedron.Subtract(polyhedron: intersecting0, from: reference)
+        let r2 = Polyhedron.subtract(polyhedron: intersecting0, from: reference)
         
         XCTAssertNotNil(r2)
         XCTAssertEqual(r2?.count, 2)
@@ -127,22 +127,22 @@ class PolyhedronTests: XCTestCase {
         XCTAssertEqual(r2?[1].upperPolytope, intersecting0.lowerPolytope)
         XCTAssertEqual(r2?[1].lowerPolytope, reference.lowerPolytope)
         
-        let r3 = Polyhedron.Subtract(polyhedron: intersecting1, from: reference)
+        let r3 = Polyhedron.subtract(polyhedron: intersecting1, from: reference)
         
         XCTAssertNotNil(r3)
         XCTAssertEqual(r3?.count, 1)
         XCTAssertEqual(r3?.first?.upperPolytope, reference.upperPolytope)
         XCTAssertEqual(r3?.first?.lowerPolytope, intersecting1.upperPolytope)
         
-        let r4 = Polyhedron.Subtract(polyhedron: above, from: reference)
+        let r4 = Polyhedron.subtract(polyhedron: above, from: reference)
         
         XCTAssertNil(r4)
         
-        let r5 = Polyhedron.Subtract(polyhedron: below, from: reference)
+        let r5 = Polyhedron.subtract(polyhedron: below, from: reference)
         
         XCTAssertNil(r5)
         
-        let r6 = Polyhedron.Subtract(polyhedron: reference, from: reference)
+        let r6 = Polyhedron.subtract(polyhedron: reference, from: reference)
         
         XCTAssertNil(r6)
         
@@ -168,7 +168,7 @@ class PolyhedronTests: XCTestCase {
         
         let lower = Polyhedron(upperPolytope: p4, lowerPolytope: p5)
         
-        let result = Polyhedron.Subtract(polyhedrons: [upper, lower], from: reference)
+        let result = Polyhedron.subtract(polyhedrons: [upper, lower], from: reference)
         
         XCTAssertNotNil(result)
         XCTAssertEqual(result.count, 3)
@@ -191,20 +191,20 @@ class PolyhedronTests: XCTestCase {
         let p0 = Polytope(x: 0, corners: [-10, -10, -10, -10], z: 0)!
         let p1 = Polytope(x: 0, corners: [-6, -6, -6, -6], z: 0)!
         
-        let p2 = Polytope(x: MDWFloat(Coordinate.Forward.x), corners: [-10, -10, -10, -10], z: MDWFloat(Coordinate.Forward.z))!
-        let p3 = Polytope(x: MDWFloat(Coordinate.Forward.x), corners: [-7, -8, -8, -7], z: MDWFloat(Coordinate.Forward.z))!
+        let p2 = Polytope(x: MDWFloat(Coordinate.forward.x), corners: [-10, -10, -10, -10], z: MDWFloat(Coordinate.forward.z))!
+        let p3 = Polytope(x: MDWFloat(Coordinate.forward.x), corners: [-7, -8, -8, -7], z: MDWFloat(Coordinate.forward.z))!
         
-        let p4 = Polytope(x: MDWFloat(Coordinate.Right.x), corners: [-7, -7, -7, -7], z: MDWFloat(Coordinate.Right.x))!
-        let p5 = Polytope(x: MDWFloat(Coordinate.Right.x), corners: [-6, -6, -6, -6], z: MDWFloat(Coordinate.Right.x))!
+        let p4 = Polytope(x: MDWFloat(Coordinate.right.x), corners: [-7, -7, -7, -7], z: MDWFloat(Coordinate.right.x))!
+        let p5 = Polytope(x: MDWFloat(Coordinate.right.x), corners: [-6, -6, -6, -6], z: MDWFloat(Coordinate.right.x))!
         
-        let p6 = Polytope(x: MDWFloat(Coordinate.Right.x), corners: [-10, -10, -10, -10], z: MDWFloat(Coordinate.Right.x))!
-        let p7 = Polytope(x: MDWFloat(Coordinate.Right.x), corners: [-9, -9, -9, -9], z: MDWFloat(Coordinate.Right.x))!
+        let p6 = Polytope(x: MDWFloat(Coordinate.right.x), corners: [-10, -10, -10, -10], z: MDWFloat(Coordinate.right.x))!
+        let p7 = Polytope(x: MDWFloat(Coordinate.right.x), corners: [-9, -9, -9, -9], z: MDWFloat(Coordinate.right.x))!
         
-        let p8 = Polytope(x: MDWFloat(Coordinate.Backward.x), corners: [-10, -10, -10, -10], z: MDWFloat(Coordinate.Backward.x))!
-        let p9 = Polytope(x: MDWFloat(Coordinate.Backward.x), corners: [-6, -7, -8, -7], z: MDWFloat(Coordinate.Backward.x))!
+        let p8 = Polytope(x: MDWFloat(Coordinate.backward.x), corners: [-10, -10, -10, -10], z: MDWFloat(Coordinate.backward.x))!
+        let p9 = Polytope(x: MDWFloat(Coordinate.backward.x), corners: [-6, -7, -8, -7], z: MDWFloat(Coordinate.backward.x))!
         
-        let p10 = Polytope(x: MDWFloat(Coordinate.Left.x), corners: [-9, -9, -9, -9], z: MDWFloat(Coordinate.Left.x))!
-        let p11 = Polytope(x: MDWFloat(Coordinate.Left.x), corners: [-6, -6, -7, -7], z: MDWFloat(Coordinate.Left.x))!
+        let p10 = Polytope(x: MDWFloat(Coordinate.left.x), corners: [-9, -9, -9, -9], z: MDWFloat(Coordinate.left.x))!
+        let p11 = Polytope(x: MDWFloat(Coordinate.left.x), corners: [-6, -6, -7, -7], z: MDWFloat(Coordinate.left.x))!
         
         let reference = Polyhedron(upperPolytope: p1, lowerPolytope: p0)
         
@@ -217,10 +217,10 @@ class PolyhedronTests: XCTestCase {
         
         let westPolyhedron = Polyhedron(upperPolytope: p11, lowerPolytope: p10)
         
-        let northInverted = Polyhedron.Stencil(polyhedrons: [northPolyhedron], against: reference, edge: .north)
-        let eastInverted = Polyhedron.Stencil(polyhedrons: [eastPolyhedronLower, eastPolyhedronUpper], against: reference, edge: .east)
-        let southInverted = Polyhedron.Stencil(polyhedrons: [southPolyhedron], against: reference, edge: .south)
-        let westInverted = Polyhedron.Stencil(polyhedrons: [westPolyhedron], against: reference, edge: .west)
+        let northInverted = Polyhedron.stencil(polyhedrons: [northPolyhedron], against: reference, edge: .north)
+        let eastInverted = Polyhedron.stencil(polyhedrons: [eastPolyhedronLower, eastPolyhedronUpper], against: reference, edge: .east)
+        let southInverted = Polyhedron.stencil(polyhedrons: [southPolyhedron], against: reference, edge: .south)
+        let westInverted = Polyhedron.stencil(polyhedrons: [westPolyhedron], against: reference, edge: .west)
         
         XCTAssertNotNil(northInverted)
         XCTAssertEqual(northInverted.count, 1)

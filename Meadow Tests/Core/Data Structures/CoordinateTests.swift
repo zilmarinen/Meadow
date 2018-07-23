@@ -14,14 +14,14 @@ class CoordinateTests: XCTestCase {
         
         let expect = expectation(description: "Static values defined by Coordinate are correct")
         
-        let zero = Coordinate.Zero
-        let one = Coordinate.One
-        let up = Coordinate.Up
-        let down = Coordinate.Down
-        let left = Coordinate.Left
-        let right = Coordinate.Right
-        let forward = Coordinate.Forward
-        let backward = Coordinate.Backward
+        let zero = Coordinate.zero
+        let one = Coordinate.one
+        let up = Coordinate.up
+        let down = Coordinate.down
+        let left = Coordinate.left
+        let right = Coordinate.right
+        let forward = Coordinate.forward
+        let backward = Coordinate.backward
         
         XCTAssertEqual(0, zero.x)
         XCTAssertEqual(0, zero.y)
@@ -98,9 +98,9 @@ class CoordinateTests: XCTestCase {
     
         let expect = expectation(description: "Coordinates are considered equal when all x, y and z components are equal")
         
-        let c0 = Coordinate.Zero
-        let c1 = Coordinate.One
-        let c2 = Coordinate.Zero
+        let c0 = Coordinate.zero
+        let c1 = Coordinate.one
+        let c2 = Coordinate.zero
         
         XCTAssertEqual(c0, c0)
         XCTAssertEqual(c0, c2)
@@ -116,12 +116,12 @@ class CoordinateTests: XCTestCase {
         let expect = expectation(description: "Coordinate adjacency along the x and z axis can be determined for both diagonal and adjacent coordinates.")
         
         let reference = Coordinate(x: 13, y: 0, z: 37)
-        let up = reference + Coordinate.Up
-        let down = reference + Coordinate.Down
-        let left = reference + Coordinate.Left
-        let right = reference + Coordinate.Right
-        let forward = reference + Coordinate.Forward
-        let backward = reference + Coordinate.Backward
+        let up = reference + Coordinate.up
+        let down = reference + Coordinate.down
+        let left = reference + Coordinate.left
+        let right = reference + Coordinate.right
+        let forward = reference + Coordinate.forward
+        let backward = reference + Coordinate.backward
         let d0 = reference + Coordinate(x: -1, y: 0, z: 1)
         let d1 = reference + Coordinate(x: 1, y: 1, z: 1)
         let d2 = reference + Coordinate(x: 1, y: 2, z: -1)

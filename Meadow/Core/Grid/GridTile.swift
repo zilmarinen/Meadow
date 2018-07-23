@@ -178,11 +178,11 @@ extension GridTile: Encodable {
 
 extension GridTile {
     
-    static func FixedVolume(_ coordinate: Coordinate) -> Volume {
+    static func fixedVolume(_ coordinate: Coordinate) -> Volume {
             
-        let coordinate = Coordinate(x: coordinate.x, y: World.Floor, z: coordinate.z)
+        let coordinate = Coordinate(x: coordinate.x, y: World.floor, z: coordinate.z)
         
-        let size = Size(width: World.TileSize, height: (World.Ceiling - World.Floor), depth: World.TileSize)
+        let size = Size(width: World.tileSize, height: (World.ceiling - World.floor), depth: World.tileSize)
         
         return Volume(coordinate: coordinate, size: size)
     }

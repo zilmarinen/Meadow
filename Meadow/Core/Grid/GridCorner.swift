@@ -59,33 +59,33 @@ extension GridCorner {
         .northEast
     ]}
 
-    static func Corners(edge: GridEdge) -> [GridCorner] {
+    static func corners(edge: GridEdge) -> [GridCorner] {
         
         return Edges[edge.rawValue]
     }
 
-    static func Corners(corner: GridCorner) -> [GridCorner] {
+    static func corners(corner: GridCorner) -> [GridCorner] {
         
         return Connected[corner.rawValue]
     }
 
-    static func Opposite(corner: GridCorner) -> GridCorner {
+    static func opposite(corner: GridCorner) -> GridCorner {
         
         return Opposite[corner.rawValue]
     }
 
-    static func Adjacent(corner: GridCorner, edge: GridEdge) -> GridCorner {
+    static func adjacent(corner: GridCorner, edge: GridEdge) -> GridCorner {
         
-        let oppositeEdge = GridEdge.Opposite(edge: edge)
+        let oppositeEdge = GridEdge.opposite(edge: edge)
         
-        let oppositeCorner = GridCorner.Opposite(corner: corner)
+        let oppositeCorner = GridCorner.opposite(corner: corner)
         
-        let corners = GridCorner.Corners(edge: oppositeEdge)
+        let corners = GridCorner.corners(edge: oppositeEdge)
         
         return corners.filter { $0 != oppositeCorner }.first!
     }
 
-    static func Extent(corner: GridCorner) -> Coordinate {
+    static func extent(corner: GridCorner) -> Coordinate {
         
         return Coordinate.GridCornerExtents[corner.rawValue]
     }

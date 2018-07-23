@@ -52,14 +52,14 @@ extension SCNVector3 {
         return SCNVector3(x: lhs.x * rhs, y: lhs.y * rhs, z: lhs.z * rhs)
     }
 
-    public static func Length(vector: SCNVector3) -> MDWFloat {
+    public static func length(vector: SCNVector3) -> MDWFloat {
         
         let v = GLKVector3Make(Float(vector.x), Float(vector.y), Float(vector.z))
         
         return MDWFloat(GLKVector3Length(v))
     }
 
-    public static func Normalise(vector: SCNVector3) -> SCNVector3 {
+    public static func normalise(vector: SCNVector3) -> SCNVector3 {
         
         let v = GLKVector3Make(Float(vector.x), Float(vector.y), Float(vector.z))
         
@@ -68,7 +68,7 @@ extension SCNVector3 {
         return SCNVector3(x: MDWFloat(n.x), y: MDWFloat(n.y), z: MDWFloat(n.z))
     }
 
-    public static func Negate(vector: SCNVector3) -> SCNVector3 {
+    public static func negate(vector: SCNVector3) -> SCNVector3 {
         
         let v = GLKVector3Make(Float(vector.x), Float(vector.y), Float(vector.z))
         
@@ -77,7 +77,7 @@ extension SCNVector3 {
         return SCNVector3(x: MDWFloat(n.x), y: MDWFloat(n.y), z: MDWFloat(n.z))
     }
 
-    public static func Dot(lhs: SCNVector3, rhs: SCNVector3) -> MDWFloat {
+    public static func dot(lhs: SCNVector3, rhs: SCNVector3) -> MDWFloat {
         
         let v0 = GLKVector3Make(Float(lhs.x), Float(lhs.y), Float(lhs.z))
         let v1 = GLKVector3Make(Float(rhs.x), Float(rhs.y), Float(rhs.z))
@@ -85,7 +85,7 @@ extension SCNVector3 {
         return MDWFloat(GLKVector3DotProduct(v0, v1))
     }
 
-    public static func Cross(lhs: SCNVector3, rhs: SCNVector3) -> SCNVector3 {
+    public static func cross(lhs: SCNVector3, rhs: SCNVector3) -> SCNVector3 {
         
         let v0 = GLKVector3Make(Float(lhs.x), Float(lhs.y), Float(lhs.z))
         let v1 = GLKVector3Make(Float(rhs.x), Float(rhs.y), Float(rhs.z))
@@ -95,7 +95,7 @@ extension SCNVector3 {
         return SCNVector3(x: MDWFloat(c.x), y: MDWFloat(c.y), z: MDWFloat(c.z))
     }
 
-    public static func Lerp(from: SCNVector3, to: SCNVector3, factor: MDWFloat) -> SCNVector3 {
+    public static func lerp(from: SCNVector3, to: SCNVector3, factor: MDWFloat) -> SCNVector3 {
         
         let v0 = GLKVector3Make(Float(from.x), Float(from.y), Float(from.z))
         let v1 = GLKVector3Make(Float(to.x), Float(to.y), Float(to.z))

@@ -69,27 +69,27 @@ extension GridEdge {
         SCNVector3.Left
     ]}
 
-    static func Edges(corner: GridCorner) -> [GridEdge] {
+    static func edges(corner: GridCorner) -> [GridEdge] {
         
         return Corners[corner.rawValue]
     }
 
-    static func Edges(edge: GridEdge) -> [GridEdge] {
+    static func edges(edge: GridEdge) -> [GridEdge] {
         
         return Connected[edge.rawValue]
     }
 
-    static func Opposite(edge: GridEdge) -> GridEdge {
+    static func opposite(edge: GridEdge) -> GridEdge {
         
         return Opposite[edge.rawValue]
     }
 
-    static func Normal(edge: GridEdge) -> SCNVector3 {
+    static func normal(edge: GridEdge) -> SCNVector3 {
         
         return Normal[edge.rawValue]
     }
 
-    static func Extent(edge: GridEdge) -> Coordinate {
+    static func extent(edge: GridEdge) -> Coordinate {
         
         return Coordinate.GridEdgeExtents[edge.rawValue]
     }
@@ -97,10 +97,10 @@ extension GridEdge {
 
 extension GridEdge {
 
-    static func Translate(vector: SCNVector3, edge: GridEdge, translation: MDWFloat) -> SCNVector3 {
+    static func translate(vector: SCNVector3, edge: GridEdge, translation: MDWFloat) -> SCNVector3 {
         
-        let normal = Normal(edge: edge)
+        let edgeNormal = normal(edge: edge)
         
-        return SCNVector3(x: vector.x + (normal.x * translation), y: vector.y, z: vector.z + (normal.z * translation))
+        return SCNVector3(x: vector.x + (edgeNormal.x * translation), y: vector.y, z: vector.z + (edgeNormal.z * translation))
     }
 }

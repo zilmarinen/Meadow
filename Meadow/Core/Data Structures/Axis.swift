@@ -12,17 +12,17 @@ public struct Axis {
     
     public static func Y(y: Int) -> MDWFloat {
         
-        return MDWFloat(y) * UnitY
+        return MDWFloat(y) * unitY
     }
     
     public static func Y(y: MDWFloat) -> Int {
         
-        return Int(y / UnitY)
+        return Int(y / unitY)
     }
 }
 
 extension Axis {
     
-    static var UnitXZ: MDWFloat { return 1.0 }
-    static var UnitY: MDWFloat { return 0.25 }
+    static var unitXZ: MDWFloat { return 1.0 }
+    static var unitY: MDWFloat { return 0.25 }
 }

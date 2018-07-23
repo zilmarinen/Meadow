@@ -60,19 +60,19 @@ extension Polyhedron {
 
 extension Polyhedron {
     
-    static func Invert(polyhedron: Polyhedron, edge: GridEdge) -> Polyhedron {
+    static func invert(polyhedron: Polyhedron, edge: GridEdge) -> Polyhedron {
         
-        return Polyhedron(upperPolytope: Polytope.Invert(polytope: polyhedron.upperPolytope, edge: edge), lowerPolytope: Polytope.Invert(polytope: polyhedron.lowerPolytope, edge: edge))
+        return Polyhedron(upperPolytope: Polytope.invert(polytope: polyhedron.upperPolytope, edge: edge), lowerPolytope: Polytope.invert(polytope: polyhedron.lowerPolytope, edge: edge))
     }
     
-    static func Stencil(polyhedrons: [Polyhedron], against: Polyhedron, edge: GridEdge) -> [Polyhedron] {
+    static func stencil(polyhedrons: [Polyhedron], against: Polyhedron, edge: GridEdge) -> [Polyhedron] {
         
-        let invertedPolyhedrons = polyhedrons.map { Polyhedron.Invert(polyhedron: $0, edge: edge) }
+        let invertedPolyhedrons = polyhedrons.map { Polyhedron.invert(polyhedron: $0, edge: edge) }
         
-        return Subtract(polyhedrons: invertedPolyhedrons, from: against)
+        return subtract(polyhedrons: invertedPolyhedrons, from: against)
     }
     
-    static func Subtract(polyhedron: Polyhedron, from: Polyhedron) -> [Polyhedron]? {
+    static func subtract(polyhedron: Polyhedron, from: Polyhedron) -> [Polyhedron]? {
         
         switch polyhedron.elevation(referencing: from) {
             
@@ -80,8 +80,8 @@ extension Polyhedron {
             
             if polyhedron.upperPolytope.elevation(referencing: from.upperPolytope) == .below && polyhedron.lowerPolytope.elevation(referencing: from.lowerPolytope) == .above {
                 
-                let upperPolytope = Polytope.Project(project: polyhedron.upperPolytope, against: from.upperPolytope)
-                let lowerPolytope = Polytope.Project(project: polyhedron.lowerPolytope, against: from.lowerPolytope)
+                let upperPolytope = Polytope.project(project: polyhedron.upperPolytope, against: from.upperPolytope)
+                let lowerPolytope = Polytope.project(project: polyhedron.lowerPolytope, against: from.lowerPolytope)
                 
                 return [ Polyhedron(upperPolytope: from.upperPolytope, lowerPolytope: upperPolytope),
                          Polyhedron(upperPolytope: lowerPolytope, lowerPolytope: from.lowerPolytope) ]
@@ -92,7 +92,7 @@ extension Polyhedron {
             case .above,
                  .equal:
                 
-                let upperPolytope = Polytope.Project(project: polyhedron.lowerPolytope, against: from.lowerPolytope)
+                let upperPolytope = Polytope.project(project: polyhedron.lowerPolytope, against: from.lowerPolytope)
                 
                 return [ Polyhedron(upperPolytope: upperPolytope, lowerPolytope: from.lowerPolytope) ]
                 
@@ -100,7 +100,7 @@ extension Polyhedron {
                 
                 if polyhedron.upperPolytope.elevation(referencing: from.lowerPolytope) == .above {
                 
-                    let lowerPolytope = Polytope.Project(project: polyhedron.upperPolytope, against: from.upperPolytope)
+                    let lowerPolytope = Polytope.project(project: polyhedron.upperPolytope, against: from.upperPolytope)
                     
                     return [ Polyhedron(upperPolytope: from.upperPolytope, lowerPolytope: lowerPolytope) ]
                 }
@@ -112,7 +112,7 @@ extension Polyhedron {
         return nil
     }
     
-    static func Subtract(polyhedrons: [Polyhedron], from: Polyhedron) -> [Polyhedron] {
+    static func subtract(polyhedrons: [Polyhedron], from: Polyhedron) -> [Polyhedron] {
         
         var divisions = [from]
         
@@ -122,7 +122,7 @@ extension Polyhedron {
             
             divisions.forEach { division in
             
-                if let result = Subtract(polyhedron: polyhedron, from: division) {
+                if let result = subtract(polyhedron: polyhedron, from: division) {
                     
                     remainder.append(contentsOf: result)
                 }
@@ -141,10 +141,10 @@ extension Polyhedron {
 
 extension Polyhedron {
     
-    static func Translate(polyhedron: Polyhedron, translation: SCNVector3) -> Polyhedron {
+    static func translate(polyhedron: Polyhedron, translation: SCNVector3) -> Polyhedron {
         
-        let upperPolytope = Polytope.Translate(polytope: polyhedron.upperPolytope, translation: translation)
-        let lowerPolytope = Polytope.Translate(polytope: polyhedron.lowerPolytope, translation: translation)
+        let upperPolytope = Polytope.translate(polytope: polyhedron.upperPolytope, translation: translation)
+        let lowerPolytope = Polytope.translate(polytope: polyhedron.lowerPolytope, translation: translation)
         
         return Polyhedron(upperPolytope: upperPolytope, lowerPolytope: lowerPolytope)
     }
@@ -152,10 +152,10 @@ extension Polyhedron {
 
 extension Polyhedron {
     
-    static func Inset(polyhedron: Polyhedron, edge: GridEdge, inset: MDWFloat) -> Polyhedron {
+    static func inset(polyhedron: Polyhedron, edge: GridEdge, inset: MDWFloat) -> Polyhedron {
         
-        let upperPolytope = Polytope.Inset(polytope: polyhedron.upperPolytope, edge: edge, inset: inset)
-        let lowerPolytope = Polytope.Inset(polytope: polyhedron.lowerPolytope, edge: edge, inset: inset)
+        let upperPolytope = Polytope.inset(polytope: polyhedron.upperPolytope, edge: edge, inset: inset)
+        let lowerPolytope = Polytope.inset(polytope: polyhedron.lowerPolytope, edge: edge, inset: inset)
         
         return Polyhedron(upperPolytope: upperPolytope, lowerPolytope: lowerPolytope)
     }

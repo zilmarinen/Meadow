@@ -170,14 +170,14 @@ extension GridChunk: Encodable {
 
 extension GridChunk {
     
-    static func FixedVolume(_ coordinate: Coordinate) -> Volume {
+    static func fixedVolume(_ coordinate: Coordinate) -> Volume {
         
-        let x = Int(floor(Double(coordinate.x) / Double(World.ChunkSize))) * World.ChunkSize
-        let z = Int(floor(Double(coordinate.z) / Double(World.ChunkSize))) * World.ChunkSize
+        let x = Int(floor(Double(coordinate.x) / Double(World.chunkSize))) * World.chunkSize
+        let z = Int(floor(Double(coordinate.z) / Double(World.chunkSize))) * World.chunkSize
         
-        let coordinate = Coordinate(x: x, y: World.Floor, z: z)
+        let coordinate = Coordinate(x: x, y: World.floor, z: z)
         
-        let size = Size(width: World.ChunkSize, height: (World.Ceiling - World.Floor), depth: World.ChunkSize)
+        let size = Size(width: World.chunkSize, height: (World.ceiling - World.floor), depth: World.chunkSize)
         
         return Volume(coordinate: coordinate, size: size)
     }

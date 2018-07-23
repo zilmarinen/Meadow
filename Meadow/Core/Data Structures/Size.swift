@@ -35,6 +35,6 @@ extension Size: Hashable {
 
 extension Size {
     
-    public static var Zero: Size { return Size(width: 0, height: 0, depth: 0) }
-    public static var One: Size { return Size(width: 1, height: 1, depth: 1) }
+    public static var zero: Size { return Size(width: 0, height: 0, depth: 0) }
+    public static var one: Size { return Size(width: 1, height: 1, depth: 1) }
 }

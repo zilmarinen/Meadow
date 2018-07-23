@@ -18,20 +18,9 @@ public class Terrain: Grid<TerrainChunk, TerrainTile, TerrainNode<TerrainLayer>>
         
         super.init()
         
-        do {
-            
-            let path = Bundle.meadow.path(forResource: "terrain_types", ofType: "json")!
-            
-            let jsonData = try NSData(contentsOfFile: path) as Data
-            
-            let decoder = JSONDecoder()
-            
-            nodeTypes = try decoder.decode([TerrainType].self, from: jsonData)
-        }
-        catch {
-            
-            fatalError("Unable to load terrain types")
-        }
+        guard let nodeTypes = NodeType.load(filename: "terrain_types") else { fatalError() }
+        
+        self.nodeTypes = nodeTypes
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -44,6 +33,6 @@ extension Terrain {
     
     func add(node coordinate: Coordinate) -> TerrainNode<TerrainLayer>? {
         
-        return add(node: TerrainTile.FixedVolume(coordinate))
+        return add(node: TerrainTile.fixedVolume(coordinate))
     }
 }

@@ -93,12 +93,12 @@ extension TerrainNode {
     
     public func add(layer terrainType: TerrainType) -> TerrainLayer? {
         
-        if let topLayer = topLayer, Axis.Y(y: topLayer.polyhedron.upperPolytope.base) == World.Ceiling {
+        if let topLayer = topLayer, Axis.Y(y: topLayer.polyhedron.upperPolytope.base) == World.ceiling {
             
             return nil
         }
         
-        let height = (World.Floor + 1)
+        let height = (World.floor + 1)
         
         let corners = topLayer?.polyhedron.upperPolytope.vertices.map { Axis.Y(y: $0.y) + 1 } ?? [height, height, height, height]
         

@@ -48,29 +48,29 @@ extension Coordinate {
 
 public extension Coordinate {
     
-    static var Zero: Coordinate { return Coordinate(x: 0, y: 0, z: 0) }
-    static var One: Coordinate { return Coordinate(x: 1, y: 1, z: 1) }
-    static var Up: Coordinate { return Coordinate(x: 0, y: 1, z: 0) }
-    static var Down: Coordinate { return Coordinate(x: 0, y: -1, z: 0) }
-    static var Left: Coordinate { return Coordinate(x: 1, y: 0, z: 0) }
-    static var Right: Coordinate { return Coordinate(x: -1, y: 0, z: 0) }
-    static var Forward: Coordinate { return Coordinate(x: 0, y: 0, z: 1) }
-    static var Backward: Coordinate { return Coordinate(x: 0, y: 0, z: -1) }
+    static var zero: Coordinate { return Coordinate(x: 0, y: 0, z: 0) }
+    static var one: Coordinate { return Coordinate(x: 1, y: 1, z: 1) }
+    static var up: Coordinate { return Coordinate(x: 0, y: 1, z: 0) }
+    static var down: Coordinate { return Coordinate(x: 0, y: -1, z: 0) }
+    static var left: Coordinate { return Coordinate(x: 1, y: 0, z: 0) }
+    static var right: Coordinate { return Coordinate(x: -1, y: 0, z: 0) }
+    static var forward: Coordinate { return Coordinate(x: 0, y: 0, z: 1) }
+    static var backward: Coordinate { return Coordinate(x: 0, y: 0, z: -1) }
     
     static var GridEdgeExtents: [Coordinate] { return [
         
-        Coordinate.Forward,
-        Coordinate.Right,
-        Coordinate.Backward,
-        Coordinate.Left
+        Coordinate.forward,
+        Coordinate.right,
+        Coordinate.backward,
+        Coordinate.left
     ]}
     
     static var GridCornerExtents: [Coordinate] { return [
         
-        Coordinate.Forward + Coordinate.Left,
-        Coordinate.Forward + Coordinate.Right,
-        Coordinate.Backward + Coordinate.Right,
-        Coordinate.Backward + Coordinate.Left
+        Coordinate.forward + Coordinate.left,
+        Coordinate.forward + Coordinate.right,
+        Coordinate.backward + Coordinate.right,
+        Coordinate.backward + Coordinate.left
     ]}
 }
 

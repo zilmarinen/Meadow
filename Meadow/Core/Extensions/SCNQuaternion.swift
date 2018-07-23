@@ -32,7 +32,7 @@ extension SCNQuaternion {
         return SCNVector3(x: MDWFloat(r.x), y: MDWFloat(r.y), z: MDWFloat(r.z))
     }
 
-    public static func Normalise(quaternion: SCNQuaternion) -> SCNQuaternion {
+    public static func normalise(quaternion: SCNQuaternion) -> SCNQuaternion {
         
         let q = GLKQuaternionMake(Float(quaternion.x), Float(quaternion.y), Float(quaternion.z), Float(quaternion.w))
         
@@ -41,7 +41,7 @@ extension SCNQuaternion {
         return SCNQuaternion(x: MDWFloat(n.x), y: MDWFloat(n.y), z: MDWFloat(n.z), w: MDWFloat(n.w))
     }
 
-    public static func Conjugate(quaternion: SCNQuaternion) -> SCNQuaternion {
+    public static func conjugate(quaternion: SCNQuaternion) -> SCNQuaternion {
         
         let q = GLKQuaternionMake(Float(quaternion.x), Float(quaternion.y), Float(quaternion.z), Float(quaternion.w))
         
@@ -50,7 +50,7 @@ extension SCNQuaternion {
         return SCNQuaternion(x: MDWFloat(c.x), y: MDWFloat(c.y), z: MDWFloat(c.z), w: MDWFloat(c.w))
     }
 
-    public static func Invert(quaternion: SCNQuaternion) -> SCNQuaternion {
+    public static func invert(quaternion: SCNQuaternion) -> SCNQuaternion {
         
         let q = GLKQuaternionMake(Float(quaternion.x), Float(quaternion.y), Float(quaternion.z), Float(quaternion.w))
         
@@ -59,15 +59,15 @@ extension SCNQuaternion {
         return SCNQuaternion(x: MDWFloat(i.x), y: MDWFloat(i.y), z: MDWFloat(i.z), w: MDWFloat(i.w))
     }
 
-    public static func Focus(vector: SCNVector3, focus: SCNVector3, up: SCNVector3) -> SCNQuaternion {
+    public static func focus(vector: SCNVector3, focus: SCNVector3, up: SCNVector3) -> SCNQuaternion {
         
-        let worldUp = SCNVector3.Normalise(vector: up)
+        let worldUp = SCNVector3.normalise(vector: up)
         
-        let forward = SCNVector3.Normalise(vector: vector - focus)
+        let forward = SCNVector3.normalise(vector: vector - focus)
         
-        let right = SCNVector3.Normalise(vector: SCNVector3.Cross(lhs: worldUp, rhs: forward))
+        let right = SCNVector3.normalise(vector: SCNVector3.cross(lhs: worldUp, rhs: forward))
         
-        let localUp = SCNVector3.Normalise(vector: SCNVector3.Cross(lhs: forward, rhs: right))
+        let localUp = SCNVector3.normalise(vector: SCNVector3.cross(lhs: forward, rhs: right))
         
         let m = GLKMatrix4Make(Float(right.x), Float(right.y), Float(right.z), 0.0,
                                Float(localUp.x), Float(localUp.y), Float(localUp.z), 0.0,
@@ -79,7 +79,7 @@ extension SCNQuaternion {
         return SCNQuaternion(x: MDWFloat(q.x), y: MDWFloat(q.y), z: MDWFloat(q.z), w: MDWFloat(q.w))
     }
 
-    public static func Slerp(from: SCNQuaternion, to: SCNQuaternion, factor: MDWFloat) -> SCNQuaternion {
+    public static func slerp(from: SCNQuaternion, to: SCNQuaternion, factor: MDWFloat) -> SCNQuaternion {
         
         let q0 = GLKQuaternionMake(Float(from.x), Float(from.y), Float(from.z), Float(from.w))
         let q1 = GLKQuaternionMake(Float(to.x), Float(to.y), Float(to.z), Float(to.w))

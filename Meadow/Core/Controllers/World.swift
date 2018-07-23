@@ -8,9 +8,9 @@
 
 public enum World {
     
-    public static var Ceiling: Int = 10
-    public static var Floor: Int = -10
+    public static var ceiling: Int = 10
+    public static var floor: Int = -10
     
-    static var ChunkSize: Int = 5
-    static var TileSize: Int = 1
+    static var chunkSize: Int = 5
+    static var tileSize: Int = 1
 }

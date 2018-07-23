@@ -12,7 +12,7 @@ public class CameraJib: SCNNode {
     
     public lazy var stateMachine = {
         
-        return CameraJibStateMachine(.focus(SCNVector3Zero, .north, CameraJib.MaximumZoomLevel), transition: { (from, to) in
+        return CameraJibStateMachine(.focus(SCNVector3Zero, .north, CameraJib.maximumZoomLevel), transition: { (from, to) in
             
             self.stateDidChange(from: from, to: to)
         })
@@ -61,8 +61,8 @@ extension CameraJib {
 
 extension CameraJib {
     
-    static var MinimumZoomLevel: MDWFloat = 1.0
-    static var MaximumZoomLevel: MDWFloat = 20.0
+    static var minimumZoomLevel: MDWFloat = 1.0
+    static var maximumZoomLevel: MDWFloat = 20.0
 }
 
 extension CameraJib {
@@ -71,7 +71,7 @@ extension CameraJib {
         
         guard let camera = camera else { return }
         
-        let scale = Double(min(max(zoomLevel, CameraJib.MinimumZoomLevel), CameraJib.MaximumZoomLevel))
+        let scale = Double(min(max(zoomLevel, CameraJib.minimumZoomLevel), CameraJib.maximumZoomLevel))
         
         camera.orthographicScale = scale
         
@@ -88,12 +88,12 @@ extension CameraJib {
         
         let targetPosition = SCNVector3(x: x, y: y, z: z)
         
-        let targetOrientation = SCNQuaternion.Focus(vector: targetPosition, focus: focus, up: SCNVector3.Up)
+        let targetOrientation = SCNQuaternion.focus(vector: targetPosition, focus: focus, up: SCNVector3.Up)
         
         let speed =  MDWFloat(deltaTime)
         
-        position = SCNVector3.Lerp(from: position, to: targetPosition, factor: speed)
+        position = SCNVector3.lerp(from: position, to: targetPosition, factor: speed)
         
-        orientation = SCNQuaternion.Slerp(from: orientation, to: targetOrientation, factor: speed)
+        orientation = SCNQuaternion.slerp(from: orientation, to: targetOrientation, factor: speed)
     }
 }

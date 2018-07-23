@@ -83,7 +83,7 @@ extension TerrainLayer: GridPolyhedronProvider {
             return lowerLayer.polyhedron.upperPolytope
         }
         
-        return Polytope(x: MDWFloat(coordinate.x), corners: [World.Floor, World.Floor, World.Floor, World.Floor], z: MDWFloat(coordinate.z))!
+        return Polytope(x: MDWFloat(coordinate.x), corners: [World.floor, World.floor, World.floor, World.floor], z: MDWFloat(coordinate.z))!
     }
     
     public var polyhedron: Polyhedron { return Polyhedron(upperPolytope: upperPolytope, lowerPolytope: lowerPolytope) }
@@ -98,7 +98,7 @@ extension TerrainLayer {
     
     func set(height: Int, corner: GridCorner) {
         
-        var cornerHeight = min(max(height, World.Floor + 1), World.Ceiling)
+        var cornerHeight = min(max(height, World.floor + 1), World.ceiling)
         
         if let upperLayer = hierarchy.upper {
             
@@ -114,7 +114,7 @@ extension TerrainLayer {
             
             let clamp = 1
             
-            GridCorner.Corners(corner: corner).forEach { connectedCorner in
+            GridCorner.corners(corner: corner).forEach { connectedCorner in
              
                 let delta = get(height: connectedCorner) - cornerHeight
                 

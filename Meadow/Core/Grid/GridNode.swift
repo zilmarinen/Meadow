@@ -66,7 +66,7 @@ extension GridNode {
         
         neighbours.append(Neighbour(edge: edge, node: node))
         
-        let oppositeEdge = GridEdge.Opposite(edge: edge)
+        let oppositeEdge = GridEdge.opposite(edge: edge)
         
         if node.find(neighbour: oppositeEdge) == nil {
             
@@ -93,7 +93,7 @@ extension GridNode {
             neighbours.remove(at: index)
         }
         
-        let oppositeEdge = GridEdge.Opposite(edge: edge)
+        let oppositeEdge = GridEdge.opposite(edge: edge)
         
         if let _ = neighbour.node.find(neighbour: oppositeEdge) {
             

@@ -88,9 +88,9 @@ extension Grid {
             return nil
         }
         
-        let chunk = find(chunk: volume.coordinate) ?? Chunk(observer: self, volume: Chunk.FixedVolume(volume.coordinate))
+        let chunk = find(chunk: volume.coordinate) ?? Chunk(observer: self, volume: Chunk.fixedVolume(volume.coordinate))
         
-        let tile = chunk.find(tile: volume.coordinate) ?? chunk.add(tile: Tile.FixedVolume(volume.coordinate))
+        let tile = chunk.find(tile: volume.coordinate) ?? chunk.add(tile: Tile.fixedVolume(volume.coordinate))
         
         guard let node = tile?.add(node: volume) else { return nil }
         
@@ -101,7 +101,7 @@ extension Grid {
         
         GridEdge.Edges.forEach { edge in
             
-            if let neighbour = find(node: volume.coordinate + GridEdge.Extent(edge: edge)) {
+            if let neighbour = find(node: volume.coordinate + GridEdge.extent(edge: edge)) {
                 
                 node.add(neighbour: neighbour, edge: edge)
             }

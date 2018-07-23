@@ -25,7 +25,7 @@ class PolytopeTests: XCTestCase {
         
         let reference = Polytope(x: 10, y: 10, z: 10)!
         
-        let halfWidth = (Axis.UnitXZ / 2.0)
+        let halfWidth = (Axis.unitXZ / 2.0)
         
         XCTAssertEqual(reference.vertices[0].x, (10.0 + halfWidth))
         XCTAssertEqual(reference.vertices[0].y, Axis.Y(y: 10))
@@ -135,10 +135,10 @@ class PolytopeTests: XCTestCase {
         
         let reference = Polytope(x: 10, y: -10, z: 10)!
         
-        let t0 = Polytope.Translate(polytope: reference, translation: SCNVector3.Up + SCNVector3.Forward)
-        let t1 = Polytope.Translate(polytope: reference, translation: SCNVector3.Up + SCNVector3.Forward + SCNVector3.Left)
+        let t0 = Polytope.translate(polytope: reference, translation: SCNVector3.Up + SCNVector3.Forward)
+        let t1 = Polytope.translate(polytope: reference, translation: SCNVector3.Up + SCNVector3.Forward + SCNVector3.Left)
         
-        let halfWidth = (Axis.UnitXZ / 2.0)
+        let halfWidth = (Axis.unitXZ / 2.0)
         
         XCTAssertEqual(t0.vertices[0].x, (10.0 + halfWidth))
         XCTAssertEqual(t0.vertices[0].y, Axis.Y(y: -6))
@@ -185,10 +185,10 @@ class PolytopeTests: XCTestCase {
         
         let reference = Polytope(x: 10, y: -10, z: 10)!
         
-        let t0 = Polytope.Inset(polytope: reference, edge: .north, inset: inset)
-        let t1 = Polytope.Inset(polytope: reference, edge: .west, inset: inset)
+        let t0 = Polytope.inset(polytope: reference, edge: .north, inset: inset)
+        let t1 = Polytope.inset(polytope: reference, edge: .west, inset: inset)
         
-        let halfWidth = (Axis.UnitXZ / 2.0)
+        let halfWidth = (Axis.unitXZ / 2.0)
         
         XCTAssertEqual(t0.vertices[0].x, (10.0 + halfWidth), accuracy: 0.01)
         XCTAssertEqual(t0.vertices[0].y, Axis.Y(y: -10))
@@ -233,10 +233,10 @@ class PolytopeTests: XCTestCase {
         
         let reference = Polytope(x: 10, y: -10, z: 10)!
         
-        let t0 = Polytope.Invert(polytope: reference, edge: .north)
-        let t1 = Polytope.Invert(polytope: reference, edge: .west)
+        let t0 = Polytope.invert(polytope: reference, edge: .north)
+        let t1 = Polytope.invert(polytope: reference, edge: .west)
         
-        let halfWidth = (Axis.UnitXZ / 2.0)
+        let halfWidth = (Axis.unitXZ / 2.0)
         
         XCTAssertEqual(t0.vertices[0].x, (10.0 + halfWidth))
         XCTAssertEqual(t0.vertices[0].y, Axis.Y(y: -10))

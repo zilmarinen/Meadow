@@ -12,6 +12,8 @@ public class TerrainLayer: GridChild {
     
     public var name: String?
     
+    public var isHidden: Bool = false
+    
     public var volume: Volume {
         
         let base = Axis.Y(y: polyhedron.lowerPolytope.base)

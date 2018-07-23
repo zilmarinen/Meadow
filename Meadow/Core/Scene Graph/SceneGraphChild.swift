@@ -9,4 +9,6 @@
 public protocol SceneGraphChild {
     
     var name: String? { get }
+    
+    var isHidden: Bool { get }
 }

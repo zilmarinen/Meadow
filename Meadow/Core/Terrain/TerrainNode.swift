@@ -46,7 +46,15 @@ public class TerrainNode<Layer: TerrainLayer>: GridNode, GridParent {
         isDirty = false
     }
     
-    public override var mesh: Mesh { return Mesh(faces: []) }
+    public override var mesh: Mesh {
+        
+        let meshes = children.compactMap { layer -> Mesh? in
+            
+            return !layer.isHidden ? layer.mesh : nil
+        }
+        
+        return Mesh(meshes: meshes)
+    }
 }
 
 extension TerrainNode {

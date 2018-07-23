@@ -54,6 +54,8 @@ extension GridChunk: GridSoilable {
             tile.clean()
         }
         
+        self.geometry = SCNGeometry(mesh: mesh)
+        
         isDirty = false
     }
 }
@@ -68,6 +70,19 @@ extension GridChunk: GridUpdatable {
             
             tile.update(deltaTime: deltaTime)
         }
+    }
+}
+
+extension GridChunk: GridMeshProvider {
+    
+    public var mesh: Mesh {
+        
+        let meshes = children.compactMap { tile -> Mesh? in
+            
+            return !tile.isHidden ? tile.mesh : nil
+        }
+        
+        return Mesh(meshes: meshes)
     }
 }
 

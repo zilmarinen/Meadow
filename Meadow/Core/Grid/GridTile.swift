@@ -18,6 +18,8 @@ public class GridTile<Node: GridNode>: GridChild, GridParent {
     
     public var name: String?
     
+    public var isHidden: Bool = false
+    
     public let volume: Volume
     
     var isDirty: Bool = true
@@ -71,7 +73,15 @@ extension GridTile: GridUpdatable {
 
 extension GridTile: GridMeshProvider {
     
-    public var mesh: Mesh { return Mesh(faces: []) }
+    public var mesh: Mesh {
+        
+        let meshes = children.compactMap { node -> Mesh? in
+            
+            return !node.isHidden ? node.mesh : nil
+        }
+        
+        return Mesh(meshes: meshes)
+    }
 }
 
 extension GridTile {

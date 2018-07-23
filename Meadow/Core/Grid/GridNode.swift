@@ -12,6 +12,8 @@ public class GridNode: GridChild, GridMeshProvider, GridSoilable, Encodable {
     
     public var name: String?
     
+    public var isHidden: Bool = false
+    
     public let volume: Volume
     
     var isDirty: Bool = true
@@ -51,7 +53,7 @@ public class GridNode: GridChild, GridMeshProvider, GridSoilable, Encodable {
     
     open func clean() {}
     
-    public var mesh: Mesh { return Mesh(faces: []) }
+    open var mesh: Mesh { return Mesh(faces: []) }
 }
 
 extension GridNode {

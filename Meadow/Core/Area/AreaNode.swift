@@ -9,3 +9,15 @@
 public class AreaNode: GridNode {
     
 }
+
+extension AreaNode {
+    
+    static var areaSize: Int = 6
+    
+    static func fixedVolume(_ coordinate: Coordinate) -> Volume {
+        
+        let size = Size(width: World.tileSize, height: areaSize, depth: World.tileSize)
+        
+        return Volume(coordinate: coordinate, size: size)
+    }
+}

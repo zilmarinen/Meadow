@@ -8,5 +8,5 @@
 
 public struct TunnelType: GridNodeType {
     
-    public var name: String
+    public let name: String
 }

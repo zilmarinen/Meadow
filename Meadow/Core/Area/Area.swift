@@ -33,6 +33,6 @@ extension Area {
     
     func add(node coordinate: Coordinate) -> AreaNode? {
         
-        return add(node: AreaTile.fixedVolume(coordinate))
+        return add(node: AreaNode.fixedVolume(coordinate))
     }
 }

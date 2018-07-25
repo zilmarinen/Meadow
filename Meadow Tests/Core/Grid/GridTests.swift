@@ -279,6 +279,29 @@ class GridTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
     
+    func testGridNodeVolume() {
+        
+        let expect = expectation(description: "Nodes can only be added to a grid if the volume they occupy is within the bounds of the World.Floor and World.Ceiling")
+        
+        let size = Size(width: 1, height: 4, depth: 1)
+        
+        let v0 = Volume(coordinate: Coordinate(x: 0, y: World.floor - 1, z: 0), size: size)
+        let v1 = Volume(coordinate: Coordinate(x: 0, y: World.ceiling, z: 0), size: size)
+        let v2 = Volume(coordinate: Coordinate(x: 0, y: World.ceiling - 2, z: 0), size: size)
+        
+        let n0 = grid.add(node: v0)
+        let n1 = grid.add(node: v1)
+        let n2 = grid.add(node: v2)
+        
+        XCTAssertNil(n0)
+        XCTAssertNil(n1)
+        XCTAssertNil(n2)
+        
+        expect.fulfill()
+        
+        waitForExpectations(timeout: 1)
+    }
+    
     func testGridNodeNeighbourAddition() {
         
         let expect = expectation(description: "Nodes are connected together when added to the grid")

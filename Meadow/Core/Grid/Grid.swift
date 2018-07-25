@@ -83,6 +83,11 @@ extension Grid {
     
     func add(node volume: Volume) -> Node? {
         
+        if volume.coordinate.y < World.floor || (volume.coordinate.y + volume.size.height) > World.ceiling {
+            
+            return nil
+        }
+        
         if let _ = find(node: volume.coordinate) {
             
             return nil

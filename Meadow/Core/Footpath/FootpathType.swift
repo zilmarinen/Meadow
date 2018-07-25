@@ -8,5 +8,5 @@
 
 public struct FootpathType: GridNodeType {
     
-    public var name: String
+    public let name: String
 }

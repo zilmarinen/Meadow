@@ -8,5 +8,5 @@
 
 public struct ScaffoldType: GridNodeType {
     
-    public var name: String
+    public let name: String
 }

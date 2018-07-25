@@ -8,5 +8,5 @@
 
 public struct AreaType: GridNodeType {
     
-    public var name: String
+    public let name: String
 }

@@ -50,11 +50,76 @@ public class TerrainNode<Layer: TerrainLayer>: GridNode, GridParent {
     
     public override var mesh: Mesh {
         
-        let layers = children.filter { !$0.isHidden }
+        var stencils: [GridEdge: [Polyhedron]] = [:]
         
-        let meshes = layers.map { _ in Mesh(faces: []) }
+        GridEdge.Edges.forEach { edge in
+            
+            if let neighbour = find(neighbour: edge)?.node as? TerrainNode, let upperPolytope = neighbour.topLayer?.polyhedron.upperPolytope, let lowerPolytope = neighbour.bottomLayer?.polyhedron.lowerPolytope {
+                
+                let polyhedron = Polyhedron(upperPolytope: upperPolytope, lowerPolytope: lowerPolytope)
+                
+                if neighbour.intersections.count > 0 {
+                    
+                    stencils[edge] = Polyhedron.subtract(polyhedrons: neighbour.intersections, from: polyhedron)
+                }
+                else {
+                    
+                    stencils[edge] = [polyhedron]
+                }
+            }
+        }
         
-        return Mesh(meshes: meshes)
+        var meshFaces: [MeshFace] = []
+        
+        children.filter { !$0.isHidden }.forEach { layer in
+            
+            GridEdge.Edges.forEach { edge in
+                
+                let corners = GridCorner.corners(edge: edge)
+                
+                let edgeNormal = GridEdge.normal(edge: edge)
+                
+                let terrainType = layer.get(terrainType: edge)
+                
+                let apexColor = terrainType.colorPalette.primary.vector
+                let edgeColor = terrainType.colorPalette.secondary.vector
+                
+                let polyhedrons = Polyhedron.subtract(polyhedrons: intersections, from: layer.polyhedron)
+                
+                polyhedrons.forEach { polyhedron in
+                 
+                    if (layer.hierarchy.upper == nil && layer.polyhedron.upperPolytope == polyhedron.upperPolytope) || layer.polyhedron.upperPolytope != polyhedron.upperPolytope {
+                        
+                        meshFaces.append(terrainType.meshProvider.terrainLayer(apex: polyhedron, corners: corners, color: apexColor))
+                    }
+                    
+                    let divisions = (stencils[edge] != nil ? Polyhedron.stencil(polyhedrons: stencils[edge]!, against: polyhedron, edge: edge) : [polyhedron])
+                    
+                    divisions.forEach { division in
+                        
+                        let v0 = division.upperPolytope.vertices[corners.first!.rawValue]
+                        let v1 = division.upperPolytope.vertices[corners.last!.rawValue]
+                        let v2 = division.lowerPolytope.vertices[corners.last!.rawValue]
+                        let v3 = division.lowerPolytope.vertices[corners.first!.rawValue]
+                        
+                        let c0equal = v0.y == v3.y
+                        let c1equal = v1.y == v2.y
+                        
+                        let acuteCorner = (c0equal ? corners.first : (c1equal ? corners.last : nil))
+                        
+                        if !c0equal || !c1equal {
+                            
+                            let vertices = [v0, v1, v2, v3]
+                            
+                            meshFaces.append(contentsOf: terrainType.meshProvider.terrainLayer(crown: corners, acuteCorner: acuteCorner, vertices: vertices, normal: edgeNormal, color: edgeColor))
+                            meshFaces.append(contentsOf: terrainType.meshProvider.terrainLayer(throne: corners, acuteCorner: acuteCorner, vertices: vertices, normal: edgeNormal, color: edgeColor))
+                        }
+                    }
+                }
+            }
+        }
+        
+        return Mesh(faces: meshFaces)
     }
 }
 
@@ -89,6 +154,14 @@ extension TerrainNode {
         return children.first { layer -> Bool in
             
             return layer.hierarchy.upper == nil
+        }
+    }
+    
+    public var bottomLayer: Layer? {
+        
+        return children.first { layer -> Bool in
+            
+            return layer.hierarchy.lower == nil
         }
     }
     

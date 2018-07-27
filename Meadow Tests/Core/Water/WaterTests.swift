@@ -37,19 +37,5 @@ class WaterTests: XCTestCase {
         
         waitForExpectations(timeout: 1)
     }
-    
-    func testNodeTypesAreLoaded() {
-        
-        let expect = expectation(description: "Water types are loaded and can be found")
-        
-        let knownNodeType = meadow.water.find(nodeType: "Water")
-        let unknownNodeType = meadow.water.find(nodeType: "unknown")
-        
-        XCTAssertNotNil(knownNodeType)
-        XCTAssertNil(unknownNodeType)
-        
-        expect.fulfill()
-        
-        waitForExpectations(timeout: 1)
-    }
+
 }

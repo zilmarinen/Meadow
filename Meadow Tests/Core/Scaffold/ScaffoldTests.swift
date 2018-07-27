@@ -37,19 +37,4 @@ class ScaffoldTests: XCTestCase {
         
         waitForExpectations(timeout: 1)
     }
-    
-    func testNodeTypesAreLoaded() {
-        
-        let expect = expectation(description: "Scaffold types are loaded and can be found")
-        
-        let knownNodeType = meadow.scaffolds.find(nodeType: "Steel")
-        let unknownNodeType = meadow.scaffolds.find(nodeType: "unknown")
-        
-        XCTAssertNotNil(knownNodeType)
-        XCTAssertNil(unknownNodeType)
-        
-        expect.fulfill()
-        
-        waitForExpectations(timeout: 1)
-    }
 }

@@ -6,6 +6,8 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
+import SceneKit
+
 public class TerrainNode<Layer: TerrainLayer>: GridNode, GridParent {
     
     public typealias ChildType = Layer
@@ -81,8 +83,8 @@ public class TerrainNode<Layer: TerrainLayer>: GridNode, GridParent {
                 
                 let terrainType = layer.get(terrainType: edge)
                 
-                let apexColor = terrainType.colorPalette.primary.vector
-                let edgeColor = terrainType.colorPalette.secondary.vector
+                let apexColor = terrainType.colorPalette?.primary.vector ?? SCNVector4Zero
+                let edgeColor = terrainType.colorPalette?.secondary.vector ?? SCNVector4Zero
                 
                 let meshProvider = terrainType.meshProvider
                 

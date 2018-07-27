@@ -8,25 +8,8 @@
 
 import Foundation
 
-public class Scaffold: Grid<ScaffoldChunk, ScaffoldTile, ScaffoldNode>, GridNodeTypeProvider {
+public class Scaffold: Grid<ScaffoldChunk, ScaffoldTile, ScaffoldNode> {
     
-    public typealias NodeType = ScaffoldType
-    
-    public var nodeTypes: [ScaffoldType] = []
-    
-    public required override init() {
-        
-        super.init()
-        
-        guard let nodeTypes = NodeType.load(filename: "scaffold_types") else { fatalError() }
-        
-        self.nodeTypes = nodeTypes
-    }
-    
-    public required init?(coder aDecoder: NSCoder) {
-        
-        fatalError("init(coder:) has not been implemented")
-    }
 }
 
 extension Scaffold {

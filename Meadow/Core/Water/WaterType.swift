@@ -6,39 +6,15 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-public struct WaterType: GridNodeType {
+public enum WaterType: Int, Codable {
     
-    public let name: String
-
-    public let colorPalette: ColorPalette
-    
-    var meshProvider: TerrainLayerMeshProvider {
-        
-        return TerrainLayerMeshProvider()
-    }
-    
-    enum CodingKeys: String, CodingKey {
-        
-        case name
-        case colorPalette = "color_palette"
-    }
-    
-    public func encode(to encoder: Encoder) throws {
-        
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        
-        try container.encode(self.name, forKey: .name)
-        try container.encode(self.colorPalette, forKey: .colorPalette)
-    }
+    case water
 }
 
-extension WaterType: Hashable {
+extension WaterType {
     
-    public var hashValue: Int { return name.hashValue }
-    
-    public static func == (lhs: WaterType, rhs: WaterType) -> Bool {
+    var meshProvider: WaterNodeMeshProvider {
         
-        return lhs.name == rhs.name
+        return WaterNodeMeshProvider()
     }
 }
-

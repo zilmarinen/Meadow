@@ -37,19 +37,4 @@ class TunnelTests: XCTestCase {
         
         waitForExpectations(timeout: 1)
     }
-    
-    func testNodeTypesAreLoaded() {
-        
-        let expect = expectation(description: "Tunnel types are loaded and can be found")
-        
-        let knownNodeType = meadow.tunnels.find(nodeType: "Concrete")
-        let unknownNodeType = meadow.tunnels.find(nodeType: "unknown")
-        
-        XCTAssertNotNil(knownNodeType)
-        XCTAssertNil(unknownNodeType)
-        
-        expect.fulfill()
-        
-        waitForExpectations(timeout: 1)
-    }
 }

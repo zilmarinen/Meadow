@@ -8,25 +8,8 @@
 
 import Foundation
 
-public class Foliage: Grid<FoliageChunk, FoliageTile, FoliageNode>, GridNodeTypeProvider {
+public class Foliage: Grid<FoliageChunk, FoliageTile, FoliageNode> {
     
-    public typealias NodeType = FoliageType
-    
-    public var nodeTypes: [FoliageType] = []
-    
-    public required override init() {
-        
-        super.init()
-        
-        guard let nodeTypes = NodeType.load(filename: "foliage_types") else { fatalError() }
-        
-        self.nodeTypes = nodeTypes
-    }
-    
-    public required init?(coder aDecoder: NSCoder) {
-        
-        fatalError("init(coder:) has not been implemented")
-    }
 }
 
 extension Foliage {

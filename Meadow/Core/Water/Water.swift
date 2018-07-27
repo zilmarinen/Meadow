@@ -8,25 +8,8 @@
 
 import Foundation
 
-public class Water: Grid<WaterChunk, WaterTile, WaterNode>, GridNodeTypeProvider {
+public class Water: Grid<WaterChunk, WaterTile, WaterNode> {
     
-    public typealias NodeType = WaterType
-    
-    public var nodeTypes: [WaterType] = []
-    
-    public required override init() {
-        
-        super.init()
-        
-        guard let nodeTypes = NodeType.load(filename: "water_types") else { fatalError() }
-        
-        self.nodeTypes = nodeTypes
-    }
-    
-    public required init?(coder aDecoder: NSCoder) {
-        
-        fatalError("init(coder:) has not been implemented")
-    }
 }
 
 extension Water {
@@ -36,7 +19,7 @@ extension Water {
         guard let node = add(node: WaterTile.fixedVolume(coordinate)) else { return nil }
         
         node.waterLevel = coordinate.y
-        node.waterType = nodeTypes.first
+        node.waterType = WaterType.water
         
         return node
     }

@@ -37,19 +37,4 @@ class FootpathTests: XCTestCase {
         
         waitForExpectations(timeout: 1)
     }
-    
-    func testNodeTypesAreLoaded() {
-        
-        let expect = expectation(description: "Footpath types are loaded and can be found")
-        
-        let knownNodeType = meadow.footpaths.find(nodeType: "Concrete")
-        let unknownNodeType = meadow.footpaths.find(nodeType: "unknown")
-        
-        XCTAssertNotNil(knownNodeType)
-        XCTAssertNil(unknownNodeType)
-        
-        expect.fulfill()
-        
-        waitForExpectations(timeout: 1)
-    }
 }

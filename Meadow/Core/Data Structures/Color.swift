@@ -10,6 +10,8 @@ import SceneKit
 
 public struct Color: Codable {
     
+    public let name: String
+    
     public let red: MDWFloat
     public let green: MDWFloat
     public let blue: MDWFloat
@@ -23,5 +25,23 @@ public struct Color: Codable {
     public var vector: SCNVector4 {
         
         return SCNVector4(x: red, y: green, z: blue, w: alpha)
+    }
+    
+    public static func load(filename: String) -> [Color]? {
+        
+        do {
+            
+            guard let path = Bundle.meadow.path(forResource: filename, ofType: "json") else { return nil }
+            
+            let jsonData = try NSData(contentsOfFile: path) as Data
+            
+            let decoder = JSONDecoder()
+            
+            return try decoder.decode([Color].self, from: jsonData)
+        }
+        catch {
+            
+            fatalError("Unable to load Colors from file -> \(filename).json")
+        }
     }
 }

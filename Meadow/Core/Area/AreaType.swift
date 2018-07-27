@@ -6,7 +6,17 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-public struct AreaType: GridNodeType {
+public enum AreaType: Int, Codable {
     
-    public let name: String
+    case brick
+    case concrete
+    case wood
+    
+    static var allCases: [AreaType] {
+        
+        return [ .brick,
+                 .concrete,
+                 .wood
+        ]
+    }
 }

@@ -8,25 +8,8 @@
 
 import Foundation
 
-public class Area: Grid<AreaChunk, AreaTile, AreaNode>, GridNodeTypeProvider {
+public class Area: Grid<AreaChunk, AreaTile, AreaNode> {
     
-    public typealias NodeType = AreaType
-    
-    public var nodeTypes: [AreaType] = []
-    
-    public required override init() {
-        
-        super.init()
-        
-        guard let nodeTypes = NodeType.load(filename: "area_types") else { fatalError() }
-        
-        self.nodeTypes = nodeTypes
-    }
-    
-    public required init?(coder aDecoder: NSCoder) {
-        
-        fatalError("init(coder:) has not been implemented")
-    }
 }
 
 extension Area {

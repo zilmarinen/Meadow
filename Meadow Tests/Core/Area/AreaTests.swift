@@ -37,19 +37,5 @@ class AreaTests: XCTestCase {
         
         waitForExpectations(timeout: 1)
     }
-    
-    func testNodeTypesAreLoaded() {
-        
-        let expect = expectation(description: "Area types are loaded and can be found")
-        
-        let knownNodeType = meadow.areas.find(nodeType: "Concrete")
-        let unknownNodeType = meadow.areas.find(nodeType: "unknown")
-        
-        XCTAssertNotNil(knownNodeType)
-        XCTAssertNil(unknownNodeType)
-        
-        expect.fulfill()
-        
-        waitForExpectations(timeout: 1)
-    }
+
 }

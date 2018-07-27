@@ -6,7 +6,17 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-public struct ScaffoldType: GridNodeType {
+public enum ScaffoldType: Int, Codable {
     
-    public let name: String
+    case concrete
+    case wood
+    case steel
+    
+    static var allCases: [ScaffoldType] {
+        
+        return [ .concrete,
+                 .wood,
+                 .steel
+        ]
+    }
 }

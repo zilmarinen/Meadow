@@ -37,19 +37,4 @@ class TerrainTests: XCTestCase {
         
         waitForExpectations(timeout: 1)
     }
-    
-    func testNodeTypesAreLoaded() {
-        
-        let expect = expectation(description: "Terrain types are loaded and can be found")
-        
-        let knownNodeType = meadow.terrain.find(nodeType: "Bedrock")
-        let unknownNodeType = meadow.terrain.find(nodeType: "unknown")
-        
-        XCTAssertNotNil(knownNodeType)
-        XCTAssertNil(unknownNodeType)
-        
-        expect.fulfill()
-        
-        waitForExpectations(timeout: 1)
-    }
 }

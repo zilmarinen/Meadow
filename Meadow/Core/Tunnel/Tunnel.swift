@@ -8,25 +8,8 @@
 
 import Foundation
 
-public class Tunnel: Grid<TunnelChunk, TunnelTile, TunnelNode>, GridNodeTypeProvider {
+public class Tunnel: Grid<TunnelChunk, TunnelTile, TunnelNode> {
     
-    public typealias NodeType = TunnelType
-    
-    public var nodeTypes: [TunnelType] = []
-    
-    public required override init() {
-        
-        super.init()
-        
-        guard let nodeTypes = NodeType.load(filename: "tunnel_types") else { fatalError() }
-        
-        self.nodeTypes = nodeTypes
-    }
-    
-    public required init?(coder aDecoder: NSCoder) {
-        
-        fatalError("init(coder:) has not been implemented")
-    }
 }
 
 extension Tunnel {

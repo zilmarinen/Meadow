@@ -93,10 +93,6 @@
 		180CAA4A210234D60026FE06 /* GridPolyhedronProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180CAA482102326D0026FE06 /* GridPolyhedronProvider.swift */; };
 		180CAA4B210234D70026FE06 /* GridPolyhedronProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180CAA482102326D0026FE06 /* GridPolyhedronProvider.swift */; };
 		180CAA4C210234D70026FE06 /* GridPolyhedronProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180CAA482102326D0026FE06 /* GridPolyhedronProvider.swift */; };
-		180F84F620D0FAF100BA42D2 /* area_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 180F84F520D0FAF100BA42D2 /* area_types.json */; };
-		180F84F720D0FB0500BA42D2 /* area_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 180F84F520D0FAF100BA42D2 /* area_types.json */; };
-		180F84F820D0FB0600BA42D2 /* area_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 180F84F520D0FAF100BA42D2 /* area_types.json */; };
-		180F84F920D0FB0600BA42D2 /* area_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 180F84F520D0FAF100BA42D2 /* area_types.json */; };
 		1814690B21085C4A00326342 /* TerrainMeshProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1814690A21085C4A00326342 /* TerrainMeshProvider.swift */; };
 		1814690C21085C5800326342 /* TerrainMeshProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1814690A21085C4A00326342 /* TerrainMeshProvider.swift */; };
 		1814690D21085C5900326342 /* TerrainMeshProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1814690A21085C4A00326342 /* TerrainMeshProvider.swift */; };
@@ -127,14 +123,23 @@
 		1819B74120A574F800BEE585 /* Meadow_iOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 1819B73320A574F800BEE585 /* Meadow_iOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1819B75620A5752000BEE585 /* Meadow_macOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1819B74D20A5752000BEE585 /* Meadow_macOS.framework */; };
 		1819B75D20A5752000BEE585 /* Meadow_macOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 1819B74F20A5752000BEE585 /* Meadow_macOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		182B49D521035D6200446582 /* GridNodeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B49D421035D6200446582 /* GridNodeType.swift */; };
-		182B49D621035D8000446582 /* GridNodeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B49D421035D6200446582 /* GridNodeType.swift */; };
-		182B49D721035D8000446582 /* GridNodeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B49D421035D6200446582 /* GridNodeType.swift */; };
-		182B49D821035D8100446582 /* GridNodeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B49D421035D6200446582 /* GridNodeType.swift */; };
-		182B49DA21035EA000446582 /* GridNodeTypeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B49D921035EA000446582 /* GridNodeTypeProvider.swift */; };
-		182B49DB21035EA700446582 /* GridNodeTypeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B49D921035EA000446582 /* GridNodeTypeProvider.swift */; };
-		182B49DC21035EA800446582 /* GridNodeTypeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B49D921035EA000446582 /* GridNodeTypeProvider.swift */; };
-		182B49DD21035EA800446582 /* GridNodeTypeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B49D921035EA000446582 /* GridNodeTypeProvider.swift */; };
+		1825957E210AFCE400F76A60 /* color_palettes.json in Resources */ = {isa = PBXBuildFile; fileRef = 1825957D210AFCE400F76A60 /* color_palettes.json */; };
+		18259580210AFD0B00F76A60 /* colors.json in Resources */ = {isa = PBXBuildFile; fileRef = 1825957F210AFD0B00F76A60 /* colors.json */; };
+		18259581210AFD0B00F76A60 /* colors.json in Resources */ = {isa = PBXBuildFile; fileRef = 1825957F210AFD0B00F76A60 /* colors.json */; };
+		18259582210AFD0B00F76A60 /* colors.json in Resources */ = {isa = PBXBuildFile; fileRef = 1825957F210AFD0B00F76A60 /* colors.json */; };
+		18259583210AFD0B00F76A60 /* colors.json in Resources */ = {isa = PBXBuildFile; fileRef = 1825957F210AFD0B00F76A60 /* colors.json */; };
+		18259584210AFE4800F76A60 /* color_palettes.json in Resources */ = {isa = PBXBuildFile; fileRef = 1825957D210AFCE400F76A60 /* color_palettes.json */; };
+		18259585210AFE4800F76A60 /* color_palettes.json in Resources */ = {isa = PBXBuildFile; fileRef = 1825957D210AFCE400F76A60 /* color_palettes.json */; };
+		18259586210AFE4900F76A60 /* color_palettes.json in Resources */ = {isa = PBXBuildFile; fileRef = 1825957D210AFCE400F76A60 /* color_palettes.json */; };
+		18259589210AFEB700F76A60 /* ColorPaletteIntermediate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18259588210AFEB700F76A60 /* ColorPaletteIntermediate.swift */; };
+		1825958A210AFEB700F76A60 /* ColorPaletteIntermediate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18259588210AFEB700F76A60 /* ColorPaletteIntermediate.swift */; };
+		1825958B210AFEB700F76A60 /* ColorPaletteIntermediate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18259588210AFEB700F76A60 /* ColorPaletteIntermediate.swift */; };
+		1825958C210AFEB700F76A60 /* ColorPaletteIntermediate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18259588210AFEB700F76A60 /* ColorPaletteIntermediate.swift */; };
+		1825958E210B043500F76A60 /* ColorPaletteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1825958D210B043500F76A60 /* ColorPaletteTests.swift */; };
+		1825958F210B047A00F76A60 /* ColorPaletteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1825958D210B043500F76A60 /* ColorPaletteTests.swift */; };
+		18259590210B04FA00F76A60 /* WaterNodeMeshProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1814691821087F6600326342 /* WaterNodeMeshProvider.swift */; };
+		18259591210B04FA00F76A60 /* WaterNodeMeshProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1814691821087F6600326342 /* WaterNodeMeshProvider.swift */; };
+		18259592210B04FA00F76A60 /* WaterNodeMeshProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1814691821087F6600326342 /* WaterNodeMeshProvider.swift */; };
 		1831501920BECE5B004317E0 /* Plane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1831501820BECE5B004317E0 /* Plane.swift */; };
 		1831501A20BECE5E004317E0 /* Plane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1831501820BECE5B004317E0 /* Plane.swift */; };
 		1831501B20BECE5E004317E0 /* Plane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1831501820BECE5B004317E0 /* Plane.swift */; };
@@ -179,18 +184,6 @@
 		183830D72105C73D00FFA729 /* WaterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183830BC2105C6C200FFA729 /* WaterType.swift */; };
 		183830D82105C73D00FFA729 /* WaterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183830BC2105C6C200FFA729 /* WaterType.swift */; };
 		183830D92105C73D00FFA729 /* WaterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183830BC2105C6C200FFA729 /* WaterType.swift */; };
-		183830DE2105C93100FFA729 /* foliage_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 183830DD2105C93100FFA729 /* foliage_types.json */; };
-		183830E02105C94300FFA729 /* scaffold_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 183830DF2105C94300FFA729 /* scaffold_types.json */; };
-		183830E22105C95000FFA729 /* tunnel_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 183830E12105C95000FFA729 /* tunnel_types.json */; };
-		183830E32105CA2900FFA729 /* foliage_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 183830DD2105C93100FFA729 /* foliage_types.json */; };
-		183830E42105CA2900FFA729 /* foliage_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 183830DD2105C93100FFA729 /* foliage_types.json */; };
-		183830E52105CA2900FFA729 /* foliage_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 183830DD2105C93100FFA729 /* foliage_types.json */; };
-		183830E62105CA2D00FFA729 /* scaffold_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 183830DF2105C94300FFA729 /* scaffold_types.json */; };
-		183830E72105CA2D00FFA729 /* scaffold_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 183830DF2105C94300FFA729 /* scaffold_types.json */; };
-		183830E82105CA2E00FFA729 /* scaffold_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 183830DF2105C94300FFA729 /* scaffold_types.json */; };
-		183830E92105CA3200FFA729 /* tunnel_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 183830E12105C95000FFA729 /* tunnel_types.json */; };
-		183830EA2105CA3200FFA729 /* tunnel_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 183830E12105C95000FFA729 /* tunnel_types.json */; };
-		183830EB2105CA3200FFA729 /* tunnel_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 183830E12105C95000FFA729 /* tunnel_types.json */; };
 		183830ED2105DEBF00FFA729 /* TerrainNodeIntersectionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183830EC2105DEBF00FFA729 /* TerrainNodeIntersectionProvider.swift */; };
 		183830EF2105DEC400FFA729 /* TerrainNodeIntersectionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183830EC2105DEBF00FFA729 /* TerrainNodeIntersectionProvider.swift */; };
 		183830F02105DEC400FFA729 /* TerrainNodeIntersectionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183830EC2105DEBF00FFA729 /* TerrainNodeIntersectionProvider.swift */; };
@@ -207,10 +200,6 @@
 		185E587920A878EC00139565 /* Bundle+Pod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185E587720A878CD00139565 /* Bundle+Pod.swift */; };
 		185E587A20A878ED00139565 /* Bundle+Pod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185E587720A878CD00139565 /* Bundle+Pod.swift */; };
 		185E587B20A878ED00139565 /* Bundle+Pod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185E587720A878CD00139565 /* Bundle+Pod.swift */; };
-		188DDC5720C6789B006B96A9 /* water_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 188DDC5620C6789B006B96A9 /* water_types.json */; };
-		188DDC5D20C67CA5006B96A9 /* water_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 188DDC5620C6789B006B96A9 /* water_types.json */; };
-		188DDC5E20C67CA5006B96A9 /* water_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 188DDC5620C6789B006B96A9 /* water_types.json */; };
-		188DDC5F20C67CA5006B96A9 /* water_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 188DDC5620C6789B006B96A9 /* water_types.json */; };
 		188F483120CA6BAD007095CF /* SCNVector4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188F483020CA6BAD007095CF /* SCNVector4.swift */; };
 		188F483220CA6DED007095CF /* SCNVector4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188F483020CA6BAD007095CF /* SCNVector4.swift */; };
 		188F483320CA6DED007095CF /* SCNVector4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188F483020CA6BAD007095CF /* SCNVector4.swift */; };
@@ -231,10 +220,6 @@
 		18EE500920A576360059829C /* AreaChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B832098601000402410 /* AreaChunk.swift */; };
 		18EE500A20A576360059829C /* AreaTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B852098601700402410 /* AreaTile.swift */; };
 		18EE500B20A576360059829C /* AreaNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B872098602000402410 /* AreaNode.swift */; };
-		18EE500E20A576430059829C /* footpath_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 1819B72A20A4815300BEE585 /* footpath_types.json */; };
-		18EE500F20A576430059829C /* footpath_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 1819B72A20A4815300BEE585 /* footpath_types.json */; };
-		18EE501020A576470059829C /* terrain_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 18538B6320A311FF00077CE2 /* terrain_types.json */; };
-		18EE501120A576480059829C /* terrain_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 18538B6320A311FF00077CE2 /* terrain_types.json */; };
 		18EE501220A5764F0059829C /* Meadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C6D2093270F00992AF3 /* Meadow.swift */; };
 		18EE501320A5764F0059829C /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C9820937A3400992AF3 /* World.swift */; };
 		18EE501420A5764F0059829C /* Meadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C6D2093270F00992AF3 /* Meadow.swift */; };
@@ -343,10 +328,6 @@
 		18EE50A420A57BC30059829C /* AreaChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B832098601000402410 /* AreaChunk.swift */; };
 		18EE50A520A57BC30059829C /* AreaTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B852098601700402410 /* AreaTile.swift */; };
 		18EE50A620A57BC30059829C /* AreaNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B58B872098602000402410 /* AreaNode.swift */; };
-		18EE50A820A57BC80059829C /* footpath_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 1819B72A20A4815300BEE585 /* footpath_types.json */; };
-		18EE50A920A57BC80059829C /* terrain_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 18538B6320A311FF00077CE2 /* terrain_types.json */; };
-		18EE50AB20A57BC90059829C /* footpath_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 1819B72A20A4815300BEE585 /* footpath_types.json */; };
-		18EE50AC20A57BC90059829C /* terrain_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 18538B6320A311FF00077CE2 /* terrain_types.json */; };
 		18EE50AD20A57BCC0059829C /* Meadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C6D2093270F00992AF3 /* Meadow.swift */; };
 		18EE50AE20A57BCC0059829C /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C9820937A3400992AF3 /* World.swift */; };
 		18EE50AF20A57BCD0059829C /* Meadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18496C6D2093270F00992AF3 /* Meadow.swift */; };
@@ -503,7 +484,6 @@
 		180CAA3E21022CF20026FE06 /* TerrainType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrainType.swift; sourceTree = "<group>"; };
 		180CAA4321022EF80026FE06 /* TerrainLayerHierarchy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrainLayerHierarchy.swift; sourceTree = "<group>"; };
 		180CAA482102326D0026FE06 /* GridPolyhedronProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridPolyhedronProvider.swift; sourceTree = "<group>"; };
-		180F84F520D0FAF100BA42D2 /* area_types.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = area_types.json; sourceTree = "<group>"; };
 		1814690A21085C4A00326342 /* TerrainMeshProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrainMeshProvider.swift; sourceTree = "<group>"; };
 		181469102108791E00326342 /* WaterNodeIntermediate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterNodeIntermediate.swift; sourceTree = "<group>"; };
 		1814691821087F6600326342 /* WaterNodeMeshProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterNodeMeshProvider.swift; sourceTree = "<group>"; };
@@ -513,7 +493,6 @@
 		181469262108904100326342 /* AreaNodeEdgeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaNodeEdgeType.swift; sourceTree = "<group>"; };
 		1814692E2108914300326342 /* AreaNodeEdgeIntermediate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaNodeEdgeIntermediate.swift; sourceTree = "<group>"; };
 		1819B72420A45EE600BEE585 /* Collection+Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Bundle.swift"; sourceTree = "<group>"; };
-		1819B72A20A4815300BEE585 /* footpath_types.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = footpath_types.json; sourceTree = "<group>"; };
 		1819B73120A574F800BEE585 /* Meadow_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Meadow_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1819B73320A574F800BEE585 /* Meadow_iOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Meadow_iOS.h; sourceTree = "<group>"; };
 		1819B73420A574F800BEE585 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -524,9 +503,11 @@
 		1819B75020A5752000BEE585 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1819B75520A5752000BEE585 /* Meadow-macOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Meadow-macOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1819B75C20A5752000BEE585 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1825957D210AFCE400F76A60 /* color_palettes.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = color_palettes.json; sourceTree = "<group>"; };
+		1825957F210AFD0B00F76A60 /* colors.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = colors.json; sourceTree = "<group>"; };
+		18259588210AFEB700F76A60 /* ColorPaletteIntermediate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPaletteIntermediate.swift; sourceTree = "<group>"; };
+		1825958D210B043500F76A60 /* ColorPaletteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPaletteTests.swift; sourceTree = "<group>"; };
 		182B22EF2098BDDB003D1309 /* MeshFace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeshFace.swift; sourceTree = "<group>"; };
-		182B49D421035D6200446582 /* GridNodeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridNodeType.swift; sourceTree = "<group>"; };
-		182B49D921035EA000446582 /* GridNodeTypeProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridNodeTypeProvider.swift; sourceTree = "<group>"; };
 		1831501820BECE5B004317E0 /* Plane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plane.swift; sourceTree = "<group>"; };
 		1831501E20BED0D8004317E0 /* SCNVector3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCNVector3.swift; sourceTree = "<group>"; };
 		183830AA2105C4A400FFA729 /* AreaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaTests.swift; sourceTree = "<group>"; };
@@ -541,9 +522,6 @@
 		183830C22105C6FB00FFA729 /* FootpathType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FootpathType.swift; sourceTree = "<group>"; };
 		183830C42105C70800FFA729 /* FoliageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoliageType.swift; sourceTree = "<group>"; };
 		183830C62105C71900FFA729 /* AreaType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaType.swift; sourceTree = "<group>"; };
-		183830DD2105C93100FFA729 /* foliage_types.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = foliage_types.json; sourceTree = "<group>"; };
-		183830DF2105C94300FFA729 /* scaffold_types.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = scaffold_types.json; sourceTree = "<group>"; };
-		183830E12105C95000FFA729 /* tunnel_types.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = tunnel_types.json; sourceTree = "<group>"; };
 		183830EC2105DEBF00FFA729 /* TerrainNodeIntersectionProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrainNodeIntersectionProvider.swift; sourceTree = "<group>"; };
 		183830F22106051D00FFA729 /* TerrainLayerEdge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrainLayerEdge.swift; sourceTree = "<group>"; };
 		183830F82106204C00FFA729 /* TerrainLayerMeshProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrainLayerMeshProvider.swift; sourceTree = "<group>"; };
@@ -570,7 +548,6 @@
 		18496C96209373B800992AF3 /* PolyhedronTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolyhedronTests.swift; sourceTree = "<group>"; };
 		18496C9820937A3400992AF3 /* World.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = World.swift; sourceTree = "<group>"; };
 		185200F720960CBE00D3ACC6 /* GridTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridTests.swift; sourceTree = "<group>"; };
-		18538B6320A311FF00077CE2 /* terrain_types.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = terrain_types.json; sourceTree = "<group>"; };
 		18538B6520A3122700077CE2 /* ColorPalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPalette.swift; sourceTree = "<group>"; };
 		18538B6920A3241A00077CE2 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		185E587720A878CD00139565 /* Bundle+Pod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Pod.swift"; sourceTree = "<group>"; };
@@ -581,7 +558,6 @@
 		18713245209735DF0084565F /* SizeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeTests.swift; sourceTree = "<group>"; };
 		1880694520A071D6002F6EC0 /* TerrainLayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrainLayerTests.swift; sourceTree = "<group>"; };
 		188B3C16209E1BF70034F4BB /* TerrainLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrainLayer.swift; sourceTree = "<group>"; };
-		188DDC5620C6789B006B96A9 /* water_types.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = water_types.json; sourceTree = "<group>"; };
 		188F483020CA6BAD007095CF /* SCNVector4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCNVector4.swift; sourceTree = "<group>"; };
 		18A6BF3420FA28E6001F7EB1 /* GridResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridResolver.swift; sourceTree = "<group>"; };
 		18A8AB232099D6DA00AF30BB /* TerrainTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrainTests.swift; sourceTree = "<group>"; };
@@ -769,22 +745,6 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		1819B72620A4812B00BEE585 /* Area */ = {
-			isa = PBXGroup;
-			children = (
-				180F84F520D0FAF100BA42D2 /* area_types.json */,
-			);
-			path = Area;
-			sourceTree = "<group>";
-		};
-		1819B72920A4814700BEE585 /* Footpath */ = {
-			isa = PBXGroup;
-			children = (
-				1819B72A20A4815300BEE585 /* footpath_types.json */,
-			);
-			path = Footpath;
-			sourceTree = "<group>";
-		};
 		1819B73220A574F800BEE585 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
@@ -819,6 +779,30 @@
 			path = macOS;
 			sourceTree = "<group>";
 		};
+		1825957B210AFC0400F76A60 /* Color Palettes */ = {
+			isa = PBXGroup;
+			children = (
+				1825957D210AFCE400F76A60 /* color_palettes.json */,
+			);
+			path = "Color Palettes";
+			sourceTree = "<group>";
+		};
+		1825957C210AFC0D00F76A60 /* Colors */ = {
+			isa = PBXGroup;
+			children = (
+				1825957F210AFD0B00F76A60 /* colors.json */,
+			);
+			path = Colors;
+			sourceTree = "<group>";
+		};
+		18259587210AFEA800F76A60 /* Intermediates */ = {
+			isa = PBXGroup;
+			children = (
+				18259588210AFEB700F76A60 /* ColorPaletteIntermediate.swift */,
+			);
+			path = Intermediates;
+			sourceTree = "<group>";
+		};
 		182B22EE2098BDCD003D1309 /* Mesh */ = {
 			isa = PBXGroup;
 			children = (
@@ -827,30 +811,6 @@
 				18EE514320A59F8E0059829C /* MeshTriangle.swift */,
 			);
 			path = Mesh;
-			sourceTree = "<group>";
-		};
-		183830DA2105C8DC00FFA729 /* Foliage */ = {
-			isa = PBXGroup;
-			children = (
-				183830DD2105C93100FFA729 /* foliage_types.json */,
-			);
-			path = Foliage;
-			sourceTree = "<group>";
-		};
-		183830DB2105C8E400FFA729 /* Scaffold */ = {
-			isa = PBXGroup;
-			children = (
-				183830DF2105C94300FFA729 /* scaffold_types.json */,
-			);
-			path = Scaffold;
-			sourceTree = "<group>";
-		};
-		183830DC2105C90300FFA729 /* Tunnel */ = {
-			isa = PBXGroup;
-			children = (
-				183830E12105C95000FFA729 /* tunnel_types.json */,
-			);
-			path = Tunnel;
 			sourceTree = "<group>";
 		};
 		183830F72106203D00FFA729 /* Mesh Providers */ = {
@@ -894,8 +854,6 @@
 				180CA9F3210202BF0026FE06 /* GridMeshProvider.swift */,
 				18496C592093234300992AF3 /* GridNode.swift */,
 				180CAA372102187D0026FE06 /* GridNodeNeighbour.swift */,
-				182B49D421035D6200446582 /* GridNodeType.swift */,
-				182B49D921035EA000446582 /* GridNodeTypeProvider.swift */,
 				180CA9EF210202A60026FE06 /* GridObserver.swift */,
 				180CA9ED210202890026FE06 /* GridParent.swift */,
 				180CAA482102326D0026FE06 /* GridPolyhedronProvider.swift */,
@@ -930,6 +888,7 @@
 		18496C71209327B900992AF3 /* Data Structures */ = {
 			isa = PBXGroup;
 			children = (
+				18259587210AFEA800F76A60 /* Intermediates */,
 				180CA9E62101F7A80026FE06 /* Axis.swift */,
 				18538B6920A3241A00077CE2 /* Color.swift */,
 				18538B6520A3122700077CE2 /* ColorPalette.swift */,
@@ -946,12 +905,13 @@
 		18496C80209366ED00992AF3 /* Data Structures */ = {
 			isa = PBXGroup;
 			children = (
-				18496C812093670800992AF3 /* CoordinateTests.swift */,
-				18496C94209373AD00992AF3 /* PolytopeTests.swift */,
-				18496C96209373B800992AF3 /* PolyhedronTests.swift */,
-				1871323E20971FE30084565F /* VolumeTests.swift */,
-				18713245209735DF0084565F /* SizeTests.swift */,
 				180CAA3C21021A210026FE06 /* AxisTests.swift */,
+				1825958D210B043500F76A60 /* ColorPaletteTests.swift */,
+				18496C812093670800992AF3 /* CoordinateTests.swift */,
+				18496C96209373B800992AF3 /* PolyhedronTests.swift */,
+				18496C94209373AD00992AF3 /* PolytopeTests.swift */,
+				18713245209735DF0084565F /* SizeTests.swift */,
+				1871323E20971FE30084565F /* VolumeTests.swift */,
 			);
 			path = "Data Structures";
 			sourceTree = "<group>";
@@ -1064,23 +1024,10 @@
 		18538B6120A311DB00077CE2 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
-				1819B72620A4812B00BEE585 /* Area */,
-				183830DA2105C8DC00FFA729 /* Foliage */,
-				1819B72920A4814700BEE585 /* Footpath */,
-				183830DB2105C8E400FFA729 /* Scaffold */,
-				18538B6220A311E300077CE2 /* Terrain */,
-				183830DC2105C90300FFA729 /* Tunnel */,
-				188DDC5520C67828006B96A9 /* Water */,
+				1825957C210AFC0D00F76A60 /* Colors */,
+				1825957B210AFC0400F76A60 /* Color Palettes */,
 			);
 			path = Assets;
-			sourceTree = "<group>";
-		};
-		18538B6220A311E300077CE2 /* Terrain */ = {
-			isa = PBXGroup;
-			children = (
-				18538B6320A311FF00077CE2 /* terrain_types.json */,
-			);
-			path = Terrain;
 			sourceTree = "<group>";
 		};
 		185E587C20A97F5300139565 /* Scene Graph */ = {
@@ -1130,14 +1077,6 @@
 				18EE510420A57CBA0059829C /* Platforms */,
 			);
 			path = "Meadow Tests";
-			sourceTree = "<group>";
-		};
-		188DDC5520C67828006B96A9 /* Water */ = {
-			isa = PBXGroup;
-			children = (
-				188DDC5620C6789B006B96A9 /* water_types.json */,
-			);
-			path = Water;
 			sourceTree = "<group>";
 		};
 		18B58BAA2098623200402410 /* Area */ = {
@@ -1412,13 +1351,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				180F84F620D0FAF100BA42D2 /* area_types.json in Resources */,
-				18EE500E20A576430059829C /* footpath_types.json in Resources */,
-				183830DE2105C93100FFA729 /* foliage_types.json in Resources */,
-				18EE501020A576470059829C /* terrain_types.json in Resources */,
-				183830E22105C95000FFA729 /* tunnel_types.json in Resources */,
-				188DDC5720C6789B006B96A9 /* water_types.json in Resources */,
-				183830E02105C94300FFA729 /* scaffold_types.json in Resources */,
+				1825957E210AFCE400F76A60 /* color_palettes.json in Resources */,
+				18259580210AFD0B00F76A60 /* colors.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1426,13 +1360,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				180F84F720D0FB0500BA42D2 /* area_types.json in Resources */,
-				18EE50A820A57BC80059829C /* footpath_types.json in Resources */,
-				183830E32105CA2900FFA729 /* foliage_types.json in Resources */,
-				183830E92105CA3200FFA729 /* tunnel_types.json in Resources */,
-				18EE50A920A57BC80059829C /* terrain_types.json in Resources */,
-				188DDC5D20C67CA5006B96A9 /* water_types.json in Resources */,
-				183830E62105CA2D00FFA729 /* scaffold_types.json in Resources */,
+				18259581210AFD0B00F76A60 /* colors.json in Resources */,
+				18259584210AFE4800F76A60 /* color_palettes.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1440,13 +1369,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				180F84F920D0FB0600BA42D2 /* area_types.json in Resources */,
-				18EE500F20A576430059829C /* footpath_types.json in Resources */,
-				183830E42105CA2900FFA729 /* foliage_types.json in Resources */,
-				183830EA2105CA3200FFA729 /* tunnel_types.json in Resources */,
-				18EE501120A576480059829C /* terrain_types.json in Resources */,
-				188DDC5E20C67CA5006B96A9 /* water_types.json in Resources */,
-				183830E72105CA2D00FFA729 /* scaffold_types.json in Resources */,
+				18259582210AFD0B00F76A60 /* colors.json in Resources */,
+				18259585210AFE4800F76A60 /* color_palettes.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1454,13 +1378,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				180F84F820D0FB0600BA42D2 /* area_types.json in Resources */,
-				18EE50AB20A57BC90059829C /* footpath_types.json in Resources */,
-				183830E52105CA2900FFA729 /* foliage_types.json in Resources */,
-				183830EB2105CA3200FFA729 /* tunnel_types.json in Resources */,
-				18EE50AC20A57BC90059829C /* terrain_types.json in Resources */,
-				188DDC5F20C67CA5006B96A9 /* water_types.json in Resources */,
-				183830E82105CA2E00FFA729 /* scaffold_types.json in Resources */,
+				18259583210AFD0B00F76A60 /* colors.json in Resources */,
+				18259586210AFE4900F76A60 /* color_palettes.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1546,6 +1465,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18259589210AFEB700F76A60 /* ColorPaletteIntermediate.swift in Sources */,
 				18069F0C20C978720041A858 /* CameraJibStateMachine.swift in Sources */,
 				18EE501520A5764F0059829C /* World.swift in Sources */,
 				18EE502E20A576660059829C /* Footpath.swift in Sources */,
@@ -1574,7 +1494,6 @@
 				180CA9F4210202BF0026FE06 /* GridMeshProvider.swift in Sources */,
 				18EE506020A576880059829C /* Water.swift in Sources */,
 				18EE505120A5767D0059829C /* TerrainLayer.swift in Sources */,
-				182B49D521035D6200446582 /* GridNodeType.swift in Sources */,
 				1814692021088E1600326342 /* TerrainLayerEdgeIntermediate.swift in Sources */,
 				180CAA17210204320026FE06 /* GridNodeIntermediate.swift in Sources */,
 				18EE501E20A576550059829C /* ColorPalette.swift in Sources */,
@@ -1641,7 +1560,6 @@
 				18EE504D20A5767D0059829C /* TerrainChunk.swift in Sources */,
 				180CAA492102326D0026FE06 /* GridPolyhedronProvider.swift in Sources */,
 				183830BF2105C6D900FFA729 /* TunnelType.swift in Sources */,
-				182B49DA21035EA000446582 /* GridNodeTypeProvider.swift in Sources */,
 				180CAA10210204150026FE06 /* GridIntermediate.swift in Sources */,
 				180CAA15210204290026FE06 /* GridTileIntermediate.swift in Sources */,
 				18EE504E20A5767D0059829C /* TerrainNode.swift in Sources */,
@@ -1667,7 +1585,6 @@
 				18EE50EF20A57BF30059829C /* TerrainNode.swift in Sources */,
 				183830AE2105C4BB00FFA729 /* FoliageTests.swift in Sources */,
 				180CAA1B210204360026FE06 /* GridNodeIntermediate.swift in Sources */,
-				182B49DB21035EA700446582 /* GridNodeTypeProvider.swift in Sources */,
 				1831501A20BECE5E004317E0 /* Plane.swift in Sources */,
 				183830B72105C4EF00FFA729 /* TunnelTests.swift in Sources */,
 				18EE50DA20A57BE70059829C /* GridEdge.swift in Sources */,
@@ -1703,6 +1620,7 @@
 				180CAA39210218810026FE06 /* GridNodeNeighbour.swift in Sources */,
 				180CA9F9210202E60026FE06 /* SceneGraphParent.swift in Sources */,
 				181469282108905300326342 /* AreaNodeEdgeType.swift in Sources */,
+				1825958E210B043500F76A60 /* ColorPaletteTests.swift in Sources */,
 				18EE50B120A57BD40059829C /* Color.swift in Sources */,
 				18EE50EE20A57BF30059829C /* TerrainChunk.swift in Sources */,
 				180CAA19210204360026FE06 /* GridChunkIntermediate.swift in Sources */,
@@ -1731,7 +1649,6 @@
 				18EE50CF20A57BE20059829C /* FootpathTile.swift in Sources */,
 				18EE50A020A57BC20059829C /* AreaChunk.swift in Sources */,
 				18EE50E520A57BEE0059829C /* ScaffoldTile.swift in Sources */,
-				182B49D621035D8000446582 /* GridNodeType.swift in Sources */,
 				18EE50B020A57BCD0059829C /* World.swift in Sources */,
 				183830CE2105C72C00FFA729 /* FootpathType.swift in Sources */,
 				18EE514520A59F8E0059829C /* MeshTriangle.swift in Sources */,
@@ -1756,10 +1673,12 @@
 				18EE509A20A57B9E0059829C /* VolumeTests.swift in Sources */,
 				18EE50C120A57BDC0059829C /* Foliage.swift in Sources */,
 				183830F42106053800FFA729 /* TerrainLayerEdge.swift in Sources */,
+				18259590210B04FA00F76A60 /* WaterNodeMeshProvider.swift in Sources */,
 				183830AB2105C4A400FFA729 /* AreaTests.swift in Sources */,
 				180CAA4021022D070026FE06 /* TerrainType.swift in Sources */,
 				18069F0D20C979980041A858 /* CameraJibStateMachine.swift in Sources */,
 				183830C82105C72200FFA729 /* AreaType.swift in Sources */,
+				1825958A210AFEB700F76A60 /* ColorPaletteIntermediate.swift in Sources */,
 				18EE50CE20A57BE20059829C /* FootpathChunk.swift in Sources */,
 				18EE50F220A57BF30059829C /* TerrainLayer.swift in Sources */,
 				1831502020BED0E9004317E0 /* SCNVector3.swift in Sources */,
@@ -1773,7 +1692,6 @@
 				18069F0E20C979990041A858 /* CameraJibStateMachine.swift in Sources */,
 				18EE501320A5764F0059829C /* World.swift in Sources */,
 				18EE503220A576660059829C /* Footpath.swift in Sources */,
-				182B49DC21035EA800446582 /* GridNodeTypeProvider.swift in Sources */,
 				180CAA06210202F90026FE06 /* GridObserver.swift in Sources */,
 				180CAA0C210203000026FE06 /* GridChild.swift in Sources */,
 				183830D22105C73300FFA729 /* ScaffoldType.swift in Sources */,
@@ -1797,6 +1715,7 @@
 				18EE503F20A5766D0059829C /* GridEdge.swift in Sources */,
 				188F483320CA6DED007095CF /* SCNVector4.swift in Sources */,
 				18EE514120A59E260059829C /* Mesh.swift in Sources */,
+				1825958B210AFEB700F76A60 /* ColorPaletteIntermediate.swift in Sources */,
 				180CAA1F210204360026FE06 /* GridNodeIntermediate.swift in Sources */,
 				183830D52105C73A00FFA729 /* TunnelType.swift in Sources */,
 				180CAA3A210218820026FE06 /* GridNodeNeighbour.swift in Sources */,
@@ -1823,9 +1742,9 @@
 				18EE503520A576660059829C /* FootpathNode.swift in Sources */,
 				180CA9FA210202E60026FE06 /* SceneGraphParent.swift in Sources */,
 				18EE505E20A576830059829C /* TunnelTile.swift in Sources */,
-				182B49D721035D8000446582 /* GridNodeType.swift in Sources */,
 				18EE501920A576540059829C /* Polyhedron.swift in Sources */,
 				18EE506720A576890059829C /* WaterNode.swift in Sources */,
+				18259591210B04FA00F76A60 /* WaterNodeMeshProvider.swift in Sources */,
 				18EE502920A5765F0059829C /* FoliageNode.swift in Sources */,
 				18EE503C20A5766D0059829C /* Grid.swift in Sources */,
 				18EE502820A5765F0059829C /* FoliageTile.swift in Sources */,
@@ -1890,6 +1809,7 @@
 				183830B52105C4E300FFA729 /* ScaffoldTests.swift in Sources */,
 				180CAA23210204370026FE06 /* GridNodeIntermediate.swift in Sources */,
 				1831501C20BECE5F004317E0 /* Plane.swift in Sources */,
+				1825958C210AFEB700F76A60 /* ColorPaletteIntermediate.swift in Sources */,
 				18EE50D420A57BE60059829C /* GridEdge.swift in Sources */,
 				180CAA3621020CDF0026FE06 /* GridUpdatable.swift in Sources */,
 				18EE50FE20A57BFA0059829C /* WaterNode.swift in Sources */,
@@ -1905,6 +1825,7 @@
 				1814691E21087F7900326342 /* WaterMeshProvider.swift in Sources */,
 				18EE50FD20A57BFA0059829C /* WaterTile.swift in Sources */,
 				180CAA4221022D070026FE06 /* TerrainType.swift in Sources */,
+				1825958F210B047A00F76A60 /* ColorPaletteTests.swift in Sources */,
 				183830D92105C73D00FFA729 /* WaterType.swift in Sources */,
 				18EE50C920A57BE20059829C /* Footpath.swift in Sources */,
 				18A6BF3D20FA2CD3001F7EB1 /* GridResolver.swift in Sources */,
@@ -1959,12 +1880,10 @@
 				18EE50A520A57BC30059829C /* AreaTile.swift in Sources */,
 				18EE50C620A57BDD0059829C /* FoliageChunk.swift in Sources */,
 				18EE50E720A57BF20059829C /* Terrain.swift in Sources */,
-				182B49D821035D8100446582 /* GridNodeType.swift in Sources */,
 				180CAA02210202F50026FE06 /* GridMeshProvider.swift in Sources */,
 				18EE510920A589A60059829C /* Meadow+Types.swift in Sources */,
 				1814692321088E3F00326342 /* TerrainLayerEdgeIntermediate.swift in Sources */,
 				180CA9FF210202F10026FE06 /* GridSoilable.swift in Sources */,
-				182B49DD21035EA800446582 /* GridNodeTypeProvider.swift in Sources */,
 				180CAA2B210205630026FE06 /* TerrainNodeIntermediate.swift in Sources */,
 				180CAA0B210203000026FE06 /* GridChild.swift in Sources */,
 				185E587B20A878ED00139565 /* Bundle+Pod.swift in Sources */,
@@ -1976,6 +1895,7 @@
 				188F483420CA6DEE007095CF /* SCNVector4.swift in Sources */,
 				18EE50BE20A57BD50059829C /* Volume.swift in Sources */,
 				18EE508F20A57A960059829C /* CoordinateTests.swift in Sources */,
+				18259592210B04FA00F76A60 /* WaterNodeMeshProvider.swift in Sources */,
 				180CAA4C210234D70026FE06 /* GridPolyhedronProvider.swift in Sources */,
 				18EE508D20A57A5C0059829C /* GridTests.swift in Sources */,
 				18EE50C520A57BDD0059829C /* Foliage.swift in Sources */,

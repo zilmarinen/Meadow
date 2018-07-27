@@ -8,25 +8,8 @@
 
 import Foundation
 
-public class Footpath: Grid<FootpathChunk, FootpathTile, FootpathNode>, GridNodeTypeProvider {
+public class Footpath: Grid<FootpathChunk, FootpathTile, FootpathNode> {
     
-    public typealias NodeType = FootpathType
-    
-    public var nodeTypes: [FootpathType] = []
-    
-    public required override init() {
-        
-        super.init()
-        
-        guard let nodeTypes = NodeType.load(filename: "footpath_types") else { fatalError() }
-        
-        self.nodeTypes = nodeTypes
-    }
-    
-    public required init?(coder aDecoder: NSCoder) {
-        
-        fatalError("init(coder:) has not been implemented")
-    }
 }
 
 extension Footpath {

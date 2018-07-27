@@ -6,7 +6,17 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-public struct FoliageType: GridNodeType {
+public enum FoliageType: Int, Codable {
     
-    public let name: String
+    case bush
+    case shrub
+    case tree
+    
+    static var allCases: [FoliageType] {
+        
+        return [ .bush,
+                 .shrub,
+                 .tree
+        ]
+    }
 }

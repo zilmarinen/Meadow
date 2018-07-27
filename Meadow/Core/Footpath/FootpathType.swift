@@ -6,7 +6,17 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-public struct FootpathType: GridNodeType {
+public enum FootpathType: Int, Codable {
     
-    public let name: String
+    case asphalt
+    case dirt
+    case tarmac
+    
+    static var allCases: [FootpathType] {
+        
+        return [ .asphalt,
+                 .dirt,
+                 .tarmac
+        ]
+    }
 }

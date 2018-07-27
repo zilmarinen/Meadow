@@ -37,19 +37,5 @@ class FoliageTests: XCTestCase {
         
         waitForExpectations(timeout: 1)
     }
-    
-    func testNodeTypesAreLoaded() {
-        
-        let expect = expectation(description: "Foliage types are loaded and can be found")
-        
-        let knownNodeType = meadow.foliage.find(nodeType: "Tree")
-        let unknownNodeType = meadow.foliage.find(nodeType: "unknown")
-        
-        XCTAssertNotNil(knownNodeType)
-        XCTAssertNil(unknownNodeType)
-        
-        expect.fulfill()
-        
-        waitForExpectations(timeout: 1)
-    }
+
 }

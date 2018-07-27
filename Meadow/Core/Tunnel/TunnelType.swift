@@ -6,7 +6,15 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-public struct TunnelType: GridNodeType {
+public enum TunnelType: Int, Codable {
     
-    public let name: String
+    case concrete
+    case glass
+    
+    static var allCases: [TunnelType] {
+        
+        return [ .concrete,
+                 .glass
+        ]
+    }
 }

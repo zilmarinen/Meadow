@@ -6,8 +6,6 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-import SceneKit
-
 public struct TerrainLayerMeshProvider: TerrainMeshProvider {
     
 }

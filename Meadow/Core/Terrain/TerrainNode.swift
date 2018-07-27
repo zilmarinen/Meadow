@@ -84,13 +84,19 @@ public class TerrainNode<Layer: TerrainLayer>: GridNode, GridParent {
                 let apexColor = terrainType.colorPalette.primary.vector
                 let edgeColor = terrainType.colorPalette.secondary.vector
                 
+                let meshProvider = terrainType.meshProvider
+                
                 let polyhedrons = Polyhedron.subtract(polyhedrons: intersections, from: layer.polyhedron)
                 
                 polyhedrons.forEach { polyhedron in
                  
                     if (layer.hierarchy.upper == nil && layer.polyhedron.upperPolytope == polyhedron.upperPolytope) || layer.polyhedron.upperPolytope != polyhedron.upperPolytope {
                         
-                        meshFaces.append(terrainType.meshProvider.terrainLayer(apex: polyhedron, corners: corners, color: apexColor))
+                        let v0 = polyhedron.upperPolytope.vertices[corners.first!.rawValue]
+                        let v1 = polyhedron.upperPolytope.vertices[corners.last!.rawValue]
+                        let v2 = polyhedron.upperPolytope.center
+                        
+                        meshFaces.append(meshProvider.terrainLayer(apex: [v0, v1, v2], color: apexColor))
                     }
                     
                     let divisions = (stencils[edge] != nil ? Polyhedron.stencil(polyhedrons: stencils[edge]!, against: polyhedron, edge: edge) : [polyhedron])
@@ -111,8 +117,8 @@ public class TerrainNode<Layer: TerrainLayer>: GridNode, GridParent {
                             
                             let vertices = [v0, v1, v2, v3]
                             
-                            meshFaces.append(contentsOf: terrainType.meshProvider.terrainLayer(crown: corners, acuteCorner: acuteCorner, vertices: vertices, normal: edgeNormal, color: edgeColor))
-                            meshFaces.append(contentsOf: terrainType.meshProvider.terrainLayer(throne: corners, acuteCorner: acuteCorner, vertices: vertices, normal: edgeNormal, color: edgeColor))
+                            meshFaces.append(contentsOf: meshProvider.terrainLayer(crown: corners, acuteCorner: acuteCorner, vertices: vertices, normal: edgeNormal, color: edgeColor))
+                            meshFaces.append(contentsOf: meshProvider.terrainLayer(throne: corners, acuteCorner: acuteCorner, vertices: vertices, normal: edgeNormal, color: edgeColor))
                         }
                     }
                 }

@@ -33,6 +33,11 @@ extension Water {
     
     func add(node coordinate: Coordinate) -> WaterNode? {
         
-        return add(node: WaterTile.fixedVolume(coordinate))
+        guard let node = add(node: WaterTile.fixedVolume(coordinate)) else { return nil }
+        
+        node.waterLevel = coordinate.y
+        node.waterType = nodeTypes.first
+        
+        return node
     }
 }

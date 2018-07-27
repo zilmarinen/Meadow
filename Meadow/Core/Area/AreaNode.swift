@@ -8,6 +8,49 @@
 
 public class AreaNode: GridNode {
     
+    var edges = Edges()
+    
+    var internalAreaType: AreaType? {
+        
+        didSet {
+            
+            if internalAreaType != oldValue {
+                
+                becomeDirty()
+            }
+        }
+    }
+    
+    var externalAreaType: AreaType? {
+        
+        didSet {
+            
+            if externalAreaType != oldValue {
+                
+                becomeDirty()
+            }
+        }
+    }
+    
+    enum CodingKeys: CodingKey {
+        
+        case name
+        case edges
+        case internalAreaType
+        case externalAreaType
+    }
+    
+    public override func encode(to encoder: Encoder) throws {
+        
+        try super.encode(to: encoder)
+        
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(self.name, forKey: .name)
+        try container.encode(self.edges, forKey: .edges)
+        try container.encode(self.internalAreaType, forKey: .internalAreaType)
+        try container.encode(self.externalAreaType, forKey: .externalAreaType)
+    }
 }
 
 extension AreaNode {

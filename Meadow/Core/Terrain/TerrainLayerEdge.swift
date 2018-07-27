@@ -13,6 +13,20 @@ extension TerrainLayer {
         let edge: GridEdge
         
         let terrainType: TerrainType
+        
+        enum CodingKeys: CodingKey {
+            
+            case edge
+            case terrainType
+        }
+        
+        public func encode(to encoder: Encoder) throws {
+            
+            var container = encoder.container(keyedBy: CodingKeys.self)
+            
+            try container.encode(edge, forKey: .edge)
+            try container.encode(terrainType.name, forKey: .terrainType)
+        }
     }
     
     public struct Edges: Codable {

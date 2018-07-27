@@ -8,4 +8,11 @@
 
 public class AreaNodeIntermediate: GridNodeIntermediate {
 
+    let name: String?
+    
+    let edges: [AreaNodeEdgeIntermediate]
+    
+    let internalAreaType: String
+    
+    let externalAreaType: String
 }

@@ -161,6 +161,11 @@ extension TerrainLayer {
     }
 }
 
+extension TerrainLayer {
+    
+    public static let crown: MDWFloat = (Axis.unitY / 2.0)
+}
+
 extension TerrainLayer: Hashable {
     
     public var hashValue: Int { return volume.hashValue }

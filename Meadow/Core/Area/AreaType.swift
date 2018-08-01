@@ -12,11 +12,21 @@ public enum AreaType: Int, Codable {
     case concrete
     case wood
     
-    static var allCases: [AreaType] {
+    public static var allCases: [AreaType] {
         
         return [ .brick,
                  .concrete,
                  .wood
         ]
+    }
+    
+    public var name: String {
+        
+        switch self {
+            
+        case .brick: return "Brick"
+        case .concrete: return "Concrete"
+        case .wood: return "Wood"
+        }
     }
 }

@@ -14,7 +14,7 @@ public class Terrain: Grid<TerrainChunk, TerrainTile, TerrainNode<TerrainLayer>>
 
 extension Terrain {
     
-    func add(node coordinate: Coordinate) -> TerrainNode<TerrainLayer>? {
+    public func add(node coordinate: Coordinate) -> TerrainNode<TerrainLayer>? {
         
         return add(node: TerrainTile.fixedVolume(coordinate))
     }

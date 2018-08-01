@@ -14,7 +14,7 @@ public class Foliage: Grid<FoliageChunk, FoliageTile, FoliageNode> {
 
 extension Foliage {
     
-    func add(node coordinate: Coordinate) -> FoliageNode? {
+    public func add(node coordinate: Coordinate) -> FoliageNode? {
         
         return add(node: FoliageTile.fixedVolume(coordinate))
     }

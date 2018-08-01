@@ -12,11 +12,21 @@ public enum ScaffoldType: Int, Codable {
     case wood
     case steel
     
-    static var allCases: [ScaffoldType] {
+    public static var allCases: [ScaffoldType] {
         
         return [ .concrete,
                  .wood,
                  .steel
         ]
+    }
+    
+    public var name: String {
+        
+        switch self {
+            
+        case .concrete: return "Concrete"
+        case .wood: return "Wood"
+        case .steel: return "Steel"
+        }
     }
 }

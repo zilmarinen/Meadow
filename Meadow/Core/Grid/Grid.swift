@@ -115,7 +115,7 @@ extension Grid {
         return node
     }
     
-    func find(chunk coordinate: Coordinate) -> Chunk? {
+    public func find(chunk coordinate: Coordinate) -> Chunk? {
         
         return children.first { chunk -> Bool in
             
@@ -123,7 +123,7 @@ extension Grid {
         }
     }
     
-    func find(tile coordinate: Coordinate) -> Tile? {
+    public func find(tile coordinate: Coordinate) -> Tile? {
         
         if let chunk = find(chunk: coordinate), let tile = chunk.find(tile: coordinate) {
             
@@ -133,7 +133,7 @@ extension Grid {
         return nil
     }
     
-    func find(node coordinate: Coordinate) -> Node? {
+    public func find(node coordinate: Coordinate) -> Node? {
         
         if let tile = find(tile: coordinate), let node = tile.find(node: coordinate) {
             
@@ -143,7 +143,7 @@ extension Grid {
         return nil
     }
     
-    func remove(chunk: Chunk) -> Bool {
+    public func remove(chunk: Chunk) -> Bool {
         
         if let _ = index(of: chunk) {
             
@@ -164,7 +164,7 @@ extension Grid {
         return false
     }
     
-    func remove(tile: Tile) -> Bool {
+    public func remove(tile: Tile) -> Bool {
         
         if let chunk = find(chunk: tile.volume.coordinate) {
             
@@ -187,7 +187,7 @@ extension Grid {
         return false
     }
     
-    func remove(node: Node) -> Bool {
+    public func remove(node: Node) -> Bool {
         
         if let tile = find(tile: node.volume.coordinate) {
             

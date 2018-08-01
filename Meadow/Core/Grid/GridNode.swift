@@ -10,7 +10,7 @@ public class GridNode: GridChild, GridMeshProvider, GridSoilable, Encodable {
     
     public var observer: GridObserver?
     
-    public var name: String?
+    public var name: String? { return "Node" }
     
     public var isHidden: Bool = false
     

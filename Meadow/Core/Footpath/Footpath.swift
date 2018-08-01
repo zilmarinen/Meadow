@@ -14,7 +14,7 @@ public class Footpath: Grid<FootpathChunk, FootpathTile, FootpathNode> {
 
 extension Footpath {
     
-    func add(node coordinate: Coordinate) -> FootpathNode? {
+    public func add(node coordinate: Coordinate) -> FootpathNode? {
         
         return add(node: FootpathTile.fixedVolume(coordinate))
     }

@@ -8,11 +8,34 @@
 
 public class AreaNodeIntermediate: GridNodeIntermediate {
 
-    let name: String?
-    
     let edges: [AreaNodeEdgeIntermediate]
     
-    let internalAreaType: String
+    let internalAreaType: AreaType
+    let externalAreaType: AreaType
     
-    let externalAreaType: String
+    let floorColorPalette: ColorPaletteIntermediate
+    
+    enum CodingKeys: CodingKey {
+        
+        case edges
+        case internalAreaType
+        case externalAreaType
+        case floorColorPalette
+    }
+    
+    public required init(from decoder: Decoder) throws {
+        
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        edges = try container.decode([AreaNodeEdgeIntermediate].self, forKey: .edges)
+        
+        internalAreaType = try container.decode(AreaType.self, forKey: .internalAreaType)
+        externalAreaType = try container.decode(AreaType.self, forKey: .externalAreaType)
+        
+        floorColorPalette = try container.decode(ColorPaletteIntermediate.self, forKey: .floorColorPalette)
+        
+        let superDecoder = try container.superDecoder()
+        
+        try super.init(from: superDecoder)
+    }
 }

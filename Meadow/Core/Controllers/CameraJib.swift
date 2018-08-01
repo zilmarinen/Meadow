@@ -8,7 +8,7 @@
 
 import SceneKit
 
-public class CameraJib: SCNNode {
+public class CameraJib: SCNNode, SceneGraphChild {
     
     public lazy var stateMachine = {
         
@@ -21,6 +21,8 @@ public class CameraJib: SCNNode {
     public override init() {
         
         super.init()
+        
+        self.name = "Camera"
         
         let camera = SCNCamera()
         

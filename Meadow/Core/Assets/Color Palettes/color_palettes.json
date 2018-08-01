@@ -1,6 +1,34 @@
 [
 	{
-		"name": "grass",
+		"name": "Grass",
+		"primary": "absoluteZero",
+		"secondary": "alienArmpit",
+		"tertiary": "alloyOrange",
+		"quaternary": "almond"
+	},
+    {
+		"name": "Sand",
+		"primary": "absoluteZero",
+		"secondary": "alienArmpit",
+		"tertiary": "alloyOrange",
+		"quaternary": "almond"
+	},
+    {
+		"name": "Bedrock",
+		"primary": "absoluteZero",
+		"secondary": "alienArmpit",
+		"tertiary": "alloyOrange",
+		"quaternary": "almond"
+	},
+    {
+		"name": "Concrete",
+		"primary": "absoluteZero",
+		"secondary": "alienArmpit",
+		"tertiary": "alloyOrange",
+		"quaternary": "almond"
+	},
+    {
+		"name": "Water",
 		"primary": "absoluteZero",
 		"secondary": "alienArmpit",
 		"tertiary": "alloyOrange",

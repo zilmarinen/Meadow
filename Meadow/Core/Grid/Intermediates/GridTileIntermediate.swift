@@ -6,7 +6,7 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-public struct GridTileIntermediate<NodeIntermediate: GridNodeIntermediate> {
+public struct GridTileIntermediate<NodeIntermediate: GridNodeIntermediate>: Decodable {
     
     let name: String?
     

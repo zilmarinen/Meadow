@@ -10,7 +10,7 @@ public class TerrainLayer: GridChild {
     
     public var observer: GridObserver?
     
-    public var name: String?
+    public var name: String? { return "Layer" }
     
     public var isHidden: Bool = false
     
@@ -30,7 +30,7 @@ public class TerrainLayer: GridChild {
     
     var corners: [Int]
     
-    var hierarchy = Hierarchy()
+    public var hierarchy = Hierarchy()
     
     public required init?(observer: GridObserver, coordinate: Coordinate, corners: [Int], terrainType: TerrainType) {
         
@@ -90,12 +90,12 @@ extension TerrainLayer: GridPolyhedronProvider {
 
 extension TerrainLayer {
     
-    func get(height corner: GridCorner) -> Int {
+    public func get(height corner: GridCorner) -> Int {
         
         return corners[corner.rawValue]
     }
     
-    func set(height: Int, corner: GridCorner) {
+    public func set(height: Int, corner: GridCorner) {
         
         var cornerHeight = min(max(height, World.floor + 1), World.ceiling)
         
@@ -134,7 +134,7 @@ extension TerrainLayer {
 
 extension TerrainLayer {
     
-    func get(terrainType edge: GridEdge) -> TerrainType {
+    public func get(terrainType edge: GridEdge) -> TerrainType {
         
         switch edge {
             
@@ -145,7 +145,7 @@ extension TerrainLayer {
         }
     }
     
-    func set(terrainType: TerrainType, edge: GridEdge) {
+    public func set(terrainType: TerrainType, edge: GridEdge) {
         
         let terrainEdge = Edge(edge: edge, terrainType: terrainType)
         

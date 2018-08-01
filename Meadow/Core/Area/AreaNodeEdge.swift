@@ -8,11 +8,22 @@
 
 extension AreaNode {
     
-    public struct Edge: Codable, Hashable {
+    public struct Edge: Codable {
         
-        let edge: GridEdge
+        public let edge: GridEdge
         
-        let edgeType: AreaNodeEdgeType
+        public let edgeType: AreaNodeEdgeType
+        
+        public let colorPalette: ColorPalette
+        
+        public init(edge: GridEdge, edgeType: AreaNodeEdgeType, colorPalette: ColorPalette) {
+            
+            self.edge = edge
+            
+            self.edgeType = edgeType
+            
+            self.colorPalette = colorPalette
+        }
     }
     
     public struct Edges: Codable {

@@ -10,7 +10,7 @@ public class AreaNode: GridNode {
     
     var edges = Edges()
     
-    var internalAreaType: AreaType? {
+    public var internalAreaType: AreaType? {
         
         didSet {
             
@@ -21,11 +21,22 @@ public class AreaNode: GridNode {
         }
     }
     
-    var externalAreaType: AreaType? {
+    public var externalAreaType: AreaType? {
         
         didSet {
             
             if externalAreaType != oldValue {
+                
+                becomeDirty()
+            }
+        }
+    }
+    
+    public var floorColorPalette: ColorPalette? {
+        
+        didSet {
+            
+            if floorColorPalette != oldValue {
                 
                 becomeDirty()
             }
@@ -50,6 +61,33 @@ public class AreaNode: GridNode {
         try container.encode(self.edges, forKey: .edges)
         try container.encode(self.internalAreaType, forKey: .internalAreaType)
         try container.encode(self.externalAreaType, forKey: .externalAreaType)
+    }
+}
+
+extension AreaNode {
+    
+    public func get(edge: GridEdge) -> Edge? {
+        
+        switch edge {
+            
+        case .north: return edges.north
+        case .east: return edges.east
+        case .south: return edges.south
+        case .west: return edges.west
+        }
+    }
+    
+    public func set(edge: Edge) {
+        
+        switch edge.edge {
+            
+        case .north: edges.north = edge
+        case .east: edges.east = edge
+        case .south: edges.south = edge
+        case .west: edges.west = edge
+        }
+        
+        becomeDirty()
     }
 }
 

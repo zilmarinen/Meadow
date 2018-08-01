@@ -8,7 +8,18 @@
 
 public class WaterNode: GridNode {
     
-    var waterLevel: Int = World.floor {
+    public var waterType: WaterType? {
+        
+        didSet {
+            
+            if waterType != oldValue {
+                
+                becomeDirty()
+            }
+        }
+    }
+    
+    public var waterLevel: Int = World.floor {
         
         didSet {
             
@@ -24,17 +35,6 @@ public class WaterNode: GridNode {
         didSet {
             
             if basePolytope != oldValue {
-                
-                becomeDirty()
-            }
-        }
-    }
-    
-    var waterType: WaterType? {
-        
-        didSet {
-            
-            if waterType != oldValue {
                 
                 becomeDirty()
             }

@@ -14,7 +14,7 @@ public class Water: Grid<WaterChunk, WaterTile, WaterNode> {
 
 extension Water {
     
-    func add(node coordinate: Coordinate) -> WaterNode? {
+    public func add(node coordinate: Coordinate) -> WaterNode? {
         
         guard let node = add(node: WaterTile.fixedVolume(coordinate)) else { return nil }
         

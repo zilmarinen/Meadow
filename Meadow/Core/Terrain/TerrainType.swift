@@ -12,12 +12,22 @@ public enum TerrainType: Int, Codable {
     case grass
     case sand
     
-    static var allCases: [TerrainType] {
+    public static var allCases: [TerrainType] {
         
         return [ .bedrock,
                  .grass,
                  .sand
         ]
+    }
+    
+    public var name: String {
+        
+        switch self {
+            
+        case .bedrock: return "Bedrock"
+        case .grass: return "Grass"
+        case .sand: return "Sand"
+        }
     }
 }
 
@@ -27,16 +37,12 @@ extension TerrainType {
         
         return TerrainLayerMeshProvider()
     }
+}
+
+extension TerrainType {
     
-    var colorPalette: ColorPalette? {
+    public var colorPalette: ColorPalette? {
         
-        switch self {
-            
-        case .bedrock:
-            
-            return ColorPalettes.shared.palette(named: "bedrock")
-            
-        default: return nil
-        }
+        return ColorPalettes.shared.palette(named: name)
     }
 }

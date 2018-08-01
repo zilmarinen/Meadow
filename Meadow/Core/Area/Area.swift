@@ -14,7 +14,7 @@ public class Area: Grid<AreaChunk, AreaTile, AreaNode> {
 
 extension Area {
     
-    func add(node coordinate: Coordinate) -> AreaNode? {
+    public func add(node coordinate: Coordinate) -> AreaNode? {
         
         return add(node: AreaNode.fixedVolume(coordinate))
     }

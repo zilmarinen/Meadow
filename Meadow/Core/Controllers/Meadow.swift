@@ -9,31 +9,49 @@
 import Foundation
 import SceneKit
 
-class Meadow: SCNScene, GridObserver, SceneGraphParent {
+public class Meadow: SCNScene, GridObserver, SceneGraphParent {
     
-    let areas = Area()
-    let foliage = Foliage()
-    let footpaths = Footpath()
-    let scaffolds = Scaffold()
-    let terrain = Terrain()
-    let tunnels = Tunnel()
-    let water = Water()
+    public let areas = Area()
+    public let foliage = Foliage()
+    public let footpaths = Footpath()
+    public let scaffolds = Scaffold()
+    public let terrain = Terrain()
+    public let tunnels = Tunnel()
+    public let water = Water()
     
-    var observer: GridObserver?
+    public let cameraJib = CameraJib()
     
-    override init() {
+    public var observer: GridObserver?
+    
+    var lastUpdate: TimeInterval?
+    
+    public init(observer: GridObserver?) {
         
         super.init()
         
         areas.observer = self
+        areas.name = "Areas"
+        
         foliage.observer = self
+        foliage.name = "Foliage"
+        
         footpaths.observer = self
+        footpaths.name = "Footpaths"
+        
         scaffolds.observer = self
+        scaffolds.name = "Scaffolds"
+        
         terrain.observer = self
+        terrain.name = "Terrain"
+        
         tunnels.observer = self
+        tunnels.name = "Tunnels"
+        
         water.observer = self
+        water.name = "Water"
         
         rootNode.name = "Meadow"
+        rootNode.addChildNode(cameraJib)
         rootNode.addChildNode(areas)
         rootNode.addChildNode(foliage)
         rootNode.addChildNode(footpaths)
@@ -43,7 +61,7 @@ class Meadow: SCNScene, GridObserver, SceneGraphParent {
         rootNode.addChildNode(water)
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         
         fatalError("init(coder:) has not been implemented")
     }
@@ -51,21 +69,21 @@ class Meadow: SCNScene, GridObserver, SceneGraphParent {
 
 extension Meadow {
     
-    var totalChildren: Int { return rootNode.childNodes.count }
+    public var totalChildren: Int { return rootNode.childNodes.count }
     
-    func child(at index: Int) -> SceneGraphChild? {
+    public func child(at index: Int) -> SceneGraphChild? {
         
         return rootNode.childNodes[index] as? SceneGraphChild
     }
     
-    func index(of child: SceneGraphChild) -> Int? {
+    public func index(of child: SceneGraphChild) -> Int? {
         
         guard let child = child as? SCNNode else { return nil }
         
         return rootNode.childNodes.index(of: child)
     }
     
-    func child(didBecomeDirty child: SceneGraphChild) {
+    public func child(didBecomeDirty child: SceneGraphChild) {
         
         switch type(of: child) {
             
@@ -83,8 +101,19 @@ extension Meadow {
 extension Meadow: SCNSceneRendererDelegate {
     
     public func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
+        
+        let delta = time - (self.lastUpdate ?? 0)
+        
+        cameraJib.update(deltaTime: delta)
+        areas.update(deltaTime: delta)
+        foliage.update(deltaTime: delta)
+        footpaths.update(deltaTime: delta)
+        scaffolds.update(deltaTime: delta)
+        terrain.update(deltaTime: delta)
+        tunnels.update(deltaTime: delta)
+        water.update(deltaTime: delta)
 
-        //
+        self.lastUpdate = time
     }
 }
 

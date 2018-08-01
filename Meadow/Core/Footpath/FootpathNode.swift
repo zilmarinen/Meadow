@@ -8,4 +8,25 @@
 
 public class FootpathNode: GridNode {
     
+    public var slope: Slope? {
+        
+        didSet {
+            
+            if slope != oldValue {
+                
+                becomeDirty()
+            }
+        }
+    }
+    
+    public var footpathType: FootpathType? {
+        
+        didSet {
+            
+            if footpathType != oldValue {
+                
+                becomeDirty()
+            }
+        }
+    }
 }

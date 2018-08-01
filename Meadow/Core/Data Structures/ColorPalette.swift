@@ -6,7 +6,7 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-public struct ColorPalette: Codable {
+public struct ColorPalette: Codable, Hashable {
     
     public let name: String
     
@@ -14,13 +14,22 @@ public struct ColorPalette: Codable {
     public let secondary: Color
     public let tertiary: Color
     public let quaternary: Color
+    
+    public var hashValue: Int { return name.hashValue }
+    
+    public static func == (lhs: ColorPalette, rhs: ColorPalette) -> Bool {
+        
+        return lhs.name == rhs.name
+    }
 }
 
 public class ColorPalettes {
     
-    static var shared = ColorPalettes()!
+    public static var shared = ColorPalettes()!
     
     let colorPalettes: [ColorPalette]
+    
+    public var all: [ColorPalette] { return colorPalettes }
     
     init?() {
         
@@ -46,7 +55,7 @@ public class ColorPalettes {
 
 extension ColorPalettes {
     
-    func palette(named: String) -> ColorPalette? {
+    public func palette(named: String) -> ColorPalette? {
         
         return colorPalettes.first { $0.name == named }
     }

@@ -12,11 +12,21 @@ public enum FoliageType: Int, Codable {
     case shrub
     case tree
     
-    static var allCases: [FoliageType] {
+    public static var allCases: [FoliageType] {
         
         return [ .bush,
                  .shrub,
                  .tree
         ]
+    }
+    
+    public var name: String {
+        
+        switch self {
+            
+        case .bush: return "Bush"
+        case .shrub: return "Shrub"
+        case .tree: return "Tree"
+        }
     }
 }

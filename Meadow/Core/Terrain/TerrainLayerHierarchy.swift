@@ -10,7 +10,7 @@ extension TerrainLayer {
     
     public struct Hierarchy {
         
-        var upper: TerrainLayer?
-        var lower: TerrainLayer?
+        public var upper: TerrainLayer?
+        public var lower: TerrainLayer?
     }
 }

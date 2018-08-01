@@ -9,6 +9,20 @@
 public enum WaterType: Int, Codable {
     
     case water
+    
+    public static var allCases: [WaterType] {
+        
+        return [ .water
+        ]
+    }
+    
+    public var name: String {
+        
+        switch self {
+            
+        case .water: return "Water"
+        }
+    }
 }
 
 extension WaterType {
@@ -16,5 +30,13 @@ extension WaterType {
     var meshProvider: WaterNodeMeshProvider {
         
         return WaterNodeMeshProvider()
+    }
+}
+
+extension WaterType {
+    
+    public var colorPalette: ColorPalette? {
+        
+        return ColorPalettes.shared.palette(named: name)
     }
 }

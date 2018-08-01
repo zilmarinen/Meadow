@@ -11,10 +11,19 @@ public enum TunnelType: Int, Codable {
     case concrete
     case glass
     
-    static var allCases: [TunnelType] {
+    public static var allCases: [TunnelType] {
         
         return [ .concrete,
                  .glass
         ]
+    }
+    
+    public var name: String {
+        
+        switch self {
+            
+        case .concrete: return "Concrete"
+        case .glass: return "Glass"
+        }
     }
 }

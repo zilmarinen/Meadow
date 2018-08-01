@@ -12,11 +12,29 @@ public enum FootpathType: Int, Codable {
     case dirt
     case tarmac
     
-    static var allCases: [FootpathType] {
+    public static var allCases: [FootpathType] {
         
         return [ .asphalt,
                  .dirt,
                  .tarmac
         ]
+    }
+    
+    public var name: String {
+        
+        switch self {
+            
+        case .asphalt: return "Asphalt"
+        case .dirt: return "Dirt"
+        case .tarmac: return "Tarmac"
+        }
+    }
+}
+
+extension FootpathType {
+    
+    public var colorPalette: ColorPalette? {
+        
+        return ColorPalettes.shared.palette(named: name)
     }
 }

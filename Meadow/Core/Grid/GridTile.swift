@@ -16,7 +16,7 @@ public class GridTile<Node: GridNode>: GridChild, GridParent {
     
     public var children: [Node] = []
     
-    public var name: String?
+    public var name: String? { return "Tile" }
     
     public var isHidden: Bool = false
     

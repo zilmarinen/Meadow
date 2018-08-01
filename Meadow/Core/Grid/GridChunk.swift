@@ -27,6 +27,8 @@ public class GridChunk<Tile: GridTile<Node>, Node: GridNode>: SCNNode, GridChild
         self.volume = volume
         
         super.init()
+        
+        self.name = "Chunk"
     }
     
     public required init?(coder aDecoder: NSCoder) {

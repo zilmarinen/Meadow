@@ -47,8 +47,9 @@ public class AreaNode: GridNode {
         
         case name
         case edges
-        case internalAreaType
         case externalAreaType
+        case internalAreaType
+        case floorColorPalette
     }
     
     public override func encode(to encoder: Encoder) throws {
@@ -59,14 +60,15 @@ public class AreaNode: GridNode {
         
         try container.encode(self.name, forKey: .name)
         try container.encode(self.edges, forKey: .edges)
-        try container.encode(self.internalAreaType, forKey: .internalAreaType)
         try container.encode(self.externalAreaType, forKey: .externalAreaType)
+        try container.encode(self.internalAreaType, forKey: .internalAreaType)
+        try container.encode(self.floorColorPalette?.name, forKey: .floorColorPalette)
     }
 }
 
 extension AreaNode {
     
-    public func get(edge: GridEdge) -> Edge? {
+    public func find(edge: GridEdge) -> Edge? {
         
         switch edge {
             
@@ -85,6 +87,18 @@ extension AreaNode {
         case .east: edges.east = edge
         case .south: edges.south = edge
         case .west: edges.west = edge
+        }
+        
+        becomeDirty()
+    }
+    
+    public func remove(edge: GridEdge) {
+        
+        switch edge {
+        case .north: edges.north = nil
+        case .east: edges.east = nil
+        case .south: edges.south = nil
+        case .west: edges.west = nil
         }
         
         becomeDirty()

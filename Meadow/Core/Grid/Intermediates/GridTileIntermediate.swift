@@ -12,5 +12,5 @@ public struct GridTileIntermediate<NodeIntermediate: GridNodeIntermediate>: Deco
     
     let volume: Volume
     
-    let nodes: [NodeIntermediate]
+    let children: [NodeIntermediate]
 }

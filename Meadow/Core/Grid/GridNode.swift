@@ -12,7 +12,16 @@ public class GridNode: GridChild, GridMeshProvider, GridSoilable, Encodable {
     
     public var name: String? { return "Node" }
     
-    public var isHidden: Bool = false
+    public var isHidden: Bool = false {
+        
+        didSet {
+            
+            if isHidden != oldValue {
+                
+                becomeDirty()
+            }
+        }
+    }
     
     public let volume: Volume
     

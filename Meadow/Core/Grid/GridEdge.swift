@@ -29,7 +29,7 @@ public enum GridEdge: Int, Codable {
 
 extension GridEdge {
 
-    static var Edges: [GridEdge] { return [
+    public static var Edges: [GridEdge] { return [
     
         .north,
         .east,

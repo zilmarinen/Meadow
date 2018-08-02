@@ -8,8 +8,24 @@
 
 import Foundation
 
-public class Water: Grid<WaterChunk, WaterTile, WaterNode> {
+public class Water: Grid<WaterChunk, WaterTile, WaterNode>, GridIntermediateLoader {
     
+    public typealias IntermediateType = WaterNodeIntermediate
+}
+
+extension Water {
+    
+    public func load(nodes: [WaterNodeIntermediate]) {
+        
+        nodes.forEach { intermediate in
+            
+            if let node = add(node: intermediate.volume.coordinate) {
+                
+                node.waterLevel = intermediate.waterLevel
+                node.waterType = ColorPalettes.shared.palette(named: intermediate.waterType)
+            }
+        }
+    }
 }
 
 extension Water {

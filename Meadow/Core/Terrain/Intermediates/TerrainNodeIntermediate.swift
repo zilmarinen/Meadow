@@ -8,21 +8,19 @@
 
 public class TerrainNodeIntermediate: GridNodeIntermediate {
     
-    let layers: [TerrainLayerIntermediate]
+    let children: [TerrainLayerIntermediate]
     
     enum CodingKeys: CodingKey {
         
-        case layers
+        case children
     }
     
     public required init(from decoder: Decoder) throws {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        layers = try container.decode([TerrainLayerIntermediate].self, forKey: .layers)
+        children = try container.decode([TerrainLayerIntermediate].self, forKey: .children)
         
-        let superDecoder = try container.superDecoder()
-        
-        try super.init(from: superDecoder)
+        try super.init(from: decoder)
     }
 }

@@ -10,5 +10,5 @@ public struct GridIntermediate<NodeIntermediate: GridNodeIntermediate>: Decodabl
     
     let name: String?
     
-    let chunks: [GridChunkIntermediate<NodeIntermediate>]
+    let children: [GridChunkIntermediate<NodeIntermediate>]
 }

@@ -14,15 +14,35 @@ extension AreaNode {
         
         public let edgeType: AreaNodeEdgeType
         
-        public let colorPalette: ColorPalette
+        public let externalColorPalette: ColorPalette
+        public let internalColorPalette: ColorPalette
         
-        public init(edge: GridEdge, edgeType: AreaNodeEdgeType, colorPalette: ColorPalette) {
+        public init(edge: GridEdge, edgeType: AreaNodeEdgeType, externalColorPalette: ColorPalette, internalColorPalette: ColorPalette) {
             
             self.edge = edge
             
             self.edgeType = edgeType
             
-            self.colorPalette = colorPalette
+            self.externalColorPalette = externalColorPalette
+            self.internalColorPalette = internalColorPalette
+        }
+        
+        enum CodingKeys: CodingKey {
+            
+            case edge
+            case edgeType
+            case externalColorPalette
+            case internalColorPalette
+        }
+        
+        public func encode(to encoder: Encoder) throws {
+            
+            var container = encoder.container(keyedBy: CodingKeys.self)
+            
+            try container.encode(self.edge, forKey: .edge)
+            try container.encode(self.edgeType, forKey: .edgeType)
+            try container.encode(self.externalColorPalette.name, forKey: .externalColorPalette)
+            try container.encode(self.internalColorPalette.name, forKey: .internalColorPalette)
         }
     }
     

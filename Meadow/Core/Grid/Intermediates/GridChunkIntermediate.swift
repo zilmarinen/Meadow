@@ -12,5 +12,5 @@ public struct GridChunkIntermediate<NodeIntermediate: GridNodeIntermediate>: Dec
     
     let volume: Volume
     
-    let tiles: [GridTileIntermediate<NodeIntermediate>]
+    let children: [GridTileIntermediate<NodeIntermediate>]
 }

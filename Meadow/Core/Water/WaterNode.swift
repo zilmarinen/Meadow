@@ -54,7 +54,7 @@ public class WaterNode: GridNode {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         try container.encode(self.waterLevel, forKey: .waterLevel)
-        try container.encode(self.waterType, forKey: .waterType)
+        try container.encode(self.waterType?.name, forKey: .waterType)
     }
 }
 

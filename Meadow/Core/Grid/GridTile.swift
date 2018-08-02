@@ -18,7 +18,16 @@ public class GridTile<Node: GridNode>: GridChild, GridParent {
     
     public var name: String? { return "Tile" }
     
-    public var isHidden: Bool = false
+    public var isHidden: Bool = false {
+        
+        didSet {
+            
+            if isHidden != oldValue {
+                
+                becomeDirty()
+            }
+        }
+    }
     
     public let volume: Volume
     

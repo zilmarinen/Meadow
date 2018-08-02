@@ -1,37 +1,58 @@
 [
 	{
 		"name": "Grass",
-		"primary": "absoluteZero",
-		"secondary": "alienArmpit",
-		"tertiary": "alloyOrange",
-		"quaternary": "almond"
+		"primary": "tropicalRainForest",
+		"secondary": "wildWatermelon",
+		"tertiary": "wintergreenDream",
+		"quaternary": "yellowGreen"
 	},
     {
 		"name": "Sand",
-		"primary": "absoluteZero",
-		"secondary": "alienArmpit",
-		"tertiary": "alloyOrange",
-		"quaternary": "almond"
+		"primary": "desertSand",
+		"secondary": "orangeSoda",
+		"tertiary": "yellowOrange",
+		"quaternary": "yellowSunshine"
 	},
     {
 		"name": "Bedrock",
-		"primary": "absoluteZero",
-		"secondary": "alienArmpit",
-		"tertiary": "alloyOrange",
-		"quaternary": "almond"
+		"primary": "graniteGray",
+		"secondary": "lapisLazuli",
+		"tertiary": "lumber",
+		"quaternary": "mysticMaroon"
 	},
     {
 		"name": "Concrete",
-		"primary": "absoluteZero",
-		"secondary": "alienArmpit",
-		"tertiary": "alloyOrange",
-		"quaternary": "almond"
+		"primary": "turquoisePearl",
+		"secondary": "sasquatchSocks",
+		"tertiary": "quickSilver",
+		"quaternary": "pixiePowder"
 	},
     {
 		"name": "Water",
-		"primary": "absoluteZero",
-		"secondary": "alienArmpit",
-		"tertiary": "alloyOrange",
-		"quaternary": "almond"
+		"primary": "shadowBlue",
+		"secondary": "steelBlue",
+		"tertiary": "tealBlue",
+		"quaternary": "winterWizard"
+	},
+    {
+		"name": "Asphalt",
+		"primary": "graniteGray",
+		"secondary": "gray",
+		"tertiary": "onyx",
+		"quaternary": "blueGray"
+	},
+    {
+		"name": "Dirt",
+		"primary": "graniteGray",
+		"secondary": "gray",
+		"tertiary": "onyx",
+		"quaternary": "blueGray"
+	},
+    {
+		"name": "Tarmac",
+		"primary": "graniteGray",
+		"secondary": "gray",
+		"tertiary": "onyx",
+		"quaternary": "blueGray"
 	}
 ]

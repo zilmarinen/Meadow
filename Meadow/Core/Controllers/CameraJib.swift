@@ -94,8 +94,11 @@ extension CameraJib {
         
         let speed =  MDWFloat(deltaTime)
         
-        position = SCNVector3.lerp(from: position, to: targetPosition, factor: speed)
+        //position = SCNVector3.lerp(from: position, to: targetPosition, factor: speed)
         
-        orientation = SCNQuaternion.slerp(from: orientation, to: targetOrientation, factor: speed)
+        //orientation = SCNQuaternion.slerp(from: orientation, to: targetOrientation, factor: speed)
+        
+        position = targetPosition
+        orientation = targetOrientation
     }
 }

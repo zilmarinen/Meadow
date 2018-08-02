@@ -12,7 +12,16 @@ public class TerrainLayer: GridChild {
     
     public var name: String? { return "Layer" }
     
-    public var isHidden: Bool = false
+    public var isHidden: Bool = false {
+        
+        didSet {
+            
+            if isHidden != oldValue {
+                
+                becomeDirty()
+            }
+        }
+    }
     
     public var volume: Volume {
         
@@ -82,7 +91,9 @@ extension TerrainLayer: GridPolyhedronProvider {
             return lowerLayer.polyhedron.upperPolytope
         }
         
-        return Polytope(x: MDWFloat(coordinate.x), corners: [World.floor, World.floor, World.floor, World.floor], z: MDWFloat(coordinate.z))!
+        let y = World.floor
+        
+        return Polytope(x: MDWFloat(coordinate.x), corners: [y, y, y, y], z: MDWFloat(coordinate.z))!
     }
     
     public var polyhedron: Polyhedron { return Polyhedron(upperPolytope: upperPolytope, lowerPolytope: lowerPolytope) }

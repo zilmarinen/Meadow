@@ -26,8 +26,6 @@ public class WaterNodeIntermediate: GridNodeIntermediate {
         
         waterType = try container.decode(String.self, forKey: .waterType)
         
-        let superDecoder = try container.superDecoder()
-        
-        try super.init(from: superDecoder)
+        try super.init(from: decoder)
     }
 }

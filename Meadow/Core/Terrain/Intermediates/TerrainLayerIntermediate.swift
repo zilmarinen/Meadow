@@ -12,5 +12,5 @@ public struct TerrainLayerIntermediate: Decodable {
     
     let corners: [Int]
     
-    let edges: [TerrainLayerEdgeIntermediate]
+    let edges: TerrainLayerEdgesIntermediate
 }

@@ -12,3 +12,11 @@ public struct TerrainLayerEdgeIntermediate: Codable {
     
     let terrainType: String
 }
+
+public struct TerrainLayerEdgesIntermediate: Codable {
+    
+    let north: TerrainLayerEdgeIntermediate
+    let east: TerrainLayerEdgeIntermediate
+    let south: TerrainLayerEdgeIntermediate
+    let west: TerrainLayerEdgeIntermediate
+}

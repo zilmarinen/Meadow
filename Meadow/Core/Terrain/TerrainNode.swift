@@ -8,9 +8,10 @@
 
 import SceneKit
 
-public class TerrainNode<Layer: TerrainLayer>: GridNode, GridParent {
+public class TerrainNode<Layer: TerrainLayer>: GridNode, GridParent, GridIntermediateLoader {
     
     public typealias ChildType = Layer
+    public typealias IntermediateType = TerrainLayerIntermediate
     
     public var children: [Layer] = []
     
@@ -18,7 +19,7 @@ public class TerrainNode<Layer: TerrainLayer>: GridNode, GridParent {
     
     enum CodingKeys: CodingKey {
         
-        case layers
+        case children
     }
     
     public override func encode(to encoder: Encoder) throws {
@@ -27,7 +28,7 @@ public class TerrainNode<Layer: TerrainLayer>: GridNode, GridParent {
         
         var container = encoder.container(keyedBy: CodingKeys.self)
         
-        try container.encode(self.children, forKey: .layers)
+        try container.encode(self.children, forKey: .children)
     }
     
     public override func becomeDirty() {
@@ -98,7 +99,7 @@ public class TerrainNode<Layer: TerrainLayer>: GridNode, GridParent {
                         let v1 = polyhedron.upperPolytope.vertices[corners.last!.rawValue]
                         let v2 = polyhedron.upperPolytope.center
                         
-                        meshFaces.append(meshProvider.terrainLayer(apex: [v0, v1, v2], color: apexColor))
+                        meshFaces.append(meshProvider.terrainLayer(apex: [v0, v2, v1], color: apexColor))
                     }
                     
                     let divisions = (stencils[edge] != nil ? Polyhedron.stencil(polyhedrons: stencils[edge]!, against: polyhedron, edge: edge) : [polyhedron])
@@ -119,7 +120,7 @@ public class TerrainNode<Layer: TerrainLayer>: GridNode, GridParent {
                             
                             let vertices = [v0, v1, v2, v3]
                             
-                            meshFaces.append(contentsOf: meshProvider.terrainLayer(crown: corners, acuteCorner: acuteCorner, vertices: vertices, normal: edgeNormal, color: edgeColor))
+                            meshFaces.append(contentsOf: meshProvider.terrainLayer(crown: corners, acuteCorner: acuteCorner, vertices: vertices, normal: edgeNormal, color: apexColor))
                             meshFaces.append(contentsOf: meshProvider.terrainLayer(throne: corners, acuteCorner: acuteCorner, vertices: vertices, normal: edgeNormal, color: edgeColor))
                         }
                     }
@@ -128,6 +129,16 @@ public class TerrainNode<Layer: TerrainLayer>: GridNode, GridParent {
         }
         
         return Mesh(faces: meshFaces)
+    }
+    
+    
+}
+
+extension TerrainNode {
+    
+    public func load(nodes: [TerrainLayerIntermediate]) {
+        
+        //
     }
 }
 

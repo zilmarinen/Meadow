@@ -8,8 +8,23 @@
 
 import Foundation
 
-public class Terrain: Grid<TerrainChunk, TerrainTile, TerrainNode<TerrainLayer>> {
+public class Terrain: Grid<TerrainChunk, TerrainTile, TerrainNode<TerrainLayer>>, GridIntermediateLoader {
     
+    public typealias IntermediateType = TerrainNodeIntermediate
+}
+
+extension Terrain {
+    
+    public func load(nodes: [TerrainNodeIntermediate]) {
+        
+        nodes.forEach { intermediate in
+            
+            if let node = add(node: intermediate.volume.coordinate) {
+                
+                node.load(nodes: intermediate.children)
+            }
+        }
+    }
 }
 
 extension Terrain {

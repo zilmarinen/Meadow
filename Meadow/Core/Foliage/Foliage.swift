@@ -8,8 +8,17 @@
 
 import Foundation
 
-public class Foliage: Grid<FoliageChunk, FoliageTile, FoliageNode> {
+public class Foliage: Grid<FoliageChunk, FoliageTile, FoliageNode>, GridIntermediateLoader {
     
+    public typealias IntermediateType = FoliageNodeIntermediate
+}
+
+extension Foliage {
+    
+    public func load(nodes: [FoliageNodeIntermediate]) {
+        
+        //
+    }
 }
 
 extension Foliage {

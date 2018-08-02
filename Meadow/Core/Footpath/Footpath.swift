@@ -8,14 +8,33 @@
 
 import Foundation
 
-public class Footpath: Grid<FootpathChunk, FootpathTile, FootpathNode> {
+public class Footpath: Grid<FootpathChunk, FootpathTile, FootpathNode>, GridIntermediateLoader {
     
+    public typealias IntermediateType = FootpathNodeIntermediate
+}
+
+extension Footpath {
+    
+    public func load(nodes: [FootpathNodeIntermediate]) {
+        
+        nodes.forEach { intermediate in
+            
+            if let node = add(node: intermediate.volume.coordinate) {
+                
+                //
+            }
+        }
+    }
 }
 
 extension Footpath {
     
     public func add(node coordinate: Coordinate) -> FootpathNode? {
         
-        return add(node: FootpathTile.fixedVolume(coordinate))
+        guard let node = add(node: FootpathTile.fixedVolume(coordinate)) else { return nil }
+        
+        node.footpathType = .asphalt
+     
+        return node
     }
 }

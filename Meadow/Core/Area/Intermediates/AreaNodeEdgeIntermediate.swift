@@ -10,5 +10,16 @@ public struct AreaNodeEdgeIntermediate: Codable {
     
     let edge: GridEdge
     
-    let edgeType: String
+    let edgeType: AreaNodeEdgeType
+    
+    let externalColorPalette: String
+    let internalColorPalette: String
+}
+
+public struct AreaNodeEdgesIntermediate: Codable {
+    
+    let north: AreaNodeEdgeIntermediate?
+    let east: AreaNodeEdgeIntermediate?
+    let south: AreaNodeEdgeIntermediate?
+    let west: AreaNodeEdgeIntermediate?
 }

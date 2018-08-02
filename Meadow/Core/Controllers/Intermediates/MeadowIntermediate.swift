@@ -8,9 +8,9 @@
 
 public struct MeadowIntermediate: Decodable {
     
-    let areas: GridIntermediate<AreaNodeIntermediate>
-    let foliage: GridIntermediate<FoliageNodeIntermediate>
-    let footpaths: GridIntermediate<FootpathNodeIntermediate>
-    let terrain: GridIntermediate<TerrainNodeIntermediate>
-    let water: GridIntermediate<WaterNodeIntermediate>
+    let areas: GridIntermediate<Area.IntermediateType>
+    let foliage: GridIntermediate<Foliage.IntermediateType>
+    let footpaths: GridIntermediate<Footpath.IntermediateType>
+    let terrain: GridIntermediate<Terrain.IntermediateType>
+    let water: GridIntermediate<Water.IntermediateType>
 }

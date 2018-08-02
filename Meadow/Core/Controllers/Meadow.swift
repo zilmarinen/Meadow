@@ -29,6 +29,8 @@ public class Meadow: SCNScene, GridObserver, SceneGraphParent {
         
         super.init()
         
+        self.observer = observer
+        
         areas.observer = self
         areas.name = "Areas"
         
@@ -114,6 +116,24 @@ extension Meadow: SCNSceneRendererDelegate {
         water.update(deltaTime: delta)
 
         self.lastUpdate = time
+    }
+}
+
+extension Meadow {
+    
+    public func load(intermediate: MeadowIntermediate) {
+        
+        let areaNodes = intermediate.areas.children.flatMap { $0.children.flatMap { $0.children } }
+        let foliageNodes = intermediate.foliage.children.flatMap { $0.children.flatMap { $0.children } }
+        let footpathNodes = intermediate.footpaths.children.flatMap { $0.children.flatMap { $0.children } }
+        let terrainNodes = intermediate.terrain.children.flatMap { $0.children.flatMap { $0.children } }
+        let waterNodes = intermediate.water.children.flatMap { $0.children.flatMap { $0.children } }
+        
+        terrain.load(nodes: terrainNodes)
+        areas.load(nodes: areaNodes)
+        foliage.load(nodes: foliageNodes)
+        footpaths.load(nodes: footpathNodes)
+        water.load(nodes: waterNodes)
     }
 }
 

@@ -14,7 +14,7 @@ public class Grid<Chunk: GridChunk<Tile, Node>, Tile: GridTile<Node>, Node: Grid
     
     public var children: [Chunk] { return childNodes as! [Chunk] }
     
-    var isDirty: Bool = true
+    var isDirty: Bool = false
     
     var observer: GridObserver?
 }
@@ -102,6 +102,8 @@ extension Grid {
         if chunk.parent == nil {
             
             addChildNode(chunk)
+            
+            becomeDirty()
         }
         
         GridEdge.Edges.forEach { edge in

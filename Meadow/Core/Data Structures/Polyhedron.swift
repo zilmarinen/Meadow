@@ -25,34 +25,46 @@ extension Polyhedron: Equatable {
 
 extension Polyhedron {
     
+    var volume: Volume {
+        
+        let base = Axis.Y(y: lowerPolytope.base)
+        let peak = Axis.Y(y: upperPolytope.peak)
+        
+        let center = lowerPolytope.center
+        
+        let coordinate = Coordinate(x: Int(center.x), y: base, z: Int(center.z))
+        
+        let size = Size(width: 1, height: (peak - base), depth: 1)
+        
+        return Volume(coordinate: coordinate, size: size)
+    }
+}
+
+extension Polyhedron {
+    
     enum Elevation {
         
         case above
         case below
+        case enclosing
         case equal
         case intersecting
     }
     
     func elevation(referencing polyhedron: Polyhedron) -> Elevation {
         
-        if polyhedron.upperPolytope == upperPolytope && polyhedron.lowerPolytope == lowerPolytope {
-         
-            return .equal
-        }
+        let e0 = upperPolytope.elevation(referencing: polyhedron.lowerPolytope)
+        let e1 = lowerPolytope.elevation(referencing: polyhedron.upperPolytope)
         
-        let lowerElevation = lowerPolytope.elevation(referencing: polyhedron.upperPolytope)
+        if e0 == .below || e0 == .equal { return .below }
+        if e1 == .above || e1 == .equal { return .above }
         
-        if lowerElevation == .above || lowerElevation == .equal {
-            
-            return .above
-        }
+        let e2 = upperPolytope.elevation(referencing: polyhedron.upperPolytope)
+        let e3 = lowerPolytope.elevation(referencing: polyhedron.lowerPolytope)
         
-        let upperElevation = upperPolytope.elevation(referencing: polyhedron.lowerPolytope)
+        if e2 == .equal && e3 == .equal { return .equal }
         
-        if upperElevation == .below || upperElevation == .equal {
-            
-            return .below
-        }
+        if (e2 == .above || e2 == .equal) && (e3 == .below || e3 == .equal) { return .enclosing }
         
         return .intersecting
     }
@@ -74,11 +86,19 @@ extension Polyhedron {
     
     static func subtract(polyhedron: Polyhedron, from: Polyhedron) -> [Polyhedron]? {
         
-        switch polyhedron.elevation(referencing: from) {
+        switch from.elevation(referencing: polyhedron) {
             
-        case .intersecting:
+        case .above,
+             .below:
             
-            if polyhedron.upperPolytope.elevation(referencing: from.upperPolytope) == .below && polyhedron.lowerPolytope.elevation(referencing: from.lowerPolytope) == .above {
+            return [from]
+            
+        case .enclosing:
+            
+            let e0 = polyhedron.upperPolytope.elevation(referencing: from.upperPolytope)
+            let e1 = polyhedron.lowerPolytope.elevation(referencing: from.lowerPolytope)
+            
+            if e0 == .below && e1 == .above {
                 
                 let upperPolytope = Polytope.project(project: polyhedron.upperPolytope, against: from.upperPolytope)
                 let lowerPolytope = Polytope.project(project: polyhedron.lowerPolytope, against: from.lowerPolytope)
@@ -87,29 +107,25 @@ extension Polyhedron {
                          Polyhedron(upperPolytope: lowerPolytope, lowerPolytope: from.lowerPolytope) ]
             }
             
-            switch polyhedron.upperPolytope.elevation(referencing: from.upperPolytope) {
-                
-            case .above,
-                 .equal:
-                
-                let upperPolytope = Polytope.project(project: polyhedron.lowerPolytope, against: from.lowerPolytope)
-                
-                return [ Polyhedron(upperPolytope: upperPolytope, lowerPolytope: from.lowerPolytope) ]
-                
-            default:
-                
-                if polyhedron.upperPolytope.elevation(referencing: from.lowerPolytope) == .above {
-                
-                    let lowerPolytope = Polytope.project(project: polyhedron.upperPolytope, against: from.upperPolytope)
-                    
-                    return [ Polyhedron(upperPolytope: from.upperPolytope, lowerPolytope: lowerPolytope) ]
-                }
-            }
+            let upperPolytope = Polytope.project(project: (e0 == .above || e0 == .equal ? polyhedron.lowerPolytope : from.upperPolytope), against: from.upperPolytope)
+            let lowerPolytope = Polytope.project(project: (e1 == .below || e1 == .equal ? polyhedron.upperPolytope : from.lowerPolytope), against: from.lowerPolytope)
             
-        default: break
+            return [ Polyhedron(upperPolytope: upperPolytope, lowerPolytope: lowerPolytope) ]
+            
+        case .intersecting:
+            
+            guard polyhedron.elevation(referencing: from) != .enclosing else { return nil }
+            
+            let e0 = polyhedron.upperPolytope.elevation(referencing: from.upperPolytope)
+            let e1 = polyhedron.lowerPolytope.elevation(referencing: from.lowerPolytope)
+            
+            let upperPolytope = Polytope.project(project: (e0 == .above || e0 == .equal ? polyhedron.lowerPolytope : from.upperPolytope), against: from.upperPolytope)
+            let lowerPolytope = Polytope.project(project: (e1 == .below || e1 == .equal ? polyhedron.upperPolytope : from.lowerPolytope), against: from.lowerPolytope)
+            
+            return [ Polyhedron(upperPolytope: upperPolytope, lowerPolytope: lowerPolytope) ]
+            
+        default: return nil
         }
-        
-        return nil
     }
     
     static func subtract(polyhedrons: [Polyhedron], from: Polyhedron) -> [Polyhedron] {
@@ -125,10 +141,6 @@ extension Polyhedron {
                 if let result = subtract(polyhedron: polyhedron, from: division) {
                     
                     remainder.append(contentsOf: result)
-                }
-                else {
-                    
-                    remainder.append(division)
                 }
             }
             

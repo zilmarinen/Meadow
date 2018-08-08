@@ -31,7 +31,7 @@ public class GridTile<Node: GridNode>: GridChild, GridParent {
     
     public let volume: Volume
     
-    var isDirty: Bool = true
+    var isDirty: Bool = false
     
     public required init(observer: GridObserver, volume: Volume) {
         
@@ -48,6 +48,8 @@ extension GridTile: GridSoilable {
         if !isDirty {
             
             isDirty = true
+            
+            observer?.child(didBecomeDirty: self)
         }
     }
     

@@ -21,7 +21,8 @@ extension Footpath {
             
             if let node = add(node: intermediate.volume.coordinate) {
                 
-                //
+                node.footpathType = FootpathType(rawValue: intermediate.footpathType)
+                node.slope = intermediate.slope
             }
         }
     }
@@ -31,7 +32,7 @@ extension Footpath {
     
     public func add(node coordinate: Coordinate) -> FootpathNode? {
         
-        guard let node = add(node: FootpathTile.fixedVolume(coordinate)) else { return nil }
+        guard let node = add(node: FootpathNode.fixedVolume(coordinate)) else { return nil }
         
         node.footpathType = .asphalt
      

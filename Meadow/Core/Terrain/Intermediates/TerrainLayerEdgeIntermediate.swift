@@ -10,7 +10,7 @@ public struct TerrainLayerEdgeIntermediate: Codable {
     
     let edge: GridEdge
     
-    let terrainType: String
+    let terrainType: Int
 }
 
 public struct TerrainLayerEdgesIntermediate: Codable {

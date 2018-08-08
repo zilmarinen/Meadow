@@ -18,7 +18,7 @@ public class GridChunk<Tile: GridTile<Node>, Node: GridNode>: SCNNode, GridChild
     
     public let volume: Volume
     
-    var isDirty: Bool = true
+    var isDirty: Bool = false
     
     public required init(observer: GridObserver, volume: Volume) {
         

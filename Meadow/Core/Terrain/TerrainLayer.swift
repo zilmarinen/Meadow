@@ -25,15 +25,12 @@ public class TerrainLayer: GridChild {
     
     public var volume: Volume {
         
-        let base = Axis.Y(y: polyhedron.lowerPolytope.base)
-        let peak = Axis.Y(y: polyhedron.upperPolytope.peak)
-        
-        return Volume(coordinate: Coordinate(x: coordinate.x, y: base, z: coordinate.z), size: Size(width: 1, height: (peak - base), depth: 1))
+        return polyhedron.volume
     }
     
     var edges: Edges
     
-    var isDirty: Bool = true
+    var isDirty: Bool = false
     
     let coordinate: Coordinate
     
@@ -141,6 +138,14 @@ extension TerrainLayer {
             becomeDirty()
         }
     }
+    
+    public func set(height: Int) {
+        
+        set(height: height, corner: .northWest)
+        set(height: height, corner: .northEast)
+        set(height: height, corner: .southEast)
+        set(height: height, corner: .southWest)
+    }
 }
 
 extension TerrainLayer {
@@ -169,6 +174,14 @@ extension TerrainLayer {
         }
         
         becomeDirty()
+    }
+    
+    public func set(terrainType: TerrainType) {
+        
+        set(terrainType: terrainType, edge: .north)
+        set(terrainType: terrainType, edge: .east)
+        set(terrainType: terrainType, edge: .south)
+        set(terrainType: terrainType, edge: .west)
     }
 }
 

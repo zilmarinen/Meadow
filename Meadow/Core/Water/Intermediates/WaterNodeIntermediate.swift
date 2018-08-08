@@ -10,7 +10,7 @@ public class WaterNodeIntermediate: GridNodeIntermediate {
     
     let waterLevel: Int
     
-    let waterType: String
+    let waterType: Int
     
     enum CodingKeys: CodingKey {
         
@@ -24,7 +24,7 @@ public class WaterNodeIntermediate: GridNodeIntermediate {
         
         waterLevel = try container.decode(Int.self, forKey: .waterLevel)
         
-        waterType = try container.decode(String.self, forKey: .waterType)
+        waterType = try container.decode(Int.self, forKey: .waterType)
         
         try super.init(from: decoder)
     }

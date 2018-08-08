@@ -16,7 +16,7 @@ class TerrainLayerTests: XCTestCase {
         
         super.setUp()
         
-        meadow = Meadow()
+        meadow = Meadow(observer: nil)
     }
     
     func testTerrainLayerAddition() {

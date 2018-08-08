@@ -22,7 +22,7 @@ extension Water {
             if let node = add(node: intermediate.volume.coordinate) {
                 
                 node.waterLevel = intermediate.waterLevel
-                node.waterType = ColorPalettes.shared.palette(named: intermediate.waterType)
+                node.waterType = WaterType(rawValue: intermediate.waterType)
             }
         }
     }

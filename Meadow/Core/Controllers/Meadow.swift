@@ -25,11 +25,17 @@ public class Meadow: SCNScene, GridObserver, SceneGraphParent {
     
     var lastUpdate: TimeInterval?
     
+    let terrainResolver: TerrainResolver
+    let waterResolver: WaterResolver
+    
     public init(observer: GridObserver?) {
         
-        super.init()
-        
         self.observer = observer
+        
+        self.terrainResolver = TerrainResolver(terrain: terrain, areas: areas, footpaths: footpaths)
+        self.waterResolver = WaterResolver(water: water, terrain: terrain)
+        
+        super.init()
         
         areas.observer = self
         areas.name = "Areas"
@@ -87,11 +93,22 @@ extension Meadow {
     
     public func child(didBecomeDirty child: SceneGraphChild) {
         
+        guard let child = child as? GridChild else { return }
+        
         switch type(of: child) {
+            
+        case is AreaTile.Type:
+            
+            terrainResolver.enqueue(volume: child.volume)
+            
+        case is FootpathTile.Type:
+            
+            terrainResolver.enqueue(volume: child.volume)
             
         case is TerrainLayer.Type:
             
-            print("terrain")
+            terrainResolver.enqueue(volume: child.volume)
+            waterResolver.enqueue(volume: child.volume)
             
         default: break
         }
@@ -105,6 +122,8 @@ extension Meadow: SCNSceneRendererDelegate {
     public func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
         
         let delta = time - (self.lastUpdate ?? 0)
+        
+        terrainResolver.resolve()
         
         cameraJib.update(deltaTime: delta)
         areas.update(deltaTime: delta)

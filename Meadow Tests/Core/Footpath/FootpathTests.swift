@@ -16,7 +16,7 @@ class FootpathTests: XCTestCase {
         
         super.setUp()
         
-        meadow = Meadow()
+        meadow = Meadow(observer: nil)
     }
     
     func testFootpathNodeAddition() {

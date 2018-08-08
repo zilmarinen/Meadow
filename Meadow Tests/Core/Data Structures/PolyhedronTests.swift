@@ -56,16 +56,29 @@ class PolyhedronTests: XCTestCase {
         
         let intersecting0 = Polyhedron(upperPolytope: p0, lowerPolytope: p3)
         let intersecting1 = Polyhedron(upperPolytope: p2, lowerPolytope: p5)
-        let intersecting2 = Polyhedron(upperPolytope: p2, lowerPolytope: p3)
+        
+        let enclosing0 = Polyhedron(upperPolytope: p0, lowerPolytope: p5)
+        let enclosing1 = Polyhedron(upperPolytope: p2, lowerPolytope: p3)
         
         XCTAssertEqual(reference.elevation(referencing: above), .below)
         XCTAssertEqual(reference.elevation(referencing: below), .above)
         
         XCTAssertEqual(reference.elevation(referencing: intersecting0), .intersecting)
         XCTAssertEqual(reference.elevation(referencing: intersecting1), .intersecting)
-        XCTAssertEqual(reference.elevation(referencing: intersecting2), .intersecting)
+        
+        XCTAssertEqual(reference.elevation(referencing: enclosing0), .intersecting)
+        XCTAssertEqual(reference.elevation(referencing: enclosing1), .enclosing)
         
         XCTAssertEqual(reference.elevation(referencing: reference), .equal)
+        
+        XCTAssertEqual(intersecting0.elevation(referencing: reference), .enclosing)
+        XCTAssertEqual(intersecting1.elevation(referencing: reference), .intersecting)
+        
+        XCTAssertEqual(above.elevation(referencing: reference), .above)
+        XCTAssertEqual(below.elevation(referencing: reference), .below)
+        
+        XCTAssertEqual(enclosing0.elevation(referencing: reference), .enclosing)
+        XCTAssertEqual(enclosing1.elevation(referencing: reference), .intersecting)
         
         expect.fulfill()
         
@@ -100,6 +113,8 @@ class PolyhedronTests: XCTestCase {
         let intersecting0 = Polyhedron(upperPolytope: p6, lowerPolytope: p7)
         let intersecting1 = Polyhedron(upperPolytope: p12, lowerPolytope: p13)
         
+        let enclosing = Polyhedron(upperPolytope: p2, lowerPolytope: p11)
+        
         let above = Polyhedron(upperPolytope: p8, lowerPolytope: p9)
         
         let below = Polyhedron(upperPolytope: p10, lowerPolytope: p11)
@@ -131,20 +146,35 @@ class PolyhedronTests: XCTestCase {
         
         XCTAssertNotNil(r3)
         XCTAssertEqual(r3?.count, 1)
-        XCTAssertEqual(r3?.first?.upperPolytope, reference.upperPolytope)
-        XCTAssertEqual(r3?.first?.lowerPolytope, intersecting1.upperPolytope)
+        XCTAssertEqual(r3?[0].upperPolytope, reference.upperPolytope)
+        XCTAssertEqual(r3?[0].lowerPolytope, intersecting1.upperPolytope)
         
         let r4 = Polyhedron.subtract(polyhedron: above, from: reference)
         
-        XCTAssertNil(r4)
+        XCTAssertNotNil(r4)
+        XCTAssertEqual(reference, r4?.first)
         
         let r5 = Polyhedron.subtract(polyhedron: below, from: reference)
         
-        XCTAssertNil(r5)
+        XCTAssertNotNil(r5)
+        XCTAssertEqual(reference, r5?.first)
         
         let r6 = Polyhedron.subtract(polyhedron: reference, from: reference)
         
         XCTAssertNil(r6)
+        
+        let r7 = Polyhedron.subtract(polyhedron: intersecting0, from: enclosing)
+        
+        XCTAssertNotNil(r7)
+        XCTAssertEqual(r7?.count, 2)
+        XCTAssertEqual(r7?[0].upperPolytope, enclosing.upperPolytope)
+        XCTAssertEqual(r7?[0].lowerPolytope, intersecting0.upperPolytope)
+        XCTAssertEqual(r7?[1].upperPolytope, intersecting0.lowerPolytope)
+        XCTAssertEqual(r7?[1].lowerPolytope, enclosing.lowerPolytope)
+        
+        let r8 = Polyhedron.subtract(polyhedron: enclosing, from: intersecting0)
+        
+        XCTAssertNil(r8)
         
         expect.fulfill()
         
@@ -204,7 +234,7 @@ class PolyhedronTests: XCTestCase {
         let p9 = Polytope(x: MDWFloat(Coordinate.backward.x), corners: [-6, -7, -8, -7], z: MDWFloat(Coordinate.backward.x))!
         
         let p10 = Polytope(x: MDWFloat(Coordinate.left.x), corners: [-9, -9, -9, -9], z: MDWFloat(Coordinate.left.x))!
-        let p11 = Polytope(x: MDWFloat(Coordinate.left.x), corners: [-6, -6, -7, -7], z: MDWFloat(Coordinate.left.x))!
+        let p11 = Polytope(x: MDWFloat(Coordinate.left.x), corners: [-9, -8, -8, -9], z: MDWFloat(Coordinate.left.x))!
         
         let reference = Polyhedron(upperPolytope: p1, lowerPolytope: p0)
         
@@ -261,10 +291,10 @@ class PolyhedronTests: XCTestCase {
         XCTAssertEqual(westInverted.first!.upperPolytope.vertices[1].y, Axis.Y(y: -6))
         XCTAssertEqual(westInverted.first!.upperPolytope.vertices[2].y, Axis.Y(y: -6))
         XCTAssertEqual(westInverted.first!.upperPolytope.vertices[3].y, Axis.Y(y: -6))
-        XCTAssertEqual(westInverted.first!.lowerPolytope.vertices[0].y, Axis.Y(y: -6))
-        XCTAssertEqual(westInverted.first!.lowerPolytope.vertices[1].y, Axis.Y(y: -6))
-        XCTAssertEqual(westInverted.first!.lowerPolytope.vertices[2].y, Axis.Y(y: -7))
-        XCTAssertEqual(westInverted.first!.lowerPolytope.vertices[3].y, Axis.Y(y: -7))
+        XCTAssertEqual(westInverted.first!.lowerPolytope.vertices[0].y, Axis.Y(y: -8))
+        XCTAssertEqual(westInverted.first!.lowerPolytope.vertices[1].y, Axis.Y(y: -9))
+        XCTAssertEqual(westInverted.first!.lowerPolytope.vertices[2].y, Axis.Y(y: -9))
+        XCTAssertEqual(westInverted.first!.lowerPolytope.vertices[3].y, Axis.Y(y: -8))
         XCTAssertEqual(westInverted.last!.upperPolytope.vertices[0].y, Axis.Y(y: -9))
         XCTAssertEqual(westInverted.last!.upperPolytope.vertices[1].y, Axis.Y(y: -9))
         XCTAssertEqual(westInverted.last!.upperPolytope.vertices[2].y, Axis.Y(y: -9))

@@ -31,14 +31,6 @@ public class TerrainNode<Layer: TerrainLayer>: GridNode, GridParent, GridInterme
         try container.encode(self.children, forKey: .children)
     }
     
-    public override func becomeDirty() {
-        
-        if !isDirty {
-            
-            isDirty = true
-        }
-    }
-    
     public override func clean() {
         
         if !isDirty { return }
@@ -76,9 +68,13 @@ public class TerrainNode<Layer: TerrainLayer>: GridNode, GridParent, GridInterme
         
         children.filter { !$0.isHidden }.forEach { layer in
             
+            let polyhedrons = Polyhedron.subtract(polyhedrons: intersections, from: layer.polyhedron)
+            
             GridEdge.Edges.forEach { edge in
                 
                 let corners = GridCorner.corners(edge: edge)
+    
+                let (c0, c1) = (corners.first!, corners.last!)
                 
                 let edgeNormal = GridEdge.normal(edge: edge)
                 
@@ -89,39 +85,44 @@ public class TerrainNode<Layer: TerrainLayer>: GridNode, GridParent, GridInterme
                 
                 let meshProvider = terrainType.meshProvider
                 
-                let polyhedrons = Polyhedron.subtract(polyhedrons: intersections, from: layer.polyhedron)
-                
                 polyhedrons.forEach { polyhedron in
-                 
-                    if (layer.hierarchy.upper == nil && layer.polyhedron.upperPolytope == polyhedron.upperPolytope) || layer.polyhedron.upperPolytope != polyhedron.upperPolytope {
+                    
+                    let v0 = polyhedron.upperPolytope.vertices[c0.rawValue]
+                    let v1 = polyhedron.upperPolytope.vertices[c1.rawValue]
+                    
+                    if (layer.hierarchy.upper == nil || layer.hierarchy.upper?.lowerPolytope != polyhedron.upperPolytope) {
                         
-                        let v0 = polyhedron.upperPolytope.vertices[corners.first!.rawValue]
-                        let v1 = polyhedron.upperPolytope.vertices[corners.last!.rawValue]
-                        let v2 = polyhedron.upperPolytope.center
-                        
-                        meshFaces.append(meshProvider.terrainLayer(apex: [v0, v2, v1], color: apexColor))
+                        meshFaces.append(meshProvider.terrainLayer(apex: corners, polytope: polyhedron.upperPolytope, color: apexColor))
                     }
                     
                     let divisions = (stencils[edge] != nil ? Polyhedron.stencil(polyhedrons: stencils[edge]!, against: polyhedron, edge: edge) : [polyhedron])
                     
                     divisions.forEach { division in
                         
-                        let v0 = division.upperPolytope.vertices[corners.first!.rawValue]
-                        let v1 = division.upperPolytope.vertices[corners.last!.rawValue]
-                        let v2 = division.lowerPolytope.vertices[corners.last!.rawValue]
-                        let v3 = division.lowerPolytope.vertices[corners.first!.rawValue]
+                        let v2 = division.upperPolytope.vertices[c0.rawValue]
+                        let v3 = division.upperPolytope.vertices[c1.rawValue]
+                        let v4 = division.lowerPolytope.vertices[c1.rawValue]
+                        let v5 = division.lowerPolytope.vertices[c0.rawValue]
                         
-                        let c0equal = v0.y == v3.y
-                        let c1equal = v1.y == v2.y
+                        let c0equal = Axis.Y(y: v2.y) == Axis.Y(y: v5.y)
+                        let c1equal = Axis.Y(y: v3.y) == Axis.Y(y: v4.y)
                         
-                        let acuteCorner = (c0equal ? corners.first : (c1equal ? corners.last : nil))
+                        let acuteCorner = (c0equal ? c0 : (c1equal ? c1 : nil))
                         
                         if !c0equal || !c1equal {
                             
-                            let vertices = [v0, v1, v2, v3]
+                            let p0equal = Axis.Y(y: v0.y) == Axis.Y(y: v2.y)
+                            let p1equal = Axis.Y(y: v1.y) == Axis.Y(y: v3.y)
                             
-                            meshFaces.append(contentsOf: meshProvider.terrainLayer(crown: corners, acuteCorner: acuteCorner, vertices: vertices, normal: edgeNormal, color: apexColor))
-                            meshFaces.append(contentsOf: meshProvider.terrainLayer(throne: corners, acuteCorner: acuteCorner, vertices: vertices, normal: edgeNormal, color: edgeColor))
+                            if p0equal && p1equal {
+                                
+                                meshFaces.append(contentsOf: meshProvider.terrainLayer(crown: corners, acuteCorner: acuteCorner, polyhedron: division, normal: edgeNormal, color: apexColor))
+                                meshFaces.append(contentsOf: meshProvider.terrainLayer(throne: corners, acuteCorner: acuteCorner, polyhedron: division, normal: edgeNormal, color: edgeColor))
+                            }
+                            else {
+                                
+                                meshFaces.append(contentsOf: meshProvider.terrainLayer(edge: corners, acuteCorner: acuteCorner, polyhedron: division, normal: edgeNormal, color: edgeColor))
+                            }
                         }
                     }
                 }
@@ -130,15 +131,26 @@ public class TerrainNode<Layer: TerrainLayer>: GridNode, GridParent, GridInterme
         
         return Mesh(faces: meshFaces)
     }
-    
-    
 }
 
 extension TerrainNode {
     
     public func load(nodes: [TerrainLayerIntermediate]) {
         
-        //
+        nodes.forEach { intermediate in
+            
+            if let layer = add(layer: TerrainType.bedrock) {
+                
+                let edges = [intermediate.edges.north, intermediate.edges.east, intermediate.edges.south, intermediate.edges.west]
+                
+                for index in 0..<intermediate.corners.count {
+                    
+                    layer.set(terrainType: TerrainType(rawValue: edges[index].terrainType)!, edge: edges[index].edge)
+                    
+                    layer.set(height: intermediate.corners[index], corner: GridCorner(rawValue: index)!)
+                }
+            }
+        }
     }
 }
 

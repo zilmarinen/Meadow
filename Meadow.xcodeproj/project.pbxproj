@@ -234,6 +234,14 @@
 		18A6BF3B20FA2CD3001F7EB1 /* GridResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A6BF3420FA28E6001F7EB1 /* GridResolver.swift */; };
 		18A6BF3C20FA2CD3001F7EB1 /* GridResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A6BF3420FA28E6001F7EB1 /* GridResolver.swift */; };
 		18A6BF3D20FA2CD3001F7EB1 /* GridResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A6BF3420FA28E6001F7EB1 /* GridResolver.swift */; };
+		18B6727821184D6A0077489A /* WaterResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6727721184D6A0077489A /* WaterResolver.swift */; };
+		18B6727921184DD30077489A /* WaterResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6727721184D6A0077489A /* WaterResolver.swift */; };
+		18B6727A21184DD30077489A /* WaterResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6727721184D6A0077489A /* WaterResolver.swift */; };
+		18B6727B21184DD40077489A /* WaterResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6727721184D6A0077489A /* WaterResolver.swift */; };
+		18BFB3342112FE94003388CB /* TerrainResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BFB3332112FE94003388CB /* TerrainResolver.swift */; };
+		18BFB3352112FF19003388CB /* TerrainResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BFB3332112FE94003388CB /* TerrainResolver.swift */; };
+		18BFB3362112FF19003388CB /* TerrainResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BFB3332112FE94003388CB /* TerrainResolver.swift */; };
+		18BFB3372112FF1A003388CB /* TerrainResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BFB3332112FE94003388CB /* TerrainResolver.swift */; };
 		18DBCF0D20CAC41800BFF9C9 /* SCNQuaternion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DBCF0C20CAC41800BFF9C9 /* SCNQuaternion.swift */; };
 		18DBCF0E20CAC46600BFF9C9 /* SCNQuaternion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DBCF0C20CAC41800BFF9C9 /* SCNQuaternion.swift */; };
 		18DBCF1020CAC46700BFF9C9 /* SCNQuaternion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DBCF0C20CAC41800BFF9C9 /* SCNQuaternion.swift */; };
@@ -612,6 +620,8 @@
 		18B58BA3209861D300402410 /* WaterChunk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterChunk.swift; sourceTree = "<group>"; };
 		18B58BA6209861E000402410 /* WaterTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterTile.swift; sourceTree = "<group>"; };
 		18B58BA8209861E900402410 /* WaterNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterNode.swift; sourceTree = "<group>"; };
+		18B6727721184D6A0077489A /* WaterResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterResolver.swift; sourceTree = "<group>"; };
+		18BFB3332112FE94003388CB /* TerrainResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrainResolver.swift; sourceTree = "<group>"; };
 		18DBCF0C20CAC41800BFF9C9 /* SCNQuaternion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCNQuaternion.swift; sourceTree = "<group>"; };
 		18EE510520A5892C0059829C /* Meadow+Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Meadow+Types.swift"; sourceTree = "<group>"; };
 		18EE513920A599000059829C /* SCNColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCNColor.swift; sourceTree = "<group>"; };
@@ -921,6 +931,7 @@
 				1814690A21085C4A00326342 /* TerrainMeshProvider.swift */,
 				18496C692093269C00992AF3 /* TerrainNode.swift */,
 				183830EC2105DEBF00FFA729 /* TerrainNodeIntersectionProvider.swift */,
+				18BFB3332112FE94003388CB /* TerrainResolver.swift */,
 				18496C6B209326A300992AF3 /* TerrainTile.swift */,
 				180CAA3E21022CF20026FE06 /* TerrainType.swift */,
 			);
@@ -1011,6 +1022,7 @@
 				18B58BA8209861E900402410 /* WaterNode.swift */,
 				18B58BA6209861E000402410 /* WaterTile.swift */,
 				183830BC2105C6C200FFA729 /* WaterType.swift */,
+				18B6727721184D6A0077489A /* WaterResolver.swift */,
 			);
 			path = Water;
 			sourceTree = "<group>";
@@ -1556,6 +1568,7 @@
 				18259599210B190E00F76A60 /* FootpathNodeIntermediate.swift in Sources */,
 				180CAA31210209B40026FE06 /* AreaNodeIntermediate.swift in Sources */,
 				18FF8E0C20AC29F900995462 /* CameraJib.swift in Sources */,
+				18BFB3342112FE94003388CB /* TerrainResolver.swift in Sources */,
 				18EE500920A576360059829C /* AreaChunk.swift in Sources */,
 				183830ED2105DEBF00FFA729 /* TerrainNodeIntersectionProvider.swift in Sources */,
 				18EE514920A5B6A30059829C /* SCNGeometry+Mesh.swift in Sources */,
@@ -1565,6 +1578,7 @@
 				18EE506320A576880059829C /* WaterNode.swift in Sources */,
 				18EE502D20A576600059829C /* FoliageNode.swift in Sources */,
 				18EE503620A5766C0059829C /* Grid.swift in Sources */,
+				18B6727821184D6A0077489A /* WaterResolver.swift in Sources */,
 				18EE502C20A576600059829C /* FoliageTile.swift in Sources */,
 				182595AA210B1D4F00F76A60 /* FoliageNodeIntermediate.swift in Sources */,
 				181469112108791E00326342 /* WaterNodeIntermediate.swift in Sources */,
@@ -1682,6 +1696,7 @@
 				18EE50E620A57BEE0059829C /* ScaffoldNode.swift in Sources */,
 				1814692121088E3E00326342 /* TerrainLayerEdgeIntermediate.swift in Sources */,
 				180CAA2C210205650026FE06 /* TerrainLayerIntermediate.swift in Sources */,
+				18BFB3352112FF19003388CB /* TerrainResolver.swift in Sources */,
 				18EE50C420A57BDC0059829C /* FoliageNode.swift in Sources */,
 				18EE50F020A57BF30059829C /* TerrainTile.swift in Sources */,
 				18EE50F820A57BF60059829C /* TunnelChunk.swift in Sources */,
@@ -1722,6 +1737,7 @@
 				183830D42105C73900FFA729 /* TunnelType.swift in Sources */,
 				18EE50F920A57BF60059829C /* TunnelTile.swift in Sources */,
 				18EE50FA20A57BF60059829C /* TunnelNode.swift in Sources */,
+				18B6727921184DD30077489A /* WaterResolver.swift in Sources */,
 				18EE50A220A57BC20059829C /* AreaNode.swift in Sources */,
 				188F483220CA6DED007095CF /* SCNVector4.swift in Sources */,
 				18EE50B720A57BD40059829C /* Volume.swift in Sources */,
@@ -1792,6 +1808,7 @@
 				18EE510720A5899E0059829C /* Meadow+Types.swift in Sources */,
 				18EE505D20A576830059829C /* TunnelChunk.swift in Sources */,
 				18FF8E0E20AC2A8F00995462 /* CameraJib.swift in Sources */,
+				18BFB3362112FF19003388CB /* TerrainResolver.swift in Sources */,
 				183830CC2105C72900FFA729 /* FoliageType.swift in Sources */,
 				18EE500520A576350059829C /* AreaChunk.swift in Sources */,
 				180CAA00210202F20026FE06 /* GridSoilable.swift in Sources */,
@@ -1801,6 +1818,7 @@
 				18EE505E20A576830059829C /* TunnelTile.swift in Sources */,
 				18EE501920A576540059829C /* Polyhedron.swift in Sources */,
 				18EE506720A576890059829C /* WaterNode.swift in Sources */,
+				18B6727A21184DD30077489A /* WaterResolver.swift in Sources */,
 				18259591210B04FA00F76A60 /* WaterNodeMeshProvider.swift in Sources */,
 				182595AC210B1D4F00F76A60 /* FoliageNodeIntermediate.swift in Sources */,
 				18EE502920A5765F0059829C /* FoliageNode.swift in Sources */,
@@ -1882,8 +1900,10 @@
 				180CAA05210202F80026FE06 /* GridObserver.swift in Sources */,
 				18EE50AD20A57BCC0059829C /* Meadow.swift in Sources */,
 				180CA9EA2101F89B0026FE06 /* Axis.swift in Sources */,
+				18B6727B21184DD40077489A /* WaterResolver.swift in Sources */,
 				18EE50D320A57BE60059829C /* GridCorner.swift in Sources */,
 				1825959C210B190E00F76A60 /* FootpathNodeIntermediate.swift in Sources */,
+				18BFB3372112FF1A003388CB /* TerrainResolver.swift in Sources */,
 				18FF8E0F20AC2A8F00995462 /* CameraJib.swift in Sources */,
 				180CAA22210204370026FE06 /* GridTileIntermediate.swift in Sources */,
 				18EE513C20A5994C0059829C /* SCNColor.swift in Sources */,
@@ -2014,7 +2034,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -2041,7 +2060,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -2114,7 +2132,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.script-orchard.Meadow-macOS";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -2140,7 +2157,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.script-orchard.Meadow-macOS";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -2241,6 +2257,7 @@
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -2298,6 +2315,7 @@
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 4.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};

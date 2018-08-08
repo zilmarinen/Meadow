@@ -25,7 +25,7 @@ extension TerrainLayer {
             var container = encoder.container(keyedBy: CodingKeys.self)
             
             try container.encode(edge, forKey: .edge)
-            try container.encode(terrainType.name, forKey: .terrainType)
+            try container.encode(terrainType, forKey: .terrainType)
         }
     }
     

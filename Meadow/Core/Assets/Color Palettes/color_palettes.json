@@ -2,7 +2,7 @@
 	{
 		"name": "Grass",
 		"primary": "tropicalRainForest",
-		"secondary": "wildWatermelon",
+		"secondary": "shamrock",
 		"tertiary": "wintergreenDream",
 		"quaternary": "yellowGreen"
 	},
@@ -16,9 +16,9 @@
     {
 		"name": "Bedrock",
 		"primary": "graniteGray",
-		"secondary": "lapisLazuli",
-		"tertiary": "lumber",
-		"quaternary": "mysticMaroon"
+		"secondary": "blackShadows",
+		"tertiary": "eerieBlack",
+		"quaternary": "blackCoralPearl"
 	},
     {
 		"name": "Concrete",

@@ -25,7 +25,7 @@ public class GridNode: GridChild, GridMeshProvider, GridSoilable, Encodable {
     
     public let volume: Volume
     
-    var isDirty: Bool = true
+    var isDirty: Bool = false
     
     var neighbours = Neighbours()
     

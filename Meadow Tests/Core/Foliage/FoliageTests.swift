@@ -16,7 +16,7 @@ class FoliageTests: XCTestCase {
         
         super.setUp()
         
-        meadow = Meadow()
+        meadow = Meadow(observer: nil)
     }
     
     func testFoliageNodeAddition() {

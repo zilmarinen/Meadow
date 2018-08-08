@@ -92,7 +92,7 @@ extension CameraJib {
         
         let targetOrientation = SCNQuaternion.focus(vector: targetPosition, focus: focus, up: SCNVector3.Up)
         
-        let speed =  MDWFloat(deltaTime)
+        //let speed =  MDWFloat(deltaTime)
         
         //position = SCNVector3.lerp(from: position, to: targetPosition, factor: speed)
         

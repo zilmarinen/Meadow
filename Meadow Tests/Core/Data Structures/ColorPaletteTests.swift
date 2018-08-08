@@ -14,7 +14,7 @@ class ColorPaletteTests: XCTestCase {
         
         let expect = expectation(description: "Colors and Color Palettes are loaded and can be found")
         
-        let knownColorPalette = ColorPalettes.shared.palette(named: "grass")
+        let knownColorPalette = ColorPalettes.shared.palette(named: "Grass")
         let unknownColorPalette = ColorPalettes.shared.palette(named: "unknown")
         
         XCTAssertNotNil(knownColorPalette)

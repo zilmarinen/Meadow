@@ -66,6 +66,25 @@ public class AreaNode: GridNode {
     }
 }
 
+extension AreaNode: GridPolyhedronProvider {
+    
+    var upperPolytope: Polytope {
+        
+        let y = (volume.coordinate.y + volume.size.height)
+        
+        return Polytope(x: MDWFloat(volume.coordinate.x), corners: [y, y, y, y], z: MDWFloat(volume.coordinate.z))!
+    }
+    
+    var lowerPolytope: Polytope {
+        
+        let y = volume.coordinate.y
+        
+        return Polytope(x: MDWFloat(volume.coordinate.x), corners: [y, y, y, y], z: MDWFloat(volume.coordinate.z))!
+    }
+    
+    public var polyhedron: Polyhedron { return Polyhedron(upperPolytope: upperPolytope, lowerPolytope: lowerPolytope) }
+}
+
 extension AreaNode {
     
     public func find(edge: GridEdge) -> Edge? {
@@ -107,11 +126,11 @@ extension AreaNode {
 
 extension AreaNode {
     
-    static var areaSize: Int = 6
+    static var areaHeight: Int = 6
     
     static func fixedVolume(_ coordinate: Coordinate) -> Volume {
         
-        let size = Size(width: World.tileSize, height: areaSize, depth: World.tileSize)
+        let size = Size(width: World.tileSize, height: areaHeight, depth: World.tileSize)
         
         return Volume(coordinate: coordinate, size: size)
     }

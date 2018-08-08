@@ -13,6 +13,7 @@ public protocol TerrainNodeIntersectionProvider {
     var totalIntersections: Int { get }
     
     func intersection(at index: Int) -> Polyhedron?
+    func find(intersection polyhedron: Polyhedron) -> Polyhedron?
     func add(intersection polyhedron: Polyhedron) -> Bool
     func remove(intersection polyhedron: Polyhedron) -> Bool
 }
@@ -24,5 +25,10 @@ extension TerrainNodeIntersectionProvider {
     public func intersection(at index: Int) -> Polyhedron? {
         
         return intersections[index]
+    }
+    
+    public func find(intersection polyhedron: Polyhedron) -> Polyhedron? {
+        
+        return intersections.first { $0 == polyhedron }
     }
 }

@@ -16,7 +16,7 @@ class WaterTests: XCTestCase {
         
         super.setUp()
         
-        meadow = Meadow()
+        meadow = Meadow(observer: nil)
     }
     
     func testWaterNodeAddition() {

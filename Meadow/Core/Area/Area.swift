@@ -8,196 +8,42 @@
 
 import Foundation
 
-/*!
- @class Area
- @abstract Area is a Grid type that manages the addition and removal of AreaNodes.
- */
-public class Area: Grid<AreaChunk, AreaTile, AreaNode> {
+public class Area: Grid<AreaChunk, AreaTile, AreaNode>, GridIntermediateLoader {
     
-    /*!
-     @property nodeName
-     @abstract Returns the name of the SceneGraphNode.
-     */
-    override public var nodeName: String { return "Areas" }
-    
-    /*!
-     @property surfaceTypes
-     @abstract Array of AreaSurfaceTypes loaded from disc.
-     */
-    var surfaceTypes: [AreaSurfaceType] = []
-    
-    /*!
-     @property availableSurfaceTypes
-     @abstract Returns a reference to the AreaSurfaceTypes currently loaded.
-     */
-    public var availableSurfaceTypes: [AreaSurfaceType] {
-        
-        return surfaceTypes
-    }
-    
-    /*!
-     @property materialTypes
-     @abstract Array of AreaMaterialTypes loaded from disc.
-     */
-    var materialTypes: [AreaMaterialType] = []
-    
-    /*!
-     @property availableMaterialTypes
-     @abstract Returns a reference to the AreaMaterialTypes currently loaded.
-     */
-    public var availableMaterialTypes: [AreaMaterialType] {
-        
-        return materialTypes
-    }
+    public typealias IntermediateType = AreaNodeIntermediate
 }
 
 extension Area {
     
-    /*!
-     @method load:nodes
-     @abstract Load all grid nodes from supplied data.
-     @property nodes FootpathNodeJSON struct containing grid data.
-     */
-    public func load(nodes: [AreaNodeJSON]) {
-        
-        clear()
-        
-        nodes.forEach { nodeJSON in
+    public func load(nodes: [AreaNodeIntermediate]) {
+    
+        nodes.forEach { intermediate in
             
-            guard let areaNode = add(node: nodeJSON.volume.coordinate) else { return }
-            
-            if let perimeterEdges = nodeJSON.perimeterEdges {
+            if let node = add(node: intermediate.volume.coordinate) {
                 
-                perimeterEdges.forEach { perimeterEdge in
+                node.externalAreaType = intermediate.externalAreaType
+                node.internalAreaType = intermediate.internalAreaType
+                node.floorColorPalette = ColorPalettes.shared.palette(named: intermediate.floorColorPalette)
+                
+                if let edge = intermediate.edges.north, let externalColorPalette = ColorPalettes.shared.palette(named: edge.externalColorPalette), let internalColorPalette = ColorPalettes.shared.palette(named: edge.internalColorPalette) {
                     
-                    areaNode.set(perimeterType: perimeterEdge.perimeterType, edge: perimeterEdge.edge)
+                    node.set(edge: AreaNode.Edge(edge: edge.edge, edgeType: edge.edgeType, externalColorPalette: externalColorPalette, internalColorPalette: internalColorPalette))
                 }
             }
-            
-            if let surfaceType = nodeJSON.surfaceType {
-                
-                areaNode.surfaceType = find(surfaceType: surfaceType)
-            }
-            
-            if let externalPrefabType = nodeJSON.externalPrefabType {
-                
-                areaNode.externalPrefabType = externalPrefabType
-            }
-            
-            if let internalPrefabType = nodeJSON.internalPrefabType {
-                
-                areaNode.internalPrefabType = internalPrefabType
-            }
         }
     }
 }
 
 extension Area {
     
-    /*!
-     @method add:node
-     @abstract Attempt to create and return a new grid node at the requested coordinate.
-     @param coordinate The coordinate used to define the volume the grid node should occupy.
-     */
     public func add(node coordinate: Coordinate) -> AreaNode? {
         
-        let volume = AreaNode.FixedVolume(coordinate)
+        guard let node = add(node: AreaNode.fixedVolume(coordinate)) else { return nil }
         
-        if let node = add(node: volume) {
-            
-            node.surfaceType = availableSurfaceTypes.first
-            node.externalMaterialType = availableMaterialTypes.first
-            node.internalMaterialType = availableMaterialTypes.first
-            
-            return node
-        }
+        node.externalAreaType = AreaType.brick
+        node.internalAreaType = AreaType.concrete
+        node.floorColorPalette = ColorPalettes.shared.all.first
         
-        return nil
-    }
-    
-    /*!
-     @method remove:node
-     @abstract Attempt to find and remove the specified node.
-     @param node The node to be found and removed.
-     */
-    public func remove(node: AreaNode) -> Bool {
-        
-        return false
-    }
-}
-
-extension Area {
-    
-    /*!
-     @method loadSurfaceTypes
-     @abstract Load AreaSurfaceTypes from disc.
-     */
-    func loadSurfaceTypes() {
-        
-        do {
-            
-            let path = Bundle.meadow.path(forResource: "area_surface_types", ofType: "json")!
-            
-            let jsonData = try NSData(contentsOfFile: path) as Data
-            
-            let decoder = JSONDecoder()
-            
-            surfaceTypes = try decoder.decode([AreaSurfaceType].self, from: jsonData)
-        }
-        catch {
-            
-            fatalError("Unable to load area surface types")
-        }
-    }
-    
-    /*!
-     @method find:surfaceType
-     @abstract Attempt to find and return the appropriate AreaSurfaceType with a matching name.
-     @param name The name of the AreaSurfaceType to be found and returned.
-     */
-    public func find(surfaceType name: String) -> AreaSurfaceType? {
-        
-        return surfaceTypes.first { surfaceType -> Bool in
-            
-            return surfaceType.name == name
-        }
-    }
-}
-
-extension Area {
-    
-    /*!
-     @method loadMaterialTypes
-     @abstract Load AreaMaterialTypes from disc.
-     */
-    func loadMaterialTypes() {
-        
-        do {
-            
-            let path = Bundle.meadow.path(forResource: "area_material_types", ofType: "json")!
-            
-            let jsonData = try NSData(contentsOfFile: path) as Data
-            
-            let decoder = JSONDecoder()
-            
-            materialTypes = try decoder.decode([AreaMaterialType].self, from: jsonData)
-        }
-        catch {
-            
-            fatalError("Unable to load area material types")
-        }
-    }
-    
-    /*!
-     @method find:materialType
-     @abstract Attempt to find and return the appropriate AreaMaterialType with a matching name.
-     @param name The name of the AreaMaterialType to be found and returned.
-     */
-    public func find(materialType name: String) -> AreaMaterialType? {
-        
-        return materialTypes.first { materialType -> Bool in
-            
-            return materialType.name == name
-        }
+        return node
     }
 }

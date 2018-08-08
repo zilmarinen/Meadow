@@ -2,59 +2,41 @@
 //  WaterType.swift
 //  Meadow-iOS
 //
-//  Created by Zack Brown on 05/06/2018.
+//  Created by Zack Brown on 23/07/2018.
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-/*!
- @class WaterType
- @abstract Named WaterType are used to paint WaterNodes with the appropriate ColorPalette.
- */
-public struct WaterType: Codable {
+public enum WaterType: Int, Codable {
     
-    /*!
-     @property name
-     @abstract THe unique name of the WaterType.
-     */
-    public let name: String
+    case water
     
-    /*!
-     @property colorPalette
-     @abstract The color palette used to paint the WaterNodes.
-     */
-    public let colorPalette: ColorPalette
-}
-
-extension WaterType: Hashable {
-    
-    /*!
-     @method ==
-     @abstract Determine the equality of two WaterTypes.
-     */
-    public static func == (lhs: WaterType, rhs: WaterType) -> Bool {
+    public static var allCases: [WaterType] {
         
-        return lhs.name == rhs.name
+        return [ .water
+        ]
     }
     
-    /*!
-     @property hashValue
-     @abstract Return the hash value of the WaterType.
-     */
-    public var hashValue: Int {
+    public var name: String {
         
-        return name.hashValue
+        switch self {
+            
+        case .water: return "Water"
+        }
     }
 }
 
 extension WaterType {
     
-    /*!
-     @enum CodingKeys
-     @abstract Defines the key value pairs for Codable types.
-     */
-    private enum CodingKeys: String, CodingKey {
+    var meshProvider: WaterNodeMeshProvider {
         
-        case name = "name"
-        case colorPalette = "color_palette"
+        return WaterNodeMeshProvider()
+    }
+}
+
+extension WaterType {
+    
+    public var colorPalette: ColorPalette? {
+        
+        return ColorPalettes.shared.palette(named: name)
     }
 }

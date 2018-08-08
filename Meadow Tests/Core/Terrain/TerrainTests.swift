@@ -8,11 +8,6 @@
 
 import XCTest
 
-extension TerrainTests: SoilableDelegate {
-    
-    func didBecomeDirty(soilable: Soilable) {}
-}
-
 class TerrainTests: XCTestCase {
 
     var meadow: Meadow!
@@ -21,7 +16,7 @@ class TerrainTests: XCTestCase {
         
         super.setUp()
         
-        meadow = Meadow(delegate: self)
+        meadow = Meadow(observer: nil)
     }
     
     func testTerrainNodeAddition() {
@@ -31,29 +26,12 @@ class TerrainTests: XCTestCase {
         let coordinate = Coordinate(x: 13, y: 0, z: 37)
         
         let n0 = meadow.terrain.add(node: Coordinate(x: 13, y: 0, z: 37))
-        let n1 = meadow.terrain.add(node: coordinate + Coordinate.Left)
+        let n1 = meadow.terrain.add(node: coordinate + Coordinate.left)
         let n2 = meadow.terrain.add(node: coordinate)
         
         XCTAssertNotNil(n0)
         XCTAssertNotNil(n1)
         XCTAssertNil(n2)
-        
-        expect.fulfill()
-        
-        waitForExpectations(timeout: 1)
-    }
-    
-    func testTerrainTypesAreLoaded() {
-        
-        let expect = expectation(description: "Terrain types are loaded and can be found")
-        
-        let BedrockTerrainType = meadow.terrain.find(terrainType: "Bedrock")
-        let grassTerrainType = meadow.terrain.find(terrainType: "Grass")
-        let unknownTerrainType = meadow.terrain.find(terrainType: "unknowm")
-        
-        XCTAssertNotNil(BedrockTerrainType)
-        XCTAssertNotNil(grassTerrainType)
-        XCTAssertNil(unknownTerrainType)
         
         expect.fulfill()
         

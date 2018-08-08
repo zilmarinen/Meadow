@@ -14,9 +14,9 @@ class VolumeTests: XCTestCase {
         
         let expect = expectation(description: "Volumes are considered equal when both coordinates and sizes are equal")
         
-        let v0 = Volume(coordinate: Coordinate.Zero, size: Size.One)
-        let v1 = Volume(coordinate: Coordinate.One, size: Size.One)
-        let v2 = Volume(coordinate: Coordinate.Zero, size: Size.One)
+        let v0 = Volume(coordinate: Coordinate.zero, size: Size.one)
+        let v1 = Volume(coordinate: Coordinate.one, size: Size.one)
+        let v2 = Volume(coordinate: Coordinate.zero, size: Size.one)
         
         XCTAssertEqual(v0, v0)
         XCTAssertEqual(v0, v2)

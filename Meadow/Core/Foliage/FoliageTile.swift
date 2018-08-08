@@ -6,10 +6,6 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-/*!
- @class FoliageTile
- @abstract Grid tiles are the parent class for any child nodes.
- */
 public class FoliageTile: GridTile<FoliageNode> {
     
 }

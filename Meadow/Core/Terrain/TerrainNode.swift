@@ -6,270 +6,279 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-/*!
- @class TerrainNodeJSON
- @abstract
- */
-public class TerrainNodeJSON: GridNodeJSON {
-    
-    /*!
-     @enum CodingKeys
-     @abstract Defines the coding keys used when encoding this object.
-     */
-    private enum CodingKeys: CodingKey {
-        
-        case layers
-    }
-    
-    /*!
-     @property layers
-     @abstract Holds instances of TerrainLayers added to the node.
-     */
-    var layers: [TerrainLayerJSON] = []
-    
-    /*!
-     @method init:from
-     @abstract Creates and initialises a node, decoded by the provided decoder.
-     @param decoder The decoder to read data from.
-     */
-    public required init(from decoder: Decoder) throws {
-        
-        try super.init(from: decoder)
-        
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        layers = try container.decode([TerrainLayerJSON].self, forKey: .layers)
-    }
-}
+import SceneKit
 
-/*!
- @class TerrainNode
- @abstract TerrainNodes are used to define regions within a Grid upon which TerrainLayers can be added.
- */
-public class TerrainNode: GridNode {
+public class TerrainNode<Layer: TerrainLayer>: GridNode, GridParent, GridIntermediateLoader {
     
-    /*!
-     @property layers
-     @abstract Holds instances of TerrainLayers added to the node.
-     */
-    private var layers: [TerrainLayer] = []
+    public typealias ChildType = Layer
+    public typealias IntermediateType = TerrainLayerIntermediate
     
-    /*!
-     @property cutaways
-     @abstract An array of cutaways within the layers of the node.
-     */
-    private var cutaways: [Polyhedron] = []
+    public var children: [Layer] = []
     
-    /*!
-     @property topLayer
-     @abstract Returns the upper most TerrainLayer with the highest elevation.
-     */
-    public var topLayer: TerrainLayer? {
+    public var intersections: [Polyhedron] = []
+    
+    enum CodingKeys: CodingKey {
         
-        return layers.max(by: { (lhs, rhs) -> Bool in
-            
-            return lhs.polyhedron.upperPolytope.peak < rhs.polyhedron.upperPolytope.peak
-        })
+        case children
     }
     
-    /*!
-     @property sortedLayers
-     @abstract Array of layers, sorted by y axis value.
-     */
-    private var sortedLayers: [TerrainLayer] {
-        
-        return layers.sorted { (lhs, rhs) -> Bool in
-            
-            return lhs.polyhedron.upperPolytope.peak < rhs.polyhedron.upperPolytope.peak
-        }
-    }
-    
-    /*!
-     @property totalChildren
-     @abstract Returns the total number of child SceneGraphNodes for the SceneGraphNode.
-     */
-    override public var totalChildren: Int { return layers.count }
-    
-    /*!
-     @method sceneGraph:childAtIndex
-     @abstract Attempt to find and return a child SceneGraphNode at the specified index.
-     @property index The index of the child SceneGraphNode to be found and returned.
-     */
-    override public func sceneGraph(childAtIndex index: Int) -> SceneGraphNode? {
-        
-        return sortedLayers[index]
-    }
-    
-    /*!
-     @method sceneGraph:indexOf
-     @abstract Attempt to find and return the index of the specified child.
-     @param child The child for which the index should be found and returned.
-     */
-    override public func sceneGraph(indexOf child: SceneGraphNode) -> Int? {
-        
-        guard let child = child as? TerrainLayer else { return nil }
-        
-        return sortedLayers.index(of: child)
-    }
-    
-    /*!
-     @enum CodingKeys
-     @abstract Defines the coding keys used when encoding this object.
-     */
-    private enum CodingKeys: CodingKey {
-        
-        case layers
-    }
-    
-    /*!
-     @method encode:to
-     @abstract Encodes this object into the given encoder.
-     @property encoder The encoder to use when encoding this object.
-     */
-    override public func encode(to encoder: Encoder) throws {
+    public override func encode(to encoder: Encoder) throws {
         
         try super.encode(to: encoder)
         
         var container = encoder.container(keyedBy: CodingKeys.self)
         
-        try container.encode(layers, forKey: .layers)
+        try container.encode(self.children, forKey: .children)
     }
     
-    /*!
-     @method compactMesh
-     @abstract Returns the compound mesh of the node.
-     */
-    override public func compactMesh() -> Mesh {
+    public override func clean() {
         
-        let meshes = layers.filter { !$0.isHidden }.compactMap { $0.mesh(cutaways: cutaways) }
+        if !isDirty { return }
         
-        return Mesh(meshes: meshes)
-    }
-    
-    /*!
-     @method clean
-     @abstract Enumerate through children and clean each layer.
-     */
-    override public func clean() -> Bool {
-    
-        if !super.clean() { return false }
-        
-        layers.forEach { layer in
+        children.forEach { layer in
             
-            let _ = layer.clean()
+            layer.clean()
         }
         
-        return true
+        isDirty = false
     }
-}
-
-extension TerrainNode {
     
-    /*!
-     @method add:layer
-     @abstract Attempt to create and return a new layer with the specified terrain type.
-     @param terrainType The terrain type for the layer.
-     */
-    public func add(layer terrainType: TerrainType) -> TerrainLayer? {
+    public override var mesh: Mesh {
         
-        if let topLayer = topLayer {
+        var stencils: [GridEdge: [Polyhedron]] = [:]
+        
+        GridEdge.Edges.forEach { edge in
             
-            if World.Y(y: topLayer.polyhedron.upperPolytope.base) == World.Ceiling {
+            if let neighbour = find(neighbour: edge)?.node as? TerrainNode, let upperPolytope = neighbour.topLayer?.polyhedron.upperPolytope, let lowerPolytope = neighbour.bottomLayer?.polyhedron.lowerPolytope {
                 
-                return nil
+                let polyhedron = Polyhedron(upperPolytope: upperPolytope, lowerPolytope: lowerPolytope)
+                
+                if neighbour.intersections.count > 0 {
+                    
+                    stencils[edge] = Polyhedron.subtract(polyhedrons: neighbour.intersections, from: polyhedron)
+                }
+                else {
+                    
+                    stencils[edge] = [polyhedron]
+                }
             }
         }
         
-        let layer = TerrainLayer(node: self, terrainType: terrainType)
+        var meshFaces: [MeshFace] = []
         
-        let currentTopLayer = topLayer
-        
-        layer.hierarchy.lower = currentTopLayer
-        
-        layers.append(layer)
-        
-        currentTopLayer?.hierarchy.upper = layer
-        
-        let height = (layer.hierarchy.lower != nil ? World.Y(y: layer.hierarchy.lower!.polyhedron.upperPolytope.peak) : World.Floor) + 1
-        
-        GridCorner.Corners.forEach { corner in
+        children.filter { !$0.isHidden }.forEach { layer in
             
-            layer.set(height: height, corner: corner)
-        }
-        
-        becomeDirty()
-        
-        return layer
-    }
+            let polyhedrons = Polyhedron.subtract(polyhedrons: intersections, from: layer.polyhedron)
+            
+            GridEdge.Edges.forEach { edge in
+                
+                let corners = GridCorner.corners(edge: edge)
     
-    /*!
-     @method remove:layer
-     @abstract Attempt to find and remove the specified layer.
-     @param layer The layer to be found and removed.
-     */
-    public func remove(layer: TerrainLayer) {
-        
-        guard let index = layers.index(of: layer) else { return }
-            
-        layers.remove(at: index)
-        
-        if let upper = layer.hierarchy.upper {
-            
-            upper.hierarchy.lower = layer.hierarchy.lower
+                let (c0, c1) = (corners.first!, corners.last!)
+                
+                let edgeNormal = GridEdge.normal(edge: edge)
+                
+                let terrainType = layer.get(terrainType: edge)
+                
+                let apexColor = terrainType.colorPalette?.primary.vector ?? SCNVector4Zero
+                let edgeColor = terrainType.colorPalette?.secondary.vector ?? SCNVector4Zero
+                
+                let meshProvider = terrainType.meshProvider
+                
+                polyhedrons.forEach { polyhedron in
+                    
+                    let v0 = polyhedron.upperPolytope.vertices[c0.rawValue]
+                    let v1 = polyhedron.upperPolytope.vertices[c1.rawValue]
+                    
+                    if (layer.hierarchy.upper == nil || layer.hierarchy.upper?.lowerPolytope != polyhedron.upperPolytope) {
+                        
+                        meshFaces.append(meshProvider.terrainLayer(apex: corners, polytope: polyhedron.upperPolytope, color: apexColor))
+                    }
+                    
+                    let divisions = (stencils[edge] != nil ? Polyhedron.stencil(polyhedrons: stencils[edge]!, against: polyhedron, edge: edge) : [polyhedron])
+                    
+                    divisions.forEach { division in
+                        
+                        let v2 = division.upperPolytope.vertices[c0.rawValue]
+                        let v3 = division.upperPolytope.vertices[c1.rawValue]
+                        let v4 = division.lowerPolytope.vertices[c1.rawValue]
+                        let v5 = division.lowerPolytope.vertices[c0.rawValue]
+                        
+                        let c0equal = Axis.Y(y: v2.y) == Axis.Y(y: v5.y)
+                        let c1equal = Axis.Y(y: v3.y) == Axis.Y(y: v4.y)
+                        
+                        let acuteCorner = (c0equal ? c0 : (c1equal ? c1 : nil))
+                        
+                        if !c0equal || !c1equal {
+                            
+                            let p0equal = Axis.Y(y: v0.y) == Axis.Y(y: v2.y)
+                            let p1equal = Axis.Y(y: v1.y) == Axis.Y(y: v3.y)
+                            
+                            if p0equal && p1equal {
+                                
+                                meshFaces.append(contentsOf: meshProvider.terrainLayer(crown: corners, acuteCorner: acuteCorner, polyhedron: division, normal: edgeNormal, color: apexColor))
+                                meshFaces.append(contentsOf: meshProvider.terrainLayer(throne: corners, acuteCorner: acuteCorner, polyhedron: division, normal: edgeNormal, color: edgeColor))
+                            }
+                            else {
+                                
+                                meshFaces.append(contentsOf: meshProvider.terrainLayer(edge: corners, acuteCorner: acuteCorner, polyhedron: division, normal: edgeNormal, color: edgeColor))
+                            }
+                        }
+                    }
+                }
+            }
         }
         
-        if let lower = layer.hierarchy.lower {
-            
-            lower.hierarchy.upper = layer.hierarchy.upper
-        }
-        
-        layer.hierarchy.upper = nil
-        layer.hierarchy.lower = nil
-        
-        becomeDirty()
+        return Mesh(faces: meshFaces)
     }
 }
 
 extension TerrainNode {
     
-    /*!
-     @method add:cutaway
-     @abstract Attempt to add a cutaway with the specified Polyhedron.
-     @param polyhedron The Polyhedron the cutaway occupies.
-     */
-    func add(cutaway polyhedron: Polyhedron) {
+    public func load(nodes: [TerrainLayerIntermediate]) {
         
-        guard find(cutaways: polyhedron)?.count == 0 else { return }
+        nodes.forEach { intermediate in
+            
+            if let layer = add(layer: TerrainType.bedrock) {
+                
+                let edges = [intermediate.edges.north, intermediate.edges.east, intermediate.edges.south, intermediate.edges.west]
+                
+                for index in 0..<intermediate.corners.count {
+                    
+                    layer.set(terrainType: TerrainType(rawValue: edges[index].terrainType)!, edge: edges[index].edge)
+                    
+                    layer.set(height: intermediate.corners[index], corner: GridCorner(rawValue: index)!)
+                }
+            }
+        }
+    }
+}
+
+extension TerrainNode {
+    
+    public var totalChildren: Int { return children.count }
+    
+    public func child(at index: Int) -> SceneGraphChild? {
         
-        cutaways.append(polyhedron)
+        return children[index]
     }
     
-    /*!
-     @method remove:cutaway
-     @abstract Attempt to find and remove the cutaway with the specified Polyhedron.
-     @param polyhedron The Polyhedron the to find and remove.
-     */
-    func remove(cutaway polyhedron: Polyhedron) {
+    public func index(of child: SceneGraphChild) -> Int? {
         
-        guard let index = cutaways.index(of: polyhedron) else { return }
+        guard let child = child as? ChildType else { return nil }
+        
+        return children.index(of: child)
+    }
+    
+    public func child(didBecomeDirty child: SceneGraphChild) {
+        
+        let _ = becomeDirty()
+        
+        observer?.child(didBecomeDirty: child)
+    }
+}
+
+extension TerrainNode {
+    
+    public var topLayer: Layer? {
+        
+        return children.first { layer -> Bool in
             
-        cutaways.remove(at: index)
+            return layer.hierarchy.upper == nil
+        }
+    }
+    
+    public var bottomLayer: Layer? {
+        
+        return children.first { layer -> Bool in
             
+            return layer.hierarchy.lower == nil
+        }
+    }
+    
+    public func add(layer terrainType: TerrainType) -> TerrainLayer? {
+        
+        if let topLayer = topLayer, Axis.Y(y: topLayer.polyhedron.upperPolytope.base) == World.ceiling {
+            
+            return nil
+        }
+        
+        let height = (World.floor + 1)
+        
+        let corners = topLayer?.polyhedron.upperPolytope.vertices.map { Axis.Y(y: $0.y) + 1 } ?? [height, height, height, height]
+        
+        guard let layer = Layer(observer: self, coordinate: volume.coordinate, corners: corners, terrainType: terrainType) else { return nil }
+        
+        layer.hierarchy.lower = topLayer
+    
+        topLayer?.hierarchy.upper = layer
+    
+        children.append(layer)
+    
         becomeDirty()
+    
+        return layer
     }
     
-    /*!
-     @method find:cutaways
-     @abstract Attempt to find and return any cutaways that intersect with the specified Polyhedron.
-     @param polyhedron The Polyhedron to check for intersections against.
-     */
-    public func find(cutaways polyhedron: Polyhedron) -> [Polyhedron]? {
+    public func remove(layer: TerrainLayer) -> Bool {
         
-        return cutaways.filter { cutaway -> Bool in
+        if let index = index(of: layer) {
             
-            let elevation = cutaway.elevation(referencing: polyhedron)
+            let upper = layer.hierarchy.upper
+            let lower = layer.hierarchy.lower
+            
+            upper?.hierarchy.lower = lower
+            
+            lower?.hierarchy.upper = upper
+            
+            layer.hierarchy.upper = nil
+            layer.hierarchy.lower = nil
+        
+            children.remove(at: index)
+            
+            becomeDirty()
+            
+            return true
+        }
+        
+        return false
+    }
+}
+
+extension TerrainNode: TerrainNodeIntersectionProvider {
+    
+    public func add(intersection polyhedron: Polyhedron) -> Bool {
+        
+        let intersection = intersections.first {
+            
+            let elevation = $0.elevation(referencing: polyhedron)
             
             return elevation == .equal || elevation == .intersecting
         }
+        
+        if intersection == nil {
+            
+            intersections.append(polyhedron)
+            
+            becomeDirty()
+            
+            return true
+        }
+        
+        return false
+    }
+    
+    public func remove(intersection polyhedron: Polyhedron) -> Bool {
+        
+        if let index = intersections.index(of: polyhedron) {
+            
+            intersections.remove(at: index)
+            
+            becomeDirty()
+            
+            return true
+        }
+        
+        return false
     }
 }

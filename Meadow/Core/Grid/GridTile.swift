@@ -6,321 +6,197 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-import SceneKit
+import Foundation
 
-/*!
- @struct GridTileJSON
- @abstract
- */
-public struct GridTileJSON<NodeJSON: GridNodeJSON>: Decodable {
+public class GridTile<Node: GridNode>: GridChild, GridParent {
     
-    /*!
-     @enum CodingKeys
-     @abstract Defines the coding keys used when encoding this object.
-     */
-    private enum CodingKeys: CodingKey {
-        
-        case nodes
-    }
+    public typealias ChildType = Node
     
-    /*!
-     @property nodes
-     @abstract Set of nodes contained within the tile.
-     */
-    let nodes: [NodeJSON]
-}
-
-/*!
- @class GridTile
- @abstract Grid tiles are the parent class for any child nodes.
- @discussion Grid tiles allow nodes to be partitioned into smaller, more managable entities which can be updated separately from other tiles and nodes in the same grid. Tiles have a fixed volume with a height defined by `World.Floor` and `World.Ceiling`.
- */
-public class GridTile<Node: GridNode>: SceneGraphNode, Encodable {
+    public var observer: GridObserver?
     
-    /*!
-     @struct GridTileNeighbour
-     @abstract Defines a relationship between two grid tiles along an edge.
-     */
-    public struct GridTileNeighbour: Hashable {
-        
-        let edge: GridEdge
-        let tile: GridTile
-    }
+    public var children: [Node] = []
     
-    /*!
-     @property isDirty
-     @abstract Represents staleness of the chunk.
-     */
-    private var isDirty: Bool = false
+    public var name: String? { return "Tile" }
     
-    /*!
-     @property delegate
-     @abstract The SoilableDelegate to inform when the tile becomes dirty.
-     */
-    private let delegate: SoilableDelegate
-    
-    /*!
-     @property nodes
-     @abstract Set of nodes contained within the tile.
-     */
-    private var nodes: Set<Node> = []
-    
-    /*!
-     @property sortedNodes
-     @abstract Array of nodes, sorted by y axis value.
-     */
-    private var sortedNodes: [Node] {
-        
-        return nodes.sorted { (lhs, rhs) -> Bool in
-            
-            return lhs.volume.coordinate.y < rhs.volume.coordinate.y
-        }
-    }
-    
-    /*!
-     @property volume
-     @abstract Fixed bounding volume of the tile.
-     */
-    public let volume: Volume
-    
-    /*!
-     @property isEmpty
-     @abstract Determines whether the tile has any child nodes.
-     */
-    var isEmpty: Bool { return nodes.isEmpty }
-    
-    /*!
-     @property isHidden
-     @abstract Determines whether the tile is displayed
-     */
     public var isHidden: Bool = false {
         
         didSet {
             
             if isHidden != oldValue {
-            
+                
                 becomeDirty()
             }
         }
     }
     
-    /*!
-     @property nodeName
-     @abstract Returns the name of the SceneGraphNode.
-     */
-    public var nodeName: String { return "Tile" }
+    public let volume: Volume
     
-    /*!
-     @property totalChildren
-     @abstract Returns the total number of child SceneGraphNodes for the SceneGraphNode.
-     */
-    public var totalChildren: Int { return nodes.count }
+    var isDirty: Bool = false
     
-    /*!
-     @method init:volume
-     @abstract Creates and initialises a tile with the specified volume.
-     @param delegate The SoilableDelegate to inform when the tile becomes dirty.
-     @param volume The bounding volume occupied by the tile.
-     */
-    public required init(delegate: SoilableDelegate, volume: Volume) {
+    public required init(observer: GridObserver, volume: Volume) {
         
-        self.delegate = delegate
+        self.observer = observer
         
         self.volume = volume
     }
+}
+
+extension GridTile: GridSoilable {
     
-    /*!
-     @method sceneGraph:childAtIndex
-     @abstract Attempt to find and return a child SceneGraphNode at the specified index.
-     @property index The index of the child SceneGraphNode to be found and returned.
-     */
-    public func sceneGraph(childAtIndex index: Int) -> SceneGraphNode? {
+    public func becomeDirty() {
         
-        return sortedNodes[index]
+        if !isDirty {
+            
+            isDirty = true
+            
+            observer?.child(didBecomeDirty: self)
+        }
     }
     
-    /*!
-     @method sceneGraph:indexOf
-     @abstract Attempt to find and return the index of the specified child.
-     @param child The child for which the index should be found and returned.
-     */
-    public func sceneGraph(indexOf child: SceneGraphNode) -> Int? {
+    public func clean() {
         
-        guard let child = child as? Node else { return nil }
+        if !isDirty { return }
         
-        return sortedNodes.index(of: child)
+        children.forEach { node in
+            
+            node.clean()
+        }
+        
+        isDirty = false
     }
+}
+
+extension GridTile: GridUpdatable {
     
-    /*!
-     @enum CodingKeys
-     @abstract Defines the coding keys used when encoding this object.
-     */
-    private enum CodingKeys: CodingKey {
+    public func update(deltaTime: TimeInterval) {
         
-        case nodes
+        clean()
+        
+        children.forEach { node in
+            
+            if let node = node as? GridUpdatable {
+            
+                node.update(deltaTime: deltaTime)
+            }
+        }
     }
+}
+
+extension GridTile: GridMeshProvider {
     
-    /*!
-     @method encode:to
-     @abstract Encodes this object into the given encoder.
-     @property encoder The encoder to use when encoding this object.
-     */
-    public func encode(to encoder: Encoder) throws {
+    public var mesh: Mesh {
         
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        
-        try container.encode(nodes, forKey: .nodes)
-    }
-    
-    /*!
-     @method compactMesh
-     @abstract Returns the compound mesh of the tiles child nodes.
-     */
-    func compactMesh() -> Mesh {
-        
-        let meshes = nodes.filter { !$0.isHidden }.compactMap { $0.compactMesh() }
+        let meshes = children.compactMap { node -> Mesh? in
+            
+            return !node.isHidden ? node.mesh : nil
+        }
         
         return Mesh(meshes: meshes)
     }
 }
 
-extension GridTile: Hashable {
+extension GridTile {
     
-    /*!
-     @method ==
-     @abstract Determine the equality of two GridTiles.
-     */
-    public static func == (lhs: GridTile<Node>, rhs: GridTile<Node>) -> Bool {
+    public var totalChildren: Int { return children.count }
+    
+    public func child(at index: Int) -> SceneGraphChild? {
         
-        return lhs.volume == rhs.volume
+        return children[index]
     }
     
-    /*!
-     @property hashValue
-     @abstract Return the hash value of the GridTile.
-     */
-    public var hashValue: Int {
+    public func index(of child: SceneGraphChild) -> Int? {
         
-        return volume.hashValue
+        guard let child = child as? ChildType else { return nil }
+        
+        return children.index(of: child)
+    }
+    
+    public func child(didBecomeDirty child: SceneGraphChild) {
+        
+        let _ = becomeDirty()
+        
+        observer?.child(didBecomeDirty: child)
     }
 }
 
 extension GridTile {
     
-    /*!
-     @method FixedVolume:coordinate
-     @abstract Clamp and return a fixed volume for a given coordinate.
-     @discussion This method will return a volume with a fixed height defined by `World.Floor` and `World.Ceiling` as well as a fixed width and depth defined by `World.TileSize`.
-     */
-    static func FixedVolume(_ coordinate: Coordinate) -> Volume {
+    func add(node volume: Volume) -> Node? {
         
-        let coordinate = Coordinate(x: coordinate.x, y: World.Floor, z: coordinate.z)
-        let size = Size(width: World.TileSize, height: (World.Ceiling - World.Floor), depth: World.TileSize)
-        
-        return Volume(coordinate: coordinate, size: size)
-    }
-}
-
-extension GridTile: SoilableDelegate {
-    
-    /*!
-     @method didBecomeDirty:volume
-     @abstract Callback for soilable item to delegate change resolution upwards.
-     @param soilable The Soilable object that became dirty.
-     */
-    public func didBecomeDirty(soilable: Soilable) {
-        
-        delegate.didBecomeDirty(soilable: soilable)
-        
-        becomeDirty()
-    }
-}
-
-extension GridTile: Soilable {
-    
-    /*!
-     @method becomeDirty
-     @abstract Record that the item is dirty and should be cleaned.
-     */
-    public func becomeDirty() {
-        
-        if isDirty { return }
-        
-        isDirty = true
-        
-        delegate.didBecomeDirty(soilable: self)
-    }
-    
-    /*!
-     @method clean
-     @abstract Perform any clean up operations required to clean the item.
-     */
-    public func clean() -> Bool {
-        
-        if !isDirty { return false}
-        
-        nodes.forEach { node in
+        if let _ = find(node: volume.coordinate) {
             
-            let _ = node.clean()
+            return nil
         }
         
-        isDirty = false
+        let node = Node(observer: self, volume: volume)
         
-        return true
-    }
-}
-
-extension GridTile {
-    
-    /*!
-     @method add:node
-     @abstract Attempt to add given node to array of children.
-     @param node The node to be added as a child.
-     */
-    func add(node: Node) {
+        children.append(node)
         
-        if let _ = find(node: node.volume.coordinate) {
-            
-            return
-        }
-        
-        nodes.insert(node)
+        return node
     }
     
-    /*!
-     @method remove:node
-     @abstract Attempt to remove given node from array of children.
-     @param node The node to be removed as a child.
-     */
-    func remove(node: Node) {
-        
-        nodes.remove(node)
-    }
-    
-    /*!
-     @method find:node
-     @abstract Attempt to find and return the appropriate node at the specified coordinate
-     @param coordinate: Coordinate of the node to be found and returned.
-     @discussion The coordinate provided will be used to find the nearest enclosing bounds matching both the x and z axis where the y axis value also intersects with the nodes bounds.
-     */
     func find(node coordinate: Coordinate) -> Node? {
         
-        return nodes.first { node -> Bool in
+        return children.first { node -> Bool in
             
             return node.volume.contains(coordinate: coordinate)
         }
     }
     
-    /*!
-     @method find:nodes
-     @abstract Attempt to find and return any nodes whose Volume x and z components are equal to the specified coordinate.
-     @param coordinate: Coordinate of the nodes to be found and returned.
-     */
-    func find(nodes coordinate: Coordinate) -> Set<Node> {
+    func remove(node: Node) -> Bool {
         
-        return nodes.filter { node -> Bool in
+        if let index = index(of: node) {
             
-            return node.volume.coordinate.adjacency(to: coordinate) == .equal
+            children.remove(at: index)
+            
+            node.observer = nil
+            
+            becomeDirty()
+            
+            return true
         }
+        
+        return false
+    }
+}
+
+extension GridTile: Hashable {
+    
+    public var hashValue: Int { return volume.hashValue }
+    
+    public static func == (lhs: GridTile, rhs: GridTile) -> Bool {
+        
+        return lhs.volume == rhs.volume
+    }
+}
+
+extension GridTile: Encodable {
+    
+    enum CodingKeys: CodingKey {
+        
+        case name
+        case volume
+        case children
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(self.name, forKey: .name)
+        try container.encode(self.volume, forKey: .volume)
+        try container.encode(self.children, forKey: .children)
+    }
+}
+
+extension GridTile {
+    
+    static func fixedVolume(_ coordinate: Coordinate) -> Volume {
+            
+        let coordinate = Coordinate(x: coordinate.x, y: World.floor, z: coordinate.z)
+        
+        let size = Size(width: World.tileSize, height: (World.ceiling - World.floor), depth: World.tileSize)
+        
+        return Volume(coordinate: coordinate, size: size)
     }
 }

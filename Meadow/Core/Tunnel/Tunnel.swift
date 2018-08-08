@@ -8,15 +8,14 @@
 
 import Foundation
 
-/*!
- @class Tunnel
- @abstract Tunnel is a Grid type that manages the addition and removal of TunnelNodes.
- */
 public class Tunnel: Grid<TunnelChunk, TunnelTile, TunnelNode> {
- 
-    /*!
-     @property nodeName
-     @abstract Returns the name of the SceneGraphNode.
-     */
-    override public var nodeName: String { return "Tunnels" }
+    
+}
+
+extension Tunnel {
+    
+    func add(node coordinate: Coordinate) -> TunnelNode? {
+        
+        return add(node: TunnelTile.fixedVolume(coordinate))
+    }
 }

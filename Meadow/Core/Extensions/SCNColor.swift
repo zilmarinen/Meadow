@@ -8,14 +8,6 @@
 
 extension MDWColor {
     
-    /*!
-     @method init:red:green:blue:alpha
-     @abstract Creates and initialises a platform specific color with the specified red, green, blue and alpha components.
-     @param red The red component of the color.
-     @param green The green component of the color.
-     @param blue The blue component of the color.
-     @param alpha The alpha component of the color.
-     */
     convenience init(red: MDWFloat, green: MDWFloat, blue: MDWFloat, alpha: MDWFloat) {
         
         #if os(iOS)

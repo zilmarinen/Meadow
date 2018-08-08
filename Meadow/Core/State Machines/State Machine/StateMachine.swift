@@ -12,12 +12,6 @@
  */
 public protocol State {
     
-    /// Determines valid state transitions.
-    ///
-    /// - Parameter newState: The proposed state to transition to.
-    /// - Returns: whether the transition should be allowed, aborted, or redirected to another state.
-    
-    
     /*!
      @method shouldTransition:to
      @abstract Determines whether the transition should be allowed.
@@ -69,6 +63,7 @@ public class StateMachine<StateType: State> {
     public var state: StateType {
         
         get {
+            
             return _state
         }
         
@@ -98,8 +93,11 @@ public class StateMachine<StateType: State> {
      @param transition A callback block to be invoked when transitioning between states.
      */
     public init(_ initialState: StateType, transition: @escaping Transition) {
+        
         _state = initialState
+        
         didTransition = transition
+        
         didTransition(nil, _state)
     }
 }

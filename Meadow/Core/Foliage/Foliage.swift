@@ -8,15 +8,23 @@
 
 import Foundation
 
-/*!
- @class Foliage
- @abstract Foliage is a Grid type that manages the addition and removal of FoliageNodes.
- */
-public class Foliage: Grid<FoliageChunk, FoliageTile, FoliageNode> {
+public class Foliage: Grid<FoliageChunk, FoliageTile, FoliageNode>, GridIntermediateLoader {
     
-    /*!
-     @property nodeName
-     @abstract Returns the name of the SceneGraphNode.
-     */
-    override public var nodeName: String { return "Foliage" }
+    public typealias IntermediateType = FoliageNodeIntermediate
+}
+
+extension Foliage {
+    
+    public func load(nodes: [FoliageNodeIntermediate]) {
+        
+        //
+    }
+}
+
+extension Foliage {
+    
+    public func add(node coordinate: Coordinate) -> FoliageNode? {
+        
+        return add(node: FoliageTile.fixedVolume(coordinate))
+    }
 }

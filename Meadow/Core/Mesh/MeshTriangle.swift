@@ -6,34 +6,12 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-/*!
- @struct MeshTriangle
- @abstract Defines an array of MeshFace triangle indices.
- */
 public struct MeshTriangle {
+
+    let i: Int32
+    let j: Int32
+    let k: Int32
     
-    /*!
-     @property i0
-     @abstract Defines a single triangle index as part of a MeshFace.
-     */
-    let i0: Int32
-    
-    /*!
-     @property i1
-     @abstract Defines a single triangle index as part of a MeshFace.
-     */
-    let i1: Int32
-    
-    /*!
-     @property i2
-     @abstract Defines a single triangle index as part of a MeshFace.
-     */
-    let i2: Int32
-    
-    /*!
-     @property indices
-     @abstract Defines an array of triangle indices that define a MeshFace.
-     */
-    public var indices: [Int32] { return [i0, i1, i2] }
+    public var indices: [Int32] { return [i, j, k] }
 }
 

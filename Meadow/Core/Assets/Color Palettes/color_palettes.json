@@ -1,0 +1,58 @@
+[
+	{
+		"name": "Grass",
+		"primary": "tropicalRainForest",
+		"secondary": "shamrock",
+		"tertiary": "wintergreenDream",
+		"quaternary": "yellowGreen"
+	},
+    {
+		"name": "Sand",
+		"primary": "desertSand",
+		"secondary": "orangeSoda",
+		"tertiary": "yellowOrange",
+		"quaternary": "yellowSunshine"
+	},
+    {
+		"name": "Bedrock",
+		"primary": "graniteGray",
+		"secondary": "blackShadows",
+		"tertiary": "eerieBlack",
+		"quaternary": "blackCoralPearl"
+	},
+    {
+		"name": "Concrete",
+		"primary": "turquoisePearl",
+		"secondary": "sasquatchSocks",
+		"tertiary": "quickSilver",
+		"quaternary": "pixiePowder"
+	},
+    {
+		"name": "Water",
+		"primary": "shadowBlue",
+		"secondary": "steelBlue",
+		"tertiary": "tealBlue",
+		"quaternary": "winterWizard"
+	},
+    {
+		"name": "Asphalt",
+		"primary": "graniteGray",
+		"secondary": "gray",
+		"tertiary": "onyx",
+		"quaternary": "blueGray"
+	},
+    {
+		"name": "Dirt",
+		"primary": "graniteGray",
+		"secondary": "gray",
+		"tertiary": "onyx",
+		"quaternary": "blueGray"
+	},
+    {
+		"name": "Tarmac",
+		"primary": "graniteGray",
+		"secondary": "gray",
+		"tertiary": "onyx",
+		"quaternary": "blueGray"
+	}
+]

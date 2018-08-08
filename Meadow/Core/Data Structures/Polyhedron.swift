@@ -8,31 +8,15 @@
 
 import SceneKit
 
-/*!
- @struct Polyhedron
- @abstract Defines a Polyhedron with an upper and lower Polytope.
- */
 public struct Polyhedron {
  
-    /*!
-     @property upperPolytope
-     @abstract The upper Polytope of the Polyhedron.
-     */
     public let upperPolytope: Polytope
     
-    /*!
-     @property lowerPolytope
-     @abstract The lower Polytope of the Polyhedron.
-     */
     public let lowerPolytope: Polytope
 }
 
 extension Polyhedron: Equatable {
     
-    /*!
-     @method ==
-     @abstract Determine the equality of two Polyhedrons.
-     */
     public static func ==(lhs: Polyhedron, rhs: Polyhedron) -> Bool {
         
         return lhs.upperPolytope == rhs.upperPolytope && lhs.lowerPolytope == rhs.lowerPolytope
@@ -41,43 +25,46 @@ extension Polyhedron: Equatable {
 
 extension Polyhedron {
     
-    /*!
-     @enum Elevation
-     @abstract Defines the relative elevation of one Polyhedron to another along the y axis.
-     */
+    var volume: Volume {
+        
+        let base = Axis.Y(y: lowerPolytope.base)
+        let peak = Axis.Y(y: upperPolytope.peak)
+        
+        let center = lowerPolytope.center
+        
+        let coordinate = Coordinate(x: Int(center.x), y: base, z: Int(center.z))
+        
+        let size = Size(width: 1, height: (peak - base), depth: 1)
+        
+        return Volume(coordinate: coordinate, size: size)
+    }
+}
+
+extension Polyhedron {
+    
     enum Elevation {
         
         case above
         case below
+        case enclosing
         case equal
         case intersecting
     }
     
-    /*!
-     @method elevation:referencing
-     @abstract Determines the elevation of the Polyhedron in reference to another Polyhedron.
-     @discussion Polyhedron elevation is determined by checking the elevations of both upper and lower Polytopes.
-     */
     func elevation(referencing polyhedron: Polyhedron) -> Elevation {
         
-        if polyhedron.upperPolytope == upperPolytope && polyhedron.lowerPolytope == lowerPolytope {
-         
-            return .equal
-        }
+        let e0 = upperPolytope.elevation(referencing: polyhedron.lowerPolytope)
+        let e1 = lowerPolytope.elevation(referencing: polyhedron.upperPolytope)
         
-        let lowerElevation = lowerPolytope.elevation(referencing: polyhedron.upperPolytope)
+        if e0 == .below || e0 == .equal { return .below }
+        if e1 == .above || e1 == .equal { return .above }
         
-        if lowerElevation == .above || lowerElevation == .equal {
-            
-            return .above
-        }
+        let e2 = upperPolytope.elevation(referencing: polyhedron.upperPolytope)
+        let e3 = lowerPolytope.elevation(referencing: polyhedron.lowerPolytope)
         
-        let upperElevation = upperPolytope.elevation(referencing: polyhedron.lowerPolytope)
+        if e2 == .equal && e3 == .equal { return .equal }
         
-        if upperElevation == .below || upperElevation == .equal {
-            
-            return .below
-        }
+        if (e2 == .above || e2 == .equal) && (e3 == .below || e3 == .equal) { return .enclosing }
         
         return .intersecting
     }
@@ -85,84 +72,63 @@ extension Polyhedron {
 
 extension Polyhedron {
     
-    /*!
-     @method Invert:polyhedron:edge
-     @abstract Invert the vertices of a Polyhedron along the specified edge.
-     @param polyhedron The Polyhedron to be inverted.
-     @param edge The edge along which the vertices should be inverted.
-     */
-    static func Invert(polyhedron: Polyhedron, edge: GridEdge) -> Polyhedron {
+    static func invert(polyhedron: Polyhedron, edge: GridEdge) -> Polyhedron {
         
-        return Polyhedron(upperPolytope: Polytope.Invert(polytope: polyhedron.upperPolytope, edge: edge), lowerPolytope: Polytope.Invert(polytope: polyhedron.lowerPolytope, edge: edge))
+        return Polyhedron(upperPolytope: Polytope.invert(polytope: polyhedron.upperPolytope, edge: edge), lowerPolytope: Polytope.invert(polytope: polyhedron.lowerPolytope, edge: edge))
     }
     
-    /*!
-     @method Stencil:polyhedrons:from:edge
-     @astract Attempts to subtract the volumes of an array of Polyhedrons from a single Polyhedron.
-     @param subtract An array of Polyhedrons to subtract from the source Polyhedron.
-     @param against The source Polyhedon to be divided into parts.
-     @param edge The edge along which the Polyhedrons should be inverted.
-     */
-    static func Stencil(polyhedrons: [Polyhedron], against: Polyhedron, edge: GridEdge) -> [Polyhedron] {
+    static func stencil(polyhedrons: [Polyhedron], against: Polyhedron, edge: GridEdge) -> [Polyhedron] {
         
-        let invertedPolyhedrons = polyhedrons.map { Polyhedron.Invert(polyhedron: $0, edge: edge) }
+        let invertedPolyhedrons = polyhedrons.map { Polyhedron.invert(polyhedron: $0, edge: edge) }
         
-        return Subtract(polyhedrons: invertedPolyhedrons, from: against)
+        return subtract(polyhedrons: invertedPolyhedrons, from: against)
     }
     
-    /*!
-     @method Subtract:polyhedron:from
-     @astract Attempts to subtract the volume of one Polyhedron from another.
-     @param subtract The Polyhedron to subtract from the source Polyhedron.
-     @param from The source Polyhedon to be divided into parts.
-     */
-    static func Subtract(polyhedron: Polyhedron, from: Polyhedron) -> [Polyhedron]? {
+    static func subtract(polyhedron: Polyhedron, from: Polyhedron) -> [Polyhedron]? {
         
-        switch polyhedron.elevation(referencing: from) {
+        switch from.elevation(referencing: polyhedron) {
             
-        case .intersecting:
+        case .above,
+             .below:
             
-            if polyhedron.upperPolytope.elevation(referencing: from.upperPolytope) == .below && polyhedron.lowerPolytope.elevation(referencing: from.lowerPolytope) == .above {
+            return [from]
+            
+        case .enclosing:
+            
+            let e0 = polyhedron.upperPolytope.elevation(referencing: from.upperPolytope)
+            let e1 = polyhedron.lowerPolytope.elevation(referencing: from.lowerPolytope)
+            
+            if e0 == .below && e1 == .above {
                 
-                let upperPolytope = Polytope.Project(project: polyhedron.upperPolytope, against: from.upperPolytope)
-                let lowerPolytope = Polytope.Project(project: polyhedron.lowerPolytope, against: from.lowerPolytope)
+                let upperPolytope = Polytope.project(project: polyhedron.upperPolytope, against: from.upperPolytope)
+                let lowerPolytope = Polytope.project(project: polyhedron.lowerPolytope, against: from.lowerPolytope)
                 
                 return [ Polyhedron(upperPolytope: from.upperPolytope, lowerPolytope: upperPolytope),
                          Polyhedron(upperPolytope: lowerPolytope, lowerPolytope: from.lowerPolytope) ]
             }
             
-            switch polyhedron.upperPolytope.elevation(referencing: from.upperPolytope) {
-                
-            case .above,
-                 .equal:
-                
-                let upperPolytope = Polytope.Project(project: polyhedron.lowerPolytope, against: from.lowerPolytope)
-                
-                return [ Polyhedron(upperPolytope: upperPolytope, lowerPolytope: from.lowerPolytope) ]
-                
-            default:
-                
-                if polyhedron.upperPolytope.elevation(referencing: from.lowerPolytope) == .above {
-                
-                    let lowerPolytope = Polytope.Project(project: polyhedron.upperPolytope, against: from.upperPolytope)
-                    
-                    return [ Polyhedron(upperPolytope: from.upperPolytope, lowerPolytope: lowerPolytope) ]
-                }
-            }
+            let upperPolytope = Polytope.project(project: (e0 == .above || e0 == .equal ? polyhedron.lowerPolytope : from.upperPolytope), against: from.upperPolytope)
+            let lowerPolytope = Polytope.project(project: (e1 == .below || e1 == .equal ? polyhedron.upperPolytope : from.lowerPolytope), against: from.lowerPolytope)
             
-        default: break
+            return [ Polyhedron(upperPolytope: upperPolytope, lowerPolytope: lowerPolytope) ]
+            
+        case .intersecting:
+            
+            guard polyhedron.elevation(referencing: from) != .enclosing else { return nil }
+            
+            let e0 = polyhedron.upperPolytope.elevation(referencing: from.upperPolytope)
+            let e1 = polyhedron.lowerPolytope.elevation(referencing: from.lowerPolytope)
+            
+            let upperPolytope = Polytope.project(project: (e0 == .above || e0 == .equal ? polyhedron.lowerPolytope : from.upperPolytope), against: from.upperPolytope)
+            let lowerPolytope = Polytope.project(project: (e1 == .below || e1 == .equal ? polyhedron.upperPolytope : from.lowerPolytope), against: from.lowerPolytope)
+            
+            return [ Polyhedron(upperPolytope: upperPolytope, lowerPolytope: lowerPolytope) ]
+            
+        default: return nil
         }
-        
-        return nil
     }
     
-    /*!
-     @method Subtract:polyhedrons:from
-     @astract Attempts to subtract the volumes of an array of Polyhedrons from a single Polyhedron.
-     @param subtract An array of Polyhedrons to subtract from the source Polyhedron.
-     @param from The source Polyhedon to be divided into parts.
-     */
-    static func Subtract(polyhedrons: [Polyhedron], from: Polyhedron) -> [Polyhedron] {
+    static func subtract(polyhedrons: [Polyhedron], from: Polyhedron) -> [Polyhedron] {
         
         var divisions = [from]
         
@@ -172,13 +138,9 @@ extension Polyhedron {
             
             divisions.forEach { division in
             
-                if let result = Subtract(polyhedron: polyhedron, from: division) {
+                if let result = subtract(polyhedron: polyhedron, from: division) {
                     
                     remainder.append(contentsOf: result)
-                }
-                else {
-                    
-                    remainder.append(division)
                 }
             }
             
@@ -191,16 +153,10 @@ extension Polyhedron {
 
 extension Polyhedron {
     
-    /*!
-     @method Translate:polyhedron:translation
-     @abstract Translates the vertices of a Polyhedrons Polytopes by the given translation vector.
-     @param polytope The Polyhedron whose Polytope vertices should be translated.
-     @param translation The vector defining the translation.
-     */
-    static func Translate(polyhedron: Polyhedron, translation: SCNVector3) -> Polyhedron {
+    static func translate(polyhedron: Polyhedron, translation: SCNVector3) -> Polyhedron {
         
-        let upperPolytope = Polytope.Translate(polytope: polyhedron.upperPolytope, translation: translation)
-        let lowerPolytope = Polytope.Translate(polytope: polyhedron.lowerPolytope, translation: translation)
+        let upperPolytope = Polytope.translate(polytope: polyhedron.upperPolytope, translation: translation)
+        let lowerPolytope = Polytope.translate(polytope: polyhedron.lowerPolytope, translation: translation)
         
         return Polyhedron(upperPolytope: upperPolytope, lowerPolytope: lowerPolytope)
     }
@@ -208,17 +164,10 @@ extension Polyhedron {
 
 extension Polyhedron {
     
-    /*!
-     @method Inset:polyhedron:edge:inset
-     @abstract Adjust the vertices of a Polyhedrons Polytopes along the given GridEdge by the specified inset.
-     @param polyhedron The Polyhedron whose Polytope vertices should be inset.
-     @param edge The GridEdge to inset.
-     @param inset The amount by which the Polytope vertices should be inset.
-     */
-    static func Inset(polyhedron: Polyhedron, edge: GridEdge, inset: MDWFloat) -> Polyhedron {
+    static func inset(polyhedron: Polyhedron, edge: GridEdge, inset: MDWFloat) -> Polyhedron {
         
-        let upperPolytope = Polytope.Inset(polytope: polyhedron.upperPolytope, edge: edge, inset: inset)
-        let lowerPolytope = Polytope.Inset(polytope: polyhedron.lowerPolytope, edge: edge, inset: inset)
+        let upperPolytope = Polytope.inset(polytope: polyhedron.upperPolytope, edge: edge, inset: inset)
+        let lowerPolytope = Polytope.inset(polytope: polyhedron.lowerPolytope, edge: edge, inset: inset)
         
         return Polyhedron(upperPolytope: upperPolytope, lowerPolytope: lowerPolytope)
     }

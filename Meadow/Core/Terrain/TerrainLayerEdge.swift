@@ -2,67 +2,46 @@
 //  TerrainLayerEdge.swift
 //  Meadow-iOS
 //
-//  Created by Zack Brown on 09/06/2018.
+//  Created by Zack Brown on 23/07/2018.
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-/*!
- @struct TerrainLayerEdgeJSON
- @abstract
- */
-public struct TerrainLayerEdgeJSON: Decodable {
+extension TerrainLayer {
     
-    /*!
-     @property edge
-     @abstract The edge of the layer to be painted.
-     */
-    public let edge: GridEdge
-    
-    /*!
-     @property terrainType
-     @abstract The TerrainType used to paint the edge of the layer.
-     */
-    public let terrainType: String
-}
-
-/*!
- @struct TerrainLayerEdge
- @abstract Defines a relationship between an edge and a TerrainType.
- */
-public struct TerrainLayerEdge: Hashable, Encodable {
-    
-    /*!
-     @enum CodingKeys
-     @abstract Defines the coding keys used when encoding this object.
-     */
-    private enum CodingKeys: CodingKey {
+    public struct Edge: Codable, Hashable {
         
-        case edge
-        case terrainType
+        let edge: GridEdge
+        
+        let terrainType: TerrainType
+        
+        enum CodingKeys: CodingKey {
+            
+            case edge
+            case terrainType
+        }
+        
+        public func encode(to encoder: Encoder) throws {
+            
+            var container = encoder.container(keyedBy: CodingKeys.self)
+            
+            try container.encode(edge, forKey: .edge)
+            try container.encode(terrainType, forKey: .terrainType)
+        }
     }
     
-    /*!
-     @property edge
-     @abstract The edge of the layer to be painted.
-     */
-    public let edge: GridEdge
-    
-    /*!
-     @property terrainType
-     @abstract The TerrainType used to paint the edge of the layer.
-     */
-    public let terrainType: TerrainType
-    
-    /*!
-     @method encode:to
-     @abstract Encodes this object into the given encoder.
-     @property encoder The encoder to use when encoding this object.
-     */
-    public func encode(to encoder: Encoder) throws {
+    public struct Edges: Codable {
         
-        var container = encoder.container(keyedBy: CodingKeys.self)
+        var north: Edge
+        var east: Edge
+        var south: Edge
+        var west: Edge
         
-        try container.encode(edge, forKey: .edge)
-        try container.encode(terrainType.name, forKey: .terrainType)
+        init(terrainType: TerrainType) {
+            
+            self.north = Edge(edge: .north, terrainType: terrainType)
+            self.east = Edge(edge: .east, terrainType: terrainType)
+            self.south = Edge(edge: .south, terrainType: terrainType)
+            self.west = Edge(edge: .west, terrainType: terrainType)
+        }
     }
 }

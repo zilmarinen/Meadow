@@ -8,40 +8,20 @@
 
 import SceneKit
 
-/*!
- @struct Polytope
- @abstract Defines a Polytope with an array of vertices.
- */
 public struct Polytope {
-    
-    /*!
-     @property vertices
-     @abstract The vertices defining the Polytope.
-     */
+
     let vertices: [SCNVector3]
     
-    /*!
-     @property peak
-     @abstract The greatest y axis value of the Polytopes vertices.
-     */
     var peak: MDWFloat {
         
         return vertices.map{ $0.y }.max()!
     }
     
-    /*!
-     @property base
-     @abstract The lowest y axis value of the Polytopes vertices.
-     */
     var base: MDWFloat {
         
         return vertices.map{ $0.y }.min()!
     }
-    
-    /*!
-     @property center
-     @abstract The calculated center of the Polytope vertices.
-     */
+
     var center: SCNVector3 {
         
         let count = MDWFloat(vertices.count)
@@ -59,53 +39,23 @@ public struct Polytope {
         return SCNVector3(x: (x / count), y: (y / count), z: (z / count))
     }
     
-    /*!
-     @method init:vertices
-     @abstract Creates and initialises a Polytope with the specified vertices.
-     @param vertices The vertices defining the Polytope.
-     */
-    public init(vertices: [SCNVector3]) {
+    public init?(vertices: [SCNVector3]) {
+        
+        guard vertices.count == 4 else { return nil }
         
         self.vertices = vertices
     }
-    
-    /*!
-     @method init:x:y:z
-     @abstract Creates and initialises a Polytope with unit length at the specified x, y and z coordinates.
-     @param x The value defining the Polytopes alignment along the x axis.
-     @param y The value defining the Polytopes alignment along the y axis.
-     @param z The value defining the Polytopes alignment along the z axis.
-     */
-    public init(x: MDWFloat, y: MDWFloat, z: MDWFloat) {
+
+    public init?(x: MDWFloat, corners: [Int], z: MDWFloat) {
         
-        self.init(x: x, y: [y, y, y, y], z: z)
-    }
-    
-    /*!
-     @method init:x:y:z
-     @abstract Creates and initialises a Polytope with unit length at the specified x, y and z coordinates.
-     @param x The value defining the Polytopes alignment along the x axis.
-     @param y An array of Integer values defining the Polytopes alignment along the y axis.
-     @param z The value defining the Polytopes alignment along the z axis.
-     */
-    public init(x: MDWFloat, y: [Int], z: MDWFloat) {
+        guard corners.count == 4 else { return nil }
         
-        self.init(x: x, y: [World.Y(y: y[0]), World.Y(y: y[1]), World.Y(y: y[2]), World.Y(y: y[3])], z: z)
-    }
-    
-    /*!
-     @method init:x:y:z
-     @abstract Creates and initialises a Polytope with unit length at the specified x, y and z coordinates.
-     @param x The value defining the Polytopes alignment along the x axis.
-     @param y An array of Float values defining the Polytopes alignment along the y axis.
-     @param z The value defining the Polytopes alignment along the z axis.
-     */
-    public init(x: MDWFloat, y: [MDWFloat], z: MDWFloat) {
+        let halfWidth = MDWFloat(Axis.unitXZ / 2.0)
         
-        self.vertices = [SCNVector3(x: (x + World.UnitXZ), y:y[0], z: (z + World.UnitXZ)),
-                         SCNVector3(x: (x + -World.UnitXZ), y: y[1], z: (z + World.UnitXZ)),
-                         SCNVector3(x: (x + -World.UnitXZ), y: y[2], z: (z + -World.UnitXZ)),
-                         SCNVector3(x: (x + World.UnitXZ), y: y[3], z: (z + -World.UnitXZ))]
+        self.vertices = [SCNVector3(x: (x + halfWidth), y: Axis.Y(y: corners[0]), z: (z + halfWidth)),
+                         SCNVector3(x: (x + -halfWidth), y: Axis.Y(y: corners[1]), z: (z + halfWidth)),
+                         SCNVector3(x: (x + -halfWidth), y: Axis.Y(y: corners[2]), z: (z + -halfWidth)),
+                         SCNVector3(x: (x + halfWidth), y: Axis.Y(y: corners[3]), z: (z + -halfWidth))]
     }
 }
 
@@ -134,11 +84,7 @@ extension Polytope: Equatable {
 }
 
 extension Polytope {
-    
-    /*!
-     @enum Elevation
-     @abstract Defines the relative elevation of one Polytope to another along the y axis.
-     */
+
     enum Elevation {
         
         case above
@@ -146,12 +92,7 @@ extension Polytope {
         case equal
         case intersecting
     }
-    
-    /*!
-     @method elevation:referencing
-     @abstract Determines the elevation of the Polytope in reference to another Polytope.
-     @discussion Polytope elevation is determined by checking the y axis values of each Polytope.
-     */
+
     func elevation(referencing polytope: Polytope) -> Elevation {
         
         var equal = true
@@ -190,29 +131,17 @@ extension Polytope {
 
 extension Polytope {
     
-    /*!
-     @method Project:project:against
-     @abstract Combine the x and z components of one Polytope with the y components of another.
-     @param project The Polytope to be projected along the x and z axis of the reference Polytope.
-     @param against The reference Polytope whose x and z axis values should be referenced.
-     */
-    static func Project(project: Polytope, against: Polytope) -> Polytope {
+    static func project(project: Polytope, against: Polytope) -> Polytope {
         
         let v0 = SCNVector3(x: against.vertices[0].x, y: project.vertices[0].y, z: against.vertices[0].z)
         let v1 = SCNVector3(x: against.vertices[1].x, y: project.vertices[1].y, z: against.vertices[1].z)
         let v2 = SCNVector3(x: against.vertices[2].x, y: project.vertices[2].y, z: against.vertices[2].z)
         let v3 = SCNVector3(x: against.vertices[3].x, y: project.vertices[3].y, z: against.vertices[3].z)
         
-        return Polytope(vertices: [ v0, v1, v2, v3 ])
+        return Polytope(vertices: [ v0, v1, v2, v3 ])!
     }
     
-    /*!
-     @method Invert:polytope:edge
-     @abstract Invert the vertices of a Polytope along the specified edge.
-     @param polytope The Polytope to be inverted.
-     @param edge The edge along which the vertices should be inverted.
-     */
-    static func Invert(polytope: Polytope, edge: GridEdge) -> Polytope {
+    static func invert(polytope: Polytope, edge: GridEdge) -> Polytope {
         
         let v0 = polytope.vertices[0]
         let v1 = polytope.vertices[1]
@@ -224,77 +153,64 @@ extension Polytope {
             case .north,
                  .south:
                 
-            return Polytope(vertices: [v3, v2, v1, v0])
+            return Polytope(vertices: [v3, v2, v1, v0])!
             
             case .east,
                  .west:
                 
-            return Polytope(vertices: [v1, v0, v3, v2])
+            return Polytope(vertices: [v1, v0, v3, v2])!
         }
     }
 }
 
 extension Polytope {
     
-    /*!
-     @method translate:polytope:translation
-     @abstract Translates the vertices of a Polytope by the given translation vector.
-     @param polytope The Polytope whose vertices should be translated.
-     @param translation The vector defining the translation.
-     */
-    static func Translate(polytope: Polytope, translation: SCNVector3) -> Polytope {
+    static func translate(polytope: Polytope, translation: SCNVector3) -> Polytope {
         
         let v0 = SCNVector3(x: polytope.vertices[0].x + translation.x, y: polytope.vertices[0].y + translation.y, z: polytope.vertices[0].z + translation.z)
         let v1 = SCNVector3(x: polytope.vertices[1].x + translation.x, y: polytope.vertices[1].y + translation.y, z: polytope.vertices[1].z + translation.z)
         let v2 = SCNVector3(x: polytope.vertices[2].x + translation.x, y: polytope.vertices[2].y + translation.y, z: polytope.vertices[2].z + translation.z)
         let v3 = SCNVector3(x: polytope.vertices[3].x + translation.x, y: polytope.vertices[3].y + translation.y, z: polytope.vertices[3].z + translation.z)
         
-        return Polytope(vertices: [ v0, v1, v2, v3 ])
+        return Polytope(vertices: [ v0, v1, v2, v3 ])!
     }
 }
 
 extension Polytope {
     
-    /*!
-     @method inset:polytope:edge:inset
-     @abstract Adjust the vertices of a Polytope along the given GridEdge by the specified inset.
-     @param polytope The Polytope whose vertices should be inset.
-     @param edge The GridEdge to inset.
-     @param inset The amount by which the Polytope vertices should be inset.
-     */
-    static func Inset(polytope: Polytope, edge: GridEdge, inset: MDWFloat) -> Polytope {
+    static func inset(polytope: Polytope, edge: GridEdge, inset: MDWFloat) -> Polytope {
         
-        let oppositeEdge = GridEdge.Opposite(edge: edge)
+        let oppositeEdge = GridEdge.opposite(edge: edge)
         
         switch edge {
             
         case .north:
         
-            let v0 = GridEdge.Translate(vector: polytope.vertices[0], edge: oppositeEdge, translation: inset)
-            let v1 = GridEdge.Translate(vector: polytope.vertices[1], edge: oppositeEdge, translation: inset)
+            let v0 = GridEdge.translate(vector: polytope.vertices[0], edge: oppositeEdge, translation: inset)
+            let v1 = GridEdge.translate(vector: polytope.vertices[1], edge: oppositeEdge, translation: inset)
             
-            return Polytope(vertices: [v0, v1, polytope.vertices[2], polytope.vertices[3]])
+            return Polytope(vertices: [v0, v1, polytope.vertices[2], polytope.vertices[3]])!
             
         case .east:
             
-            let v1 = GridEdge.Translate(vector: polytope.vertices[1], edge: oppositeEdge, translation: inset)
-            let v2 = GridEdge.Translate(vector: polytope.vertices[2], edge: oppositeEdge, translation: inset)
+            let v1 = GridEdge.translate(vector: polytope.vertices[1], edge: oppositeEdge, translation: inset)
+            let v2 = GridEdge.translate(vector: polytope.vertices[2], edge: oppositeEdge, translation: inset)
             
-            return Polytope(vertices: [polytope.vertices[0], v1, v2, polytope.vertices[3]])
+            return Polytope(vertices: [polytope.vertices[0], v1, v2, polytope.vertices[3]])!
             
         case .south:
             
-            let v2 = GridEdge.Translate(vector: polytope.vertices[2], edge: oppositeEdge, translation: inset)
-            let v3 = GridEdge.Translate(vector: polytope.vertices[3], edge: oppositeEdge, translation: inset)
+            let v2 = GridEdge.translate(vector: polytope.vertices[2], edge: oppositeEdge, translation: inset)
+            let v3 = GridEdge.translate(vector: polytope.vertices[3], edge: oppositeEdge, translation: inset)
             
-            return Polytope(vertices: [polytope.vertices[0], polytope.vertices[1], v2, v3])
+            return Polytope(vertices: [polytope.vertices[0], polytope.vertices[1], v2, v3])!
             
         case .west:
             
-            let v0 = GridEdge.Translate(vector: polytope.vertices[0], edge: oppositeEdge, translation: inset)
-            let v3 = GridEdge.Translate(vector: polytope.vertices[3], edge: oppositeEdge, translation: inset)
+            let v0 = GridEdge.translate(vector: polytope.vertices[0], edge: oppositeEdge, translation: inset)
+            let v3 = GridEdge.translate(vector: polytope.vertices[3], edge: oppositeEdge, translation: inset)
             
-            return Polytope(vertices: [v0, polytope.vertices[1], polytope.vertices[2], v3])
+            return Polytope(vertices: [v0, polytope.vertices[1], polytope.vertices[2], v3])!
             
         }
     }

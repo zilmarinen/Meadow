@@ -14,9 +14,9 @@ class SizeTests: XCTestCase {
         
         let expect = expectation(description: "Sizes are considered equal when all width, height and depth components are equal")
         
-        let s0 = Size.Zero
-        let s1 = Size.One
-        let s2 = Size.Zero
+        let s0 = Size.zero
+        let s1 = Size.one
+        let s2 = Size.zero
         
         XCTAssertEqual(s0, s0)
         XCTAssertEqual(s0, s2)

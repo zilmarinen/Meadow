@@ -6,12 +6,8 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
+import Foundation
 import XCTest
-
-extension GridTests: SoilableDelegate {
-    
-    func didBecomeDirty(soilable: Soilable) {}
-}
 
 class GridTests: XCTestCase {
     
@@ -21,19 +17,15 @@ class GridTests: XCTestCase {
         
         super.setUp()
         
-        let meadow = Meadow(delegate: self)
-        
-        grid = Grid()
-        
-        grid.delegate = meadow
+        self.grid = Grid()
     }
 
     func testGridNodeAddition() {
         
         let expect = expectation(description: "Nodes can be added to a grid if the volume they define is not already occupied")
         
-        let v0 = Volume(coordinate: Coordinate(x: 13, y: 0, z: 37), size: Size.One)
-        let v1 = Volume(coordinate: Coordinate.Left, size: Size.One)
+        let v0 = Volume(coordinate: Coordinate(x: 13, y: 0, z: 37), size: Size.one)
+        let v1 = Volume(coordinate: Coordinate.left, size: Size.one)
         
         let n0 = grid.add(node: v0)
         let n1 = grid.add(node: v1)
@@ -58,7 +50,7 @@ class GridTests: XCTestCase {
         
         let expect = expectation(description: "Nodes are removed from a grid when the appropriate chunk is removed")
         
-        let volume = Volume(coordinate: Coordinate.Left, size: Size.One)
+        let volume = Volume(coordinate: Coordinate.left, size: Size.one)
         
         let n0 = grid.add(node: volume)
         
@@ -70,7 +62,7 @@ class GridTests: XCTestCase {
         XCTAssertNotNil(t0)
         XCTAssertNotNil(c0)
         
-        let result = grid.remove(chunk: c0!.volume.coordinate)
+        let result = grid.remove(chunk: c0!)
         
         let n1 = grid.find(node: n0!.volume.coordinate)
         let t1 = grid.find(tile: t0!.volume.coordinate)
@@ -90,7 +82,7 @@ class GridTests: XCTestCase {
         
         let expect = expectation(description: "Nodes are removed from a grid when the appropriate tile is removed")
         
-        let volume = Volume(coordinate: Coordinate.Left, size: Size.One)
+        let volume = Volume(coordinate: Coordinate.left, size: Size.one)
         
         let n0 = grid.add(node: volume)
         
@@ -102,7 +94,7 @@ class GridTests: XCTestCase {
         XCTAssertNotNil(t0)
         XCTAssertNotNil(c0)
         
-        let result = grid.remove(tile: t0!.volume.coordinate)
+        let result = grid.remove(tile: t0!)
         
         let n1 = grid.find(node: n0!.volume.coordinate)
         let t1 = grid.find(tile: t0!.volume.coordinate)
@@ -122,7 +114,7 @@ class GridTests: XCTestCase {
         
         let expect = expectation(description: "Nodes can be found and removed from a grid, removing any related chunks and tiles")
         
-        let volume = Volume(coordinate: Coordinate.Left, size: Size.One)
+        let volume = Volume(coordinate: Coordinate.left, size: Size.one)
         
         let n0 = grid.add(node: volume)
         
@@ -134,7 +126,7 @@ class GridTests: XCTestCase {
         XCTAssertNotNil(t0)
         XCTAssertNotNil(c0)
         
-        let result = grid.remove(node: n0!.volume.coordinate)
+        let result = grid.remove(node: n0!)
         
         let n1 = grid.find(node: n0!.volume.coordinate)
         let t1 = grid.find(tile: t0!.volume.coordinate)
@@ -154,7 +146,7 @@ class GridTests: XCTestCase {
         
         let expect = expectation(description: "Chunks can be found with the given coordinate should they exist")
         
-        let volume = Volume(coordinate: Coordinate.Left, size: Size.One)
+        let volume = Volume(coordinate: Coordinate.left, size: Size.one)
         
         let n0 = grid.add(node: volume)
         
@@ -175,7 +167,7 @@ class GridTests: XCTestCase {
         
         let expect = expectation(description: "Tiles can be found with the given coordinate should they exist")
         
-        let volume = Volume(coordinate: Coordinate.Left, size: Size.One)
+        let volume = Volume(coordinate: Coordinate.left, size: Size.one)
         
         let n0 = grid.add(node: volume)
         
@@ -193,7 +185,7 @@ class GridTests: XCTestCase {
         
         let expect = expectation(description: "Nodes can be found with the given coordinate should they exist")
         
-        let volume = Volume(coordinate: Coordinate.Left, size: Size.One)
+        let volume = Volume(coordinate: Coordinate.left, size: Size.one)
         
         let n0 = grid.add(node: volume)
         
@@ -211,9 +203,9 @@ class GridTests: XCTestCase {
         
         let expect = expectation(description: "Chunk volume is correctly calculated when chunks are created")
         
-        let v0 = Volume(coordinate: Coordinate.Left, size: Size.One)
-        let v1 = Volume(coordinate: Coordinate(x: 13, y: 0, z: 37), size: Size.One)
-        let v2 = Volume(coordinate: Coordinate(x: -13, y: 0, z: -37), size: Size.One)
+        let v0 = Volume(coordinate: Coordinate.left, size: Size.one)
+        let v1 = Volume(coordinate: Coordinate(x: 13, y: 0, z: 37), size: Size.one)
+        let v2 = Volume(coordinate: Coordinate(x: -13, y: 0, z: -37), size: Size.one)
         
         let n0 = grid.add(node: v0)
         let n1 = grid.add(node: v1)
@@ -230,16 +222,16 @@ class GridTests: XCTestCase {
         XCTAssertNotNil(c1)
         XCTAssertNotNil(c2)
         XCTAssertEqual(c0?.volume.coordinate.x, 0)
-        XCTAssertEqual(c0?.volume.coordinate.y, World.Floor)
+        XCTAssertEqual(c0?.volume.coordinate.y, World.floor)
         XCTAssertEqual(c0?.volume.coordinate.z, 0)
-        XCTAssertEqual(c0?.volume.size.width, World.ChunkSize)
-        XCTAssertEqual(c0?.volume.size.height, (World.Ceiling - World.Floor))
-        XCTAssertEqual(c0?.volume.size.depth, World.ChunkSize)
+        XCTAssertEqual(c0?.volume.size.width, World.chunkSize)
+        XCTAssertEqual(c0?.volume.size.height, (World.ceiling - World.floor))
+        XCTAssertEqual(c0?.volume.size.depth, World.chunkSize)
         XCTAssertEqual(c1?.volume.coordinate.x, 10)
-        XCTAssertEqual(c1?.volume.coordinate.y, World.Floor)
+        XCTAssertEqual(c1?.volume.coordinate.y, World.floor)
         XCTAssertEqual(c1?.volume.coordinate.z, 35)
         XCTAssertEqual(c2?.volume.coordinate.x, -15)
-        XCTAssertEqual(c2?.volume.coordinate.y, World.Floor)
+        XCTAssertEqual(c2?.volume.coordinate.y, World.floor)
         XCTAssertEqual(c2?.volume.coordinate.z, -40)
         
         expect.fulfill()
@@ -251,9 +243,9 @@ class GridTests: XCTestCase {
         
         let expect = expectation(description: "Tile volume is correctly calculated when chunks are created")
         
-        let v0 = Volume(coordinate: Coordinate.Left, size: Size.One)
-        let v1 = Volume(coordinate: Coordinate(x: 13, y: 0, z: 37), size: Size.One)
-        let v2 = Volume(coordinate: Coordinate(x: -13, y: 0, z: -37), size: Size.One)
+        let v0 = Volume(coordinate: Coordinate.left, size: Size.one)
+        let v1 = Volume(coordinate: Coordinate(x: 13, y: 0, z: 37), size: Size.one)
+        let v2 = Volume(coordinate: Coordinate(x: -13, y: 0, z: -37), size: Size.one)
         
         let n0 = grid.add(node: v0)
         let n1 = grid.add(node: v1)
@@ -270,17 +262,40 @@ class GridTests: XCTestCase {
         XCTAssertNotNil(t1)
         XCTAssertNotNil(t2)
         XCTAssertEqual(t0?.volume.coordinate.x, 1)
-        XCTAssertEqual(t0?.volume.coordinate.y, World.Floor)
+        XCTAssertEqual(t0?.volume.coordinate.y, World.floor)
         XCTAssertEqual(t0?.volume.coordinate.z, 0)
-        XCTAssertEqual(t0?.volume.size.width, World.TileSize)
-        XCTAssertEqual(t0?.volume.size.height, (World.Ceiling - World.Floor))
-        XCTAssertEqual(t0?.volume.size.depth, World.TileSize)
+        XCTAssertEqual(t0?.volume.size.width, World.tileSize)
+        XCTAssertEqual(t0?.volume.size.height, (World.ceiling - World.floor))
+        XCTAssertEqual(t0?.volume.size.depth, World.tileSize)
         XCTAssertEqual(t1?.volume.coordinate.x, 13)
-        XCTAssertEqual(t1?.volume.coordinate.y, World.Floor)
+        XCTAssertEqual(t1?.volume.coordinate.y, World.floor)
         XCTAssertEqual(t1?.volume.coordinate.z, 37)
         XCTAssertEqual(t2?.volume.coordinate.x, -13)
-        XCTAssertEqual(t2?.volume.coordinate.y, World.Floor)
+        XCTAssertEqual(t2?.volume.coordinate.y, World.floor)
         XCTAssertEqual(t2?.volume.coordinate.z, -37)
+        
+        expect.fulfill()
+        
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testGridNodeVolume() {
+        
+        let expect = expectation(description: "Nodes can only be added to a grid if the volume they occupy is within the bounds of the World.Floor and World.Ceiling")
+        
+        let size = Size(width: 1, height: 4, depth: 1)
+        
+        let v0 = Volume(coordinate: Coordinate(x: 0, y: World.floor - 1, z: 0), size: size)
+        let v1 = Volume(coordinate: Coordinate(x: 0, y: World.ceiling, z: 0), size: size)
+        let v2 = Volume(coordinate: Coordinate(x: 0, y: World.ceiling - 2, z: 0), size: size)
+        
+        let n0 = grid.add(node: v0)
+        let n1 = grid.add(node: v1)
+        let n2 = grid.add(node: v2)
+        
+        XCTAssertNil(n0)
+        XCTAssertNil(n1)
+        XCTAssertNil(n2)
         
         expect.fulfill()
         
@@ -293,8 +308,8 @@ class GridTests: XCTestCase {
         
         let coordinate = Coordinate(x: 13, y: 0, z: 37)
         
-        let v0 = Volume(coordinate: coordinate, size: Size.One)
-        let v1 = Volume(coordinate: coordinate + Coordinate.Left, size: Size.One)
+        let v0 = Volume(coordinate: coordinate, size: Size.one)
+        let v1 = Volume(coordinate: coordinate + Coordinate.left, size: Size.one)
         
         let n0 = grid.add(node: v0)
         let n1 = grid.add(node: v1)
@@ -339,8 +354,8 @@ class GridTests: XCTestCase {
         
         let coordinate = Coordinate(x: 13, y: 0, z: 37)
         
-        let v0 = Volume(coordinate: coordinate, size: Size.One)
-        let v1 = Volume(coordinate: coordinate + Coordinate.Left, size: Size.One)
+        let v0 = Volume(coordinate: coordinate, size: Size.one)
+        let v1 = Volume(coordinate: coordinate + Coordinate.left, size: Size.one)
         
         let n0 = grid.add(node: v0)
         let n1 = grid.add(node: v1)
@@ -348,7 +363,7 @@ class GridTests: XCTestCase {
         XCTAssertNotNil(n0)
         XCTAssertNotNil(n1)
         
-        let result = grid.remove(node: n1!.volume.coordinate)
+        let result = grid.remove(node: n1!)
         
         let n2 = n0?.find(neighbour: .north)
         let n3 = n0?.find(neighbour: .east)

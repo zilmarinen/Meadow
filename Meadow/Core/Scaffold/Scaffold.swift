@@ -8,15 +8,14 @@
 
 import Foundation
 
-/*!
- @class Scaffold
- @abstract Scaffold is a Grid type that manages the addition and removal of ScaffoldNodes.
- */
 public class Scaffold: Grid<ScaffoldChunk, ScaffoldTile, ScaffoldNode> {
- 
-    /*!
-     @property nodeName
-     @abstract Returns the name of the SceneGraphNode.
-     */
-    override public var nodeName: String { return "Scaffolds" }
+    
+}
+
+extension Scaffold {
+    
+    func add(node coordinate: Coordinate) -> ScaffoldNode? {
+        
+        return add(node: ScaffoldTile.fixedVolume(coordinate))
+    }
 }

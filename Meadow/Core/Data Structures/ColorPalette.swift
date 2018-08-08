@@ -6,33 +6,57 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-/*!
- @struct ColorPalette
- @abstract Defines a ColorPalette with four Colors.
- */
-public struct ColorPalette: Codable {
+public struct ColorPalette: Codable, Hashable {
     
-    /*!
-     @property primary
-     @abstract The primary Color of the ColorPalette.
-     */
+    public let name: String
+    
     public let primary: Color
-    
-    /*!
-     @property secondary
-     @abstract The secondary Color of the ColorPalette.
-     */
     public let secondary: Color
-    
-    /*!
-     @property tertiary
-     @abstract The tertiary Color of the ColorPalette.
-     */
     public let tertiary: Color
-    
-    /*!
-     @property quaternary
-     @abstract The quaternary Color of the ColorPalette.
-     */
     public let quaternary: Color
+    
+    public var hashValue: Int { return name.hashValue }
+    
+    public static func == (lhs: ColorPalette, rhs: ColorPalette) -> Bool {
+        
+        return lhs.name == rhs.name
+    }
+}
+
+public class ColorPalettes {
+    
+    public static var shared = ColorPalettes()!
+    
+    let colorPalettes: [ColorPalette]
+    
+    public var all: [ColorPalette] { return colorPalettes }
+    
+    init?() {
+        
+        guard let colors = Color.load(filename: "colors") else { return nil }
+        
+        guard let intermediates = ColorPaletteIntermediate.load(filename: "color_palettes") else { return nil }
+        
+        var palettes: [ColorPalette] = []
+        
+        intermediates.forEach { intermediate in
+            
+            let primary = colors.first { $0.name == intermediate.primary }
+            let secondary = colors.first { $0.name == intermediate.secondary }
+            let tertiary = colors.first { $0.name == intermediate.tertiary }
+            let quaternary = colors.first { $0.name == intermediate.quaternary }
+            
+            palettes.append(ColorPalette(name: intermediate.name, primary: primary!, secondary: secondary!, tertiary: tertiary!, quaternary: quaternary!))
+        }
+        
+        self.colorPalettes = palettes
+    }
+}
+
+extension ColorPalettes {
+    
+    public func palette(named: String) -> ColorPalette? {
+        
+        return colorPalettes.first { $0.name == named }
+    }
 }

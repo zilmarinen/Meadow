@@ -1,60 +1,48 @@
 //
 //  TerrainType.swift
-//  Meadow
+//  Meadow-iOS
 //
-//  Created by Zack Brown on 05/05/2018.
+//  Created by Zack Brown on 20/07/2018.
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-/*!
- @class TerrainType
- @abstract Named TerrainTypes are used to paint TerrainLayers with the appropriate ColorPalette.
- */
-public struct TerrainType: Codable {
+public enum TerrainType: Int, Codable {
     
-    /*!
-     @property name
-     @abstract THe unique name of the TerrainType.
-     */
-    public let name: String
+    case bedrock
+    case grass
+    case sand
     
-    /*!
-     @property colorPalette
-     @abstract The color palette used to paint the TerrainLayer.
-     */
-    public let colorPalette: ColorPalette
-}
-
-extension TerrainType: Hashable {
-    
-    /*!
-     @method ==
-     @abstract Determine the equality of two TerrainTypes.
-     */
-    public static func == (lhs: TerrainType, rhs: TerrainType) -> Bool {
+    public static var allCases: [TerrainType] {
         
-        return lhs.name == rhs.name
+        return [ .bedrock,
+                 .grass,
+                 .sand
+        ]
     }
     
-    /*!
-     @property hashValue
-     @abstract Return the hash value of the TerrainType.
-     */
-    public var hashValue: Int {
+    public var name: String {
         
-        return name.hashValue
+        switch self {
+            
+        case .bedrock: return "Bedrock"
+        case .grass: return "Grass"
+        case .sand: return "Sand"
+        }
     }
 }
 
 extension TerrainType {
     
-    /*!
-     @enum CodingKeys
-     @abstract Defines the key value pairs for Codable types.
-     */
-    private enum CodingKeys: String, CodingKey {
+    var meshProvider: TerrainLayerMeshProvider {
         
-        case name = "name"
-        case colorPalette = "color_palette"
+        return TerrainLayerMeshProvider()
+    }
+}
+
+extension TerrainType {
+    
+    public var colorPalette: ColorPalette? {
+        
+        return ColorPalettes.shared.palette(named: name)
     }
 }

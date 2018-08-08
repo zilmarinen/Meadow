@@ -8,27 +8,11 @@
 
 import SceneKit
 
-/*!
- @struct MeshFace
- @abstract Defines an array of vertices, normals and colors that define up a MeshFace.
- */
 public struct MeshFace {
-    
-    /*!
-     @property vertices
-     @abstract Defines an array of vertices used to create the MeshFace.
-     */
+
     let vertices: [SCNVector3]
-    
-    /*!
-     @property normals
-     @abstract Defines an array of normals used to create the MeshFace.
-     */
+
     let normals: [SCNVector3]
-    
-    /*!
-     @property faces
-     @abstract Defines an array of colors used to create the MeshFace.
-     */
+
     let colors: [SCNVector4]
 }

@@ -78,7 +78,9 @@ extension TerrainLayer: GridPolyhedronProvider {
     
     var upperPolytope: Polytope {
         
-        return Polytope(x: MDWFloat(coordinate.x), corners: corners, z: MDWFloat(coordinate.z))!
+        let (c0, c1, c2, c3) = (corners[0], corners[1], corners[2], corners[3])
+        
+        return Polytope(x: MDWFloat(coordinate.x), y0: c0, y1: c1, y2: c2, y3: c3, z: MDWFloat(coordinate.z))
     }
     
     var lowerPolytope: Polytope {
@@ -90,7 +92,7 @@ extension TerrainLayer: GridPolyhedronProvider {
         
         let y = World.floor
         
-        return Polytope(x: MDWFloat(coordinate.x), corners: [y, y, y, y], z: MDWFloat(coordinate.z))!
+        return Polytope(x: MDWFloat(coordinate.x), y0: y, y1: y, y2: y, y3: y, z: MDWFloat(coordinate.z))
     }
     
     public var polyhedron: Polyhedron { return Polyhedron(upperPolytope: upperPolytope, lowerPolytope: lowerPolytope) }

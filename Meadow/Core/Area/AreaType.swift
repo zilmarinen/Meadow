@@ -30,3 +30,24 @@ public enum AreaType: Int, Codable {
         }
     }
 }
+
+extension AreaType {
+    
+    var meshProvider: AreaMeshProvider {
+        
+        switch self {
+            
+        case .brick:
+            
+            return BrickAreaNodeMeshProvider()
+            
+        case .concrete:
+            
+            return ConcreteAreaNodeMeshProvider()
+        
+        case .wood:
+            
+            return WoodAreaNodeMeshProvider()
+        }
+    }
+}

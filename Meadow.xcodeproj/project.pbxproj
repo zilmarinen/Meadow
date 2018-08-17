@@ -101,11 +101,6 @@
 		181469122108798700326342 /* WaterNodeIntermediate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181469102108791E00326342 /* WaterNodeIntermediate.swift */; };
 		181469132108798800326342 /* WaterNodeIntermediate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181469102108791E00326342 /* WaterNodeIntermediate.swift */; };
 		181469142108798800326342 /* WaterNodeIntermediate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181469102108791E00326342 /* WaterNodeIntermediate.swift */; };
-		1814691921087F6600326342 /* WaterNodeMeshProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1814691821087F6600326342 /* WaterNodeMeshProvider.swift */; };
-		1814691B21087F7200326342 /* WaterMeshProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1814691A21087F7200326342 /* WaterMeshProvider.swift */; };
-		1814691C21087F7800326342 /* WaterMeshProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1814691A21087F7200326342 /* WaterMeshProvider.swift */; };
-		1814691D21087F7900326342 /* WaterMeshProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1814691A21087F7200326342 /* WaterMeshProvider.swift */; };
-		1814691E21087F7900326342 /* WaterMeshProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1814691A21087F7200326342 /* WaterMeshProvider.swift */; };
 		1814692021088E1600326342 /* TerrainLayerEdgeIntermediate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1814691F21088E1600326342 /* TerrainLayerEdgeIntermediate.swift */; };
 		1814692121088E3E00326342 /* TerrainLayerEdgeIntermediate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1814691F21088E1600326342 /* TerrainLayerEdgeIntermediate.swift */; };
 		1814692221088E3F00326342 /* TerrainLayerEdgeIntermediate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1814691F21088E1600326342 /* TerrainLayerEdgeIntermediate.swift */; };
@@ -119,6 +114,22 @@
 		1814692C2108905700326342 /* AreaNodeEdge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1814692421088FE700326342 /* AreaNodeEdge.swift */; };
 		1814692D2108905800326342 /* AreaNodeEdge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1814692421088FE700326342 /* AreaNodeEdge.swift */; };
 		1814692F2108914300326342 /* AreaNodeEdgeIntermediate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1814692E2108914300326342 /* AreaNodeEdgeIntermediate.swift */; };
+		181832B9211DC6A60020170E /* AreaMeshProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181832B8211DC6A60020170E /* AreaMeshProvider.swift */; };
+		181832BA211DC93C0020170E /* AreaMeshProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181832B8211DC6A60020170E /* AreaMeshProvider.swift */; };
+		181832BB211DC93C0020170E /* AreaMeshProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181832B8211DC6A60020170E /* AreaMeshProvider.swift */; };
+		181832BC211DC93C0020170E /* AreaMeshProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181832B8211DC6A60020170E /* AreaMeshProvider.swift */; };
+		181832BF211DC99E0020170E /* ConcreteAreaNodeMeshProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181832BE211DC99E0020170E /* ConcreteAreaNodeMeshProvider.swift */; };
+		181832C0211DC9D40020170E /* ConcreteAreaNodeMeshProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181832BE211DC99E0020170E /* ConcreteAreaNodeMeshProvider.swift */; };
+		181832C1211DC9D40020170E /* ConcreteAreaNodeMeshProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181832BE211DC99E0020170E /* ConcreteAreaNodeMeshProvider.swift */; };
+		181832C2211DC9D40020170E /* ConcreteAreaNodeMeshProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181832BE211DC99E0020170E /* ConcreteAreaNodeMeshProvider.swift */; };
+		181832C4211DD93B0020170E /* BrickAreaNodeMeshProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181832C3211DD93B0020170E /* BrickAreaNodeMeshProvider.swift */; };
+		181832C5211DD95F0020170E /* BrickAreaNodeMeshProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181832C3211DD93B0020170E /* BrickAreaNodeMeshProvider.swift */; };
+		181832C6211DD9600020170E /* BrickAreaNodeMeshProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181832C3211DD93B0020170E /* BrickAreaNodeMeshProvider.swift */; };
+		181832C7211DD9600020170E /* BrickAreaNodeMeshProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181832C3211DD93B0020170E /* BrickAreaNodeMeshProvider.swift */; };
+		181832C9211DD9C90020170E /* WoodAreaNodeMeshProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181832C8211DD9C90020170E /* WoodAreaNodeMeshProvider.swift */; };
+		181832CA211DD9CB0020170E /* WoodAreaNodeMeshProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181832C8211DD9C90020170E /* WoodAreaNodeMeshProvider.swift */; };
+		181832CB211DD9CC0020170E /* WoodAreaNodeMeshProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181832C8211DD9C90020170E /* WoodAreaNodeMeshProvider.swift */; };
+		181832CC211DD9CC0020170E /* WoodAreaNodeMeshProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181832C8211DD9C90020170E /* WoodAreaNodeMeshProvider.swift */; };
 		1819B73A20A574F800BEE585 /* Meadow_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1819B73120A574F800BEE585 /* Meadow_iOS.framework */; };
 		1819B74120A574F800BEE585 /* Meadow_iOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 1819B73320A574F800BEE585 /* Meadow_iOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1819B75620A5752000BEE585 /* Meadow_macOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1819B74D20A5752000BEE585 /* Meadow_macOS.framework */; };
@@ -137,9 +148,6 @@
 		1825958C210AFEB700F76A60 /* ColorPaletteIntermediate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18259588210AFEB700F76A60 /* ColorPaletteIntermediate.swift */; };
 		1825958E210B043500F76A60 /* ColorPaletteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1825958D210B043500F76A60 /* ColorPaletteTests.swift */; };
 		1825958F210B047A00F76A60 /* ColorPaletteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1825958D210B043500F76A60 /* ColorPaletteTests.swift */; };
-		18259590210B04FA00F76A60 /* WaterNodeMeshProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1814691821087F6600326342 /* WaterNodeMeshProvider.swift */; };
-		18259591210B04FA00F76A60 /* WaterNodeMeshProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1814691821087F6600326342 /* WaterNodeMeshProvider.swift */; };
-		18259592210B04FA00F76A60 /* WaterNodeMeshProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1814691821087F6600326342 /* WaterNodeMeshProvider.swift */; };
 		18259594210B18FC00F76A60 /* FootpathNodeSlope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18259593210B18FC00F76A60 /* FootpathNodeSlope.swift */; };
 		18259595210B18FC00F76A60 /* FootpathNodeSlope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18259593210B18FC00F76A60 /* FootpathNodeSlope.swift */; };
 		18259596210B18FC00F76A60 /* FootpathNodeSlope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18259593210B18FC00F76A60 /* FootpathNodeSlope.swift */; };
@@ -214,10 +222,10 @@
 		183830F42106053800FFA729 /* TerrainLayerEdge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183830F22106051D00FFA729 /* TerrainLayerEdge.swift */; };
 		183830F52106053800FFA729 /* TerrainLayerEdge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183830F22106051D00FFA729 /* TerrainLayerEdge.swift */; };
 		183830F62106053900FFA729 /* TerrainLayerEdge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183830F22106051D00FFA729 /* TerrainLayerEdge.swift */; };
-		183830F92106204C00FFA729 /* TerrainLayerMeshProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183830F82106204C00FFA729 /* TerrainLayerMeshProvider.swift */; };
-		183830FA2106207400FFA729 /* TerrainLayerMeshProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183830F82106204C00FFA729 /* TerrainLayerMeshProvider.swift */; };
-		183830FB2106207500FFA729 /* TerrainLayerMeshProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183830F82106204C00FFA729 /* TerrainLayerMeshProvider.swift */; };
-		183830FC2106207600FFA729 /* TerrainLayerMeshProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183830F82106204C00FFA729 /* TerrainLayerMeshProvider.swift */; };
+		1842417A21231FB10015B110 /* MeshProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1842417921231FB10015B110 /* MeshProvider.swift */; };
+		1842417B21231FC70015B110 /* MeshProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1842417921231FB10015B110 /* MeshProvider.swift */; };
+		1842417C21231FC80015B110 /* MeshProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1842417921231FB10015B110 /* MeshProvider.swift */; };
+		1842417D21231FC80015B110 /* MeshProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1842417921231FB10015B110 /* MeshProvider.swift */; };
 		185E587820A878CD00139565 /* Bundle+Pod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185E587720A878CD00139565 /* Bundle+Pod.swift */; };
 		185E587920A878EC00139565 /* Bundle+Pod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185E587720A878CD00139565 /* Bundle+Pod.swift */; };
 		185E587A20A878ED00139565 /* Bundle+Pod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185E587720A878CD00139565 /* Bundle+Pod.swift */; };
@@ -520,12 +528,14 @@
 		180CAA482102326D0026FE06 /* GridPolyhedronProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridPolyhedronProvider.swift; sourceTree = "<group>"; };
 		1814690A21085C4A00326342 /* TerrainMeshProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrainMeshProvider.swift; sourceTree = "<group>"; };
 		181469102108791E00326342 /* WaterNodeIntermediate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterNodeIntermediate.swift; sourceTree = "<group>"; };
-		1814691821087F6600326342 /* WaterNodeMeshProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterNodeMeshProvider.swift; sourceTree = "<group>"; };
-		1814691A21087F7200326342 /* WaterMeshProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterMeshProvider.swift; sourceTree = "<group>"; };
 		1814691F21088E1600326342 /* TerrainLayerEdgeIntermediate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrainLayerEdgeIntermediate.swift; sourceTree = "<group>"; };
 		1814692421088FE700326342 /* AreaNodeEdge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaNodeEdge.swift; sourceTree = "<group>"; };
 		181469262108904100326342 /* AreaNodeEdgeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaNodeEdgeType.swift; sourceTree = "<group>"; };
 		1814692E2108914300326342 /* AreaNodeEdgeIntermediate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaNodeEdgeIntermediate.swift; sourceTree = "<group>"; };
+		181832B8211DC6A60020170E /* AreaMeshProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaMeshProvider.swift; sourceTree = "<group>"; };
+		181832BE211DC99E0020170E /* ConcreteAreaNodeMeshProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcreteAreaNodeMeshProvider.swift; sourceTree = "<group>"; };
+		181832C3211DD93B0020170E /* BrickAreaNodeMeshProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrickAreaNodeMeshProvider.swift; sourceTree = "<group>"; };
+		181832C8211DD9C90020170E /* WoodAreaNodeMeshProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WoodAreaNodeMeshProvider.swift; sourceTree = "<group>"; };
 		1819B72420A45EE600BEE585 /* Collection+Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Bundle.swift"; sourceTree = "<group>"; };
 		1819B73120A574F800BEE585 /* Meadow_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Meadow_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1819B73320A574F800BEE585 /* Meadow_iOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Meadow_iOS.h; sourceTree = "<group>"; };
@@ -562,7 +572,7 @@
 		183830C62105C71900FFA729 /* AreaType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaType.swift; sourceTree = "<group>"; };
 		183830EC2105DEBF00FFA729 /* TerrainNodeIntersectionProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrainNodeIntersectionProvider.swift; sourceTree = "<group>"; };
 		183830F22106051D00FFA729 /* TerrainLayerEdge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrainLayerEdge.swift; sourceTree = "<group>"; };
-		183830F82106204C00FFA729 /* TerrainLayerMeshProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrainLayerMeshProvider.swift; sourceTree = "<group>"; };
+		1842417921231FB10015B110 /* MeshProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeshProvider.swift; sourceTree = "<group>"; };
 		18496C592093234300992AF3 /* GridNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridNode.swift; sourceTree = "<group>"; };
 		18496C5A2093234300992AF3 /* GridChunk.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridChunk.swift; sourceTree = "<group>"; };
 		18496C5B2093234300992AF3 /* Grid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
@@ -765,10 +775,12 @@
 			path = Intermediates;
 			sourceTree = "<group>";
 		};
-		1814691721087F5700326342 /* Mesh Providers */ = {
+		181832BD211DC9720020170E /* Mesh Providers */ = {
 			isa = PBXGroup;
 			children = (
-				1814691821087F6600326342 /* WaterNodeMeshProvider.swift */,
+				181832C3211DD93B0020170E /* BrickAreaNodeMeshProvider.swift */,
+				181832BE211DC99E0020170E /* ConcreteAreaNodeMeshProvider.swift */,
+				181832C8211DD9C90020170E /* WoodAreaNodeMeshProvider.swift */,
 			);
 			path = "Mesh Providers";
 			sourceTree = "<group>";
@@ -860,16 +872,9 @@
 				18EE513E20A59E260059829C /* Mesh.swift */,
 				182B22EF2098BDDB003D1309 /* MeshFace.swift */,
 				18EE514320A59F8E0059829C /* MeshTriangle.swift */,
+				1842417921231FB10015B110 /* MeshProvider.swift */,
 			);
 			path = Mesh;
-			sourceTree = "<group>";
-		};
-		183830F72106203D00FFA729 /* Mesh Providers */ = {
-			isa = PBXGroup;
-			children = (
-				183830F82106204C00FFA729 /* TerrainLayerMeshProvider.swift */,
-			);
-			path = "Mesh Providers";
 			sourceTree = "<group>";
 		};
 		18496C572093230900992AF3 /* Core */ = {
@@ -922,7 +927,6 @@
 			isa = PBXGroup;
 			children = (
 				180CAA24210205110026FE06 /* Intermediates */,
-				183830F72106203D00FFA729 /* Mesh Providers */,
 				18496C652093267E00992AF3 /* Terrain.swift */,
 				18496C672093269500992AF3 /* TerrainChunk.swift */,
 				188B3C16209E1BF70034F4BB /* TerrainLayer.swift */,
@@ -941,6 +945,7 @@
 		18496C71209327B900992AF3 /* Data Structures */ = {
 			isa = PBXGroup;
 			children = (
+				18496C9820937A3400992AF3 /* World.swift */,
 				18259587210AFEA800F76A60 /* Intermediates */,
 				180CA9E62101F7A80026FE06 /* Axis.swift */,
 				18538B6920A3241A00077CE2 /* Color.swift */,
@@ -972,6 +977,7 @@
 		18496C83209368AB00992AF3 /* Area */ = {
 			isa = PBXGroup;
 			children = (
+				181832BD211DC9720020170E /* Mesh Providers */,
 				18B58B812098600800402410 /* Area.swift */,
 				18B58B832098601000402410 /* AreaChunk.swift */,
 				18B58B872098602000402410 /* AreaNode.swift */,
@@ -980,6 +986,7 @@
 				18B58B852098601700402410 /* AreaTile.swift */,
 				183830C62105C71900FFA729 /* AreaType.swift */,
 				180CAA2F210209A80026FE06 /* Intermediates */,
+				181832B8211DC6A60020170E /* AreaMeshProvider.swift */,
 			);
 			path = Area;
 			sourceTree = "<group>";
@@ -1015,10 +1022,8 @@
 			isa = PBXGroup;
 			children = (
 				1814690F2108791100326342 /* Intermediates */,
-				1814691721087F5700326342 /* Mesh Providers */,
 				18B58BA1209861CB00402410 /* Water.swift */,
 				18B58BA3209861D300402410 /* WaterChunk.swift */,
-				1814691A21087F7200326342 /* WaterMeshProvider.swift */,
 				18B58BA8209861E900402410 /* WaterNode.swift */,
 				18B58BA6209861E000402410 /* WaterTile.swift */,
 				183830BC2105C6C200FFA729 /* WaterType.swift */,
@@ -1057,14 +1062,6 @@
 				182595A3210B1CB900F76A60 /* Intermediates */,
 				18FF8E0B20AC29F900995462 /* CameraJib.swift */,
 				18496C6D2093270F00992AF3 /* Meadow.swift */,
-				18496C9820937A3400992AF3 /* World.swift */,
-			);
-			path = Controllers;
-			sourceTree = "<group>";
-		};
-		185200F32096092E00D3ACC6 /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1205,7 +1202,6 @@
 			isa = PBXGroup;
 			children = (
 				18B58BAA2098623200402410 /* Area */,
-				185200F32096092E00D3ACC6 /* Controllers */,
 				18496C80209366ED00992AF3 /* Data Structures */,
 				18B58BAB2098623A00402410 /* Foliage */,
 				18B58BAC2098624000402410 /* Footpath */,
@@ -1521,11 +1517,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				181832C4211DD93B0020170E /* BrickAreaNodeMeshProvider.swift in Sources */,
 				18259589210AFEB700F76A60 /* ColorPaletteIntermediate.swift in Sources */,
 				18069F0C20C978720041A858 /* CameraJibStateMachine.swift in Sources */,
 				18EE501520A5764F0059829C /* World.swift in Sources */,
 				18EE502E20A576660059829C /* Footpath.swift in Sources */,
-				1814691921087F6600326342 /* WaterNodeMeshProvider.swift in Sources */,
 				18EE500B20A576360059829C /* AreaNode.swift in Sources */,
 				18EE504520A576770059829C /* ScaffoldChunk.swift in Sources */,
 				1814690B21085C4A00326342 /* TerrainMeshProvider.swift in Sources */,
@@ -1541,6 +1537,7 @@
 				18EE502A20A576600059829C /* Foliage.swift in Sources */,
 				18EE502F20A576660059829C /* FootpathChunk.swift in Sources */,
 				1814692F2108914300326342 /* AreaNodeEdgeIntermediate.swift in Sources */,
+				181832C9211DD9C90020170E /* WoodAreaNodeMeshProvider.swift in Sources */,
 				18EE501D20A576550059829C /* Color.swift in Sources */,
 				180CAA3321020C7C0026FE06 /* GridUpdatable.swift in Sources */,
 				18EE504420A576770059829C /* Scaffold.swift in Sources */,
@@ -1555,6 +1552,7 @@
 				1814692021088E1600326342 /* TerrainLayerEdgeIntermediate.swift in Sources */,
 				180CAA17210204320026FE06 /* GridNodeIntermediate.swift in Sources */,
 				18EE501E20A576550059829C /* ColorPalette.swift in Sources */,
+				181832B9211DC6A60020170E /* AreaMeshProvider.swift in Sources */,
 				180CA9EC2102027D0026FE06 /* GridChild.swift in Sources */,
 				18069F1320C97E1C0041A858 /* StateMachine.swift in Sources */,
 				18EE502220A576550059829C /* Size.swift in Sources */,
@@ -1570,6 +1568,7 @@
 				18FF8E0C20AC29F900995462 /* CameraJib.swift in Sources */,
 				18BFB3342112FE94003388CB /* TerrainResolver.swift in Sources */,
 				18EE500920A576360059829C /* AreaChunk.swift in Sources */,
+				1842417A21231FB10015B110 /* MeshProvider.swift in Sources */,
 				183830ED2105DEBF00FFA729 /* TerrainNodeIntersectionProvider.swift in Sources */,
 				18EE514920A5B6A30059829C /* SCNGeometry+Mesh.swift in Sources */,
 				18EE503120A576660059829C /* FootpathNode.swift in Sources */,
@@ -1586,7 +1585,6 @@
 				18EE504C20A5767D0059829C /* Terrain.swift in Sources */,
 				18EE504F20A5767D0059829C /* TerrainTile.swift in Sources */,
 				182595A5210B1CC500F76A60 /* MeadowIntermediate.swift in Sources */,
-				183830F92106204C00FFA729 /* TerrainLayerMeshProvider.swift in Sources */,
 				18EE503720A5766C0059829C /* GridChunk.swift in Sources */,
 				183830BD2105C6C200FFA729 /* WaterType.swift in Sources */,
 				18EE513A20A599000059829C /* SCNColor.swift in Sources */,
@@ -1605,12 +1603,12 @@
 				18EE506120A576880059829C /* WaterChunk.swift in Sources */,
 				180CA9E72101F7A80026FE06 /* Axis.swift in Sources */,
 				180CAA382102187D0026FE06 /* GridNodeNeighbour.swift in Sources */,
+				181832BF211DC99E0020170E /* ConcreteAreaNodeMeshProvider.swift in Sources */,
 				18EE504720A576770059829C /* ScaffoldNode.swift in Sources */,
 				180CA9F6210202DB0026FE06 /* SceneGraphParent.swift in Sources */,
 				1831501F20BED0D8004317E0 /* SCNVector3.swift in Sources */,
 				18EE503820A5766C0059829C /* GridCorner.swift in Sources */,
 				18DBCF0D20CAC41800BFF9C9 /* SCNQuaternion.swift in Sources */,
-				1814691B21087F7200326342 /* WaterMeshProvider.swift in Sources */,
 				18EE504620A576770059829C /* ScaffoldTile.swift in Sources */,
 				180CAA3F21022CF20026FE06 /* TerrainType.swift in Sources */,
 				18EE500820A576360059829C /* Area.swift in Sources */,
@@ -1661,6 +1659,7 @@
 				18EE50AF20A57BCD0059829C /* Meadow.swift in Sources */,
 				180CA9E82101F89A0026FE06 /* Axis.swift in Sources */,
 				18EE50D920A57BE60059829C /* GridCorner.swift in Sources */,
+				181832C5211DD95F0020170E /* BrickAreaNodeMeshProvider.swift in Sources */,
 				18FF8E0D20AC2A8E00995462 /* CameraJib.swift in Sources */,
 				180CAA1A210204360026FE06 /* GridTileIntermediate.swift in Sources */,
 				18EE513D20A5994C0059829C /* SCNColor.swift in Sources */,
@@ -1673,10 +1672,12 @@
 				18A6BF3B20FA2CD3001F7EB1 /* GridResolver.swift in Sources */,
 				183830B42105C4DE00FFA729 /* ScaffoldTests.swift in Sources */,
 				18EE514020A59E260059829C /* Mesh.swift in Sources */,
+				181832BA211DC93C0020170E /* AreaMeshProvider.swift in Sources */,
 				18EE50F720A57BF60059829C /* Tunnel.swift in Sources */,
 				18EE509820A57B9E0059829C /* PolytopeTests.swift in Sources */,
 				18EE50C320A57BDC0059829C /* FoliageTile.swift in Sources */,
 				18EE50DD20A57BE90059829C /* MeshFace.swift in Sources */,
+				181832CA211DD9CB0020170E /* WoodAreaNodeMeshProvider.swift in Sources */,
 				18EE50B320A57BD40059829C /* Coordinate.swift in Sources */,
 				18EE510020A57BFB0059829C /* WaterChunk.swift in Sources */,
 				180CAA0A210202FD0026FE06 /* GridParent.swift in Sources */,
@@ -1686,6 +1687,7 @@
 				180CAA18210204360026FE06 /* GridIntermediate.swift in Sources */,
 				180CAA39210218810026FE06 /* GridNodeNeighbour.swift in Sources */,
 				180CA9F9210202E60026FE06 /* SceneGraphParent.swift in Sources */,
+				181832C0211DC9D40020170E /* ConcreteAreaNodeMeshProvider.swift in Sources */,
 				181469282108905300326342 /* AreaNodeEdgeType.swift in Sources */,
 				1825958E210B043500F76A60 /* ColorPaletteTests.swift in Sources */,
 				18873B8C2111ECA10010B52C /* GridIntermediateLoader.swift in Sources */,
@@ -1698,6 +1700,7 @@
 				180CAA2C210205650026FE06 /* TerrainLayerIntermediate.swift in Sources */,
 				18BFB3352112FF19003388CB /* TerrainResolver.swift in Sources */,
 				18EE50C420A57BDC0059829C /* FoliageNode.swift in Sources */,
+				1842417B21231FC70015B110 /* MeshProvider.swift in Sources */,
 				18EE50F020A57BF30059829C /* TerrainTile.swift in Sources */,
 				18EE50F820A57BF60059829C /* TunnelChunk.swift in Sources */,
 				183830B12105C4CB00FFA729 /* FootpathTests.swift in Sources */,
@@ -1708,11 +1711,9 @@
 				18EE509720A57B9E0059829C /* CoordinateTests.swift in Sources */,
 				183830CB2105C72900FFA729 /* FoliageType.swift in Sources */,
 				18EE50D020A57BE20059829C /* FootpathNode.swift in Sources */,
-				1814691C21087F7800326342 /* WaterMeshProvider.swift in Sources */,
 				182595A0210B195D00F76A60 /* AreaNodeEdgeIntermediate.swift in Sources */,
 				180CA9FC210202ED0026FE06 /* SceneGraphChild.swift in Sources */,
 				18EE50E420A57BEE0059829C /* ScaffoldChunk.swift in Sources */,
-				183830FB2106207500FFA729 /* TerrainLayerMeshProvider.swift in Sources */,
 				18DBCF0E20CAC46600BFF9C9 /* SCNQuaternion.swift in Sources */,
 				18EE50B420A57BD40059829C /* Polyhedron.swift in Sources */,
 				18EE50D820A57BE60059829C /* GridChunk.swift in Sources */,
@@ -1745,7 +1746,6 @@
 				18EE509A20A57B9E0059829C /* VolumeTests.swift in Sources */,
 				18EE50C120A57BDC0059829C /* Foliage.swift in Sources */,
 				183830F42106053800FFA729 /* TerrainLayerEdge.swift in Sources */,
-				18259590210B04FA00F76A60 /* WaterNodeMeshProvider.swift in Sources */,
 				183830AB2105C4A400FFA729 /* AreaTests.swift in Sources */,
 				180CAA4021022D070026FE06 /* TerrainType.swift in Sources */,
 				18069F0D20C979980041A858 /* CameraJibStateMachine.swift in Sources */,
@@ -1761,6 +1761,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				181832C6211DD9600020170E /* BrickAreaNodeMeshProvider.swift in Sources */,
 				18069F0E20C979990041A858 /* CameraJibStateMachine.swift in Sources */,
 				18EE501320A5764F0059829C /* World.swift in Sources */,
 				18EE503220A576660059829C /* Footpath.swift in Sources */,
@@ -1781,6 +1782,7 @@
 				18EE502620A5765F0059829C /* Foliage.swift in Sources */,
 				18EE503320A576660059829C /* FootpathChunk.swift in Sources */,
 				18EE501620A576540059829C /* Color.swift in Sources */,
+				181832CB211DD9CC0020170E /* WoodAreaNodeMeshProvider.swift in Sources */,
 				183830C92105C72300FFA729 /* AreaType.swift in Sources */,
 				18A6BF3C20FA2CD3001F7EB1 /* GridResolver.swift in Sources */,
 				18EE504820A576780059829C /* Scaffold.swift in Sources */,
@@ -1795,12 +1797,12 @@
 				180CA9FD210202ED0026FE06 /* SceneGraphChild.swift in Sources */,
 				18EE506420A576890059829C /* Water.swift in Sources */,
 				18EE505720A5767E0059829C /* TerrainLayer.swift in Sources */,
+				181832BB211DC93C0020170E /* AreaMeshProvider.swift in Sources */,
 				18EE501720A576540059829C /* ColorPalette.swift in Sources */,
 				180CAA4121022D070026FE06 /* TerrainType.swift in Sources */,
 				18069F1520C97E1C0041A858 /* StateMachine.swift in Sources */,
 				18EE501B20A576540059829C /* Size.swift in Sources */,
 				180CAA09210202FD0026FE06 /* GridParent.swift in Sources */,
-				183830FA2106207400FFA729 /* TerrainLayerMeshProvider.swift in Sources */,
 				18EE501220A5764F0059829C /* Meadow.swift in Sources */,
 				180CAA4A210234D60026FE06 /* GridPolyhedronProvider.swift in Sources */,
 				18EE501820A576540059829C /* Coordinate.swift in Sources */,
@@ -1810,6 +1812,7 @@
 				18FF8E0E20AC2A8F00995462 /* CameraJib.swift in Sources */,
 				18BFB3362112FF19003388CB /* TerrainResolver.swift in Sources */,
 				183830CC2105C72900FFA729 /* FoliageType.swift in Sources */,
+				1842417D21231FC80015B110 /* MeshProvider.swift in Sources */,
 				18EE500520A576350059829C /* AreaChunk.swift in Sources */,
 				180CAA00210202F20026FE06 /* GridSoilable.swift in Sources */,
 				18EE514B20A5B6A30059829C /* SCNGeometry+Mesh.swift in Sources */,
@@ -1819,7 +1822,6 @@
 				18EE501920A576540059829C /* Polyhedron.swift in Sources */,
 				18EE506720A576890059829C /* WaterNode.swift in Sources */,
 				18B6727A21184DD30077489A /* WaterResolver.swift in Sources */,
-				18259591210B04FA00F76A60 /* WaterNodeMeshProvider.swift in Sources */,
 				182595AC210B1D4F00F76A60 /* FoliageNodeIntermediate.swift in Sources */,
 				18EE502920A5765F0059829C /* FoliageNode.swift in Sources */,
 				18EE503C20A5766D0059829C /* Grid.swift in Sources */,
@@ -1830,7 +1832,6 @@
 				180CAA2A210205630026FE06 /* TerrainNodeIntermediate.swift in Sources */,
 				18EE503D20A5766D0059829C /* GridChunk.swift in Sources */,
 				18EE513B20A5990F0059829C /* SCNColor.swift in Sources */,
-				1814691D21087F7900326342 /* WaterMeshProvider.swift in Sources */,
 				1814692C2108905700326342 /* AreaNodeEdge.swift in Sources */,
 				18EE504020A5766D0059829C /* GridNode.swift in Sources */,
 				18EE503420A576660059829C /* FootpathTile.swift in Sources */,
@@ -1845,6 +1846,7 @@
 				18EE502720A5765F0059829C /* FoliageChunk.swift in Sources */,
 				18EE506520A576890059829C /* WaterChunk.swift in Sources */,
 				180CA9E92101F89A0026FE06 /* Axis.swift in Sources */,
+				181832C1211DC9D40020170E /* ConcreteAreaNodeMeshProvider.swift in Sources */,
 				18EE504B20A576780059829C /* ScaffoldNode.swift in Sources */,
 				1831502120BED0EA004317E0 /* SCNVector3.swift in Sources */,
 				180CAA2D210205650026FE06 /* TerrainLayerIntermediate.swift in Sources */,
@@ -1874,6 +1876,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				18259597210B18FC00F76A60 /* FootpathNodeSlope.swift in Sources */,
+				181832CC211DD9CC0020170E /* WoodAreaNodeMeshProvider.swift in Sources */,
 				18EE50B920A57BD50059829C /* ColorPalette.swift in Sources */,
 				18EE50D520A57BE60059829C /* GridNode.swift in Sources */,
 				18EE50FB20A57BFA0059829C /* Water.swift in Sources */,
@@ -1903,12 +1906,12 @@
 				18B6727B21184DD40077489A /* WaterResolver.swift in Sources */,
 				18EE50D320A57BE60059829C /* GridCorner.swift in Sources */,
 				1825959C210B190E00F76A60 /* FootpathNodeIntermediate.swift in Sources */,
+				181832C7211DD9600020170E /* BrickAreaNodeMeshProvider.swift in Sources */,
 				18BFB3372112FF1A003388CB /* TerrainResolver.swift in Sources */,
 				18FF8E0F20AC2A8F00995462 /* CameraJib.swift in Sources */,
 				180CAA22210204370026FE06 /* GridTileIntermediate.swift in Sources */,
 				18EE513C20A5994C0059829C /* SCNColor.swift in Sources */,
 				183830F62106053900FFA729 /* TerrainLayerEdge.swift in Sources */,
-				1814691E21087F7900326342 /* WaterMeshProvider.swift in Sources */,
 				18EE50FD20A57BFA0059829C /* WaterTile.swift in Sources */,
 				180CAA4221022D070026FE06 /* TerrainType.swift in Sources */,
 				1825958F210B047A00F76A60 /* ColorPaletteTests.swift in Sources */,
@@ -1936,7 +1939,6 @@
 				180CA9FB210202E70026FE06 /* SceneGraphParent.swift in Sources */,
 				183830B22105C4D000FFA729 /* FootpathTests.swift in Sources */,
 				18EE50B820A57BD50059829C /* Color.swift in Sources */,
-				183830FC2106207600FFA729 /* TerrainLayerMeshProvider.swift in Sources */,
 				18EE50E820A57BF20059829C /* TerrainChunk.swift in Sources */,
 				180CAA21210204370026FE06 /* GridChunkIntermediate.swift in Sources */,
 				18EE50E220A57BED0059829C /* ScaffoldNode.swift in Sources */,
@@ -1948,6 +1950,7 @@
 				18EE50F420A57BF60059829C /* TunnelChunk.swift in Sources */,
 				18EE509220A57A960059829C /* VolumeTests.swift in Sources */,
 				183830AC2105C4B000FFA729 /* AreaTests.swift in Sources */,
+				181832BC211DC93C0020170E /* AreaMeshProvider.swift in Sources */,
 				18EE50BC20A57BD50059829C /* Polytope.swift in Sources */,
 				18EE509120A57A960059829C /* PolyhedronTests.swift in Sources */,
 				18EE509020A57A960059829C /* PolytopeTests.swift in Sources */,
@@ -1974,18 +1977,19 @@
 				180CA9FF210202F10026FE06 /* GridSoilable.swift in Sources */,
 				180CAA2B210205630026FE06 /* TerrainNodeIntermediate.swift in Sources */,
 				182595AD210B1D4F00F76A60 /* FoliageNodeIntermediate.swift in Sources */,
+				181832C2211DC9D40020170E /* ConcreteAreaNodeMeshProvider.swift in Sources */,
 				180CAA0B210203000026FE06 /* GridChild.swift in Sources */,
 				185E587B20A878ED00139565 /* Bundle+Pod.swift in Sources */,
 				18EE509420A57A960059829C /* TerrainTests.swift in Sources */,
 				183830BB2105C5CD00FFA729 /* WaterTests.swift in Sources */,
 				18EE50F520A57BF60059829C /* TunnelTile.swift in Sources */,
+				1842417C21231FC80015B110 /* MeshProvider.swift in Sources */,
 				18EE50F620A57BF60059829C /* TunnelNode.swift in Sources */,
 				18873B8E2111ECA20010B52C /* GridIntermediateLoader.swift in Sources */,
 				18EE50A620A57BC30059829C /* AreaNode.swift in Sources */,
 				188F483420CA6DEE007095CF /* SCNVector4.swift in Sources */,
 				18EE50BE20A57BD50059829C /* Volume.swift in Sources */,
 				18EE508F20A57A960059829C /* CoordinateTests.swift in Sources */,
-				18259592210B04FA00F76A60 /* WaterNodeMeshProvider.swift in Sources */,
 				180CAA4C210234D70026FE06 /* GridPolyhedronProvider.swift in Sources */,
 				18EE508D20A57A5C0059829C /* GridTests.swift in Sources */,
 				18EE50C520A57BDD0059829C /* Foliage.swift in Sources */,

@@ -39,23 +39,17 @@ public struct Polytope {
         return SCNVector3(x: (x / count), y: (y / count), z: (z / count))
     }
     
-    public init?(vertices: [SCNVector3]) {
+    public init(v0: SCNVector3, v1: SCNVector3, v2: SCNVector3, v3: SCNVector3) {
         
-        guard vertices.count == 4 else { return nil }
-        
-        self.vertices = vertices
+        self.vertices = [v0, v1, v2, v3]
     }
 
-    public init?(x: MDWFloat, corners: [Int], z: MDWFloat) {
+    public init(x: MDWFloat, y0: Int, y1: Int, y2: Int, y3: Int, z: MDWFloat) {
         
-        guard corners.count == 4 else { return nil }
-        
-        let halfWidth = MDWFloat(Axis.unitXZ / 2.0)
-        
-        self.vertices = [SCNVector3(x: (x + halfWidth), y: Axis.Y(y: corners[0]), z: (z + halfWidth)),
-                         SCNVector3(x: (x + -halfWidth), y: Axis.Y(y: corners[1]), z: (z + halfWidth)),
-                         SCNVector3(x: (x + -halfWidth), y: Axis.Y(y: corners[2]), z: (z + -halfWidth)),
-                         SCNVector3(x: (x + halfWidth), y: Axis.Y(y: corners[3]), z: (z + -halfWidth))]
+        self.vertices = [SCNVector3(x: (x + Axis.halfUnitXZ), y: Axis.Y(y: y0), z: (z + Axis.halfUnitXZ)),
+                         SCNVector3(x: (x + -Axis.halfUnitXZ), y: Axis.Y(y: y1), z: (z + Axis.halfUnitXZ)),
+                         SCNVector3(x: (x + -Axis.halfUnitXZ), y: Axis.Y(y: y2), z: (z + -Axis.halfUnitXZ)),
+                         SCNVector3(x: (x + Axis.halfUnitXZ), y: Axis.Y(y: y3), z: (z + -Axis.halfUnitXZ))]
     }
 }
 
@@ -138,7 +132,7 @@ extension Polytope {
         let v2 = SCNVector3(x: against.vertices[2].x, y: project.vertices[2].y, z: against.vertices[2].z)
         let v3 = SCNVector3(x: against.vertices[3].x, y: project.vertices[3].y, z: against.vertices[3].z)
         
-        return Polytope(vertices: [ v0, v1, v2, v3 ])!
+        return Polytope(v0: v0, v1: v1, v2: v2, v3: v3)
     }
     
     static func invert(polytope: Polytope, edge: GridEdge) -> Polytope {
@@ -153,65 +147,60 @@ extension Polytope {
             case .north,
                  .south:
                 
-            return Polytope(vertices: [v3, v2, v1, v0])!
+            return Polytope(v0: v3, v1: v2, v2: v1, v3: v0)
             
             case .east,
                  .west:
                 
-            return Polytope(vertices: [v1, v0, v3, v2])!
+            return Polytope(v0: v1, v1: v0, v2: v3, v3: v2)
         }
     }
-}
-
-extension Polytope {
-    
-    static func translate(polytope: Polytope, translation: SCNVector3) -> Polytope {
-        
-        let v0 = SCNVector3(x: polytope.vertices[0].x + translation.x, y: polytope.vertices[0].y + translation.y, z: polytope.vertices[0].z + translation.z)
-        let v1 = SCNVector3(x: polytope.vertices[1].x + translation.x, y: polytope.vertices[1].y + translation.y, z: polytope.vertices[1].z + translation.z)
-        let v2 = SCNVector3(x: polytope.vertices[2].x + translation.x, y: polytope.vertices[2].y + translation.y, z: polytope.vertices[2].z + translation.z)
-        let v3 = SCNVector3(x: polytope.vertices[3].x + translation.x, y: polytope.vertices[3].y + translation.y, z: polytope.vertices[3].z + translation.z)
-        
-        return Polytope(vertices: [ v0, v1, v2, v3 ])!
-    }
-}
-
-extension Polytope {
     
     static func inset(polytope: Polytope, edge: GridEdge, inset: MDWFloat) -> Polytope {
         
-        let oppositeEdge = GridEdge.opposite(edge: edge)
+        let corners = GridCorner.corners(edge: edge)
+        
+        let (c0, c1) = (corners.first!, corners.last!)
+        
+        let d0 = GridCorner.opposite(corner: c0)
+        let d1 = GridCorner.opposite(corner: c1)
+        
+        let v2 = polytope.vertices[d0.rawValue]
+        let v3 = polytope.vertices[d1.rawValue]
+        
+        let v0 = SCNVector3.lerp(from: polytope.vertices[c0.rawValue], to: v3, factor: inset)
+        let v1 = SCNVector3.lerp(from: polytope.vertices[c1.rawValue], to: v2, factor: inset)
         
         switch edge {
             
         case .north:
         
-            let v0 = GridEdge.translate(vector: polytope.vertices[0], edge: oppositeEdge, translation: inset)
-            let v1 = GridEdge.translate(vector: polytope.vertices[1], edge: oppositeEdge, translation: inset)
-            
-            return Polytope(vertices: [v0, v1, polytope.vertices[2], polytope.vertices[3]])!
+            return Polytope(v0: v0, v1: v1, v2: polytope.vertices[2], v3: polytope.vertices[3])
             
         case .east:
             
-            let v1 = GridEdge.translate(vector: polytope.vertices[1], edge: oppositeEdge, translation: inset)
-            let v2 = GridEdge.translate(vector: polytope.vertices[2], edge: oppositeEdge, translation: inset)
-            
-            return Polytope(vertices: [polytope.vertices[0], v1, v2, polytope.vertices[3]])!
+            return Polytope(v0: polytope.vertices[0], v1: v0, v2: v1, v3: polytope.vertices[3])
             
         case .south:
             
-            let v2 = GridEdge.translate(vector: polytope.vertices[2], edge: oppositeEdge, translation: inset)
-            let v3 = GridEdge.translate(vector: polytope.vertices[3], edge: oppositeEdge, translation: inset)
-            
-            return Polytope(vertices: [polytope.vertices[0], polytope.vertices[1], v2, v3])!
+            return Polytope(v0: polytope.vertices[0], v1: polytope.vertices[1], v2: v0, v3: v1)
             
         case .west:
             
-            let v0 = GridEdge.translate(vector: polytope.vertices[0], edge: oppositeEdge, translation: inset)
-            let v3 = GridEdge.translate(vector: polytope.vertices[3], edge: oppositeEdge, translation: inset)
-            
-            return Polytope(vertices: [v0, polytope.vertices[1], polytope.vertices[2], v3])!
+            return Polytope(v0: v1, v1: polytope.vertices[1], v2: polytope.vertices[2], v3: v0)
             
         }
+    }
+    
+    static func offset(polytope: Polytope, y: MDWFloat) -> Polytope {
+        
+        let vector = SCNVector3(x: 0.0, y: y, z: 0.0)
+        
+        let v0 = polytope.vertices[0] + vector
+        let v1 = polytope.vertices[1] + vector
+        let v2 = polytope.vertices[2] + vector
+        let v3 = polytope.vertices[3] + vector
+        
+        return Polytope(v0: v0, v1: v1, v2: v2, v3: v3)
     }
 }

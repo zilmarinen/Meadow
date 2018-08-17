@@ -8,8 +8,8 @@
 
 public enum World {
     
-    public static var ceiling: Int = 10
-    public static var floor: Int = -10
+    public static let ceiling: Int = 10
+    public static let floor: Int = -10
     
     static var chunkSize: Int = 5
     static var tileSize: Int = 1

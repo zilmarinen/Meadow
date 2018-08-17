@@ -25,6 +25,22 @@ extension Foliage {
     
     public func add(node coordinate: Coordinate) -> FoliageNode? {
         
-        return add(node: FoliageTile.fixedVolume(coordinate))
+        guard let node = add(node: FoliageTile.fixedVolume(coordinate)) else { return nil }
+        
+        GridEdge.Edges.forEach { edge in
+            
+            if let tile = find(tile: coordinate + GridEdge.extent(edge: edge)) {
+                
+                for index in 0..<tile.totalChildren {
+                    
+                    if let neighbour = tile.child(at: index) as? FoliageNode, (neighbour.volume.coordinate.y >= coordinate.y - 1 && neighbour.volume.coordinate.y <= coordinate.y + 1) {
+                        
+                        node.add(neighbour: neighbour, edge: edge)
+                    }
+                }
+            }
+        }
+        
+        return node
     }
 }

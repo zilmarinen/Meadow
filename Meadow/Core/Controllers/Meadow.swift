@@ -110,6 +110,10 @@ extension Meadow {
             terrainResolver.enqueue(volume: child.volume)
             waterResolver.enqueue(volume: child.volume)
             
+        case is WaterTile.Type:
+            
+            waterResolver.enqueue(volume: child.volume)
+            
         default: break
         }
         
@@ -123,8 +127,6 @@ extension Meadow: SCNSceneRendererDelegate {
         
         let delta = time - (self.lastUpdate ?? 0)
         
-        terrainResolver.resolve()
-        
         cameraJib.update(deltaTime: delta)
         areas.update(deltaTime: delta)
         foliage.update(deltaTime: delta)
@@ -133,6 +135,9 @@ extension Meadow: SCNSceneRendererDelegate {
         terrain.update(deltaTime: delta)
         tunnels.update(deltaTime: delta)
         water.update(deltaTime: delta)
+        
+        terrainResolver.resolve()
+        waterResolver.resolve()
 
         self.lastUpdate = time
     }

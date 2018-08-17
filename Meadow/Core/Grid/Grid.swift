@@ -106,14 +106,6 @@ extension Grid {
             becomeDirty()
         }
         
-        GridEdge.Edges.forEach { edge in
-            
-            if let neighbour = find(node: volume.coordinate + GridEdge.extent(edge: edge)) {
-                
-                node.add(neighbour: neighbour, edge: edge)
-            }
-        }
-        
         return node
     }
     

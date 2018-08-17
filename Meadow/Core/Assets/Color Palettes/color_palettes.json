@@ -29,7 +29,7 @@
 	},
     {
 		"name": "Water",
-		"primary": "shadowBlue",
+		"primary": "tealBlue",
 		"secondary": "steelBlue",
 		"tertiary": "tealBlue",
 		"quaternary": "winterWizard"

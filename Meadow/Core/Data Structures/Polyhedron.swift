@@ -153,17 +153,6 @@ extension Polyhedron {
 
 extension Polyhedron {
     
-    static func translate(polyhedron: Polyhedron, translation: SCNVector3) -> Polyhedron {
-        
-        let upperPolytope = Polytope.translate(polytope: polyhedron.upperPolytope, translation: translation)
-        let lowerPolytope = Polytope.translate(polytope: polyhedron.lowerPolytope, translation: translation)
-        
-        return Polyhedron(upperPolytope: upperPolytope, lowerPolytope: lowerPolytope)
-    }
-}
-
-extension Polyhedron {
-    
     static func inset(polyhedron: Polyhedron, edge: GridEdge, inset: MDWFloat) -> Polyhedron {
         
         let upperPolytope = Polytope.inset(polytope: polyhedron.upperPolytope, edge: edge, inset: inset)

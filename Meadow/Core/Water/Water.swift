@@ -37,6 +37,14 @@ extension Water {
         node.waterLevel = coordinate.y
         node.waterType = WaterType.water
         
+        GridEdge.Edges.forEach { edge in
+            
+            if let neighbour = find(node: coordinate + GridEdge.extent(edge: edge)) {
+                
+                node.add(neighbour: neighbour, edge: edge)
+            }
+        }
+        
         return node
     }
 }

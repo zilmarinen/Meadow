@@ -6,6 +6,8 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
+import SceneKit
+
 public class AreaNode: GridNode {
     
     var edges = Edges()
@@ -64,6 +66,48 @@ public class AreaNode: GridNode {
         try container.encode(self.internalAreaType, forKey: .internalAreaType)
         try container.encode(self.floorColorPalette?.name, forKey: .floorColorPalette)
     }
+    
+    public override var mesh: Mesh {
+        
+        var meshFaces: [MeshFace] = []
+        
+        let meshPolyhedron = Polyhedron(upperPolytope: upperPolytope, lowerPolytope: Polytope.offset(polytope: lowerPolytope, y: AreaNode.surface))
+        
+        GridEdge.Edges.forEach { edge in
+            
+            let corners = GridCorner.corners(edge: edge)
+            
+            let edgeNormal = GridEdge.normal(edge: edge)
+            let antiNormal = SCNVector3.negate(vector: edgeNormal)
+            
+            let neighbour = find(neighbour: edge)?.node as? AreaNode
+            
+            let nodeEdge = find(edge: edge)
+            
+            if let internalMeshProvider = internalAreaType?.meshProvider {
+                
+                if let floorColor = floorColorPalette?.primary.vector {
+                    
+                    meshFaces.append(MeshProvider.surface(corners: corners, polytope: meshPolyhedron.lowerPolytope, color: floorColor))
+                }
+                
+                if let nodeEdge = nodeEdge {
+                    
+                    meshFaces.append(contentsOf: internalMeshProvider.areaNode(edge: corners, edgeType: nodeEdge.edgeType, polyhedron: meshPolyhedron, side: .interior, normal: antiNormal, colorPalette: nodeEdge.internalColorPalette))
+                }
+            }
+            
+            if let externalMeshProvider = externalAreaType?.meshProvider {
+                
+                if let nodeEdge = nodeEdge, neighbour?.find(edge: GridEdge.opposite(edge: edge)) == nil {
+                    
+                    meshFaces.append(contentsOf: externalMeshProvider.areaNode(edge: corners, edgeType: nodeEdge.edgeType, polyhedron: meshPolyhedron, side: .exterior, normal: edgeNormal, colorPalette: nodeEdge.externalColorPalette))
+                }
+            }
+        }
+        
+        return Mesh(faces: meshFaces)
+    }
 }
 
 extension AreaNode: GridPolyhedronProvider {
@@ -72,14 +116,14 @@ extension AreaNode: GridPolyhedronProvider {
         
         let y = (volume.coordinate.y + volume.size.height)
         
-        return Polytope(x: MDWFloat(volume.coordinate.x), corners: [y, y, y, y], z: MDWFloat(volume.coordinate.z))!
+        return Polytope(x: MDWFloat(volume.coordinate.x), y0: y, y1: y, y2: y, y3: y, z: MDWFloat(volume.coordinate.z))
     }
     
     var lowerPolytope: Polytope {
         
         let y = volume.coordinate.y
         
-        return Polytope(x: MDWFloat(volume.coordinate.x), corners: [y, y, y, y], z: MDWFloat(volume.coordinate.z))!
+        return Polytope(x: MDWFloat(volume.coordinate.x), y0: y, y1: y, y2: y, y3: y, z: MDWFloat(volume.coordinate.z))
     }
     
     public var polyhedron: Polyhedron { return Polyhedron(upperPolytope: upperPolytope, lowerPolytope: lowerPolytope) }
@@ -126,7 +170,9 @@ extension AreaNode {
 
 extension AreaNode {
     
-    static var areaHeight: Int = 6
+    static let surface: MDWFloat = 0.01
+    
+    static let areaHeight: Int = 6
     
     static func fixedVolume(_ coordinate: Coordinate) -> Volume {
         

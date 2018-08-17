@@ -6,6 +6,8 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
+import SceneKit
+
 public class WaterNode: GridNode {
     
     public var waterType: WaterType? {
@@ -56,19 +58,65 @@ public class WaterNode: GridNode {
         try container.encode(self.waterLevel, forKey: .waterLevel)
         try container.encode(self.waterType, forKey: .waterType)
     }
+    
+    public override var mesh: Mesh {
+        
+        guard let waterType = waterType else { return Mesh(faces: []) }
+            
+        var meshFaces: [MeshFace] = []
+        
+        var meshPolyhedron = polyhedron
+        
+        GridEdge.Edges.forEach { edge in
+            
+            if find(neighbour: edge) == nil {
+                
+                meshPolyhedron = Polyhedron.inset(polyhedron: meshPolyhedron, edge: edge, inset: WaterNode.tension)
+            }
+        }
+        
+        meshPolyhedron = Polyhedron(upperPolytope: Polytope.offset(polytope: meshPolyhedron.upperPolytope, y: WaterNode.meniscus), lowerPolytope: meshPolyhedron.lowerPolytope)
+        
+        GridEdge.Edges.forEach { edge in
+            
+            let corners = GridCorner.corners(edge: edge)
+            
+            let edgeNormal = GridEdge.normal(edge: edge)
+            
+            let neighbour = find(neighbour: edge)?.node as? WaterNode
+            
+            let apexColor = waterType.colorPalette?.primary.vector ?? SCNVector4Zero
+            let edgeColor = waterType.colorPalette?.secondary.vector ?? SCNVector4Zero
+            
+            meshFaces.append(MeshProvider.surface(corners: corners, polytope: meshPolyhedron.upperPolytope, color: apexColor))
+            
+            if neighbour == nil {
+                
+                meshFaces.append(contentsOf: MeshProvider.edge(corners: corners, polyhedron: meshPolyhedron, normal: edgeNormal, color: edgeColor))
+            }
+        }
+        
+        return Mesh(faces: meshFaces)
+    }
 }
 
 extension WaterNode: GridPolyhedronProvider {
     
     var upperPolytope: Polytope {
         
-        return Polytope(x: MDWFloat(volume.coordinate.x), corners: [waterLevel, waterLevel, waterLevel, waterLevel], z: MDWFloat(volume.coordinate.z))!
+        return Polytope(x: MDWFloat(volume.coordinate.x), y0: waterLevel, y1: waterLevel, y2: waterLevel, y3: waterLevel, z: MDWFloat(volume.coordinate.z))
     }
     
     var lowerPolytope: Polytope {
         
-        return basePolytope ?? Polytope(x: MDWFloat(volume.coordinate.x), corners: [World.floor, World.floor, World.floor, World.floor], z: MDWFloat(volume.coordinate.z))!
+        return basePolytope ?? Polytope(x: MDWFloat(volume.coordinate.x), y0: World.floor, y1: World.floor, y2: World.floor, y3: World.floor, z: MDWFloat(volume.coordinate.z))
     }
     
     public var polyhedron: Polyhedron { return Polyhedron(upperPolytope: upperPolytope, lowerPolytope: lowerPolytope) }
+}
+
+extension WaterNode {
+    
+    static let meniscus: MDWFloat = 0.05
+    static let tension: MDWFloat = 0.01
 }

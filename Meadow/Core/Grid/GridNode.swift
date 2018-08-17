@@ -60,7 +60,12 @@ public class GridNode: GridChild, GridMeshProvider, GridSoilable, Encodable {
         }
     }
     
-    open func clean() {}
+    open func clean() {
+        
+        if !isDirty { return }
+        
+        isDirty = false
+    }
     
     open var mesh: Mesh { return Mesh(faces: []) }
 }

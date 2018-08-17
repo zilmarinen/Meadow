@@ -94,13 +94,3 @@ extension GridEdge {
         return Coordinate.GridEdgeExtents[edge.rawValue]
     }
 }
-
-extension GridEdge {
-
-    static func translate(vector: SCNVector3, edge: GridEdge, translation: MDWFloat) -> SCNVector3 {
-        
-        let edgeNormal = normal(edge: edge)
-        
-        return SCNVector3(x: vector.x + (edgeNormal.x * translation), y: vector.y, z: vector.z + (edgeNormal.z * translation))
-    }
-}

@@ -27,14 +27,6 @@ public enum WaterType: Int, Codable {
 
 extension WaterType {
     
-    var meshProvider: WaterNodeMeshProvider {
-        
-        return WaterNodeMeshProvider()
-    }
-}
-
-extension WaterType {
-    
     public var colorPalette: ColorPalette? {
         
         return ColorPalettes.shared.palette(named: name)

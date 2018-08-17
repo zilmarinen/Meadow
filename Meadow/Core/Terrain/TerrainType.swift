@@ -33,14 +33,6 @@ public enum TerrainType: Int, Codable {
 
 extension TerrainType {
     
-    var meshProvider: TerrainLayerMeshProvider {
-        
-        return TerrainLayerMeshProvider()
-    }
-}
-
-extension TerrainType {
-    
     public var colorPalette: ColorPalette? {
         
         return ColorPalettes.shared.palette(named: name)

@@ -24,5 +24,7 @@ public struct Axis {
 extension Axis {
     
     static var unitXZ: MDWFloat { return 1.0 }
+    static var halfUnitXZ: MDWFloat { return unitXZ / 2.0 }
+    
     static var unitY: MDWFloat { return 0.25 }
 }

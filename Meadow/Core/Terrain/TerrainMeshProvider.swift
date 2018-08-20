@@ -10,9 +10,9 @@ import SceneKit
 
 struct TerrainMeshProvider {
     
-    static func terrainLayer(crown corners: [GridCorner], acuteCorner: GridCorner?, polyhedron: Polyhedron, normal: SCNVector3, color: SCNVector4) -> [MeshFace] {
+    static func terrainLayer(crown corners: (GridCorner, GridCorner), acuteCorner: GridCorner?, polyhedron: Polyhedron, normal: SCNVector3, color: SCNVector4) -> [MeshFace] {
         
-        let (c0, c1) = (corners.first!, corners.last!)
+        let (c0, c1) = (corners.0, corners.1)
         
         let crown = SCNVector3(x: 0.0, y: TerrainLayer.crown, z: 0.0)
         
@@ -37,9 +37,9 @@ struct TerrainMeshProvider {
                 MeshFace(v0: v0, v1: v2, v2: v3, normal: normal, color: color)]
     }
     
-    static func terrainLayer(throne corners: [GridCorner], acuteCorner: GridCorner?, polyhedron: Polyhedron, normal: SCNVector3, color: SCNVector4) -> [MeshFace] {
+    static func terrainLayer(throne corners: (GridCorner, GridCorner), acuteCorner: GridCorner?, polyhedron: Polyhedron, normal: SCNVector3, color: SCNVector4) -> [MeshFace] {
         
-        let (c0, c1) = (corners.first!, corners.last!)
+        let (c0, c1) = (corners.0, corners.1)
         
         let crown = SCNVector3(x: 0.0, y: TerrainLayer.crown, z: 0.0)
         

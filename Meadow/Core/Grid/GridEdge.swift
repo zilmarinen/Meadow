@@ -69,14 +69,14 @@ extension GridEdge {
         SCNVector3.Left
     ]}
 
-    static func edges(corner: GridCorner) -> [GridEdge] {
+    static func edges(corner: GridCorner) -> (GridEdge, GridEdge) {
         
-        return Corners[corner.rawValue]
+        return (Corners[corner.rawValue].first!, Corners[corner.rawValue].last!)
     }
 
-    static func edges(edge: GridEdge) -> [GridEdge] {
+    static func edges(edge: GridEdge) -> (GridEdge, GridEdge) {
         
-        return Connected[edge.rawValue]
+        return (Connected[edge.rawValue].first!, Connected[edge.rawValue].last!)
     }
 
     static func opposite(edge: GridEdge) -> GridEdge {

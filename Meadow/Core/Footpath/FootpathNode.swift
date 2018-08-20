@@ -65,16 +65,14 @@ public class FootpathNode: GridNode {
         
         GridEdge.Edges.forEach { edge in
             
-            let corners = GridCorner.corners(edge: edge)
-            
-            let (c0, c1) = (corners.first!, corners.last!)
+            let (c0, c1) = GridCorner.corners(edge: edge)
             
             let d0 = GridCorner.opposite(corner: c0)
             let d1 = GridCorner.opposite(corner: c1)
             
             let surfaceColor = footpathType.colorPalette?.primary.vector ?? SCNVector4Zero
             
-            meshFaces.append(MeshProvider.surface(corners: corners, polytope: insetPolytope, color: surfaceColor))
+            meshFaces.append(MeshProvider.surface(corners: (c0, c1), polytope: insetPolytope, color: surfaceColor))
             
             if let neighbour = find(neighbour: edge)?.node as? FootpathNode {
                 
@@ -92,8 +90,11 @@ public class FootpathNode: GridNode {
                     var v4 = v0
                     var v5 = v1
                     
-                    let e0 = GridEdge.edges(corner: c0).first { $0 != edge }!
-                    let e1 = GridEdge.edges(corner: c1).first { $0 != edge }!
+                    let (ce0, ce1) = GridEdge.edges(corner: c0)
+                    let (ce2, ce3) = GridEdge.edges(corner: c1)
+                    
+                    let e0 = (ce0 != edge ? ce0 : ce1)
+                    let e1 = (ce2 != edge ? ce2 : ce3)
                     
                     let a0 = find(neighbour: e0)?.node as? FootpathNode
                     let a1 = find(neighbour: e1)?.node as? FootpathNode
@@ -150,9 +151,7 @@ extension FootpathNode {
         
         if let slope = slope {
         
-            let edgeCorners = GridCorner.corners(edge: slope.edge)
-        
-            let (c0, c1) = (edgeCorners.first!, edgeCorners.last!)
+            let (c0, c1) = GridCorner.corners(edge: slope.edge)
         
             heights[c0.rawValue] += (slope.steep ? 2 : 1)
             heights[c1.rawValue] += (slope.steep ? 2 : 1)

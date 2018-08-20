@@ -21,5 +21,16 @@ extension GridNode {
         var east: Neighbour?
         var south: Neighbour?
         var west: Neighbour?
+        
+        func find(edge: GridEdge) -> Neighbour? {
+            
+            switch edge {
+                
+            case .north: return north
+            case .east: return east
+            case .south: return south
+            case .west: return west
+            }
+        }
     }
 }

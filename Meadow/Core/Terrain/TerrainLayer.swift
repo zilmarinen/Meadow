@@ -123,7 +123,9 @@ extension TerrainLayer {
             
             let clamp = 1
             
-            GridCorner.corners(corner: corner).forEach { connectedCorner in
+            let (c0, c1) = GridCorner.corners(corner: corner)
+            
+            [c0, c1].forEach { connectedCorner in
              
                 let delta = get(height: connectedCorner) - cornerHeight
                 

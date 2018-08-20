@@ -158,9 +158,7 @@ extension Polytope {
     
     static func inset(polytope: Polytope, edge: GridEdge, inset: MDWFloat) -> Polytope {
         
-        let corners = GridCorner.corners(edge: edge)
-        
-        let (c0, c1) = (corners.first!, corners.last!)
+        let (c0, c1) = GridCorner.corners(edge: edge)
         
         let d0 = GridCorner.opposite(corner: c0)
         let d1 = GridCorner.opposite(corner: c1)
@@ -202,5 +200,12 @@ extension Polytope {
         let v3 = polytope.vertices[3] + vector
         
         return Polytope(v0: v0, v1: v1, v2: v2, v3: v3)
+    }
+    
+    static func translate(polytope: Polytope, translation: SCNVector3) -> Polytope {
+        
+        let vertices = polytope.vertices.map { $0 + translation }
+        
+        return Polytope(v0: vertices[0], v1: vertices[1], v2: vertices[2], v3: vertices[3])
     }
 }

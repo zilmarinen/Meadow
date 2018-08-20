@@ -100,13 +100,7 @@ extension GridNode {
     
     func find(neighbour edge: GridEdge) -> GridNode.Neighbour? {
         
-        switch edge {
-            
-        case .north: return neighbours.north
-        case .east: return neighbours.east
-        case .south: return neighbours.south
-        case .west: return neighbours.west
-        }
+        return neighbours.find(edge: edge)
     }
     
     func remove(neighbour edge: GridEdge) -> Bool {

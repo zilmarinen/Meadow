@@ -52,5 +52,16 @@ extension AreaNode {
         var east: Edge?
         var south: Edge?
         var west: Edge?
+        
+        func find(edge: GridEdge) -> Edge? {
+            
+            switch edge {
+                
+            case .north: return north
+            case .east: return east
+            case .south: return south
+            case .west: return west
+            }
+        }
     }
 }

@@ -10,7 +10,22 @@ import SceneKit
 
 class ConcreteAreaNodeMeshProvider: AreaMeshProvider {
     
-    func areaNode(edge corners: [GridCorner], edgeType: AreaNodeEdgeType, polyhedron: Polyhedron, side: Plane.Side, normal: SCNVector3, colorPalette: ColorPalette) -> [MeshFace] {
+    func areaNode(corner: GridCorner, polyhedron: Polyhedron, side: Plane.Side, colorPalettes: (ColorPalette, ColorPalette)) -> [MeshFace] {
+        
+        return []
+    }
+    
+    func areaNode(door edge: GridEdge, polyhedron: Polyhedron, side: Plane.Side, edges: AreaNode.Edges, normal: SCNVector3, colorPalette: ColorPalette) -> [MeshFace] {
+        
+        return []
+    }
+    
+    func areaNode(wall edge: GridEdge, polyhedron: Polyhedron, side: Plane.Side, edges: AreaNode.Edges, normal: SCNVector3, colorPalette: ColorPalette) -> [MeshFace] {
+        
+        return []
+    }
+    
+    func areaNode(window edge: GridEdge, polyhedron: Polyhedron, side: Plane.Side, edges: AreaNode.Edges, normal: SCNVector3, colorPalette: ColorPalette) -> [MeshFace] {
         
         return []
     }

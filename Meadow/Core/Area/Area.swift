@@ -27,7 +27,7 @@ extension Area {
                 
                 if let edge = intermediate.edges.north, let externalColorPalette = ColorPalettes.shared.palette(named: edge.externalColorPalette), let internalColorPalette = ColorPalettes.shared.palette(named: edge.internalColorPalette) {
                     
-                    node.set(edge: AreaNode.Edge(edge: edge.edge, edgeType: edge.edgeType, externalColorPalette: externalColorPalette, internalColorPalette: internalColorPalette))
+                    node.set(edge: AreaNode.Edge(edge: edge.edge, edgeType: edge.edgeType, architectureType: edge.architectureType, externalColorPalette: externalColorPalette, internalColorPalette: internalColorPalette))
                 }
             }
         }

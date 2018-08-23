@@ -84,22 +84,31 @@ public class AreaNode: GridNode {
             
             let edgeType0 = find(edge: e0)
             let edgeType1 = find(edge: e1)
-            let edgeType2 = a0?.find(edge: e1)
-            let edgeType3 = a1?.find(edge: e0)
+            let adjacentEdgeType0 = a0?.find(edge: e1)
+            let adjacentEdgeType1 = a1?.find(edge: e0)
             
             if let internalMeshProvider = internalAreaType?.meshProvider {
                 
-                if let edgeType2 = edgeType2, let edgeType3 = edgeType3, edgeType0 == nil && edgeType1 == nil {
+                if let adjacentEdgeType0 = adjacentEdgeType0, let adjacentEdgeType1 = adjacentEdgeType1, edgeType0 == nil && edgeType1 == nil {
                     
-                    let colorPalette = (corner == .northEast || corner == .southWest ? (edgeType3.internalColorPalette, edgeType2.internalColorPalette) : (edgeType2.internalColorPalette, edgeType3.internalColorPalette))
+                    var colorPalettes = (adjacentEdgeType0.internalColorPalette, adjacentEdgeType1.internalColorPalette)
+                    var architectureTypes = (adjacentEdgeType0.architectureType, adjacentEdgeType1.architectureType)
                     
-                    meshFaces.append(contentsOf: internalMeshProvider.areaNode(corner: corner, polyhedron: meshPolyhedron, side: .interior, colorPalettes: colorPalette))
+                    if corner == .northEast || corner == .southWest {
+                        
+                        colorPalettes = (adjacentEdgeType1.internalColorPalette, adjacentEdgeType0.internalColorPalette)
+                        architectureTypes = (adjacentEdgeType1.architectureType, adjacentEdgeType0.architectureType)
+                    }
+                    
+                    let data = AreaNodeCornerData(corner: corner, side: .interior, architectureTypes: architectureTypes, colorPalettes: colorPalettes, polyhedron: meshPolyhedron)
+                    
+                    meshFaces.append(contentsOf: internalMeshProvider.areaNode(corner: data))
                 }
             }
             
             if let externalMeshProvider = externalAreaType?.meshProvider {
              
-                if let edgeType0 = edgeType0, let edgeType1 = edgeType1, edgeType2 == nil && edgeType3 == nil && d == nil {
+                if let edgeType0 = edgeType0, let edgeType1 = edgeType1, adjacentEdgeType0 == nil && adjacentEdgeType1 == nil && d == nil {
                     
                     let translation = (GridEdge.normal(edge: edgeType0.edge) + GridEdge.normal(edge: edgeType1.edge))
                     
@@ -107,7 +116,12 @@ public class AreaNode: GridNode {
                     
                     let oppositeCorner = GridCorner.opposite(corner: corner)
                     
-                    meshFaces.append(contentsOf: externalMeshProvider.areaNode(corner: oppositeCorner, polyhedron: externalPolyhedron, side: .exterior, colorPalettes: (edgeType0.externalColorPalette, edgeType1.externalColorPalette)))
+                    let colorPalettes = (edgeType0.externalColorPalette, edgeType1.externalColorPalette)
+                    let architectureTypes = (edgeType0.architectureType, edgeType1.architectureType)
+                    
+                    let data = AreaNodeCornerData(corner: oppositeCorner, side: .exterior, architectureTypes: architectureTypes, colorPalettes: colorPalettes, polyhedron: externalPolyhedron)
+                    
+                    meshFaces.append(contentsOf: externalMeshProvider.areaNode(corner: data))
                 }
             }
         }
@@ -129,11 +143,7 @@ public class AreaNode: GridNode {
                 
                 if let nodeEdge = nodeEdge {
                     
-                    let oppositeEdge = GridEdge.opposite(edge: edge)
-                    
-                    let normal = GridEdge.normal(edge: oppositeEdge)
-                    
-                    meshFaces.append(contentsOf: internalMeshProvider.areaNode(edge: edge, polyhedron: meshPolyhedron, edgeType: nodeEdge.edgeType, side: .interior, edges: edges, normal: normal, colorPalette: nodeEdge.internalColorPalette))
+                    meshFaces.append(contentsOf: internalMeshProvider.areaNode(edge: edge, polyhedron: meshPolyhedron, edgeType: nodeEdge.edgeType, architectureType: nodeEdge.architectureType, side: .interior, edges: edges, colorPalette: nodeEdge.internalColorPalette))
                 }
             }
             
@@ -173,7 +183,7 @@ public class AreaNode: GridNode {
                         externalEdges.south = (e1 == .south ? edgeType1 : edgeType0)
                     }
                     
-                    meshFaces.append(contentsOf: externalMeshProvider.areaNode(edge: edge, polyhedron: externalPolyhedron, edgeType: nodeEdge.edgeType, side: .exterior, edges: externalEdges, normal: normal, colorPalette: nodeEdge.externalColorPalette))
+                    meshFaces.append(contentsOf: externalMeshProvider.areaNode(edge: edge, polyhedron: externalPolyhedron, edgeType: nodeEdge.edgeType, architectureType: nodeEdge.architectureType, side: .exterior, edges: externalEdges, colorPalette: nodeEdge.externalColorPalette))
                 }
             }
         }
@@ -242,18 +252,12 @@ extension AreaNode {
 
 extension AreaNode {
     
-    static let externalWallDepth: MDWFloat = 0.075
-    static let internalWallDepth: MDWFloat = 0.025
-    
-    static let skirtingDepth: MDWFloat = 0.1
-    static let skirtingHeight: MDWFloat = 0.1
+    static let externalWallDepth: MDWFloat = 0.06
+    static let internalWallDepth: MDWFloat = 0.03
     
     static let surface: MDWFloat = 0.01
     
-    static let lintelHeight: MDWFloat = 5
-    static let windowsillHeight: MDWFloat = 3
-    
-    static let areaHeight: Int = 6
+    static let areaHeight: Int = 5
     
     static func fixedVolume(_ coordinate: Coordinate) -> Volume {
         

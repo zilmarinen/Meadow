@@ -33,21 +33,13 @@ public enum AreaType: Int, Codable {
 
 extension AreaType {
     
-    var meshProvider: AreaMeshProvider {
+    var meshProvider: AreaNodeMeshProvider {
         
         switch self {
             
-        case .brick:
-            
-            return BrickAreaNodeMeshProvider()
-            
-        case .concrete:
-            
-            return ConcreteAreaNodeMeshProvider()
-        
-        case .wood:
-            
-            return WoodAreaNodeMeshProvider()
+        case .brick: return BrickAreaNodeMeshProvider()
+        case .concrete: return ConcreteAreaNodeMeshProvider()
+        case .wood: return WoodAreaNodeMeshProvider()
         }
     }
 }

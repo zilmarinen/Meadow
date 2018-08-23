@@ -54,5 +54,19 @@
 		"secondary": "gray",
 		"tertiary": "onyx",
 		"quaternary": "blueGray"
+	},
+    {
+		"name": "Building Interior",
+		"primary": "razzmatazz",
+		"secondary": "bananaMania",
+		"tertiary": "violetRed",
+		"quaternary": "cornflower"
+	},
+    {
+		"name": "Building Exterior",
+		"primary": "rawUmber",
+		"secondary": "tan",
+		"tertiary": "beaver",
+		"quaternary": "cornflower"
 	}
 ]

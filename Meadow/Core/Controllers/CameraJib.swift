@@ -78,8 +78,8 @@ extension CameraJib {
         camera.orthographicScale = scale
         
         let radius = Float(camera.zFar / 2.0)
-        let yAngle = Float(45.0)
-        let xzAngle = Float((edge.rawValue * 90) + 15)
+        let yAngle = Float(35.0)
+        let xzAngle = Float((edge.rawValue * 90) + 42)
         let i = GLKMathDegreesToRadians(xzAngle)
         let j = GLKMathDegreesToRadians(yAngle)
         let k = GLKMathDegreesToRadians(xzAngle)

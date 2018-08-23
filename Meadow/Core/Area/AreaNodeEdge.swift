@@ -14,14 +14,18 @@ extension AreaNode {
         
         public let edgeType: AreaNodeEdgeType
         
+        public let architectureType: AreaArchitectureType
+        
         public let externalColorPalette: ColorPalette
         public let internalColorPalette: ColorPalette
         
-        public init(edge: GridEdge, edgeType: AreaNodeEdgeType, externalColorPalette: ColorPalette, internalColorPalette: ColorPalette) {
+        public init(edge: GridEdge, edgeType: AreaNodeEdgeType, architectureType: AreaArchitectureType,  externalColorPalette: ColorPalette, internalColorPalette: ColorPalette) {
             
             self.edge = edge
             
             self.edgeType = edgeType
+            
+            self.architectureType = architectureType
             
             self.externalColorPalette = externalColorPalette
             self.internalColorPalette = internalColorPalette
@@ -31,6 +35,7 @@ extension AreaNode {
             
             case edge
             case edgeType
+            case architectureType
             case externalColorPalette
             case internalColorPalette
         }
@@ -41,6 +46,7 @@ extension AreaNode {
             
             try container.encode(self.edge, forKey: .edge)
             try container.encode(self.edgeType, forKey: .edgeType)
+            try container.encode(self.architectureType, forKey: .architectureType)
             try container.encode(self.externalColorPalette.name, forKey: .externalColorPalette)
             try container.encode(self.internalColorPalette.name, forKey: .internalColorPalette)
         }

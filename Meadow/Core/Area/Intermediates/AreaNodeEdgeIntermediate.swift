@@ -12,6 +12,8 @@ public struct AreaNodeEdgeIntermediate: Codable {
     
     let edgeType: AreaNodeEdgeType
     
+    let architectureType: AreaArchitectureType
+    
     let externalColorPalette: String
     let internalColorPalette: String
 }

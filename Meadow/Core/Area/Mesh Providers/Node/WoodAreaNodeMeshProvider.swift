@@ -10,23 +10,31 @@ import SceneKit
 
 class WoodAreaNodeMeshProvider: AreaNodeMeshProvider {
     
-    func areaNode(corner: AreaNodeCornerData) -> [MeshFace] {
+    func areaNode(doorway edge: AreaNodeEdgeData, insets: AreaArchitectureInsets, offsets: AreaArchitectureOffsets, transom: Bool) -> [MeshFace] {
         
-        return []
+        var meshFaces: [MeshFace] = []
+        
+        return meshFaces
     }
     
-    func areaNode(doorway edge: AreaNodeEdgeData, fullWidth: Bool, transom: Bool) -> [MeshFace] {
+    func areaNode(wall corner: AreaNodeCornerData, insets: (AreaArchitectureInsets, AreaArchitectureInsets), offsets: (AreaArchitectureOffsets, AreaArchitectureOffsets)) -> [MeshFace] {
         
-        return []
+        var meshFaces: [MeshFace] = []
+        
+        return meshFaces
     }
     
-    func areaNode(wall edge: AreaNodeEdgeData) -> [MeshFace] {
+    func areaNode(wall edge: AreaNodeEdgeData, insets: AreaArchitectureInsets, offsets: AreaArchitectureOffsets) -> [MeshFace] {
         
-        return []
+        var meshFaces: [MeshFace] = []
+        
+        return meshFaces
     }
     
-    func areaNode(window edge: AreaNodeEdgeData, fullWidth: Bool) -> [MeshFace] {
+    func areaNode(window edge: AreaNodeEdgeData, insets: AreaArchitectureInsets, offsets: AreaArchitectureOffsets) -> [MeshFace] {
         
-        return []
+        var meshFaces: [MeshFace] = []
+        
+        return meshFaces
     }
 }

@@ -8,17 +8,26 @@
 
 import SceneKit
 
+struct AreaNodePolytopes {
+    
+    let polytope: Polytope
+    
+    let wall: Polytope
+    
+    let skirting: Polytope
+}
+
 struct AreaNodeCornerData {
     
     let corner: GridCorner
     
     let side: Plane.Side
     
-    let architectureTypes: (AreaArchitectureType, AreaArchitectureType)
-    
     let colorPalettes: (ColorPalette, ColorPalette)
     
-    let polyhedron: Polyhedron
+    let polytopes: AreaNodePolytopes
+    
+    let insetPolytopes: AreaNodePolytopes
 }
 
 struct AreaNodeEdgeData {
@@ -27,48 +36,177 @@ struct AreaNodeEdgeData {
     
     let side: Plane.Side
     
-    let architectureType: AreaArchitectureType
-    
     let normal: SCNVector3
     
     let colorPalette: ColorPalette
     
-    let polyhedron: Polyhedron
+    let polytopes: AreaNodePolytopes
     
-    let wall: Polytope
-    
-    let skirting: Polytope
+    let insetPolytopes: AreaNodePolytopes
 }
 
 protocol AreaNodeMeshProvider {
     
-    func areaNode(corner: AreaNodeCornerData) -> [MeshFace]
+    func areaNode(corner: GridCorner, polyhedron: Polyhedron, architectureTypes: (AreaArchitectureType, AreaArchitectureType), side: Plane.Side, colorPalettes: (ColorPalette, ColorPalette)) -> [MeshFace]
     
     func areaNode(edge: GridEdge, polyhedron: Polyhedron, edgeType: AreaNodeEdgeType, architectureType: AreaArchitectureType, side: Plane.Side, edges: AreaNode.Edges, colorPalette: ColorPalette) -> [MeshFace]
     
-    func areaNode(doorway edge: AreaNodeEdgeData, fullWidth: Bool, transom: Bool) -> [MeshFace]
+    func areaNode(doorway edge: AreaNodeEdgeData, insets: AreaArchitectureInsets, offsets: AreaArchitectureOffsets, transom: Bool) -> [MeshFace]
     
-    func areaNode(wall edge: AreaNodeEdgeData) -> [MeshFace]
+    func areaNode(wall corner: AreaNodeCornerData, insets: (AreaArchitectureInsets, AreaArchitectureInsets), offsets: (AreaArchitectureOffsets, AreaArchitectureOffsets)) -> [MeshFace]
     
-    func areaNode(window edge: AreaNodeEdgeData, fullWidth: Bool) -> [MeshFace]
+    func areaNode(wall edge: AreaNodeEdgeData, insets: AreaArchitectureInsets, offsets: AreaArchitectureOffsets) -> [MeshFace]
+    
+    func areaNode(window edge: AreaNodeEdgeData, insets: AreaArchitectureInsets, offsets: AreaArchitectureOffsets) -> [MeshFace]
 }
 
 extension AreaNodeMeshProvider {
     
-    func areaNode(edge: GridEdge, polyhedron: Polyhedron, edgeType: AreaNodeEdgeType, architectureType: AreaArchitectureType, side: Plane.Side, edges: AreaNode.Edges, colorPalette: ColorPalette) -> [MeshFace] {
+    func areaNode(edgeInsets edgeType: AreaNodeEdgeType, architectureType: AreaArchitectureType, side: Plane.Side) -> AreaArchitectureInsets {
         
         let doorWidth = architectureType.meshProvider.door.x
-        let skirtingWidth = architectureType.meshProvider.skirting.x
+        let frameWidth = architectureType.meshProvider.frame.x
         let windowWidth = architectureType.meshProvider.window.x
-        
-        guard (doorWidth * 2) + (skirtingWidth * 2) < 1 && (windowWidth * 2) + (skirtingWidth * 2) < 1 else { return [] }
+        let fullWidth = (edgeType == .doubleDoor || edgeType == .doubleDoorWithTransom || edgeType == .windowFullWidth)
         
         let wallInset = (side == .exterior ? AreaNode.externalWallDepth : AreaNode.internalWallDepth)
-        let skirtingInset = (wallInset + architectureType.meshProvider.skirting.x)
+        let skirtingInset = (wallInset + architectureType.meshProvider.skirting.z)
         
-        var wallPolytope = Polytope.inset(polytope: polyhedron.lowerPolytope, edge: edge, inset: wallInset)
+        var cutawayWidth = MDWFloat(0.0)
         
-        var skirtingPolytope = Polytope.inset(polytope: polyhedron.lowerPolytope, edge: edge, inset: skirtingInset)
+        switch edgeType {
+            
+        case .windowHalfWidth,
+             .windowFullWidth:
+            
+            cutawayWidth = (windowWidth * (fullWidth ? 2 : 1))
+            
+        case .door,
+             .doorWithTransom,
+             .doubleDoor,
+             .doubleDoorWithTransom:
+            
+            cutawayWidth = (doorWidth * (fullWidth ? 2 : 1))
+            
+        default: break
+        }
+        
+        let frameInset = (Axis.unitXZ - cutawayWidth) / 2.0
+        let cutawayInset = (frameInset - frameWidth)
+        
+        return AreaArchitectureInsets(frame: frameInset, cutaway: cutawayInset, wall: wallInset, skirting: skirtingInset)
+    }
+    
+    public func areaNode(offsets architectureType: AreaArchitectureType, side: Plane.Side) -> AreaArchitectureOffsets {
+        
+        let areaHeight = Axis.Y(y: AreaNode.areaHeight)
+        let doorHeight = architectureType.meshProvider.door.y
+        let frameHeight = architectureType.meshProvider.frame.y
+        let skirtingHeight = architectureType.meshProvider.skirting.y
+        let transomHeight = architectureType.meshProvider.transom.y
+        let windowHeight = architectureType.meshProvider.window.y
+        let lintelHeight = ((areaHeight - (doorHeight + transomHeight + (frameHeight * 3))) / 2.0)
+        
+        let wallPeak = SCNVector3(x: 0.0, y: areaHeight, z: 0.0)
+        let transomFramePeak = SCNVector3(x: 0.0, y: areaHeight - lintelHeight, z: 0.0)
+        let transomPeak = SCNVector3(x: 0.0, y: transomFramePeak.y - frameHeight, z: 0.0)
+        let transomBase = SCNVector3(x: 0.0, y: transomPeak.y - transomHeight, z: 0.0)
+        let transomFrameBase = SCNVector3(x: 0.0, y: transomBase.y - frameHeight, z: 0.0)
+        let lintelFramePeak = SCNVector3(x: 0.0, y: doorHeight + frameHeight, z: 0.0)
+        let lintelPeak = SCNVector3(x: 0.0, y: doorHeight, z: 0.0)
+        let windowBase = SCNVector3(x: 0.0, y: doorHeight - windowHeight, z: 0.0)
+        let windowFrameBase = SCNVector3(x: 0.0, y: windowBase.y - frameHeight, z: 0.0)
+        let skirtingPeak = SCNVector3(x: 0.0, y: (side == .interior ? skirtingHeight : 0.0), z: 0.0)
+        let surface = SCNVector3(x: 0.0, y: AreaNode.surface, z: 0.0)
+        
+        return AreaArchitectureOffsets(wallPeak: wallPeak,
+                                       transomFramePeak: transomFramePeak,
+                                       transomPeak: transomPeak,
+                                       transomBase: transomBase,
+                                       transomFrameBase: transomFrameBase,
+                                       lintelFramePeak: lintelFramePeak,
+                                       lintelPeak: lintelPeak,
+                                       windowBase: windowBase,
+                                       windowFrameBase: windowFrameBase,
+                                       skirtingPeak: skirtingPeak,
+                                       surface: surface)
+    }
+}
+
+extension AreaNodeMeshProvider {
+    
+    func areaNode(corner: GridCorner, polyhedron: Polyhedron, architectureTypes: (AreaArchitectureType, AreaArchitectureType), side: Plane.Side, colorPalettes: (ColorPalette, ColorPalette)) -> [MeshFace] {
+        
+        let oppositeCorner = GridCorner.opposite(corner: corner)
+        
+        let (e0, e1) = GridEdge.edges(corner: oppositeCorner)
+        
+        let (at0, at1) = (architectureTypes.0, architectureTypes.1)
+        let (cp0, cp1) = (colorPalettes.0, colorPalettes.1)
+        
+        let i0 = areaNode(edgeInsets: .wall, architectureType: at0, side: side)
+        let i1 = areaNode(edgeInsets: .wall, architectureType: at1, side: side)
+        
+        let o0 = areaNode(offsets: at0, side: side)
+        let o1 = areaNode(offsets: at1, side: side)
+        
+        var wallPolytope = polyhedron.lowerPolytope
+        
+        var skirtingPolytope = polyhedron.lowerPolytope
+        
+        let polytopes = AreaNodePolytopes(polytope: polyhedron.lowerPolytope, wall: wallPolytope, skirting: skirtingPolytope)
+        
+        wallPolytope = Polytope.inset(polytope: wallPolytope, edge: e0, inset: (Axis.unitXZ - i0.wall))
+        wallPolytope = Polytope.inset(polytope: wallPolytope, edge: e1, inset: (Axis.unitXZ - i1.wall))
+        
+        skirtingPolytope = Polytope.inset(polytope: skirtingPolytope, edge: e0, inset: (Axis.unitXZ - i0.skirting))
+        skirtingPolytope = Polytope.inset(polytope: skirtingPolytope, edge: e1, inset: (Axis.unitXZ - i1.skirting))
+        
+        let insetPolytopes = AreaNodePolytopes(polytope: polyhedron.lowerPolytope, wall: wallPolytope, skirting: skirtingPolytope)
+        
+        let data = AreaNodeCornerData(corner: corner,
+                                      side: side,
+                                      colorPalettes: colorPalettes,
+                                      polytopes: polytopes,
+                                      insetPolytopes: insetPolytopes)
+        
+        var meshFaces: [MeshFace] = []
+        
+        meshFaces.append(contentsOf: areaNode(wall: data, insets: (i0, i1), offsets: (o0, o1)))
+        
+        if side == .interior {
+            
+            let d0 = AreaNodeEdgeData(edge: e0,
+                                      side: side,
+                                      normal: GridEdge.normal(edge: e0),
+                                      colorPalette: cp0,
+                                      polytopes: polytopes,
+                                      insetPolytopes: insetPolytopes)
+            
+            let d1 = AreaNodeEdgeData(edge: e1,
+                                      side: side,
+                                      normal: GridEdge.normal(edge: e1),
+                                      colorPalette: cp1,
+                                      polytopes: polytopes,
+                                      insetPolytopes: insetPolytopes)
+            
+            meshFaces.append(contentsOf: at0.meshProvider.areaNode(skirting: d0, insets: i0, offsets: o0))
+            meshFaces.append(contentsOf: at1.meshProvider.areaNode(skirting: d1, insets: i1, offsets: o1))
+        }
+        
+        return meshFaces
+    }
+    
+    func areaNode(edge: GridEdge, polyhedron: Polyhedron, edgeType: AreaNodeEdgeType, architectureType: AreaArchitectureType, side: Plane.Side, edges: AreaNode.Edges, colorPalette: ColorPalette) -> [MeshFace] {
+        
+        let insets = areaNode(edgeInsets: edgeType, architectureType: architectureType, side: side)
+        let offsets = areaNode(offsets: architectureType, side: side)
+        
+        var wallPolytope = Polytope.inset(polytope: polyhedron.lowerPolytope, edge: edge, inset: insets.wall)
+        
+        var skirtingPolytope = Polytope.inset(polytope: polyhedron.lowerPolytope, edge: edge, inset: insets.skirting)
+        
+        let polytopes = AreaNodePolytopes(polytope: polyhedron.lowerPolytope, wall: wallPolytope, skirting: skirtingPolytope)
         
         let (e0, e1) = GridEdge.edges(edge: edge)
         
@@ -76,15 +214,22 @@ extension AreaNodeMeshProvider {
             
             if edges.find(edge: connectedEdge)?.edgeType != nil {
                 
-                wallPolytope = Polytope.inset(polytope: wallPolytope, edge: connectedEdge, inset: wallInset)
+                wallPolytope = Polytope.inset(polytope: wallPolytope, edge: connectedEdge, inset: insets.wall)
                 
-                skirtingPolytope = Polytope.inset(polytope: skirtingPolytope, edge: connectedEdge, inset: skirtingInset)
+                skirtingPolytope = Polytope.inset(polytope: skirtingPolytope, edge: connectedEdge, inset: insets.skirting)
             }
         }
         
+        let insetPolytopes = AreaNodePolytopes(polytope: polyhedron.lowerPolytope, wall: wallPolytope, skirting: skirtingPolytope)
+        
         let normal = GridEdge.normal(edge: (side == .exterior ? edge : GridEdge.opposite(edge: edge)))
         
-        let data = AreaNodeEdgeData(edge: edge, side: side, architectureType: architectureType, normal: normal, colorPalette: colorPalette, polyhedron: polyhedron, wall: wallPolytope, skirting: skirtingPolytope)
+        let data = AreaNodeEdgeData(edge: edge,
+                                    side: side,
+                                    normal: normal,
+                                    colorPalette: colorPalette,
+                                    polytopes: polytopes,
+                                    insetPolytopes: insetPolytopes)
         
         var meshFaces: [MeshFace] = []
         
@@ -96,25 +241,36 @@ extension AreaNodeMeshProvider {
              .doubleDoorWithTransom:
             
             let transom = (edgeType == .doorWithTransom || edgeType == .doubleDoorWithTransom)
-            let fullWidth = (edgeType == .doubleDoor || edgeType == .doubleDoorWithTransom)
             
-            meshFaces.append(contentsOf: areaNode(doorway: data, fullWidth: fullWidth, transom: transom))
+            meshFaces.append(contentsOf: areaNode(doorway: data, insets: insets, offsets: offsets, transom: transom))
+            
+            meshFaces.append(contentsOf: architectureType.meshProvider.areaNode(doorway: data, insets: insets, offsets: offsets))
             
             if transom {
                 
-                //meshFaces.append(contentsOf: edge.architectureType.meshProvider.areaNode(transom: data, polyhedron: polyhedron))
+                meshFaces.append(contentsOf: architectureType.meshProvider.areaNode(transom: data, insets: insets, offsets: offsets))
             }
             
         case .wall:
             
-            meshFaces.append(contentsOf: areaNode(wall: data))
+            meshFaces.append(contentsOf: areaNode(wall: data, insets: insets, offsets: offsets))
+            
+            if side == .interior {
+             
+                meshFaces.append(contentsOf: architectureType.meshProvider.areaNode(skirting: data, insets: insets, offsets: offsets))
+            }
             
         case .windowFullWidth,
              .windowHalfWidth:
             
-            let fullWidth = (edgeType == .windowFullWidth)
+            meshFaces.append(contentsOf: areaNode(window: data, insets: insets, offsets: offsets))
             
-            meshFaces.append(contentsOf: areaNode(window: data, fullWidth: fullWidth))
+            meshFaces.append(contentsOf: architectureType.meshProvider.areaNode(window: data, insets: insets, offsets: offsets))
+            
+            if side == .interior {
+                
+                meshFaces.append(contentsOf: architectureType.meshProvider.areaNode(skirting: data, insets: insets, offsets: offsets))
+            }
         }
         
         return meshFaces

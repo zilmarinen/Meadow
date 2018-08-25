@@ -100,9 +100,7 @@ public class AreaNode: GridNode {
                         architectureTypes = (adjacentEdgeType1.architectureType, adjacentEdgeType0.architectureType)
                     }
                     
-                    let data = AreaNodeCornerData(corner: corner, side: .interior, architectureTypes: architectureTypes, colorPalettes: colorPalettes, polyhedron: meshPolyhedron)
-                    
-                    meshFaces.append(contentsOf: internalMeshProvider.areaNode(corner: data))
+                    meshFaces.append(contentsOf: internalMeshProvider.areaNode(corner: corner, polyhedron: meshPolyhedron, architectureTypes: architectureTypes, side: .interior, colorPalettes: colorPalettes))
                 }
             }
             
@@ -117,11 +115,10 @@ public class AreaNode: GridNode {
                     let oppositeCorner = GridCorner.opposite(corner: corner)
                     
                     let colorPalettes = (edgeType0.externalColorPalette, edgeType1.externalColorPalette)
+                    
                     let architectureTypes = (edgeType0.architectureType, edgeType1.architectureType)
                     
-                    let data = AreaNodeCornerData(corner: oppositeCorner, side: .exterior, architectureTypes: architectureTypes, colorPalettes: colorPalettes, polyhedron: externalPolyhedron)
-                    
-                    meshFaces.append(contentsOf: externalMeshProvider.areaNode(corner: data))
+                    meshFaces.append(contentsOf: externalMeshProvider.areaNode(corner: oppositeCorner, polyhedron: externalPolyhedron, architectureTypes: architectureTypes, side: .exterior, colorPalettes: colorPalettes))
                 }
             }
         }

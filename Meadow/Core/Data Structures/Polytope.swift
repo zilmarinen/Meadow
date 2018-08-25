@@ -25,17 +25,17 @@ public struct Polytope {
     var center: SCNVector3 {
         
         var x: MDWFloat = 0
-        var y: Int = 0
+        var y: MDWFloat = 0
         var z: MDWFloat = 0
         
         vertices.forEach { vertex in
             
             x += vertex.x
-            y += Axis.Y(y: vertex.y)
+            y += vertex.y
             z += vertex.z
         }
         
-        return SCNVector3(x: (x / 4), y: Axis.Y(y: Int(round(Double(y) / 4))), z: (z / 4))
+        return SCNVector3(x: x / 4, y: y / 4, z: z / 4)
     }
     
     public init(v0: SCNVector3, v1: SCNVector3, v2: SCNVector3, v3: SCNVector3) {

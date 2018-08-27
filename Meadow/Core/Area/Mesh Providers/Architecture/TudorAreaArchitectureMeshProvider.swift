@@ -43,99 +43,112 @@ extension TudorAreaArchitectureMeshProvider {
         
         let w0 = edge.polytopes.wall.vertices[c0.rawValue]
         let w1 = edge.polytopes.wall.vertices[c1.rawValue]
-        let wi0 = edge.insetPolytopes.wall.vertices[c0.rawValue]
-        let wi1 = edge.insetPolytopes.wall.vertices[c1.rawValue]
         
         let s0 = edge.polytopes.skirting.vertices[c0.rawValue]
         let s1 = edge.polytopes.skirting.vertices[c1.rawValue]
-        let si0 = edge.insetPolytopes.skirting.vertices[c0.rawValue]
-        let si1 = edge.insetPolytopes.skirting.vertices[c1.rawValue]
         
-        let pf0 = SCNVector3.lerp(from: p0, to: p1, factor: insets.frame)
-        let pf1 = SCNVector3.lerp(from: p1, to: p0, factor: insets.frame)
+        let wc0 = edge.polytopes.wallCutaway.vertices[c0.rawValue]
+        let wc1 = edge.polytopes.wallCutaway.vertices[c1.rawValue]
         
-        let wc0 = SCNVector3.lerp(from: w0, to: w1, factor: insets.cutaway)
-        let wc1 = SCNVector3.lerp(from: w1, to: w0, factor: insets.cutaway)
+        let fc0 = edge.polytopes.frameCutaway.vertices[c0.rawValue]
+        let fc1 = edge.polytopes.frameCutaway.vertices[c1.rawValue]
         
-        let sc0 = SCNVector3.lerp(from: s0, to: s1, factor: insets.cutaway)
-        let sc1 = SCNVector3.lerp(from: s1, to: s0, factor: insets.cutaway)
-        let sf0 = SCNVector3.lerp(from: s0, to: s1, factor: insets.frame)
-        let sf1 = SCNVector3.lerp(from: s1, to: s0, factor: insets.frame)
+        let pv0 = SCNVector3.lerp(from: p0, to: p1, factor: insets.frame)
+        let pv1 = SCNVector3.lerp(from: p1, to: p0, factor: insets.frame)
         
-        let pv0 = pf0 + offsets.lintelPeak
-        let pv1 = pf1 + offsets.lintelPeak
-        let pv2 = pf0 + offsets.surface
-        let pv3 = pf1 + offsets.surface
+        let wv0 = SCNVector3.lerp(from: wc0, to: wc1, factor: insets.cutaway)
+        let wv1 = SCNVector3.lerp(from: wc1, to: wc0, factor: insets.cutaway)
         
-        let wv0 = wc0 + offsets.lintelFramePeak
-        let wv1 = wc1 + offsets.lintelFramePeak
-        let wv2 = wc0 + offsets.skirtingPeak
-        let wv3 = wc1 + offsets.skirtingPeak
-        let wv4 = wi0 + offsets.skirtingPeak
-        let wv5 = wi1 + offsets.skirtingPeak
+        let fv0 = SCNVector3.lerp(from: fc0, to: fc1, factor: insets.cutaway)
+        let fv1 = SCNVector3.lerp(from: fc1, to: fc0, factor: insets.cutaway)
+        let fv2 = SCNVector3.lerp(from: fc0, to: fc1, factor: insets.frame)
+        let fv3 = SCNVector3.lerp(from: fc1, to: fc0, factor: insets.frame)
         
-        let sv0 = sc0 + offsets.lintelFramePeak
-        let sv1 = sc1 + offsets.lintelFramePeak
-        let sv2 = sf0 + offsets.lintelFramePeak
-        let sv3 = sf1 + offsets.lintelFramePeak
-        let sv4 = sf0 + offsets.lintelPeak
-        let sv5 = sf1 + offsets.lintelPeak
-        let sv6 = sc0 + offsets.surface
-        let sv7 = sc1 + offsets.surface
-        let sv8 = sf0 + offsets.surface
-        let sv9 = sf1 + offsets.surface
-        let sv10 = si0 + offsets.skirtingPeak
-        let sv11 = si1 + offsets.skirtingPeak
-        let sv12 = sc0 + offsets.skirtingPeak
-        let sv13 = sc1 + offsets.skirtingPeak
+        let v0 = pv0 + offsets.lintelPeak
+        let v1 = pv1 + offsets.lintelPeak
+        let v2 = pv0 + offsets.surface
+        let v3 = pv1 + offsets.surface
+        
+        let v4 = wv0 + offsets.lintelFramePeak
+        let v5 = wv1 + offsets.lintelFramePeak
+        let v6 = wv0 + offsets.skirtingPeak
+        let v7 = wv1 + offsets.skirtingPeak
+        
+        let v8 = fv0 + offsets.lintelFramePeak
+        let v9 = fv1 + offsets.lintelFramePeak
+        let v10 = fv2 + offsets.lintelFramePeak
+        let v11 = fv3 + offsets.lintelFramePeak
+        
+        let v12 = fv2 + offsets.lintelPeak
+        let v13 = fv3 + offsets.lintelPeak
+        
+        let v14 = fv0 + offsets.surface
+        let v15 = fv1 + offsets.surface
+        let v16 = fv2 + offsets.surface
+        let v17 = fv3 + offsets.surface
+        
+        let v18 = s0 + offsets.skirtingPeak
+        let v19 = s1 + offsets.skirtingPeak
+        
+        let v20 = fv0 + offsets.skirtingPeak
+        let v21 = fv1 + offsets.skirtingPeak
+        
+        let v22 = s0 + offsets.surface
+        let v23 = s1 + offsets.surface
+        
+        let v24 = w0 + offsets.skirtingPeak
+        let v25 = w1 + offsets.skirtingPeak
         
         //top face
-        meshFaces.append(MeshFace(v0: wv0, v1: wv1, v2: sv1, projectedNormal: SCNVector3.Up, color: edge.colorPalette.secondary.vector))
-        meshFaces.append(MeshFace(v0: wv0, v1: sv1, v2: sv0, projectedNormal: SCNVector3.Up, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v4, v1: v5, v2: v9, projectedNormal: SCNVector3.Up, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v4, v1: v9, v2: v8, projectedNormal: SCNVector3.Up, color: edge.colorPalette.secondary.vector))
         
         //front face
-        meshFaces.append(MeshFace(v0: sv2, v1: sv3, v2: sv5, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
-        meshFaces.append(MeshFace(v0: sv2, v1: sv5, v2: sv4, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
-        meshFaces.append(MeshFace(v0: sv0, v1: sv2, v2: sv8, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
-        meshFaces.append(MeshFace(v0: sv0, v1: sv8, v2: sv6, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
-        meshFaces.append(MeshFace(v0: sv3, v1: sv1, v2: sv7, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
-        meshFaces.append(MeshFace(v0: sv3, v1: sv7, v2: sv9, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v10, v1: v11, v2: v13, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v10, v1: v13, v2: v12, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v8, v1: v10, v2: v16, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v8, v1: v16, v2: v14, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v11, v1: v9, v2: v15, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v11, v1: v15, v2: v17, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
         
         //inner face
-        meshFaces.append(MeshFace(v0: pv1, v1: sv5, v2: sv9, projectedNormal: n0, color: edge.colorPalette.secondary.vector))
-        meshFaces.append(MeshFace(v0: pv1, v1: sv9, v2: pv3, projectedNormal: n0, color: edge.colorPalette.secondary.vector))
-        meshFaces.append(MeshFace(v0: sv4, v1: pv0, v2: pv2, projectedNormal: n1, color: edge.colorPalette.secondary.vector))
-        meshFaces.append(MeshFace(v0: sv4, v1: pv2, v2: sv8, projectedNormal: n1, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v1, v1: v13, v2: v17, projectedNormal: n0, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v1, v1: v17, v2: v3, projectedNormal: n0, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v12, v1: v0, v2: v2, projectedNormal: n1, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v12, v1: v2, v2: v16, projectedNormal: n1, color: edge.colorPalette.secondary.vector))
         
         if edge.side == .interior {
             
             //top face
-            meshFaces.append(MeshFace(v0: wv4, v1: wv2, v2: sv12, projectedNormal: SCNVector3.Up, color: edge.colorPalette.secondary.vector))
-            meshFaces.append(MeshFace(v0: wv4, v1: sv12, v2: sv10, projectedNormal: SCNVector3.Up, color: edge.colorPalette.secondary.vector))
-            meshFaces.append(MeshFace(v0: wv3, v1: wv5, v2: sv11, projectedNormal: SCNVector3.Up, color: edge.colorPalette.secondary.vector))
-            meshFaces.append(MeshFace(v0: wv3, v1: sv11, v2: sv13, projectedNormal: SCNVector3.Up, color: edge.colorPalette.secondary.vector))
+            meshFaces.append(MeshFace(v0: v24, v1: v6, v2: v20, projectedNormal: SCNVector3.Up, color: edge.colorPalette.secondary.vector))
+            meshFaces.append(MeshFace(v0: v24, v1: v20, v2: v18, projectedNormal: SCNVector3.Up, color: edge.colorPalette.secondary.vector))
+            meshFaces.append(MeshFace(v0: v7, v1: v25, v2: v19, projectedNormal: SCNVector3.Up, color: edge.colorPalette.secondary.vector))
+            meshFaces.append(MeshFace(v0: v7, v1: v19, v2: v21, projectedNormal: SCNVector3.Up, color: edge.colorPalette.secondary.vector))
             
             //front face
-            meshFaces.append(MeshFace(v0: sv10, v1: sv12, v2: sv6, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
-            meshFaces.append(MeshFace(v0: sv10, v1: sv6, v2: si0 + offsets.surface, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
-            meshFaces.append(MeshFace(v0: sv13, v1: sv11, v2: si1 + offsets.surface, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
-            meshFaces.append(MeshFace(v0: sv13, v1: si1 + offsets.surface, v2: sv7, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
+            meshFaces.append(MeshFace(v0: v18, v1: v20, v2: v14, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
+            meshFaces.append(MeshFace(v0: v18, v1: v14, v2: v22, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
+            meshFaces.append(MeshFace(v0: v21, v1: v19, v2: v23, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
+            meshFaces.append(MeshFace(v0: v21, v1: v23, v2: v15, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
             
             //outer face
-            meshFaces.append(MeshFace(v0: wv0, v1: sv0, v2: sv12, projectedNormal: n0, color: edge.colorPalette.secondary.vector))
-            meshFaces.append(MeshFace(v0: wv0, v1: sv12, v2: wv2, projectedNormal: n0, color: edge.colorPalette.secondary.vector))
-            meshFaces.append(MeshFace(v0: sv1, v1: wv1, v2: wv3, projectedNormal: n1, color: edge.colorPalette.secondary.vector))
-            meshFaces.append(MeshFace(v0: sv1, v1: wv3, v2: sv13, projectedNormal: n1, color: edge.colorPalette.secondary.vector))
+            meshFaces.append(MeshFace(v0: v4, v1: v8, v2: v20, projectedNormal: n0, color: edge.colorPalette.secondary.vector))
+            meshFaces.append(MeshFace(v0: v4, v1: v20, v2: v6, projectedNormal: n0, color: edge.colorPalette.secondary.vector))
+            meshFaces.append(MeshFace(v0: v9, v1: v5, v2: v7, projectedNormal: n1, color: edge.colorPalette.secondary.vector))
+            meshFaces.append(MeshFace(v0: v9, v1: v7, v2: v21, projectedNormal: n1, color: edge.colorPalette.secondary.vector))
         }
         else {
             
+            let v26 = fv0 + offsets.surface
+            let v27 = fv1 + offsets.surface
+            
             //outer face
-            meshFaces.append(MeshFace(v0: wv0, v1: sv0, v2: sv6, projectedNormal: n0, color: edge.colorPalette.secondary.vector))
-            meshFaces.append(MeshFace(v0: wv0, v1: sv6, v2: wc0 + offsets.surface, projectedNormal: n0, color: edge.colorPalette.secondary.vector))
-            meshFaces.append(MeshFace(v0: sv1, v1: wv1, v2: wc1 + offsets.surface, projectedNormal: n1, color: edge.colorPalette.secondary.vector))
-            meshFaces.append(MeshFace(v0: sv1, v1: wc1 + offsets.surface, v2: sv7, projectedNormal: n1, color: edge.colorPalette.secondary.vector))
+            meshFaces.append(MeshFace(v0: v4, v1: v8, v2: v14, projectedNormal: n0, color: edge.colorPalette.secondary.vector))
+            meshFaces.append(MeshFace(v0: v4, v1: v14, v2: v26, projectedNormal: n0, color: edge.colorPalette.secondary.vector))
+            meshFaces.append(MeshFace(v0: v9, v1: v5, v2: v27, projectedNormal: n1, color: edge.colorPalette.secondary.vector))
+            meshFaces.append(MeshFace(v0: v9, v1: v27, v2: v15, projectedNormal: n1, color: edge.colorPalette.secondary.vector))
         }
-        
+ 
         return meshFaces
     }
     
@@ -145,11 +158,11 @@ extension TudorAreaArchitectureMeshProvider {
         
         let (c0, c1) = GridCorner.corners(edge: edge.edge)
         
-        let w0 = edge.insetPolytopes.wall.vertices[c0.rawValue]
-        let w1 = edge.insetPolytopes.wall.vertices[c1.rawValue]
+        let w0 = edge.polytopes.wall.vertices[c0.rawValue]
+        let w1 = edge.polytopes.wall.vertices[c1.rawValue]
         
-        let s0 = edge.insetPolytopes.skirting.vertices[c0.rawValue]
-        let s1 = edge.insetPolytopes.skirting.vertices[c1.rawValue]
+        let s0 = edge.polytopes.skirting.vertices[c0.rawValue]
+        let s1 = edge.polytopes.skirting.vertices[c1.rawValue]
         
         let v0 = w0 + offsets.skirtingPeak
         let v1 = w1 + offsets.skirtingPeak
@@ -189,73 +202,76 @@ extension TudorAreaArchitectureMeshProvider {
         let p0 = edge.polytopes.polytope.vertices[c0.rawValue]
         let p1 = edge.polytopes.polytope.vertices[c1.rawValue]
         
-        let w0 = edge.polytopes.wall.vertices[c0.rawValue]
-        let w1 = edge.polytopes.wall.vertices[c1.rawValue]
+        let wc0 = edge.polytopes.wallCutaway.vertices[c0.rawValue]
+        let wc1 = edge.polytopes.wallCutaway.vertices[c1.rawValue]
         
-        let s0 = edge.polytopes.skirting.vertices[c0.rawValue]
-        let s1 = edge.polytopes.skirting.vertices[c1.rawValue]
+        let fc0 = edge.polytopes.frameCutaway.vertices[c0.rawValue]
+        let fc1 = edge.polytopes.frameCutaway.vertices[c1.rawValue]
         
-        let pf0 = SCNVector3.lerp(from: p0, to: p1, factor: insets.frame)
-        let pf1 = SCNVector3.lerp(from: p1, to: p0, factor: insets.frame)
+        let pv0 = SCNVector3.lerp(from: p0, to: p1, factor: insets.frame)
+        let pv1 = SCNVector3.lerp(from: p1, to: p0, factor: insets.frame)
         
-        let wc0 = SCNVector3.lerp(from: w0, to: w1, factor: insets.cutaway)
-        let wc1 = SCNVector3.lerp(from: w1, to: w0, factor: insets.cutaway)
+        let wv0 = SCNVector3.lerp(from: wc0, to: wc1, factor: insets.cutaway)
+        let wv1 = SCNVector3.lerp(from: wc1, to: wc0, factor: insets.cutaway)
         
-        let sc0 = SCNVector3.lerp(from: s0, to: s1, factor: insets.cutaway)
-        let sc1 = SCNVector3.lerp(from: s1, to: s0, factor: insets.cutaway)
-        let sf0 = SCNVector3.lerp(from: s0, to: s1, factor: insets.frame)
-        let sf1 = SCNVector3.lerp(from: s1, to: s0, factor: insets.frame)
+        let fv0 = SCNVector3.lerp(from: fc0, to: fc1, factor: insets.cutaway)
+        let fv1 = SCNVector3.lerp(from: fc1, to: fc0, factor: insets.cutaway)
+        let fv2 = SCNVector3.lerp(from: fc0, to: fc1, factor: insets.frame)
+        let fv3 = SCNVector3.lerp(from: fc1, to: fc0, factor: insets.frame)
         
-        let pv0 = pf0 + offsets.transomPeak
-        let pv1 = pf1 + offsets.transomPeak
-        let pv2 = pf0 + offsets.transomBase
-        let pv3 = pf1 + offsets.transomBase
+        let v0 = pv0 + offsets.transomPeak
+        let v1 = pv1 + offsets.transomPeak
+        let v2 = pv0 + offsets.transomBase
+        let v3 = pv1 + offsets.transomBase
         
-        let wv0 = wc0 + offsets.transomFramePeak
-        let wv1 = wc1 + offsets.transomFramePeak
-        let wv2 = wc0 + offsets.transomFrameBase
-        let wv3 = wc1 + offsets.transomFrameBase
+        let v4 = wv0 + offsets.transomFramePeak
+        let v5 = wv1 + offsets.transomFramePeak
+        let v6 = wv0 + offsets.transomFrameBase
+        let v7 = wv1 + offsets.transomFrameBase
         
-        let sv0 = sc0 + offsets.transomFramePeak
-        let sv1 = sc1 + offsets.transomFramePeak
-        let sv2 = sf0 + offsets.transomFramePeak
-        let sv3 = sf1 + offsets.transomFramePeak
-        let sv4 = sf0 + offsets.transomPeak
-        let sv5 = sf1 + offsets.transomPeak
-        let sv6 = sc0 + offsets.transomFrameBase
-        let sv7 = sc1 + offsets.transomFrameBase
-        let sv8 = sf0 + offsets.transomFrameBase
-        let sv9 = sf1 + offsets.transomFrameBase
-        let sv10 = sf0 + offsets.transomBase
-        let sv11 = sf1 + offsets.transomBase
+        let v8 = fv0 + offsets.transomFramePeak
+        let v9 = fv1 + offsets.transomFramePeak
+        let v10 = fv2 + offsets.transomFramePeak
+        let v11 = fv3 + offsets.transomFramePeak
+        
+        let v12 = fv2 + offsets.transomPeak
+        let v13 = fv3 + offsets.transomPeak
+        
+        let v14 = fv0 + offsets.transomFrameBase
+        let v15 = fv1 + offsets.transomFrameBase
+        let v16 = fv2 + offsets.transomFrameBase
+        let v17 = fv3 + offsets.transomFrameBase
+        
+        let v18 = fv2 + offsets.transomBase
+        let v19 = fv3 + offsets.transomBase
         
         //top face
-        meshFaces.append(MeshFace(v0: wv0, v1: wv1, v2: sv1, projectedNormal: SCNVector3.Up, color: edge.colorPalette.secondary.vector))
-        meshFaces.append(MeshFace(v0: wv0, v1: sv1, v2: sv0, projectedNormal: SCNVector3.Up, color: edge.colorPalette.secondary.vector))
-        meshFaces.append(MeshFace(v0: sv10, v1: pv2, v2: pv3, projectedNormal: SCNVector3.Up, color: edge.colorPalette.secondary.vector))
-        meshFaces.append(MeshFace(v0: sv10, v1: pv3, v2: sv11, projectedNormal: SCNVector3.Up, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v4, v1: v5, v2: v9, projectedNormal: SCNVector3.Up, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v4, v1: v9, v2: v8, projectedNormal: SCNVector3.Up, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v2, v1: v3, v2: v19, projectedNormal: SCNVector3.Up, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v2, v1: v19, v2: v18, projectedNormal: SCNVector3.Up, color: edge.colorPalette.secondary.vector))
         
         //front face
-        meshFaces.append(MeshFace(v0: sv2, v1: sv3, v2: sv5, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
-        meshFaces.append(MeshFace(v0: sv2, v1: sv5, v2: sv4, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
-        meshFaces.append(MeshFace(v0: sv0, v1: sv2, v2: sv8, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
-        meshFaces.append(MeshFace(v0: sv0, v1: sv8, v2: sv6, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
-        meshFaces.append(MeshFace(v0: sv3, v1: sv1, v2: sv7, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
-        meshFaces.append(MeshFace(v0: sv3, v1: sv7, v2: sv9, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
-        meshFaces.append(MeshFace(v0: sv10, v1: sv11, v2: sv9, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
-        meshFaces.append(MeshFace(v0: sv10, v1: sv9, v2: sv8, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v10, v1: v11, v2: v13, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v10, v1: v13, v2: v12, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v8, v1: v10, v2: v16, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v8, v1: v16, v2: v14, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v11, v1: v9, v2: v15, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v11, v1: v15, v2: v17, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v18, v1: v19, v2: v17, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v18, v1: v17, v2: v16, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
         
         //inner face
-        meshFaces.append(MeshFace(v0: pv1, v1: sv5, v2: sv11, projectedNormal: n0, color: edge.colorPalette.secondary.vector))
-        meshFaces.append(MeshFace(v0: pv1, v1: sv11, v2: pv3, projectedNormal: n0, color: edge.colorPalette.secondary.vector))
-        meshFaces.append(MeshFace(v0: sv4, v1: pv0, v2: pv2, projectedNormal: n1, color: edge.colorPalette.secondary.vector))
-        meshFaces.append(MeshFace(v0: sv4, v1: pv2, v2: sv10, projectedNormal: n1, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v1, v1: v13, v2: v19, projectedNormal: n0, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v1, v1: v19, v2: v3, projectedNormal: n0, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v12, v1: v0, v2: v2, projectedNormal: n1, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v12, v1: v2, v2: v18, projectedNormal: n1, color: edge.colorPalette.secondary.vector))
         
         //outer face
-        meshFaces.append(MeshFace(v0: wv0, v1: sv0, v2: sv6, projectedNormal: n0, color: edge.colorPalette.secondary.vector))
-        meshFaces.append(MeshFace(v0: wv0, v1: sv6, v2: wv2, projectedNormal: n0, color: edge.colorPalette.secondary.vector))
-        meshFaces.append(MeshFace(v0: sv1, v1: wv1, v2: wv3, projectedNormal: n1, color: edge.colorPalette.secondary.vector))
-        meshFaces.append(MeshFace(v0: sv1, v1: wv3, v2: sv7, projectedNormal: n1, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v4, v1: v8, v2: v14, projectedNormal: n0, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v4, v1: v14, v2: v6, projectedNormal: n0, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v9, v1: v5, v2: v7, projectedNormal: n1, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v9, v1: v7, v2: v15, projectedNormal: n1, color: edge.colorPalette.secondary.vector))
         
         return meshFaces
     }
@@ -278,73 +294,76 @@ extension TudorAreaArchitectureMeshProvider {
         let p0 = edge.polytopes.polytope.vertices[c0.rawValue]
         let p1 = edge.polytopes.polytope.vertices[c1.rawValue]
         
-        let w0 = edge.polytopes.wall.vertices[c0.rawValue]
-        let w1 = edge.polytopes.wall.vertices[c1.rawValue]
+        let wc0 = edge.polytopes.wallCutaway.vertices[c0.rawValue]
+        let wc1 = edge.polytopes.wallCutaway.vertices[c1.rawValue]
         
-        let s0 = edge.polytopes.skirting.vertices[c0.rawValue]
-        let s1 = edge.polytopes.skirting.vertices[c1.rawValue]
+        let fc0 = edge.polytopes.frameCutaway.vertices[c0.rawValue]
+        let fc1 = edge.polytopes.frameCutaway.vertices[c1.rawValue]
         
-        let pf0 = SCNVector3.lerp(from: p0, to: p1, factor: insets.frame)
-        let pf1 = SCNVector3.lerp(from: p1, to: p0, factor: insets.frame)
+        let pv0 = SCNVector3.lerp(from: p0, to: p1, factor: insets.frame)
+        let pv1 = SCNVector3.lerp(from: p1, to: p0, factor: insets.frame)
         
-        let wc0 = SCNVector3.lerp(from: w0, to: w1, factor: insets.cutaway)
-        let wc1 = SCNVector3.lerp(from: w1, to: w0, factor: insets.cutaway)
+        let wv0 = SCNVector3.lerp(from: wc0, to: wc1, factor: insets.cutaway)
+        let wv1 = SCNVector3.lerp(from: wc1, to: wc0, factor: insets.cutaway)
         
-        let sc0 = SCNVector3.lerp(from: s0, to: s1, factor: insets.cutaway)
-        let sc1 = SCNVector3.lerp(from: s1, to: s0, factor: insets.cutaway)
-        let sf0 = SCNVector3.lerp(from: s0, to: s1, factor: insets.frame)
-        let sf1 = SCNVector3.lerp(from: s1, to: s0, factor: insets.frame)
+        let fv0 = SCNVector3.lerp(from: fc0, to: fc1, factor: insets.cutaway)
+        let fv1 = SCNVector3.lerp(from: fc1, to: fc0, factor: insets.cutaway)
+        let fv2 = SCNVector3.lerp(from: fc0, to: fc1, factor: insets.frame)
+        let fv3 = SCNVector3.lerp(from: fc1, to: fc0, factor: insets.frame)
         
-        let pv0 = pf0 + offsets.lintelPeak
-        let pv1 = pf1 + offsets.lintelPeak
-        let pv2 = pf0 + offsets.windowBase
-        let pv3 = pf1 + offsets.windowBase
+        let v0 = pv0 + offsets.lintelPeak
+        let v1 = pv1 + offsets.lintelPeak
+        let v2 = pv0 + offsets.windowBase
+        let v3 = pv1 + offsets.windowBase
         
-        let wv0 = wc0 + offsets.lintelFramePeak
-        let wv1 = wc1 + offsets.lintelFramePeak
-        let wv2 = wc0 + offsets.windowFrameBase
-        let wv3 = wc1 + offsets.windowFrameBase
+        let v4 = wv0 + offsets.lintelFramePeak
+        let v5 = wv1 + offsets.lintelFramePeak
+        let v6 = wv0 + offsets.windowFrameBase
+        let v7 = wv1 + offsets.windowFrameBase
         
-        let sv0 = sc0 + offsets.lintelFramePeak
-        let sv1 = sc1 + offsets.lintelFramePeak
-        let sv2 = sf0 + offsets.lintelFramePeak
-        let sv3 = sf1 + offsets.lintelFramePeak
-        let sv4 = sf0 + offsets.lintelPeak
-        let sv5 = sf1 + offsets.lintelPeak
-        let sv6 = sc0 + offsets.windowFrameBase
-        let sv7 = sc1 + offsets.windowFrameBase
-        let sv8 = sf0 + offsets.windowFrameBase
-        let sv9 = sf1 + offsets.windowFrameBase
-        let sv10 = sf0 + offsets.windowBase
-        let sv11 = sf1 + offsets.windowBase
+        let v8 = fv0 + offsets.lintelFramePeak
+        let v9 = fv1 + offsets.lintelFramePeak
+        let v10 = fv2 + offsets.lintelFramePeak
+        let v11 = fv3 + offsets.lintelFramePeak
+        
+        let v12 = fv2 + offsets.lintelPeak
+        let v13 = fv3 + offsets.lintelPeak
+        
+        let v14 = fv0 + offsets.windowFrameBase
+        let v15 = fv1 + offsets.windowFrameBase
+        let v16 = fv2 + offsets.windowFrameBase
+        let v17 = fv3 + offsets.windowFrameBase
+        
+        let v18 = fv2 + offsets.windowBase
+        let v19 = fv3 + offsets.windowBase
         
         //top face
-        meshFaces.append(MeshFace(v0: wv0, v1: wv1, v2: sv1, projectedNormal: SCNVector3.Up, color: edge.colorPalette.secondary.vector))
-        meshFaces.append(MeshFace(v0: wv0, v1: sv1, v2: sv0, projectedNormal: SCNVector3.Up, color: edge.colorPalette.secondary.vector))
-        meshFaces.append(MeshFace(v0: sv10, v1: pv2, v2: pv3, projectedNormal: SCNVector3.Up, color: edge.colorPalette.secondary.vector))
-        meshFaces.append(MeshFace(v0: sv10, v1: pv3, v2: sv11, projectedNormal: SCNVector3.Up, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v4, v1: v5, v2: v9, projectedNormal: SCNVector3.Up, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v4, v1: v9, v2: v8, projectedNormal: SCNVector3.Up, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v2, v1: v3, v2: v19, projectedNormal: SCNVector3.Up, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v2, v1: v19, v2: v18, projectedNormal: SCNVector3.Up, color: edge.colorPalette.secondary.vector))
         
         //front face
-        meshFaces.append(MeshFace(v0: sv2, v1: sv3, v2: sv5, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
-        meshFaces.append(MeshFace(v0: sv2, v1: sv5, v2: sv4, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
-        meshFaces.append(MeshFace(v0: sv0, v1: sv2, v2: sv8, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
-        meshFaces.append(MeshFace(v0: sv0, v1: sv8, v2: sv6, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
-        meshFaces.append(MeshFace(v0: sv3, v1: sv1, v2: sv7, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
-        meshFaces.append(MeshFace(v0: sv3, v1: sv7, v2: sv9, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
-        meshFaces.append(MeshFace(v0: sv10, v1: sv11, v2: sv9, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
-        meshFaces.append(MeshFace(v0: sv10, v1: sv9, v2: sv8, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v10, v1: v11, v2: v13, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v10, v1: v13, v2: v12, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v8, v1: v10, v2: v16, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v8, v1: v16, v2: v14, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v11, v1: v9, v2: v15, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v11, v1: v15, v2: v17, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v18, v1: v19, v2: v17, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v18, v1: v17, v2: v16, projectedNormal: edge.normal, color: edge.colorPalette.secondary.vector))
         
         //inner face
-        meshFaces.append(MeshFace(v0: pv1, v1: sv5, v2: sv11, projectedNormal: n0, color: edge.colorPalette.secondary.vector))
-        meshFaces.append(MeshFace(v0: pv1, v1: sv11, v2: pv3, projectedNormal: n0, color: edge.colorPalette.secondary.vector))
-        meshFaces.append(MeshFace(v0: sv4, v1: pv0, v2: pv2, projectedNormal: n1, color: edge.colorPalette.secondary.vector))
-        meshFaces.append(MeshFace(v0: sv4, v1: pv2, v2: sv10, projectedNormal: n1, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v1, v1: v13, v2: v19, projectedNormal: n0, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v1, v1: v19, v2: v3, projectedNormal: n0, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v12, v1: v0, v2: v2, projectedNormal: n1, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v12, v1: v2, v2: v18, projectedNormal: n1, color: edge.colorPalette.secondary.vector))
         
         //outer face
-        meshFaces.append(MeshFace(v0: wv0, v1: sv0, v2: sv6, projectedNormal: n0, color: edge.colorPalette.secondary.vector))
-        meshFaces.append(MeshFace(v0: wv0, v1: sv6, v2: wv2, projectedNormal: n0, color: edge.colorPalette.secondary.vector))
-        meshFaces.append(MeshFace(v0: sv1, v1: wv1, v2: wv3, projectedNormal: n1, color: edge.colorPalette.secondary.vector))
-        meshFaces.append(MeshFace(v0: sv1, v1: wv3, v2: sv7, projectedNormal: n1, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v4, v1: v8, v2: v14, projectedNormal: n0, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v4, v1: v14, v2: v6, projectedNormal: n0, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v9, v1: v5, v2: v7, projectedNormal: n1, color: edge.colorPalette.secondary.vector))
+        meshFaces.append(MeshFace(v0: v9, v1: v7, v2: v15, projectedNormal: n1, color: edge.colorPalette.secondary.vector))
         
         return meshFaces
     }

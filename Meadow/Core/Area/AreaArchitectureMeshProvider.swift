@@ -10,10 +10,10 @@ import SceneKit
 
 struct AreaArchitectureInsets {
     
-    let frame: MDWFloat
-    let cutaway: MDWFloat
     let wall: MDWFloat
     let skirting: MDWFloat
+    let frame: MDWFloat
+    let cutaway: MDWFloat
 }
 
 struct AreaArchitectureOffsets {

@@ -15,6 +15,10 @@ struct AreaNodePolytopes {
     let wall: Polytope
     
     let skirting: Polytope
+ 
+    let wallCutaway: Polytope
+    
+    let frameCutaway: Polytope
 }
 
 struct AreaNodeCornerData {
@@ -26,8 +30,6 @@ struct AreaNodeCornerData {
     let colorPalettes: (ColorPalette, ColorPalette)
     
     let polytopes: AreaNodePolytopes
-    
-    let insetPolytopes: AreaNodePolytopes
 }
 
 struct AreaNodeEdgeData {
@@ -41,8 +43,6 @@ struct AreaNodeEdgeData {
     let colorPalette: ColorPalette
     
     let polytopes: AreaNodePolytopes
-    
-    let insetPolytopes: AreaNodePolytopes
 }
 
 protocol AreaNodeMeshProvider {
@@ -94,7 +94,7 @@ extension AreaNodeMeshProvider {
         let frameInset = (Axis.unitXZ - cutawayWidth) / 2.0
         let cutawayInset = (frameInset - frameWidth)
         
-        return AreaArchitectureInsets(frame: frameInset, cutaway: cutawayInset, wall: wallInset, skirting: skirtingInset)
+        return AreaArchitectureInsets(wall: wallInset, skirting: skirtingInset, frame: frameInset, cutaway: cutawayInset)
     }
     
     public func areaNode(offsets architectureType: AreaArchitectureType, side: Plane.Side) -> AreaArchitectureOffsets {
@@ -154,21 +154,18 @@ extension AreaNodeMeshProvider {
         
         var skirtingPolytope = polyhedron.lowerPolytope
         
-        let polytopes = AreaNodePolytopes(polytope: polyhedron.lowerPolytope, wall: wallPolytope, skirting: skirtingPolytope)
-        
         wallPolytope = Polytope.inset(polytope: wallPolytope, edge: e0, inset: (Axis.unitXZ - i0.wall))
         wallPolytope = Polytope.inset(polytope: wallPolytope, edge: e1, inset: (Axis.unitXZ - i1.wall))
         
         skirtingPolytope = Polytope.inset(polytope: skirtingPolytope, edge: e0, inset: (Axis.unitXZ - i0.skirting))
         skirtingPolytope = Polytope.inset(polytope: skirtingPolytope, edge: e1, inset: (Axis.unitXZ - i1.skirting))
         
-        let insetPolytopes = AreaNodePolytopes(polytope: polyhedron.lowerPolytope, wall: wallPolytope, skirting: skirtingPolytope)
+        let polytopes = AreaNodePolytopes(polytope: polyhedron.lowerPolytope, wall: wallPolytope, skirting: skirtingPolytope, wallCutaway: wallPolytope, frameCutaway: skirtingPolytope)
         
         let data = AreaNodeCornerData(corner: corner,
                                       side: side,
                                       colorPalettes: colorPalettes,
-                                      polytopes: polytopes,
-                                      insetPolytopes: insetPolytopes)
+                                      polytopes: polytopes)
         
         var meshFaces: [MeshFace] = []
         
@@ -180,15 +177,13 @@ extension AreaNodeMeshProvider {
                                       side: side,
                                       normal: GridEdge.normal(edge: e0),
                                       colorPalette: cp0,
-                                      polytopes: polytopes,
-                                      insetPolytopes: insetPolytopes)
+                                      polytopes: polytopes)
             
             let d1 = AreaNodeEdgeData(edge: e1,
                                       side: side,
                                       normal: GridEdge.normal(edge: e1),
                                       colorPalette: cp1,
-                                      polytopes: polytopes,
-                                      insetPolytopes: insetPolytopes)
+                                      polytopes: polytopes)
             
             meshFaces.append(contentsOf: at0.meshProvider.areaNode(skirting: d0, insets: i0, offsets: o0))
             meshFaces.append(contentsOf: at1.meshProvider.areaNode(skirting: d1, insets: i1, offsets: o1))
@@ -206,7 +201,9 @@ extension AreaNodeMeshProvider {
         
         var skirtingPolytope = Polytope.inset(polytope: polyhedron.lowerPolytope, edge: edge, inset: insets.skirting)
         
-        let polytopes = AreaNodePolytopes(polytope: polyhedron.lowerPolytope, wall: wallPolytope, skirting: skirtingPolytope)
+        let wallCutaway = Polytope.inset(polytope: polyhedron.lowerPolytope, edge: edge, inset: insets.wall)
+        
+        let frameCutaway = Polytope.inset(polytope: polyhedron.lowerPolytope, edge: edge, inset: insets.skirting)
         
         let (e0, e1) = GridEdge.edges(edge: edge)
         
@@ -220,7 +217,7 @@ extension AreaNodeMeshProvider {
             }
         }
         
-        let insetPolytopes = AreaNodePolytopes(polytope: polyhedron.lowerPolytope, wall: wallPolytope, skirting: skirtingPolytope)
+        let polytopes = AreaNodePolytopes(polytope: polyhedron.lowerPolytope, wall: wallPolytope, skirting: skirtingPolytope, wallCutaway: wallCutaway, frameCutaway: frameCutaway)
         
         let normal = GridEdge.normal(edge: (side == .exterior ? edge : GridEdge.opposite(edge: edge)))
         
@@ -228,8 +225,7 @@ extension AreaNodeMeshProvider {
                                     side: side,
                                     normal: normal,
                                     colorPalette: colorPalette,
-                                    polytopes: polytopes,
-                                    insetPolytopes: insetPolytopes)
+                                    polytopes: polytopes)
         
         var meshFaces: [MeshFace] = []
         

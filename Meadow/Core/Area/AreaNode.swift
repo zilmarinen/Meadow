@@ -249,8 +249,8 @@ extension AreaNode {
 
 extension AreaNode {
     
-    static let externalWallDepth: MDWFloat = 0.06
-    static let internalWallDepth: MDWFloat = 0.03
+    static let externalWallDepth: MDWFloat = 0.042
+    static let internalWallDepth: MDWFloat = 0.013
     
     static let surface: MDWFloat = 0.01
     

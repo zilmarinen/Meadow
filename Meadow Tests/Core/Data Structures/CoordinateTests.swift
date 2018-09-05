@@ -60,6 +60,31 @@ class CoordinateTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
     
+    func testCoordinateCreation() {
+        
+        let expect = expectation(description: "Coordinate components created with floating point values are clamped correctly")
+        
+        let c0 = Coordinate(x: 13.37, y: 0.0, z: 73.31)
+        let c1 = Coordinate(x: 31.73, y: -2.0, z: 13.73)
+        let c2 = Coordinate(x: 1.0, y: 2.0, z: 3.0)
+        
+        XCTAssertEqual(13, c0.x)
+        XCTAssertEqual(0, c0.y)
+        XCTAssertEqual(73, c0.z)
+        
+        XCTAssertEqual(32, c1.x)
+        XCTAssertEqual(-8, c1.y)
+        XCTAssertEqual(14, c1.z)
+        
+        XCTAssertEqual(1, c2.x)
+        XCTAssertEqual(8, c2.y)
+        XCTAssertEqual(3, c2.z)
+        
+        expect.fulfill()
+        
+        waitForExpectations(timeout: 1)
+    }
+    
     func testCoordinateAddition() {
         
         let expect = expectation(description: "Coordinate components are added together correctly when using the + operator")

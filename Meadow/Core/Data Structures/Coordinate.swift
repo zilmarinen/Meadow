@@ -18,6 +18,13 @@ public struct Coordinate: Codable {
         self.y = y
         self.z = z
     }
+    
+    public init(x: MDWFloat, y: MDWFloat, z: MDWFloat) {
+        
+        self.x = Axis.X(x: x)
+        self.y = Axis.Y(y: y)
+        self.z = Axis.Z(z: z)
+    }
 }
 
 extension Coordinate: Hashable {

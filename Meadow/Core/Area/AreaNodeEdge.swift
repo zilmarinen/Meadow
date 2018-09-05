@@ -69,5 +69,10 @@ extension AreaNode {
             case .west: return west
             }
         }
+        
+        var any: Edge? {
+            
+            return (north ?? (east ?? (south ?? (west ?? nil))))
+        }
     }
 }

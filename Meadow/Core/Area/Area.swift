@@ -29,6 +29,21 @@ extension Area {
                     
                     node.set(edge: AreaNode.Edge(edge: edge.edge, edgeType: edge.edgeType, architectureType: edge.architectureType, externalColorPalette: externalColorPalette, internalColorPalette: internalColorPalette))
                 }
+                
+                if let edge = intermediate.edges.east, let externalColorPalette = ColorPalettes.shared.palette(named: edge.externalColorPalette), let internalColorPalette = ColorPalettes.shared.palette(named: edge.internalColorPalette) {
+                    
+                    node.set(edge: AreaNode.Edge(edge: edge.edge, edgeType: edge.edgeType, architectureType: edge.architectureType, externalColorPalette: externalColorPalette, internalColorPalette: internalColorPalette))
+                }
+                
+                if let edge = intermediate.edges.south, let externalColorPalette = ColorPalettes.shared.palette(named: edge.externalColorPalette), let internalColorPalette = ColorPalettes.shared.palette(named: edge.internalColorPalette) {
+                    
+                    node.set(edge: AreaNode.Edge(edge: edge.edge, edgeType: edge.edgeType, architectureType: edge.architectureType, externalColorPalette: externalColorPalette, internalColorPalette: internalColorPalette))
+                }
+                
+                if let edge = intermediate.edges.west, let externalColorPalette = ColorPalettes.shared.palette(named: edge.externalColorPalette), let internalColorPalette = ColorPalettes.shared.palette(named: edge.internalColorPalette) {
+                    
+                    node.set(edge: AreaNode.Edge(edge: edge.edge, edgeType: edge.edgeType, architectureType: edge.architectureType, externalColorPalette: externalColorPalette, internalColorPalette: internalColorPalette))
+                }
             }
         }
     }

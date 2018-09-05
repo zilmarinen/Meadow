@@ -9,7 +9,9 @@
 import Foundation
 import SceneKit
 
-public class Meadow: SCNScene, GridObserver, SceneGraphParent {
+public class Meadow: SCNScene, GridObserver, SceneGraphParent, SceneGraphChild {
+    
+    public var name: String? { return rootNode.name }
     
     public let areas = Area()
     public let foliage = Foliage()
@@ -158,6 +160,46 @@ extension Meadow {
         foliage.load(nodes: foliageNodes)
         footpaths.load(nodes: footpathNodes)
         water.load(nodes: waterNodes)
+    }
+}
+
+extension Meadow {
+    
+    public func hitTest(hits: [SCNHitTestResult]) -> [GridNode] {
+        
+        var results: [GridNode] = []
+        
+        hits.forEach { hit in
+            
+            let coordinate = Coordinate(x: hit.localCoordinates.x, y: hit.localCoordinates.y, z: hit.localCoordinates.z)
+            
+            print("Coordinate: \(coordinate) -> \(hit.localCoordinates)")
+            
+            switch type(of: hit.node) {
+                
+            case is AreaChunk.Type:
+                
+                guard let node = areas.find(node: coordinate) else { break }
+                
+                results.append(node)
+                
+            case is FootpathChunk.Type:
+                
+                guard let node = footpaths.find(node: coordinate) else { break }
+                
+                results.append(node)
+                
+            case is TerrainChunk.Type:
+                
+                guard let node = terrain.find(node: coordinate) else { break }
+                
+                results.append(node)
+                
+            default: break
+            }
+        }
+        
+        return results
     }
 }
 

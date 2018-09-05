@@ -127,60 +127,85 @@ public class AreaNode: GridNode {
             
             let neighbour = find(neighbour: edge)?.node as? AreaNode
             
-            let nodeEdge = find(edge: edge)
+            let (e0, e1) = GridEdge.edges(edge: edge)
             
-            if let internalMeshProvider = internalAreaType?.meshProvider {
+            let (c0, c1) = GridCorner.corners(edge: edge)
+            
+            let a0 = find(neighbour: e0)?.node as? AreaNode
+            let a1 = find(neighbour: e1)?.node as? AreaNode
+            
+            if let floorColor = floorColorPalette?.primary.vector {
                 
-                if let floorColor = floorColorPalette?.primary.vector {
-                    
-                    let corners = GridCorner.corners(edge: edge)
-                    
-                    meshFaces.append(MeshProvider.surface(corners: corners, polytope: meshPolyhedron.lowerPolytope, color: floorColor))
-                }
-                
-                if let nodeEdge = nodeEdge {
-                    
-                    meshFaces.append(contentsOf: internalMeshProvider.areaNode(edge: edge, polyhedron: meshPolyhedron, edgeType: nodeEdge.edgeType, architectureType: nodeEdge.architectureType, side: .interior, edges: edges, colorPalette: nodeEdge.internalColorPalette))
-                }
+                meshFaces.append(MeshProvider.surface(corners: (c0, c1), polytope: meshPolyhedron.lowerPolytope, color: floorColor))
             }
             
-            if let externalMeshProvider = externalAreaType?.meshProvider {
+            if let nodeEdge = find(edge: edge) {
+            
+                if let internalMeshProvider = internalAreaType?.meshProvider {
                 
-                if let nodeEdge = nodeEdge, neighbour?.find(edge: GridEdge.opposite(edge: edge)) == nil {
+                    meshFaces.append(contentsOf: internalMeshProvider.areaNode(edge: edge, polyhedron: meshPolyhedron, edgeType: nodeEdge.edgeType, architectureType: nodeEdge.architectureType, side: .interior, edges: edges, colorPalette: nodeEdge.internalColorPalette))
                     
-                    let normal = GridEdge.normal(edge: edge)
+                    let ne0 = find(edge: e0)
+                    let ne1 = find(edge: e1)
                     
-                    let externalPolyhedron = Polyhedron.invert(polyhedron: Polyhedron.translate(polyhedron: meshPolyhedron, translation: normal), edge: edge)
+                    let connectedEdges = ((e0, a0, ne0), (e1, a1, ne1))
                     
-                    let (e0, e1) = GridEdge.edges(edge: edge)
-                    
-                    let a0 = find(neighbour: e0)?.node as? AreaNode
-                    let a1 = find(neighbour: e1)?.node as? AreaNode
-                    
-                    let d0 = a0?.find(neighbour: edge)?.node as? AreaNode
-                    let d1 = a1?.find(neighbour: edge)?.node as? AreaNode
-                    
-                    let edgeType0 = d0?.find(edge: e1)
-                    let edgeType1 = d1?.find(edge: e0)
-                    
-                    var externalEdges = AreaNode.Edges()
-                    
-                    switch edge {
+                    [connectedEdges.0, connectedEdges.1].forEach { connectedEdge in
                         
-                    case .north,
-                         .south:
+                        let (e, a, ne) = (connectedEdge.0, connectedEdge.1, connectedEdge.2)
                         
-                        externalEdges.east = (e0 == .east ? edgeType0 : edgeType1)
-                        externalEdges.west = (e1 == .west ? edgeType1 : edgeType0)
-                        
-                    case .east,
-                         .west:
-                    
-                        externalEdges.north = (e0 == .north ? edgeType0 : edgeType1)
-                        externalEdges.south = (e1 == .south ? edgeType1 : edgeType0)
+                        if ne == nil && (a == nil || (a?.find(edge: edge) == nil || a?.find(edge: e) == nil)) {
+                            
+                            let (c2, c3) = GridCorner.corners(edge: e)
+                            
+                            let translation = GridEdge.normal(edge: e)
+                            
+                            let externalPolyhedron = Polyhedron.translate(polyhedron: meshPolyhedron, translation: translation)
+                            
+                            let c = (c0 != c2 && c0 != c3 ? c0 : c1)
+                            
+                            let colorPalettes = (nodeEdge.internalColorPalette, nodeEdge.internalColorPalette)
+                            
+                            let architectureTypes = (nodeEdge.architectureType, nodeEdge.architectureType)
+                            
+                            meshFaces.append(contentsOf: internalMeshProvider.areaNode(corner: c, polyhedron: externalPolyhedron, architectureTypes: architectureTypes, side: .interior, colorPalettes: colorPalettes))
+                        }
                     }
+                }
+            
+                if let externalMeshProvider = externalAreaType?.meshProvider {
+                
+                    if neighbour?.find(edge: GridEdge.opposite(edge: edge)) == nil {
                     
-                    meshFaces.append(contentsOf: externalMeshProvider.areaNode(edge: edge, polyhedron: externalPolyhedron, edgeType: nodeEdge.edgeType, architectureType: nodeEdge.architectureType, side: .exterior, edges: externalEdges, colorPalette: nodeEdge.externalColorPalette))
+                        let normal = GridEdge.normal(edge: edge)
+                        
+                        let externalPolyhedron = Polyhedron.invert(polyhedron: Polyhedron.translate(polyhedron: meshPolyhedron, translation: normal), edge: edge)
+                        
+                        let d0 = a0?.find(neighbour: edge)?.node as? AreaNode
+                        let d1 = a1?.find(neighbour: edge)?.node as? AreaNode
+                        
+                        let ne0 = d0?.find(edge: e1)
+                        let ne1 = d1?.find(edge: e0)
+                        
+                        var externalEdges = AreaNode.Edges()
+                        
+                        switch edge {
+                            
+                        case .north,
+                             .south:
+                            
+                            externalEdges.east = (e0 == .east ? ne0 : ne1)
+                            externalEdges.west = (e1 == .west ? ne1 : ne0)
+                            
+                        case .east,
+                             .west:
+                        
+                            externalEdges.north = (e0 == .north ? ne0 : ne1)
+                            externalEdges.south = (e1 == .south ? ne1 : ne0)
+                        }
+                        
+                        meshFaces.append(contentsOf: externalMeshProvider.areaNode(edge: edge, polyhedron: externalPolyhedron, edgeType: nodeEdge.edgeType, architectureType: nodeEdge.architectureType, side: .exterior, edges: externalEdges, colorPalette: nodeEdge.externalColorPalette))
+                    }
                 }
             }
         }
@@ -232,6 +257,24 @@ extension AreaNode {
         }
         
         becomeDirty()
+        
+        if let neighbour = find(neighbour: edge.edge)?.node as? AreaNode {
+            
+            let oppositeEdge = GridEdge.opposite(edge: edge.edge)
+            
+            let neighbourEdge = neighbour.find(edge: oppositeEdge)
+            
+            if neighbourEdge?.edgeType == edge.edgeType {
+                
+                return
+            }
+            
+            let architectureType = (neighbourEdge?.architectureType ?? edge.architectureType)
+            let externalColorPalette = (neighbourEdge?.externalColorPalette ?? edge.externalColorPalette)
+            let internalColorPalette = (neighbourEdge?.internalColorPalette ?? edge.internalColorPalette)
+            
+            neighbour.set(edge: Edge(edge: oppositeEdge, edgeType: edge.edgeType, architectureType: architectureType, externalColorPalette: externalColorPalette, internalColorPalette: internalColorPalette))
+        }
     }
     
     public func remove(edge: GridEdge) {
@@ -244,6 +287,11 @@ extension AreaNode {
         }
         
         becomeDirty()
+    }
+    
+    public func anyEdge() -> Edge? {
+        
+        return edges.any
     }
 }
 

@@ -139,8 +139,8 @@ extension TudorAreaArchitectureMeshProvider {
         }
         else {
             
-            let v26 = fv0 + offsets.surface
-            let v27 = fv1 + offsets.surface
+            let v26 = wv0 + offsets.surface
+            let v27 = wv1 + offsets.surface
             
             //outer face
             meshFaces.append(MeshFace(v0: v4, v1: v8, v2: v14, projectedNormal: n0, color: edge.colorPalette.secondary.vector))

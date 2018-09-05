@@ -10,6 +10,11 @@ import Foundation
 
 public struct Axis {
     
+    public static func X(x: MDWFloat) -> Int {
+        
+        return Int(round(x))
+    }
+    
     public static func Y(y: Int) -> MDWFloat {
         
         return MDWFloat(y) * unitY
@@ -18,6 +23,11 @@ public struct Axis {
     public static func Y(y: MDWFloat) -> Int {
         
         return Int(y / unitY)
+    }
+    
+    public static func Z(z: MDWFloat) -> Int {
+        
+        return Int(round(z))
     }
 }
 

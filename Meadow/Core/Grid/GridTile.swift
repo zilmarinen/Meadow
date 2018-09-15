@@ -66,7 +66,7 @@ extension GridTile: GridSoilable {
     }
 }
 
-extension GridTile: GridUpdatable {
+extension GridTile: SceneGraphUpdatable {
     
     public func update(deltaTime: TimeInterval) {
         
@@ -74,7 +74,7 @@ extension GridTile: GridUpdatable {
         
         children.forEach { node in
             
-            if let node = node as? GridUpdatable {
+            if let node = node as? SceneGraphUpdatable {
             
                 node.update(deltaTime: deltaTime)
             }

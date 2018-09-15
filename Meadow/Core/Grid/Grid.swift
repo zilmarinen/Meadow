@@ -42,7 +42,7 @@ extension Grid: GridSoilable {
     }
 }
 
-extension Grid: GridUpdatable {
+extension Grid: SceneGraphUpdatable {
     
     public func update(deltaTime: TimeInterval) {
         

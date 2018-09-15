@@ -8,4 +8,19 @@
 
 public class FoliageNodeIntermediate: GridNodeIntermediate {
     
+    let foliageType: FoliageType
+    
+    enum CodingKeys: CodingKey {
+        
+        case foliageType
+    }
+    
+    public required init(from decoder: Decoder) throws {
+        
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        foliageType = try container.decode(FoliageType.self, forKey: .foliageType)
+        
+        try super.init(from: decoder)
+    }
 }

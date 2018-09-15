@@ -62,7 +62,7 @@ extension GridChunk: GridSoilable {
     }
 }
 
-extension GridChunk: GridUpdatable {
+extension GridChunk: SceneGraphUpdatable {
     
     public func update(deltaTime: TimeInterval) {
         

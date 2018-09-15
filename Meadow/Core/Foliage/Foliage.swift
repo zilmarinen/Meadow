@@ -27,17 +27,13 @@ extension Foliage {
         
         guard let node = add(node: FoliageTile.fixedVolume(coordinate)) else { return nil }
         
+        node.foliageType = .bush
+        
         GridEdge.Edges.forEach { edge in
             
-            if let tile = find(tile: coordinate + GridEdge.extent(edge: edge)) {
+            if let neighbour = find(node: coordinate + GridEdge.extent(edge: edge)) {
                 
-                for index in 0..<tile.totalChildren {
-                    
-                    if let neighbour = tile.child(at: index) as? FoliageNode, (neighbour.volume.coordinate.y >= coordinate.y - 1 && neighbour.volume.coordinate.y <= coordinate.y + 1) {
-                        
-                        node.add(neighbour: neighbour, edge: edge)
-                    }
-                }
+                node.add(neighbour: neighbour, edge: edge)
             }
         }
         

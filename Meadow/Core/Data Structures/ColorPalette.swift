@@ -29,31 +29,43 @@ public class ColorPalettes {
     
     let colorPalettes: [ColorPalette]
     
+    let colors: [Color]
+    
     public var all: [ColorPalette] { return colorPalettes }
     
     init?() {
         
-        guard let colors = Color.load(filename: "colors") else { return nil }
+        guard let colorIntermediates = Color.load(filename: "colors") else { return nil }
         
-        guard let intermediates = ColorPaletteIntermediate.load(filename: "color_palettes") else { return nil }
+        guard let colorPaletteIntermediates = ColorPaletteIntermediate.load(filename: "color_palettes") else { return nil }
         
         var palettes: [ColorPalette] = []
         
-        intermediates.forEach { intermediate in
+        colorPaletteIntermediates.forEach { intermediate in
             
-            let primary = colors.first { $0.name == intermediate.primary }
-            let secondary = colors.first { $0.name == intermediate.secondary }
-            let tertiary = colors.first { $0.name == intermediate.tertiary }
-            let quaternary = colors.first { $0.name == intermediate.quaternary }
+            let primary = colorIntermediates.first { $0.name == intermediate.primary }
+            let secondary = colorIntermediates.first { $0.name == intermediate.secondary }
+            let tertiary = colorIntermediates.first { $0.name == intermediate.tertiary }
+            let quaternary = colorIntermediates.first { $0.name == intermediate.quaternary }
             
-            palettes.append(ColorPalette(name: intermediate.name, primary: primary!, secondary: secondary!, tertiary: tertiary!, quaternary: quaternary!))
+            if let primary = primary, let secondary = secondary, let tertiary = tertiary, let quaternary = quaternary {
+            
+                palettes.append(ColorPalette(name: intermediate.name, primary: primary, secondary: secondary, tertiary: tertiary, quaternary: quaternary))
+            }
         }
+        
+        self.colors = colorIntermediates
         
         self.colorPalettes = palettes
     }
 }
 
 extension ColorPalettes {
+    
+    public func color(named: String) -> Color? {
+        
+        return colors.first { $0.name == named }
+    }
     
     public func palette(named: String) -> ColorPalette? {
         

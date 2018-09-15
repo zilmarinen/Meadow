@@ -13,13 +13,7 @@ public class Meadow: SCNScene, GridObserver, SceneGraphParent, SceneGraphChild {
     
     public var name: String? { return rootNode.name }
     
-    public let areas = Area()
-    public let foliage = Foliage()
-    public let footpaths = Footpath()
-    public let scaffolds = Scaffold()
-    public let terrain = Terrain()
-    public let tunnels = Tunnel()
-    public let water = Water()
+    public let world = World()
     
     public let cameraJib = CameraJib()
     
@@ -27,48 +21,16 @@ public class Meadow: SCNScene, GridObserver, SceneGraphParent, SceneGraphChild {
     
     var lastUpdate: TimeInterval?
     
-    let terrainResolver: TerrainResolver
-    let waterResolver: WaterResolver
-    
     public init(observer: GridObserver?) {
         
         self.observer = observer
         
-        self.terrainResolver = TerrainResolver(terrain: terrain, areas: areas, footpaths: footpaths)
-        self.waterResolver = WaterResolver(water: water, terrain: terrain)
-        
         super.init()
         
-        areas.observer = self
-        areas.name = "Areas"
-        
-        foliage.observer = self
-        foliage.name = "Foliage"
-        
-        footpaths.observer = self
-        footpaths.name = "Footpaths"
-        
-        scaffolds.observer = self
-        scaffolds.name = "Scaffolds"
-        
-        terrain.observer = self
-        terrain.name = "Terrain"
-        
-        tunnels.observer = self
-        tunnels.name = "Tunnels"
-        
-        water.observer = self
-        water.name = "Water"
-        
         rootNode.name = "Meadow"
+        
         rootNode.addChildNode(cameraJib)
-        rootNode.addChildNode(areas)
-        rootNode.addChildNode(foliage)
-        rootNode.addChildNode(footpaths)
-        rootNode.addChildNode(scaffolds)
-        rootNode.addChildNode(terrain)
-        rootNode.addChildNode(tunnels)
-        rootNode.addChildNode(water)
+        rootNode.addChildNode(world)
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -95,30 +57,6 @@ extension Meadow {
     
     public func child(didBecomeDirty child: SceneGraphChild) {
         
-        guard let child = child as? GridChild else { return }
-        
-        switch type(of: child) {
-            
-        case is AreaTile.Type:
-            
-            terrainResolver.enqueue(volume: child.volume)
-            
-        case is FootpathTile.Type:
-            
-            terrainResolver.enqueue(volume: child.volume)
-            
-        case is TerrainLayer.Type:
-            
-            terrainResolver.enqueue(volume: child.volume)
-            waterResolver.enqueue(volume: child.volume)
-            
-        case is WaterTile.Type:
-            
-            waterResolver.enqueue(volume: child.volume)
-            
-        default: break
-        }
-        
         observer?.child(didBecomeDirty: child)
     }
 }
@@ -130,16 +68,8 @@ extension Meadow: SCNSceneRendererDelegate {
         let delta = time - (self.lastUpdate ?? 0)
         
         cameraJib.update(deltaTime: delta)
-        areas.update(deltaTime: delta)
-        foliage.update(deltaTime: delta)
-        footpaths.update(deltaTime: delta)
-        scaffolds.update(deltaTime: delta)
-        terrain.update(deltaTime: delta)
-        tunnels.update(deltaTime: delta)
-        water.update(deltaTime: delta)
         
-        terrainResolver.resolve()
-        waterResolver.resolve()
+        world.update(deltaTime: delta)
 
         self.lastUpdate = time
     }
@@ -149,17 +79,7 @@ extension Meadow {
     
     public func load(intermediate: MeadowIntermediate) {
         
-        let areaNodes = intermediate.areas.children.flatMap { $0.children.flatMap { $0.children } }
-        let foliageNodes = intermediate.foliage.children.flatMap { $0.children.flatMap { $0.children } }
-        let footpathNodes = intermediate.footpaths.children.flatMap { $0.children.flatMap { $0.children } }
-        let terrainNodes = intermediate.terrain.children.flatMap { $0.children.flatMap { $0.children } }
-        let waterNodes = intermediate.water.children.flatMap { $0.children.flatMap { $0.children } }
-        
-        terrain.load(nodes: terrainNodes)
-        areas.load(nodes: areaNodes)
-        foliage.load(nodes: foliageNodes)
-        footpaths.load(nodes: footpathNodes)
-        water.load(nodes: waterNodes)
+        world.load(intermediate: intermediate.world)
     }
 }
 
@@ -179,19 +99,19 @@ extension Meadow {
                 
             case is AreaChunk.Type:
                 
-                guard let node = areas.find(node: coordinate) else { break }
+                guard let node = world.areas.find(node: coordinate) else { break }
                 
                 results.append(node)
                 
             case is FootpathChunk.Type:
                 
-                guard let node = footpaths.find(node: coordinate) else { break }
+                guard let node = world.footpaths.find(node: coordinate) else { break }
                 
                 results.append(node)
                 
             case is TerrainChunk.Type:
                 
-                guard let node = terrain.find(node: coordinate) else { break }
+                guard let node = world.terrain.find(node: coordinate) else { break }
                 
                 results.append(node)
                 
@@ -209,11 +129,7 @@ extension Meadow: Encodable {
         
         case name
         
-        case areas
-        case foliage
-        case footpaths
-        case terrain
-        case water
+        case world
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -222,10 +138,6 @@ extension Meadow: Encodable {
         
         try container.encodeIfPresent(self.rootNode.name, forKey: .name)
         
-        try container.encode(self.areas, forKey: .areas)
-        try container.encode(self.foliage, forKey: .foliage)
-        try container.encode(self.footpaths, forKey: .footpaths)
-        try container.encode(self.terrain, forKey: .terrain)
-        try container.encode(self.water, forKey: .water)
+        try container.encode(self.world, forKey: .world)
     }
 }

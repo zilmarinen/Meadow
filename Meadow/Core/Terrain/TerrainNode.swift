@@ -8,7 +8,7 @@
 
 import SceneKit
 
-public class TerrainNode<Layer: TerrainLayer>: GridNode, GridParent, GridIntermediateLoader {
+public class TerrainNode<Layer: TerrainLayer>: GridNode, GridParent, SceneGraphIntermediate {
     
     public typealias ChildType = Layer
     public typealias IntermediateType = TerrainLayerIntermediate
@@ -131,9 +131,9 @@ public class TerrainNode<Layer: TerrainLayer>: GridNode, GridParent, GridInterme
 
 extension TerrainNode {
     
-    public func load(nodes: [TerrainLayerIntermediate]) {
+    public func load(intermediates: [TerrainLayerIntermediate]) {
         
-        nodes.forEach { intermediate in
+        intermediates.forEach { intermediate in
             
             if let layer = add(layer: TerrainType.bedrock) {
                 

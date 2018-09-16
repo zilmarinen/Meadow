@@ -8,16 +8,17 @@
 
 import Foundation
 
-public class Area: Grid<AreaChunk, AreaTile, AreaNode>, GridIntermediateLoader {
+public class Area: Grid<AreaChunk, AreaTile, AreaNode> {
     
-    public typealias IntermediateType = AreaNodeIntermediate
 }
 
-extension Area {
+extension Area: SceneGraphIntermediate {
     
-    public func load(nodes: [AreaNodeIntermediate]) {
+    public typealias IntermediateType = AreaNodeIntermediate
     
-        nodes.forEach { intermediate in
+    public func load(intermediates: [IntermediateType]) {
+    
+        intermediates.forEach { intermediate in
             
             if let node = add(node: intermediate.volume.coordinate) {
                 
@@ -57,7 +58,7 @@ extension Area {
         
         node.externalAreaType = AreaType.brick
         node.internalAreaType = AreaType.concrete
-        node.floorColorPalette = ColorPalettes.shared.all.first
+        node.floorColorPalette = ColorPalettes.shared.allColorPalettes.first
         
         GridEdge.Edges.forEach { edge in
             

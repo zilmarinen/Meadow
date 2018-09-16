@@ -10,6 +10,18 @@ import SceneKit
 
 public class Floor: SCNNode, SceneGraphChild, SceneGraphParent {
     
+    public var color: Color? {
+        
+        didSet {
+            
+            guard let color = color else { return }
+            
+            let material = (geometry?.firstMaterial ?? SCNMaterial())
+            
+            material.diffuse.contents = color.color
+        }
+    }
+    
     public override init() {
         
         super.init()
@@ -23,15 +35,6 @@ public class Floor: SCNNode, SceneGraphChild, SceneGraphParent {
         self.geometry = floor
         
         self.position = SCNVector3(x: 0.0, y: Axis.Y(y: World.floor), z: 0.0)
-        
-        if let color = ColorPalettes.shared.color(named: "white") {
-           
-            let material = SCNMaterial()
-            
-            material.diffuse.contents = color.color
-            
-            self.geometry?.firstMaterial = material
-        }
     }
     
     public required init?(coder aDecoder: NSCoder) {

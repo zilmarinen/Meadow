@@ -8,16 +8,17 @@
 
 import Foundation
 
-public class Footpath: Grid<FootpathChunk, FootpathTile, FootpathNode>, GridIntermediateLoader {
+public class Footpath: Grid<FootpathChunk, FootpathTile, FootpathNode> {
     
-    public typealias IntermediateType = FootpathNodeIntermediate
 }
 
-extension Footpath {
+extension Footpath: SceneGraphIntermediate {
     
-    public func load(nodes: [FootpathNodeIntermediate]) {
+    public typealias IntermediateType = FootpathNodeIntermediate
+    
+    public func load(intermediates: [IntermediateType]) {
         
-        nodes.forEach { intermediate in
+        intermediates.forEach { intermediate in
             
             if let node = add(node: intermediate.volume.coordinate) {
                 

@@ -8,14 +8,15 @@
 
 import Foundation
 
-public class Foliage: Grid<FoliageChunk, FoliageTile, FoliageNode>, GridIntermediateLoader {
+public class Foliage: Grid<FoliageChunk, FoliageTile, FoliageNode> {
     
-    public typealias IntermediateType = FoliageNodeIntermediate
 }
 
-extension Foliage {
+extension Foliage: SceneGraphIntermediate {
     
-    public func load(nodes: [FoliageNodeIntermediate]) {
+    public typealias IntermediateType = FoliageNodeIntermediate
+    
+    public func load(intermediates: [IntermediateType]) {
         
         //
     }

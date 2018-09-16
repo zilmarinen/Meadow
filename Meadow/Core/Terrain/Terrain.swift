@@ -8,20 +8,22 @@
 
 import Foundation
 
-public class Terrain: Grid<TerrainChunk, TerrainTile, TerrainNode<TerrainLayer>>, GridIntermediateLoader {
+public class Terrain: Grid<TerrainChunk, TerrainTile, TerrainNode<TerrainLayer>> {
     
-    public typealias IntermediateType = TerrainNodeIntermediate
+    
 }
 
-extension Terrain {
+extension Terrain: SceneGraphIntermediate {
     
-    public func load(nodes: [TerrainNodeIntermediate]) {
+    public typealias IntermediateType = TerrainNodeIntermediate
+    
+    public func load(intermediates: [IntermediateType]) {
         
-        nodes.forEach { intermediate in
+        intermediates.forEach { intermediate in
             
             if let node = add(node: intermediate.volume.coordinate) {
                 
-                node.load(nodes: intermediate.children)
+                node.load(intermediates: intermediate.children)
             }
         }
     }

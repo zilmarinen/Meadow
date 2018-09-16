@@ -31,7 +31,9 @@ public class ColorPalettes {
     
     let colors: [Color]
     
-    public var all: [ColorPalette] { return colorPalettes }
+    public var allColors: [Color] { return colors }
+    
+    public var allColorPalettes: [ColorPalette] { return colorPalettes }
     
     init?() {
         

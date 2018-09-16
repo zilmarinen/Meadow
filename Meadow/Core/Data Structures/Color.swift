@@ -8,7 +8,7 @@
 
 import SceneKit
 
-public struct Color: Codable {
+public struct Color: Codable, Hashable {
     
     public let name: String
     

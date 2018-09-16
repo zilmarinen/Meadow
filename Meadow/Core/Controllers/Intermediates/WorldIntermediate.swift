@@ -8,6 +8,8 @@
 
 public struct WorldIntermediate: Decodable {
     
+    let floorColor: String
+    
     let areas: GridIntermediate<Area.IntermediateType>
     let foliage: GridIntermediate<Foliage.IntermediateType>
     let footpaths: GridIntermediate<Footpath.IntermediateType>

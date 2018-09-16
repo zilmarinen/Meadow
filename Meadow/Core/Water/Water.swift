@@ -8,16 +8,17 @@
 
 import Foundation
 
-public class Water: Grid<WaterChunk, WaterTile, WaterNode>, GridIntermediateLoader {
+public class Water: Grid<WaterChunk, WaterTile, WaterNode> {
     
-    public typealias IntermediateType = WaterNodeIntermediate
 }
 
-extension Water {
+extension Water: SceneGraphIntermediate {
     
-    public func load(nodes: [WaterNodeIntermediate]) {
+    public typealias IntermediateType = WaterNodeIntermediate
+    
+    public func load(intermediates: [IntermediateType]) {
         
-        nodes.forEach { intermediate in
+        intermediates.forEach { intermediate in
             
             if let node = add(node: intermediate.volume.coordinate) {
                 

@@ -75,11 +75,13 @@ extension Meadow: SCNSceneRendererDelegate {
     }
 }
 
-extension Meadow {
+extension Meadow: SceneGraphIntermediate {
     
-    public func load(intermediate: MeadowIntermediate) {
+    public func load(intermediates: [MeadowIntermediate]) {
         
-        world.load(intermediate: intermediate.world)
+        guard let intermediate = intermediates.first else { return }
+        
+        world.load(intermediates: [intermediate.world])
     }
 }
 

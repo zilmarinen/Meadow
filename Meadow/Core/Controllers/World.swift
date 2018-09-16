@@ -137,9 +137,13 @@ extension World: SceneGraphUpdatable {
     }
 }
 
-extension World {
+extension World: SceneGraphIntermediate {
     
-    func load(intermediate: WorldIntermediate) {
+    public typealias IntermediateType = WorldIntermediate
+    
+    func load(intermediates: [IntermediateType]) {
+        
+        guard let intermediate = intermediates.first else { return }
         
         let areaNodes = intermediate.areas.children.flatMap { $0.children.flatMap { $0.children } }
         let foliageNodes = intermediate.foliage.children.flatMap { $0.children.flatMap { $0.children } }
@@ -147,11 +151,16 @@ extension World {
         let terrainNodes = intermediate.terrain.children.flatMap { $0.children.flatMap { $0.children } }
         let waterNodes = intermediate.water.children.flatMap { $0.children.flatMap { $0.children } }
         
-        terrain.load(nodes: terrainNodes)
-        areas.load(nodes: areaNodes)
-        foliage.load(nodes: foliageNodes)
-        footpaths.load(nodes: footpathNodes)
-        water.load(nodes: waterNodes)
+        terrain.load(intermediates: terrainNodes)
+        areas.load(intermediates: areaNodes)
+        foliage.load(intermediates: foliageNodes)
+        footpaths.load(intermediates: footpathNodes)
+        water.load(intermediates: waterNodes)
+        
+        if let floorColor = ColorPalettes.shared.color(named: intermediate.floorColor) {
+            
+            floor.color = floorColor
+        }
     }
 }
 
@@ -166,6 +175,8 @@ extension World: Encodable {
         case footpaths
         case terrain
         case water
+        
+        case floorColor
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -179,6 +190,8 @@ extension World: Encodable {
         try container.encode(self.footpaths, forKey: .footpaths)
         try container.encode(self.terrain, forKey: .terrain)
         try container.encode(self.water, forKey: .water)
+        
+        try container.encodeIfPresent(self.floor.color?.name, forKey: .floorColor)
     }
 }
 

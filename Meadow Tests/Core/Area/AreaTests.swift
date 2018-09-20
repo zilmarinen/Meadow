@@ -25,9 +25,9 @@ class AreaTests: XCTestCase {
         
         let coordinate = Coordinate(x: 13, y: 0, z: 37)
         
-        let n0 = meadow.areas.add(node: Coordinate(x: 13, y: 0, z: 37))
-        let n1 = meadow.areas.add(node: coordinate + Coordinate.left)
-        let n2 = meadow.areas.add(node: coordinate)
+        let n0 = meadow.world.areas.add(node: Coordinate(x: 13, y: 0, z: 37))
+        let n1 = meadow.world.areas.add(node: coordinate + Coordinate.left)
+        let n2 = meadow.world.areas.add(node: coordinate)
         
         XCTAssertNotNil(n0)
         XCTAssertNotNil(n1)
@@ -44,8 +44,8 @@ class AreaTests: XCTestCase {
         
         let coordinate = Coordinate(x: 13, y: 0, z: 37)
         
-        let n0 = meadow.areas.add(node: Coordinate(x: 13, y: 0, z: 37))
-        let n1 = meadow.areas.add(node: coordinate + Coordinate.left)
+        let n0 = meadow.world.areas.add(node: Coordinate(x: 13, y: 0, z: 37))
+        let n1 = meadow.world.areas.add(node: coordinate + Coordinate.left)
         
         XCTAssertNotNil(n0)
         XCTAssertNotNil(n1)

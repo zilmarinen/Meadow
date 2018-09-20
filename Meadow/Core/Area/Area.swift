@@ -17,33 +17,21 @@ extension Area: SceneGraphIntermediate {
     public typealias IntermediateType = AreaNodeIntermediate
     
     public func load(intermediates: [IntermediateType]) {
-    
+        
         intermediates.forEach { intermediate in
             
             if let node = add(node: intermediate.volume.coordinate) {
                 
                 node.externalAreaType = intermediate.externalAreaType
                 node.internalAreaType = intermediate.internalAreaType
-                node.floorColorPalette = ColorPalettes.shared.palette(named: intermediate.floorColorPalette)
+                node.floorColorPalette = ColorPalettes.shared?.palette(named: intermediate.floorColorPalette)
                 
-                if let edge = intermediate.edges.north, let externalColorPalette = ColorPalettes.shared.palette(named: edge.externalColorPalette), let internalColorPalette = ColorPalettes.shared.palette(named: edge.internalColorPalette) {
+                GridEdge.Edges.forEach { edge in
                     
-                    node.set(edge: AreaNode.Edge(edge: edge.edge, edgeType: edge.edgeType, architectureType: edge.architectureType, externalColorPalette: externalColorPalette, internalColorPalette: internalColorPalette))
-                }
-                
-                if let edge = intermediate.edges.east, let externalColorPalette = ColorPalettes.shared.palette(named: edge.externalColorPalette), let internalColorPalette = ColorPalettes.shared.palette(named: edge.internalColorPalette) {
-                    
-                    node.set(edge: AreaNode.Edge(edge: edge.edge, edgeType: edge.edgeType, architectureType: edge.architectureType, externalColorPalette: externalColorPalette, internalColorPalette: internalColorPalette))
-                }
-                
-                if let edge = intermediate.edges.south, let externalColorPalette = ColorPalettes.shared.palette(named: edge.externalColorPalette), let internalColorPalette = ColorPalettes.shared.palette(named: edge.internalColorPalette) {
-                    
-                    node.set(edge: AreaNode.Edge(edge: edge.edge, edgeType: edge.edgeType, architectureType: edge.architectureType, externalColorPalette: externalColorPalette, internalColorPalette: internalColorPalette))
-                }
-                
-                if let edge = intermediate.edges.west, let externalColorPalette = ColorPalettes.shared.palette(named: edge.externalColorPalette), let internalColorPalette = ColorPalettes.shared.palette(named: edge.internalColorPalette) {
-                    
-                    node.set(edge: AreaNode.Edge(edge: edge.edge, edgeType: edge.edgeType, architectureType: edge.architectureType, externalColorPalette: externalColorPalette, internalColorPalette: internalColorPalette))
+                    if let nodeEdge = intermediate.edges.find(edge: edge), let externalColorPalette = ColorPalettes.shared?.palette(named: nodeEdge.externalColorPalette), let internalColorPalette = ColorPalettes.shared?.palette(named: nodeEdge.internalColorPalette) {
+                        
+                        node.set(edge: AreaNode.Edge(edge: edge, edgeType: nodeEdge.edgeType, architectureType: nodeEdge.architectureType, externalColorPalette: externalColorPalette, internalColorPalette: internalColorPalette))
+                    }
                 }
             }
         }
@@ -58,7 +46,7 @@ extension Area {
         
         node.externalAreaType = AreaType.brick
         node.internalAreaType = AreaType.concrete
-        node.floorColorPalette = ColorPalettes.shared.allColorPalettes.first
+        node.floorColorPalette = ColorPalettes.shared?.allColorPalettes.first
         
         GridEdge.Edges.forEach { edge in
             

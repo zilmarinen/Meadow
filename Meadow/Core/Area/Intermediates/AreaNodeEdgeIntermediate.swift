@@ -24,4 +24,15 @@ public struct AreaNodeEdgesIntermediate: Codable {
     let east: AreaNodeEdgeIntermediate?
     let south: AreaNodeEdgeIntermediate?
     let west: AreaNodeEdgeIntermediate?
+    
+    func find(edge: GridEdge) -> AreaNodeEdgeIntermediate? {
+        
+        switch edge {
+            
+        case .north: return north
+        case .east: return east
+        case .south: return south
+        case .west: return west
+        }
+    }
 }

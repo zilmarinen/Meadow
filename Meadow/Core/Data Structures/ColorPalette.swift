@@ -25,7 +25,7 @@ public struct ColorPalette: Codable, Hashable {
 
 public class ColorPalettes {
     
-    public static var shared = ColorPalettes()!
+    public static let shared = ColorPalettes()
     
     let colorPalettes: [ColorPalette]
     

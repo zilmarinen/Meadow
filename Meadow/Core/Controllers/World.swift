@@ -157,7 +157,7 @@ extension World: SceneGraphIntermediate {
         footpaths.load(intermediates: footpathNodes)
         water.load(intermediates: waterNodes)
         
-        if let floorColor = ColorPalettes.shared.color(named: intermediate.floorColor) {
+        if let floorColor = ColorPalettes.shared?.color(named: intermediate.floorColor) {
             
             floor.color = floorColor
         }

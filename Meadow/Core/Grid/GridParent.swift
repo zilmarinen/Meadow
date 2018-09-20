@@ -10,7 +10,7 @@ import Foundation
 
 public protocol GridParent: SceneGraphParent, GridObserver {
     
-    associatedtype ChildType: Hashable
+    associatedtype ChildType
     
     var children: [ChildType] { get }
 }

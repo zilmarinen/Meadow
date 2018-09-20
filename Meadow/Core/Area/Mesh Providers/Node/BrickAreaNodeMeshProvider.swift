@@ -53,8 +53,8 @@ class BrickAreaNodeMeshProvider: AreaNodeMeshProvider {
         let v15 = cv1 + offsets.lintelFramePeak
         
         //top face
-        meshFaces.append(MeshFace(v0: v0, v1: v1, v2: v3, projectedNormal: SCNVector3.Up, color: edge.colorPalette.primary.vector))
-        meshFaces.append(MeshFace(v0: v0, v1: v3, v2: v2, projectedNormal: SCNVector3.Up, color: edge.colorPalette.primary.vector))
+        meshFaces.append(MeshFace(v0: v0, v1: v1, v2: v3, projectedNormal: SCNVector3.Up, color: edge.colorPalette.tertiary.vector))
+        meshFaces.append(MeshFace(v0: v0, v1: v3, v2: v2, projectedNormal: SCNVector3.Up, color: edge.colorPalette.tertiary.vector))
         
         //wall
         meshFaces.append(MeshFace(v0: v2, v1: v4, v2: v12, projectedNormal: edge.normal, color: edge.colorPalette.primary.vector))
@@ -115,8 +115,8 @@ class BrickAreaNodeMeshProvider: AreaNodeMeshProvider {
         let v6 = p3 + o1.surface
         
         //top face
-        meshFaces.append(MeshFace(v0: v0, v1: v1, v2: v2, projectedNormal: SCNVector3.Up, color: cp0.primary.vector))
-        meshFaces.append(MeshFace(v0: v0, v1: v2, v2: v3, projectedNormal: SCNVector3.Up, color: cp1.primary.vector))
+        meshFaces.append(MeshFace(v0: v0, v1: v1, v2: v2, projectedNormal: SCNVector3.Up, color: cp0.tertiary.vector))
+        meshFaces.append(MeshFace(v0: v0, v1: v2, v2: v3, projectedNormal: SCNVector3.Up, color: cp1.tertiary.vector))
         
         //wall
         meshFaces.append(MeshFace(v0: v2, v1: v1, v2: v4, projectedNormal: n0, color: cp0.primary.vector))
@@ -151,8 +151,8 @@ class BrickAreaNodeMeshProvider: AreaNodeMeshProvider {
         let v5 = w1 + offsets.surface
         
         //top face
-        meshFaces.append(MeshFace(v0: v0, v1: v1, v2: v3, projectedNormal: SCNVector3.Up, color: edge.colorPalette.primary.vector))
-        meshFaces.append(MeshFace(v0: v0, v1: v3, v2: v2, projectedNormal: SCNVector3.Up, color: edge.colorPalette.primary.vector))
+        meshFaces.append(MeshFace(v0: v0, v1: v1, v2: v3, projectedNormal: SCNVector3.Up, color: edge.colorPalette.tertiary.vector))
+        meshFaces.append(MeshFace(v0: v0, v1: v3, v2: v2, projectedNormal: SCNVector3.Up, color: edge.colorPalette.tertiary.vector))
         
         //wall
         meshFaces.append(MeshFace(v0: v2, v1: v3, v2: v5, projectedNormal: edge.normal, color: edge.colorPalette.primary.vector))
@@ -201,8 +201,8 @@ class BrickAreaNodeMeshProvider: AreaNodeMeshProvider {
         let v13 = cv1 + offsets.surface
         
         //top face
-        meshFaces.append(MeshFace(v0: v0, v1: v1, v2: v3, projectedNormal: SCNVector3.Up, color: edge.colorPalette.primary.vector))
-        meshFaces.append(MeshFace(v0: v0, v1: v3, v2: v2, projectedNormal: SCNVector3.Up, color: edge.colorPalette.primary.vector))
+        meshFaces.append(MeshFace(v0: v0, v1: v1, v2: v3, projectedNormal: SCNVector3.Up, color: edge.colorPalette.tertiary.vector))
+        meshFaces.append(MeshFace(v0: v0, v1: v3, v2: v2, projectedNormal: SCNVector3.Up, color: edge.colorPalette.tertiary.vector))
         
         //wall
         meshFaces.append(MeshFace(v0: v2, v1: v4, v2: v12, projectedNormal: edge.normal, color: edge.colorPalette.primary.vector))

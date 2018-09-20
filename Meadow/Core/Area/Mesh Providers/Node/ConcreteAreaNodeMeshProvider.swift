@@ -12,28 +12,28 @@ class ConcreteAreaNodeMeshProvider: AreaNodeMeshProvider {
     
     func areaNode(doorway edge: AreaNodeEdgeData, insets: AreaArchitectureInsets, offsets: AreaArchitectureOffsets, transom: Bool) -> [MeshFace] {
         
-        var meshFaces: [MeshFace] = []
+        let meshFaces: [MeshFace] = []
         
         return meshFaces
     }
     
     func areaNode(wall corner: AreaNodeCornerData, insets: (AreaArchitectureInsets, AreaArchitectureInsets), offsets: (AreaArchitectureOffsets, AreaArchitectureOffsets)) -> [MeshFace] {
         
-        var meshFaces: [MeshFace] = []
+        let meshFaces: [MeshFace] = []
         
         return meshFaces
     }
     
     func areaNode(wall edge: AreaNodeEdgeData, insets: AreaArchitectureInsets, offsets: AreaArchitectureOffsets) -> [MeshFace] {
         
-        var meshFaces: [MeshFace] = []
+        let meshFaces: [MeshFace] = []
         
         return meshFaces
     }
     
     func areaNode(window edge: AreaNodeEdgeData, insets: AreaArchitectureInsets, offsets: AreaArchitectureOffsets) -> [MeshFace] {
         
-        var meshFaces: [MeshFace] = []
+        let meshFaces: [MeshFace] = []
         
         return meshFaces
     }

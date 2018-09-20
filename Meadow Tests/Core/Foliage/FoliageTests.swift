@@ -25,9 +25,9 @@ class FoliageTests: XCTestCase {
         
         let coordinate = Coordinate(x: 13, y: 0, z: 37)
         
-        let n0 = meadow.foliage.add(node: Coordinate(x: 13, y: 0, z: 37))
-        let n1 = meadow.foliage.add(node: coordinate + Coordinate.left)
-        let n2 = meadow.foliage.add(node: coordinate)
+        let n0 = meadow.world.foliage.add(node: Coordinate(x: 13, y: 0, z: 37))
+        let n1 = meadow.world.foliage.add(node: coordinate + Coordinate.left)
+        let n2 = meadow.world.foliage.add(node: coordinate)
         
         XCTAssertNotNil(n0)
         XCTAssertNotNil(n1)
@@ -44,8 +44,8 @@ class FoliageTests: XCTestCase {
         
         let coordinate = Coordinate(x: 13, y: 0, z: 37)
         
-        let n0 = meadow.foliage.add(node: Coordinate(x: 13, y: 0, z: 37))
-        let n1 = meadow.foliage.add(node: coordinate + Coordinate.left)
+        let n0 = meadow.world.foliage.add(node: Coordinate(x: 13, y: 0, z: 37))
+        let n1 = meadow.world.foliage.add(node: coordinate + Coordinate.left)
         
         XCTAssertNotNil(n0)
         XCTAssertNotNil(n1)

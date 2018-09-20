@@ -35,6 +35,6 @@ extension FootpathType {
     
     public var colorPalette: ColorPalette? {
         
-        return ColorPalettes.shared.palette(named: name)
+        return ColorPalettes.shared?.palette(named: name)
     }
 }

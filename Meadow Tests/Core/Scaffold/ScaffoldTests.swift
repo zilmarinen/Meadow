@@ -25,9 +25,9 @@ class ScaffoldTests: XCTestCase {
         
         let coordinate = Coordinate(x: 13, y: 0, z: 37)
         
-        let n0 = meadow.scaffolds.add(node: Coordinate(x: 13, y: 0, z: 37))
-        let n1 = meadow.scaffolds.add(node: coordinate + Coordinate.left)
-        let n2 = meadow.scaffolds.add(node: coordinate)
+        let n0 = meadow.world.scaffolds.add(node: Coordinate(x: 13, y: 0, z: 37))
+        let n1 = meadow.world.scaffolds.add(node: coordinate + Coordinate.left)
+        let n2 = meadow.world.scaffolds.add(node: coordinate)
         
         XCTAssertNotNil(n0)
         XCTAssertNotNil(n1)
@@ -44,8 +44,8 @@ class ScaffoldTests: XCTestCase {
         
         let coordinate = Coordinate(x: 13, y: 0, z: 37)
         
-        let n0 = meadow.scaffolds.add(node: Coordinate(x: 13, y: 0, z: 37))
-        let n1 = meadow.scaffolds.add(node: coordinate + Coordinate.left)
+        let n0 = meadow.world.scaffolds.add(node: Coordinate(x: 13, y: 0, z: 37))
+        let n1 = meadow.world.scaffolds.add(node: coordinate + Coordinate.left)
         
         XCTAssertNotNil(n0)
         XCTAssertNotNil(n1)

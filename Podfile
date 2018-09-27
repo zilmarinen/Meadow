@@ -5,6 +5,8 @@ target 'Meadow-iOS' do
 
 	platform :ios, '11.3'
 
+	pod 'THRUtilities', :path => '../THRUtilities'
+
   	target 'Meadow-iOSTests' do
     
     	inherit! :search_paths
@@ -16,6 +18,8 @@ end
 target 'Meadow-macOS' do
 
 	platform :osx, '10.13'
+
+	pod 'THRUtilities', :path => '../THRUtilities'
 
   	target 'Meadow-macOSTests' do
     

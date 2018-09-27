@@ -57,10 +57,10 @@
 	},
     {
 		"name": "Building Interior",
-		"primary": "razzmatazz",
-		"secondary": "bananaMania",
-		"tertiary": "violetRed",
-		"quaternary": "cornflower"
+		"primary": "orchid",
+		"secondary": "coconut",
+		"tertiary": "shampoo",
+		"quaternary": "periwinkle"
 	},
     {
 		"name": "Building Exterior",

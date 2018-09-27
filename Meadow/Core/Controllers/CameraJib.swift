@@ -10,12 +10,9 @@ import SceneKit
 
 public class CameraJib: SCNNode, SceneGraphChild {
     
-    public lazy var stateMachine = {
+    public lazy var model = {
         
-        return CameraJibStateMachine(.focus(SCNVector3Zero, .north, CameraJib.maximumZoomLevel), transition: { (from, to) in
-            
-            self.stateDidChange(from: from, to: to)
-        })
+        return CameraJibModel()
     }()
 
     public override init() {
@@ -29,6 +26,8 @@ public class CameraJib: SCNNode, SceneGraphChild {
         camera.usesOrthographicProjection = true
         
         self.camera = camera
+        
+        self.model.subscribe(stateDidChange(from:to:))
     }
 
     public required init?(coder aDecoder: NSCoder) {
@@ -52,7 +51,7 @@ extension CameraJib {
 
     public func update(deltaTime: TimeInterval) {
         
-        switch stateMachine.state {
+        switch model.state {
             
         case .focus(let vector, let edge, let zoomLevel):
             

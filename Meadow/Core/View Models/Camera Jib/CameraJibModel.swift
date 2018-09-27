@@ -1,5 +1,5 @@
 //
-//  CameraJibStateMachine.swift
+//  CameraJibModel.swift
 //  Meadow-iOS
 //
 //  Created by Zack Brown on 07/06/2018.
@@ -7,6 +7,7 @@
 //
 
 import SceneKit
+import THRUtilities
 
 extension CameraJib {
 
@@ -20,7 +21,11 @@ extension CameraJib {
         }
     }
     
-    public class CameraJibStateMachine: StateMachine<CameraState> {
+    public class CameraJibModel: BaseViewModel<CameraState> {
     
+        init() {
+            
+            super.init(initialState: .focus(SCNVector3Zero, .north, CameraJib.maximumZoomLevel))
+        }
     }
 }

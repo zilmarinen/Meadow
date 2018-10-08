@@ -103,6 +103,8 @@ extension Grid {
             
             addChildNode(chunk)
             
+            chunk.categoryBitMask = categoryBitMask
+            
             becomeDirty()
         }
         

@@ -10,6 +10,8 @@ import SceneKit
 
 public class World: SCNNode, GridObserver, SceneGraphChild, SceneGraphParent {
     
+    public let blueprint = Blueprint()
+    
     public let floor = Floor()
     
     public let areas = Area()
@@ -38,25 +40,33 @@ public class World: SCNNode, GridObserver, SceneGraphChild, SceneGraphParent {
         
         areas.observer = self
         areas.name = "Areas"
+        areas.categoryBitMask = SceneGraphNodeType.area.rawValue
         
         foliage.observer = self
         foliage.name = "Foliage"
+        foliage.categoryBitMask = SceneGraphNodeType.foliage.rawValue
         
         footpaths.observer = self
         footpaths.name = "Footpaths"
+        footpaths.categoryBitMask = SceneGraphNodeType.footpaths.rawValue
         
         scaffolds.observer = self
         scaffolds.name = "Scaffolds"
+        scaffolds.categoryBitMask = SceneGraphNodeType.scaffold.rawValue
         
         terrain.observer = self
         terrain.name = "Terrain"
+        terrain.categoryBitMask = SceneGraphNodeType.terrain.rawValue
         
         tunnels.observer = self
         tunnels.name = "Tunnels"
+        tunnels.categoryBitMask = SceneGraphNodeType.tunnel.rawValue
         
         water.observer = self
         water.name = "Water"
+        water.categoryBitMask = SceneGraphNodeType.water.rawValue
         
+        self.addChildNode(blueprint)
         self.addChildNode(floor)
         self.addChildNode(areas)
         self.addChildNode(foliage)

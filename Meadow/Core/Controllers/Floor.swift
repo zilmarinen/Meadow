@@ -27,6 +27,7 @@ public class Floor: SCNNode, SceneGraphChild, SceneGraphParent {
         super.init()
         
         self.name = "Floor"
+        self.categoryBitMask = SceneGraphNodeType.floor.rawValue
         
         let floor = SCNFloor()
         

@@ -85,46 +85,6 @@ extension Meadow: SceneGraphIntermediate {
     }
 }
 
-extension Meadow {
-    
-    public func hitTest(hits: [SCNHitTestResult]) -> [GridNode] {
-        
-        var results: [GridNode] = []
-        
-        hits.forEach { hit in
-            
-            let coordinate = Coordinate(x: hit.localCoordinates.x, y: hit.localCoordinates.y, z: hit.localCoordinates.z)
-            
-            print("Coordinate: \(coordinate) -> \(hit.localCoordinates)")
-            
-            switch type(of: hit.node) {
-                
-            case is AreaChunk.Type:
-                
-                guard let node = world.areas.find(node: coordinate) else { break }
-                
-                results.append(node)
-                
-            case is FootpathChunk.Type:
-                
-                guard let node = world.footpaths.find(node: coordinate) else { break }
-                
-                results.append(node)
-                
-            case is TerrainChunk.Type:
-                
-                guard let node = world.terrain.find(node: coordinate) else { break }
-                
-                results.append(node)
-                
-            default: break
-            }
-        }
-        
-        return results
-    }
-}
-
 extension Meadow: Encodable {
     
     enum CodingKeys: CodingKey {

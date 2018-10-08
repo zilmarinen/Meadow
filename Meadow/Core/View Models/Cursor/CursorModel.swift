@@ -20,27 +20,33 @@ extension SceneView {
             case right
         }
         
-        case down(inputType: InputType, position: CGPoint)
-        case tracking(inputType: InputType, startPosition: CGPoint, position: CGPoint)
-        case up(inputType: InputType, startPosition: CGPoint, position: CGPoint)
-        case idle
+        case down(position: CGPoint, inputType: InputType)
+        case tracking(position: CGPoint, inputType: InputType, startPosition: CGPoint)
+        case up(position: CGPoint, inputType: InputType, startPosition: CGPoint)
+        case idle(position: CGPoint)
         
         public func shouldTransition(to newState: CursorState) -> Should<CursorState> {
         
-            if case .up = newState {
+            switch newState {
                 
-                return .redirect(.idle)
+            case .up(let position, _, _):
+                
+                return .redirect(.idle(position: position))
+                
+            default:
+                
+                return .continue
             }
-            
-            return .continue
         }
     }
     
     public class CursorModel: BaseViewModel<CursorState> {
         
+        public var tracksIdleEvents: Bool = false
+        
         public init() {
             
-            super.init(initialState: .idle)
+            super.init(initialState: .idle(position: CGPoint.zero))
         }
     }
 }

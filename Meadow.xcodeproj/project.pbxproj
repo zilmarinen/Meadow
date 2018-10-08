@@ -129,10 +129,8 @@
 		1825957E210AFCE400F76A60 /* color_palettes.json in Resources */ = {isa = PBXBuildFile; fileRef = 1825957D210AFCE400F76A60 /* color_palettes.json */; };
 		18259580210AFD0B00F76A60 /* colors.json in Resources */ = {isa = PBXBuildFile; fileRef = 1825957F210AFD0B00F76A60 /* colors.json */; };
 		18259581210AFD0B00F76A60 /* colors.json in Resources */ = {isa = PBXBuildFile; fileRef = 1825957F210AFD0B00F76A60 /* colors.json */; };
-		18259582210AFD0B00F76A60 /* colors.json in Resources */ = {isa = PBXBuildFile; fileRef = 1825957F210AFD0B00F76A60 /* colors.json */; };
 		18259583210AFD0B00F76A60 /* colors.json in Resources */ = {isa = PBXBuildFile; fileRef = 1825957F210AFD0B00F76A60 /* colors.json */; };
 		18259584210AFE4800F76A60 /* color_palettes.json in Resources */ = {isa = PBXBuildFile; fileRef = 1825957D210AFCE400F76A60 /* color_palettes.json */; };
-		18259585210AFE4800F76A60 /* color_palettes.json in Resources */ = {isa = PBXBuildFile; fileRef = 1825957D210AFCE400F76A60 /* color_palettes.json */; };
 		18259586210AFE4900F76A60 /* color_palettes.json in Resources */ = {isa = PBXBuildFile; fileRef = 1825957D210AFCE400F76A60 /* color_palettes.json */; };
 		18259589210AFEB700F76A60 /* ColorPaletteIntermediate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18259588210AFEB700F76A60 /* ColorPaletteIntermediate.swift */; };
 		1825958A210AFEB700F76A60 /* ColorPaletteIntermediate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18259588210AFEB700F76A60 /* ColorPaletteIntermediate.swift */; };
@@ -170,6 +168,10 @@
 		1831502020BED0E9004317E0 /* SCNVector3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1831501E20BED0D8004317E0 /* SCNVector3.swift */; };
 		1831502120BED0EA004317E0 /* SCNVector3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1831501E20BED0D8004317E0 /* SCNVector3.swift */; };
 		1831502220BED0EA004317E0 /* SCNVector3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1831501E20BED0D8004317E0 /* SCNVector3.swift */; };
+		18380BE4215E08AE00A446D0 /* Blueprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18380BE3215E08AE00A446D0 /* Blueprint.swift */; };
+		18380BE5215E08B000A446D0 /* Blueprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18380BE3215E08AE00A446D0 /* Blueprint.swift */; };
+		18380BE6215E08B100A446D0 /* Blueprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18380BE3215E08AE00A446D0 /* Blueprint.swift */; };
+		18380BE7215E08B100A446D0 /* Blueprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18380BE3215E08AE00A446D0 /* Blueprint.swift */; };
 		183830AB2105C4A400FFA729 /* AreaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183830AA2105C4A400FFA729 /* AreaTests.swift */; };
 		183830AC2105C4B000FFA729 /* AreaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183830AA2105C4A400FFA729 /* AreaTests.swift */; };
 		183830AE2105C4BB00FFA729 /* FoliageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183830AD2105C4BB00FFA729 /* FoliageTests.swift */; };
@@ -250,6 +252,24 @@
 		187E4701214A8068007430D6 /* WorldIntermediate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187E46FF214A805A007430D6 /* WorldIntermediate.swift */; };
 		187E4702214A8069007430D6 /* WorldIntermediate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187E46FF214A805A007430D6 /* WorldIntermediate.swift */; };
 		187E4703214A8069007430D6 /* WorldIntermediate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187E46FF214A805A007430D6 /* WorldIntermediate.swift */; };
+		188834D621639E3300D83AFB /* CursorModelObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188834D521639E3300D83AFB /* CursorModelObserver.swift */; };
+		188834D721639E3300D83AFB /* CursorModelObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188834D521639E3300D83AFB /* CursorModelObserver.swift */; };
+		188834D821639E3300D83AFB /* CursorModelObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188834D521639E3300D83AFB /* CursorModelObserver.swift */; };
+		188834D921639E3300D83AFB /* CursorModelObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188834D521639E3300D83AFB /* CursorModelObserver.swift */; };
+		188834DA2163A75200D83AFB /* colors.json in Resources */ = {isa = PBXBuildFile; fileRef = 1825957F210AFD0B00F76A60 /* colors.json */; };
+		188834DB2163A75200D83AFB /* color_palettes.json in Resources */ = {isa = PBXBuildFile; fileRef = 1825957D210AFCE400F76A60 /* color_palettes.json */; };
+		188834DD2163A7C700D83AFB /* SceneGraphNodeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188834DC2163A7C700D83AFB /* SceneGraphNodeType.swift */; };
+		188834DE2163A7C700D83AFB /* SceneGraphNodeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188834DC2163A7C700D83AFB /* SceneGraphNodeType.swift */; };
+		188834DF2163A7C700D83AFB /* SceneGraphNodeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188834DC2163A7C700D83AFB /* SceneGraphNodeType.swift */; };
+		188834E02163A7C700D83AFB /* SceneGraphNodeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188834DC2163A7C700D83AFB /* SceneGraphNodeType.swift */; };
+		188B77EC216B445E00B6B141 /* GraticuleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188B77EB216B445E00B6B141 /* GraticuleModel.swift */; };
+		188B77ED216B447C00B6B141 /* GraticuleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188B77EB216B445E00B6B141 /* GraticuleModel.swift */; };
+		188B77EE216B447D00B6B141 /* GraticuleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188B77EB216B445E00B6B141 /* GraticuleModel.swift */; };
+		188B77EF216B447D00B6B141 /* GraticuleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188B77EB216B445E00B6B141 /* GraticuleModel.swift */; };
+		188B77F1216B476F00B6B141 /* GraticuleModelObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188B77F0216B476F00B6B141 /* GraticuleModelObserver.swift */; };
+		188B77F2216B477B00B6B141 /* GraticuleModelObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188B77F0216B476F00B6B141 /* GraticuleModelObserver.swift */; };
+		188B77F3216B477B00B6B141 /* GraticuleModelObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188B77F0216B476F00B6B141 /* GraticuleModelObserver.swift */; };
+		188B77F4216B477C00B6B141 /* GraticuleModelObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188B77F0216B476F00B6B141 /* GraticuleModelObserver.swift */; };
 		188F483120CA6BAD007095CF /* SCNVector4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188F483020CA6BAD007095CF /* SCNVector4.swift */; };
 		188F483220CA6DED007095CF /* SCNVector4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188F483020CA6BAD007095CF /* SCNVector4.swift */; };
 		188F483320CA6DED007095CF /* SCNVector4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188F483020CA6BAD007095CF /* SCNVector4.swift */; };
@@ -600,6 +620,7 @@
 		182B22EF2098BDDB003D1309 /* MeshFace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeshFace.swift; sourceTree = "<group>"; };
 		1831501820BECE5B004317E0 /* Plane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plane.swift; sourceTree = "<group>"; };
 		1831501E20BED0D8004317E0 /* SCNVector3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCNVector3.swift; sourceTree = "<group>"; };
+		18380BE3215E08AE00A446D0 /* Blueprint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Blueprint.swift; sourceTree = "<group>"; };
 		183830AA2105C4A400FFA729 /* AreaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaTests.swift; sourceTree = "<group>"; };
 		183830AD2105C4BB00FFA729 /* FoliageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoliageTests.swift; sourceTree = "<group>"; };
 		183830B02105C4CB00FFA729 /* FootpathTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FootpathTests.swift; sourceTree = "<group>"; };
@@ -654,7 +675,11 @@
 		18713245209735DF0084565F /* SizeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeTests.swift; sourceTree = "<group>"; };
 		187E46FF214A805A007430D6 /* WorldIntermediate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldIntermediate.swift; sourceTree = "<group>"; };
 		1880694520A071D6002F6EC0 /* TerrainLayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrainLayerTests.swift; sourceTree = "<group>"; };
+		188834D521639E3300D83AFB /* CursorModelObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CursorModelObserver.swift; sourceTree = "<group>"; };
+		188834DC2163A7C700D83AFB /* SceneGraphNodeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneGraphNodeType.swift; sourceTree = "<group>"; };
 		188B3C16209E1BF70034F4BB /* TerrainLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrainLayer.swift; sourceTree = "<group>"; };
+		188B77EB216B445E00B6B141 /* GraticuleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraticuleModel.swift; sourceTree = "<group>"; };
+		188B77F0216B476F00B6B141 /* GraticuleModelObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraticuleModelObserver.swift; sourceTree = "<group>"; };
 		188F483020CA6BAD007095CF /* SCNVector4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCNVector4.swift; sourceTree = "<group>"; };
 		18924B3F212C1ED000943057 /* AreaArchitectureType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaArchitectureType.swift; sourceTree = "<group>"; };
 		18924B43212C2A6F00943057 /* AreaArchitectureMeshProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaArchitectureMeshProvider.swift; sourceTree = "<group>"; };
@@ -1116,6 +1141,7 @@
 				18496C6D2093270F00992AF3 /* Meadow.swift */,
 				18D67A10215BC52100D3570C /* SceneView.swift */,
 				18496C9820937A3400992AF3 /* World.swift */,
+				18380BE3215E08AE00A446D0 /* Blueprint.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1140,6 +1166,7 @@
 		185E587C20A97F5300139565 /* Scene Graph */ = {
 			isa = PBXGroup;
 			children = (
+				188834DC2163A7C700D83AFB /* SceneGraphNodeType.swift */,
 				180CA9F7210202E30026FE06 /* SceneGraphChild.swift */,
 				180CA9F5210202DB0026FE06 /* SceneGraphParent.swift */,
 				185ACB0E214A54AD00D593BB /* SceneGraphUpdatable.swift */,
@@ -1186,6 +1213,15 @@
 				18EE510420A57CBA0059829C /* Platforms */,
 			);
 			path = "Meadow Tests";
+			sourceTree = "<group>";
+		};
+		188B77EA216B444D00B6B141 /* Graticule */ = {
+			isa = PBXGroup;
+			children = (
+				188B77EB216B445E00B6B141 /* GraticuleModel.swift */,
+				188B77F0216B476F00B6B141 /* GraticuleModelObserver.swift */,
+			);
+			path = Graticule;
 			sourceTree = "<group>";
 		};
 		18924B41212C2A5100943057 /* Node */ = {
@@ -1282,6 +1318,7 @@
 		18D67A08215B93B700D3570C /* View Models */ = {
 			isa = PBXGroup;
 			children = (
+				188B77EA216B444D00B6B141 /* Graticule */,
 				18D67A0F215B99D000D3570C /* Cursor */,
 				18069F0A20C9785F0041A858 /* Camera Jib */,
 				18D67A09215B940900D3570C /* Scene View */,
@@ -1301,6 +1338,7 @@
 			isa = PBXGroup;
 			children = (
 				18411BD921523028001B900C /* CursorModel.swift */,
+				188834D521639E3300D83AFB /* CursorModelObserver.swift */,
 			);
 			path = Cursor;
 			sourceTree = "<group>";
@@ -1538,8 +1576,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				18259582210AFD0B00F76A60 /* colors.json in Resources */,
-				18259585210AFE4800F76A60 /* color_palettes.json in Resources */,
+				188834DA2163A75200D83AFB /* colors.json in Resources */,
+				188834DB2163A75200D83AFB /* color_palettes.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1634,6 +1672,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				188834DD2163A7C700D83AFB /* SceneGraphNodeType.swift in Sources */,
 				181832C4211DD93B0020170E /* BrickAreaNodeMeshProvider.swift in Sources */,
 				18259589210AFEB700F76A60 /* ColorPaletteIntermediate.swift in Sources */,
 				18069F0C20C978720041A858 /* CameraJibModel.swift in Sources */,
@@ -1685,6 +1724,7 @@
 				18EE505920A576830059829C /* TunnelChunk.swift in Sources */,
 				18259599210B190E00F76A60 /* FootpathNodeIntermediate.swift in Sources */,
 				180CAA31210209B40026FE06 /* AreaNodeIntermediate.swift in Sources */,
+				18380BE4215E08AE00A446D0 /* Blueprint.swift in Sources */,
 				18924B44212C2A6F00943057 /* AreaArchitectureMeshProvider.swift in Sources */,
 				18FF8E0C20AC29F900995462 /* CameraJib.swift in Sources */,
 				18C9BF10214E84A600440DCA /* SceneGraphIntermediate.swift in Sources */,
@@ -1716,6 +1756,7 @@
 				180CAA26210205230026FE06 /* TerrainNodeIntermediate.swift in Sources */,
 				18EE503020A576660059829C /* FootpathTile.swift in Sources */,
 				183830F32106051D00FFA729 /* TerrainLayerEdge.swift in Sources */,
+				188834D621639E3300D83AFB /* CursorModelObserver.swift in Sources */,
 				18EE514420A59F8E0059829C /* MeshTriangle.swift in Sources */,
 				18EE503B20A5766C0059829C /* GridTile.swift in Sources */,
 				1831501920BECE5B004317E0 /* Plane.swift in Sources */,
@@ -1741,6 +1782,7 @@
 				183830C72105C71900FFA729 /* AreaType.swift in Sources */,
 				185ACB0A214A451100D593BB /* Floor.swift in Sources */,
 				180CA9F0210202A60026FE06 /* GridObserver.swift in Sources */,
+				188B77EC216B445E00B6B141 /* GraticuleModel.swift in Sources */,
 				180CA9F2210202B60026FE06 /* GridSoilable.swift in Sources */,
 				18EE500A20A576360059829C /* AreaTile.swift in Sources */,
 				185E587820A878CD00139565 /* Bundle+Pod.swift in Sources */,
@@ -1751,6 +1793,7 @@
 				180CAA10210204150026FE06 /* GridIntermediate.swift in Sources */,
 				18D67A11215BC52100D3570C /* SceneView.swift in Sources */,
 				180CAA15210204290026FE06 /* GridTileIntermediate.swift in Sources */,
+				188B77F1216B476F00B6B141 /* GraticuleModelObserver.swift in Sources */,
 				18EE504E20A5767D0059829C /* TerrainNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1762,6 +1805,7 @@
 				18EE50B220A57BD40059829C /* ColorPalette.swift in Sources */,
 				18EE50DB20A57BE70059829C /* GridNode.swift in Sources */,
 				1814692B2108905600326342 /* AreaNodeEdge.swift in Sources */,
+				188834D721639E3300D83AFB /* CursorModelObserver.swift in Sources */,
 				18D67A04215B928800D3570C /* SceneView_iOS.swift in Sources */,
 				18EE50FF20A57BFB0059829C /* Water.swift in Sources */,
 				18EE50B620A57BD40059829C /* Size.swift in Sources */,
@@ -1778,9 +1822,11 @@
 				1831501A20BECE5E004317E0 /* Plane.swift in Sources */,
 				18D67A0C215B97BE00D3570C /* SceneViewModel.swift in Sources */,
 				183830B72105C4EF00FFA729 /* TunnelTests.swift in Sources */,
+				188B77F2216B477B00B6B141 /* GraticuleModelObserver.swift in Sources */,
 				18EE50DA20A57BE70059829C /* GridEdge.swift in Sources */,
 				183830F12105DEC500FFA729 /* TerrainNodeIntersectionProvider.swift in Sources */,
 				18EE510220A57BFB0059829C /* WaterNode.swift in Sources */,
+				188834DE2163A7C700D83AFB /* SceneGraphNodeType.swift in Sources */,
 				18EE514A20A5B6A30059829C /* SCNGeometry+Mesh.swift in Sources */,
 				185ACB0B214A451400D593BB /* Floor.swift in Sources */,
 				180CAA07210202FA0026FE06 /* GridObserver.swift in Sources */,
@@ -1856,6 +1902,7 @@
 				18EE50E520A57BEE0059829C /* ScaffoldTile.swift in Sources */,
 				183C78D2213FC2D100542348 /* FoliageResolver.swift in Sources */,
 				18EE50B020A57BCD0059829C /* World.swift in Sources */,
+				18380BE5215E08B000A446D0 /* Blueprint.swift in Sources */,
 				183830CE2105C72C00FFA729 /* FootpathType.swift in Sources */,
 				18EE514520A59F8E0059829C /* MeshTriangle.swift in Sources */,
 				18EE50A120A57BC20059829C /* AreaTile.swift in Sources */,
@@ -1886,6 +1933,7 @@
 				18EE50C120A57BDC0059829C /* Foliage.swift in Sources */,
 				183830F42106053800FFA729 /* TerrainLayerEdge.swift in Sources */,
 				183830AB2105C4A400FFA729 /* AreaTests.swift in Sources */,
+				188B77EE216B447D00B6B141 /* GraticuleModel.swift in Sources */,
 				180CAA4021022D070026FE06 /* TerrainType.swift in Sources */,
 				18069F0D20C979980041A858 /* CameraJibModel.swift in Sources */,
 				183830C82105C72200FFA729 /* AreaType.swift in Sources */,
@@ -1900,6 +1948,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				188834DF2163A7C700D83AFB /* SceneGraphNodeType.swift in Sources */,
 				181832C6211DD9600020170E /* BrickAreaNodeMeshProvider.swift in Sources */,
 				18069F0E20C979990041A858 /* CameraJibModel.swift in Sources */,
 				18EE501320A5764F0059829C /* World.swift in Sources */,
@@ -1951,6 +2000,7 @@
 				18EE501820A576540059829C /* Coordinate.swift in Sources */,
 				18EE501C20A576540059829C /* Volume.swift in Sources */,
 				18EE510720A5899E0059829C /* Meadow+Types.swift in Sources */,
+				18380BE6215E08B100A446D0 /* Blueprint.swift in Sources */,
 				18EE505D20A576830059829C /* TunnelChunk.swift in Sources */,
 				18C9BF12214E851500440DCA /* SceneGraphIntermediate.swift in Sources */,
 				18FF8E0E20AC2A8F00995462 /* CameraJib.swift in Sources */,
@@ -1982,6 +2032,7 @@
 				18EE503420A576660059829C /* FootpathTile.swift in Sources */,
 				18EE514620A59F8E0059829C /* MeshTriangle.swift in Sources */,
 				1825959E210B194000F76A60 /* AreaNodeIntermediate.swift in Sources */,
+				188834D821639E3300D83AFB /* CursorModelObserver.swift in Sources */,
 				18EE504120A5766D0059829C /* GridTile.swift in Sources */,
 				1831501B20BECE5E004317E0 /* Plane.swift in Sources */,
 				180CAA4721022F6E0026FE06 /* TerrainLayerHierarchy.swift in Sources */,
@@ -2007,6 +2058,7 @@
 				18259596210B18FC00F76A60 /* FootpathNodeSlope.swift in Sources */,
 				185ACB0C214A451400D593BB /* Floor.swift in Sources */,
 				1825959B210B190E00F76A60 /* FootpathNodeIntermediate.swift in Sources */,
+				188B77ED216B447C00B6B141 /* GraticuleModel.swift in Sources */,
 				18EE504A20A576780059829C /* ScaffoldTile.swift in Sources */,
 				182595A2210B195E00F76A60 /* AreaNodeEdgeIntermediate.swift in Sources */,
 				18EE500420A576350059829C /* Area.swift in Sources */,
@@ -2017,6 +2069,7 @@
 				180CAA1C210204360026FE06 /* GridIntermediate.swift in Sources */,
 				18D67A13215BC52500D3570C /* SceneView.swift in Sources */,
 				180CAA1E210204360026FE06 /* GridTileIntermediate.swift in Sources */,
+				188B77F3216B477B00B6B141 /* GraticuleModelObserver.swift in Sources */,
 				18EE505420A5767E0059829C /* TerrainNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2090,8 +2143,10 @@
 				182595A8210B1CC500F76A60 /* MeadowIntermediate.swift in Sources */,
 				180CAA08210202FC0026FE06 /* GridParent.swift in Sources */,
 				1814690E21085C5900326342 /* TerrainMeshProvider.swift in Sources */,
+				18380BE7215E08B100A446D0 /* Blueprint.swift in Sources */,
 				18EE50D120A57BE60059829C /* Grid.swift in Sources */,
 				180CAA20210204370026FE06 /* GridIntermediate.swift in Sources */,
+				188834D921639E3300D83AFB /* CursorModelObserver.swift in Sources */,
 				183830AF2105C4C100FFA729 /* FoliageTests.swift in Sources */,
 				180CAA3B210218820026FE06 /* GridNodeNeighbour.swift in Sources */,
 				180CA9FB210202E70026FE06 /* SceneGraphParent.swift in Sources */,
@@ -2122,6 +2177,7 @@
 				18D67A0E215B97BF00D3570C /* SceneViewModel.swift in Sources */,
 				18924B4A212C2A9700943057 /* AreaArchitectureType.swift in Sources */,
 				182595A1210B195E00F76A60 /* AreaNodeEdgeIntermediate.swift in Sources */,
+				188834E02163A7C700D83AFB /* SceneGraphNodeType.swift in Sources */,
 				18EE50D220A57BE60059829C /* GridChunk.swift in Sources */,
 				18EE50CB20A57BE20059829C /* FootpathTile.swift in Sources */,
 				18EE50A420A57BC30059829C /* AreaChunk.swift in Sources */,
@@ -2129,6 +2185,7 @@
 				18EE50AE20A57BCC0059829C /* World.swift in Sources */,
 				18EE514720A59F8E0059829C /* MeshTriangle.swift in Sources */,
 				18EE50A520A57BC30059829C /* AreaTile.swift in Sources */,
+				188B77EF216B447D00B6B141 /* GraticuleModel.swift in Sources */,
 				18EE50C620A57BDD0059829C /* FoliageChunk.swift in Sources */,
 				18EE50E720A57BF20059829C /* Terrain.swift in Sources */,
 				180CAA02210202F50026FE06 /* GridMeshProvider.swift in Sources */,
@@ -2139,6 +2196,7 @@
 				182595AD210B1D4F00F76A60 /* FoliageNodeIntermediate.swift in Sources */,
 				181832C2211DC9D40020170E /* ConcreteAreaNodeMeshProvider.swift in Sources */,
 				180CAA0B210203000026FE06 /* GridChild.swift in Sources */,
+				188B77F4216B477C00B6B141 /* GraticuleModelObserver.swift in Sources */,
 				185ACB12214A54BB00D593BB /* SceneGraphUpdatable.swift in Sources */,
 				185E587B20A878ED00139565 /* Bundle+Pod.swift in Sources */,
 				18EE509420A57A960059829C /* TerrainTests.swift in Sources */,

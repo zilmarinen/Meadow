@@ -1,59 +1,52 @@
 [
+    {
+        "name": "Blueprint",
+        "primary": "Cerulean",
+        "secondary": "Asparagus",
+        "tertiary": "Scarlet",
+        "quaternary": "White"
+    },
 	{
 		"name": "Grass",
-		"primary": "tropicalRainForest",
-		"secondary": "shamrock",
-		"tertiary": "wintergreenDream",
-		"quaternary": "yellowGreen"
+		"primary": "Green Sheen",
+		"secondary": "Sea Green",
+		"tertiary": "Wintergreen Dream",
+		"quaternary": "Yellow Green"
 	},
     {
 		"name": "Sand",
-		"primary": "desertSand",
-		"secondary": "orangeSoda",
-		"tertiary": "yellowOrange",
-		"quaternary": "yellowSunshine"
+		"primary": "Desert Sand",
+		"secondary": "Orange Soda",
+		"tertiary": "Yellow Orange",
+		"quaternary": "Yellow Sunshine"
 	},
     {
 		"name": "Bedrock",
-		"primary": "graniteGray",
-		"secondary": "blackShadows",
-		"tertiary": "eerieBlack",
-		"quaternary": "blackCoralPearl"
-	},
+		"primary": "Granite Gray",
+		"secondary": "Black Shadows",
+		"tertiary": "Eerie Black",
+		"quaternary": "Black Coral Pearl"
+    },
     {
-		"name": "Concrete",
-		"primary": "turquoisePearl",
-		"secondary": "sasquatchSocks",
-		"tertiary": "quickSilver",
-		"quaternary": "pixiePowder"
-	},
+        "name": "Asphalt",
+        "primary": "Manatee",
+        "secondary": "Sasquatch Socks",
+        "tertiary": "Quick Silver",
+        "quaternary": "Pixie Powder"
+    },
+    {
+        "name": "Dirt",
+        "primary": "turquoisePearl",
+        "secondary": "sasquatchSocks",
+        "tertiary": "quickSilver",
+        "quaternary": "pixiePowder"
+    },
     {
 		"name": "Water",
-		"primary": "tealBlue",
-		"secondary": "steelBlue",
-		"tertiary": "tealBlue",
-		"quaternary": "winterWizard"
-	},
-    {
-		"name": "Asphalt",
-		"primary": "graniteGray",
-		"secondary": "gray",
-		"tertiary": "onyx",
-		"quaternary": "blueGray"
-	},
-    {
-		"name": "Dirt",
-		"primary": "graniteGray",
-		"secondary": "gray",
-		"tertiary": "onyx",
-		"quaternary": "blueGray"
-	},
-    {
-		"name": "Tarmac",
-		"primary": "graniteGray",
-		"secondary": "gray",
-		"tertiary": "onyx",
-		"quaternary": "blueGray"
+		"primary": "Teal Blue",
+		"secondary": "Steel Blue",
+		"tertiary": "Teal Blue",
+		"quaternary": "Winter Wizard"
 	},
     {
 		"name": "Building Interior",

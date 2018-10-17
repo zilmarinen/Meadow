@@ -1,6 +1,6 @@
 //
 //  ScaffoldTests.swift
-//  Meadow-iOSTests
+//  MeadowTests
 //
 //  Created by Zack Brown on 23/07/2018.
 //  Copyright © 2018 Script Orchard. All rights reserved.
@@ -10,13 +10,13 @@ import XCTest
 
 class ScaffoldTests: XCTestCase {
  
-    var meadow: Meadow!
+    var scene: Scene!
     
     override func setUp() {
         
         super.setUp()
         
-        meadow = Meadow(observer: nil)
+        self.scene = Scene(observer: nil)
     }
     
     func testScaffoldNodeAddition() {
@@ -25,9 +25,9 @@ class ScaffoldTests: XCTestCase {
         
         let coordinate = Coordinate(x: 13, y: 0, z: 37)
         
-        let n0 = meadow.world.scaffolds.add(node: Coordinate(x: 13, y: 0, z: 37))
-        let n1 = meadow.world.scaffolds.add(node: coordinate + Coordinate.left)
-        let n2 = meadow.world.scaffolds.add(node: coordinate)
+        let n0 = scene.world.scaffolds.add(node: Coordinate(x: 13, y: 0, z: 37))
+        let n1 = scene.world.scaffolds.add(node: coordinate + Coordinate.left)
+        let n2 = scene.world.scaffolds.add(node: coordinate)
         
         XCTAssertNotNil(n0)
         XCTAssertNotNil(n1)
@@ -44,8 +44,8 @@ class ScaffoldTests: XCTestCase {
         
         let coordinate = Coordinate(x: 13, y: 0, z: 37)
         
-        let n0 = meadow.world.scaffolds.add(node: Coordinate(x: 13, y: 0, z: 37))
-        let n1 = meadow.world.scaffolds.add(node: coordinate + Coordinate.left)
+        let n0 = scene.world.scaffolds.add(node: Coordinate(x: 13, y: 0, z: 37))
+        let n1 = scene.world.scaffolds.add(node: coordinate + Coordinate.left)
         
         XCTAssertNotNil(n0)
         XCTAssertNotNil(n1)

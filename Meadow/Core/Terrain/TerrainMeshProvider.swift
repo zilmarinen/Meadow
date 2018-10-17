@@ -1,6 +1,6 @@
 //
 //  TerrainMeshProvider.swift
-//  Meadow-iOS
+//  Meadow
 //
 //  Created by Zack Brown on 25/07/2018.
 //  Copyright © 2018 Script Orchard. All rights reserved.
@@ -8,9 +8,9 @@
 
 import SceneKit
 
-struct TerrainMeshProvider {
+public struct TerrainMeshProvider {
     
-    static func terrainLayer(crown corners: (GridCorner, GridCorner), acuteCorner: GridCorner?, polyhedron: Polyhedron, normal: SCNVector3, color: SCNVector4) -> [MeshFace] {
+    public static func terrainLayer(crown corners: (GridCorner, GridCorner), acuteCorner: GridCorner?, polyhedron: Polyhedron, normal: SCNVector3, color: SCNVector4) -> [MeshFace] {
         
         let (c0, c1) = (corners.0, corners.1)
         
@@ -37,7 +37,7 @@ struct TerrainMeshProvider {
                 MeshFace(v0: v0, v1: v2, v2: v3, normal: normal, color: color)]
     }
     
-    static func terrainLayer(throne corners: (GridCorner, GridCorner), acuteCorner: GridCorner?, polyhedron: Polyhedron, normal: SCNVector3, color: SCNVector4) -> [MeshFace] {
+    public static func terrainLayer(throne corners: (GridCorner, GridCorner), acuteCorner: GridCorner?, polyhedron: Polyhedron, normal: SCNVector3, color: SCNVector4) -> [MeshFace] {
         
         let (c0, c1) = (corners.0, corners.1)
         

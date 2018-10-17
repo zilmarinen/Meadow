@@ -1,6 +1,6 @@
 //
 //  Axis.swift
-//  Meadow-iOS
+//  Meadow
 //
 //  Created by Zack Brown on 20/07/2018.
 //  Copyright © 2018 Script Orchard. All rights reserved.
@@ -33,8 +33,8 @@ public struct Axis {
 
 extension Axis {
     
-    static var unitXZ: MDWFloat { return 1.0 }
-    static var halfUnitXZ: MDWFloat { return unitXZ / 2.0 }
+    public static var unitXZ: MDWFloat { return 1.0 }
+    public static var halfUnitXZ: MDWFloat { return unitXZ / 2.0 }
     
-    static var unitY: MDWFloat { return 0.25 }
+    public static var unitY: MDWFloat { return 0.25 }
 }

@@ -14,13 +14,13 @@ public struct Mesh {
     
     public let triangles: [MeshTriangle]
 
-    init(faces: [MeshFace], triangles: [MeshTriangle]) {
+    public init(faces: [MeshFace], triangles: [MeshTriangle]) {
         
         self.faces = faces
         self.triangles = triangles
     }
     
-    init(faces: [MeshFace]) {
+    public init(faces: [MeshFace]) {
         
         var meshTriangles: [MeshTriangle] = []
         
@@ -34,7 +34,7 @@ public struct Mesh {
         self.init(faces: faces, triangles: meshTriangles)
     }
 
-    init(meshes: [Mesh]) {
+    public init(meshes: [Mesh]) {
         
         self.init(faces: meshes.flatMap { $0.faces })
     }

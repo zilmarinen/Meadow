@@ -1,6 +1,6 @@
 //
 //  CameraJib.swift
-//  Meadow-iOS
+//  Meadow
 //
 //  Created by Zack Brown on 16/05/2018.
 //  Copyright © 2018 Script Orchard. All rights reserved.
@@ -63,7 +63,7 @@ extension CameraJib {
 extension CameraJib {
     
     static var minimumZoomLevel: MDWFloat = 1.0
-    static var maximumZoomLevel: MDWFloat = 20.0
+    static var maximumZoomLevel: MDWFloat = 10.0
 }
 
 extension CameraJib {

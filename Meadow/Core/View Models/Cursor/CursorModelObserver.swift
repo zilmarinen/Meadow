@@ -8,7 +8,7 @@
 
 public protocol CursorModelObserver {
     
-    var cursorModelCallbackReference: UUID? { get }
+    var cursorModelCallbackReference: SceneView.CursorModel.CallbackReference? { get }
     
     func stateDidChange(from: SceneView.CursorState?, to: SceneView.CursorState)
 }

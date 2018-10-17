@@ -69,27 +69,27 @@ extension GridEdge {
         SCNVector3.Left
     ]}
 
-    static func edges(corner: GridCorner) -> (GridEdge, GridEdge) {
+    public static func edges(corner: GridCorner) -> (GridEdge, GridEdge) {
         
         return (Corners[corner.rawValue].first!, Corners[corner.rawValue].last!)
     }
 
-    static func edges(edge: GridEdge) -> (GridEdge, GridEdge) {
+    public static func edges(edge: GridEdge) -> (GridEdge, GridEdge) {
         
         return (Connected[edge.rawValue].first!, Connected[edge.rawValue].last!)
     }
 
-    static func opposite(edge: GridEdge) -> GridEdge {
+    public static func opposite(edge: GridEdge) -> GridEdge {
         
         return Opposite[edge.rawValue]
     }
 
-    static func normal(edge: GridEdge) -> SCNVector3 {
+    public static func normal(edge: GridEdge) -> SCNVector3 {
         
         return Normal[edge.rawValue]
     }
 
-    static func extent(edge: GridEdge) -> Coordinate {
+    public static func extent(edge: GridEdge) -> Coordinate {
         
         return Coordinate.GridEdgeExtents[edge.rawValue]
     }

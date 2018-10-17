@@ -53,11 +53,11 @@ extension SceneView {
         
         switch viewModel.state {
             
-        case .scene(_, let cursorModel):
+        case .scene(_, let input):
             
-            guard cursorModel.tracksIdleEvents else { break }
+            guard input.cursorModel.tracksIdleEvents else { break }
             
-            switch cursorModel.state {
+            switch input.cursorModel.state {
                 
             case .idle:
                 
@@ -65,7 +65,7 @@ extension SceneView {
                 
                 let position = CGPoint(x: pointInView.x, y: pointInView.y)
                 
-                cursorModel.state = .idle(position: position)
+                input.cursorModel.state = .idle(position: position)
                 
             default: break
             }
@@ -81,9 +81,9 @@ extension SceneView {
         
         switch viewModel.state {
             
-        case .scene(_, let cursorModel):
+        case .scene(_, let input):
             
-            switch cursorModel.state {
+            switch input.cursorModel.state {
                 
             case .idle:
                 
@@ -91,7 +91,7 @@ extension SceneView {
                 
                 let position = CGPoint(x: pointInView.x, y: pointInView.y)
                 
-                cursorModel.state = .down(position: position, inputType: inputType)
+                input.cursorModel.state = .down(position: position, inputType: inputType)
                 
             default: break
             }
@@ -104,9 +104,9 @@ extension SceneView {
      
         switch viewModel.state {
             
-        case .scene(_, let cursorModel):
+        case .scene(_, let input):
             
-            switch cursorModel.state {
+            switch input.cursorModel.state {
                 
             case .down(let startPosition, _),
                  .tracking(_, _, let startPosition):
@@ -115,7 +115,7 @@ extension SceneView {
                 
                 let position = CGPoint(x: pointInView.x, y: pointInView.y)
                 
-                cursorModel.state = .up(position: position, inputType: inputType, startPosition: startPosition)
+                input.cursorModel.state = .up(position: position, inputType: inputType, startPosition: startPosition)
                 
             default: break
             }
@@ -128,9 +128,9 @@ extension SceneView {
         
         switch viewModel.state {
             
-        case .scene(_, let cursorModel):
+        case .scene(_, let input):
             
-            switch cursorModel.state {
+            switch input.cursorModel.state {
                 
             case .down(let startPosition, _),
                  .tracking(_, _, let startPosition):
@@ -139,7 +139,7 @@ extension SceneView {
                 
                 let position = CGPoint(x: pointInView.x, y: pointInView.y)
                 
-                cursorModel.state = .tracking(position: position, inputType: inputType, startPosition: startPosition)
+                input.cursorModel.state = .tracking(position: position, inputType: inputType, startPosition: startPosition)
                 
             default: break
             }

@@ -6,6 +6,8 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
+import SceneKit
+
 public struct Coordinate: Codable {
     
     public let x: Int
@@ -24,6 +26,13 @@ public struct Coordinate: Codable {
         self.x = Axis.X(x: x)
         self.y = Axis.Y(y: y)
         self.z = Axis.Z(z: z)
+    }
+    
+    public init(vector: SCNVector3) {
+        
+        self.x = Axis.X(x: vector.x)
+        self.y = Axis.Y(y: vector.y)
+        self.z = Axis.Z(z: vector.z)
     }
 }
 

@@ -10,13 +10,13 @@ import SceneKit
 
 extension SceneView {
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         switch viewModel.state {
             
-        case .scene(_, let cursorModel):
+        case .scene(_, let input):
             
-            switch cursorModel.state {
+            switch input.cursorModel.state {
                 
             case .idle:
                 
@@ -26,7 +26,7 @@ extension SceneView {
                 
                 let inputType: CursorState.InputType = (touch.tapCount == 1 ? .left : .right)
                 
-                cursorModel.state = .down(inputType: inputType, position: position)
+                input.cursorModel.state = .down(position: position, inputType: inputType)
                 
             default: break
             }
@@ -35,22 +35,22 @@ extension SceneView {
         }
     }
     
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override public func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         switch viewModel.state {
             
-        case .scene(_, let cursorModel):
+        case .scene(_, let input):
             
-            switch cursorModel.state {
+            switch input.cursorModel.state {
                 
-            case .down(let inputType, let startPosition),
-                 .tracking(let inputType, let startPosition, _):
+            case .down(let startPosition, let inputType),
+                 .tracking(_, let inputType, let startPosition):
                 
                 guard let touch = touches.first else { break }
                 
                 let position = touch.location(in: self)
                 
-                cursorModel.state = .up(inputType: inputType, startPosition: startPosition, position: position)
+                input.cursorModel.state = .up(position: position, inputType: inputType, startPosition: startPosition)
                 
             default: break
             }
@@ -59,22 +59,22 @@ extension SceneView {
         }
     }
     
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override public func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         switch viewModel.state {
             
-        case .scene(_, let cursorModel):
+        case .scene(_, let input):
             
-            switch cursorModel.state {
+            switch input.cursorModel.state {
                 
-            case .down(let inputType, let startPosition),
-                 .tracking(let inputType, let startPosition, _):
+            case .down(let startPosition, let inputType),
+                 .tracking(_, let inputType, let startPosition):
                 
                 guard let touch = touches.first else { break }
                 
                 let position = touch.location(in: self)
                 
-                cursorModel.state = .tracking(inputType: inputType, startPosition: startPosition, position: position)
+                input.cursorModel.state = .tracking(position: position, inputType: inputType, startPosition: startPosition)
                 
             default: break
             }

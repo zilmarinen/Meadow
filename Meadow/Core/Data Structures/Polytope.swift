@@ -12,17 +12,17 @@ public struct Polytope {
 
     let vertices: [SCNVector3]
     
-    var peak: MDWFloat {
+    public var peak: MDWFloat {
         
         return vertices.map{ $0.y }.max()!
     }
     
-    var base: MDWFloat {
+    public var base: MDWFloat {
         
         return vertices.map{ $0.y }.min()!
     }
 
-    var center: SCNVector3 {
+    public var center: SCNVector3 {
         
         var x: MDWFloat = 0
         var y: MDWFloat = 0
@@ -78,7 +78,7 @@ extension Polytope: Equatable {
 
 extension Polytope {
 
-    enum Elevation {
+    public enum Elevation {
         
         case above
         case below
@@ -86,7 +86,7 @@ extension Polytope {
         case intersecting
     }
 
-    func elevation(referencing polytope: Polytope) -> Elevation {
+    public func elevation(referencing polytope: Polytope) -> Elevation {
         
         var equal = true
         var above = true
@@ -124,7 +124,7 @@ extension Polytope {
 
 extension Polytope {
     
-    static func project(project: Polytope, against: Polytope) -> Polytope {
+    public static func project(project: Polytope, against: Polytope) -> Polytope {
         
         let v0 = SCNVector3(x: against.vertices[0].x, y: project.vertices[0].y, z: against.vertices[0].z)
         let v1 = SCNVector3(x: against.vertices[1].x, y: project.vertices[1].y, z: against.vertices[1].z)
@@ -134,7 +134,7 @@ extension Polytope {
         return Polytope(v0: v0, v1: v1, v2: v2, v3: v3)
     }
     
-    static func invert(polytope: Polytope, edge: GridEdge) -> Polytope {
+    public static func invert(polytope: Polytope, edge: GridEdge) -> Polytope {
         
         let v0 = polytope.vertices[0]
         let v1 = polytope.vertices[1]
@@ -155,7 +155,7 @@ extension Polytope {
         }
     }
     
-    static func inset(polytope: Polytope, edge: GridEdge, inset: MDWFloat) -> Polytope {
+    public static func inset(polytope: Polytope, edge: GridEdge, inset: MDWFloat) -> Polytope {
         
         let (c0, c1) = GridCorner.corners(edge: edge)
         
@@ -189,7 +189,7 @@ extension Polytope {
         }
     }
     
-    static func offset(polytope: Polytope, y: MDWFloat) -> Polytope {
+    public static func offset(polytope: Polytope, y: MDWFloat) -> Polytope {
         
         let vector = SCNVector3(x: 0.0, y: y, z: 0.0)
         
@@ -201,7 +201,7 @@ extension Polytope {
         return Polytope(v0: v0, v1: v1, v2: v2, v3: v3)
     }
     
-    static func translate(polytope: Polytope, translation: SCNVector3) -> Polytope {
+    public static func translate(polytope: Polytope, translation: SCNVector3) -> Polytope {
         
         let vertices = polytope.vertices.map { $0 + translation }
         

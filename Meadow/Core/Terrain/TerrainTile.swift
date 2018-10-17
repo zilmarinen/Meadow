@@ -7,5 +7,5 @@
 //
 
 public class TerrainTile: GridTile<TerrainNode<TerrainLayer>> {
-    
+
 }

@@ -1,6 +1,6 @@
 //
 //  Blueprint.swift
-//  Meadow-iOS
+//  Meadow
 //
 //  Created by Zack Brown on 28/09/2018.
 //  Copyright © 2018 Script Orchard. All rights reserved.
@@ -9,6 +9,10 @@
 import SceneKit
 
 public class Blueprint: SCNNode, SceneGraphChild {
+    
+    var isDirty: Bool = false
+    
+    var meshes: [Mesh] = []
     
     public override init() {
         
@@ -23,6 +27,55 @@ public class Blueprint: SCNNode, SceneGraphChild {
     }
 }
 
+extension Blueprint: SceneGraphUpdatable {
+    
+    public func update(deltaTime: TimeInterval) {
+    
+        clean()
+    }
+}
+
+extension Blueprint: GridSoilable {
+    
+    public func becomeDirty() {
+        
+        if !isDirty {
+            
+            isDirty = true
+        }
+    }
+    
+    public func clean() {
+        
+        if !isDirty { return }
+        
+        self.geometry = SCNGeometry(mesh: mesh)
+        
+        isDirty = false
+    }
+}
+
+extension Blueprint: GridMeshProvider {
+    
+    public var mesh: Mesh {
+        
+        return Mesh(meshes: meshes)
+    }
+}
+
 extension Blueprint {
     
+    public func clear() {
+        
+        meshes.removeAll()
+        
+        becomeDirty()
+    }
+    
+    public func add(mesh: Mesh) {
+        
+        meshes.append(mesh)
+        
+        becomeDirty()
+    }
 }

@@ -1,6 +1,6 @@
 //
 //  SceneView.swift
-//  Meadow-iOS
+//  Meadow
 //
 //  Created by Zack Brown on 26/09/2018.
 //  Copyright © 2018 Script Orchard. All rights reserved.
@@ -34,10 +34,10 @@ extension SceneView {
             self.scene = nil
             self.delegate = nil
             
-        case .scene(let meadow, _):
+        case .scene(let scene, _):
             
-            self.scene = meadow
-            self.delegate = meadow
+            self.scene = scene
+            self.delegate = scene
         }
     }
 }

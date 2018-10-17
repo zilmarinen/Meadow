@@ -56,7 +56,10 @@ public class ColorPalettes {
             }
         }
         
-        self.colors = colorIntermediates
+        self.colors = colorIntermediates.sorted(by: { (lhs, rhs) -> Bool in
+            
+            return lhs.red > rhs.red && lhs.green > rhs.green && lhs.blue > rhs.blue
+        })
         
         self.colorPalettes = palettes
     }
@@ -66,11 +69,15 @@ extension ColorPalettes {
     
     public func color(named: String) -> Color? {
         
-        return colors.first { $0.name == named }
+        let name = named.lowercased()
+        
+        return colors.first { $0.name.lowercased() == name }
     }
     
     public func palette(named: String) -> ColorPalette? {
         
-        return colorPalettes.first { $0.name == named }
+        let name = named.lowercased()
+        
+        return colorPalettes.first { $0.name.lowercased() == name }
     }
 }

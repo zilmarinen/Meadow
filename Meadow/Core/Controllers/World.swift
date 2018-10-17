@@ -134,6 +134,7 @@ extension World: SceneGraphUpdatable {
     public func update(deltaTime: TimeInterval) {
     
         areas.update(deltaTime: deltaTime)
+        blueprint.update(deltaTime: deltaTime)
         foliage.update(deltaTime: deltaTime)
         footpaths.update(deltaTime: deltaTime)
         scaffolds.update(deltaTime: deltaTime)

@@ -192,7 +192,7 @@ extension TerrainNode {
         }
     }
     
-    public func add(layer terrainType: TerrainType) -> TerrainLayer? {
+    func add(layer terrainType: TerrainType) -> TerrainLayer? {
         
         if let topLayer = topLayer, Axis.Y(y: topLayer.polyhedron.upperPolytope.base) == World.ceiling {
             
@@ -216,7 +216,7 @@ extension TerrainNode {
         return layer
     }
     
-    public func remove(layer: TerrainLayer) -> Bool {
+    func remove(layer: TerrainLayer) -> Bool {
         
         if let index = index(of: layer) {
             

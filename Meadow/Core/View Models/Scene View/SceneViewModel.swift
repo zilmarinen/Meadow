@@ -1,6 +1,6 @@
 //
 //  SceneViewModel.swift
-//  Meadow-iOS
+//  Meadow
 //
 //  Created by Zack Brown on 26/09/2018.
 //  Copyright © 2018 Script Orchard. All rights reserved.
@@ -13,7 +13,7 @@ extension SceneView {
     public enum ViewState: State {
         
         case empty
-        case scene(Meadow, CursorModel)
+        case scene(scene: Scene, input: Input)
         
         public func shouldTransition(to newState: ViewState) -> Should<ViewState> {
             

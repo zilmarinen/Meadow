@@ -45,4 +45,37 @@ extension Terrain {
         
         return node
     }
+    
+    public func add(layer coordinate: Coordinate, terrainType: TerrainType) -> TerrainLayer? {
+        
+        guard let node = find(node: coordinate) ?? add(node: coordinate) else { return nil }
+        
+        let layer = node.add(layer: terrainType)
+        
+        if layer != nil {
+            
+            becomeDirty()
+        }
+        
+        return layer
+    }
+    
+    public func remove(layer: TerrainLayer) -> Bool {
+     
+        guard let node = find(node: layer.coordinate) else { return false }
+        
+        if node.remove(layer: layer) {
+            
+            if node.totalChildren == 0 {
+                
+                let _ = remove(node: node)
+                
+                becomeDirty()
+            }
+            
+            return true
+        }
+        
+        return false
+    }
 }

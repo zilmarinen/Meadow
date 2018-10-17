@@ -10,20 +10,20 @@ import XCTest
 
 class TerrainLayerTests: XCTestCase {
 
-    var meadow: Meadow!
+    var scene: Scene!
     
     override func setUp() {
         
         super.setUp()
         
-        meadow = Meadow(observer: nil)
+        self.scene = Scene(observer: nil)
     }
     
     func testTerrainLayerAddition() {
         
         let expect = expectation(description: "Terrain layers can be added to a grid if the volume they define is not already occupied")
         
-        let n0 = meadow.world.terrain.add(node: Coordinate(x: 13, y: 0, z: 37))
+        let n0 = scene.world.terrain.add(node: Coordinate(x: 13, y: 0, z: 37))
         
         XCTAssertNotNil(n0)
         
@@ -59,7 +59,7 @@ class TerrainLayerTests: XCTestCase {
         
         let expect = expectation(description: "Terrain layers are considered equal when all x, y and z components are equal")
         
-        let n0 = meadow.world.terrain.add(node: Coordinate(x: 13, y: 0, z: 37))
+        let n0 = scene.world.terrain.add(node: Coordinate(x: 13, y: 0, z: 37))
         
         XCTAssertNotNil(n0)
         
@@ -80,7 +80,7 @@ class TerrainLayerTests: XCTestCase {
         
         let expect = expectation(description: "Corner heights for layers are set to the height of the lower node +1 when created")
         
-        let n0 = meadow.world.terrain.add(node: Coordinate(x: 13, y: 0, z: 37))
+        let n0 = scene.world.terrain.add(node: Coordinate(x: 13, y: 0, z: 37))
         
         XCTAssertNotNil(n0)
         
@@ -116,7 +116,7 @@ class TerrainLayerTests: XCTestCase {
         
         let expect = expectation(description: "Corner heights for layers are constrained to the grid")
         
-        let n0 = meadow.world.terrain.add(node: Coordinate(x: 13, y: 0, z: 37))
+        let n0 = scene.world.terrain.add(node: Coordinate(x: 13, y: 0, z: 37))
         
         XCTAssertNotNil(n0)
         
@@ -153,7 +153,7 @@ class TerrainLayerTests: XCTestCase {
         
         let expect = expectation(description: "Corner heights for layers are constrained by upper and lower nodes")
         
-        let n0 = meadow.world.terrain.add(node: Coordinate(x: 13, y: 0, z: 37))
+        let n0 = scene.world.terrain.add(node: Coordinate(x: 13, y: 0, z: 37))
         
         XCTAssertNotNil(n0)
         
@@ -194,7 +194,7 @@ class TerrainLayerTests: XCTestCase {
         
         let expect = expectation(description: "Corner heights for layers are set to the height of the lower node +1 when created")
         
-        let n0 = meadow.world.terrain.add(node: Coordinate(x: 13, y: 0, z: 37))
+        let n0 = scene.world.terrain.add(node: Coordinate(x: 13, y: 0, z: 37))
         
         XCTAssertNotNil(n0)
         
@@ -245,7 +245,7 @@ class TerrainLayerTests: XCTestCase {
         
         let expect = expectation(description: "Layers can be added to a grid node and are stacked correctly")
         
-        let n0 = meadow.world.terrain.add(node: Coordinate(x: 13, y: 0, z: 37))
+        let n0 = scene.world.terrain.add(node: Coordinate(x: 13, y: 0, z: 37))
         
         XCTAssertNotNil(n0)
         
@@ -272,7 +272,7 @@ class TerrainLayerTests: XCTestCase {
         
         let expect = expectation(description: "Layers can be removed from a grid node and are re-stacked correctly")
         
-        let n0 = meadow.world.terrain.add(node: Coordinate(x: 13, y: 0, z: 37))
+        let n0 = scene.world.terrain.add(node: Coordinate(x: 13, y: 0, z: 37))
         
         XCTAssertNotNil(n0)
         

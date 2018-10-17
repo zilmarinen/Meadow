@@ -1,6 +1,6 @@
 //
 //  FootpathType.swift
-//  Meadow-iOS
+//  Meadow
 //
 //  Created by Zack Brown on 23/07/2018.
 //  Copyright © 2018 Script Orchard. All rights reserved.
@@ -10,13 +10,11 @@ public enum FootpathType: Int, Codable {
     
     case asphalt
     case dirt
-    case tarmac
     
     public static var allCases: [FootpathType] {
         
         return [ .asphalt,
                  .dirt,
-                 .tarmac
         ]
     }
     
@@ -26,7 +24,6 @@ public enum FootpathType: Int, Codable {
             
         case .asphalt: return "Asphalt"
         case .dirt: return "Dirt"
-        case .tarmac: return "Tarmac"
         }
     }
 }

@@ -1,6 +1,6 @@
 //
 //  MeshProvider.swift
-//  Meadow-iOS
+//  Meadow
 //
 //  Created by Zack Brown on 14/08/2018.
 //  Copyright © 2018 Script Orchard. All rights reserved.
@@ -8,13 +8,13 @@
 
 import SceneKit
 
-struct MeshProvider {
+public struct MeshProvider {
     
 }
 
 extension MeshProvider {
     
-    static func surface(corners: (GridCorner, GridCorner), polytope: Polytope, color: SCNVector4) -> MeshFace {
+    public static func surface(corners: (GridCorner, GridCorner), polytope: Polytope, color: SCNVector4) -> MeshFace {
         
         let (c0, c1) = (corners.0, corners.1)
         
@@ -25,7 +25,7 @@ extension MeshProvider {
         return MeshFace(v0: v0, v1: v1, v2: v2, projectedNormal: SCNVector3.Up, color: color)
     }
     
-    static func edge(corners: (GridCorner, GridCorner), polyhedron: Polyhedron, normal: SCNVector3, color: SCNVector4) -> [MeshFace] {
+    public static func edge(corners: (GridCorner, GridCorner), polyhedron: Polyhedron, normal: SCNVector3, color: SCNVector4) -> [MeshFace] {
         
         let (c0, c1) = (corners.0, corners.1)
         

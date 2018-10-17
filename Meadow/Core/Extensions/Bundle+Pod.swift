@@ -1,6 +1,6 @@
 //
 //  Bundle+Pod.swift
-//  Meadow-iOS
+//  Meadow
 //
 //  Created by Zack Brown on 13/05/2018.
 //  Copyright © 2018 Script Orchard. All rights reserved.

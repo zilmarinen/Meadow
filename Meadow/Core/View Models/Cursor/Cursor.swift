@@ -1,5 +1,5 @@
 //
-//  CursorModel.swift
+//  Cursor.swift
 //  Meadow
 //
 //  Created by Zack Brown on 19/09/2018.
@@ -33,6 +33,10 @@ extension SceneView {
                 
                 return .redirect(.idle(position: position))
                 
+            case .down(let position, let inputType):
+                
+                return .redirect(.tracking(position: position, inputType: inputType, startPosition: position))
+                
             default:
                 
                 return .continue
@@ -40,7 +44,7 @@ extension SceneView {
         }
     }
     
-    public class CursorModel: BaseViewModel<CursorState> {
+    public class Cursor: BaseViewModel<CursorState> {
         
         public var tracksIdleEvents: Bool = false
         

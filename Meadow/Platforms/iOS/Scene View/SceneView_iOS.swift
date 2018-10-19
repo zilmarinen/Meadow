@@ -16,7 +16,7 @@ extension SceneView {
             
         case .scene(_, let input):
             
-            switch input.cursorModel.state {
+            switch input.cursor.state {
                 
             case .idle:
                 
@@ -26,7 +26,7 @@ extension SceneView {
                 
                 let inputType: CursorState.InputType = (touch.tapCount == 1 ? .left : .right)
                 
-                input.cursorModel.state = .down(position: position, inputType: inputType)
+                input.cursor.state = .down(position: position, inputType: inputType)
                 
             default: break
             }
@@ -41,7 +41,7 @@ extension SceneView {
             
         case .scene(_, let input):
             
-            switch input.cursorModel.state {
+            switch input.cursor.state {
                 
             case .down(let startPosition, let inputType),
                  .tracking(_, let inputType, let startPosition):
@@ -50,7 +50,7 @@ extension SceneView {
                 
                 let position = touch.location(in: self)
                 
-                input.cursorModel.state = .up(position: position, inputType: inputType, startPosition: startPosition)
+                input.cursor.state = .up(position: position, inputType: inputType, startPosition: startPosition)
                 
             default: break
             }
@@ -65,7 +65,7 @@ extension SceneView {
             
         case .scene(_, let input):
             
-            switch input.cursorModel.state {
+            switch input.cursor.state {
                 
             case .down(let startPosition, let inputType),
                  .tracking(_, let inputType, let startPosition):
@@ -74,7 +74,7 @@ extension SceneView {
                 
                 let position = touch.location(in: self)
                 
-                input.cursorModel.state = .tracking(position: position, inputType: inputType, startPosition: startPosition)
+                input.cursor.state = .tracking(position: position, inputType: inputType, startPosition: startPosition)
                 
             default: break
             }

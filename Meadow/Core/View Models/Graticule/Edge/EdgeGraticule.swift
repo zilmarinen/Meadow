@@ -14,6 +14,7 @@ extension SceneView {
     public enum EdgeGraticuleState: State {
         
         case idle
+        case tracking(position: Coordinate, edge: GridEdge, yOffset: Int)
         
         public func shouldTransition(to newState: SceneView.EdgeGraticuleState) -> Should<SceneView.EdgeGraticuleState> {
             

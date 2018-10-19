@@ -244,10 +244,10 @@
 		183C78D2213FC2D100542348 /* FoliageResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183C78D0213FC20600542348 /* FoliageResolver.swift */; };
 		183C78D3213FC2D200542348 /* FoliageResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183C78D0213FC20600542348 /* FoliageResolver.swift */; };
 		183C78D4213FC2D200542348 /* FoliageResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183C78D0213FC20600542348 /* FoliageResolver.swift */; };
-		18411BDA21523028001B900C /* CursorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18411BD921523028001B900C /* CursorModel.swift */; };
-		18411BDB2152308C001B900C /* CursorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18411BD921523028001B900C /* CursorModel.swift */; };
-		18411BDC2152308C001B900C /* CursorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18411BD921523028001B900C /* CursorModel.swift */; };
-		18411BDD2152308C001B900C /* CursorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18411BD921523028001B900C /* CursorModel.swift */; };
+		18411BDA21523028001B900C /* Cursor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18411BD921523028001B900C /* Cursor.swift */; };
+		18411BDB2152308C001B900C /* Cursor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18411BD921523028001B900C /* Cursor.swift */; };
+		18411BDC2152308C001B900C /* Cursor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18411BD921523028001B900C /* Cursor.swift */; };
+		18411BDD2152308C001B900C /* Cursor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18411BD921523028001B900C /* Cursor.swift */; };
 		1842417A21231FB10015B110 /* MeshProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1842417921231FB10015B110 /* MeshProvider.swift */; };
 		1842417B21231FC70015B110 /* MeshProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1842417921231FB10015B110 /* MeshProvider.swift */; };
 		1842417C21231FC80015B110 /* MeshProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1842417921231FB10015B110 /* MeshProvider.swift */; };
@@ -268,10 +268,10 @@
 		187E4701214A8068007430D6 /* WorldIntermediate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187E46FF214A805A007430D6 /* WorldIntermediate.swift */; };
 		187E4702214A8069007430D6 /* WorldIntermediate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187E46FF214A805A007430D6 /* WorldIntermediate.swift */; };
 		187E4703214A8069007430D6 /* WorldIntermediate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187E46FF214A805A007430D6 /* WorldIntermediate.swift */; };
-		188834D621639E3300D83AFB /* CursorModelObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188834D521639E3300D83AFB /* CursorModelObserver.swift */; };
-		188834D721639E3300D83AFB /* CursorModelObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188834D521639E3300D83AFB /* CursorModelObserver.swift */; };
-		188834D821639E3300D83AFB /* CursorModelObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188834D521639E3300D83AFB /* CursorModelObserver.swift */; };
-		188834D921639E3300D83AFB /* CursorModelObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188834D521639E3300D83AFB /* CursorModelObserver.swift */; };
+		188834D621639E3300D83AFB /* CursorObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188834D521639E3300D83AFB /* CursorObserver.swift */; };
+		188834D721639E3300D83AFB /* CursorObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188834D521639E3300D83AFB /* CursorObserver.swift */; };
+		188834D821639E3300D83AFB /* CursorObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188834D521639E3300D83AFB /* CursorObserver.swift */; };
+		188834D921639E3300D83AFB /* CursorObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188834D521639E3300D83AFB /* CursorObserver.swift */; };
 		188834DA2163A75200D83AFB /* colors.json in Resources */ = {isa = PBXBuildFile; fileRef = 1825957F210AFD0B00F76A60 /* colors.json */; };
 		188834DB2163A75200D83AFB /* color_palettes.json in Resources */ = {isa = PBXBuildFile; fileRef = 1825957D210AFCE400F76A60 /* color_palettes.json */; };
 		188834DD2163A7C700D83AFB /* SceneGraphNodeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188834DC2163A7C700D83AFB /* SceneGraphNodeType.swift */; };
@@ -666,7 +666,7 @@
 		183C78C6213FBB7B00542348 /* FoliageNodeMeshProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoliageNodeMeshProvider.swift; sourceTree = "<group>"; };
 		183C78CB213FBF6300542348 /* HedgeFoliageNodeMeshProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HedgeFoliageNodeMeshProvider.swift; sourceTree = "<group>"; };
 		183C78D0213FC20600542348 /* FoliageResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoliageResolver.swift; sourceTree = "<group>"; };
-		18411BD921523028001B900C /* CursorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CursorModel.swift; sourceTree = "<group>"; };
+		18411BD921523028001B900C /* Cursor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cursor.swift; sourceTree = "<group>"; };
 		1842417921231FB10015B110 /* MeshProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeshProvider.swift; sourceTree = "<group>"; };
 		18496C592093234300992AF3 /* GridNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridNode.swift; sourceTree = "<group>"; };
 		18496C5A2093234300992AF3 /* GridChunk.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridChunk.swift; sourceTree = "<group>"; };
@@ -703,7 +703,7 @@
 		18713245209735DF0084565F /* SizeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeTests.swift; sourceTree = "<group>"; };
 		187E46FF214A805A007430D6 /* WorldIntermediate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldIntermediate.swift; sourceTree = "<group>"; };
 		1880694520A071D6002F6EC0 /* TerrainLayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrainLayerTests.swift; sourceTree = "<group>"; };
-		188834D521639E3300D83AFB /* CursorModelObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CursorModelObserver.swift; sourceTree = "<group>"; };
+		188834D521639E3300D83AFB /* CursorObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CursorObserver.swift; sourceTree = "<group>"; };
 		188834DC2163A7C700D83AFB /* SceneGraphNodeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneGraphNodeType.swift; sourceTree = "<group>"; };
 		188B3C16209E1BF70034F4BB /* TerrainLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrainLayer.swift; sourceTree = "<group>"; };
 		188B77EB216B445E00B6B141 /* TileGraticule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileGraticule.swift; sourceTree = "<group>"; };
@@ -1397,8 +1397,8 @@
 		18D67A0F215B99D000D3570C /* Cursor */ = {
 			isa = PBXGroup;
 			children = (
-				18411BD921523028001B900C /* CursorModel.swift */,
-				188834D521639E3300D83AFB /* CursorModelObserver.swift */,
+				18411BD921523028001B900C /* Cursor.swift */,
+				188834D521639E3300D83AFB /* CursorObserver.swift */,
 			);
 			path = Cursor;
 			sourceTree = "<group>";
@@ -1821,7 +1821,7 @@
 				180CAA26210205230026FE06 /* TerrainNodeIntermediate.swift in Sources */,
 				18EE503020A576660059829C /* FootpathTile.swift in Sources */,
 				183830F32106051D00FFA729 /* TerrainLayerEdge.swift in Sources */,
-				188834D621639E3300D83AFB /* CursorModelObserver.swift in Sources */,
+				188834D621639E3300D83AFB /* CursorObserver.swift in Sources */,
 				18EE514420A59F8E0059829C /* MeshTriangle.swift in Sources */,
 				18EE503B20A5766C0059829C /* GridTile.swift in Sources */,
 				1831501920BECE5B004317E0 /* Plane.swift in Sources */,
@@ -1831,7 +1831,7 @@
 				180CAA4421022EF80026FE06 /* TerrainLayerHierarchy.swift in Sources */,
 				18EE506120A576880059829C /* WaterChunk.swift in Sources */,
 				180CA9E72101F7A80026FE06 /* Axis.swift in Sources */,
-				18411BDA21523028001B900C /* CursorModel.swift in Sources */,
+				18411BDA21523028001B900C /* Cursor.swift in Sources */,
 				1832993021771D0600485907 /* CornerGraticule.swift in Sources */,
 				180CAA382102187D0026FE06 /* GridNodeNeighbour.swift in Sources */,
 				181832BF211DC99E0020170E /* ConcreteAreaNodeMeshProvider.swift in Sources */,
@@ -1871,7 +1871,7 @@
 				18EE50B220A57BD40059829C /* ColorPalette.swift in Sources */,
 				18EE50DB20A57BE70059829C /* GridNode.swift in Sources */,
 				1814692B2108905600326342 /* AreaNodeEdge.swift in Sources */,
-				188834D721639E3300D83AFB /* CursorModelObserver.swift in Sources */,
+				188834D721639E3300D83AFB /* CursorObserver.swift in Sources */,
 				18D67A04215B928800D3570C /* SceneView_iOS.swift in Sources */,
 				18EE50FF20A57BFB0059829C /* Water.swift in Sources */,
 				18EE50B620A57BD40059829C /* Size.swift in Sources */,
@@ -1999,7 +1999,7 @@
 				188F483220CA6DED007095CF /* SCNVector4.swift in Sources */,
 				18EE50B720A57BD40059829C /* Volume.swift in Sources */,
 				18EE509920A57B9E0059829C /* PolyhedronTests.swift in Sources */,
-				18411BDB2152308C001B900C /* CursorModel.swift in Sources */,
+				18411BDB2152308C001B900C /* Cursor.swift in Sources */,
 				18924B4E212C2AEF00943057 /* TudorAreaArchitectureMeshProvider.swift in Sources */,
 				18EE509A20A57B9E0059829C /* VolumeTests.swift in Sources */,
 				18EE50C120A57BDC0059829C /* Foliage.swift in Sources */,
@@ -2108,7 +2108,7 @@
 				18EE503420A576660059829C /* FootpathTile.swift in Sources */,
 				18EE514620A59F8E0059829C /* MeshTriangle.swift in Sources */,
 				1825959E210B194000F76A60 /* AreaNodeIntermediate.swift in Sources */,
-				188834D821639E3300D83AFB /* CursorModelObserver.swift in Sources */,
+				188834D821639E3300D83AFB /* CursorObserver.swift in Sources */,
 				1832993821771E2500485907 /* EdgeGraticule.swift in Sources */,
 				18EE504120A5766D0059829C /* GridTile.swift in Sources */,
 				1831501B20BECE5E004317E0 /* Plane.swift in Sources */,
@@ -2118,7 +2118,7 @@
 				18EE502720A5765F0059829C /* FoliageChunk.swift in Sources */,
 				18EE506520A576890059829C /* WaterChunk.swift in Sources */,
 				180CA9E92101F89A0026FE06 /* Axis.swift in Sources */,
-				18411BDC2152308C001B900C /* CursorModel.swift in Sources */,
+				18411BDC2152308C001B900C /* Cursor.swift in Sources */,
 				181832C1211DC9D40020170E /* ConcreteAreaNodeMeshProvider.swift in Sources */,
 				18EE504B20A576780059829C /* ScaffoldNode.swift in Sources */,
 				1831502120BED0EA004317E0 /* SCNVector3.swift in Sources */,
@@ -2213,7 +2213,7 @@
 				183830F02105DEC400FFA729 /* TerrainNodeIntersectionProvider.swift in Sources */,
 				18EE509320A57A960059829C /* SizeTests.swift in Sources */,
 				18EE50C720A57BDD0059829C /* FoliageTile.swift in Sources */,
-				18411BDD2152308C001B900C /* CursorModel.swift in Sources */,
+				18411BDD2152308C001B900C /* Cursor.swift in Sources */,
 				18EE50DE20A57BEA0059829C /* MeshFace.swift in Sources */,
 				1814692D2108905800326342 /* AreaNodeEdge.swift in Sources */,
 				183830B82105C4F900FFA729 /* TunnelTests.swift in Sources */,
@@ -2228,7 +2228,7 @@
 				18380BE7215E08B100A446D0 /* Blueprint.swift in Sources */,
 				18EE50D120A57BE60059829C /* Grid.swift in Sources */,
 				180CAA20210204370026FE06 /* GridIntermediate.swift in Sources */,
-				188834D921639E3300D83AFB /* CursorModelObserver.swift in Sources */,
+				188834D921639E3300D83AFB /* CursorObserver.swift in Sources */,
 				183830AF2105C4C100FFA729 /* FoliageTests.swift in Sources */,
 				180CAA3B210218820026FE06 /* GridNodeNeighbour.swift in Sources */,
 				180CA9FB210202E70026FE06 /* SceneGraphParent.swift in Sources */,

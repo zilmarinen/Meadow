@@ -6,4 +6,4 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-public typealias Input = (cursorModel: SceneView.CursorModel, keyboardModel: SceneView.CursorModel)
+public typealias Input = (cursor: SceneView.Cursor, keyboard: SceneView.Cursor)

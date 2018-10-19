@@ -14,7 +14,7 @@ extension SceneView {
     public enum TileGraticuleState: State {
         
         case idle
-        case tracking(position: Coordinate, startPosition: Coordinate)
+        case tracking(position: Coordinate, startPosition: Coordinate, yOffset: Int)
         
         public func shouldTransition(to newState: SceneView.TileGraticuleState) -> Should<SceneView.TileGraticuleState> {
             

@@ -75,7 +75,7 @@ public class WaterNode: GridNode {
             }
         }
         
-        meshPolyhedron = Polyhedron(upperPolytope: Polytope.offset(polytope: meshPolyhedron.upperPolytope, y: WaterNode.meniscus), lowerPolytope: meshPolyhedron.lowerPolytope)
+        meshPolyhedron = Polyhedron(upperPolytope: Polytope.offset(polytope: meshPolyhedron.upperPolytope, y: -WaterNode.meniscus), lowerPolytope: meshPolyhedron.lowerPolytope)
         
         GridEdge.Edges.forEach { edge in
             

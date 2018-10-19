@@ -69,6 +69,8 @@ extension Blueprint {
         
         meshes.removeAll()
         
+        self.geometry = nil
+        
         becomeDirty()
     }
     
@@ -78,4 +80,9 @@ extension Blueprint {
         
         becomeDirty()
     }
+}
+
+extension Blueprint {
+    
+    public static let surface: MDWFloat = 0.01
 }

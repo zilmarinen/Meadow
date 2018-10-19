@@ -98,7 +98,7 @@ extension GridNode {
         becomeDirty()
     }
     
-    func find(neighbour edge: GridEdge) -> GridNode.Neighbour? {
+    public func find(neighbour edge: GridEdge) -> GridNode.Neighbour? {
         
         return neighbours.find(edge: edge)
     }

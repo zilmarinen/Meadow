@@ -48,4 +48,19 @@ extension Water {
         
         return node
     }
+    
+    public func drain(node: WaterNode) -> Bool {
+        
+        GridEdge.Edges.forEach { edge in
+            
+            if let neighbour = node.find(neighbour: edge)?.node as? WaterNode {
+                
+                let _ = node.remove(neighbour: edge)
+                
+                let _ = drain(node: neighbour)
+            }
+        }
+        
+        return super.remove(node: node)
+    }
 }

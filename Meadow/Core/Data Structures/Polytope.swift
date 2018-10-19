@@ -208,3 +208,57 @@ extension Polytope {
         return Polytope(v0: vertices[0], v1: vertices[1], v2: vertices[2], v3: vertices[3])
     }
 }
+
+extension Polytope {
+    
+    public func closest(corner vector: SCNVector3) -> GridCorner {
+        
+        var closestCorner = GridCorner.northWest
+        
+        var distance = MDWFloat(1.0)
+        
+        GridCorner.Corners.forEach { corner in
+            
+            let v0 = vertices[corner.rawValue]
+            
+            let delta = SCNVector3.length(vector: v0 - vector)
+            
+            if delta < distance {
+                
+                closestCorner = corner
+                
+                distance = delta
+            }
+        }
+        
+        return closestCorner
+    }
+    
+    public func closest(edge vector: SCNVector3) -> GridEdge {
+     
+        var closestEdge = GridEdge.north
+        
+        var distance = MDWFloat(1.0)
+        
+        GridEdge.Edges.forEach { edge in
+            
+            let (c0, c1) = GridCorner.corners(edge: edge)
+            
+            let v0 = vertices[c0.rawValue]
+            let v1 = vertices[c1.rawValue]
+            
+            let v2 = SCNVector3.lerp(from: v0, to: v1, factor: Axis.halfUnitXZ)
+            
+            let delta = SCNVector3.length(vector: v2 - vector)
+            
+            if delta < distance {
+                
+                closestEdge = edge
+                
+                distance = delta
+            }
+        }
+        
+        return closestEdge
+    }
+}

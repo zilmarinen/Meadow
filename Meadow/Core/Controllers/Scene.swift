@@ -19,6 +19,8 @@ public class Scene: SCNScene, GridObserver, SceneGraphParent, SceneGraphChild {
     
     public var observer: GridObserver?
     
+    public var delegate: SceneGraphUpdatable?
+    
     var lastUpdate: TimeInterval?
     
     public init(observer: GridObserver?) {
@@ -67,11 +69,13 @@ extension Scene: SCNSceneRendererDelegate {
     
     public func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
         
-        let delta = time - (self.lastUpdate ?? 0)
+        let deltaTime = time - (self.lastUpdate ?? 0)
         
-        cameraJib.update(deltaTime: delta)
+        delegate?.update(deltaTime: deltaTime)
         
-        world.update(deltaTime: delta)
+        cameraJib.update(deltaTime: deltaTime)
+        
+        world.update(deltaTime: deltaTime)
 
         self.lastUpdate = time
     }

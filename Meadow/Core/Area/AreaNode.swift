@@ -300,9 +300,9 @@ extension AreaNode {
     static let externalWallDepth: MDWFloat = 0.042
     static let internalWallDepth: MDWFloat = 0.013
     
-    static let surface: MDWFloat = 0.01
+    public static let surface: MDWFloat = 0.01
     
-    static let areaHeight: Int = 5
+    public static let areaHeight: Int = 5
     
     static func fixedVolume(_ coordinate: Coordinate) -> Volume {
         

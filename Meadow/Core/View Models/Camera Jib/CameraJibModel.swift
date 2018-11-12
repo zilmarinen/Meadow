@@ -13,7 +13,7 @@ extension CameraJib {
 
     public enum CameraState: State {
         
-        case focus(SCNVector3, GridEdge, MDWFloat)
+        case focus(vector: SCNVector3, edge: GridEdge, zoom: MDWFloat)
         
         public func shouldTransition(to newState: CameraState) -> Should<CameraState> {
             
@@ -25,7 +25,7 @@ extension CameraJib {
     
         init() {
             
-            super.init(initialState: .focus(SCNVector3Zero, .north, CameraJib.maximumZoomLevel))
+            super.init(initialState: .focus(vector: SCNVector3Zero, edge: .north, zoom: CameraJib.maximumZoomLevel))
         }
     }
 }

@@ -47,7 +47,7 @@ extension CameraJib {
     }
 }
 
-extension CameraJib {
+extension CameraJib: SceneGraphUpdatable {
 
     public func update(deltaTime: TimeInterval) {
         

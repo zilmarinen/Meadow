@@ -36,6 +36,8 @@ public class Floor: SCNNode, SceneGraphChild, SceneGraphParent {
         self.geometry = floor
         
         self.position = SCNVector3(x: 0.0, y: Axis.Y(y: World.floor), z: 0.0)
+        
+        self.color = ColorPalettes.shared?.color(named: "white")
     }
     
     public required init?(coder aDecoder: NSCoder) {

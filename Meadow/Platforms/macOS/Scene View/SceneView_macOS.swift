@@ -148,3 +148,47 @@ extension SceneView {
         }
     }
 }
+
+extension SceneView {
+    
+    public override func keyDown(with event: NSEvent) {
+        
+        switch viewModel.state {
+            
+        case .scene(_, let input):
+            
+            guard let keyCode = KeyCode(rawValue: event.keyCode) else { break }
+            
+            switch input.keyboard.state {
+                
+            case .idle:
+                
+                input.keyboard.state = .keyDown(key: keyCode)
+                
+            case .keysHeld(let keys):
+                
+                guard !keys.contains(keyCode) else { break }
+                
+                input.keyboard.state = .keyDown(key: keyCode)
+                
+            default: break
+            }
+            
+        default: break
+        }
+    }
+    
+    public override func keyUp(with event: NSEvent) {
+        
+        switch viewModel.state {
+            
+        case .scene(_, let input):
+            
+            guard let keyCode = KeyCode(rawValue: event.keyCode) else { break }
+            
+            input.keyboard.state = .keyUp(key: keyCode)
+            
+        default: break
+        }
+    }
+}

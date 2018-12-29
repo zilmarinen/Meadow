@@ -22,4 +22,17 @@ extension Collection where Iterator.Element: Bundle {
         
         return nil
     }
+    
+    func urls(forResourcesWithExtension: String?, subdirectory: String?) -> [URL]? {
+        
+        for bundle in self {
+            
+            if let paths = bundle.urls(forResourcesWithExtension: forResourcesWithExtension, subdirectory: subdirectory), !paths.isEmpty {
+             
+                return paths
+            }
+        }
+        
+        return nil
+    }
 }

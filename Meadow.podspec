@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
 
   s.subspec 'Core' do |cs|
 
-    cs.source_files = "Meadow/Core/**/*.{h,m,swift,json}"
+    cs.source_files = "Meadow/Core/**/*.{h,m,swift,json,model,prop,proplist}"
     cs.ios.source_files = "Meadow/Platforms/iOS/**/*.{h,m,swift}"
     cs.osx.source_files = "Meadow/Platforms/macOS/**/*.{h,m,swift}"
 
@@ -26,7 +26,7 @@ Pod::Spec.new do |s|
 
     	'Meadow' => [
 
-    		"Meadow/Core/**/*.{json}"
+    		"Meadow/Core/**/*.{json,model,prop,proplist}"
     	]
     }
     

@@ -8,6 +8,37 @@
 
 import SceneKit
 
+extension SCNVector3: Codable {
+    
+    enum CodingKeys: CodingKey {
+        
+        case x
+        case y
+        case z
+    }
+    
+    public init(from decoder: Decoder) throws {
+        
+        self.init()
+        
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        self.x = try container.decode(MDWFloat.self, forKey: .x)
+        self.y = try container.decode(MDWFloat.self, forKey: .y)
+        self.z = try container.decode(MDWFloat.self, forKey: .z)
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(self.x, forKey: .x)
+        try container.encode(self.y, forKey: .y)
+        try container.encode(self.z, forKey: .z)
+    }
+}
+
+
 extension SCNVector3 {
     
     public static var Up: SCNVector3 { return SCNVector3(x: 0.0, y: 1.0, z: 0.0) }
@@ -18,6 +49,11 @@ extension SCNVector3 {
 }
 
 extension SCNVector3 {
+    
+    public static func ==(lhs: SCNVector3, rhs: SCNVector3) -> Bool {
+        
+        return lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z
+    }
     
     public static func +(lhs: SCNVector3, rhs: SCNVector3) -> SCNVector3 {
         

@@ -8,14 +8,16 @@
 
 public struct SceneGraphNodeType: OptionSet {
     
-    public static let area = SceneGraphNodeType(rawValue: 1 << 0)
-    public static let floor = SceneGraphNodeType(rawValue: 1 << 1)
-    public static let foliage = SceneGraphNodeType(rawValue: 1 << 2)
-    public static let footpaths = SceneGraphNodeType(rawValue: 1 << 3)
-    public static let scaffold = SceneGraphNodeType(rawValue: 1 << 4)
-    public static let terrain = SceneGraphNodeType(rawValue: 1 << 5)
-    public static let tunnel = SceneGraphNodeType(rawValue: 1 << 6)
-    public static let water = SceneGraphNodeType(rawValue: 1 << 7)
+    public static let actors = SceneGraphNodeType(rawValue: 1 << 0)
+    public static let area = SceneGraphNodeType(rawValue: 1 << 1)
+    public static let floor = SceneGraphNodeType(rawValue: 1 << 2)
+    public static let foliage = SceneGraphNodeType(rawValue: 1 << 3)
+    public static let footpaths = SceneGraphNodeType(rawValue: 1 << 4)
+    public static let props = SceneGraphNodeType(rawValue: 1 << 5)
+    public static let scaffold = SceneGraphNodeType(rawValue: 1 << 6)
+    public static let terrain = SceneGraphNodeType(rawValue: 1 << 7)
+    public static let tunnel = SceneGraphNodeType(rawValue: 1 << 8)
+    public static let water = SceneGraphNodeType(rawValue: 1 << 9)
     
     public let rawValue: Int
     

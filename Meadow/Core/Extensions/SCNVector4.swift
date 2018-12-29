@@ -8,7 +8,46 @@
 
 import SceneKit
 
+extension SCNVector4: Codable {
+    
+    enum CodingKeys: CodingKey {
+        
+        case x
+        case y
+        case z
+        case w
+    }
+    
+    public init(from decoder: Decoder) throws {
+        
+        self.init()
+        
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        self.x = try container.decode(MDWFloat.self, forKey: .x)
+        self.y = try container.decode(MDWFloat.self, forKey: .y)
+        self.z = try container.decode(MDWFloat.self, forKey: .z)
+        self.w = try container.decode(MDWFloat.self, forKey: .w)
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(self.x, forKey: .x)
+        try container.encode(self.y, forKey: .y)
+        try container.encode(self.z, forKey: .z)
+        try container.encode(self.w, forKey: .w)
+    }
+}
+
+
 extension SCNVector4 {
+    
+    public static func ==(lhs: SCNVector4, rhs: SCNVector4) -> Bool {
+        
+        return lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z && lhs.w == rhs.w
+    }
     
     public static func length(vector: SCNVector4) -> MDWFloat {
         

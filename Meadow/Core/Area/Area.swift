@@ -24,11 +24,11 @@ extension Area: SceneGraphIntermediate {
                 
                 node.externalAreaType = intermediate.externalAreaType
                 node.internalAreaType = intermediate.internalAreaType
-                node.floorColorPalette = ColorPalettes.shared?.palette(named: intermediate.floorColorPalette)
+                node.floorColorPalette = ArtDirector.shared?.palette(named: intermediate.floorColorPalette)
                 
                 GridEdge.Edges.forEach { edge in
                     
-                    if let nodeEdge = intermediate.edges.find(edge: edge), let externalColorPalette = ColorPalettes.shared?.palette(named: nodeEdge.externalColorPalette), let internalColorPalette = ColorPalettes.shared?.palette(named: nodeEdge.internalColorPalette) {
+                    if let nodeEdge = intermediate.edges.find(edge: edge), let externalColorPalette = ArtDirector.shared?.palette(named: nodeEdge.externalColorPalette), let internalColorPalette = ArtDirector.shared?.palette(named: nodeEdge.internalColorPalette) {
                         
                         node.set(edge: AreaNode.Edge(edge: edge, edgeType: nodeEdge.edgeType, architectureType: nodeEdge.architectureType, externalColorPalette: externalColorPalette, internalColorPalette: internalColorPalette))
                     }
@@ -46,7 +46,7 @@ extension Area {
         
         node.externalAreaType = AreaType.brick
         node.internalAreaType = AreaType.concrete
-        node.floorColorPalette = ColorPalettes.shared?.allColorPalettes.first
+        node.floorColorPalette = ArtDirector.shared?.palettes.child(at: 0)
         
         GridEdge.Edges.forEach { edge in
             

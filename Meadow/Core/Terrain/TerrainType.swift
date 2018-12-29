@@ -35,6 +35,6 @@ extension TerrainType {
     
     public var colorPalette: ColorPalette? {
         
-        return ColorPalettes.shared?.palette(named: name)
+        return ArtDirector.shared?.palette(named: name)
     }
 }

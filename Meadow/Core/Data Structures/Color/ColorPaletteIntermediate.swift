@@ -17,11 +17,13 @@ public struct ColorPaletteIntermediate: Codable {
     let tertiary: String
     let quaternary: String
     
-    public static func load(filename: String) -> [ColorPaletteIntermediate]? {
+    public static func load(palettes: String) -> [ColorPaletteIntermediate]? {
+        
+        let resource = palettes.lowercased().replacingOccurrences(of: " ", with: "_")
         
         do {
             
-            guard let path = Bundle.meadow.path(forResource: filename, ofType: "json") else { return nil }
+            guard let path = Bundle.meadow.path(forResource: resource, ofType: "json") else { return nil }
             
             let jsonData = try NSData(contentsOfFile: path) as Data
             
@@ -31,7 +33,7 @@ public struct ColorPaletteIntermediate: Codable {
         }
         catch {
             
-            fatalError("Unable to load Colors Palettes from file -> \(filename).json")
+            fatalError("Unable to load Colors Palettes from file -> \(resource).json")
         }
     }
 }

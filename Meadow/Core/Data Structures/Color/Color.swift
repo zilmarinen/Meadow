@@ -26,22 +26,27 @@ public struct Color: Codable, Hashable {
         
         return SCNVector4(x: red, y: green, z: blue, w: alpha)
     }
+}
+
+extension Color {
     
-    public static func load(filename: String) -> [Color]? {
+    public static func load(colors: String) -> [Color]? {
+        
+        let resource = colors.lowercased().replacingOccurrences(of: " ", with: "_")
         
         do {
             
-            guard let path = Bundle.meadow.path(forResource: filename, ofType: "json") else { return nil }
+            guard let path = Bundle.meadow.path(forResource: resource, ofType: "json") else { return nil }
             
-            let jsonData = try NSData(contentsOfFile: path) as Data
+            let data = try NSData(contentsOfFile: path) as Data
             
             let decoder = JSONDecoder()
             
-            return try decoder.decode([Color].self, from: jsonData)
+            return try decoder.decode([Color].self, from: data)
         }
         catch {
             
-            fatalError("Unable to load Colors from file -> \(filename).json")
+            fatalError("Unable to load Colors from file -> \(resource).json")
         }
     }
 }

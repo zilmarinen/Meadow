@@ -12,14 +12,14 @@ public class Grid<Chunk: GridChunk<Tile, Node>, Tile: GridTile<Node>, Node: Grid
     
     public typealias ChildType = Chunk
     
-    public var children: [Chunk] { return childNodes as! [Chunk] }
+    public var children: [ChildType] { return childNodes as! [ChildType] }
     
     var isDirty: Bool = false
     
     var observer: GridObserver?
 }
 
-extension Grid: GridSoilable {
+extension Grid: SceneGraphSoilable {
     
     public func becomeDirty() {
         

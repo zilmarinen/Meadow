@@ -52,7 +52,7 @@ public class TerrainLayer: GridChild {
     }
 }
 
-extension TerrainLayer: GridSoilable {
+extension TerrainLayer: SceneGraphSoilable {
     
     public func becomeDirty() {
         

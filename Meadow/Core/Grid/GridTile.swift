@@ -14,7 +14,7 @@ public class GridTile<Node: GridNode>: GridChild, GridParent {
     
     public var observer: GridObserver?
     
-    public var children: [Node] = []
+    public var children: [ChildType] = []
     
     public var name: String? { return "Tile" }
     
@@ -41,7 +41,7 @@ public class GridTile<Node: GridNode>: GridChild, GridParent {
     }
 }
 
-extension GridTile: GridSoilable {
+extension GridTile: SceneGraphSoilable {
     
     public func becomeDirty() {
         

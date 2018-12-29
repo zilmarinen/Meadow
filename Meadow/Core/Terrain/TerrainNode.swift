@@ -13,7 +13,7 @@ public class TerrainNode<Layer: TerrainLayer>: GridNode, GridParent, SceneGraphI
     public typealias ChildType = Layer
     public typealias IntermediateType = TerrainLayerIntermediate
     
-    public var children: [Layer] = []
+    public var children: [ChildType] = []
     
     public var intersections: [Polyhedron] = []
     

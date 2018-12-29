@@ -35,7 +35,7 @@ extension Blueprint: SceneGraphUpdatable {
     }
 }
 
-extension Blueprint: GridSoilable {
+extension Blueprint: SceneGraphSoilable {
     
     public func becomeDirty() {
         

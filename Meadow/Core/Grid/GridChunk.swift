@@ -14,7 +14,7 @@ public class GridChunk<Tile: GridTile<Node>, Node: GridNode>: SCNNode, GridChild
     
     public var observer: GridObserver?
     
-    public var children: [Tile] = []
+    public var children: [ChildType] = []
     
     public let volume: Volume
     
@@ -37,7 +37,7 @@ public class GridChunk<Tile: GridTile<Node>, Node: GridNode>: SCNNode, GridChild
     }
 }
 
-extension GridChunk: GridSoilable {
+extension GridChunk: SceneGraphSoilable {
     
     public func becomeDirty() {
         

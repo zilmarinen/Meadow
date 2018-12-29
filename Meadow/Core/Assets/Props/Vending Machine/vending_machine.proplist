@@ -1,0 +1,8 @@
+{
+  "name": "Vending Machine",
+  "category": 1,
+  "props": [
+    "Drink Machine",
+    "Snack Machine"
+  ]
+}

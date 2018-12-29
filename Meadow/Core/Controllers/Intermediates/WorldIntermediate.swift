@@ -13,6 +13,7 @@ public struct WorldIntermediate: Decodable {
     let areas: GridIntermediate<Area.IntermediateType>
     let foliage: GridIntermediate<Foliage.IntermediateType>
     let footpaths: GridIntermediate<Footpath.IntermediateType>
+    let props: PropsIntermediate
     let terrain: GridIntermediate<Terrain.IntermediateType>
     let water: GridIntermediate<Water.IntermediateType>
 }

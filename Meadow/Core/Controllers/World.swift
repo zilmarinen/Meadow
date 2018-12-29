@@ -14,9 +14,11 @@ public class World: SCNNode, GridObserver, SceneGraphChild, SceneGraphParent {
     
     public let floor = Floor()
     
+    public let actors = Actors()
     public let areas = Area()
     public let foliage = Foliage()
     public let footpaths = Footpath()
+    public let props = Props()
     public let scaffolds = Scaffold()
     public let terrain = Terrain()
     public let tunnels = Tunnel()
@@ -38,6 +40,9 @@ public class World: SCNNode, GridObserver, SceneGraphChild, SceneGraphParent {
         
         self.name = "World"
         
+        actors.name = "Actors"
+        actors.categoryBitMask = SceneGraphNodeType.actors.rawValue
+        
         areas.observer = self
         areas.name = "Areas"
         areas.categoryBitMask = SceneGraphNodeType.area.rawValue
@@ -49,6 +54,10 @@ public class World: SCNNode, GridObserver, SceneGraphChild, SceneGraphParent {
         footpaths.observer = self
         footpaths.name = "Footpaths"
         footpaths.categoryBitMask = SceneGraphNodeType.footpaths.rawValue
+        
+        props.observer = self
+        props.name = "Props"
+        props.categoryBitMask = SceneGraphNodeType.props.rawValue
         
         scaffolds.observer = self
         scaffolds.name = "Scaffolds"
@@ -68,9 +77,11 @@ public class World: SCNNode, GridObserver, SceneGraphChild, SceneGraphParent {
         
         self.addChildNode(blueprint)
         self.addChildNode(floor)
+        self.addChildNode(actors)
         self.addChildNode(areas)
         self.addChildNode(foliage)
         self.addChildNode(footpaths)
+        self.addChildNode(props)
         self.addChildNode(scaffolds)
         self.addChildNode(terrain)
         self.addChildNode(tunnels)
@@ -156,19 +167,21 @@ extension World: SceneGraphIntermediate {
         
         guard let intermediate = intermediates.first else { return }
         
-        let areaNodes = intermediate.areas.children.flatMap { $0.children.flatMap { $0.children } }
-        let foliageNodes = intermediate.foliage.children.flatMap { $0.children.flatMap { $0.children } }
-        let footpathNodes = intermediate.footpaths.children.flatMap { $0.children.flatMap { $0.children } }
-        let terrainNodes = intermediate.terrain.children.flatMap { $0.children.flatMap { $0.children } }
-        let waterNodes = intermediate.water.children.flatMap { $0.children.flatMap { $0.children } }
+        let areaIntermediates = intermediate.areas.children.flatMap { $0.children.flatMap { $0.children } }
+        let foliageIntermediates = intermediate.foliage.children.flatMap { $0.children.flatMap { $0.children } }
+        let footpathIntermediates = intermediate.footpaths.children.flatMap { $0.children.flatMap { $0.children } }
+        let propIntermediates = intermediate.props.children
+        let terrainIntermediates = intermediate.terrain.children.flatMap { $0.children.flatMap { $0.children } }
+        let waterIntermediates = intermediate.water.children.flatMap { $0.children.flatMap { $0.children } }
         
-        terrain.load(intermediates: terrainNodes)
-        areas.load(intermediates: areaNodes)
-        foliage.load(intermediates: foliageNodes)
-        footpaths.load(intermediates: footpathNodes)
-        water.load(intermediates: waterNodes)
+        terrain.load(intermediates: terrainIntermediates)
+        areas.load(intermediates: areaIntermediates)
+        foliage.load(intermediates: foliageIntermediates)
+        footpaths.load(intermediates: footpathIntermediates)
+        props.load(intermediates: propIntermediates)
+        water.load(intermediates: waterIntermediates)
         
-        if let floorColor = ColorPalettes.shared?.color(named: intermediate.floorColor) {
+        if let floorColor = ArtDirector.shared?.color(named: intermediate.floorColor) {
             
             floor.color = floorColor
         }
@@ -184,6 +197,7 @@ extension World: Encodable {
         case areas
         case foliage
         case footpaths
+        case props
         case terrain
         case water
         
@@ -199,6 +213,7 @@ extension World: Encodable {
         try container.encode(self.areas, forKey: .areas)
         try container.encode(self.foliage, forKey: .foliage)
         try container.encode(self.footpaths, forKey: .footpaths)
+        try container.encode(self.props, forKey: .props)
         try container.encode(self.terrain, forKey: .terrain)
         try container.encode(self.water, forKey: .water)
         

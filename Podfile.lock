@@ -4,15 +4,15 @@ PODS:
   - THRUtilities/Core (1.7.5)
 
 DEPENDENCIES:
-  - THRUtilities (from `../THRUtilities`)
+  - THRUtilities (from `../../3Squared/THR/THRUtilities`)
 
 EXTERNAL SOURCES:
   THRUtilities:
-    :path: "../THRUtilities"
+    :path: "../../3Squared/THR/THRUtilities"
 
 SPEC CHECKSUMS:
   THRUtilities: 08695fe94b602540cba2c0db60d256320339ae5b
 
-PODFILE CHECKSUM: 89fe76d638332683000637cb97cb00e974bc594c
+PODFILE CHECKSUM: 42e6c59604a1ff905ccd6964bde5d24d1411c368
 
 COCOAPODS: 1.5.3

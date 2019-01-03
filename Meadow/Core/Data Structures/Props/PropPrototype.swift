@@ -1,12 +1,12 @@
 //
-//  Prop.swift
+//  PropPrototype.swift
 //  Meadow
 //
 //  Created by Zack Brown on 21/11/2018.
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-public struct Prop: Codable {
+public struct PropPrototype: Codable {
     
     public let name: String
     
@@ -24,18 +24,24 @@ public struct Prop: Codable {
             
             let decoder = JSONDecoder()
             
-            self = try decoder.decode(Prop.self, from: data)
+            self = try decoder.decode(PropPrototype.self, from: data)
         }
         catch {
             
             fatalError("Unable to load Prop from file -> \(resource).prop")
         }
     }
+    
+    public init(name: String) {
+        
+        self.name = name
+        self.footprint = Footprint(coordinate: Coordinate.zero, rotation: .north)
+    }
 }
 
-extension Prop: Hashable {
+extension PropPrototype: Equatable {
     
-    public static func == (lhs: Prop, rhs: Prop) -> Bool {
+    public static func == (lhs: PropPrototype, rhs: PropPrototype) -> Bool {
         
         return lhs.name == rhs.name
     }

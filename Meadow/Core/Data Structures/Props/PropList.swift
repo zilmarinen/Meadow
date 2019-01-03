@@ -12,7 +12,7 @@ public struct PropList: Codable {
     
     public let category: PropType
     
-    public let props: [Prop]
+    public let prototypes: [PropPrototype]
     
     public init?(named: String) {
         
@@ -33,9 +33,16 @@ public struct PropList: Codable {
             fatalError("Unable to load Proplist from file -> \(resource).proplist")
         }
     }
+    
+    public init(name: String, category: PropType, prototypes: [PropPrototype]) {
+        
+        self.name = name
+        self.category = category
+        self.prototypes = prototypes
+    }
 }
 
-extension PropList: Hashable {
+extension PropList: Equatable {
     
     public static func == (lhs: PropList, rhs: PropList) -> Bool {
         
@@ -61,17 +68,17 @@ extension PropList {
         
         let propNames = try container.decode([String].self, forKey: .props)
         
-        var propIntermediates: [Prop] = []
+        var props: [PropPrototype] = []
         
         propNames.forEach { propName in
             
-            if let prop = Prop(named: propName) {
+            if let prop = PropPrototype(named: propName) {
                 
-                propIntermediates.append(prop)
+                props.append(prop)
             }
         }
         
-        self.props = propIntermediates
+        self.prototypes = props
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -80,6 +87,23 @@ extension PropList {
         
         try container.encode(self.name, forKey: .name)
         try container.encode(self.category, forKey: .category)
-        try container.encode(self.props.map { $0.name }, forKey: .props)
+        try container.encode(self.prototypes.map { $0.name }, forKey: .props)
+    }
+}
+
+extension PropList: TreeParent {
+    
+    public typealias TreeChild = PropPrototype
+    
+    public var totalChildren: Int { return prototypes.count }
+    
+    public func child(at index: Int) -> PropPrototype? {
+        
+        return prototypes[index]
+    }
+
+    public func index(of child: PropPrototype) -> Int? {
+    
+        return prototypes.index(of: child)
     }
 }

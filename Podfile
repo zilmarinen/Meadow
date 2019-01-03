@@ -5,7 +5,7 @@ target 'Meadow-iOS' do
 
 	platform :ios, '11.3'
 
-	pod 'THRUtilities', :path => '../THRUtilities'
+	pod 'THRUtilities', :path => '../../3Squared/THR/THRUtilities'
 
   	target 'Meadow-iOSTests' do
     
@@ -19,7 +19,7 @@ target 'Meadow-macOS' do
 
 	platform :osx, '10.13'
 
-	pod 'THRUtilities', :path => '../THRUtilities'
+	pod 'THRUtilities', :path => '../../3Squared/THR/THRUtilities'
 
   	target 'Meadow-macOSTests' do
     

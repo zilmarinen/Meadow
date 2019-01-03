@@ -33,7 +33,7 @@ public class PropsMaster {
             return lhs.name > rhs.name
         }))
         
-        self.props = Props(props: propLists.flatMap { $0.props } )
+        self.props = Props(prototypes: propLists.flatMap { $0.prototypes } )
     }
 }
 
@@ -43,7 +43,7 @@ extension PropsMaster {
         
         public typealias TreeChild = PropList
         
-        let lists: [PropList]
+        let lists: [TreeChild]
         
         public var totalChildren: Int { return lists.count }
         
@@ -70,27 +70,27 @@ extension PropsMaster {
     
     public struct Props: TreeParent {
         
-        public typealias TreeChild = Prop
+        public typealias TreeChild = PropPrototype
         
-        let props: [Prop]
+        let prototypes: [TreeChild]
         
-        public var totalChildren: Int { return props.count }
+        public var totalChildren: Int { return prototypes.count }
         
-        public func child(at index: Int) -> Prop? {
+        public func child(at index: Int) -> PropPrototype? {
             
-            return props[index]
+            return prototypes[index]
         }
         
-        public func index(of child: Prop) -> Int? {
+        public func index(of child: PropPrototype) -> Int? {
             
-            return props.index(of: child)
+            return prototypes.index(of: child)
         }
     }
     
-    public func prop(named: String) -> Prop? {
+    public func prop(named: String) -> PropPrototype? {
         
         let name = named.lowercased()
         
-        return props.props.first { $0.name.lowercased() == name }
+        return props.prototypes.first { $0.name.lowercased() == name }
     }
 }

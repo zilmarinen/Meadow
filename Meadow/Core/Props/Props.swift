@@ -10,7 +10,7 @@ import SceneKit
 
 public class Props: SCNNode, SceneGraphChild, SceneGraphParent {
     
-    public typealias ChildType = PropNode
+    public typealias ChildType = Prop
     
     public var children: [ChildType] { return childNodes as! [ChildType] }
     
@@ -74,17 +74,17 @@ extension Props: SceneGraphIntermediate {
 
 extension Props {
     
-    public func add(prop: Prop, coordinate: Coordinate) -> PropNode? {
+    public func add(prototype: PropPrototype, coordinate: Coordinate) -> Prop? {
         
         return nil
     }
     
-    public func find(prop coordinate: Coordinate, edge: GridEdge) -> PropNode? {
+    public func find(prop coordinate: Coordinate, edge: GridEdge) -> Prop? {
         
         return nil
     }
     
-    public func remove(prop: PropNode) -> Bool {
+    public func remove(prop: Prop) -> Bool {
         
         if let _ = index(of: prop) {
             

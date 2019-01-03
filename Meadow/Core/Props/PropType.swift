@@ -9,13 +9,23 @@
 public enum PropType: Int, Codable {
     
     case decoration
+    case structural
     case utility
+    
+    public static var allCases: [PropType] {
+        
+        return [ .decoration,
+                 .structural,
+                 .utility
+        ]
+    }
     
     public var name: String {
         
         switch self {
             
         case .decoration: return "Decoration"
+        case .structural: return "Structural"
         case .utility: return "Utility"
         }
     }

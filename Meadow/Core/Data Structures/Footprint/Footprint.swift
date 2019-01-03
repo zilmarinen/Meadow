@@ -13,4 +13,10 @@ public struct Footprint: Codable, Hashable {
     public let rotation: GridEdge
     
     //public let nodes: Set<FootprintNode>
+    
+    public init(coordinate: Coordinate, rotation: GridEdge) {
+        
+        self.coordinate = coordinate
+        self.rotation = rotation
+    }
 }

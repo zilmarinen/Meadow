@@ -1,5 +1,5 @@
 //
-//  PropNode.swift
+//  Prop.swift
 //  Meadow
 //
 //  Created by Zack Brown on 12/11/2018.
@@ -8,23 +8,23 @@
 
 import SceneKit
 
-public class PropNode: SCNNode, SceneGraphChild {
+public class Prop: SCNNode, SceneGraphChild {
     
     public let coordinate: Coordinate
     
     public let footprint: Footprint
     
-    public let prop: Prop
+    public let prototype: PropPrototype
     
     var isDirty: Bool = false
     
-    init(prop: Prop, coordinate: Coordinate) {
+    init(prototype: PropPrototype, coordinate: Coordinate) {
         
-        self.prop = prop
+        self.prototype = prototype
         
         self.coordinate = coordinate
         
-        self.footprint = prop.footprint
+        self.footprint = prototype.footprint
         
         super.init()
     }
@@ -35,7 +35,7 @@ public class PropNode: SCNNode, SceneGraphChild {
     }
 }
 
-extension PropNode: SceneGraphSoilable {
+extension Prop: SceneGraphSoilable {
     
     public func becomeDirty() {
         
@@ -55,7 +55,7 @@ extension PropNode: SceneGraphSoilable {
     }
 }
 
-extension PropNode: Encodable {
+extension Prop: Encodable {
     
     enum CodingKeys: CodingKey {
         

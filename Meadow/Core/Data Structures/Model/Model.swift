@@ -10,7 +10,7 @@ public struct Model: Codable {
     
     public let name: String
     
-    public let faces: [ModelFace]
+    public let groups: [ModelGroup]
     
     public init?(named: String) {
         
@@ -31,22 +31,11 @@ public struct Model: Codable {
             fatalError("Unable to load Model from file -> \(resource).model")
         }
     }
-}
-
-extension Model: TreeParent {
     
-    public typealias TreeChild = ModelFace
-    
-    public var totalChildren: Int { return faces.count }
-    
-    public func child(at index: Int) -> ModelFace? {
+    public init(name: String, groups: [ModelGroup]) {
         
-        return faces[index]
-    }
-    
-    public func index(of child: ModelFace) -> Int? {
-        
-        return faces.index(of: child)
+        self.name = name
+        self.groups = groups
     }
 }
 
@@ -56,13 +45,16 @@ extension Model {
         
         var meshFaces: [MeshFace] = []
         
-        faces.forEach { face in
+        groups.forEach { group in
+        
+            group.faces.forEach { face in
             
-            if let color = colorPalette.child(at: face.color) {
+                if let color = colorPalette.child(at: face.color) {
             
-                let meshFace = MeshFace(v0: face.v0, v1: face.v1, v2: face.v2, normal: face.normal, color: color.vector)
+                    let meshFace = MeshFace(v0: face.v0, v1: face.v1, v2: face.v2, normal: face.normal, color: color.vector)
                 
-                meshFaces.append(meshFace)
+                    meshFaces.append(meshFace)
+                }
             }
         }
         

@@ -19,7 +19,7 @@ public struct Color: Codable, Hashable {
     
     public var color: MDWColor {
         
-        return MDWColor(red: red, green: green, blue: blue, alpha: alpha)
+        return MDWColor(red: CGFloat(red), green: CGFloat(green), blue: CGFloat(blue), alpha: CGFloat(alpha))
     }
     
     public var vector: SCNVector4 {

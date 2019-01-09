@@ -15,6 +15,15 @@ public struct ModelFace: Codable {
     public let v2: SCNVector3
     public let normal: SCNVector3
     public let color: Int
+    
+    public init(v0: SCNVector3, v1: SCNVector3, v2: SCNVector3, normal: SCNVector3, color: Int) {
+        
+        self.v0 = v0
+        self.v1 = v1
+        self.v2 = v2
+        self.normal = normal
+        self.color = color
+    }
 }
 
 extension ModelFace: Equatable {

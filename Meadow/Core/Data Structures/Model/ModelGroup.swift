@@ -13,6 +13,12 @@ public struct ModelGroup: Codable {
     public let name: String
     
     public let faces: [ModelFace]
+    
+    public init(name: String, faces: [ModelFace]) {
+        
+        self.name = name
+        self.faces = faces
+    }
 }
 
 extension ModelGroup: Equatable {

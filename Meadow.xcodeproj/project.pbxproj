@@ -314,9 +314,6 @@
 		18924B4E212C2AEF00943057 /* TudorAreaArchitectureMeshProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18924B4C212C2AE800943057 /* TudorAreaArchitectureMeshProvider.swift */; };
 		18924B4F212C2AEF00943057 /* TudorAreaArchitectureMeshProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18924B4C212C2AE800943057 /* TudorAreaArchitectureMeshProvider.swift */; };
 		18924B50212C2AF000943057 /* TudorAreaArchitectureMeshProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18924B4C212C2AE800943057 /* TudorAreaArchitectureMeshProvider.swift */; };
-		189B6230219F12CE00253703 /* vending_machine.proplist in Resources */ = {isa = PBXBuildFile; fileRef = 189B622F219F12CE00253703 /* vending_machine.proplist */; };
-		189B6232219F130A00253703 /* snack_machine.prop in Resources */ = {isa = PBXBuildFile; fileRef = 189B6231219F130A00253703 /* snack_machine.prop */; };
-		189B6234219F131500253703 /* snack_machine.model in Resources */ = {isa = PBXBuildFile; fileRef = 189B6233219F131500253703 /* snack_machine.model */; };
 		18A6BF3520FA28E6001F7EB1 /* GridResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A6BF3420FA28E6001F7EB1 /* GridResolver.swift */; };
 		18A6BF3B20FA2CD3001F7EB1 /* GridResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A6BF3420FA28E6001F7EB1 /* GridResolver.swift */; };
 		18A6BF3C20FA2CD3001F7EB1 /* GridResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A6BF3420FA28E6001F7EB1 /* GridResolver.swift */; };
@@ -325,8 +322,6 @@
 		18B6727921184DD30077489A /* WaterResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6727721184D6A0077489A /* WaterResolver.swift */; };
 		18B6727A21184DD30077489A /* WaterResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6727721184D6A0077489A /* WaterResolver.swift */; };
 		18B6727B21184DD40077489A /* WaterResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6727721184D6A0077489A /* WaterResolver.swift */; };
-		18BEC942219EBB1E0058228E /* drink_machine.prop in Resources */ = {isa = PBXBuildFile; fileRef = 18BEC941219EBB1E0058228E /* drink_machine.prop */; };
-		18BEC944219EBB340058228E /* drink_machine.model in Resources */ = {isa = PBXBuildFile; fileRef = 18BEC943219EBB340058228E /* drink_machine.model */; };
 		18BFB3342112FE94003388CB /* TerrainResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BFB3332112FE94003388CB /* TerrainResolver.swift */; };
 		18BFB3352112FF19003388CB /* TerrainResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BFB3332112FE94003388CB /* TerrainResolver.swift */; };
 		18BFB3362112FF19003388CB /* TerrainResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BFB3332112FE94003388CB /* TerrainResolver.swift */; };
@@ -387,11 +382,6 @@
 		18DBCF0E20CAC46600BFF9C9 /* SCNQuaternion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DBCF0C20CAC41800BFF9C9 /* SCNQuaternion.swift */; };
 		18DBCF1020CAC46700BFF9C9 /* SCNQuaternion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DBCF0C20CAC41800BFF9C9 /* SCNQuaternion.swift */; };
 		18DBCF1120CAC46800BFF9C9 /* SCNQuaternion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DBCF0C20CAC41800BFF9C9 /* SCNQuaternion.swift */; };
-		18EBE14D21A2A6B900B4F591 /* standing_desk.prop in Resources */ = {isa = PBXBuildFile; fileRef = 18EBE14C21A2A6B900B4F591 /* standing_desk.prop */; };
-		18EBE14F21A2A6CF00B4F591 /* office_desk.prop in Resources */ = {isa = PBXBuildFile; fileRef = 18EBE14E21A2A6CF00B4F591 /* office_desk.prop */; };
-		18EBE15121A2A6DE00B4F591 /* standing_desk.model in Resources */ = {isa = PBXBuildFile; fileRef = 18EBE15021A2A6DE00B4F591 /* standing_desk.model */; };
-		18EBE15321A2A6E700B4F591 /* office_desk.model in Resources */ = {isa = PBXBuildFile; fileRef = 18EBE15221A2A6E700B4F591 /* office_desk.model */; };
-		18EBE15521A2A70400B4F591 /* desk.proplist in Resources */ = {isa = PBXBuildFile; fileRef = 18EBE15421A2A70400B4F591 /* desk.proplist */; };
 		18EBE15721A2A75900B4F591 /* PropType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EBE15621A2A75900B4F591 /* PropType.swift */; };
 		18EBE15821A2A79E00B4F591 /* PropType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EBE15621A2A75900B4F591 /* PropType.swift */; };
 		18EBE15921A2A79E00B4F591 /* PropType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EBE15621A2A75900B4F591 /* PropType.swift */; };
@@ -404,16 +394,6 @@
 		18EBE16221A2B1DA00B4F591 /* PropIntermediate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EBE16021A2B1C000B4F591 /* PropIntermediate.swift */; };
 		18EBE16321A2B1DA00B4F591 /* PropIntermediate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EBE16021A2B1C000B4F591 /* PropIntermediate.swift */; };
 		18EBE16421A2B1DB00B4F591 /* PropIntermediate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EBE16021A2B1C000B4F591 /* PropIntermediate.swift */; };
-		18EBE16521A2B96400B4F591 /* vending_machine.proplist in Resources */ = {isa = PBXBuildFile; fileRef = 189B622F219F12CE00253703 /* vending_machine.proplist */; };
-		18EBE16621A2B96800B4F591 /* desk.proplist in Resources */ = {isa = PBXBuildFile; fileRef = 18EBE15421A2A70400B4F591 /* desk.proplist */; };
-		18EBE16721A2C35200B4F591 /* drink_machine.prop in Resources */ = {isa = PBXBuildFile; fileRef = 18BEC941219EBB1E0058228E /* drink_machine.prop */; };
-		18EBE16821A2C35200B4F591 /* drink_machine.model in Resources */ = {isa = PBXBuildFile; fileRef = 18BEC943219EBB340058228E /* drink_machine.model */; };
-		18EBE16921A2C35500B4F591 /* snack_machine.prop in Resources */ = {isa = PBXBuildFile; fileRef = 189B6231219F130A00253703 /* snack_machine.prop */; };
-		18EBE16A21A2C35500B4F591 /* snack_machine.model in Resources */ = {isa = PBXBuildFile; fileRef = 189B6233219F131500253703 /* snack_machine.model */; };
-		18EBE16B21A2C35800B4F591 /* office_desk.prop in Resources */ = {isa = PBXBuildFile; fileRef = 18EBE14E21A2A6CF00B4F591 /* office_desk.prop */; };
-		18EBE16C21A2C35800B4F591 /* office_desk.model in Resources */ = {isa = PBXBuildFile; fileRef = 18EBE15221A2A6E700B4F591 /* office_desk.model */; };
-		18EBE16D21A2C35B00B4F591 /* standing_desk.prop in Resources */ = {isa = PBXBuildFile; fileRef = 18EBE14C21A2A6B900B4F591 /* standing_desk.prop */; };
-		18EBE16E21A2C35B00B4F591 /* standing_desk.model in Resources */ = {isa = PBXBuildFile; fileRef = 18EBE15021A2A6DE00B4F591 /* standing_desk.model */; };
 		18EBE17421A54C3200B4F591 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EBE17321A54C3200B4F591 /* Model.swift */; };
 		18EBE17521A54C3200B4F591 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EBE17321A54C3200B4F591 /* Model.swift */; };
 		18EBE17621A54C3200B4F591 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EBE17321A54C3200B4F591 /* Model.swift */; };
@@ -638,10 +618,6 @@
 		18EE510720A5899E0059829C /* Meadow+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EE510520A5892C0059829C /* Meadow+Types.swift */; };
 		18EE510820A589A50059829C /* Meadow+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EE510520A5892C0059829C /* Meadow+Types.swift */; };
 		18EE510920A589A60059829C /* Meadow+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EE510520A5892C0059829C /* Meadow+Types.swift */; };
-		18EE513A20A599000059829C /* SCNColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EE513920A599000059829C /* SCNColor.swift */; };
-		18EE513B20A5990F0059829C /* SCNColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EE513920A599000059829C /* SCNColor.swift */; };
-		18EE513C20A5994C0059829C /* SCNColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EE513920A599000059829C /* SCNColor.swift */; };
-		18EE513D20A5994C0059829C /* SCNColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EE513920A599000059829C /* SCNColor.swift */; };
 		18EE513F20A59E260059829C /* Mesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EE513E20A59E260059829C /* Mesh.swift */; };
 		18EE514020A59E260059829C /* Mesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EE513E20A59E260059829C /* Mesh.swift */; };
 		18EE514120A59E260059829C /* Mesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EE513E20A59E260059829C /* Mesh.swift */; };
@@ -815,9 +791,6 @@
 		18924B3F212C1ED000943057 /* AreaArchitectureType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaArchitectureType.swift; sourceTree = "<group>"; };
 		18924B43212C2A6F00943057 /* AreaArchitectureMeshProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaArchitectureMeshProvider.swift; sourceTree = "<group>"; };
 		18924B4C212C2AE800943057 /* TudorAreaArchitectureMeshProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TudorAreaArchitectureMeshProvider.swift; sourceTree = "<group>"; };
-		189B622F219F12CE00253703 /* vending_machine.proplist */ = {isa = PBXFileReference; lastKnownFileType = text; path = vending_machine.proplist; sourceTree = "<group>"; };
-		189B6231219F130A00253703 /* snack_machine.prop */ = {isa = PBXFileReference; lastKnownFileType = text; path = snack_machine.prop; sourceTree = "<group>"; };
-		189B6233219F131500253703 /* snack_machine.model */ = {isa = PBXFileReference; lastKnownFileType = text; path = snack_machine.model; sourceTree = "<group>"; };
 		18A6BF3420FA28E6001F7EB1 /* GridResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridResolver.swift; sourceTree = "<group>"; };
 		18A8AB232099D6DA00AF30BB /* TerrainTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrainTests.swift; sourceTree = "<group>"; };
 		18B58B812098600800402410 /* Area.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Area.swift; sourceTree = "<group>"; };
@@ -841,8 +814,6 @@
 		18B58BA6209861E000402410 /* WaterTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterTile.swift; sourceTree = "<group>"; };
 		18B58BA8209861E900402410 /* WaterNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterNode.swift; sourceTree = "<group>"; };
 		18B6727721184D6A0077489A /* WaterResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterResolver.swift; sourceTree = "<group>"; };
-		18BEC941219EBB1E0058228E /* drink_machine.prop */ = {isa = PBXFileReference; lastKnownFileType = text; path = drink_machine.prop; sourceTree = "<group>"; };
-		18BEC943219EBB340058228E /* drink_machine.model */ = {isa = PBXFileReference; lastKnownFileType = text; path = drink_machine.model; sourceTree = "<group>"; };
 		18BFB3332112FE94003388CB /* TerrainResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrainResolver.swift; sourceTree = "<group>"; };
 		18C8CFDF219971A700041D09 /* Props.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Props.swift; sourceTree = "<group>"; };
 		18C8CFE52199727A00041D09 /* Actors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Actors.swift; sourceTree = "<group>"; };
@@ -859,11 +830,6 @@
 		18DB0868216B563800294789 /* Input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Input.swift; sourceTree = "<group>"; };
 		18DB086D216B568F00294789 /* Meadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meadow.swift; sourceTree = "<group>"; };
 		18DBCF0C20CAC41800BFF9C9 /* SCNQuaternion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCNQuaternion.swift; sourceTree = "<group>"; };
-		18EBE14C21A2A6B900B4F591 /* standing_desk.prop */ = {isa = PBXFileReference; lastKnownFileType = text; path = standing_desk.prop; sourceTree = "<group>"; };
-		18EBE14E21A2A6CF00B4F591 /* office_desk.prop */ = {isa = PBXFileReference; lastKnownFileType = text; path = office_desk.prop; sourceTree = "<group>"; };
-		18EBE15021A2A6DE00B4F591 /* standing_desk.model */ = {isa = PBXFileReference; lastKnownFileType = text; path = standing_desk.model; sourceTree = "<group>"; };
-		18EBE15221A2A6E700B4F591 /* office_desk.model */ = {isa = PBXFileReference; lastKnownFileType = text; path = office_desk.model; sourceTree = "<group>"; };
-		18EBE15421A2A70400B4F591 /* desk.proplist */ = {isa = PBXFileReference; lastKnownFileType = text; path = desk.proplist; sourceTree = "<group>"; };
 		18EBE15621A2A75900B4F591 /* PropType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropType.swift; sourceTree = "<group>"; };
 		18EBE15B21A2B17500B4F591 /* PropsIntermediate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropsIntermediate.swift; sourceTree = "<group>"; };
 		18EBE16021A2B1C000B4F591 /* PropIntermediate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropIntermediate.swift; sourceTree = "<group>"; };
@@ -873,7 +839,6 @@
 		18EBE18421A5537C00B4F591 /* PropPrototype.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropPrototype.swift; sourceTree = "<group>"; };
 		18EBE18921A5543000B4F591 /* PropsMaster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropsMaster.swift; sourceTree = "<group>"; };
 		18EE510520A5892C0059829C /* Meadow+Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Meadow+Types.swift"; sourceTree = "<group>"; };
-		18EE513920A599000059829C /* SCNColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCNColor.swift; sourceTree = "<group>"; };
 		18EE513E20A59E260059829C /* Mesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mesh.swift; sourceTree = "<group>"; };
 		18EE514320A59F8E0059829C /* MeshTriangle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeshTriangle.swift; sourceTree = "<group>"; };
 		18EE514820A5B6A30059829C /* SCNGeometry+Mesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SCNGeometry+Mesh.swift"; sourceTree = "<group>"; };
@@ -1014,7 +979,6 @@
 				185E587720A878CD00139565 /* Bundle+Pod.swift */,
 				1819B72420A45EE600BEE585 /* Collection+Bundle.swift */,
 				18EE510520A5892C0059829C /* Meadow+Types.swift */,
-				18EE513920A599000059829C /* SCNColor.swift */,
 				18EE514820A5B6A30059829C /* SCNGeometry+Mesh.swift */,
 				18DBCF0C20CAC41800BFF9C9 /* SCNQuaternion.swift */,
 				1831501E20BED0D8004317E0 /* SCNVector3.swift */,
@@ -1440,25 +1404,6 @@
 			path = Architecture;
 			sourceTree = "<group>";
 		};
-		189B622D219F128700253703 /* Vending Machine */ = {
-			isa = PBXGroup;
-			children = (
-				18F64846219C4D6B00CE3267 /* Drink Machine */,
-				189B622F219F12CE00253703 /* vending_machine.proplist */,
-				189B622E219F129C00253703 /* Snack Machine */,
-			);
-			path = "Vending Machine";
-			sourceTree = "<group>";
-		};
-		189B622E219F129C00253703 /* Snack Machine */ = {
-			isa = PBXGroup;
-			children = (
-				189B6231219F130A00253703 /* snack_machine.prop */,
-				189B6233219F131500253703 /* snack_machine.model */,
-			);
-			path = "Snack Machine";
-			sourceTree = "<group>";
-		};
 		18B58BAA2098623200402410 /* Area */ = {
 			isa = PBXGroup;
 			children = (
@@ -1591,24 +1536,6 @@
 			path = Cursor;
 			sourceTree = "<group>";
 		};
-		18EBE14A21A2A6A200B4F591 /* Office Desk */ = {
-			isa = PBXGroup;
-			children = (
-				18EBE14E21A2A6CF00B4F591 /* office_desk.prop */,
-				18EBE15221A2A6E700B4F591 /* office_desk.model */,
-			);
-			path = "Office Desk";
-			sourceTree = "<group>";
-		};
-		18EBE14B21A2A6A800B4F591 /* Standing Desk */ = {
-			isa = PBXGroup;
-			children = (
-				18EBE14C21A2A6B900B4F591 /* standing_desk.prop */,
-				18EBE15021A2A6DE00B4F591 /* standing_desk.model */,
-			);
-			path = "Standing Desk";
-			sourceTree = "<group>";
-		};
 		18EBE17221A54BB100B4F591 /* Footprint */ = {
 			isa = PBXGroup;
 			children = (
@@ -1676,29 +1603,8 @@
 		18F64828219C178300CE3267 /* Props */ = {
 			isa = PBXGroup;
 			children = (
-				189B622D219F128700253703 /* Vending Machine */,
-				18F64845219C4D6400CE3267 /* Desk */,
 			);
 			path = Props;
-			sourceTree = "<group>";
-		};
-		18F64845219C4D6400CE3267 /* Desk */ = {
-			isa = PBXGroup;
-			children = (
-				18EBE14A21A2A6A200B4F591 /* Office Desk */,
-				18EBE15421A2A70400B4F591 /* desk.proplist */,
-				18EBE14B21A2A6A800B4F591 /* Standing Desk */,
-			);
-			path = Desk;
-			sourceTree = "<group>";
-		};
-		18F64846219C4D6B00CE3267 /* Drink Machine */ = {
-			isa = PBXGroup;
-			children = (
-				18BEC941219EBB1E0058228E /* drink_machine.prop */,
-				18BEC943219EBB340058228E /* drink_machine.model */,
-			);
-			path = "Drink Machine";
 			sourceTree = "<group>";
 		};
 		18F64847219C4DA800CE3267 /* Intermediates */ = {
@@ -1890,18 +1796,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				189B6230219F12CE00253703 /* vending_machine.proplist in Resources */,
-				18EBE14F21A2A6CF00B4F591 /* office_desk.prop in Resources */,
 				1825957E210AFCE400F76A60 /* color_palettes.json in Resources */,
-				18BEC942219EBB1E0058228E /* drink_machine.prop in Resources */,
-				18BEC944219EBB340058228E /* drink_machine.model in Resources */,
-				189B6234219F131500253703 /* snack_machine.model in Resources */,
 				18259580210AFD0B00F76A60 /* colors.json in Resources */,
-				18EBE15321A2A6E700B4F591 /* office_desk.model in Resources */,
-				18EBE15521A2A70400B4F591 /* desk.proplist in Resources */,
-				189B6232219F130A00253703 /* snack_machine.prop in Resources */,
-				18EBE15121A2A6DE00B4F591 /* standing_desk.model in Resources */,
-				18EBE14D21A2A6B900B4F591 /* standing_desk.prop in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1918,18 +1814,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				18EBE16D21A2C35B00B4F591 /* standing_desk.prop in Resources */,
-				18EBE16C21A2C35800B4F591 /* office_desk.model in Resources */,
-				18EBE16621A2B96800B4F591 /* desk.proplist in Resources */,
-				18EBE16B21A2C35800B4F591 /* office_desk.prop in Resources */,
-				18EBE16E21A2C35B00B4F591 /* standing_desk.model in Resources */,
 				188834DA2163A75200D83AFB /* colors.json in Resources */,
-				18EBE16821A2C35200B4F591 /* drink_machine.model in Resources */,
 				188834DB2163A75200D83AFB /* color_palettes.json in Resources */,
-				18EBE16721A2C35200B4F591 /* drink_machine.prop in Resources */,
-				18EBE16521A2B96400B4F591 /* vending_machine.proplist in Resources */,
-				18EBE16A21A2C35500B4F591 /* snack_machine.model in Resources */,
-				18EBE16921A2C35500B4F591 /* snack_machine.prop in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2119,7 +2005,6 @@
 				182595A5210B1CC500F76A60 /* SceneIntermediate.swift in Sources */,
 				18EE503720A5766C0059829C /* GridChunk.swift in Sources */,
 				183830BD2105C6C200FFA729 /* WaterType.swift in Sources */,
-				18EE513A20A599000059829C /* SCNColor.swift in Sources */,
 				1832993F21771E4A00485907 /* EdgeGraticuleObserver.swift in Sources */,
 				180CA9F8210202E30026FE06 /* SceneGraphChild.swift in Sources */,
 				18EE503A20A5766C0059829C /* GridNode.swift in Sources */,
@@ -2225,7 +2110,6 @@
 				1832994021771E4A00485907 /* EdgeGraticuleObserver.swift in Sources */,
 				18FF8E0D20AC2A8E00995462 /* CameraJib.swift in Sources */,
 				180CAA1A210204360026FE06 /* GridTileIntermediate.swift in Sources */,
-				18EE513D20A5994C0059829C /* SCNColor.swift in Sources */,
 				18F64827219C172300CE3267 /* FootprintNode.swift in Sources */,
 				18F64821219C120D00CE3267 /* Footprint.swift in Sources */,
 				180CAA4521022F6D0026FE06 /* TerrainLayerHierarchy.swift in Sources */,
@@ -2443,7 +2327,6 @@
 				18EE505520A5767E0059829C /* TerrainTile.swift in Sources */,
 				180CAA2A210205630026FE06 /* TerrainNodeIntermediate.swift in Sources */,
 				18EE503D20A5766D0059829C /* GridChunk.swift in Sources */,
-				18EE513B20A5990F0059829C /* SCNColor.swift in Sources */,
 				18EBE17C21A54C8200B4F591 /* ModelFace.swift in Sources */,
 				1814692C2108905700326342 /* AreaNodeEdge.swift in Sources */,
 				1832994121771E4A00485907 /* EdgeGraticuleObserver.swift in Sources */,
@@ -2553,7 +2436,6 @@
 				18BFB3372112FF1A003388CB /* TerrainResolver.swift in Sources */,
 				18FF8E0F20AC2A8F00995462 /* CameraJib.swift in Sources */,
 				180CAA22210204370026FE06 /* GridTileIntermediate.swift in Sources */,
-				18EE513C20A5994C0059829C /* SCNColor.swift in Sources */,
 				1832993721771E2500485907 /* EdgeGraticule.swift in Sources */,
 				183830F62106053900FFA729 /* TerrainLayerEdge.swift in Sources */,
 				18EBE15F21A2B1B500B4F591 /* PropsIntermediate.swift in Sources */,

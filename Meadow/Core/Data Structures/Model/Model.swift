@@ -41,7 +41,7 @@ public struct Model: Codable {
 
 extension Model {
     
-    func mesh(colorPalette: ColorPalette) -> Mesh {
+    public func mesh(colorPalette: ColorPalette) -> Mesh {
         
         var meshFaces: [MeshFace] = []
         

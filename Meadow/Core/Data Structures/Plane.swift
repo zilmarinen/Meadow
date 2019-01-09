@@ -20,7 +20,7 @@ public struct Plane {
 
     let direction: MDWFloat
     
-    init(v0: SCNVector3, v1: SCNVector3, v2: SCNVector3) {
+    public init(v0: SCNVector3, v1: SCNVector3, v2: SCNVector3) {
         
         let ab = v1 - v0
         let ac = v2 - v0

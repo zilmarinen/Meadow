@@ -6,7 +6,7 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-#if os(iOS)
+#if os(iOS) || os(tvOS)
 
 import UIKit
 

@@ -32,7 +32,7 @@ extension ColorPalette: TreeParent {
     
     public var totalChildren: Int { return 4 }
     
-    public func child(at index: Int) -> Color? {
+    public func child(at index: Int) -> TreeChild? {
         
         switch index {
             
@@ -45,7 +45,7 @@ extension ColorPalette: TreeParent {
         }
     }
     
-    public func index(of child: Color) -> Int? {
+    public func index(of child: TreeChild) -> Int? {
         
         switch child {
             

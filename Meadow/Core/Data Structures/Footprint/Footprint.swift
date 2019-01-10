@@ -12,11 +12,50 @@ public struct Footprint: Codable, Hashable {
     
     public let rotation: GridEdge
     
-    //public let nodes: Set<FootprintNode>
+    public let nodes: [FootprintNode]
     
-    public init(coordinate: Coordinate, rotation: GridEdge) {
+    init(coordinate: Coordinate, rotation: GridEdge, nodes: [FootprintNode]) {
         
         self.coordinate = coordinate
         self.rotation = rotation
+        
+        self.nodes = nodes.map { node -> FootprintNode in
+            
+            let nodeCoordinate = Coordinate.rotate(coordinate: (node.coordinate + coordinate), rotation: rotation)
+            
+            let edges = node.edges.map { GridEdge.rotate(edge: $0, rotation: rotation) }
+            
+            return FootprintNode(coordinate: nodeCoordinate, edges: edges)
+        }
+    }
+}
+
+extension Footprint {
+    
+    func intersects(footprint: Footprint) -> Bool {
+        
+        for i in 0..<nodes.count {
+            
+            let lhs = nodes[i]
+            
+            for j in 0..<footprint.nodes.count {
+                
+                let rhs = footprint.nodes[j]
+                
+                if lhs.intersects(node: rhs) {
+                    
+                    return true
+                }
+            }
+        }
+        
+        return false
+    }
+    
+    public func intersects(coordinate: Coordinate, edge: GridEdge) -> Bool {
+        
+        let node = FootprintNode(coordinate: coordinate, edges: [edge])
+        
+        return intersects(footprint: Footprint(coordinate: coordinate, rotation: .north, nodes: [node]))
     }
 }

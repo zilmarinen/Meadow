@@ -6,6 +6,8 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
+import Foundation
+
 public struct PropPrototype: Codable {
     
     public let name: String
@@ -30,12 +32,6 @@ public struct PropPrototype: Codable {
             
             fatalError("Unable to load Prop from file -> \(resource).prop")
         }
-    }
-    
-    public init(name: String) {
-        
-        self.name = name
-        self.footprint = Footprint(coordinate: Coordinate.zero, rotation: .north)
     }
 }
 

@@ -6,6 +6,8 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
+import Foundation
+
 public struct PropList: Codable {
     
     public let name: String
@@ -97,13 +99,13 @@ extension PropList: TreeParent {
     
     public var totalChildren: Int { return prototypes.count }
     
-    public func child(at index: Int) -> PropPrototype? {
+    public func child(at index: Int) -> TreeChild? {
         
         return prototypes[index]
     }
 
-    public func index(of child: PropPrototype) -> Int? {
-    
+    public func index(of child: TreeChild) -> Int? {
+        
         return prototypes.index(of: child)
     }
 }

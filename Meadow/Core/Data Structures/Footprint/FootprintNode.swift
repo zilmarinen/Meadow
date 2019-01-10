@@ -10,5 +10,37 @@ public struct FootprintNode: Codable, Hashable {
     
     public let coordinate: Coordinate
     
-    public let edges: Set<GridEdge>
+    public let edges: [GridEdge]
+    
+    init(coordinate: Coordinate, edges: [GridEdge]) {
+        
+        self.coordinate = coordinate
+        self.edges = edges
+    }
+}
+
+extension FootprintNode {
+    
+    func intersects(node: FootprintNode) -> Bool {
+        
+        if coordinate == node.coordinate {
+            
+            for i in 0..<edges.count {
+                
+                let lhs = edges[i]
+                
+                for j in 0..<node.edges.count {
+                    
+                    let rhs = node.edges[j]
+                    
+                    if lhs == rhs {
+                        
+                        return true
+                    }
+                }
+            }
+        }
+        
+        return false
+    }
 }

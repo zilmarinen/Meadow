@@ -94,3 +94,15 @@ extension GridEdge {
         return Coordinate.GridEdgeExtents[edge.rawValue]
     }
 }
+
+extension GridEdge {
+    
+    public static func rotate(edge: GridEdge, rotation: GridEdge) -> GridEdge {
+        
+        var value = (edge.rawValue + rotation.rawValue)
+        
+        value = (value > 3 ? (value - 4) : value)
+        
+        return GridEdge(rawValue: value)!
+    }
+}

@@ -9,4 +9,8 @@
 public struct PropIntermediate: Decodable {
     
     let name: String
+    
+    let coordinate: Coordinate
+    
+    let rotation: GridEdge
 }

@@ -165,13 +165,6 @@ extension TerrainNode {
         
         return children.index(of: child)
     }
-    
-    public func child(didBecomeDirty child: SceneGraphChild) {
-        
-        let _ = becomeDirty()
-        
-        observer?.child(didBecomeDirty: child)
-    }
 }
 
 extension TerrainNode {

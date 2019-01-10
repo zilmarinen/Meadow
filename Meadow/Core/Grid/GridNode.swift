@@ -67,6 +67,13 @@ public class GridNode: GridChild, GridMeshProvider, SceneGraphSoilable, Encodabl
         isDirty = false
     }
     
+    open func child(didBecomeDirty child: SceneGraphChild) {
+        
+        let _ = becomeDirty()
+        
+        observer?.child(didBecomeDirty: child)
+    }
+    
     open var mesh: Mesh { return Mesh(faces: []) }
 }
 

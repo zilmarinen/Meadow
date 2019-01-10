@@ -10,23 +10,34 @@ import SceneKit
 
 public class Prop: SCNNode, SceneGraphChild {
     
-    public let coordinate: Coordinate
-    
     public let footprint: Footprint
     
     public let prototype: PropPrototype
     
     var isDirty: Bool = false
     
-    init(prototype: PropPrototype, coordinate: Coordinate) {
+    var colorPalette: ColorPalette? {
+        
+        didSet {
+            
+            if colorPalette != oldValue {
+            
+                becomeDirty()
+            }
+        }
+    }
+    
+    init(prototype: PropPrototype, footprint: Footprint) {
         
         self.prototype = prototype
         
-        self.coordinate = coordinate
-        
-        self.footprint = prototype.footprint
+        self.footprint = footprint
         
         super.init()
+        
+        self.name = prototype.name
+        
+        self.position = SCNVector3(x: MDWFloat(footprint.coordinate.x), y: Axis.Y(y: footprint.coordinate.y), z: MDWFloat(footprint.coordinate.z))
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -49,7 +60,11 @@ extension Prop: SceneGraphSoilable {
         
         if !isDirty { return }
         
-        //
+        guard let model = Model(named: prototype.name), let colorPalette = colorPalette else { return }
+        
+        let mesh = model.mesh(colorPalette: colorPalette)
+        
+        self.geometry = SCNGeometry(mesh: mesh)
         
         isDirty = false
     }
@@ -60,6 +75,8 @@ extension Prop: Encodable {
     enum CodingKeys: CodingKey {
         
         case name
+        case coordinate
+        case rotation
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -67,5 +84,7 @@ extension Prop: Encodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         try container.encode(self.name, forKey: .name)
+        try container.encode(self.footprint.coordinate, forKey: .coordinate)
+        try container.encode(self.footprint.rotation, forKey: .rotation)
     }
 }

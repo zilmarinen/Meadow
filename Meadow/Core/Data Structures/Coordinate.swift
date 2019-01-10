@@ -122,3 +122,20 @@ extension Coordinate {
         return .detached
     }
 }
+
+extension Coordinate {
+    
+    static func rotate(coordinate: Coordinate, rotation: GridEdge) -> Coordinate {
+        
+        switch rotation {
+            
+        case .east: return Coordinate(x: (coordinate.z * -1), y: coordinate.y, z: coordinate.x)
+            
+        case .south: return Coordinate(x: (coordinate.x * -1), y: coordinate.y, z: (coordinate.z * -1))
+            
+        case .west: return Coordinate(x: coordinate.z, y: coordinate.y, z: (coordinate.x * -1))
+            
+        default: return Coordinate(x: coordinate.x, y: coordinate.y, z: coordinate.z)
+        }
+    }
+}

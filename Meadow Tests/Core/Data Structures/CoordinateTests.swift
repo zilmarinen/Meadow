@@ -181,4 +181,33 @@ class CoordinateTests: XCTestCase {
         
         waitForExpectations(timeout: 1)
     }
+    
+    func testGridEdgeRotation() {
+        
+        let expect = expectation(description: "Rotating a coordinate correctly returns the rotated coordinate")
+        
+        XCTAssertEqual(Coordinate.rotate(coordinate: Coordinate(x: 0, y: 0, z: 2), rotation: .north), Coordinate(x: 0, y: 0, z: 2))
+        XCTAssertEqual(Coordinate.rotate(coordinate: Coordinate(x: 0, y: 0, z: 2), rotation: .east), Coordinate(x: -2, y: 0, z: 0))
+        XCTAssertEqual(Coordinate.rotate(coordinate: Coordinate(x: 0, y: 0, z: 2), rotation: .south), Coordinate(x: 0, y: 0, z: -2))
+        XCTAssertEqual(Coordinate.rotate(coordinate: Coordinate(x: 0, y: 0, z: 2), rotation: .west), Coordinate(x: 2, y: 0, z: 0))
+        
+        XCTAssertEqual(Coordinate.rotate(coordinate: Coordinate(x: -3, y: 0, z: 1), rotation: .north), Coordinate(x: -3, y: 0, z: 1))
+        XCTAssertEqual(Coordinate.rotate(coordinate: Coordinate(x: -3, y: 0, z: 1), rotation: .east), Coordinate(x: -1, y: 0, z: -3))
+        XCTAssertEqual(Coordinate.rotate(coordinate: Coordinate(x: -3, y: 0, z: 1), rotation: .south), Coordinate(x: 3, y: 0, z: -1))
+        XCTAssertEqual(Coordinate.rotate(coordinate: Coordinate(x: -3, y: 0, z: 1), rotation: .west), Coordinate(x: 1, y: 0, z: 3))
+        
+        XCTAssertEqual(Coordinate.rotate(coordinate: Coordinate(x: -2, y: 0, z: -3), rotation: .north), Coordinate(x: -2, y: 0, z: -3))
+        XCTAssertEqual(Coordinate.rotate(coordinate: Coordinate(x: -2, y: 0, z: -3), rotation: .east), Coordinate(x: 3, y: 0, z: -2))
+        XCTAssertEqual(Coordinate.rotate(coordinate: Coordinate(x: -2, y: 0, z: -3), rotation: .south), Coordinate(x: 2, y: 0, z: 3))
+        XCTAssertEqual(Coordinate.rotate(coordinate: Coordinate(x: -2, y: 0, z: -3), rotation: .west), Coordinate(x: -3, y: 0, z: 2))
+        
+        XCTAssertEqual(Coordinate.rotate(coordinate: Coordinate(x: 2, y: 0, z: -1), rotation: .north), Coordinate(x: 2, y: 0, z: -1))
+        XCTAssertEqual(Coordinate.rotate(coordinate: Coordinate(x: 2, y: 0, z: -1), rotation: .east), Coordinate(x: 1, y: 0, z: 2))
+        XCTAssertEqual(Coordinate.rotate(coordinate: Coordinate(x: 2, y: 0, z: -1), rotation: .south), Coordinate(x: -2, y: 0, z: 1))
+        XCTAssertEqual(Coordinate.rotate(coordinate: Coordinate(x: 2, y: 0, z: -1), rotation: .west), Coordinate(x: -1, y: 0, z: -2))
+        
+        expect.fulfill()
+        
+        waitForExpectations(timeout: 1)
+    }
 }

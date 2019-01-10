@@ -6,6 +6,8 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
+import Foundation
+
 public class PropsMaster {
     
     public static let shared = PropsMaster()
@@ -47,12 +49,12 @@ extension PropsMaster {
         
         public var totalChildren: Int { return lists.count }
         
-        public func child(at index: Int) -> PropList? {
+        public func child(at index: Int) -> TreeChild? {
             
             return lists[index]
         }
         
-        public func index(of child: PropList) -> Int? {
+        public func index(of child: TreeChild) -> Int? {
             
             return lists.index(of: child)
         }
@@ -76,12 +78,12 @@ extension PropsMaster {
         
         public var totalChildren: Int { return prototypes.count }
         
-        public func child(at index: Int) -> PropPrototype? {
+        public func child(at index: Int) -> TreeChild? {
             
             return prototypes[index]
         }
         
-        public func index(of child: PropPrototype) -> Int? {
+        public func index(of child: TreeChild) -> Int? {
             
             return prototypes.index(of: child)
         }

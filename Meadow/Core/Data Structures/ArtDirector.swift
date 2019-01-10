@@ -57,12 +57,12 @@ extension ArtDirector {
         
         public var totalChildren: Int { return palettes.count }
         
-        public func child(at index: Int) -> ColorPalette? {
+        public func child(at index: Int) -> TreeChild? {
             
             return palettes[index]
         }
         
-        public func index(of child: ColorPalette) -> Int? {
+        public func index(of child: TreeChild) -> Int? {
             
             return palettes.index(of: child)
         }
@@ -86,12 +86,12 @@ extension ArtDirector {
         
         public var totalChildren: Int { return colors.count }
         
-        public func child(at index: Int) -> Color? {
+        public func child(at index: Int) -> TreeChild? {
             
             return colors[index]
         }
         
-        public func index(of child: Color) -> Int? {
+        public func index(of child: TreeChild) -> Int? {
             
             return colors.index(of: child)
         }

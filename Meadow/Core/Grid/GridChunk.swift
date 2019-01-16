@@ -90,16 +90,7 @@ extension GridChunk: GridMeshProvider {
 
 extension GridChunk {
     
-    public var totalChildren: Int { return children.count }
-    
-    public func child(at index: Int) -> SceneGraphChild? {
-        
-        return children[index]
-    }
-    
-    public func index(of child: SceneGraphChild) -> Int? {
-        
-        guard let child = child as? ChildType else { return nil }
+    public func index(of child: ChildType) -> Int? {
         
         return children.index(of: child)
     }
@@ -124,6 +115,8 @@ extension GridChunk {
         let tile = Tile(observer: self, volume: volume)
         
         children.append(tile)
+        
+        becomeDirty()
         
         return tile
     }

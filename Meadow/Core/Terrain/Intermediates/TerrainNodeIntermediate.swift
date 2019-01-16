@@ -8,7 +8,7 @@
 
 public class TerrainNodeIntermediate: GridNodeIntermediate {
     
-    let children: [TerrainLayerIntermediate]
+    let children: [TerrainNodeEdgeIntermediate]
     
     enum CodingKeys: CodingKey {
         
@@ -19,7 +19,7 @@ public class TerrainNodeIntermediate: GridNodeIntermediate {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        children = try container.decode([TerrainLayerIntermediate].self, forKey: .children)
+        children = try container.decode([TerrainNodeEdgeIntermediate].self, forKey: .children)
         
         try super.init(from: decoder)
     }

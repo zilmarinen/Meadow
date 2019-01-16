@@ -88,7 +88,7 @@ extension PropChunk: SceneGraphIntermediate {
     
     public typealias IntermediateType = PropIntermediate
     
-    func load(intermediates: [PropIntermediate]) {
+    func load(intermediates: [IntermediateType]) {
         
         intermediates.forEach { intermediate in
             

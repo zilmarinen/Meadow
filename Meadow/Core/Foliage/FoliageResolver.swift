@@ -42,14 +42,14 @@ extension FoliageResolver {
 
 extension FoliageResolver {
     
-    func clean(node: FoliageNode, terrainNode: TerrainNode<TerrainLayer>?) {
+    func clean(node: FoliageNode, terrainNode: TerrainNode<TerrainNodeEdge>?) {
         
-        if let terrainNode = terrainNode, let upperPolytope = terrainNode.topLayer?.upperPolytope {
-            
-            node.basePolytope = upperPolytope
-            
-            return
-        }
+//        if let terrainNode = terrainNode, let upperPolytope = terrainNode.topLayer?.upperPolytope {
+//
+//            node.basePolytope = upperPolytope
+//
+//            return
+//        }
         
         let _ = foliage.remove(node: node)
     }

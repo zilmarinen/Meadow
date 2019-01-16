@@ -83,7 +83,9 @@ extension Scene: SCNSceneRendererDelegate {
 
 extension Scene: SceneGraphIntermediate {
     
-    public func load(intermediates: [SceneIntermediate]) {
+    public typealias IntermediateType = SceneIntermediate
+    
+    public func load(intermediates: [IntermediateType]) {
         
         guard let intermediate = intermediates.first else { return }
         

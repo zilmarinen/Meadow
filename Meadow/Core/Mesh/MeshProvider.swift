@@ -10,10 +10,6 @@ import SceneKit
 
 public struct MeshProvider {
     
-}
-
-extension MeshProvider {
-    
     public static func surface(corners: (GridCorner, GridCorner), polytope: Polytope, color: SCNVector4) -> MeshFace {
         
         let (c0, c1) = (corners.0, corners.1)

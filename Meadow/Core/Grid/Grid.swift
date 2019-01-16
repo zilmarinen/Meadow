@@ -57,16 +57,7 @@ extension Grid: SceneGraphUpdatable {
 
 extension Grid {
     
-    public var totalChildren: Int { return childNodes.count }
-    
-    public func child(at index: Int) -> SceneGraphChild? {
-        
-        return childNodes[index] as? SceneGraphChild
-    }
-    
-    public func index(of child: SceneGraphChild) -> Int? {
-        
-        guard let child = child as? ChildType else { return nil }
+    public func index(of child: ChildType) -> Int? {
         
         return childNodes.index(of: child)
     }
@@ -104,8 +95,6 @@ extension Grid {
             addChildNode(chunk)
             
             chunk.categoryBitMask = categoryBitMask
-            
-            becomeDirty()
         }
         
         return node

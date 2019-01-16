@@ -28,23 +28,23 @@ extension TerrainResolver {
     
     func resolve() {
         
-        while volumes.count > 0 {
-            
-            let volume = volumes.removeFirst()
-            
-            if let node = terrain.find(node: volume.coordinate), let layer = node.topLayer {
-                
-                clean(node: node, layer: layer)
-                
-                update(node: node, layer: layer)
-            }
-        }
+//        while volumes.count > 0 {
+//            
+//            let volume = volumes.removeFirst()
+//            
+//            if let node = terrain.find(node: volume.coordinate), let layer = node.topLayer {
+//                
+//                clean(node: node, layer: layer)
+//                
+//                update(node: node, layer: layer)
+//            }
+//        }
     }
 }
 
 extension TerrainResolver {
     
-    func clean(node: TerrainNode<TerrainLayer>, layer: TerrainLayer) {
+    func clean(node: TerrainNode<TerrainNodeEdge>, layer: TerrainEdgeLayer) {
         
         var staleIntersections: [Polyhedron] = []
         
@@ -82,7 +82,7 @@ extension TerrainResolver {
         }
     }
     
-    func update(node: TerrainNode<TerrainLayer>, layer: TerrainLayer) {
+    func update(node: TerrainNode<TerrainNodeEdge>, layer: TerrainEdgeLayer) {
         
         if let areaTile = areas.find(tile: node.volume.coordinate) {
             

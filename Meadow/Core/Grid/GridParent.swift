@@ -8,9 +8,27 @@
 
 import Foundation
 
-public protocol GridParent: SceneGraphParent, GridObserver {
+public protocol GridParent: GridObserver {
     
     associatedtype ChildType
     
     var children: [ChildType] { get }
+    
+    var totalChildren: Int { get }
+
+    func child(at index: Int) -> ChildType?
+    func index(of child: ChildType) -> Int?
+    
+    //func child(didBecomeDirty child: ChildType)
 }
+
+extension GridParent {
+    
+    public var totalChildren: Int { return children.count }
+    
+    public func child(at index: Int) -> ChildType? {
+        
+        return children[index]
+    }
+}
+

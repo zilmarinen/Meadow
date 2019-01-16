@@ -8,8 +8,8 @@
 
 public protocol SceneGraphParent: class {
     
-    var totalChildren: Int { get }
-    
-    func child(at index: Int) -> SceneGraphChild?
-    func index(of child: SceneGraphChild) -> Int?
+//    var totalChildren: Int { get }
+//    
+//    func child(at index: Int) -> SceneGraphChild?
+//    func index(of child: SceneGraphChild) -> Int?
 }

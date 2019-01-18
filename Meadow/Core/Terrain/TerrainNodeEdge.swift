@@ -6,13 +6,13 @@
 //  Copyright © 2019 Script Orchard. All rights reserved.
 //
 
-public class TerrainNodeEdge: GridChild, GridParent {
+public class TerrainNodeEdge: SceneGraphChild, SceneGraphObserver, SceneGraphParent {
     
     public typealias ChildType = TerrainEdgeLayer
     
+    public var observer: SceneGraphObserver?
+    
     public var children: [ChildType] = []
- 
-    public var observer: GridObserver?
     
     public var name: String? { return "Edge" }
     
@@ -33,7 +33,7 @@ public class TerrainNodeEdge: GridChild, GridParent {
     
     var isDirty: Bool = false
     
-    public required init(observer: GridObserver, volume: Volume, edge: GridEdge) {
+    public required init(observer: SceneGraphObserver, volume: Volume, edge: GridEdge) {
         
         self.observer = observer
         
@@ -99,6 +99,10 @@ extension TerrainNodeEdge {
         
         let edgeLayer = TerrainEdgeLayer(observer: self, coordinate: self.volume.coordinate, edge: self.edge)
         
+        topLayer?.upper = edgeLayer
+        
+        edgeLayer.lower = topLayer
+        
         children.append(edgeLayer)
         
         becomeDirty()
@@ -110,15 +114,15 @@ extension TerrainNodeEdge {
         
         if let index = index(of: layer) {
             
-            let upper = layer.upperLayer
-            let lower = layer.lowerLayer
+            let upper = layer.upper
+            let lower = layer.lower
             
-            upper?.lowerLayer = lower
+            upper?.lower = lower
             
-            lower?.upperLayer = upper
+            lower?.upper = upper
             
-            layer.upperLayer = nil
-            layer.lowerLayer = nil
+            layer.upper = nil
+            layer.lower = nil
             
             children.remove(at: index)
             
@@ -130,6 +134,14 @@ extension TerrainNodeEdge {
         }
         
         return false
+    }
+}
+
+extension TerrainNodeEdge {
+    
+    var topLayer: TerrainEdgeLayer? {
+        
+        return children.last
     }
 }
 

@@ -8,7 +8,7 @@
 
 import SceneKit
 
-public class TerrainNode<NodeEdge: TerrainNodeEdge>: GridNode, GridParent {
+public class TerrainNode<NodeEdge: TerrainNodeEdge>: GridNode, SceneGraphParent {
     
     public typealias ChildType = NodeEdge
     
@@ -47,19 +47,6 @@ public class TerrainNode<NodeEdge: TerrainNodeEdge>: GridNode, GridParent {
         //
         
         return Mesh(meshes: [])
-    }
-}
-
-extension TerrainNode: SceneGraphIntermediate {
-    
-    public typealias IntermediateType = TerrainNodeEdgeIntermediate
-    
-    public func load(intermediates: [IntermediateType]) {
-        
-        intermediates.forEach { intermediate in
-            
-            //
-        }
     }
 }
 

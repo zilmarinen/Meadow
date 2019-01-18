@@ -6,9 +6,9 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-public class GridNode: GridChild, GridMeshProvider, SceneGraphSoilable, Encodable {
+public class GridNode: Encodable, GridMeshProvider, SceneGraphChild, SceneGraphObserver, SceneGraphSoilable {
     
-    public var observer: GridObserver?
+    public var observer: SceneGraphObserver?
     
     public var name: String? { return "Node" }
     
@@ -43,7 +43,7 @@ public class GridNode: GridChild, GridMeshProvider, SceneGraphSoilable, Encodabl
         try container.encode(self.volume, forKey: .volume)
     }
     
-    public required init(observer: GridObserver, volume: Volume) {
+    public required init(observer: SceneGraphObserver, volume: Volume) {
         
         self.observer = observer
         

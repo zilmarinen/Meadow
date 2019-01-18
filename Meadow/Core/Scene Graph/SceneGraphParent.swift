@@ -6,10 +6,17 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-public protocol SceneGraphParent: class {
+public protocol SceneGraphParent: class, TreeParent {
     
-//    var totalChildren: Int { get }
-//    
-//    func child(at index: Int) -> SceneGraphChild?
-//    func index(of child: SceneGraphChild) -> Int?
+    var children: [ChildType] { get }
+}
+
+extension SceneGraphParent {
+    
+    public var totalChildren: Int { return children.count }
+    
+    public func child(at index: Int) -> ChildType? {
+        
+        return children[index]
+    }
 }

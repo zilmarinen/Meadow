@@ -8,10 +8,10 @@
 
 public protocol TreeParent {
     
-    associatedtype TreeChild
+    associatedtype ChildType
     
     var totalChildren: Int { get }
     
-    func child(at index: Int) -> TreeChild?
-    func index(of child: TreeChild) -> Int?
+    func child(at index: Int) -> ChildType?
+    func index(of child: ChildType) -> Int?
 }

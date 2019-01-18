@@ -6,11 +6,11 @@
 //  Copyright © 2019 Script Orchard. All rights reserved.
 //
 
-public class TerrainEdgeLayer: GridChild {
+public class TerrainEdgeLayer: SceneGraphChild {
     
-    public var observer: GridObserver?
+    public var observer: SceneGraphObserver?
     
-    public var name: String? { return edge.description }
+    public var name: String? { return apex.edge.description }
     
     public var isHidden: Bool = false {
         
@@ -28,22 +28,41 @@ public class TerrainEdgeLayer: GridChild {
         return polyhedron.volume
     }
     
-    public let coordinate: Coordinate
-    
-    public let edge: GridEdge
-    
     var isDirty: Bool = false
     
-    var upperLayer: TerrainEdgeLayer?
-    var lowerLayer: TerrainEdgeLayer?
+    public let coordinate: Coordinate
     
-    public required init(observer: GridObserver, coordinate: Coordinate, edge: GridEdge) {
+    let apex: TerrainEdgeLayerApex
+    
+    var upper: TerrainEdgeLayer? {
+        
+        didSet {
+            
+            if upper != oldValue {
+                
+                becomeDirty()
+            }
+        }
+    }
+    
+    var lower: TerrainEdgeLayer? {
+        
+        didSet {
+            
+            if lower != oldValue {
+                
+                becomeDirty()
+            }
+        }
+    }
+    
+    public required init(observer: SceneGraphObserver, coordinate: Coordinate, edge: GridEdge) {
         
         self.observer = observer
         
         self.coordinate = coordinate
         
-        self.edge = edge
+        self.apex = TerrainEdgeLayerApex(edge: edge)
     }
 }
 
@@ -99,7 +118,7 @@ extension TerrainEdgeLayer: Encodable {
     enum CodingKeys: CodingKey {
         
         case coordinate
-        case edge
+        case apex
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -107,6 +126,6 @@ extension TerrainEdgeLayer: Encodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         try container.encode(self.coordinate, forKey: .coordinate)
-        try container.encode(self.edge, forKey: .edge)
+        try container.encode(self.apex, forKey: .apex)
     }
 }

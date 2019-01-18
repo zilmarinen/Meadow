@@ -8,15 +8,17 @@
 
 import SceneKit
 
-public class Props: SCNNode, SceneGraphChild, SceneGraphParent, GridObserver {
+public class Props: SCNNode, SceneGraphChild, SceneGraphObserver, SceneGraphParent {
     
     public typealias ChildType = PropChunk
+    
+    public var observer: SceneGraphObserver?
     
     public var children: [ChildType] { return childNodes as! [ChildType] }
     
     var isDirty: Bool = false
     
-    var observer: GridObserver?
+    public var volume: Volume { return Volume(coordinate: Coordinate.zero, size: Size.one) }
 }
 
 extension Props: SceneGraphSoilable {
@@ -44,16 +46,7 @@ extension Props: SceneGraphSoilable {
 
 extension Props {
     
-    public var totalChildren: Int { return childNodes.count }
-    
-    public func child(at index: Int) -> SceneGraphChild? {
-        
-        return childNodes[index] as? SceneGraphChild
-    }
-    
-    public func index(of child: SceneGraphChild) -> Int? {
-        
-        guard let child = child as? SCNNode else { return nil }
+    public func index(of child: PropChunk) -> Int? {
         
         return childNodes.index(of: child)
     }
@@ -147,9 +140,9 @@ extension Props {
             
             chunk.observer = nil
             
-            while chunk.totalChildren > 0 {
+            while let prop = chunk.child(at: 0) {
                 
-                let _ = chunk.remove(prop: chunk.child(at: 0) as! Prop)
+                let _ = chunk.remove(prop: prop)
             }
             
             becomeDirty()

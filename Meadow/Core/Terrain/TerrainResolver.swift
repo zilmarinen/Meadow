@@ -88,7 +88,7 @@ extension TerrainResolver {
             
             for index in 0..<areaTile.totalChildren {
                 
-                if let areaNode = areaTile.child(at: index) as? AreaNode, layer.upperPolytope.elevation(referencing: areaNode.polyhedron.lowerPolytope) == .above {
+                if let areaNode = areaTile.child(at: index), layer.upperPolytope.elevation(referencing: areaNode.polyhedron.lowerPolytope) == .above {
                     
                     if node.find(intersection: areaNode.polyhedron) == nil {
                      
@@ -102,7 +102,7 @@ extension TerrainResolver {
             
             for index in 0..<footpathTile.totalChildren {
                 
-                if let footpathNode = footpathTile.child(at: index) as? FootpathNode, layer.upperPolytope.elevation(referencing: footpathNode.polyhedron.lowerPolytope) == .above {
+                if let footpathNode = footpathTile.child(at: index), layer.upperPolytope.elevation(referencing: footpathNode.polyhedron.lowerPolytope) == .above {
                     
                     if node.find(intersection: footpathNode.polyhedron) == nil {
                         

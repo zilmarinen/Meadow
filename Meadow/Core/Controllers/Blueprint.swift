@@ -10,21 +10,13 @@ import SceneKit
 
 public class Blueprint: SCNNode, SceneGraphChild {
     
+    public var observer: SceneGraphObserver?
+    
+    public var volume: Volume { return Volume(coordinate: Coordinate.zero, size: Size.one) }
+    
     var isDirty: Bool = false
     
     var meshes: [Mesh] = []
-    
-    public override init() {
-        
-        super.init()
-        
-        self.name = "Blueprint"
-    }
-    
-    public required init?(coder aDecoder: NSCoder) {
-        
-        fatalError("init(coder:) has not been implemented")
-    }
 }
 
 extension Blueprint: SceneGraphUpdatable {

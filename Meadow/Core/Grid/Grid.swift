@@ -1,4 +1,4 @@
- //
+//
 //  Grid.swift
 //  Meadow
 //
@@ -8,15 +8,20 @@
 
 import SceneKit
 
-public class Grid<Chunk: GridChunk<Tile, Node>, Tile: GridTile<Node>, Node: GridNode>: SCNNode, SceneGraphChild, GridParent {
+public class Grid<Chunk: GridChunk<Tile, Node>, Tile: GridTile<Node>, Node: GridNode>: SCNNode, SceneGraphChild, SceneGraphObserver, SceneGraphParent {
     
     public typealias ChildType = Chunk
+    
+    public var observer: SceneGraphObserver?
     
     public var children: [ChildType] { return childNodes as! [ChildType] }
     
     var isDirty: Bool = false
     
-    var observer: GridObserver?
+    public var volume: Volume {
+        
+        return Volume(coordinate: Coordinate.zero, size: Size.one)
+    }
 }
 
 extension Grid: SceneGraphSoilable {
@@ -26,6 +31,8 @@ extension Grid: SceneGraphSoilable {
         if !isDirty {
             
             isDirty = true
+            
+            observer?.child(didBecomeDirty: self)
         }
     }
     
@@ -136,9 +143,9 @@ extension Grid {
             
             chunk.observer = nil
             
-            while chunk.totalChildren > 0 {
+            while let tile = chunk.child(at: 0) {
                 
-                let _ = chunk.remove(tile: chunk.child(at: 0) as! Tile)
+                let _ = chunk.remove(tile: tile)
             }
             
             becomeDirty()
@@ -155,9 +162,9 @@ extension Grid {
             
             if chunk.remove(tile: tile) {
                 
-                while tile.totalChildren > 0 {
+                while let node = tile.child(at: 0) {
                     
-                    let _ = tile.remove(node: tile.child(at: 0) as! Node)
+                    let _ = tile.remove(node: node)
                 }
                 
                 if chunk.totalChildren == 0 {

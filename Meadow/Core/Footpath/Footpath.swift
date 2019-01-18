@@ -43,7 +43,7 @@ extension Footpath {
             
                 for index in 0..<tile.totalChildren {
                     
-                    if let neighbour = tile.child(at: index) as? FootpathNode, (neighbour.volume.coordinate.y >= coordinate.y - 1 && neighbour.volume.coordinate.y <= coordinate.y + 1) {
+                    if let neighbour = tile.child(at: index), (neighbour.volume.coordinate.y >= coordinate.y - 1 && neighbour.volume.coordinate.y <= coordinate.y + 1) {
                         
                         node.add(neighbour: neighbour, edge: edge)
                     }

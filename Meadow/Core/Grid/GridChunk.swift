@@ -8,19 +8,19 @@
 
 import SceneKit
 
-public class GridChunk<Tile: GridTile<Node>, Node: GridNode>: SCNNode, GridChild, GridParent {
+public class GridChunk<Tile: GridTile<Node>, Node: GridNode>: SCNNode, SceneGraphChild, SceneGraphObserver, SceneGraphParent {
     
     public typealias ChildType = Tile
     
-    public var observer: GridObserver?
+    public var observer: SceneGraphObserver?
     
     public var children: [ChildType] = []
     
-    public let volume: Volume
-    
     var isDirty: Bool = false
     
-    public required init(observer: GridObserver, volume: Volume) {
+    public let volume: Volume
+    
+    public required init(observer: SceneGraphObserver, volume: Volume) {
         
         self.observer = observer
         
@@ -44,6 +44,8 @@ extension GridChunk: SceneGraphSoilable {
         if !isDirty {
             
             isDirty = true
+            
+            observer?.child(didBecomeDirty: self)
         }
     }
     

@@ -8,11 +8,11 @@
 
 import Foundation
 
-public class GridTile<Node: GridNode>: GridChild, GridParent {
+public class GridTile<Node: GridNode>: SceneGraphChild, SceneGraphObserver, SceneGraphParent {
     
     public typealias ChildType = Node
     
-    public var observer: GridObserver?
+    public var observer: SceneGraphObserver?
     
     public var children: [ChildType] = []
     
@@ -33,7 +33,7 @@ public class GridTile<Node: GridNode>: GridChild, GridParent {
     
     var isDirty: Bool = false
     
-    public required init(observer: GridObserver, volume: Volume) {
+    public required init(observer: SceneGraphObserver, volume: Volume) {
         
         self.observer = observer
         

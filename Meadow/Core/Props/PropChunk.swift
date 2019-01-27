@@ -69,7 +69,7 @@ extension PropChunk {
     
     public func child(didBecomeDirty child: SceneGraphChild) {
         
-        let _ = becomeDirty()
+        becomeDirty()
         
         observer?.child(didBecomeDirty: child)
     }
@@ -79,7 +79,7 @@ extension PropChunk {
     
     public func add(prototype: PropPrototype, footprint: Footprint) -> Prop? {
         
-        if let _ = find(prop: footprint) {
+        if find(prop: footprint) != nil {
         
             return nil
         }
@@ -111,9 +111,10 @@ extension PropChunk {
         }
     }
     
+    @discardableResult
     public func remove(prop: Prop) -> Bool {
         
-        if let _ = index(of: prop) {
+        if index(of: prop) != nil {
             
             prop.removeFromParentNode()
             

@@ -41,6 +41,35 @@ public class GridTile<Node: GridNode>: SceneGraphChild, SceneGraphObserver, Scen
     }
 }
 
+extension GridTile: Encodable {
+    
+    enum CodingKeys: CodingKey {
+        
+        case name
+        case volume
+        case children
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(self.name, forKey: .name)
+        try container.encode(self.volume, forKey: .volume)
+        try container.encode(self.children, forKey: .children)
+    }
+}
+
+extension GridTile: Hashable {
+    
+    public var hashValue: Int { return volume.hashValue }
+    
+    public static func == (lhs: GridTile, rhs: GridTile) -> Bool {
+        
+        return lhs.volume == rhs.volume
+    }
+}
+
 extension GridTile: SceneGraphSoilable {
     
     public func becomeDirty() {
@@ -104,7 +133,7 @@ extension GridTile {
     
     public func child(didBecomeDirty child: SceneGraphChild) {
         
-        let _ = becomeDirty()
+        becomeDirty()
         
         observer?.child(didBecomeDirty: child)
     }
@@ -114,7 +143,7 @@ extension GridTile {
     
     func add(node volume: Volume) -> Node? {
         
-        if let _ = find(node: volume.coordinate) {
+        if find(node: volume.coordinate) != nil {
             
             return nil
         }
@@ -136,6 +165,7 @@ extension GridTile {
         }
     }
     
+    @discardableResult
     func remove(node: Node) -> Bool {
         
         if let index = index(of: node) {
@@ -150,35 +180,6 @@ extension GridTile {
         }
         
         return false
-    }
-}
-
-extension GridTile: Hashable {
-    
-    public var hashValue: Int { return volume.hashValue }
-    
-    public static func == (lhs: GridTile, rhs: GridTile) -> Bool {
-        
-        return lhs.volume == rhs.volume
-    }
-}
-
-extension GridTile: Encodable {
-    
-    enum CodingKeys: CodingKey {
-        
-        case name
-        case volume
-        case children
-    }
-    
-    public func encode(to encoder: Encoder) throws {
-        
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        
-        try container.encode(self.name, forKey: .name)
-        try container.encode(self.volume, forKey: .volume)
-        try container.encode(self.children, forKey: .children)
     }
 }
 

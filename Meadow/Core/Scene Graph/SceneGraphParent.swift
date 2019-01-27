@@ -17,6 +17,8 @@ extension SceneGraphParent {
     
     public func child(at index: Int) -> ChildType? {
         
+        guard !children.isEmpty else { return nil }
+        
         return children[index]
     }
 }

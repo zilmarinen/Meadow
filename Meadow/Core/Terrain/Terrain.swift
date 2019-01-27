@@ -60,4 +60,13 @@ extension Terrain {
         
         return node
     }
+    
+    func remove(layer: TerrainEdgeLayer) -> Bool {
+        
+        guard let node = find(node: layer.coordinate) else { return false }
+        
+        guard let edge = node.find(edge: layer.edge) else { return false }
+        
+        return edge.remove(layer: layer)
+    }
 }

@@ -53,7 +53,7 @@ extension Props {
     
     public func child(didBecomeDirty child: SceneGraphChild) {
         
-        let _ = becomeDirty()
+        becomeDirty()
         
         observer?.child(didBecomeDirty: child)
     }
@@ -83,7 +83,7 @@ extension Props {
         
         let footprint = Footprint(coordinate: coordinate, rotation: rotation, nodes: prototype.footprint.nodes)
         
-        if let _ = find(prop: footprint) {
+        if find(prop: footprint) != nil {
             
             return nil
         }
@@ -132,9 +132,10 @@ extension Props {
         return nil
     }
     
+    @discardableResult
     public func remove(chunk: ChildType) -> Bool {
         
-        if let _ = index(of: chunk) {
+        if index(of: chunk) != nil {
             
             chunk.removeFromParentNode()
             
@@ -142,7 +143,7 @@ extension Props {
             
             while let prop = chunk.child(at: 0) {
                 
-                let _ = chunk.remove(prop: prop)
+                chunk.remove(prop: prop)
             }
             
             becomeDirty()
@@ -153,6 +154,7 @@ extension Props {
         return false
     }
     
+    @discardableResult
     public func remove(prop: Prop) -> Bool {
         
         if let chunk = find(chunk: prop.footprint.coordinate) {
@@ -161,7 +163,7 @@ extension Props {
                 
                 if chunk.totalChildren == 0 {
                     
-                    let _ = remove(chunk: chunk)
+                    remove(chunk: chunk)
                 }
                 
                 return true

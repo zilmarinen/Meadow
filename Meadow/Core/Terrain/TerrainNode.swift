@@ -62,7 +62,7 @@ extension TerrainNode {
     
     func add(edge: GridEdge) -> NodeEdge? {
         
-        if let _ = find(edge: edge) {
+        if find(edge: edge) != nil {
             
             return nil
         }
@@ -100,6 +100,7 @@ extension TerrainNode {
 
 extension TerrainNode: TerrainNodeIntersectionProvider {
     
+    @discardableResult
     public func add(intersection polyhedron: Polyhedron) -> Bool {
         
         let intersection = intersections.first {
@@ -121,6 +122,7 @@ extension TerrainNode: TerrainNodeIntersectionProvider {
         return false
     }
     
+    @discardableResult
     public func remove(intersection polyhedron: Polyhedron) -> Bool {
         
         if let index = intersections.index(of: polyhedron) {

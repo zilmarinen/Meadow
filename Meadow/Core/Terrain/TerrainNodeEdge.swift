@@ -43,6 +43,21 @@ public class TerrainNodeEdge: SceneGraphChild, SceneGraphObserver, SceneGraphPar
     }
 }
 
+extension TerrainNodeEdge: Encodable {
+    
+    enum CodingKeys: CodingKey {
+        
+        case edge
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(self.edge, forKey: .edge)
+    }
+}
+
 extension TerrainNodeEdge: Hashable {
     
     public var hashValue: Int { return volume.hashValue }
@@ -87,7 +102,7 @@ extension TerrainNodeEdge {
     
     public func child(didBecomeDirty child: SceneGraphChild) {
         
-        let _ = becomeDirty()
+        becomeDirty()
         
         observer?.child(didBecomeDirty: child)
     }
@@ -97,17 +112,28 @@ extension TerrainNodeEdge {
     
     func add(layer terrainType: TerrainType) -> TerrainEdgeLayer? {
         
-        let edgeLayer = TerrainEdgeLayer(observer: self, coordinate: self.volume.coordinate, edge: self.edge)
+        if let topLayer = topLayer {
+            
+            guard topLayer.base < World.ceiling else { return nil }
+        }
         
-        topLayer?.upper = edgeLayer
+        let layer = TerrainEdgeLayer(observer: self, coordinate: self.volume.coordinate, edge: self.edge)
         
-        edgeLayer.lower = topLayer
+        topLayer?.upper = layer
         
-        children.append(edgeLayer)
+        layer.lower = topLayer
+        
+        let (corner0, corner1) = GridCorner.corners(edge: layer.edge)
+        
+        layer.set(corner: corner0, height: (layer.lower?.get(corner: corner0) ?? (World.floor + 1)))
+        layer.set(corner: corner1, height: (layer.lower?.get(corner: corner1) ?? (World.floor + 1)))
+        layer.set(center: (layer.lower?.centre ?? (World.floor + 1)))
+        
+        children.append(layer)
         
         becomeDirty()
         
-        return edgeLayer
+        return layer
     }
     
     func remove(layer: TerrainEdgeLayer) -> Bool {
@@ -142,20 +168,5 @@ extension TerrainNodeEdge {
     var topLayer: TerrainEdgeLayer? {
         
         return children.last
-    }
-}
-
-extension TerrainNodeEdge: Encodable {
-    
-    enum CodingKeys: CodingKey {
-        
-        case edge
-    }
-    
-    public func encode(to encoder: Encoder) throws {
-        
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        
-        try container.encode(self.edge, forKey: .edge)
     }
 }

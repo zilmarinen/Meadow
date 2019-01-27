@@ -69,9 +69,9 @@ extension WaterResolver {
 //                        
 //                        neighbour.waterLevel = waterLevel
 //                    }
-//                    else if let _ = terrainNode.find(neighbour: edge)?.node as? TerrainNode<TerrainNodeEdge> {
+//                    else if terrainNode.find(neighbour: edge)?.node as? TerrainNode<TerrainNodeEdge> {
 //                        
-//                        let _ = water.add(node: node.volume.coordinate + GridEdge.extent(edge: edge))
+//                        water.add(node: node.volume.coordinate + GridEdge.extent(edge: edge))
 //                    }
 //                }
 //                
@@ -79,6 +79,6 @@ extension WaterResolver {
 //            }
 //        }
         
-        let _ = water.remove(node: node)
+        water.remove(node: node)
     }
 }

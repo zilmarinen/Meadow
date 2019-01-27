@@ -51,6 +51,6 @@ extension FoliageResolver {
 //            return
 //        }
         
-        let _ = foliage.remove(node: node)
+        foliage.remove(node: node)
     }
 }

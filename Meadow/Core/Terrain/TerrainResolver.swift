@@ -78,7 +78,7 @@ extension TerrainResolver {
         
         staleIntersections.forEach { polyhedron in
             
-            let _ = node.remove(intersection: polyhedron)
+            node.remove(intersection: polyhedron)
         }
     }
     
@@ -92,7 +92,7 @@ extension TerrainResolver {
                     
                     if node.find(intersection: areaNode.polyhedron) == nil {
                      
-                        let _ = node.add(intersection: areaNode.polyhedron)
+                        node.add(intersection: areaNode.polyhedron)
                     }
                 }
             }
@@ -106,7 +106,7 @@ extension TerrainResolver {
                     
                     if node.find(intersection: footpathNode.polyhedron) == nil {
                         
-                        let _ = node.add(intersection: footpathNode.polyhedron)
+                        node.add(intersection: footpathNode.polyhedron)
                     }
                 }
             }

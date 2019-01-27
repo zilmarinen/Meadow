@@ -10,6 +10,10 @@ import SceneKit
 
 public class Prop: SCNNode, SceneGraphChild {
     
+    public var observer: SceneGraphObserver?
+    
+    public var volume: Volume { return Volume(coordinate: Coordinate.zero, size: Size.one) }
+    
     public let footprint: Footprint
     
     public let prototype: PropPrototype
@@ -27,7 +31,9 @@ public class Prop: SCNNode, SceneGraphChild {
         }
     }
     
-    init(prototype: PropPrototype, footprint: Footprint) {
+    init(observer: SceneGraphObserver, prototype: PropPrototype, footprint: Footprint) {
+        
+        self.observer = observer
         
         self.prototype = prototype
         

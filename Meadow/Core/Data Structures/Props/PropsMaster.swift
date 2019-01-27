@@ -43,18 +43,18 @@ extension PropsMaster {
     
     public struct PropLists: TreeParent {
         
-        public typealias TreeChild = PropList
+        public typealias ChildType = PropList
         
-        let lists: [TreeChild]
+        let lists: [ChildType]
         
         public var totalChildren: Int { return lists.count }
         
-        public func child(at index: Int) -> TreeChild? {
+        public func child(at index: Int) -> ChildType? {
             
             return lists[index]
         }
         
-        public func index(of child: TreeChild) -> Int? {
+        public func index(of child: ChildType) -> Int? {
             
             return lists.index(of: child)
         }
@@ -72,18 +72,18 @@ extension PropsMaster {
     
     public struct Props: TreeParent {
         
-        public typealias TreeChild = PropPrototype
+        public typealias ChildType = PropPrototype
         
-        let prototypes: [TreeChild]
+        let prototypes: [ChildType]
         
         public var totalChildren: Int { return prototypes.count }
         
-        public func child(at index: Int) -> TreeChild? {
+        public func child(at index: Int) -> ChildType? {
             
             return prototypes[index]
         }
         
-        public func index(of child: TreeChild) -> Int? {
+        public func index(of child: ChildType) -> Int? {
             
             return prototypes.index(of: child)
         }

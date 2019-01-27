@@ -95,16 +95,16 @@ extension PropList {
 
 extension PropList: TreeParent {
     
-    public typealias TreeChild = PropPrototype
+    public typealias ChildType = PropPrototype
     
     public var totalChildren: Int { return prototypes.count }
     
-    public func child(at index: Int) -> TreeChild? {
+    public func child(at index: Int) -> ChildType? {
         
         return prototypes[index]
     }
 
-    public func index(of child: TreeChild) -> Int? {
+    public func index(of child: ChildType) -> Int? {
         
         return prototypes.index(of: child)
     }

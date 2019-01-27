@@ -10,6 +10,17 @@ import SceneKit
 
 public class Floor: SCNNode, SceneGraphChild, SceneGraphParent {
     
+    public typealias ChildType = SCNNode
+    
+    public var observer: SceneGraphObserver?
+    
+    public var children: [ChildType] { return childNodes }
+    
+    public var volume: Volume {
+        
+        return Volume(coordinate: Coordinate.zero, size: Size.one)
+    }
+    
     public var color: Color? {
         
         didSet {
@@ -48,17 +59,10 @@ public class Floor: SCNNode, SceneGraphChild, SceneGraphParent {
 
 extension Floor {
     
-    public var totalChildren: Int { return childNodes.count }
-    
-    public func child(at index: Int) -> SceneGraphChild? {
+    public func index(of child: SCNNode) -> Int? {
         
-        return childNodes[index] as? SceneGraphChild
+        return children.index(of: child)
     }
     
-    public func index(of child: SceneGraphChild) -> Int? {
-        
-        guard let child = child as? SCNNode else { return nil }
-        
-        return childNodes.index(of: child)
-    }
+    
 }

@@ -8,7 +8,15 @@
 
 import SceneKit
 
-public class Actors: SCNNode, SceneGraphChild, SceneGraphParent {
+public class Actors: SCNNode, SceneGraphChild, SceneGraphObserver, SceneGraphParent {
+    
+    public typealias ChildType = SCNNode
+    
+    public var observer: SceneGraphObserver?
+    
+    public var children: [SCNNode] { return childNodes }
+    
+    public var volume: Volume { return Volume(coordinate: Coordinate.zero, size: Size.one) }
     
     public let hero = Hero()
     
@@ -18,8 +26,10 @@ public class Actors: SCNNode, SceneGraphChild, SceneGraphParent {
         
         super.init()
         
+        hero.observer = self
         hero.name = "Hero"
         
+        npcs.observer = self
         npcs.name = "NPCs"
         
         self.addChildNode(hero)
@@ -34,17 +44,13 @@ public class Actors: SCNNode, SceneGraphChild, SceneGraphParent {
 
 extension Actors {
     
-    public var totalChildren: Int { return childNodes.count }
-    
-    public func child(at index: Int) -> SceneGraphChild? {
-        
-        return childNodes[index] as? SceneGraphChild
-    }
-    
-    public func index(of child: SceneGraphChild) -> Int? {
-        
-        guard let child = child as? SCNNode else { return nil }
+    public func index(of child: SCNNode) -> Int? {
         
         return childNodes.index(of: child)
+    }
+    
+    public func child(didBecomeDirty child: SceneGraphChild) {
+        
+        observer?.child(didBecomeDirty: child)
     }
 }

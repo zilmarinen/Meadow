@@ -8,19 +8,19 @@
 
 import SceneKit
 
-public class GridChunk<Tile: GridTile<Node>, Node: GridNode>: SCNNode, GridChild, GridParent {
+public class GridChunk<Tile: GridTile<Node>, Node: GridNode>: SCNNode, SceneGraphChild, SceneGraphObserver, SceneGraphParent {
     
     public typealias ChildType = Tile
     
-    public var observer: GridObserver?
+    public var observer: SceneGraphObserver?
     
     public var children: [ChildType] = []
     
-    public let volume: Volume
-    
     var isDirty: Bool = false
     
-    public required init(observer: GridObserver, volume: Volume) {
+    public let volume: Volume
+    
+    public required init(observer: SceneGraphObserver, volume: Volume) {
         
         self.observer = observer
         
@@ -37,6 +37,25 @@ public class GridChunk<Tile: GridTile<Node>, Node: GridNode>: SCNNode, GridChild
     }
 }
 
+extension GridChunk: Encodable {
+    
+    enum CodingKeys: CodingKey {
+        
+        case name
+        case volume
+        case children
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(self.name, forKey: .name)
+        try container.encode(self.volume, forKey: .volume)
+        try container.encode(self.children, forKey: .children)
+    }
+}
+
 extension GridChunk: SceneGraphSoilable {
     
     public func becomeDirty() {
@@ -44,6 +63,8 @@ extension GridChunk: SceneGraphSoilable {
         if !isDirty {
             
             isDirty = true
+            
+            observer?.child(didBecomeDirty: self)
         }
     }
     
@@ -90,23 +111,14 @@ extension GridChunk: GridMeshProvider {
 
 extension GridChunk {
     
-    public var totalChildren: Int { return children.count }
-    
-    public func child(at index: Int) -> SceneGraphChild? {
-        
-        return children[index]
-    }
-    
-    public func index(of child: SceneGraphChild) -> Int? {
-        
-        guard let child = child as? ChildType else { return nil }
+    public func index(of child: ChildType) -> Int? {
         
         return children.index(of: child)
     }
     
     public func child(didBecomeDirty child: SceneGraphChild) {
         
-        let _ = becomeDirty()
+        becomeDirty()
         
         observer?.child(didBecomeDirty: child)
     }
@@ -116,7 +128,7 @@ extension GridChunk {
     
     func add(tile volume: Volume) -> Tile? {
         
-        if let _ = find(tile: volume.coordinate) {
+        if find(tile: volume.coordinate) != nil {
             
             return nil
         }
@@ -124,6 +136,8 @@ extension GridChunk {
         let tile = Tile(observer: self, volume: volume)
         
         children.append(tile)
+        
+        becomeDirty()
         
         return tile
     }
@@ -136,6 +150,7 @@ extension GridChunk {
         }
     }
     
+    @discardableResult
     func remove(tile: Tile) -> Bool {
         
         if let index = index(of: tile) {
@@ -150,25 +165,6 @@ extension GridChunk {
         }
         
         return false
-    }
-}
-
-extension GridChunk: Encodable {
-    
-    enum CodingKeys: CodingKey {
-        
-        case name
-        case volume
-        case children
-    }
-    
-    public func encode(to encoder: Encoder) throws {
-        
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        
-        try container.encode(self.name, forKey: .name)
-        try container.encode(self.volume, forKey: .volume)
-        try container.encode(self.children, forKey: .children)
     }
 }
 

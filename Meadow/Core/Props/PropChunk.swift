@@ -8,19 +8,19 @@
 
 import SceneKit
 
-public class PropChunk: SCNNode, SceneGraphChild, SceneGraphParent {
+public class PropChunk: SCNNode, SceneGraphChild, SceneGraphObserver, SceneGraphParent {
     
     public typealias ChildType = Prop
+    
+    public var observer: SceneGraphObserver?
     
     public var children: [ChildType] { return childNodes as! [ChildType] }
     
     var isDirty: Bool = false
     
-    var observer: GridObserver?
+    public let volume: Volume
     
-    let volume: Volume
-    
-    public required init(observer: GridObserver, volume: Volume) {
+    public required init(observer: SceneGraphObserver, volume: Volume) {
         
         self.observer = observer
         
@@ -62,38 +62,16 @@ extension PropChunk: SceneGraphSoilable {
 
 extension PropChunk {
     
-    public var totalChildren: Int { return childNodes.count }
-    
-    public func child(at index: Int) -> SceneGraphChild? {
-        
-        return childNodes[index] as? SceneGraphChild
-    }
-    
-    public func index(of child: SceneGraphChild) -> Int? {
-        
-        guard let child = child as? SCNNode else { return nil }
+    public func index(of child: Prop) -> Int? {
         
         return childNodes.index(of: child)
     }
     
     public func child(didBecomeDirty child: SceneGraphChild) {
         
-        let _ = becomeDirty()
+        becomeDirty()
         
         observer?.child(didBecomeDirty: child)
-    }
-}
-
-extension PropChunk: SceneGraphIntermediate {
-    
-    public typealias IntermediateType = PropIntermediate
-    
-    func load(intermediates: [PropIntermediate]) {
-        
-        intermediates.forEach { intermediate in
-            
-            //
-        }
     }
 }
 
@@ -101,12 +79,12 @@ extension PropChunk {
     
     public func add(prototype: PropPrototype, footprint: Footprint) -> Prop? {
         
-        if let _ = find(prop: footprint) {
+        if find(prop: footprint) != nil {
         
             return nil
         }
         
-        let prop = Prop(prototype: prototype, footprint: footprint)
+        let prop = Prop(observer: self, prototype: prototype, footprint: footprint)
         
         addChildNode(prop)
         
@@ -133,9 +111,10 @@ extension PropChunk {
         }
     }
     
+    @discardableResult
     public func remove(prop: Prop) -> Bool {
         
-        if let _ = index(of: prop) {
+        if index(of: prop) != nil {
             
             prop.removeFromParentNode()
             

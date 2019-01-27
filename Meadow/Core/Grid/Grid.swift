@@ -1,4 +1,4 @@
- //
+//
 //  Grid.swift
 //  Meadow
 //
@@ -8,16 +8,39 @@
 
 import SceneKit
 
-public class Grid<Chunk: GridChunk<Tile, Node>, Tile: GridTile<Node>, Node: GridNode>: SCNNode, SceneGraphChild, GridParent {
+public class Grid<Chunk: GridChunk<Tile, Node>, Tile: GridTile<Node>, Node: GridNode>: SCNNode, SceneGraphChild, SceneGraphObserver, SceneGraphParent {
     
     public typealias ChildType = Chunk
+    
+    public var observer: SceneGraphObserver?
     
     public var children: [ChildType] { return childNodes as! [ChildType] }
     
     var isDirty: Bool = false
     
-    var observer: GridObserver?
+    public var volume: Volume {
+        
+        return Volume(coordinate: Coordinate.zero, size: Size.one)
+    }
 }
+
+extension Grid: Encodable {
+    
+    enum CodingKeys: CodingKey {
+        
+        case name
+        case children
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(self.name, forKey: .name)
+        try container.encode(self.children, forKey: .children)
+    }
+}
+
 
 extension Grid: SceneGraphSoilable {
     
@@ -26,6 +49,8 @@ extension Grid: SceneGraphSoilable {
         if !isDirty {
             
             isDirty = true
+            
+            observer?.child(didBecomeDirty: self)
         }
     }
     
@@ -57,23 +82,14 @@ extension Grid: SceneGraphUpdatable {
 
 extension Grid {
     
-    public var totalChildren: Int { return childNodes.count }
-    
-    public func child(at index: Int) -> SceneGraphChild? {
-        
-        return childNodes[index] as? SceneGraphChild
-    }
-    
-    public func index(of child: SceneGraphChild) -> Int? {
-        
-        guard let child = child as? ChildType else { return nil }
+    public func index(of child: ChildType) -> Int? {
         
         return childNodes.index(of: child)
     }
     
     public func child(didBecomeDirty child: SceneGraphChild) {
         
-        let _ = becomeDirty()
+        becomeDirty()
         
         observer?.child(didBecomeDirty: child)
     }
@@ -88,7 +104,7 @@ extension Grid {
             return nil
         }
         
-        if let _ = find(node: volume.coordinate) {
+        if find(node: volume.coordinate) != nil {
             
             return nil
         }
@@ -104,8 +120,6 @@ extension Grid {
             addChildNode(chunk)
             
             chunk.categoryBitMask = categoryBitMask
-            
-            becomeDirty()
         }
         
         return node
@@ -139,17 +153,18 @@ extension Grid {
         return nil
     }
     
+    @discardableResult
     public func remove(chunk: Chunk) -> Bool {
         
-        if let _ = index(of: chunk) {
+        if index(of: chunk) != nil {
             
             chunk.removeFromParentNode()
             
             chunk.observer = nil
             
-            while chunk.totalChildren > 0 {
+            while let tile = chunk.child(at: 0) {
                 
-                let _ = chunk.remove(tile: chunk.child(at: 0) as! Tile)
+                chunk.remove(tile: tile)
             }
             
             becomeDirty()
@@ -160,20 +175,21 @@ extension Grid {
         return false
     }
     
+    @discardableResult
     public func remove(tile: Tile) -> Bool {
         
         if let chunk = find(chunk: tile.volume.coordinate) {
             
             if chunk.remove(tile: tile) {
                 
-                while tile.totalChildren > 0 {
+                while let node = tile.child(at: 0) {
                     
-                    let _ = tile.remove(node: tile.child(at: 0) as! Node)
+                    tile.remove(node: node)
                 }
                 
                 if chunk.totalChildren == 0 {
                     
-                    let _ = remove(chunk: chunk)
+                    remove(chunk: chunk)
                 }
                 
                 return true
@@ -183,6 +199,7 @@ extension Grid {
         return false
     }
     
+    @discardableResult
     public func remove(node: Node) -> Bool {
         
         if let tile = find(tile: node.volume.coordinate) {
@@ -191,12 +208,12 @@ extension Grid {
                 
                 GridEdge.Edges.forEach { edge in
                  
-                    let _ = node.remove(neighbour: edge)
+                    node.remove(neighbour: edge)
                 }
                 
                 if tile.totalChildren == 0 {
                     
-                    let _ = remove(tile: tile)
+                    remove(tile: tile)
                 }
                 
                 return true
@@ -204,22 +221,5 @@ extension Grid {
         }
         
         return false
-    }
-}
-
-extension Grid: Encodable {
-    
-    enum CodingKeys: CodingKey {
-        
-        case name
-        case children
-    }
-    
-    public func encode(to encoder: Encoder) throws {
-        
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        
-        try container.encode(self.name, forKey: .name)
-        try container.encode(self.children, forKey: .children)
     }
 }

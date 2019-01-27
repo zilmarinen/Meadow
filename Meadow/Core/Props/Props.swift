@@ -8,15 +8,17 @@
 
 import SceneKit
 
-public class Props: SCNNode, SceneGraphChild, SceneGraphParent, GridObserver {
+public class Props: SCNNode, SceneGraphChild, SceneGraphObserver, SceneGraphParent {
     
     public typealias ChildType = PropChunk
+    
+    public var observer: SceneGraphObserver?
     
     public var children: [ChildType] { return childNodes as! [ChildType] }
     
     var isDirty: Bool = false
     
-    var observer: GridObserver?
+    public var volume: Volume { return Volume(coordinate: Coordinate.zero, size: Size.one) }
 }
 
 extension Props: SceneGraphSoilable {
@@ -44,23 +46,14 @@ extension Props: SceneGraphSoilable {
 
 extension Props {
     
-    public var totalChildren: Int { return childNodes.count }
-    
-    public func child(at index: Int) -> SceneGraphChild? {
-        
-        return childNodes[index] as? SceneGraphChild
-    }
-    
-    public func index(of child: SceneGraphChild) -> Int? {
-        
-        guard let child = child as? SCNNode else { return nil }
+    public func index(of child: PropChunk) -> Int? {
         
         return childNodes.index(of: child)
     }
     
     public func child(didBecomeDirty child: SceneGraphChild) {
         
-        let _ = becomeDirty()
+        becomeDirty()
         
         observer?.child(didBecomeDirty: child)
     }
@@ -70,7 +63,7 @@ extension Props: SceneGraphIntermediate {
     
     public typealias IntermediateType = PropIntermediate
     
-    func load(intermediates: [PropIntermediate]) {
+    func load(intermediates: [IntermediateType]) {
         
         intermediates.forEach { intermediate in
             
@@ -90,7 +83,7 @@ extension Props {
         
         let footprint = Footprint(coordinate: coordinate, rotation: rotation, nodes: prototype.footprint.nodes)
         
-        if let _ = find(prop: footprint) {
+        if find(prop: footprint) != nil {
             
             return nil
         }
@@ -139,17 +132,18 @@ extension Props {
         return nil
     }
     
+    @discardableResult
     public func remove(chunk: ChildType) -> Bool {
         
-        if let _ = index(of: chunk) {
+        if index(of: chunk) != nil {
             
             chunk.removeFromParentNode()
             
             chunk.observer = nil
             
-            while chunk.totalChildren > 0 {
+            while let prop = chunk.child(at: 0) {
                 
-                let _ = chunk.remove(prop: chunk.child(at: 0) as! Prop)
+                chunk.remove(prop: prop)
             }
             
             becomeDirty()
@@ -160,6 +154,7 @@ extension Props {
         return false
     }
     
+    @discardableResult
     public func remove(prop: Prop) -> Bool {
         
         if let chunk = find(chunk: prop.footprint.coordinate) {
@@ -168,7 +163,7 @@ extension Props {
                 
                 if chunk.totalChildren == 0 {
                     
-                    let _ = remove(chunk: chunk)
+                    remove(chunk: chunk)
                 }
                 
                 return true

@@ -8,7 +8,15 @@
 
 import SceneKit
 
-public class World: SCNNode, GridObserver, SceneGraphChild, SceneGraphParent {
+public class World: SCNNode, SceneGraphChild, SceneGraphObserver, SceneGraphParent {
+    
+    public typealias ChildType = SCNNode
+    
+    public var children: [SCNNode] { return childNodes }
+    
+    public var observer: SceneGraphObserver?
+    
+    public var volume: Volume { return Volume(coordinate: Coordinate.zero, size: Size.one) }
     
     public let blueprint = Blueprint()
     
@@ -27,8 +35,6 @@ public class World: SCNNode, GridObserver, SceneGraphChild, SceneGraphParent {
     let foliageResolver: FoliageResolver
     let terrainResolver: TerrainResolver
     let waterResolver: WaterResolver
-    
-    public var observer: GridObserver?
     
     public override init() {
         
@@ -96,23 +102,12 @@ public class World: SCNNode, GridObserver, SceneGraphChild, SceneGraphParent {
 
 extension World {
     
-    public var totalChildren: Int { return childNodes.count }
-    
-    public func child(at index: Int) -> SceneGraphChild? {
-        
-        return childNodes[index] as? SceneGraphChild
-    }
-    
-    public func index(of child: SceneGraphChild) -> Int? {
-        
-        guard let child = child as? SCNNode else { return nil }
+    public func index(of child: SCNNode) -> Int? {
         
         return childNodes.index(of: child)
     }
     
     public func child(didBecomeDirty child: SceneGraphChild) {
-        
-        guard let child = child as? GridChild else { return }
         
         switch type(of: child) {
             
@@ -124,7 +119,7 @@ extension World {
             
             terrainResolver.enqueue(volume: child.volume)
             
-        case is TerrainLayer.Type:
+        case is TerrainEdgeLayer.Type:
             
             terrainResolver.enqueue(volume: child.volume)
             waterResolver.enqueue(volume: child.volume)

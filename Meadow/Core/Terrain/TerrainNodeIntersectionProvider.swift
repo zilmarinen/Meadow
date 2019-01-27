@@ -15,7 +15,7 @@ public protocol TerrainNodeIntersectionProvider {
     func intersection(at index: Int) -> Polyhedron?
     func find(intersection polyhedron: Polyhedron) -> Polyhedron?
     func add(intersection polyhedron: Polyhedron) -> Bool
-    func remove(intersection polyhedron: Polyhedron) -> Bool
+    @discardableResult func remove(intersection polyhedron: Polyhedron) -> Bool
 }
 
 extension TerrainNodeIntersectionProvider {

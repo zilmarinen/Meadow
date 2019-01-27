@@ -28,11 +28,11 @@ extension ColorPalette: Hashable {
 
 extension ColorPalette: TreeParent {
     
-    public typealias TreeChild = Color
+    public typealias ChildType = Color
     
     public var totalChildren: Int { return 4 }
     
-    public func child(at index: Int) -> TreeChild? {
+    public func child(at index: Int) -> ChildType? {
         
         switch index {
             
@@ -45,7 +45,7 @@ extension ColorPalette: TreeParent {
         }
     }
     
-    public func index(of child: TreeChild) -> Int? {
+    public func index(of child: ChildType) -> Int? {
         
         switch child {
             

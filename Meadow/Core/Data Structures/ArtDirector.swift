@@ -51,18 +51,18 @@ extension ArtDirector {
     
     public struct ColorPalettes: TreeParent {
         
-        public typealias TreeChild = ColorPalette
+        public typealias ChildType = ColorPalette
         
-        let palettes: [TreeChild]
+        let palettes: [ChildType]
         
         public var totalChildren: Int { return palettes.count }
         
-        public func child(at index: Int) -> TreeChild? {
+        public func child(at index: Int) -> ChildType? {
             
             return palettes[index]
         }
         
-        public func index(of child: TreeChild) -> Int? {
+        public func index(of child: ChildType) -> Int? {
             
             return palettes.index(of: child)
         }
@@ -80,18 +80,18 @@ extension ArtDirector {
     
     public struct Colors: TreeParent {
         
-        public typealias TreeChild = Color
+        public typealias ChildType = Color
         
-        let colors: [TreeChild]
+        let colors: [ChildType]
         
         public var totalChildren: Int { return colors.count }
         
-        public func child(at index: Int) -> TreeChild? {
+        public func child(at index: Int) -> ChildType? {
             
             return colors[index]
         }
         
-        public func index(of child: TreeChild) -> Int? {
+        public func index(of child: ChildType) -> Int? {
             
             return colors.index(of: child)
         }

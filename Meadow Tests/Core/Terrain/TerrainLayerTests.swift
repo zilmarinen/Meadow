@@ -23,32 +23,33 @@ class TerrainLayerTests: XCTestCase {
         
         let expect = expectation(description: "Terrain layers can be added to a grid if the volume they define is not already occupied")
         
-        let n0 = scene.world.terrain.add(node: Coordinate(x: 13, y: 0, z: 37))
+        let edge = GridEdge.north
         
-        XCTAssertNotNil(n0)
+        let l0 = scene.world.terrain.add(layer: Coordinate(x: 13, y: 0, z: 37), edge: edge, terrainType: TerrainType.bedrock)
+        let l1 = scene.world.terrain.add(layer: Coordinate(x: 13, y: 0, z: 37), edge: edge, terrainType: TerrainType.bedrock)
         
-        let l0 = n0?.add(layer: TerrainType.bedrock)
-        let l1 = n0?.add(layer: TerrainType.bedrock)
+        XCTAssertNotNil(l0)
+        XCTAssertNotNil(l1)
         
-        l1?.set(height: World.ceiling, corner: .northWest)
-        l1?.set(height: World.ceiling, corner: .northEast)
-        l1?.set(height: World.ceiling, corner: .southEast)
-        l1?.set(height: World.ceiling, corner: .southWest)
+        let (c0, c1) = GridCorner.corners(edge: edge)
         
-        XCTAssertEqual(l1?.get(height: .northWest), World.ceiling)
-        XCTAssertEqual(l1?.get(height: .northEast), World.ceiling)
-        XCTAssertEqual(l1?.get(height: .southEast), World.ceiling)
-        XCTAssertEqual(l1?.get(height: .southWest), World.ceiling)
+        l1?.set(corner: c0, height: World.ceiling)
+        l1?.set(corner: c1, height: World.ceiling)
+        l1?.set(center: World.ceiling)
         
-        let l2 = n0?.add(layer: TerrainType.bedrock)
+        XCTAssertEqual(l1?.get(corner: c0), World.ceiling)
+        XCTAssertEqual(l1?.get(corner: c1), World.ceiling)
+        XCTAssertEqual(l1?.centre, World.ceiling)
+        
+        let l2 = scene.world.terrain.add(layer: Coordinate(x: 13, y: 0, z: 37), edge: .north, terrainType: TerrainType.bedrock)
         
         XCTAssertNotNil(l0)
         XCTAssertNotNil(l1)
         XCTAssertNil(l2)
-        XCTAssertNil(l0?.hierarchy.lower)
-        XCTAssertEqual(l0?.hierarchy.upper, l1)
-        XCTAssertEqual(l1?.hierarchy.lower, l0)
-        XCTAssertNil(l1?.hierarchy.upper)
+        XCTAssertNil(l0?.lower)
+        XCTAssertEqual(l0?.upper, l1)
+        XCTAssertEqual(l1?.lower, l0)
+        XCTAssertNil(l1?.upper)
         
         expect.fulfill()
         
@@ -57,14 +58,15 @@ class TerrainLayerTests: XCTestCase {
     
     func testTerrainLayerEquality() {
         
-        let expect = expectation(description: "Terrain layers are considered equal when all x, y and z components are equal")
+        let expect = expectation(description: "Terrain layers are considered equal when all x, y and z components, edges and corner heights are equal")
         
-        let n0 = scene.world.terrain.add(node: Coordinate(x: 13, y: 0, z: 37))
+        let edge = GridEdge.north
         
-        XCTAssertNotNil(n0)
+        let l0 = scene.world.terrain.add(layer: Coordinate(x: 13, y: 0, z: 37), edge: edge, terrainType: TerrainType.bedrock)
+        let l1 = scene.world.terrain.add(layer: Coordinate(x: 13, y: 0, z: 37), edge: edge, terrainType: TerrainType.bedrock)
         
-        let l0 = n0?.add(layer: TerrainType.bedrock)
-        let l1 = n0?.add(layer: TerrainType.bedrock)
+        XCTAssertNotNil(l0)
+        XCTAssertNotNil(l1)
         
         XCTAssertNotNil(l0)
         XCTAssertNotNil(l1)
@@ -80,32 +82,29 @@ class TerrainLayerTests: XCTestCase {
         
         let expect = expectation(description: "Corner heights for layers are set to the height of the lower node +1 when created")
         
-        let n0 = scene.world.terrain.add(node: Coordinate(x: 13, y: 0, z: 37))
+        let edge = GridEdge.north
         
-        XCTAssertNotNil(n0)
-        
-        let l0 = n0?.add(layer: TerrainType.bedrock)
-        let l1 = n0?.add(layer: TerrainType.bedrock)
-        let l2 = n0?.add(layer: TerrainType.bedrock)
+        let l0 = scene.world.terrain.add(layer: Coordinate(x: 13, y: 0, z: 37), edge: edge, terrainType: TerrainType.bedrock)
+        let l1 = scene.world.terrain.add(layer: Coordinate(x: 13, y: 0, z: 37), edge: edge, terrainType: TerrainType.bedrock)
+        let l2 = scene.world.terrain.add(layer: Coordinate(x: 13, y: 0, z: 37), edge: edge, terrainType: TerrainType.bedrock)
         
         XCTAssertNotNil(l0)
         XCTAssertNotNil(l1)
         XCTAssertNotNil(l2)
         
-        XCTAssertEqual(l0?.get(height: .northWest), (World.floor + 1))
-        XCTAssertEqual(l0?.get(height: .northEast), (World.floor + 1))
-        XCTAssertEqual(l0?.get(height: .southEast), (World.floor + 1))
-        XCTAssertEqual(l0?.get(height: .southWest), (World.floor + 1))
+        let (c0, c1) = GridCorner.corners(edge: edge)
         
-        XCTAssertEqual(l1?.get(height: .northWest), (World.floor + 2))
-        XCTAssertEqual(l1?.get(height: .northEast), (World.floor + 2))
-        XCTAssertEqual(l1?.get(height: .southEast), (World.floor + 2))
-        XCTAssertEqual(l1?.get(height: .southWest), (World.floor + 2))
+        XCTAssertEqual(l0?.get(corner: c0), (World.floor + 1))
+        XCTAssertEqual(l0?.get(corner: c1), (World.floor + 1))
+        XCTAssertEqual(l0?.centre, (World.floor + 1))
         
-        XCTAssertEqual(l2?.get(height: .northWest), (World.floor + 3))
-        XCTAssertEqual(l2?.get(height: .northEast), (World.floor + 3))
-        XCTAssertEqual(l2?.get(height: .southEast), (World.floor + 3))
-        XCTAssertEqual(l2?.get(height: .southWest), (World.floor + 3))
+        XCTAssertEqual(l1?.get(corner: c0), (World.floor + 2))
+        XCTAssertEqual(l1?.get(corner: c1), (World.floor + 2))
+        XCTAssertEqual(l1?.centre, (World.floor + 2))
+        
+        XCTAssertEqual(l2?.get(corner: c0), (World.floor + 3))
+        XCTAssertEqual(l2?.get(corner: c1), (World.floor + 3))
+        XCTAssertEqual(l2?.centre, (World.floor + 3))
         
         expect.fulfill()
         
@@ -116,33 +115,29 @@ class TerrainLayerTests: XCTestCase {
         
         let expect = expectation(description: "Corner heights for layers are constrained to the grid")
         
-        let n0 = scene.world.terrain.add(node: Coordinate(x: 13, y: 0, z: 37))
+        let edge = GridEdge.north
         
-        XCTAssertNotNil(n0)
-        
-        let l0 = n0?.add(layer: TerrainType.bedrock)
+        let l0 = scene.world.terrain.add(layer: Coordinate(x: 13, y: 0, z: 37), edge: edge, terrainType: TerrainType.bedrock)
         
         XCTAssertNotNil(l0)
         
-        l0?.set(height: (World.floor * 2), corner: .northWest)
-        l0?.set(height: (World.floor * 2), corner: .northEast)
-        l0?.set(height: (World.floor * 2), corner: .southEast)
-        l0?.set(height: (World.floor * 2), corner: .southWest)
+        let (c0, c1) = GridCorner.corners(edge: edge)
         
-        XCTAssertEqual(l0?.get(height: .northWest), (World.floor + 1))
-        XCTAssertEqual(l0?.get(height: .northEast), (World.floor + 1))
-        XCTAssertEqual(l0?.get(height: .southEast), (World.floor + 1))
-        XCTAssertEqual(l0?.get(height: .southWest), (World.floor + 1))
+        l0?.set(corner: c0, height: (World.floor * 2))
+        l0?.set(corner: c1, height: (World.floor * 2))
+        l0?.set(center: (World.floor * 2))
         
-        l0?.set(height: (World.ceiling * 2), corner: .northWest)
-        l0?.set(height: (World.ceiling * 2), corner: .northEast)
-        l0?.set(height: (World.ceiling * 2), corner: .southEast)
-        l0?.set(height: (World.ceiling * 2), corner: .southWest)
+        XCTAssertEqual(l0?.get(corner: c0), (World.floor + 1))
+        XCTAssertEqual(l0?.get(corner: c1), (World.floor + 1))
+        XCTAssertEqual(l0?.centre, (World.floor + 1))
         
-        XCTAssertEqual(l0?.get(height: .northWest), World.ceiling)
-        XCTAssertEqual(l0?.get(height: .northEast), World.ceiling)
-        XCTAssertEqual(l0?.get(height: .southEast), World.ceiling)
-        XCTAssertEqual(l0?.get(height: .southWest), World.ceiling)
+        l0?.set(corner: c0, height: (World.ceiling * 2))
+        l0?.set(corner: c1, height: (World.ceiling * 2))
+        l0?.set(center: (World.ceiling * 2))
+        
+        XCTAssertEqual(l0?.get(corner: c0), World.ceiling)
+        XCTAssertEqual(l0?.get(corner: c1), World.ceiling)
+        XCTAssertEqual(l0?.centre, World.ceiling)
         
         expect.fulfill()
         
@@ -153,37 +148,33 @@ class TerrainLayerTests: XCTestCase {
         
         let expect = expectation(description: "Corner heights for layers are constrained by upper and lower nodes")
         
-        let n0 = scene.world.terrain.add(node: Coordinate(x: 13, y: 0, z: 37))
+        let edge = GridEdge.north
         
-        XCTAssertNotNil(n0)
-        
-        let l0 = n0?.add(layer: TerrainType.bedrock)
-        let l1 = n0?.add(layer: TerrainType.bedrock)
-        let l2 = n0?.add(layer: TerrainType.bedrock)
+        let l0 = scene.world.terrain.add(layer: Coordinate(x: 13, y: 0, z: 37), edge: edge, terrainType: TerrainType.bedrock)
+        let l1 = scene.world.terrain.add(layer: Coordinate(x: 13, y: 0, z: 37), edge: edge, terrainType: TerrainType.bedrock)
+        let l2 = scene.world.terrain.add(layer: Coordinate(x: 13, y: 0, z: 37), edge: edge, terrainType: TerrainType.bedrock)
         
         XCTAssertNotNil(l0)
         XCTAssertNotNil(l1)
         XCTAssertNotNil(l2)
         
-        l1?.set(height: (World.floor * 2), corner: .northWest)
-        l1?.set(height: (World.floor * 2), corner: .northEast)
-        l1?.set(height: (World.floor * 2), corner: .southEast)
-        l1?.set(height: (World.floor * 2), corner: .southWest)
+        let (c0, c1) = GridCorner.corners(edge: edge)
         
-        XCTAssertEqual(l1?.get(height: .northWest), (World.floor + 1))
-        XCTAssertEqual(l1?.get(height: .northEast), (World.floor + 1))
-        XCTAssertEqual(l1?.get(height: .southEast), (World.floor + 1))
-        XCTAssertEqual(l1?.get(height: .southWest), (World.floor + 1))
+        l1?.set(corner: c0, height: (World.floor * 2))
+        l1?.set(corner: c1, height: (World.floor * 2))
+        l1?.set(center: (World.floor * 2))
         
-        l1?.set(height: (World.ceiling * 2), corner: .northWest)
-        l1?.set(height: (World.ceiling * 2), corner: .northEast)
-        l1?.set(height: (World.ceiling * 2), corner: .southEast)
-        l1?.set(height: (World.ceiling * 2), corner: .southWest)
+        XCTAssertEqual(l1?.get(corner: c0), (World.floor + 2))
+        XCTAssertEqual(l1?.get(corner: c1), (World.floor + 2))
+        XCTAssertEqual(l1?.centre, (World.floor + 2))
         
-        XCTAssertEqual(l1?.get(height: .northWest), (World.floor + 3))
-        XCTAssertEqual(l1?.get(height: .northEast), (World.floor + 3))
-        XCTAssertEqual(l1?.get(height: .southEast), (World.floor + 3))
-        XCTAssertEqual(l1?.get(height: .southWest), (World.floor + 3))
+        l1?.set(corner: c0, height: (World.ceiling * 2))
+        l1?.set(corner: c1, height: (World.ceiling * 2))
+        l1?.set(center: (World.ceiling * 2))
+        
+        XCTAssertEqual(l1?.get(corner: c0), (World.floor + 3))
+        XCTAssertEqual(l1?.get(corner: c1), (World.floor + 3))
+        XCTAssertEqual(l1?.centre, (World.floor + 3))
         
         expect.fulfill()
         
@@ -194,13 +185,11 @@ class TerrainLayerTests: XCTestCase {
         
         let expect = expectation(description: "Corner heights for layers are set to the height of the lower node +1 when created")
         
-        let n0 = scene.world.terrain.add(node: Coordinate(x: 13, y: 0, z: 37))
+        let edge = GridEdge.north
         
-        XCTAssertNotNil(n0)
-        
-        let l0 = n0?.add(layer: TerrainType.bedrock)
-        let l1 = n0?.add(layer: TerrainType.bedrock)
-        let l2 = n0?.add(layer: TerrainType.bedrock)
+        let l0 = scene.world.terrain.add(layer: Coordinate(x: 13, y: 0, z: 37), edge: edge, terrainType: TerrainType.bedrock)
+        let l1 = scene.world.terrain.add(layer: Coordinate(x: 13, y: 0, z: 37), edge: edge, terrainType: TerrainType.bedrock)
+        let l2 = scene.world.terrain.add(layer: Coordinate(x: 13, y: 0, z: 37), edge: edge, terrainType: TerrainType.bedrock)
         
         XCTAssertNotNil(l0)
         XCTAssertNotNil(l1)
@@ -245,23 +234,22 @@ class TerrainLayerTests: XCTestCase {
         
         let expect = expectation(description: "Layers can be added to a grid node and are stacked correctly")
         
-        let n0 = scene.world.terrain.add(node: Coordinate(x: 13, y: 0, z: 37))
+        let edge = GridEdge.north
         
-        XCTAssertNotNil(n0)
-        
-        let l0 = n0?.add(layer: TerrainType.bedrock)
-        let l1 = n0?.add(layer: TerrainType.bedrock)
-        let l2 = n0?.add(layer: TerrainType.bedrock)
+        let l0 = scene.world.terrain.add(layer: Coordinate(x: 13, y: 0, z: 37), edge: edge, terrainType: TerrainType.bedrock)
+        let l1 = scene.world.terrain.add(layer: Coordinate(x: 13, y: 0, z: 37), edge: edge, terrainType: TerrainType.bedrock)
+        let l2 = scene.world.terrain.add(layer: Coordinate(x: 13, y: 0, z: 37), edge: edge, terrainType: TerrainType.bedrock)
         
         XCTAssertNotNil(l0)
         XCTAssertNotNil(l1)
         XCTAssertNotNil(l2)
-        XCTAssertNil(l0?.hierarchy.lower)
-        XCTAssertEqual(l0?.hierarchy.upper, l1)
-        XCTAssertEqual(l1?.hierarchy.lower, l0)
-        XCTAssertEqual(l1?.hierarchy.upper, l2)
-        XCTAssertEqual(l2?.hierarchy.lower, l1)
-        XCTAssertNil(l2?.hierarchy.upper)
+        
+        XCTAssertNil(l0?.lower)
+        XCTAssertEqual(l0?.upper, l1)
+        XCTAssertEqual(l1?.lower, l0)
+        XCTAssertEqual(l1?.upper, l2)
+        XCTAssertEqual(l2?.lower, l1)
+        XCTAssertNil(l2?.upper)
         
         expect.fulfill()
         
@@ -272,24 +260,22 @@ class TerrainLayerTests: XCTestCase {
         
         let expect = expectation(description: "Layers can be removed from a grid node and are re-stacked correctly")
         
-        let n0 = scene.world.terrain.add(node: Coordinate(x: 13, y: 0, z: 37))
+        let edge = GridEdge.north
         
-        XCTAssertNotNil(n0)
-        
-        let l0 = n0?.add(layer: TerrainType.bedrock)
-        let l1 = n0?.add(layer: TerrainType.bedrock)
-        let l2 = n0?.add(layer: TerrainType.bedrock)
+        let l0 = scene.world.terrain.add(layer: Coordinate(x: 13, y: 0, z: 37), edge: edge, terrainType: TerrainType.bedrock)
+        let l1 = scene.world.terrain.add(layer: Coordinate(x: 13, y: 0, z: 37), edge: edge, terrainType: TerrainType.bedrock)
+        let l2 = scene.world.terrain.add(layer: Coordinate(x: 13, y: 0, z: 37), edge: edge, terrainType: TerrainType.bedrock)
         
         XCTAssertNotNil(l0)
         XCTAssertNotNil(l1)
         XCTAssertNotNil(l2)
         
-        let _ = n0?.remove(layer: l1!)
+        scene.world.terrain.remove(layer: l1!)
         
-        XCTAssertNil(l0?.hierarchy.lower)
-        XCTAssertEqual(l0?.hierarchy.upper, l2)
-        XCTAssertEqual(l2?.hierarchy.lower, l0)
-        XCTAssertNil(l2?.hierarchy.upper)
+        XCTAssertNil(l0?.lower)
+        XCTAssertEqual(l0?.upper, l2)
+        XCTAssertEqual(l2?.lower, l0)
+        XCTAssertNil(l2?.upper)
         
         expect.fulfill()
         

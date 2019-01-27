@@ -8,10 +8,9 @@
 
 import SceneKit
 
-public class TerrainNode<Layer: TerrainLayer>: GridNode, GridParent, SceneGraphIntermediate {
+public class TerrainNode<NodeEdge: TerrainNodeEdge>: GridNode, SceneGraphParent {
     
-    public typealias ChildType = Layer
-    public typealias IntermediateType = TerrainLayerIntermediate
+    public typealias ChildType = NodeEdge
     
     public var children: [ChildType] = []
     
@@ -45,123 +44,15 @@ public class TerrainNode<Layer: TerrainLayer>: GridNode, GridParent, SceneGraphI
     
     public override var mesh: Mesh {
         
-        var stencils: [GridEdge: [Polyhedron]] = [:]
+        //
         
-        GridEdge.Edges.forEach { edge in
-            
-            if let neighbour = find(neighbour: edge)?.node as? TerrainNode, let upperPolytope = neighbour.topLayer?.polyhedron.upperPolytope, let lowerPolytope = neighbour.bottomLayer?.polyhedron.lowerPolytope {
-                
-                let polyhedron = Polyhedron(upperPolytope: upperPolytope, lowerPolytope: lowerPolytope)
-                
-                if neighbour.intersections.count > 0 {
-                    
-                    stencils[edge] = Polyhedron.subtract(polyhedrons: neighbour.intersections, from: polyhedron)
-                }
-                else {
-                    
-                    stencils[edge] = [polyhedron]
-                }
-            }
-        }
-        
-        var meshFaces: [MeshFace] = []
-        
-        children.filter { !$0.isHidden }.forEach { layer in
-            
-            let polyhedrons = Polyhedron.subtract(polyhedrons: intersections, from: layer.polyhedron)
-            
-            GridEdge.Edges.forEach { edge in
-                
-                let (c0, c1) = GridCorner.corners(edge: edge)
-                
-                let edgeNormal = GridEdge.normal(edge: edge)
-                
-                let terrainType = layer.get(terrainType: edge)
-                
-                let apexColor = terrainType.colorPalette?.primary.vector ?? SCNVector4Zero
-                let edgeColor = terrainType.colorPalette?.secondary.vector ?? SCNVector4Zero
-                
-                polyhedrons.forEach { polyhedron in
-                    
-                    let v0 = polyhedron.upperPolytope.vertices[c0.rawValue]
-                    let v1 = polyhedron.upperPolytope.vertices[c1.rawValue]
-                    
-                    if (layer.hierarchy.upper == nil || layer.hierarchy.upper?.lowerPolytope != polyhedron.upperPolytope) {
-                        
-                        meshFaces.append(MeshProvider.surface(corners: (c0, c1), polytope: polyhedron.upperPolytope, color: apexColor))
-                    }
-                    
-                    let divisions = (stencils[edge] != nil ? Polyhedron.stencil(polyhedrons: stencils[edge]!, against: polyhedron, edge: edge) : [polyhedron])
-                    
-                    divisions.forEach { division in
-                        
-                        let v2 = division.upperPolytope.vertices[c0.rawValue]
-                        let v3 = division.upperPolytope.vertices[c1.rawValue]
-                        let v4 = division.lowerPolytope.vertices[c1.rawValue]
-                        let v5 = division.lowerPolytope.vertices[c0.rawValue]
-                        
-                        let c0equal = Axis.Y(y: v2.y) == Axis.Y(y: v5.y)
-                        let c1equal = Axis.Y(y: v3.y) == Axis.Y(y: v4.y)
-                        
-                        let acuteCorner = (c0equal ? c0 : (c1equal ? c1 : nil))
-                        
-                        if !c0equal || !c1equal {
-                            
-                            let p0equal = Axis.Y(y: v0.y) == Axis.Y(y: v2.y)
-                            let p1equal = Axis.Y(y: v1.y) == Axis.Y(y: v3.y)
-                            
-                            if p0equal && p1equal {
-                                
-                                meshFaces.append(contentsOf: TerrainMeshProvider.terrainLayer(crown: (c0, c1), acuteCorner: acuteCorner, polyhedron: division, normal: edgeNormal, color: apexColor))
-                                meshFaces.append(contentsOf: TerrainMeshProvider.terrainLayer(throne: (c0, c1), acuteCorner: acuteCorner, polyhedron: division, normal: edgeNormal, color: edgeColor))
-                            }
-                            else {
-                                
-                                meshFaces.append(contentsOf: MeshProvider.edge(corners: (c0, c1), polyhedron: division, normal: edgeNormal, color: edgeColor))
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        
-        return Mesh(faces: meshFaces)
+        return Mesh(meshes: [])
     }
 }
 
 extension TerrainNode {
     
-    public func load(intermediates: [TerrainLayerIntermediate]) {
-        
-        intermediates.forEach { intermediate in
-            
-            if let layer = add(layer: TerrainType.bedrock) {
-                
-                let edges = [intermediate.edges.north, intermediate.edges.east, intermediate.edges.south, intermediate.edges.west]
-                
-                for index in 0..<intermediate.corners.count {
-                    
-                    layer.set(terrainType: TerrainType(rawValue: edges[index].terrainType)!, edge: edges[index].edge)
-                    
-                    layer.set(height: intermediate.corners[index], corner: GridCorner(rawValue: index)!)
-                }
-            }
-        }
-    }
-}
-
-extension TerrainNode {
-    
-    public var totalChildren: Int { return children.count }
-    
-    public func child(at index: Int) -> SceneGraphChild? {
-        
-        return children[index]
-    }
-    
-    public func index(of child: SceneGraphChild) -> Int? {
-        
-        guard let child = child as? ChildType else { return nil }
+    public func index(of child: ChildType) -> Int? {
         
         return children.index(of: child)
     }
@@ -169,61 +60,34 @@ extension TerrainNode {
 
 extension TerrainNode {
     
-    public var topLayer: Layer? {
+    func add(edge: GridEdge) -> NodeEdge? {
         
-        return children.first { layer -> Bool in
-            
-            return layer.hierarchy.upper == nil
-        }
-    }
-    
-    public var bottomLayer: Layer? {
-        
-        return children.first { layer -> Bool in
-            
-            return layer.hierarchy.lower == nil
-        }
-    }
-    
-    func add(layer terrainType: TerrainType) -> TerrainLayer? {
-        
-        if let topLayer = topLayer, Axis.Y(y: topLayer.polyhedron.upperPolytope.base) == World.ceiling {
+        if find(edge: edge) != nil {
             
             return nil
         }
         
-        let height = (World.floor + 1)
+        let nodeEdge = NodeEdge(observer: self, volume: self.volume, edge: edge)
         
-        let corners = topLayer?.polyhedron.upperPolytope.vertices.map { Axis.Y(y: $0.y) + 1 } ?? [height, height, height, height]
+        children.append(nodeEdge)
         
-        guard let layer = Layer(observer: self, coordinate: volume.coordinate, corners: corners, terrainType: terrainType) else { return nil }
-        
-        layer.hierarchy.lower = topLayer
-    
-        topLayer?.hierarchy.upper = layer
-    
-        children.append(layer)
-    
         becomeDirty()
-    
-        return layer
+        
+        return nodeEdge
     }
     
-    func remove(layer: TerrainLayer) -> Bool {
+    func find(edge: GridEdge) -> NodeEdge? {
         
-        if let index = index(of: layer) {
-            
-            let upper = layer.hierarchy.upper
-            let lower = layer.hierarchy.lower
-            
-            upper?.hierarchy.lower = lower
-            
-            lower?.hierarchy.upper = upper
-            
-            layer.hierarchy.upper = nil
-            layer.hierarchy.lower = nil
+        return children.first { $0.edge == edge }
+    }
+    
+    func remove(edge: NodeEdge) -> Bool {
         
+        if let index = index(of: edge) {
+            
             children.remove(at: index)
+            
+            edge.observer = nil
             
             becomeDirty()
             
@@ -236,6 +100,7 @@ extension TerrainNode {
 
 extension TerrainNode: TerrainNodeIntersectionProvider {
     
+    @discardableResult
     public func add(intersection polyhedron: Polyhedron) -> Bool {
         
         let intersection = intersections.first {
@@ -257,6 +122,7 @@ extension TerrainNode: TerrainNodeIntersectionProvider {
         return false
     }
     
+    @discardableResult
     public func remove(intersection polyhedron: Polyhedron) -> Bool {
         
         if let index = intersections.index(of: polyhedron) {

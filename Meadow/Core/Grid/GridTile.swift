@@ -8,11 +8,11 @@
 
 import Foundation
 
-public class GridTile<Node: GridNode>: GridChild, GridParent {
+public class GridTile<Node: GridNode>: SceneGraphChild, SceneGraphObserver, SceneGraphParent {
     
     public typealias ChildType = Node
     
-    public var observer: GridObserver?
+    public var observer: SceneGraphObserver?
     
     public var children: [ChildType] = []
     
@@ -33,11 +33,40 @@ public class GridTile<Node: GridNode>: GridChild, GridParent {
     
     var isDirty: Bool = false
     
-    public required init(observer: GridObserver, volume: Volume) {
+    public required init(observer: SceneGraphObserver, volume: Volume) {
         
         self.observer = observer
         
         self.volume = volume
+    }
+}
+
+extension GridTile: Encodable {
+    
+    enum CodingKeys: CodingKey {
+        
+        case name
+        case volume
+        case children
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(self.name, forKey: .name)
+        try container.encode(self.volume, forKey: .volume)
+        try container.encode(self.children, forKey: .children)
+    }
+}
+
+extension GridTile: Hashable {
+    
+    public var hashValue: Int { return volume.hashValue }
+    
+    public static func == (lhs: GridTile, rhs: GridTile) -> Bool {
+        
+        return lhs.volume == rhs.volume
     }
 }
 
@@ -97,23 +126,14 @@ extension GridTile: GridMeshProvider {
 
 extension GridTile {
     
-    public var totalChildren: Int { return children.count }
-    
-    public func child(at index: Int) -> SceneGraphChild? {
-        
-        return children[index]
-    }
-    
-    public func index(of child: SceneGraphChild) -> Int? {
-        
-        guard let child = child as? ChildType else { return nil }
+    public func index(of child: ChildType) -> Int? {
         
         return children.index(of: child)
     }
     
     public func child(didBecomeDirty child: SceneGraphChild) {
         
-        let _ = becomeDirty()
+        becomeDirty()
         
         observer?.child(didBecomeDirty: child)
     }
@@ -123,7 +143,7 @@ extension GridTile {
     
     func add(node volume: Volume) -> Node? {
         
-        if let _ = find(node: volume.coordinate) {
+        if find(node: volume.coordinate) != nil {
             
             return nil
         }
@@ -131,6 +151,8 @@ extension GridTile {
         let node = Node(observer: self, volume: volume)
         
         children.append(node)
+        
+        becomeDirty()
         
         return node
     }
@@ -143,6 +165,7 @@ extension GridTile {
         }
     }
     
+    @discardableResult
     func remove(node: Node) -> Bool {
         
         if let index = index(of: node) {
@@ -157,35 +180,6 @@ extension GridTile {
         }
         
         return false
-    }
-}
-
-extension GridTile: Hashable {
-    
-    public var hashValue: Int { return volume.hashValue }
-    
-    public static func == (lhs: GridTile, rhs: GridTile) -> Bool {
-        
-        return lhs.volume == rhs.volume
-    }
-}
-
-extension GridTile: Encodable {
-    
-    enum CodingKeys: CodingKey {
-        
-        case name
-        case volume
-        case children
-    }
-    
-    public func encode(to encoder: Encoder) throws {
-        
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        
-        try container.encode(self.name, forKey: .name)
-        try container.encode(self.volume, forKey: .volume)
-        try container.encode(self.children, forKey: .children)
     }
 }
 

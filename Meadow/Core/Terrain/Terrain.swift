@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class Terrain: Grid<TerrainChunk, TerrainTile, TerrainNode<TerrainLayer>> {
+public class Terrain: Grid<TerrainChunk, TerrainTile, TerrainNode<TerrainNodeEdge>> {
     
     
 }
@@ -20,10 +20,16 @@ extension Terrain: SceneGraphIntermediate {
     public func load(intermediates: [IntermediateType]) {
         
         intermediates.forEach { intermediate in
-            
-            if let node = add(node: intermediate.volume.coordinate) {
+        
+            intermediate.children.forEach { nodeEdgeIntermediate in
                 
-                node.load(intermediates: intermediate.children)
+                nodeEdgeIntermediate.children.forEach { edgeLayerIntermediate in
+                    
+                    if let terrainType = TerrainType(rawValue: edgeLayerIntermediate.terrainType) {
+                        
+                        let _ = add(layer: intermediate.volume.coordinate, edge: nodeEdgeIntermediate.edge, terrainType: terrainType)
+                    }
+                }
             }
         }
     }
@@ -31,7 +37,16 @@ extension Terrain: SceneGraphIntermediate {
 
 extension Terrain {
     
-    public func add(node coordinate: Coordinate) -> TerrainNode<TerrainLayer>? {
+    public func add(layer coordinate: Coordinate, edge: GridEdge, terrainType: TerrainType) -> TerrainEdgeLayer? {
+        
+        let node = (find(node: coordinate) ?? add(node: coordinate))
+        
+        let nodeEdge = (node?.find(edge: edge) ?? node?.add(edge: edge))
+        
+        return nodeEdge?.add(layer: terrainType)
+    }
+    
+    func add(node coordinate: Coordinate) -> TerrainNode<TerrainNodeEdge>? {
         
         guard let node = add(node: TerrainTile.fixedVolume(coordinate)) else { return nil }
         
@@ -46,36 +61,12 @@ extension Terrain {
         return node
     }
     
-    public func add(layer coordinate: Coordinate, terrainType: TerrainType) -> TerrainLayer? {
+    func remove(layer: TerrainEdgeLayer) -> Bool {
         
-        guard let node = find(node: coordinate) ?? add(node: coordinate) else { return nil }
-        
-        let layer = node.add(layer: terrainType)
-        
-        if layer != nil {
-            
-            becomeDirty()
-        }
-        
-        return layer
-    }
-    
-    public func remove(layer: TerrainLayer) -> Bool {
-     
         guard let node = find(node: layer.coordinate) else { return false }
         
-        if node.remove(layer: layer) {
-            
-            if node.totalChildren == 0 {
-                
-                let _ = remove(node: node)
-                
-                becomeDirty()
-            }
-            
-            return true
-        }
+        guard let edge = node.find(edge: layer.edge) else { return false }
         
-        return false
+        return edge.remove(layer: layer)
     }
 }

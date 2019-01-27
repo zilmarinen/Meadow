@@ -9,21 +9,29 @@
 import Foundation
 import SceneKit
 
-public class Scene: SCNScene, GridObserver, SceneGraphParent, SceneGraphChild {
+public class Scene: SCNScene, SceneGraphObserver, SceneGraphParent, SceneGraphChild {
+    
+    public typealias ChildType = SCNNode
+    
+    public var children: [SCNNode] { return [rootNode] }
     
     public var name: String? { return rootNode.name }
+    
+    public var isHidden: Bool = false
+    
+    public var volume: Volume { return Volume(coordinate: Coordinate.zero, size: Size.one) }
     
     public let world = World()
     
     public let cameraJib = CameraJib()
     
-    public var observer: GridObserver?
+    public var observer: SceneGraphObserver?
     
     public var delegate: SceneGraphUpdatable?
     
     var lastUpdate: TimeInterval?
     
-    public init(observer: GridObserver?) {
+    public init(observer: SceneGraphObserver?) {
         
         self.observer = observer
         
@@ -45,16 +53,7 @@ public class Scene: SCNScene, GridObserver, SceneGraphParent, SceneGraphChild {
 
 extension Scene {
     
-    public var totalChildren: Int { return rootNode.childNodes.count }
-    
-    public func child(at index: Int) -> SceneGraphChild? {
-        
-        return rootNode.childNodes[index] as? SceneGraphChild
-    }
-    
-    public func index(of child: SceneGraphChild) -> Int? {
-        
-        guard let child = child as? SCNNode else { return nil }
+    public func index(of child: SCNNode) -> Int? {
         
         return rootNode.childNodes.index(of: child)
     }
@@ -83,7 +82,9 @@ extension Scene: SCNSceneRendererDelegate {
 
 extension Scene: SceneGraphIntermediate {
     
-    public func load(intermediates: [SceneIntermediate]) {
+    public typealias IntermediateType = SceneIntermediate
+    
+    public func load(intermediates: [IntermediateType]) {
         
         guard let intermediate = intermediates.first else { return }
         

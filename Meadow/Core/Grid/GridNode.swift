@@ -6,7 +6,7 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-public class GridNode: Encodable, GridMeshProvider, SceneGraphChild, SceneGraphObserver, SceneGraphSoilable {
+public class GridNode: Encodable, MeshProvider, SceneGraphChild, SceneGraphObserver, SceneGraphSoilable {
     
     public var observer: SceneGraphObserver?
     

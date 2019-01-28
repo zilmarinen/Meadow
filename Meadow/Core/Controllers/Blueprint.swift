@@ -47,7 +47,7 @@ extension Blueprint: SceneGraphSoilable {
     }
 }
 
-extension Blueprint: GridMeshProvider {
+extension Blueprint: MeshProvider {
     
     public var mesh: Mesh {
         

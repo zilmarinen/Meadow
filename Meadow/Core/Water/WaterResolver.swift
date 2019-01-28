@@ -42,7 +42,7 @@ extension WaterResolver {
 
 extension WaterResolver {
     
-    func clean(node: WaterNode, terrainNode: TerrainNode<TerrainNodeEdge>?) {
+    func clean(node: WaterNode, terrainNode: TerrainNode<TerrainNodeEdge<TerrainEdgeLayer>>?) {
         
 //        if let terrainNode = terrainNode, let upperPolytope = terrainNode.topLayer?.upperPolytope {
 //            

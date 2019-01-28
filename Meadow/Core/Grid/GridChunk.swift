@@ -29,6 +29,7 @@ public class GridChunk<Tile: GridTile<Node>, Node: GridNode>: SCNNode, SceneGrap
         super.init()
         
         self.name = "Chunk"
+        self.position = SCNVector3(x: MDWFloat(self.volume.coordinate.x), y: Axis.Y(y: self.volume.coordinate.y), z: MDWFloat(self.volume.coordinate.z))
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -96,7 +97,7 @@ extension GridChunk: SceneGraphUpdatable {
     }
 }
 
-extension GridChunk: GridMeshProvider {
+extension GridChunk: MeshProvider {
     
     public var mesh: Mesh {
         

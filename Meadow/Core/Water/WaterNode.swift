@@ -61,42 +61,7 @@ public class WaterNode: GridNode {
     
     public override var mesh: Mesh {
         
-        guard let waterType = waterType else { return Mesh(faces: []) }
-            
-        var meshFaces: [MeshFace] = []
-        
-        var meshPolyhedron = polyhedron
-        
-        GridEdge.Edges.forEach { edge in
-            
-            if find(neighbour: edge) == nil {
-                
-                meshPolyhedron = Polyhedron.inset(polyhedron: meshPolyhedron, edge: edge, inset: WaterNode.tension)
-            }
-        }
-        
-        meshPolyhedron = Polyhedron(upperPolytope: Polytope.offset(polytope: meshPolyhedron.upperPolytope, y: -WaterNode.meniscus), lowerPolytope: meshPolyhedron.lowerPolytope)
-        
-        GridEdge.Edges.forEach { edge in
-            
-            let corners = GridCorner.corners(edge: edge)
-            
-            let edgeNormal = GridEdge.normal(edge: edge)
-            
-            let neighbour = find(neighbour: edge)?.node as? WaterNode
-            
-            let apexColor = waterType.colorPalette?.primary.vector ?? SCNVector4Zero
-            let edgeColor = waterType.colorPalette?.secondary.vector ?? SCNVector4Zero
-            
-            meshFaces.append(MeshProvider.surface(corners: corners, polytope: meshPolyhedron.upperPolytope, color: apexColor))
-            
-            if neighbour == nil {
-                
-                meshFaces.append(contentsOf: MeshProvider.edge(corners: corners, polyhedron: meshPolyhedron, normal: edgeNormal, color: edgeColor))
-            }
-        }
-        
-        return Mesh(faces: meshFaces)
+        return Mesh(faces: [])
     }
 }
 

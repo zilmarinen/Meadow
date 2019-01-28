@@ -47,7 +47,7 @@ public class TerrainEdgeLayer: SceneGraphChild {
     
     public let edge: GridEdge
     
-    var upper: TerrainEdgeLayer? {
+    public var upper: TerrainEdgeLayer? {
         
         didSet {
             
@@ -58,7 +58,7 @@ public class TerrainEdgeLayer: SceneGraphChild {
         }
     }
     
-    var lower: TerrainEdgeLayer? {
+    public var lower: TerrainEdgeLayer? {
         
         didSet {
             
@@ -72,6 +72,17 @@ public class TerrainEdgeLayer: SceneGraphChild {
     var c0 = LayerCornerHeight(corner: .c0, height: World.floor)
     var c1 = LayerCornerHeight(corner: .c1, height: World.floor)
     var c2 = LayerCornerHeight(corner: .c2, height: World.floor)
+    
+    public var terrainType: TerrainType = TerrainType.bedrock {
+        
+        didSet {
+            
+            if terrainType != oldValue {
+                
+                becomeDirty()
+            }
+        }
+    }
     
     public required init(observer: SceneGraphObserver, coordinate: Coordinate, edge: GridEdge) {
         
@@ -136,19 +147,16 @@ extension TerrainEdgeLayer: GridPolyhedronProvider {
     
     var upperPolytope: Polytope {
         
-        let height = peak
-        
-        return Polytope(x: MDWFloat(coordinate.x), y0: height, y1: height, y2: height, y3: height, z: MDWFloat(coordinate.z))
+        switch edge {
+            
+        case .north, .south: return Polytope(x: MDWFloat(coordinate.x), y0: c0.height, y1: c1.height, y2: c0.height, y3: c1.height, z: MDWFloat(coordinate.z))
+        case .east, .west: return Polytope(x: MDWFloat(coordinate.x), y0: c1.height, y1: c0.height, y2: c1.height, y3: c0.height, z: MDWFloat(coordinate.z))
+        }
     }
     
     var lowerPolytope: Polytope {
         
-        if let lower = lower {
-            
-            return lower.upperPolytope
-        }
-        
-        return Polytope(x: MDWFloat(coordinate.x), y0: World.floor, y1: World.floor, y2: World.floor, y3: World.floor, z: MDWFloat(coordinate.z))
+        return (lower?.upperPolytope ?? Polytope(x: MDWFloat(coordinate.x), y0: World.floor, y1: World.floor, y2: World.floor, y3: World.floor, z: MDWFloat(coordinate.z)))
     }
     
     public var polyhedron: Polyhedron { return Polyhedron(upperPolytope: upperPolytope, lowerPolytope: lowerPolytope) }
@@ -166,12 +174,12 @@ extension TerrainEdgeLayer {
         return max(c0.height, c1.height, c2.height)
     }
     
-    var centre: Int {
+    public var centre: Int {
         
         return c2.height
     }
     
-    func get(corner: GridCorner) -> Int? {
+    public func get(corner: GridCorner) -> Int? {
      
         let (corner0, corner1) = GridCorner.corners(edge: edge)
         
@@ -184,7 +192,7 @@ extension TerrainEdgeLayer {
     }
     
     @discardableResult
-    func set(corner: GridCorner, height: Int) -> Bool {
+    public func set(corner: GridCorner, height: Int) -> Bool {
         
         let (corner0, corner1) = GridCorner.corners(edge: edge)
         
@@ -197,7 +205,7 @@ extension TerrainEdgeLayer {
     }
     
     @discardableResult
-    func set(center height: Int) -> Bool {
+    public func set(center height: Int) -> Bool {
         
         return adjust(corner: c2, height: height)
     }
@@ -241,26 +249,19 @@ extension TerrainEdgeLayer {
                 
             case .negative:
                 
-                print("resolving \(connected.corner) to height \(height - 1)")
-                
                 adjust(corner: connected, height: (height - 1))
                 
             case .positive:
                 
-                print("resolving \(connected.corner) to height \(height + 1)")
-                
                 adjust(corner: connected, height: (height + 1))
                 
-            default: print("\(connected.height) - \(height) equals zero")
+            default: break
             }
         }
         
         let clamped = clamp(corner: corner, height: height)
         
         guard corner.height != clamped else { return false }
-        
-        print("-------")
-        print("adjusting \(corner.corner) to height \(clamped)")
         
         switch corner.corner {
             

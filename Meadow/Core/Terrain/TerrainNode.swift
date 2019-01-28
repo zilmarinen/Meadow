@@ -8,7 +8,7 @@
 
 import SceneKit
 
-public class TerrainNode<NodeEdge: TerrainNodeEdge>: GridNode, SceneGraphParent {
+public class TerrainNode<NodeEdge: TerrainNodeEdge<TerrainEdgeLayer>>: GridNode, SceneGraphParent {
     
     public typealias ChildType = NodeEdge
     
@@ -34,9 +34,9 @@ public class TerrainNode<NodeEdge: TerrainNodeEdge>: GridNode, SceneGraphParent 
         
         if !isDirty { return }
         
-        children.forEach { layer in
+        children.forEach { edge in
             
-            layer.clean()
+            edge.clean()
         }
         
         isDirty = false
@@ -44,9 +44,7 @@ public class TerrainNode<NodeEdge: TerrainNodeEdge>: GridNode, SceneGraphParent 
     
     public override var mesh: Mesh {
         
-        //
-        
-        return Mesh(meshes: [])
+        return Mesh(faces: [])
     }
 }
 
@@ -76,11 +74,12 @@ extension TerrainNode {
         return nodeEdge
     }
     
-    func find(edge: GridEdge) -> NodeEdge? {
+    public func find(edge: GridEdge) -> NodeEdge? {
         
         return children.first { $0.edge == edge }
     }
     
+    @discardableResult
     func remove(edge: NodeEdge) -> Bool {
         
         if let index = index(of: edge) {

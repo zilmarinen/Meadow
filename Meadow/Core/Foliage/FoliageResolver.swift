@@ -42,7 +42,7 @@ extension FoliageResolver {
 
 extension FoliageResolver {
     
-    func clean(node: FoliageNode, terrainNode: TerrainNode<TerrainNodeEdge>?) {
+    func clean(node: FoliageNode, terrainNode: TerrainNode<TerrainNodeEdge<TerrainEdgeLayer>>?) {
         
 //        if let terrainNode = terrainNode, let upperPolytope = terrainNode.topLayer?.upperPolytope {
 //

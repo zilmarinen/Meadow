@@ -36,5 +36,5 @@ extension Axis {
     public static var unitXZ: MDWFloat { return 1.0 }
     public static var halfUnitXZ: MDWFloat { return unitXZ / 2.0 }
     
-    public static var unitY: MDWFloat { return 0.25 }
+    public static var unitY: MDWFloat { return (1 / 4) }
 }

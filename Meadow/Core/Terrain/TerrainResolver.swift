@@ -44,7 +44,7 @@ extension TerrainResolver {
 
 extension TerrainResolver {
     
-    func clean(node: TerrainNode<TerrainNodeEdge>, layer: TerrainEdgeLayer) {
+    func clean(node: TerrainNode<TerrainNodeEdge<TerrainEdgeLayer>>, layer: TerrainEdgeLayer) {
         
         var staleIntersections: [Polyhedron] = []
         
@@ -82,7 +82,7 @@ extension TerrainResolver {
         }
     }
     
-    func update(node: TerrainNode<TerrainNodeEdge>, layer: TerrainEdgeLayer) {
+    func update(node: TerrainNode<TerrainNodeEdge<TerrainEdgeLayer>>, layer: TerrainEdgeLayer) {
         
         if let areaTile = areas.find(tile: node.volume.coordinate) {
             

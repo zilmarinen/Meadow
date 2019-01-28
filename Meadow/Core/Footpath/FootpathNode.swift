@@ -50,75 +50,7 @@ public class FootpathNode: GridNode {
     
     public override var mesh: Mesh {
         
-        guard let footpathType = footpathType else { return Mesh(faces: []) }
-        
-        var meshFaces: [MeshFace] = []
-        
-        let meshPolytope = Polytope.offset(polytope: lowerPolytope, y: FootpathNode.surface)
-        
-        var insetPolytope = meshPolytope
-        
-        GridEdge.Edges.forEach { edge in
-            
-            insetPolytope = Polytope.inset(polytope: insetPolytope, edge: edge, inset: FootpathNode.kerb)
-        }
-        
-        GridEdge.Edges.forEach { edge in
-            
-            let (c0, c1) = GridCorner.corners(edge: edge)
-            
-            let d0 = GridCorner.opposite(corner: c0)
-            let d1 = GridCorner.opposite(corner: c1)
-            
-            let surfaceColor = footpathType.colorPalette?.primary.vector ?? SCNVector4Zero
-            
-            meshFaces.append(MeshProvider.surface(corners: (c0, c1), polytope: insetPolytope, color: surfaceColor))
-            
-            if let neighbour = find(neighbour: edge)?.node as? FootpathNode {
-                
-                let y0 = self.corners[c0.rawValue]
-                let y1 = self.corners[c1.rawValue]
-                let y2 = neighbour.corners[d0.rawValue]
-                let y3 = neighbour.corners[d1.rawValue]
-                
-                if y0 == y3 && y1 == y2 {
-                    
-                    let v0 = meshPolytope.vertices[c0.rawValue]
-                    let v1 = meshPolytope.vertices[c1.rawValue]
-                    let v2 = insetPolytope.vertices[c1.rawValue]
-                    let v3 = insetPolytope.vertices[c0.rawValue]
-                    var v4 = v0
-                    var v5 = v1
-                    
-                    let (ce0, ce1) = GridEdge.edges(corner: c0)
-                    let (ce2, ce3) = GridEdge.edges(corner: c1)
-                    
-                    let e0 = (ce0 != edge ? ce0 : ce1)
-                    let e1 = (ce2 != edge ? ce2 : ce3)
-                    
-                    let a0 = find(neighbour: e0)?.node as? FootpathNode
-                    let a1 = find(neighbour: e1)?.node as? FootpathNode
-                    
-                    let d0 = neighbour.find(neighbour: e0)?.node as? FootpathNode
-                    let d1 = neighbour.find(neighbour: e1)?.node as? FootpathNode
-                    
-                    if a0 == nil || (a0 != nil && d0 == nil) {
-                        
-                        v4 = SCNVector3.lerp(from: v0, to: v1, factor: FootpathNode.kerb)
-                    }
-                    
-                    if a1 == nil || (a1 != nil && d1 == nil) {
-                        
-                        v5 = SCNVector3.lerp(from: v1, to: v0, factor: FootpathNode.kerb)
-                    }
-                    
-                    meshFaces.append(MeshFace(v0: v4, v1: v5, v2: v2, projectedNormal: SCNVector3.Up, color: surfaceColor))
-                    meshFaces.append(MeshFace(v0: v4, v1: v2, v2: v3, projectedNormal: SCNVector3.Up, color: surfaceColor))
-                }
-            }
-        }
-        
-        return Mesh(faces: meshFaces)
+        return Mesh(faces: [])
     }
 }
 

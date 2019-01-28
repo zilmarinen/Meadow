@@ -13,7 +13,7 @@ public class Scene: SCNScene, SceneGraphObserver, SceneGraphParent, SceneGraphCh
     
     public typealias ChildType = SCNNode
     
-    public var children: [SCNNode] { return [rootNode] }
+    public var children: [SCNNode] { return rootNode.childNodes }
     
     public var name: String? { return rootNode.name }
     

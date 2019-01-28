@@ -111,7 +111,7 @@ extension GridTile: SceneGraphUpdatable {
     }
 }
 
-extension GridTile: GridMeshProvider {
+extension GridTile: MeshProvider {
     
     public var mesh: Mesh {
         

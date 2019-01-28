@@ -6,6 +6,6 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-public class TerrainChunk: GridChunk<TerrainTile, TerrainNode<TerrainNodeEdge>> {
+public class TerrainChunk: GridChunk<TerrainTile, TerrainNode<TerrainNodeEdge<TerrainEdgeLayer>>> {
     
 }

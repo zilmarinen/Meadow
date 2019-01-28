@@ -6,9 +6,9 @@
 //  Copyright © 2019 Script Orchard. All rights reserved.
 //
 
-public class TerrainNodeEdge: SceneGraphChild, SceneGraphObserver, SceneGraphParent {
+public class TerrainNodeEdge<EdgeLayer: TerrainEdgeLayer>: SceneGraphChild, SceneGraphObserver, SceneGraphParent {
     
-    public typealias ChildType = TerrainEdgeLayer
+    public typealias ChildType = EdgeLayer
     
     public var observer: SceneGraphObserver?
     
@@ -117,7 +117,7 @@ extension TerrainNodeEdge {
             guard topLayer.base < World.ceiling else { return nil }
         }
         
-        let layer = TerrainEdgeLayer(observer: self, coordinate: self.volume.coordinate, edge: self.edge)
+        let layer = EdgeLayer(observer: self, coordinate: self.volume.coordinate, edge: self.edge)
         
         topLayer?.upper = layer
         
@@ -136,7 +136,7 @@ extension TerrainNodeEdge {
         return layer
     }
     
-    func remove(layer: TerrainEdgeLayer) -> Bool {
+    func remove(layer: EdgeLayer) -> Bool {
         
         if let index = index(of: layer) {
             

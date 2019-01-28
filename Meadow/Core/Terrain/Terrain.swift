@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class Terrain: Grid<TerrainChunk, TerrainTile, TerrainNode<TerrainNodeEdge>> {
+public class Terrain: Grid<TerrainChunk, TerrainTile, TerrainNode<TerrainNodeEdge<TerrainEdgeLayer>>> {
     
     
 }
@@ -46,7 +46,7 @@ extension Terrain {
         return nodeEdge?.add(layer: terrainType)
     }
     
-    func add(node coordinate: Coordinate) -> TerrainNode<TerrainNodeEdge>? {
+    func add(node coordinate: Coordinate) -> TerrainNode<TerrainNodeEdge<TerrainEdgeLayer>>? {
         
         guard let node = add(node: TerrainTile.fixedVolume(coordinate)) else { return nil }
         
@@ -59,6 +59,11 @@ extension Terrain {
         }
         
         return node
+    }
+    
+    func find(edge coordinate: Coordinate, edge: GridEdge) -> TerrainNodeEdge<TerrainEdgeLayer>? {
+        
+        return find(node: coordinate)?.find(edge: edge)
     }
     
     func remove(layer: TerrainEdgeLayer) -> Bool {

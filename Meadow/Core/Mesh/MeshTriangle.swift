@@ -14,4 +14,3 @@ public struct MeshTriangle {
     
     public var indices: [Int32] { return [i, j, k] }
 }
-

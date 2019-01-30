@@ -66,6 +66,7 @@ extension Terrain {
         return find(node: coordinate)?.find(edge: edge)
     }
     
+    @discardableResult
     func remove(layer: TerrainEdgeLayer) -> Bool {
         
         guard let node = find(node: layer.coordinate) else { return false }

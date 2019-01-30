@@ -29,7 +29,7 @@ public class TerrainNodeEdge<EdgeLayer: TerrainEdgeLayer>: SceneGraphChild, Scen
     
     public let volume: Volume
     
-    let edge: GridEdge
+    public let edge: GridEdge
     
     var isDirty: Bool = false
     
@@ -91,6 +91,21 @@ extension TerrainNodeEdge: SceneGraphSoilable {
         
         isDirty = false
     }
+}
+
+extension TerrainNodeEdge: GridPolyhedronProvider {
+    
+    var upperPolytope: Polytope {
+        
+        return (topLayer?.upperPolytope ?? Polytope(x: MDWFloat(volume.coordinate.x), y0: World.floor, y1: World.floor, y2: World.floor, y3: World.floor, z: MDWFloat(volume.coordinate.z)))
+    }
+    
+    var lowerPolytope: Polytope {
+        
+        return (bottomLayer?.lowerPolytope ?? Polytope(x: MDWFloat(volume.coordinate.x), y0: World.floor, y1: World.floor, y2: World.floor, y3: World.floor, z: MDWFloat(volume.coordinate.z)))
+    }
+    
+    public var polyhedron: Polyhedron { return Polyhedron(upperPolytope: upperPolytope, lowerPolytope: lowerPolytope) }
 }
 
 extension TerrainNodeEdge {
@@ -168,5 +183,10 @@ extension TerrainNodeEdge {
     var topLayer: TerrainEdgeLayer? {
         
         return children.last
+    }
+    
+    var bottomLayer: TerrainEdgeLayer? {
+        
+        return children.first
     }
 }

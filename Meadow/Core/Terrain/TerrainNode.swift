@@ -14,7 +14,7 @@ public class TerrainNode<NodeEdge: TerrainNodeEdge<TerrainEdgeLayer>>: GridNode,
     
     public var children: [ChildType] = []
     
-    public var intersections: [Polyhedron] = []
+    public var cutaways: [TerrainCutaway] = []
     
     enum CodingKeys: CodingKey {
         
@@ -44,7 +44,75 @@ public class TerrainNode<NodeEdge: TerrainNodeEdge<TerrainEdgeLayer>>: GridNode,
     
     public override var mesh: Mesh {
         
-        return Mesh(faces: [])
+        var faces: [MeshFace] = []
+        
+        for edgeIndex in 0..<totalChildren {
+        
+            guard let nodeEdge = child(at: edgeIndex), !nodeEdge.isHidden else { continue }
+            
+            let (c0, c1) = GridCorner.corners(edge: nodeEdge.edge)
+            
+            let edgeNormal = GridEdge.normal(edge: nodeEdge.edge)
+            let inverseNormal = SCNVector3.negate(vector: edgeNormal)
+            
+            let neighbourNode = find(neighbour: nodeEdge.edge)?.node as? TerrainNode
+            
+            let edgeStencils = (neighbourNode?.stencils(edge: GridEdge.opposite(edge: nodeEdge.edge)) ?? [])
+            
+            for layerIndex in 0..<nodeEdge.totalChildren {
+                
+                guard let layer = nodeEdge.child(at: layerIndex), let colorPalette = layer.terrainType.colorPalette, !layer.isHidden else { continue }
+                
+                let polyhedrons = Polyhedron.subtract(polyhedrons: cutaways, from: layer.polyhedron)
+                
+                polyhedrons.forEach { polyhedron in
+                    
+                    if layer.upper == nil || layer.upper?.lowerPolytope != polyhedron.upperPolytope {
+                        
+                        faces.append(MeshFace.apex(corners: (c0: c0, c1: c1), polytope: polyhedron.upperPolytope, color: colorPalette.primary.vector))
+                    }
+                    
+                    let stencils = Polyhedron.subtract(polyhedrons: edgeStencils, from: polyhedron)
+                    
+                    stencils.forEach { stencil in
+                        
+                        let c0equal = Axis.Y(y: polyhedron.upperPolytope.vertices[c0.rawValue].y) == Axis.Y(y: stencil.upperPolytope.vertices[c0.rawValue].y)
+                        let c1equal = Axis.Y(y: polyhedron.upperPolytope.vertices[c1.rawValue].y) == Axis.Y(y: stencil.upperPolytope.vertices[c1.rawValue].y)
+                        
+                        if c0equal && c1equal {
+                            
+                            faces.append(contentsOf: MeshFace.edge(crown: (c0: c0, c1: c1), polyhedron: stencil, normal: edgeNormal, color: colorPalette.primary.vector))
+                            faces.append(contentsOf: MeshFace.edge(throne: (c0: c0, c1: c1), polyhedron: stencil, normal: edgeNormal, color: colorPalette.secondary.vector))
+                        }
+                        else {
+                            
+                            faces.append(contentsOf: MeshFace.edge(corners: (c0: c0, c1: c1), polyhedron: stencil, normal: edgeNormal, color: colorPalette.secondary.vector))
+                        }
+                    }
+                    
+                    let (e0, e1) = GridEdge.edges(edge: nodeEdge.edge)
+                    
+                    [e0, e1].forEach { edge in
+                    
+                        let (c2, c3) = GridCorner.corners(edge: edge)
+                        
+                        let corner = (c2 == c0 ? c2 : (c2 == c1 ? c2 : c3))
+                        
+                        if layer.upper == nil || layer.upper?.lowerPolytope != polyhedron.upperPolytope {
+                            
+                            faces.append(contentsOf: MeshFace.diagonal(crown: corner, polyhedron: polyhedron, normal: inverseNormal, color: colorPalette.primary.vector))
+                            faces.append(contentsOf: MeshFace.diagonal(throne: corner, polyhedron: polyhedron, normal: inverseNormal, color: colorPalette.secondary.vector))
+                        }
+                        else {
+                            
+                            faces.append(contentsOf: MeshFace.diagonal(corner: corner, polyhedron: polyhedron, normal: inverseNormal, color: colorPalette.secondary.vector))
+                        }
+                    }
+                }
+            }
+        }
+        
+        return Mesh(faces: faces)
     }
 }
 
@@ -97,21 +165,22 @@ extension TerrainNode {
     }
 }
 
-extension TerrainNode: TerrainNodeIntersectionProvider {
+extension TerrainNode: TerrainCutawayProvider {
     
-    @discardableResult
-    public func add(intersection polyhedron: Polyhedron) -> Bool {
+    func add(cutaway: TerrainCutaway) -> Bool {
         
-        let intersection = intersections.first {
-            
-            let elevation = $0.elevation(referencing: polyhedron)
-            
-            return elevation == .equal || elevation == .intersecting
+        let match = cutaways.first {
+         
+            switch $0.elevation(referencing: cutaway) {
+             
+            case .equal, .intersecting: return true
+            default: return false
+            }
         }
         
-        if intersection == nil {
-            
-            intersections.append(polyhedron)
+        if match == nil {
+         
+            cutaways.append(cutaway)
             
             becomeDirty()
             
@@ -121,12 +190,11 @@ extension TerrainNode: TerrainNodeIntersectionProvider {
         return false
     }
     
-    @discardableResult
-    public func remove(intersection polyhedron: Polyhedron) -> Bool {
+    func remove(cutaway: TerrainCutaway) -> Bool {
         
-        if let index = intersections.index(of: polyhedron) {
+        if let index = index(of: cutaway) {
             
-            intersections.remove(at: index)
+            cutaways.remove(at: index)
             
             becomeDirty()
             
@@ -134,5 +202,12 @@ extension TerrainNode: TerrainNodeIntersectionProvider {
         }
         
         return false
+    }
+    
+    func stencils(edge: GridEdge) -> [Polyhedron] {
+        
+        guard let nodeEdge = find(edge: edge) else { return [] }
+        
+        return Polyhedron.subtract(polyhedrons: cutaways, from: nodeEdge.polyhedron)
     }
 }

@@ -149,8 +149,10 @@ extension TerrainEdgeLayer: GridPolyhedronProvider {
         
         switch edge {
             
-        case .north, .south: return Polytope(x: MDWFloat(coordinate.x), y0: c0.height, y1: c1.height, y2: c0.height, y3: c1.height, z: MDWFloat(coordinate.z))
-        case .east, .west: return Polytope(x: MDWFloat(coordinate.x), y0: c1.height, y1: c0.height, y2: c1.height, y3: c0.height, z: MDWFloat(coordinate.z))
+        case .north: return Polytope(x: MDWFloat(coordinate.x), y0: c0.height, y1: c1.height, y2: c2.height, y3: c2.height, z: MDWFloat(coordinate.z))
+        case .east: return Polytope(x: MDWFloat(coordinate.x), y0: c2.height, y1: c0.height, y2: c1.height, y3: c2.height, z: MDWFloat(coordinate.z))
+        case .south: return Polytope(x: MDWFloat(coordinate.x), y0: c2.height, y1: c2.height, y2: c0.height, y3: c1.height, z: MDWFloat(coordinate.z))
+        case .west: return Polytope(x: MDWFloat(coordinate.x), y0: c1.height, y1: c2.height, y2: c2.height, y3: c0.height, z: MDWFloat(coordinate.z))
         }
     }
     
@@ -243,17 +245,19 @@ extension TerrainEdgeLayer {
             
             let delta = (connected.height - height)
             
-            guard abs(delta) > 1 else { return }
+            let threshold = 2
+            
+            guard abs(delta) > threshold else { return }
             
             switch sign(delta) {
                 
             case .negative:
                 
-                adjust(corner: connected, height: (height - 1))
+                adjust(corner: connected, height: (height - threshold))
                 
             case .positive:
                 
-                adjust(corner: connected, height: (height + 1))
+                adjust(corner: connected, height: (height + threshold))
                 
             default: break
             }
@@ -297,4 +301,9 @@ extension TerrainEdgeLayer {
         
         return true
     }
+}
+
+extension TerrainEdgeLayer {
+    
+    public static let crown: MDWFloat = (Axis.unitY / 2.0)
 }

@@ -10,11 +10,9 @@ import Foundation
 
 public class GridTile<Node: GridNode>: SceneGraphChild, SceneGraphObserver, SceneGraphParent {
     
-    public typealias ChildType = Node
+    var children = Tree<Node>()
     
     public var observer: SceneGraphObserver?
-    
-    public var children: [ChildType] = []
     
     public var name: String? { return "Tile" }
     
@@ -56,7 +54,7 @@ extension GridTile: Encodable {
         
         try container.encode(self.name, forKey: .name)
         try container.encode(self.volume, forKey: .volume)
-        try container.encode(self.children, forKey: .children)
+        try container.encode(self.children.children, forKey: .children)
     }
 }
 
@@ -67,6 +65,23 @@ extension GridTile: Hashable {
     public static func == (lhs: GridTile, rhs: GridTile) -> Bool {
         
         return lhs.volume == rhs.volume
+    }
+}
+
+extension GridTile {
+    
+    public var totalChildren: Int { return children.count }
+    
+    public func child(at index: Int) -> SceneGraphChild? {
+        
+        return children[index]
+    }
+    
+    public func index(of child: SceneGraphChild) -> Int? {
+        
+        guard let child = child as? Node else { return nil }
+        
+        return children.index(of: child)
     }
 }
 
@@ -126,12 +141,7 @@ extension GridTile: MeshProvider {
 
 extension GridTile {
     
-    public func index(of child: ChildType) -> Int? {
-        
-        return children.index(of: child)
-    }
-    
-    public func child(didBecomeDirty child: SceneGraphChild) {
+   public func child(didBecomeDirty child: SceneGraphChild) {
         
         becomeDirty()
         

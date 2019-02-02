@@ -35,72 +35,44 @@ public class ArtDirector {
             }
         }
         
-        self.colors = Colors(colors: colorIntermediates.sorted(by: { (lhs, rhs) -> Bool in
+        self.colors = Colors(children: Tree<Color>(colorIntermediates.sorted(by: { (lhs, rhs) -> Bool in
             
             return lhs.red > rhs.red && lhs.green > rhs.green && lhs.blue > rhs.blue
-        }))
+        })))
         
-        self.palettes = ColorPalettes(palettes: colorPalettes.sorted(by: { (lhs, rhs) -> Bool in
+        self.palettes = ColorPalettes(children: Tree<ColorPalette>(colorPalettes.sorted(by: { (lhs, rhs) -> Bool in
             
             return lhs.name < rhs.name
-        }))
+        })))
     }
 }
 
 extension ArtDirector {
     
-    public struct ColorPalettes: TreeParent {
+    public struct ColorPalettes {
         
-        public typealias ChildType = ColorPalette
-        
-        let palettes: [ChildType]
-        
-        public var totalChildren: Int { return palettes.count }
-        
-        public func child(at index: Int) -> ChildType? {
-            
-            return palettes[index]
-        }
-        
-        public func index(of child: ChildType) -> Int? {
-            
-            return palettes.index(of: child)
-        }
+        public let children: Tree<ColorPalette>
     }
     
     public func palette(named: String) -> ColorPalette? {
         
         let name = named.lowercased()
         
-        return palettes.palettes.first { $0.name.lowercased() == name }
+        return palettes.children.first { $0.name.lowercased() == name }
     }
 }
 
 extension ArtDirector {
     
-    public struct Colors: TreeParent {
+    public struct Colors: Equatable {
         
-        public typealias ChildType = Color
-        
-        let colors: [ChildType]
-        
-        public var totalChildren: Int { return colors.count }
-        
-        public func child(at index: Int) -> ChildType? {
-            
-            return colors[index]
-        }
-        
-        public func index(of child: ChildType) -> Int? {
-            
-            return colors.index(of: child)
-        }
+        public let children: Tree<Color>
     }
     
     public func color(named: String) -> Color? {
         
         let name = named.lowercased()
         
-        return colors.colors.first { $0.name.lowercased() == name }
+        return colors.children.first { $0.name.lowercased() == name }
     }
 }

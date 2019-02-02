@@ -41,9 +41,11 @@ extension Footpath {
             
             if let tile = find(tile: coordinate + GridEdge.extent(edge: edge)) {
             
-                for index in 0..<tile.totalChildren {
+                for index in 0..<tile.children.count {
                     
-                    if let neighbour = tile.child(at: index), (neighbour.volume.coordinate.y >= coordinate.y - 1 && neighbour.volume.coordinate.y <= coordinate.y + 1) {
+                    let neighbour = tile.children[index]
+                    
+                    if (neighbour.volume.coordinate.y >= coordinate.y - 1 && neighbour.volume.coordinate.y <= coordinate.y + 1) {
                         
                         node.add(neighbour: neighbour, edge: edge)
                     }

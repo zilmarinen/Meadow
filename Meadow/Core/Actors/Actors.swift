@@ -8,13 +8,9 @@
 
 import SceneKit
 
-public class Actors: SCNNode, SceneGraphChild, SceneGraphObserver, SceneGraphParent {
-    
-    public typealias ChildType = SCNNode
+public class Actors: SCNNode, SceneGraphChild, SceneGraphObserver {
     
     public var observer: SceneGraphObserver?
-    
-    public var children: [SCNNode] { return childNodes }
     
     public var volume: Volume { return Volume(coordinate: Coordinate.zero, size: Size.one) }
     
@@ -43,11 +39,6 @@ public class Actors: SCNNode, SceneGraphChild, SceneGraphObserver, SceneGraphPar
 }
 
 extension Actors {
-    
-    public func index(of child: SCNNode) -> Int? {
-        
-        return childNodes.index(of: child)
-    }
     
     public func child(didBecomeDirty child: SceneGraphChild) {
         

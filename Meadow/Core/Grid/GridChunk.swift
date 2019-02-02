@@ -10,11 +10,9 @@ import SceneKit
 
 public class GridChunk<Tile: GridTile<Node>, Node: GridNode>: SCNNode, SceneGraphChild, SceneGraphObserver, SceneGraphParent {
     
-    public typealias ChildType = Tile
+    var children = Tree<Tile>()
     
     public var observer: SceneGraphObserver?
-    
-    public var children: [ChildType] = []
     
     var isDirty: Bool = false
     
@@ -53,7 +51,24 @@ extension GridChunk: Encodable {
         
         try container.encode(self.name, forKey: .name)
         try container.encode(self.volume, forKey: .volume)
-        try container.encode(self.children, forKey: .children)
+        try container.encode(self.children.children, forKey: .children)
+    }
+}
+
+extension GridChunk {
+    
+    public var totalChildren: Int { return children.count }
+    
+    public func child(at index: Int) -> SceneGraphChild? {
+        
+        return children[index]
+    }
+    
+    public func index(of child: SceneGraphChild) -> Int? {
+        
+        guard let child = child as? Tile else { return nil }
+        
+        return children.index(of: child)
     }
 }
 
@@ -111,11 +126,6 @@ extension GridChunk: MeshProvider {
 }
 
 extension GridChunk {
-    
-    public func index(of child: ChildType) -> Int? {
-        
-        return children.index(of: child)
-    }
     
     public func child(didBecomeDirty child: SceneGraphChild) {
         

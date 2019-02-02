@@ -93,7 +93,7 @@ extension PropList {
     }
 }
 
-extension PropList: TreeParent {
+extension PropList {
     
     public typealias ChildType = PropPrototype
     

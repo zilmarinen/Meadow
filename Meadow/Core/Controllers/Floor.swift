@@ -8,13 +8,9 @@
 
 import SceneKit
 
-public class Floor: SCNNode, SceneGraphChild, SceneGraphParent {
-    
-    public typealias ChildType = SCNNode
+public class Floor: SCNNode, SceneGraphChild {
     
     public var observer: SceneGraphObserver?
-    
-    public var children: [ChildType] { return childNodes }
     
     public var volume: Volume {
         
@@ -55,14 +51,4 @@ public class Floor: SCNNode, SceneGraphChild, SceneGraphParent {
         
         fatalError("init(coder:) has not been implemented")
     }
-}
-
-extension Floor {
-    
-    public func index(of child: SCNNode) -> Int? {
-        
-        return children.index(of: child)
-    }
-    
-    
 }

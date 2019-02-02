@@ -46,7 +46,7 @@ extension Area {
         
         node.externalAreaType = AreaType.brick
         node.internalAreaType = AreaType.concrete
-        node.floorColorPalette = ArtDirector.shared?.palettes.child(at: 0)
+        node.floorColorPalette = ArtDirector.shared?.palettes.children.first
         
         GridEdge.Edges.forEach { edge in
             

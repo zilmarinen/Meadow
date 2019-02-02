@@ -8,11 +8,9 @@
 
 public class TerrainNodeEdge<EdgeLayer: TerrainEdgeLayer>: SceneGraphChild, SceneGraphObserver, SceneGraphParent {
     
-    public typealias ChildType = EdgeLayer
+    var children = Tree<EdgeLayer>()
     
     public var observer: SceneGraphObserver?
-    
-    public var children: [ChildType] = []
     
     public var name: String? { return "Edge" }
     
@@ -68,6 +66,23 @@ extension TerrainNodeEdge: Hashable {
     }
 }
 
+extension TerrainNodeEdge {
+    
+    public var totalChildren: Int { return children.count }
+    
+    public func child(at index: Int) -> SceneGraphChild? {
+        
+        return children[index]
+    }
+    
+    public func index(of child: SceneGraphChild) -> Int? {
+        
+        guard let child = child as? EdgeLayer else { return nil }
+        
+        return children.index(of: child)
+    }
+}
+
 extension TerrainNodeEdge: SceneGraphSoilable {
     
     public func becomeDirty() {
@@ -110,11 +125,6 @@ extension TerrainNodeEdge: GridPolyhedronProvider {
 
 extension TerrainNodeEdge {
     
-    public func index(of child: ChildType) -> Int? {
-        
-        return children.index(of: child)
-    }
-    
     public func child(didBecomeDirty child: SceneGraphChild) {
         
         becomeDirty()
@@ -153,7 +163,7 @@ extension TerrainNodeEdge {
     
     func remove(layer: EdgeLayer) -> Bool {
         
-        if let index = index(of: layer) {
+        if let index = children.index(of: layer) {
             
             let upper = layer.upper
             let lower = layer.lower

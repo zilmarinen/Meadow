@@ -9,11 +9,9 @@
 import Foundation
 import SceneKit
 
-public class Scene: SCNScene, SceneGraphObserver, SceneGraphParent, SceneGraphChild {
+public class Scene: SCNScene, SceneGraphChild, SceneGraphObserver, SceneGraphParent {
     
-    public typealias ChildType = SCNNode
-    
-    public var children: [SCNNode] { return rootNode.childNodes }
+    var children = Tree<SCNNode>()
     
     public var name: String? { return rootNode.name }
     
@@ -41,22 +39,42 @@ public class Scene: SCNScene, SceneGraphObserver, SceneGraphParent, SceneGraphCh
         
         world.observer = self
         
-        rootNode.addChildNode(cameraJib)
-        rootNode.addChildNode(world)
+        addChildNode(cameraJib)
+        addChildNode(world)
     }
     
     public required init?(coder aDecoder: NSCoder) {
         
         fatalError("init(coder:) has not been implemented")
     }
+    
+    public func addChildNode(_ child: SCNNode) {
+        
+        if children.append(child) {
+            
+            rootNode.addChildNode(child)
+        }
+    }
 }
 
 extension Scene {
     
-    public func index(of child: SCNNode) -> Int? {
+    public var totalChildren: Int { return children.count }
+    
+    public func child(at index: Int) -> SceneGraphChild? {
         
-        return rootNode.childNodes.index(of: child)
+        return children[index] as? SceneGraphChild
     }
+    
+    public func index(of child: SceneGraphChild) -> Int? {
+        
+        guard let child = child as? SCNNode else { return nil }
+        
+        return children.index(of: child)
+    }
+}
+
+extension Scene {
     
     public func child(didBecomeDirty child: SceneGraphChild) {
         

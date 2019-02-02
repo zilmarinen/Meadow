@@ -10,17 +10,25 @@ import SceneKit
 
 public class Grid<Chunk: GridChunk<Tile, Node>, Tile: GridTile<Node>, Node: GridNode>: SCNNode, SceneGraphChild, SceneGraphObserver, SceneGraphParent {
     
-    public typealias ChildType = Chunk
+    var children = Tree<Chunk>()
     
     public var observer: SceneGraphObserver?
-    
-    public var children: [ChildType] { return childNodes as! [ChildType] }
     
     var isDirty: Bool = false
     
     public var volume: Volume {
         
         return Volume(coordinate: Coordinate.zero, size: Size.one)
+    }
+    
+    public override func addChildNode(_ child: SCNNode) {
+        
+        guard let child = child as? Chunk else { return }
+        
+        if children.append(child) {
+            
+            super.addChildNode(child)
+        }
     }
 }
 
@@ -37,10 +45,26 @@ extension Grid: Encodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         try container.encode(self.name, forKey: .name)
-        try container.encode(self.children, forKey: .children)
+        try container.encode(self.children.children, forKey: .children)
     }
 }
 
+extension Grid {
+    
+    public var totalChildren: Int { return children.count }
+    
+    public func child(at index: Int) -> SceneGraphChild? {
+        
+        return children[index]
+    }
+    
+    public func index(of child: SceneGraphChild) -> Int? {
+        
+        guard let child = child as? Chunk else { return nil }
+        
+        return children.index(of: child)
+    }
+}
 
 extension Grid: SceneGraphSoilable {
     
@@ -81,11 +105,6 @@ extension Grid: SceneGraphUpdatable {
 }
 
 extension Grid {
-    
-    public func index(of child: ChildType) -> Int? {
-        
-        return childNodes.index(of: child)
-    }
     
     public func child(didBecomeDirty child: SceneGraphChild) {
         
@@ -162,10 +181,12 @@ extension Grid {
             
             chunk.observer = nil
             
-            while let tile = chunk.child(at: 0) {
+            while let tile = chunk.children.first {
                 
                 chunk.remove(tile: tile)
             }
+            
+            children.remove(chunk)
             
             becomeDirty()
             
@@ -182,7 +203,7 @@ extension Grid {
             
             if chunk.remove(tile: tile) {
                 
-                while let node = tile.child(at: 0) {
+                while let node = tile.children.first {
                     
                     tile.remove(node: node)
                 }

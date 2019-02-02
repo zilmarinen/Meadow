@@ -10,11 +10,9 @@ import SceneKit
 
 public class PropChunk: SCNNode, SceneGraphChild, SceneGraphObserver, SceneGraphParent {
     
-    public typealias ChildType = Prop
+    var children = Tree<Prop>()
     
     public var observer: SceneGraphObserver?
-    
-    public var children: [ChildType] { return childNodes as! [ChildType] }
     
     var isDirty: Bool = false
     
@@ -34,6 +32,40 @@ public class PropChunk: SCNNode, SceneGraphChild, SceneGraphObserver, SceneGraph
     required init?(coder aDecoder: NSCoder) {
         
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension PropChunk: Encodable {
+    
+    enum CodingKeys: CodingKey {
+        
+        case name
+        case children
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(self.name, forKey: .name)
+        try container.encode(self.children.children, forKey: .children)
+    }
+}
+
+extension PropChunk {
+    
+    public var totalChildren: Int { return children.count }
+    
+    public func child(at index: Int) -> SceneGraphChild? {
+        
+        return children[index]
+    }
+    
+    public func index(of child: SceneGraphChild) -> Int? {
+        
+        guard let child = child as? Prop else { return nil }
+        
+        return children.index(of: child)
     }
 }
 
@@ -61,11 +93,6 @@ extension PropChunk: SceneGraphSoilable {
 }
 
 extension PropChunk {
-    
-    public func index(of child: Prop) -> Int? {
-        
-        return childNodes.index(of: child)
-    }
     
     public func child(didBecomeDirty child: SceneGraphChild) {
         
@@ -124,22 +151,5 @@ extension PropChunk {
         }
         
         return false
-    }
-}
-
-extension PropChunk: Encodable {
-    
-    enum CodingKeys: CodingKey {
-        
-        case name
-        case children
-    }
-    
-    public func encode(to encoder: Encoder) throws {
-        
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        
-        try container.encode(self.name, forKey: .name)
-        try container.encode(self.children, forKey: .children)
     }
 }

@@ -10,13 +10,11 @@ import SceneKit
 
 public class TerrainNode<NodeEdge: TerrainNodeEdge<TerrainEdgeLayer>>: GridNode, SceneGraphParent {
     
-    public typealias ChildType = NodeEdge
-    
-    public var children: [ChildType] = []
+    var children = Tree<NodeEdge>()
     
     public var cutaways: [TerrainCutaway] = []
     
-    enum CodingKeys: CodingKey {
+    private enum CodingKeys: CodingKey {
         
         case children
     }
@@ -27,7 +25,7 @@ public class TerrainNode<NodeEdge: TerrainNodeEdge<TerrainEdgeLayer>>: GridNode,
         
         var container = encoder.container(keyedBy: CodingKeys.self)
         
-        try container.encode(self.children, forKey: .children)
+        try container.encode(self.children.children, forKey: .children)
     }
     
     public override func clean() {
@@ -46,9 +44,11 @@ public class TerrainNode<NodeEdge: TerrainNodeEdge<TerrainEdgeLayer>>: GridNode,
         
         var faces: [MeshFace] = []
         
-        for edgeIndex in 0..<totalChildren {
+        for edgeIndex in 0..<children.count {
         
-            guard let nodeEdge = child(at: edgeIndex), !nodeEdge.isHidden else { continue }
+            let nodeEdge = children[edgeIndex]
+            
+            guard !nodeEdge.isHidden else { continue }
             
             let (c0, c1) = GridCorner.corners(edge: nodeEdge.edge)
             
@@ -59,9 +59,11 @@ public class TerrainNode<NodeEdge: TerrainNodeEdge<TerrainEdgeLayer>>: GridNode,
             
             let edgeStencils = (neighbourNode?.stencils(edge: GridEdge.opposite(edge: nodeEdge.edge)) ?? [])
             
-            for layerIndex in 0..<nodeEdge.totalChildren {
+            for layerIndex in 0..<nodeEdge.children.count {
                 
-                guard let layer = nodeEdge.child(at: layerIndex), let colorPalette = layer.terrainType.colorPalette, !layer.isHidden else { continue }
+                let layer = nodeEdge.children[layerIndex]
+                
+                guard let colorPalette = layer.terrainType.colorPalette, !layer.isHidden else { continue }
                 
                 let polyhedrons = Polyhedron.subtract(polyhedrons: cutaways, from: layer.polyhedron)
                 
@@ -118,7 +120,16 @@ public class TerrainNode<NodeEdge: TerrainNodeEdge<TerrainEdgeLayer>>: GridNode,
 
 extension TerrainNode {
     
-    public func index(of child: ChildType) -> Int? {
+    public var totalChildren: Int { return children.count }
+    
+    public func child(at index: Int) -> SceneGraphChild? {
+        
+        return children[index]
+    }
+    
+    public func index(of child: SceneGraphChild) -> Int? {
+        
+        guard let child = child as? NodeEdge else { return nil }
         
         return children.index(of: child)
     }
@@ -150,7 +161,7 @@ extension TerrainNode {
     @discardableResult
     func remove(edge: NodeEdge) -> Bool {
         
-        if let index = index(of: edge) {
+        if let index = children.index(of: edge) {
             
             children.remove(at: index)
             

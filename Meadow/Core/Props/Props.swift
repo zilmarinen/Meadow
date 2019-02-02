@@ -10,16 +10,49 @@ import SceneKit
 
 public class Props: SCNNode, SceneGraphChild, SceneGraphObserver, SceneGraphParent {
     
-    public typealias ChildType = PropChunk
+    var children = Tree<PropChunk>()
     
     public var observer: SceneGraphObserver?
-    
-    public var children: [ChildType] { return childNodes as! [ChildType] }
     
     var isDirty: Bool = false
     
     public var volume: Volume { return Volume(coordinate: Coordinate.zero, size: Size.one) }
 }
+
+extension Props {
+    
+    public var totalChildren: Int { return children.count }
+    
+    public func child(at index: Int) -> SceneGraphChild? {
+        
+        return children[index]
+    }
+    
+    public func index(of child: SceneGraphChild) -> Int? {
+        
+        guard let child = child as? PropChunk else { return nil }
+        
+        return children.index(of: child)
+    }
+}
+
+extension Props: Encodable {
+    
+    enum CodingKeys: CodingKey {
+        
+        case name
+        case children
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(self.name, forKey: .name)
+        try container.encode(self.children.children, forKey: .children)
+    }
+}
+
 
 extension Props: SceneGraphSoilable {
     
@@ -45,11 +78,6 @@ extension Props: SceneGraphSoilable {
 }
 
 extension Props {
-    
-    public func index(of child: PropChunk) -> Int? {
-        
-        return childNodes.index(of: child)
-    }
     
     public func child(didBecomeDirty child: SceneGraphChild) {
         
@@ -104,7 +132,7 @@ extension Props {
         return prop
     }
     
-    public func find(chunk coordinate: Coordinate) -> ChildType? {
+    public func find(chunk coordinate: Coordinate) -> PropChunk? {
         
         return children.first { chunk -> Bool in
             
@@ -133,7 +161,7 @@ extension Props {
     }
     
     @discardableResult
-    public func remove(chunk: ChildType) -> Bool {
+    public func remove(chunk: PropChunk) -> Bool {
         
         if index(of: chunk) != nil {
             
@@ -141,10 +169,12 @@ extension Props {
             
             chunk.observer = nil
             
-            while let prop = chunk.child(at: 0) {
+            while let prop = chunk.children.first {
                 
                 chunk.remove(prop: prop)
             }
+            
+            children.remove(chunk)
             
             becomeDirty()
             
@@ -171,22 +201,5 @@ extension Props {
         }
         
         return false
-    }
-}
-
-extension Props: Encodable {
-    
-    enum CodingKeys: CodingKey {
-        
-        case name
-        case children
-    }
-    
-    public func encode(to encoder: Encoder) throws {
-        
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        
-        try container.encode(self.name, forKey: .name)
-        try container.encode(self.children, forKey: .children)
     }
 }

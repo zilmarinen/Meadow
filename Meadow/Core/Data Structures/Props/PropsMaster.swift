@@ -30,69 +30,41 @@ public class PropsMaster {
             }
         }
         
-        self.lists = PropLists(lists: propLists.sorted(by: { (lhs, rhs) -> Bool in
+        self.lists = PropLists(children: Tree<PropList>(propLists.sorted(by: { (lhs, rhs) -> Bool in
             
             return lhs.name > rhs.name
-        }))
+        })))
         
-        self.props = Props(prototypes: propLists.flatMap { $0.prototypes } )
+        self.props = Props(children: Tree<PropPrototype>(propLists.flatMap { $0.prototypes }))
     }
 }
 
 extension PropsMaster {
     
-    public struct PropLists: TreeParent {
+    public struct PropLists {
         
-        public typealias ChildType = PropList
-        
-        let lists: [ChildType]
-        
-        public var totalChildren: Int { return lists.count }
-        
-        public func child(at index: Int) -> ChildType? {
-            
-            return lists[index]
-        }
-        
-        public func index(of child: ChildType) -> Int? {
-            
-            return lists.index(of: child)
-        }
+        public let children: Tree<PropList>
     }
     
     public func list(named: String) -> PropList? {
         
         let name = named.lowercased()
         
-        return lists.lists.first { $0.name.lowercased() == name }
+        return lists.children.first { $0.name.lowercased() == name }
     }
 }
 
 extension PropsMaster {
     
-    public struct Props: TreeParent {
+    public struct Props {
         
-        public typealias ChildType = PropPrototype
-        
-        let prototypes: [ChildType]
-        
-        public var totalChildren: Int { return prototypes.count }
-        
-        public func child(at index: Int) -> ChildType? {
-            
-            return prototypes[index]
-        }
-        
-        public func index(of child: ChildType) -> Int? {
-            
-            return prototypes.index(of: child)
-        }
+        public let children: Tree<PropPrototype>
     }
     
     public func prop(named: String) -> PropPrototype? {
         
         let name = named.lowercased()
         
-        return props.prototypes.first { $0.name.lowercased() == name }
+        return props.children.first { $0.name.lowercased() == name }
     }
 }

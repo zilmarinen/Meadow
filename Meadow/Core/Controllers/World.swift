@@ -10,9 +10,7 @@ import SceneKit
 
 public class World: SCNNode, SceneGraphChild, SceneGraphObserver, SceneGraphParent {
     
-    public typealias ChildType = SCNNode
-    
-    public var children: [SCNNode] { return childNodes }
+    var children = Tree<SCNNode>()
     
     public var observer: SceneGraphObserver?
     
@@ -98,14 +96,34 @@ public class World: SCNNode, SceneGraphChild, SceneGraphObserver, SceneGraphPare
         
         fatalError("init(coder:) has not been implemented")
     }
+    
+    public override func addChildNode(_ child: SCNNode) {
+        
+        if children.append(child) {
+            
+            super.addChildNode(child)
+        }
+    }
 }
 
 extension World {
     
-    public func index(of child: SCNNode) -> Int? {
+    public var totalChildren: Int { return children.count }
+    
+    public func child(at index: Int) -> SceneGraphChild? {
         
-        return childNodes.index(of: child)
+        return children[index] as? SceneGraphChild
     }
+    
+    public func index(of child: SceneGraphChild) -> Int? {
+        
+        guard let child = child as? SCNNode else { return nil }
+        
+        return children.index(of: child)
+    }
+}
+
+extension World {
     
     public func child(didBecomeDirty child: SceneGraphChild) {
         

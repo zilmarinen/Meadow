@@ -1,3 +1,18 @@
-PODFILE CHECKSUM: 23003d296ae82dfde05286be4b80e1efab445dd7
+PODS:
+  - THRUtilities (1.7.5):
+    - THRUtilities/Core (= 1.7.5)
+  - THRUtilities/Core (1.7.5)
 
-COCOAPODS: 1.5.0
+DEPENDENCIES:
+  - THRUtilities (from `../../3Squared/THR/THRUtilities`)
+
+EXTERNAL SOURCES:
+  THRUtilities:
+    :path: "../../3Squared/THR/THRUtilities"
+
+SPEC CHECKSUMS:
+  THRUtilities: 08695fe94b602540cba2c0db60d256320339ae5b
+
+PODFILE CHECKSUM: 42e6c59604a1ff905ccd6964bde5d24d1411c368
+
+COCOAPODS: 1.5.3

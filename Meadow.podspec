@@ -11,8 +11,27 @@ Pod::Spec.new do |s|
   s.default_subspec = 'Core'
   s.pod_target_xcconfig = { 'SWIFT_VERSION' => '4' }
 
+  s.ios.deployment_target = '11.3'
+  s.osx.deployment_target = '10.13'
+  s.tvos.deployment_target = '11.3'
+
+  s.dependency 'THRUtilities'
+
   s.subspec 'Core' do |cs|
-    cs.source_files = "Meadow/Core/*.{h,m,swift}"
+
+    cs.source_files = "Meadow/Core/**/*.{h,m,swift}"
+    cs.ios.source_files = "Meadow/Platforms/iOS/**/*.{h,m,swift}"
+    cs.osx.source_files = "Meadow/Platforms/macOS/**/*.{h,m,swift}"
+    cs.tvos.source_files = "Meadow/Platforms/iOS/**/*.{h,m,swift}"
+
+    cs.resource_bundles = {
+
+    	'Meadow' => [
+
+    		"Meadow/Core/**/*.{json,lintel,model,prop,proplist}"
+    	]
+    }
+    
   end
 
 end

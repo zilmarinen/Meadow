@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class GridTile<Node: GridNode>: SceneGraphChild, SceneGraphObserver, SceneGraphParent {
+public class GridTile<Node: GridNode>: Encodable, SceneGraphChild, SceneGraphObserver, SceneGraphParent {
     
     var children = Tree<Node>()
     
@@ -31,16 +31,6 @@ public class GridTile<Node: GridNode>: SceneGraphChild, SceneGraphObserver, Scen
     
     var isDirty: Bool = false
     
-    public required init(observer: SceneGraphObserver, volume: Volume) {
-        
-        self.observer = observer
-        
-        self.volume = volume
-    }
-}
-
-extension GridTile: Encodable {
-    
     enum CodingKeys: CodingKey {
         
         case name
@@ -55,6 +45,13 @@ extension GridTile: Encodable {
         try container.encode(self.name, forKey: .name)
         try container.encode(self.volume, forKey: .volume)
         try container.encode(self.children.children, forKey: .children)
+    }
+    
+    public required init(observer: SceneGraphObserver, volume: Volume) {
+        
+        self.observer = observer
+        
+        self.volume = volume
     }
 }
 
@@ -87,7 +84,7 @@ extension GridTile {
 
 extension GridTile: SceneGraphSoilable {
     
-    public func becomeDirty() {
+    @discardableResult public func becomeDirty() -> Bool {
         
         if !isDirty {
             
@@ -95,11 +92,13 @@ extension GridTile: SceneGraphSoilable {
             
             observer?.child(didBecomeDirty: self)
         }
+        
+        return isDirty
     }
     
-    public func clean() {
+    @discardableResult public func clean() -> Bool {
         
-        if !isDirty { return }
+        if !isDirty { return false }
         
         children.forEach { node in
             
@@ -107,6 +106,8 @@ extension GridTile: SceneGraphSoilable {
         }
         
         isDirty = false
+        
+        return true
     }
 }
 

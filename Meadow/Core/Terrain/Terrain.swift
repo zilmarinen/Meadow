@@ -10,7 +10,6 @@ import Foundation
 
 public class Terrain: Grid<TerrainChunk, TerrainTile, TerrainNode<TerrainNodeEdge<TerrainEdgeLayer>>> {
     
-    
 }
 
 extension Terrain: SceneGraphIntermediate {

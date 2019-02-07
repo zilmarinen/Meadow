@@ -6,6 +6,8 @@
 //  Copyright © 2019 Script Orchard. All rights reserved.
 //
 
+import SceneKit
+
 public class TerrainEdgeLayer: SceneGraphChild {
     
     enum LayerCorner {
@@ -73,7 +75,7 @@ public class TerrainEdgeLayer: SceneGraphChild {
     var c1 = LayerCornerHeight(corner: .c1, height: World.floor)
     var c2 = LayerCornerHeight(corner: .c2, height: World.floor)
     
-    public var terrainType: TerrainType = TerrainType.bedrock {
+    public var terrainType: TerrainType {
         
         didSet {
             
@@ -84,13 +86,12 @@ public class TerrainEdgeLayer: SceneGraphChild {
         }
     }
     
-    public required init(observer: SceneGraphObserver, coordinate: Coordinate, edge: GridEdge) {
+    public required init(observer: SceneGraphObserver, coordinate: Coordinate, edge: GridEdge, terrainType: TerrainType) {
         
         self.observer = observer
-        
         self.coordinate = coordinate
-        
         self.edge = edge
+        self.terrainType = terrainType
     }
 }
 
@@ -123,7 +124,7 @@ extension TerrainEdgeLayer: Hashable {
 
 extension TerrainEdgeLayer: SceneGraphSoilable {
     
-    public func becomeDirty() {
+    @discardableResult public func becomeDirty() -> Bool {
         
         if !isDirty {
             
@@ -131,15 +132,17 @@ extension TerrainEdgeLayer: SceneGraphSoilable {
             
             observer?.child(didBecomeDirty: self)
         }
+        
+        return isDirty
     }
     
-    public func clean() {
+    @discardableResult public func clean() -> Bool {
         
-        if !isDirty { return }
-        
-        //
+        if !isDirty { return false }
         
         isDirty = false
+        
+        return true
     }
 }
 
@@ -149,10 +152,53 @@ extension TerrainEdgeLayer: GridPolyhedronProvider {
         
         switch edge {
             
-        case .north: return Polytope(x: MDWFloat(coordinate.x), y0: c0.height, y1: c1.height, y2: c2.height, y3: c2.height, z: MDWFloat(coordinate.z))
-        case .east: return Polytope(x: MDWFloat(coordinate.x), y0: c2.height, y1: c0.height, y2: c1.height, y3: c2.height, z: MDWFloat(coordinate.z))
-        case .south: return Polytope(x: MDWFloat(coordinate.x), y0: c2.height, y1: c2.height, y2: c0.height, y3: c1.height, z: MDWFloat(coordinate.z))
-        case .west: return Polytope(x: MDWFloat(coordinate.x), y0: c1.height, y1: c2.height, y2: c2.height, y3: c0.height, z: MDWFloat(coordinate.z))
+        case .north:
+            
+            let polytope = Polytope(x: MDWFloat(coordinate.x), y0: c0.height, y1: c1.height, y2: c2.height, y3: c2.height, z: MDWFloat(coordinate.z))
+            
+            let v0 = SCNVector3.lerp(from: polytope.vertices[0], to: polytope.vertices[1], factor: 0.5)
+            
+            let v1 = SCNVector3(x: polytope.center.x, y: Axis.Y(y: centre), z: polytope.center.z)
+            
+            let v2 = ((v1 - v0) * 2)
+            
+            return Polytope(v0: polytope.vertices[0], v1: polytope.vertices[1], v2: (polytope.vertices[1] + v2), v3: (polytope.vertices[0] + v2))
+            
+        case .east:
+            
+            let polytope = Polytope(x: MDWFloat(coordinate.x), y0: c2.height, y1: c0.height, y2: c1.height, y3: c2.height, z: MDWFloat(coordinate.z))
+            
+            let v0 = SCNVector3.lerp(from: polytope.vertices[1], to: polytope.vertices[2], factor: 0.5)
+            
+            let v1 = SCNVector3(x: polytope.center.x, y: Axis.Y(y: centre), z: polytope.center.z)
+            
+            let v2 = ((v1 - v0) * 2)
+            
+            return Polytope(v0: (polytope.vertices[1] + v2), v1: polytope.vertices[1], v2: polytope.vertices[2], v3: (polytope.vertices[2] + v2))
+            
+        case .south:
+            
+            let polytope = Polytope(x: MDWFloat(coordinate.x), y0: c2.height, y1: c2.height, y2: c0.height, y3: c1.height, z: MDWFloat(coordinate.z))
+            
+            let v0 = SCNVector3.lerp(from: polytope.vertices[2], to: polytope.vertices[3], factor: 0.5)
+            
+            let v1 = SCNVector3(x: polytope.center.x, y: Axis.Y(y: centre), z: polytope.center.z)
+            
+            let v2 = ((v1 - v0) * 2)
+            
+            return Polytope(v0: (polytope.vertices[3] + v2), v1: (polytope.vertices[2] + v2), v2: polytope.vertices[2], v3: polytope.vertices[3])
+            
+        case .west:
+            
+            let polytope = Polytope(x: MDWFloat(coordinate.x), y0: c1.height, y1: c2.height, y2: c2.height, y3: c0.height, z: MDWFloat(coordinate.z))
+            
+            let v0 = SCNVector3.lerp(from: polytope.vertices[0], to: polytope.vertices[3], factor: 0.5)
+            
+            let v1 = SCNVector3(x: polytope.center.x, y: Axis.Y(y: centre), z: polytope.center.z)
+            
+            let v2 = ((v1 - v0) * 2)
+            
+            return Polytope(v0: polytope.vertices[0], v1: (polytope.vertices[0] + v2), v2: (polytope.vertices[3] + v2), v3: polytope.vertices[3])
         }
     }
     

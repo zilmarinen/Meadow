@@ -8,7 +8,7 @@
 
 import SceneKit
 
-public class GridChunk<Tile: GridTile<Node>, Node: GridNode>: SCNNode, SceneGraphChild, SceneGraphObserver, SceneGraphParent {
+public class GridChunk<Tile: GridTile<Node>, Node: GridNode>: SCNNode, Encodable, SceneGraphChild, SceneGraphObserver, SceneGraphParent, SceneGraphSoilable {
     
     var children = Tree<Tile>()
     
@@ -17,6 +17,22 @@ public class GridChunk<Tile: GridTile<Node>, Node: GridNode>: SCNNode, SceneGrap
     var isDirty: Bool = false
     
     public let volume: Volume
+    
+    enum CodingKeys: CodingKey {
+        
+        case name
+        case volume
+        case children
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(self.name, forKey: .name)
+        try container.encode(self.volume, forKey: .volume)
+        try container.encode(self.children.children, forKey: .children)
+    }
     
     public required init(observer: SceneGraphObserver, volume: Volume) {
         
@@ -33,24 +49,33 @@ public class GridChunk<Tile: GridTile<Node>, Node: GridNode>: SCNNode, SceneGrap
         
         fatalError("init(coder:) has not been implemented")
     }
-}
-
-extension GridChunk: Encodable {
     
-    enum CodingKeys: CodingKey {
+    @discardableResult open func becomeDirty() -> Bool {
         
-        case name
-        case volume
-        case children
+        if !isDirty {
+            
+            isDirty = true
+            
+            observer?.child(didBecomeDirty: self)
+        }
+        
+        return isDirty
     }
     
-    public func encode(to encoder: Encoder) throws {
+    @discardableResult open func clean() -> Bool {
         
-        var container = encoder.container(keyedBy: CodingKeys.self)
+        if !isDirty { return false }
         
-        try container.encode(self.name, forKey: .name)
-        try container.encode(self.volume, forKey: .volume)
-        try container.encode(self.children.children, forKey: .children)
+        children.forEach { tile in
+            
+            tile.clean()
+        }
+        
+        self.geometry = SCNGeometry(mesh: mesh)
+        
+        isDirty = false
+        
+        return true
     }
 }
 
@@ -68,33 +93,6 @@ extension GridChunk {
         guard let child = child as? Tile else { return nil }
         
         return children.index(of: child)
-    }
-}
-
-extension GridChunk: SceneGraphSoilable {
-    
-    public func becomeDirty() {
-        
-        if !isDirty {
-            
-            isDirty = true
-            
-            observer?.child(didBecomeDirty: self)
-        }
-    }
-    
-    public func clean() {
-        
-        if !isDirty { return }
-        
-        children.forEach { tile in
-            
-            tile.clean()
-        }
-        
-        self.geometry = SCNGeometry(mesh: mesh)
-        
-        isDirty = false
     }
 }
 

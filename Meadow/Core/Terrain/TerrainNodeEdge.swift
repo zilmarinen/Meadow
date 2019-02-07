@@ -12,7 +12,7 @@ public class TerrainNodeEdge<EdgeLayer: TerrainEdgeLayer>: SceneGraphChild, Scen
     
     public var observer: SceneGraphObserver?
     
-    public var name: String? { return "Edge" }
+    public var name: String? { return "Edge (\(edge.description))" }
     
     public var isHidden: Bool = false {
         
@@ -62,7 +62,7 @@ extension TerrainNodeEdge: Hashable {
     
     public static func == (lhs: TerrainNodeEdge, rhs: TerrainNodeEdge) -> Bool {
         
-        return lhs.volume == rhs.volume
+        return lhs.volume == rhs.volume && lhs.edge == rhs.edge
     }
 }
 
@@ -85,7 +85,7 @@ extension TerrainNodeEdge {
 
 extension TerrainNodeEdge: SceneGraphSoilable {
     
-    public func becomeDirty() {
+    @discardableResult public func becomeDirty() -> Bool {
         
         if !isDirty {
             
@@ -93,11 +93,13 @@ extension TerrainNodeEdge: SceneGraphSoilable {
             
             observer?.child(didBecomeDirty: self)
         }
+        
+        return isDirty
     }
     
-    public func clean() {
+    @discardableResult public func clean() -> Bool {
         
-        if !isDirty { return }
+        if !isDirty { return false }
         
         children.forEach { chunk in
             
@@ -105,6 +107,8 @@ extension TerrainNodeEdge: SceneGraphSoilable {
         }
         
         isDirty = false
+        
+        return true
     }
 }
 
@@ -142,7 +146,7 @@ extension TerrainNodeEdge {
             guard topLayer.base < World.ceiling else { return nil }
         }
         
-        let layer = EdgeLayer(observer: self, coordinate: self.volume.coordinate, edge: self.edge)
+        let layer = EdgeLayer(observer: self, coordinate: self.volume.coordinate, edge: self.edge, terrainType: terrainType)
         
         topLayer?.upper = layer
         

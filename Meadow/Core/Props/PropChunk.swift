@@ -1,6 +1,6 @@
 //
 //  PropChunk.swift
-//  Meadow-iOS
+//  Meadow
 //
 //  Created by Zack Brown on 10/01/2019.
 //  Copyright © 2019 Script Orchard. All rights reserved.
@@ -71,17 +71,19 @@ extension PropChunk {
 
 extension PropChunk: SceneGraphSoilable {
     
-    public func becomeDirty() {
+    @discardableResult public func becomeDirty() -> Bool {
         
         if !isDirty {
             
             isDirty = true
         }
+        
+        return isDirty
     }
     
-    public func clean() {
+    @discardableResult public func clean() -> Bool {
         
-        if !isDirty { return }
+        if !isDirty { return false }
         
         children.forEach { prop in
             
@@ -89,6 +91,8 @@ extension PropChunk: SceneGraphSoilable {
         }
         
         isDirty = false
+        
+        return true
     }
 }
 

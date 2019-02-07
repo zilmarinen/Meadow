@@ -54,25 +54,29 @@ public class Prop: SCNNode, SceneGraphChild {
 
 extension Prop: SceneGraphSoilable {
     
-    public func becomeDirty() {
+    @discardableResult public func becomeDirty() -> Bool {
         
         if !isDirty {
             
             isDirty = true
         }
+        
+        return isDirty
     }
     
-    public func clean() {
+    @discardableResult public func clean() -> Bool {
         
-        if !isDirty { return }
+        if !isDirty { return false }
         
-        guard let model = Model(named: prototype.name), let colorPalette = colorPalette else { return }
+        guard let model = Model(named: prototype.name), let colorPalette = colorPalette else { return false }
         
         let mesh = model.mesh(colorPalette: colorPalette)
         
         self.geometry = SCNGeometry(mesh: mesh)
         
         isDirty = false
+        
+        return true
     }
 }
 

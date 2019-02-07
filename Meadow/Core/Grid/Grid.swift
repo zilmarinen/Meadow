@@ -8,7 +8,7 @@
 
 import SceneKit
 
-public class Grid<Chunk: GridChunk<Tile, Node>, Tile: GridTile<Node>, Node: GridNode>: SCNNode, SceneGraphChild, SceneGraphObserver, SceneGraphParent {
+public class Grid<Chunk: GridChunk<Tile, Node>, Tile: GridTile<Node>, Node: GridNode>: SCNNode, Encodable, SceneGraphChild, SceneGraphObserver, SceneGraphParent {
     
     var children = Tree<Chunk>()
     
@@ -20,19 +20,6 @@ public class Grid<Chunk: GridChunk<Tile, Node>, Tile: GridTile<Node>, Node: Grid
         
         return Volume(coordinate: Coordinate.zero, size: Size.one)
     }
-    
-    public override func addChildNode(_ child: SCNNode) {
-        
-        guard let child = child as? Chunk else { return }
-        
-        if children.append(child) {
-            
-            super.addChildNode(child)
-        }
-    }
-}
-
-extension Grid: Encodable {
     
     enum CodingKeys: CodingKey {
         
@@ -46,6 +33,16 @@ extension Grid: Encodable {
         
         try container.encode(self.name, forKey: .name)
         try container.encode(self.children.children, forKey: .children)
+    }
+    
+    public override func addChildNode(_ child: SCNNode) {
+        
+        guard let child = child as? Chunk else { return }
+        
+        if children.append(child) {
+            
+            super.addChildNode(child)
+        }
     }
 }
 
@@ -68,7 +65,7 @@ extension Grid {
 
 extension Grid: SceneGraphSoilable {
     
-    public func becomeDirty() {
+    @discardableResult public func becomeDirty() -> Bool {
         
         if !isDirty {
             
@@ -76,11 +73,13 @@ extension Grid: SceneGraphSoilable {
             
             observer?.child(didBecomeDirty: self)
         }
+        
+        return isDirty
     }
     
-    public func clean() {
+    @discardableResult public func clean() -> Bool {
         
-        if !isDirty { return }
+        if !isDirty { return false }
         
         children.forEach { chunk in
             
@@ -88,6 +87,8 @@ extension Grid: SceneGraphSoilable {
         }
         
         isDirty = false
+        
+        return true
     }
 }
 

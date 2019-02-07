@@ -33,27 +33,37 @@ extension SceneView {
         public func shouldTransition(to newState: SceneView.KeyboardState) -> Should<SceneView.KeyboardState> {
             
             switch self {
-                
-            case .keysHeld(var keys):
+            
+            case .idle:
                 
                 switch newState {
                     
                 case .keyDown(let key):
                     
-                    guard keys.insert(key).inserted else { return .abort }
+                    return .redirect(.keysHeld(keys: [key]))
+                
+                default: return .abort
+                }
+                
+            case .keysHeld(var keys):
+                
+                switch newState {
                     
-                    return .redirect(.keysHeld(keys: keys))
+                case .idle:
                     
+                    return (keys.count > 0 ? .redirect(.keysHeld(keys: keys)) : .continue)
+                    
+                case .keyDown(let key):
+                    
+                    keys.insert(key)
+                    
+                    return (keys.count > 0 ? .redirect(.keysHeld(keys: keys)) : .redirect(.idle))
+                
                 case .keyUp(let key):
                     
                     keys.remove(key)
                     
-                    if keys.count > 0 {
-                        
-                        return .redirect(.keysHeld(keys: keys))
-                    }
-                    
-                    return .redirect(.idle)
+                    return (keys.count > 0 ? .redirect(.keysHeld(keys: keys)) : .redirect(.idle))
                     
                 default: return .abort
                 }

@@ -1,6 +1,6 @@
 //
 //  ModelGroup.swift
-//  Meadow-iOS
+//  Meadow
 //
 //  Created by Zack Brown on 31/12/2018.
 //  Copyright © 2018 Script Orchard. All rights reserved.

@@ -20,7 +20,7 @@ extension Bundle {
         return [bundle(forPod: "Meadow")!]
     }
     
-    static func bundle(forPod pod: String) -> Bundle? {
+    public static func bundle(forPod pod: String) -> Bundle? {
         
         let bundles = Bundle.allBundles + Bundle.allFrameworks
         

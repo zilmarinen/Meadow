@@ -29,21 +29,25 @@ extension Blueprint: SceneGraphUpdatable {
 
 extension Blueprint: SceneGraphSoilable {
     
-    public func becomeDirty() {
+    @discardableResult public func becomeDirty() -> Bool {
         
         if !isDirty {
             
             isDirty = true
         }
+        
+        return isDirty
     }
     
-    public func clean() {
+    @discardableResult public func clean() -> Bool {
         
-        if !isDirty { return }
+        if !isDirty { return false }
         
         self.geometry = SCNGeometry(mesh: mesh)
         
         isDirty = false
+        
+        return true
     }
 }
 

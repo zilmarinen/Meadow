@@ -8,6 +8,6 @@
 
 public protocol SceneGraphSoilable {
     
-    func becomeDirty()
-    func clean()
+    @discardableResult func becomeDirty() -> Bool
+    @discardableResult func clean() -> Bool
 }

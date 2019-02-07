@@ -50,7 +50,7 @@ public class GridNode: Encodable, MeshProvider, SceneGraphChild, SceneGraphObser
         self.volume = volume
     }
     
-    open func becomeDirty() {
+    @discardableResult open func becomeDirty() -> Bool {
         
         if !isDirty {
             
@@ -58,13 +58,17 @@ public class GridNode: Encodable, MeshProvider, SceneGraphChild, SceneGraphObser
             
             observer?.child(didBecomeDirty: self)
         }
+        
+        return isDirty
     }
     
-    open func clean() {
+    @discardableResult open func clean() -> Bool {
         
-        if !isDirty { return }
+        if !isDirty { return false }
         
         isDirty = false
+        
+        return true
     }
     
     open func child(didBecomeDirty child: SceneGraphChild) {

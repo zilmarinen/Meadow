@@ -28,9 +28,9 @@ public class TerrainNode<NodeEdge: TerrainNodeEdge<TerrainEdgeLayer>>: GridNode,
         try container.encode(self.children.children, forKey: .children)
     }
     
-    public override func clean() {
+    @discardableResult public override func clean() -> Bool {
         
-        if !isDirty { return }
+        if !isDirty { return false }
         
         children.forEach { edge in
             
@@ -38,6 +38,8 @@ public class TerrainNode<NodeEdge: TerrainNodeEdge<TerrainEdgeLayer>>: GridNode,
         }
         
         isDirty = false
+        
+        return true
     }
     
     public override var mesh: Mesh {
@@ -83,7 +85,7 @@ public class TerrainNode<NodeEdge: TerrainNodeEdge<TerrainEdgeLayer>>: GridNode,
                         
                         if c0equal && c1equal {
                             
-                            faces.append(contentsOf: MeshFace.edge(crown: (c0: c0, c1: c1), polyhedron: stencil, normal: edgeNormal, color: colorPalette.primary.vector))
+                            faces.append(contentsOf: MeshFace.edge(crown: (c0: c0, c1: c1), polyhedron: stencil, normal: edgeNormal, color: colorPalette.tertiary.vector))
                             faces.append(contentsOf: MeshFace.edge(throne: (c0: c0, c1: c1), polyhedron: stencil, normal: edgeNormal, color: colorPalette.secondary.vector))
                         }
                         else {
@@ -95,19 +97,39 @@ public class TerrainNode<NodeEdge: TerrainNodeEdge<TerrainEdgeLayer>>: GridNode,
                     let (e0, e1) = GridEdge.edges(edge: nodeEdge.edge)
                     
                     [e0, e1].forEach { edge in
+                        
+                        let diagonalNormal = inverseNormal + GridEdge.normal(edge: edge)
                     
                         let (c2, c3) = GridCorner.corners(edge: edge)
                         
                         let corner = (c2 == c0 ? c2 : (c2 == c1 ? c2 : c3))
                         
-                        if layer.upper == nil || layer.upper?.lowerPolytope != polyhedron.upperPolytope {
+                        let cornerUpper = polyhedron.upperPolytope.vertices[corner.rawValue]
+                        let centreUpper = polyhedron.upperPolytope.center
+                        
+                        var cornerLower = polyhedron.lowerPolytope.vertices[corner.rawValue]
+                        var centerLower = polyhedron.lowerPolytope.center
+                        
+                        if let diagonalPolytope = find(edge: edge)?.topLayer?.upperPolytope {
                             
-                            faces.append(contentsOf: MeshFace.diagonal(crown: corner, polyhedron: polyhedron, normal: inverseNormal, color: colorPalette.primary.vector))
-                            faces.append(contentsOf: MeshFace.diagonal(throne: corner, polyhedron: polyhedron, normal: inverseNormal, color: colorPalette.secondary.vector))
+                            cornerLower = (diagonalPolytope.vertices[corner.rawValue].y > cornerLower.y ? diagonalPolytope.vertices[corner.rawValue] : cornerLower)
+                            
+                            centerLower = (diagonalPolytope.center.y > centerLower.y ? diagonalPolytope.center : centerLower)
                         }
-                        else {
+                        
+                        if cornerUpper.y > cornerLower.y || centreUpper.y > centerLower.y {
                             
-                            faces.append(contentsOf: MeshFace.diagonal(corner: corner, polyhedron: polyhedron, normal: inverseNormal, color: colorPalette.secondary.vector))
+                            let polytope = Polytope(v0: cornerUpper, v1: centreUpper, v2: centerLower, v3: cornerLower)
+                            
+                            if layer.upper == nil || layer.upper?.lowerPolytope != polyhedron.upperPolytope {
+                                
+                                faces.append(contentsOf: MeshFace.diagonal(crown: polytope, normal: diagonalNormal, color: colorPalette.tertiary.vector))
+                                faces.append(contentsOf: MeshFace.diagonal(throne: polytope, normal: diagonalNormal, color: colorPalette.secondary.vector))
+                            }
+                            else {
+                                
+                                faces.append(contentsOf: MeshFace.diagonal(polytope: polytope, normal: diagonalNormal, color: colorPalette.secondary.vector))
+                            }
                         }
                     }
                 }
@@ -139,10 +161,7 @@ extension TerrainNode {
     
     func add(edge: GridEdge) -> NodeEdge? {
         
-        if find(edge: edge) != nil {
-            
-            return nil
-        }
+        guard find(edge: edge) == nil else { return nil }
         
         let nodeEdge = NodeEdge(observer: self, volume: self.volume, edge: edge)
         

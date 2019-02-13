@@ -34,7 +34,7 @@ extension SceneView {
             self.scene = nil
             self.delegate = nil
             
-        case .scene(let meadow, _):
+        case .scene(let meadow):
             
             self.scene = meadow.scene
             self.delegate = meadow.scene

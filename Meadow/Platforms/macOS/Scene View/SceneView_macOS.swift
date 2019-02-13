@@ -53,11 +53,11 @@ extension SceneView {
         
         switch viewModel.state {
             
-        case .scene(_, let input):
+        case .scene(let meadow):
             
-            guard input.cursor.tracksIdleEvents else { break }
+            guard meadow.input.cursor.tracksIdleEvents else { break }
             
-            switch input.cursor.state {
+            switch meadow.input.cursor.state {
                 
             case .idle:
                 
@@ -65,7 +65,7 @@ extension SceneView {
                 
                 let position = CGPoint(x: pointInView.x, y: pointInView.y)
                 
-                input.cursor.state = .idle(position: position)
+                meadow.input.cursor.state = .idle(position: position)
                 
             default: break
             }
@@ -81,9 +81,9 @@ extension SceneView {
         
         switch viewModel.state {
             
-        case .scene(_, let input):
+        case .scene(let meadow):
             
-            switch input.cursor.state {
+            switch meadow.input.cursor.state {
                 
             case .idle:
                 
@@ -91,7 +91,7 @@ extension SceneView {
                 
                 let position = CGPoint(x: pointInView.x, y: pointInView.y)
                 
-                input.cursor.state = .down(position: position, inputType: inputType)
+                meadow.input.cursor.state = .down(position: position, inputType: inputType)
                 
             default: break
             }
@@ -104,9 +104,9 @@ extension SceneView {
      
         switch viewModel.state {
             
-        case .scene(_, let input):
+        case .scene(let meadow):
             
-            switch input.cursor.state {
+            switch meadow.input.cursor.state {
                 
             case .down(let startPosition, _),
                  .tracking(_, _, let startPosition):
@@ -115,7 +115,7 @@ extension SceneView {
                 
                 let position = CGPoint(x: pointInView.x, y: pointInView.y)
                 
-                input.cursor.state = .up(position: position, inputType: inputType, startPosition: startPosition)
+                meadow.input.cursor.state = .up(position: position, inputType: inputType, startPosition: startPosition)
                 
             default: break
             }
@@ -128,9 +128,9 @@ extension SceneView {
         
         switch viewModel.state {
             
-        case .scene(_, let input):
+        case .scene(let meadow):
             
-            switch input.cursor.state {
+            switch meadow.input.cursor.state {
                 
             case .down(let startPosition, _),
                  .tracking(_, _, let startPosition):
@@ -139,7 +139,7 @@ extension SceneView {
                 
                 let position = CGPoint(x: pointInView.x, y: pointInView.y)
                 
-                input.cursor.state = .tracking(position: position, inputType: inputType, startPosition: startPosition)
+                meadow.input.cursor.state = .tracking(position: position, inputType: inputType, startPosition: startPosition)
                 
             default: break
             }
@@ -155,21 +155,21 @@ extension SceneView {
         
         switch viewModel.state {
             
-        case .scene(_, let input):
+        case .scene(let meadow):
             
             guard let keyCode = KeyCode(rawValue: event.keyCode) else { break }
             
-            switch input.keyboard.state {
+            switch meadow.input.keyboard.state {
                 
             case .idle:
                 
-                input.keyboard.state = .keyDown(key: keyCode)
+                meadow.input.keyboard.state = .keyDown(key: keyCode)
                 
             case .keysHeld(let keys):
                 
                 guard !keys.contains(keyCode) else { break }
                 
-                input.keyboard.state = .keyDown(key: keyCode)
+                meadow.input.keyboard.state = .keyDown(key: keyCode)
                 
             default: break
             }
@@ -182,11 +182,11 @@ extension SceneView {
         
         switch viewModel.state {
             
-        case .scene(_, let input):
+        case .scene(let meadow):
             
             guard let keyCode = KeyCode(rawValue: event.keyCode) else { break }
             
-            input.keyboard.state = .keyUp(key: keyCode)
+            meadow.input.keyboard.state = .keyUp(key: keyCode)
             
         default: break
         }

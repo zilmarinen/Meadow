@@ -13,7 +13,7 @@ extension SceneView {
     public enum ViewState: State {
         
         case empty
-        case scene(meadow: Meadow, input: Input)
+        case scene(meadow: Meadow)
         
         public func shouldTransition(to newState: ViewState) -> Should<ViewState> {
             

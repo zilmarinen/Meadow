@@ -255,9 +255,6 @@
 		187E4702214A8069007430D6 /* WorldIntermediate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187E46FF214A805A007430D6 /* WorldIntermediate.swift */; };
 		187E4703214A8069007430D6 /* WorldIntermediate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187E46FF214A805A007430D6 /* WorldIntermediate.swift */; };
 		18866749220B071500FFE6F6 /* color_palettes.json in Resources */ = {isa = PBXBuildFile; fileRef = 1825957D210AFCE400F76A60 /* color_palettes.json */; };
-		1886675E220B0B2E00FFE6F6 /* terrain.metal in Sources */ = {isa = PBXBuildFile; fileRef = 18C9E1CD220AE6FE00842285 /* terrain.metal */; };
-		1886675F220B0B2F00FFE6F6 /* terrain.metal in Sources */ = {isa = PBXBuildFile; fileRef = 18C9E1CD220AE6FE00842285 /* terrain.metal */; };
-		1886676B220B35D700FFE6F6 /* water.metal in Sources */ = {isa = PBXBuildFile; fileRef = 1886676A220B35D700FFE6F6 /* water.metal */; };
 		188834D621639E3300D83AFB /* CursorObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188834D521639E3300D83AFB /* CursorObserver.swift */; };
 		188834D721639E3300D83AFB /* CursorObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188834D521639E3300D83AFB /* CursorObserver.swift */; };
 		188834D821639E3300D83AFB /* CursorObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188834D521639E3300D83AFB /* CursorObserver.swift */; };
@@ -845,12 +842,15 @@
 		18FF8E0B20AC29F900995462 /* CameraJib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraJib.swift; sourceTree = "<group>"; };
 		1A97612B550B166B0831FC9A /* Pods-MeadowTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeadowTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MeadowTests/Pods-MeadowTests.release.xcconfig"; sourceTree = "<group>"; };
 		35FDC4E9F3727471EA2160BC /* Pods_MeadowTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MeadowTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		428234701CAAFB611C6EB3D2 /* libPods-Meadow-Metal.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Meadow-Metal.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B35CC9A2B4D0CE6C525831F /* Pods-Meadow-iOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Meadow-iOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Meadow-iOSTests/Pods-Meadow-iOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		4B593656DAE43AE767449361 /* Pods-Meadow-macOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Meadow-macOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Meadow-macOSTests/Pods-Meadow-macOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		607CE98C6661872CDB81E06A /* libPods-Meadow-macOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Meadow-macOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		664ACCF9010A419ED8F6A483 /* libPods-Meadow-macOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Meadow-macOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		82F5F34E1A212472BCBED43F /* Pods-Meadow-macOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Meadow-macOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Meadow-macOS/Pods-Meadow-macOS.release.xcconfig"; sourceTree = "<group>"; };
+		93D0A965E98F34DF1067C460 /* Pods-Meadow-Metal.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Meadow-Metal.release.xcconfig"; path = "Pods/Target Support Files/Pods-Meadow-Metal/Pods-Meadow-Metal.release.xcconfig"; sourceTree = "<group>"; };
 		95CA003B80C69F6F0B76DA7B /* Pods-Meadow-macOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Meadow-macOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Meadow-macOS/Pods-Meadow-macOS.debug.xcconfig"; sourceTree = "<group>"; };
+		9B2C260344F02DEF0CC52FB3 /* Pods-Meadow-Metal.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Meadow-Metal.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Meadow-Metal/Pods-Meadow-Metal.debug.xcconfig"; sourceTree = "<group>"; };
 		9B90DAC7972347872CA8BE0B /* libPods-Meadow-iOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Meadow-iOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5E9543EE7C3772BE98B8C91 /* Pods-MeadowTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeadowTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MeadowTests/Pods-MeadowTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C2CC349B0B0595F31A91855C /* Pods-Meadow-iOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Meadow-iOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Meadow-iOSTests/Pods-Meadow-iOSTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1649,6 +1649,7 @@
 				9B90DAC7972347872CA8BE0B /* libPods-Meadow-iOSTests.a */,
 				664ACCF9010A419ED8F6A483 /* libPods-Meadow-macOS.a */,
 				607CE98C6661872CDB81E06A /* libPods-Meadow-macOSTests.a */,
+				428234701CAAFB611C6EB3D2 /* libPods-Meadow-Metal.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1668,6 +1669,8 @@
 				82F5F34E1A212472BCBED43F /* Pods-Meadow-macOS.release.xcconfig */,
 				4B593656DAE43AE767449361 /* Pods-Meadow-macOSTests.debug.xcconfig */,
 				FCF2E4DCFDB9FE7123F2576E /* Pods-Meadow-macOSTests.release.xcconfig */,
+				9B2C260344F02DEF0CC52FB3 /* Pods-Meadow-Metal.debug.xcconfig */,
+				93D0A965E98F34DF1067C460 /* Pods-Meadow-Metal.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -1989,7 +1992,6 @@
 				18EE501420A5764F0059829C /* Scene.swift in Sources */,
 				18EBE18A21A5543000B4F591 /* PropsMaster.swift in Sources */,
 				18EE501F20A576550059829C /* Coordinate.swift in Sources */,
-				1886676B220B35D700FFE6F6 /* water.metal in Sources */,
 				183830C52105C70800FFA729 /* FoliageType.swift in Sources */,
 				18EE502320A576550059829C /* Volume.swift in Sources */,
 				18EE510620A5892C0059829C /* Meadow+Types.swift in Sources */,
@@ -2054,7 +2056,6 @@
 				1831501F20BED0D8004317E0 /* SCNVector3.swift in Sources */,
 				18C8CFF021997A1900041D09 /* NPCs.swift in Sources */,
 				18EE503820A5766C0059829C /* GridCorner.swift in Sources */,
-				1886675F220B0B2F00FFE6F6 /* terrain.metal in Sources */,
 				18C8CFE62199727A00041D09 /* Actors.swift in Sources */,
 				18DBCF0D20CAC41800BFF9C9 /* SCNQuaternion.swift in Sources */,
 				18EE504620A576770059829C /* ScaffoldTile.swift in Sources */,
@@ -2379,7 +2380,6 @@
 				18EBE17621A54C3200B4F591 /* Model.swift in Sources */,
 				18EBE18221A5534900B4F591 /* PropList.swift in Sources */,
 				18C8CFF221997A1900041D09 /* NPCs.swift in Sources */,
-				1886675E220B0B2E00FFE6F6 /* terrain.metal in Sources */,
 				18D67A0D215B97BE00D3570C /* SceneViewModel.swift in Sources */,
 				18C8CFE8219972B600041D09 /* Actors.swift in Sources */,
 				183830D82105C73D00FFA729 /* WaterType.swift in Sources */,

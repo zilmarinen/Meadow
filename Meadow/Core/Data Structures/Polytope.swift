@@ -10,7 +10,7 @@ import SceneKit
 
 public struct Polytope {
 
-    let vertices: [SCNVector3]
+    public let vertices: [SCNVector3]
     
     public var peak: MDWFloat {
         

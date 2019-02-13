@@ -66,12 +66,28 @@ extension Terrain {
     }
     
     @discardableResult
-    func remove(layer: TerrainEdgeLayer) -> Bool {
+    public func remove(layer: TerrainEdgeLayer) -> Bool {
         
         guard let node = find(node: layer.coordinate) else { return false }
         
         guard let edge = node.find(edge: layer.edge) else { return false }
         
-        return edge.remove(layer: layer)
+        if edge.remove(layer: layer) {
+            
+            if edge.totalChildren == 0 {
+                
+                if node.remove(edge: edge) {
+                    
+                    if node.totalChildren == 0 {
+                        
+                        return remove(node: node)
+                    }
+                }
+            }
+            
+            return true
+        }
+        
+        return false
     }
 }

@@ -6,6 +6,8 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
+import SceneKit
+
 public class ArtDirector {
     
     public static let shared = ArtDirector()
@@ -13,6 +15,20 @@ public class ArtDirector {
     public let palettes: ColorPalettes
     
     public let colors: Colors
+    
+    var library: MTLLibrary? {
+        
+        if _library != nil { return _library }
+        
+        if let device = MTLCreateSystemDefaultDevice(), let bundle = Bundle.bundle(forPod: "Meadow") {
+        
+            _library = try? device.makeDefaultLibrary(bundle: bundle)
+        }
+        
+        return _library
+    }
+    
+    var _library: MTLLibrary?
     
     init?() {
         
@@ -74,5 +90,17 @@ extension ArtDirector {
         let name = named.lowercased()
         
         return colors.children.first { $0.name.lowercased() == name }
+    }
+}
+
+extension ArtDirector {
+    
+    public func program(named: String) -> ShaderProgram {
+        
+        let shaderProgram = ShaderProgram(named: named)
+        
+        shaderProgram.library = library
+        
+        return shaderProgram
     }
 }

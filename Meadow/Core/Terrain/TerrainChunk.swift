@@ -17,7 +17,7 @@ public class TerrainChunk: GridChunk<TerrainTile, TerrainNode<TerrainNodeEdge<Te
         
             if geometry?.program == nil {
                 
-                geometry?.program = ShaderProgram(named: "terrain")
+                geometry?.program = ArtDirector.shared?.program(named: "terrain")
             }
         }
         

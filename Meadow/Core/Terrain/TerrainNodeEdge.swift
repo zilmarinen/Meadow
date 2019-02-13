@@ -194,12 +194,12 @@ extension TerrainNodeEdge {
 
 extension TerrainNodeEdge {
     
-    var topLayer: TerrainEdgeLayer? {
+    public var topLayer: TerrainEdgeLayer? {
         
         return children.last
     }
     
-    var bottomLayer: TerrainEdgeLayer? {
+    public var bottomLayer: TerrainEdgeLayer? {
         
         return children.first
     }

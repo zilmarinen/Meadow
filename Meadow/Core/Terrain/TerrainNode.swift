@@ -140,6 +140,33 @@ public class TerrainNode<NodeEdge: TerrainNodeEdge<TerrainEdgeLayer>>: GridNode,
     }
 }
 
+extension TerrainNode: GridPolyhedronProvider {
+    
+    var upperPolytope: Polytope {
+        
+        var corners: [Int] = [World.floor, World.floor, World.floor, World.floor]
+        
+        for edgeIndex in 0..<children.count {
+            
+            let nodeEdge = children[edgeIndex]
+            
+            let (c0, c1) = GridCorner.corners(edge: nodeEdge.edge)
+            
+            corners[c0.rawValue] = max(corners[c0.rawValue], nodeEdge.topLayer?.get(corner: c0) ?? World.floor)
+            corners[c1.rawValue] = max(corners[c1.rawValue], nodeEdge.topLayer?.get(corner: c1) ?? World.floor)
+        }
+        
+        return Polytope(x: MDWFloat(volume.coordinate.x), y0: corners[0], y1: corners[1], y2: corners[2], y3: corners[3], z: MDWFloat(volume.coordinate.z))
+    }
+    
+    var lowerPolytope: Polytope {
+        
+        return Polytope(x: MDWFloat(volume.coordinate.x), y0: World.floor, y1: World.floor, y2: World.floor, y3: World.floor, z: MDWFloat(volume.coordinate.z))
+    }
+    
+    public var polyhedron: Polyhedron { return Polyhedron(upperPolytope: upperPolytope, lowerPolytope: lowerPolytope) }
+}
+
 extension TerrainNode {
     
     public var totalChildren: Int { return children.count }

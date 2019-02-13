@@ -8,22 +8,15 @@
 
 import SceneKit
 
-class ShaderProgram: SCNProgram, SCNProgramDelegate {
+public class ShaderProgram: SCNProgram, SCNProgramDelegate {
     
-    init?(named: String) {
+    public init(named: String) {
         
         super.init()
         
         delegate = self
         fragmentFunctionName = "\(named)_fragment"
         vertexFunctionName = "\(named)_vertex"
-        
-        setSemantic(SCNGeometrySource.Semantic.vertex.rawValue, forSymbol: "vertex", options: nil)
-        setSemantic(SCNGeometrySource.Semantic.color.rawValue, forSymbol: "color", options: nil)
-        setSemantic(SCNGeometrySource.Semantic.normal.rawValue, forSymbol: "normal", options: nil)
-        
-        setSemantic(SCNModelViewTransform, forSymbol: "modelViewMatrix", options: nil)
-        setSemantic(SCNModelViewProjectionTransform, forSymbol: "projectionMatrix", options: nil)
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -33,6 +26,6 @@ class ShaderProgram: SCNProgram, SCNProgramDelegate {
     
     public func program(_ program: SCNProgram, handleError error: Error) {
         
-        print("error: \(error)")
+        print("SCNProgram error: \(error)")
     }
 }

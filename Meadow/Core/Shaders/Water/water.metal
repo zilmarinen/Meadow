@@ -1,6 +1,6 @@
 //
 //  water.metal
-//  Meadow-iOS
+//  Meadow
 //
 //  Created by Zack Brown on 06/02/2019.
 //  Copyright © 2019 Script Orchard. All rights reserved.
@@ -11,41 +11,41 @@ using namespace metal;
 
 #include <SceneKit/scn_metal>
 
-struct VertexIn {
+struct NodeBuffer {
+    
+    float4x4 modelTransform;
+    float4x4 modelViewTransform;
+    float4x4 normalTransform;
+    float4x4 modelViewProjectionTransform;
+};
+
+typedef struct {
     
     float3 position [[ attribute(SCNVertexSemanticPosition) ]];
     float3 normal [[ attribute(SCNVertexSemanticNormal) ]];
     float4 color [[ attribute(SCNVertexSemanticColor) ]];
-};
+    
+} VertexIn;
 
-struct VertexOut {
+struct FragmentIn {
     
     float4 position [[position]];
-    float4 eyeNormal;
-    float4 eyePosition;
-    float4 color;
+    float4 normal [[user(normal)]];
+    float4 color [[user(color)]];
 };
 
-struct Uniforms {
+vertex FragmentIn water_vertex(VertexIn v [[ stage_in ]], constant SCNSceneBuffer& scn_frame [[buffer(0)]], constant NodeBuffer& scn_node [[buffer(1)]]) {
     
-    float4x4 modelViewMatrix;
-    float4x4 projectionMatrix;
-};
-
-vertex VertexOut water_vertex(VertexIn vertexIn [[stage_in]], constant Uniforms &uniforms [[buffer(1)]]) {
+    FragmentIn f;
     
-    VertexOut vertexOut;
+    f.position = scn_node.modelViewProjectionTransform * float4(v.position, 1.0);
+    f.normal = scn_node.normalTransform * float4(v.normal, 1.0);
+    f.color = v.color;
     
-    vertexOut.position = uniforms.projectionMatrix * uniforms.modelViewMatrix * float4(vertexIn.position, 1);
-    vertexOut.eyeNormal = uniforms.modelViewMatrix * float4(vertexIn.normal, 0);
-    vertexOut.eyePosition = uniforms.modelViewMatrix * float4(vertexIn.position, 1);
-    vertexOut.color = vertexIn.color;
-    
-    return vertexOut;
+    return f;
 }
 
-fragment float4 water_fragment(VertexOut fragmentIn [[stage_in]]) {
+fragment half4 water_fragment(FragmentIn f [[stage_in]]) {
     
-    return fragmentIn.color;
+    return half4(f.color);
 }
-

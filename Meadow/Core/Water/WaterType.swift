@@ -9,10 +9,12 @@
 public enum WaterType: Int, Codable {
     
     case water
+    case lava
     
     public static var allCases: [WaterType] {
         
-        return [ .water
+        return [ .water,
+                 .lava
         ]
     }
     
@@ -20,6 +22,7 @@ public enum WaterType: Int, Codable {
         
         switch self {
             
+        case .lava: return "Lava"
         case .water: return "Water"
         }
     }

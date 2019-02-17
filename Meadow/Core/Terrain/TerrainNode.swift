@@ -42,6 +42,15 @@ public class TerrainNode<NodeEdge: TerrainNodeEdge<TerrainEdgeLayer>>: GridNode,
         return true
     }
     
+    public override func child(didBecomeDirty child: SceneGraphChild) {
+        
+        super.child(didBecomeDirty: child)
+        
+        guard let child = child as? NodeEdge else { return }
+        
+        find(neighbour: child.edge)?.node.becomeDirty()
+    }
+    
     public override var mesh: Mesh {
         
         var faces: [MeshFace] = []

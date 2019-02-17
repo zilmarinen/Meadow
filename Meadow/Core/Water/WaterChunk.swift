@@ -6,6 +6,6 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-public class WaterChunk: GridChunk<WaterTile, WaterNode> {
+public class WaterChunk: GridChunk<WaterTile, WaterNode<WaterNodeEdge>> {
     
 }

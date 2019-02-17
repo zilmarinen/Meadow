@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class Water: Grid<WaterChunk, WaterTile, WaterNode> {
+public class Water: Grid<WaterChunk, WaterTile, WaterNode<WaterNodeEdge>> {
     
 }
 
@@ -22,8 +22,15 @@ extension Water: SceneGraphIntermediate {
             
             if let node = add(node: intermediate.volume.coordinate) {
                 
-                node.waterLevel = intermediate.waterLevel
-                node.waterType = WaterType(rawValue: intermediate.waterType)
+                intermediate.children.forEach { nodeEdgeIntermediate in
+                    
+                    if let waterType = WaterType(rawValue: nodeEdgeIntermediate.waterType) {
+                        
+                        let nodeEdge = node.add(edge: nodeEdgeIntermediate.edge, waterType: waterType)
+                        
+                        nodeEdge?.waterLevel = nodeEdgeIntermediate.waterLevel
+                    }
+                }
             }
         }
     }
@@ -31,12 +38,16 @@ extension Water: SceneGraphIntermediate {
 
 extension Water {
     
-    public func add(node coordinate: Coordinate) -> WaterNode? {
+    public func add(edge coordinate: Coordinate, edge: GridEdge, waterType: WaterType) -> WaterNodeEdge? {
+        
+        let node = (find(node: coordinate) ?? add(node: coordinate))
+        
+        return (node?.find(edge: edge) ?? node?.add(edge: edge, waterType: waterType))
+    }
+    
+    func add(node coordinate: Coordinate) -> WaterNode<WaterNodeEdge>? {
         
         guard let node = add(node: WaterTile.fixedVolume(coordinate)) else { return nil }
-        
-        node.waterLevel = coordinate.y
-        node.waterType = WaterType.water
         
         GridEdge.Edges.forEach { edge in
             
@@ -49,19 +60,25 @@ extension Water {
         return node
     }
     
-    @discardableResult
-    public func drain(node: WaterNode) -> Bool {
+    func find(edge coordinate: Coordinate, edge: GridEdge) -> WaterNodeEdge? {
         
-        GridEdge.Edges.forEach { edge in
+        return find(node: coordinate)?.find(edge: edge)
+    }
+    
+    @discardableResult public func remove(edge: WaterNodeEdge) -> Bool {
+        
+        guard let node = find(node: edge.volume.coordinate) else { return false }
+        
+        if node.remove(edge: edge) {
             
-            if let neighbour = node.find(neighbour: edge)?.node as? WaterNode {
+            if node.totalChildren == 0 {
                 
-                node.remove(neighbour: edge)
-                
-                drain(node: neighbour)
+                return remove(node: node)
             }
+            
+            return true
         }
         
-        return super.remove(node: node)
+        return false
     }
 }

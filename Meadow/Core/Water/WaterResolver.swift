@@ -42,43 +42,49 @@ extension WaterResolver {
 
 extension WaterResolver {
     
-    func clean(node: WaterNode, terrainNode: TerrainNode<TerrainNodeEdge<TerrainEdgeLayer>>?) {
+    func clean(node: WaterNode<WaterNodeEdge>, terrainNode: TerrainNode<TerrainNodeEdge<TerrainEdgeLayer>>?) {
         
-//        if let terrainNode = terrainNode, let upperPolytope = terrainNode.topLayer?.upperPolytope {
-//            
-//            var waterLevel = node.waterLevel
-//            
-//            GridEdge.Edges.forEach { edge in
-//                
-//                if let neighbour = node.find(neighbour: edge)?.node as? WaterNode {
-//                    
-//                    waterLevel = max(waterLevel, neighbour.waterLevel)
-//                }
-//            }
-//            
-//            node.waterLevel = waterLevel
-//            node.basePolytope = upperPolytope
-//            
-//            let elevation = node.upperPolytope.elevation(referencing: upperPolytope)
-//            
-//            if elevation == .above || elevation == .intersecting {
-//                
-//                GridEdge.Edges.forEach { edge in
-//                    
-//                    if let neighbour = node.find(neighbour: edge)?.node as? WaterNode {
-//                        
-//                        neighbour.waterLevel = waterLevel
-//                    }
-//                    else if terrainNode.find(neighbour: edge)?.node as? TerrainNode<TerrainNodeEdge> {
-//                        
-//                        water.add(node: node.volume.coordinate + GridEdge.extent(edge: edge))
-//                    }
-//                }
-//                
-//                return
-//            }
-//        }
+        guard let terrainNode = terrainNode else {
+            
+            water.remove(node: node)
+            
+            return
+        }
         
-        water.remove(node: node)
+        GridEdge.Edges.forEach { edge in
+            
+            if let waterNodeEdge = node.find(edge: edge) {
+            
+                let terrainEdgeLayer = terrainNode.find(edge: waterNodeEdge.edge)?.topLayer
+                
+                if terrainEdgeLayer == nil || Axis.Y(y: terrainEdgeLayer!.upperPolytope.base) >= waterNodeEdge.waterLevel {
+                
+                    water.remove(edge: waterNodeEdge)
+                }
+                else {
+                    
+                    waterNodeEdge.terrainPolytope = terrainEdgeLayer?.upperPolytope
+                    
+                    let (e0, e1) = GridEdge.edges(edge: waterNodeEdge.edge)
+                    
+                    [e0, e1].forEach { connectedEdge in
+                        
+                        let connectedWaterNodeEdge = node.find(edge: connectedEdge)
+                        let connectedTerrainEdgeLayer = terrainNode.find(edge: connectedEdge)?.topLayer
+                        
+                        if let connectedTerrainEdgeLayer = connectedTerrainEdgeLayer, connectedWaterNodeEdge == nil {
+                            
+                            if Axis.Y(y: connectedTerrainEdgeLayer.upperPolytope.base) < waterNodeEdge.waterLevel {
+                                
+                                let nodeEdge = water.add(edge: node.volume.coordinate, edge: connectedEdge, waterType: waterNodeEdge.waterType)
+                                
+                                nodeEdge?.waterLevel = waterNodeEdge.waterLevel
+                                nodeEdge?.terrainPolytope = connectedTerrainEdgeLayer.upperPolytope
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

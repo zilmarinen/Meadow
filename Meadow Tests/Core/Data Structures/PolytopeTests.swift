@@ -133,16 +133,16 @@ class PolytopeTests: XCTestCase {
         
         let reference = Polytope(x: 10, y: -10, z: 10)
         
-        let t0 = Polytope.inset(polytope: reference, edge: .north, inset: WaterNode.tension)
-        let t1 = Polytope.inset(polytope: reference, edge: .west, inset: WaterNode.tension)
+        let t0 = Polytope.inset(polytope: reference, edge: .north, inset: WaterNodeEdge.tension)
+        let t1 = Polytope.inset(polytope: reference, edge: .west, inset: WaterNodeEdge.tension)
         
         XCTAssertEqual(t0.vertices[0].x, (10.0 + Axis.halfUnitXZ))
         XCTAssertEqual(t0.vertices[0].y, Axis.Y(y: -10))
-        XCTAssertEqual(t0.vertices[0].z, (10.0 + Axis.halfUnitXZ) - WaterNode.tension, accuracy: WaterNode.tension)
+        XCTAssertEqual(t0.vertices[0].z, (10.0 + Axis.halfUnitXZ) - WaterNodeEdge.tension, accuracy: WaterNodeEdge.tension)
         
         XCTAssertEqual(t0.vertices[1].x, (10.0 + -Axis.halfUnitXZ))
         XCTAssertEqual(t0.vertices[1].y, Axis.Y(y: -10))
-        XCTAssertEqual(t0.vertices[1].z, (10.0 + Axis.halfUnitXZ) - WaterNode.tension, accuracy: WaterNode.tension)
+        XCTAssertEqual(t0.vertices[1].z, (10.0 + Axis.halfUnitXZ) - WaterNodeEdge.tension, accuracy: WaterNodeEdge.tension)
         
         XCTAssertEqual(t0.vertices[2].x, (10.0 + -Axis.halfUnitXZ))
         XCTAssertEqual(t0.vertices[2].y, Axis.Y(y: -10))
@@ -152,7 +152,7 @@ class PolytopeTests: XCTestCase {
         XCTAssertEqual(t0.vertices[3].y, Axis.Y(y: -10))
         XCTAssertEqual(t0.vertices[3].z, (10.0 + -Axis.halfUnitXZ))
         
-        XCTAssertEqual(t1.vertices[0].x, (10.0 + Axis.halfUnitXZ) - WaterNode.tension, accuracy: WaterNode.tension)
+        XCTAssertEqual(t1.vertices[0].x, (10.0 + Axis.halfUnitXZ) - WaterNodeEdge.tension, accuracy: WaterNodeEdge.tension)
         XCTAssertEqual(t1.vertices[0].y, Axis.Y(y: -10))
         XCTAssertEqual(t1.vertices[0].z, (10.0 + Axis.halfUnitXZ))
         
@@ -164,7 +164,7 @@ class PolytopeTests: XCTestCase {
         XCTAssertEqual(t1.vertices[2].y, Axis.Y(y: -10))
         XCTAssertEqual(t1.vertices[2].z, (10.0 + -Axis.halfUnitXZ))
         
-        XCTAssertEqual(t1.vertices[3].x, (10.0 + Axis.halfUnitXZ) - WaterNode.tension, accuracy: WaterNode.tension)
+        XCTAssertEqual(t1.vertices[3].x, (10.0 + Axis.halfUnitXZ) - WaterNodeEdge.tension, accuracy: WaterNodeEdge.tension)
         XCTAssertEqual(t1.vertices[3].y, Axis.Y(y: -10))
         XCTAssertEqual(t1.vertices[3].z, (10.0 + -Axis.halfUnitXZ))
         

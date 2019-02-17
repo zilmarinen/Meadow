@@ -118,7 +118,7 @@ extension TerrainEdgeLayer: Hashable {
     
     public static func == (lhs: TerrainEdgeLayer, rhs: TerrainEdgeLayer) -> Bool {
         
-        return lhs.coordinate == rhs.coordinate && lhs.edge == rhs.edge && lhs.c0 == rhs.c0 && lhs.c1 == rhs.c1 && lhs.c2 == rhs.c2
+        return lhs.coordinate == rhs.coordinate && lhs.edge == rhs.edge && lhs.c0 == rhs.c0 && lhs.c1 == rhs.c1 && lhs.c2 == rhs.c2 && lhs.terrainType == rhs.terrainType
     }
 }
 
@@ -212,12 +212,12 @@ extension TerrainEdgeLayer: GridPolyhedronProvider {
 
 extension TerrainEdgeLayer {
     
-    var base: Int {
+    public var base: Int {
     
         return min(c0.height, c1.height, c2.height)
     }
     
-    var peak: Int {
+    public var peak: Int {
         
         return max(c0.height, c1.height, c2.height)
     }

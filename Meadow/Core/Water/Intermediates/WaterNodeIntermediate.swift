@@ -8,23 +8,18 @@
 
 public class WaterNodeIntermediate: GridNodeIntermediate {
     
-    let waterLevel: Int
-    
-    let waterType: Int
+    let children: [WaterNodeEdgeIntermediate]
     
     enum CodingKeys: CodingKey {
         
-        case waterLevel
-        case waterType
+        case children
     }
     
     public required init(from decoder: Decoder) throws {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        waterLevel = try container.decode(Int.self, forKey: .waterLevel)
-        
-        waterType = try container.decode(Int.self, forKey: .waterType)
+        children = try container.decode([WaterNodeEdgeIntermediate].self, forKey: .children)
         
         try super.init(from: decoder)
     }

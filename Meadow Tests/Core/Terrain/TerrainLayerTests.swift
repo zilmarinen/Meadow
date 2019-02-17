@@ -19,7 +19,7 @@ class TerrainLayerTests: XCTestCase {
         self.scene = Scene(observer: nil)
     }
     
-    func testTerrainEdgeLayerCountCount() {
+    func testTerrainEdgeLayerCount() {
         
         let expect = expectation(description: "Terrain edge and layer counts should match the number of edges per node and layers per edge")
         
@@ -149,20 +149,28 @@ class TerrainLayerTests: XCTestCase {
     
     func testTerrainLayerEquality() {
         
-        let expect = expectation(description: "Terrain layers are considered equal when all x, y and z components, edges and corner heights are equal")
+        let expect = expectation(description: "Terrain layers are considered equal when all x, y and z components, edges, corner heights and terrain types are equal")
         
         let edge = GridEdge.north
+        let oppositeEdge = GridEdge.opposite(edge: edge)
         
         let l0 = scene.world.terrain.add(layer: Coordinate(x: 13, y: 0, z: 37), edge: edge, terrainType: TerrainType.bedrock)
         let l1 = scene.world.terrain.add(layer: Coordinate(x: 13, y: 0, z: 37), edge: edge, terrainType: TerrainType.bedrock)
+        let l2 = scene.world.terrain.add(layer: Coordinate(x: 13, y: 0, z: 37), edge: oppositeEdge, terrainType: TerrainType.bedrock)
+        let l3 = scene.world.terrain.add(layer: Coordinate(x: 13, y: 0, z: 37), edge: oppositeEdge, terrainType: TerrainType.sand)
         
         XCTAssertNotNil(l0)
         XCTAssertNotNil(l1)
+        XCTAssertNotNil(l2)
+        XCTAssertNotNil(l3)
         
-        XCTAssertNotNil(l0)
-        XCTAssertNotNil(l1)
         XCTAssertEqual(l0, l0)
         XCTAssertNotEqual(l0, l1)
+        XCTAssertNotEqual(l0, l2)
+        XCTAssertNotEqual(l0, l3)
+        XCTAssertNotEqual(l1, l2)
+        XCTAssertNotEqual(l1, l3)
+        XCTAssertNotEqual(l2, l3)
         
         expect.fulfill()
         

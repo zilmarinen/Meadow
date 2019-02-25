@@ -231,6 +231,14 @@ extension TerrainNode {
     }
 }
 
+extension TerrainNode {
+    
+    public var filled: Bool {
+        
+        return totalChildren == 4
+    }
+}
+
 extension TerrainNode: TerrainCutawayProvider {
     
     func add(cutaway: TerrainCutaway) -> Bool {

@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class Area: Grid<AreaChunk, AreaTile, AreaNode> {
+public class Area: Grid<AreaChunk, AreaTile, AreaNode<AreaNodeEdge>> {
     
 }
 
@@ -22,16 +22,9 @@ extension Area: SceneGraphIntermediate {
             
             if let node = add(node: intermediate.volume.coordinate) {
                 
-                node.externalAreaType = intermediate.externalAreaType
-                node.internalAreaType = intermediate.internalAreaType
-                node.floorColorPalette = ArtDirector.shared?.palette(named: intermediate.floorColorPalette)
-                
-                GridEdge.Edges.forEach { edge in
+                intermediate.children.forEach { nodeEdgeIntermediate in
                     
-                    if let nodeEdge = intermediate.edges.find(edge: edge), let externalColorPalette = ArtDirector.shared?.palette(named: nodeEdge.externalColorPalette), let internalColorPalette = ArtDirector.shared?.palette(named: nodeEdge.internalColorPalette) {
-                        
-                        node.set(edge: AreaNode.Edge(edge: edge, edgeType: nodeEdge.edgeType, architectureType: nodeEdge.architectureType, externalColorPalette: externalColorPalette, internalColorPalette: internalColorPalette))
-                    }
+                    //
                 }
             }
         }
@@ -40,13 +33,9 @@ extension Area: SceneGraphIntermediate {
 
 extension Area {
     
-    public func add(node coordinate: Coordinate) -> AreaNode? {
+    public func add(node coordinate: Coordinate) -> AreaNode<AreaNodeEdge>? {
         
-        guard let node = add(node: AreaNode.fixedVolume(coordinate)) else { return nil }
-        
-        node.externalAreaType = AreaType.brick
-        node.internalAreaType = AreaType.concrete
-        node.floorColorPalette = ArtDirector.shared?.palettes.children.first
+        guard let node = add(node: AreaNodeEdge.fixedVolume(coordinate)) else { return nil }
         
         GridEdge.Edges.forEach { edge in
             

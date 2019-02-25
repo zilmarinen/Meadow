@@ -51,37 +51,57 @@ extension WaterResolver {
             return
         }
         
-        GridEdge.Edges.forEach { edge in
+        let edges = GridEdge.Edges
+        
+        for edgeIndex in 0..<edges.count {
             
-            if let waterNodeEdge = node.find(edge: edge) {
+            let edge = edges[edgeIndex]
+         
+            guard let waterNodeEdge = node.find(edge: edge) else { continue }
             
-                let terrainEdgeLayer = terrainNode.find(edge: waterNodeEdge.edge)?.topLayer
+            guard let terrainLayer = terrainNode.find(edge: edge)?.topLayer else {
                 
-                if terrainEdgeLayer == nil || Axis.Y(y: terrainEdgeLayer!.upperPolytope.base) >= waterNodeEdge.waterLevel {
+                node.remove(edge: waterNodeEdge)
                 
-                    water.remove(edge: waterNodeEdge)
-                }
-                else {
+                continue
+            }
+            
+            guard Axis.Y(y: terrainLayer.upperPolytope.base) < waterNodeEdge.waterLevel else {
+                
+                node.remove(edge: waterNodeEdge)
+                
+                continue
+            }
+            
+            waterNodeEdge.terrainPolytope = terrainLayer.upperPolytope
+            
+            let oppositeEdge = GridEdge.opposite(edge: edge)
+            let connectedEdges = GridEdge.edges(edge: edge)
+            
+            let neighbourWaterNode = node.find(neighbour: edge)?.node as? WaterNode
+            let neighbourTerrainNode = terrainNode.find(neighbour: edge)?.node as? TerrainNode
+            
+            if neighbourWaterNode == nil, let neighbourTerrainLayer = neighbourTerrainNode?.find(edge: oppositeEdge)?.topLayer {
+                
+                let nodeEdge = water.add(edge: neighbourTerrainLayer.volume.coordinate, edge: oppositeEdge, waterType: waterNodeEdge.waterType)
+                
+                nodeEdge?.waterLevel = waterNodeEdge.waterLevel
+                nodeEdge?.terrainPolytope = neighbourTerrainLayer.upperPolytope
+            }
+            
+            [connectedEdges.e0, connectedEdges.e1].forEach { connectedEdge in
+                
+                let connectedWaterNodeEdge = node.find(edge: connectedEdge)
+                let connectedTerrainEdgeLayer = terrainNode.find(edge: connectedEdge)?.topLayer
+                
+                if let connectedTerrainEdgeLayer = connectedTerrainEdgeLayer, connectedWaterNodeEdge == nil {
                     
-                    waterNodeEdge.terrainPolytope = terrainEdgeLayer?.upperPolytope
-                    
-                    let (e0, e1) = GridEdge.edges(edge: waterNodeEdge.edge)
-                    
-                    [e0, e1].forEach { connectedEdge in
+                    if Axis.Y(y: connectedTerrainEdgeLayer.upperPolytope.base) < waterNodeEdge.waterLevel {
                         
-                        let connectedWaterNodeEdge = node.find(edge: connectedEdge)
-                        let connectedTerrainEdgeLayer = terrainNode.find(edge: connectedEdge)?.topLayer
+                        let nodeEdge = node.add(edge: connectedEdge, waterType: waterNodeEdge.waterType)
                         
-                        if let connectedTerrainEdgeLayer = connectedTerrainEdgeLayer, connectedWaterNodeEdge == nil {
-                            
-                            if Axis.Y(y: connectedTerrainEdgeLayer.upperPolytope.base) < waterNodeEdge.waterLevel {
-                                
-                                let nodeEdge = water.add(edge: node.volume.coordinate, edge: connectedEdge, waterType: waterNodeEdge.waterType)
-                                
-                                nodeEdge?.waterLevel = waterNodeEdge.waterLevel
-                                nodeEdge?.terrainPolytope = connectedTerrainEdgeLayer.upperPolytope
-                            }
-                        }
+                        nodeEdge?.waterLevel = waterNodeEdge.waterLevel
+                        nodeEdge?.terrainPolytope = connectedTerrainEdgeLayer.upperPolytope
                     }
                 }
             }

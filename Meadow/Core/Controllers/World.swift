@@ -137,12 +137,15 @@ extension World {
             
             terrainResolver.enqueue(volume: child.volume)
             
-        case is TerrainEdgeLayer.Type:
+        case is TerrainNodeEdge<TerrainEdgeLayer>.Type,
+             is TerrainEdgeLayer.Type:
             
             terrainResolver.enqueue(volume: child.volume)
             waterResolver.enqueue(volume: child.volume)
             
-        case is WaterTile.Type:
+        case is WaterTile.Type,
+             is WaterNode<WaterNodeEdge>.Type,
+             is WaterNodeEdge.Type:
             
             waterResolver.enqueue(volume: child.volume)
             

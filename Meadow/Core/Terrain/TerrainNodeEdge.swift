@@ -46,6 +46,7 @@ extension TerrainNodeEdge: Encodable {
     enum CodingKeys: CodingKey {
         
         case edge
+        case children
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -53,6 +54,7 @@ extension TerrainNodeEdge: Encodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         try container.encode(self.edge, forKey: .edge)
+        try container.encode(self.children.children, forKey: .children)
     }
 }
 

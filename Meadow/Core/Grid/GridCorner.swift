@@ -59,12 +59,12 @@ extension GridCorner {
         .northEast
     ]}
 
-    public static func corners(edge: GridEdge) -> (GridCorner, GridCorner) {
+    public static func corners(edge: GridEdge) -> (c0: GridCorner, c1: GridCorner) {
         
         return (Edges[edge.rawValue].first!, Edges[edge.rawValue].last!)
     }
 
-    public static func corners(corner: GridCorner) -> (GridCorner, GridCorner) {
+    public static func corners(corner: GridCorner) -> (c0: GridCorner, c1: GridCorner) {
         
         return (Connected[corner.rawValue].first!, Connected[corner.rawValue].last!)
     }

@@ -159,7 +159,7 @@ extension MeshFace {
         let c0equal = Axis.Y(y: v0.y) == Axis.Y(y: v3.y)
         let c1equal = Axis.Y(y: v1.y) == Axis.Y(y: v2.y)
         
-        guard !c0equal && !c1equal else { return [] }
+        guard !c0equal || !c1equal else { return [] }
         
         if c0equal || c1equal {
             
@@ -182,7 +182,7 @@ extension MeshFace {
         let c0equal = Axis.Y(y: v0.y) == Axis.Y(y: v3.y)
         let c1equal = Axis.Y(y: v1.y) == Axis.Y(y: v2.y)
         
-        guard !c0equal && !c1equal else { return [] }
+        guard !c0equal || !c1equal else { return [] }
         
         let crown = SCNVector3(x: 0.0, y: TerrainEdgeLayer.crown, z: 0.0)
         
@@ -191,10 +191,10 @@ extension MeshFace {
         
         if c0equal || c1equal {
             
-            let v6 = (c1equal ? v4 : SCNVector3.lerp(from: v3, to: v2, factor: TerrainEdgeLayer.crown))
-            let v7 = (c0equal ? v5 : SCNVector3.lerp(from: v2, to: v3, factor: TerrainEdgeLayer.crown))
+            let v6 = (c0equal ? v5 : SCNVector3.lerp(from: v2, to: v3, factor: TerrainEdgeLayer.crown))
+            let v7 = (c1equal ? v4 : SCNVector3.lerp(from: v3, to: v2, factor: TerrainEdgeLayer.crown))
             
-            return [    MeshFace(v0: v0, v1: v1, v2: v7, projectedNormal: normal, color: color),
+            return [    MeshFace(v0: v0, v1: v1, v2: v6, projectedNormal: normal, color: color),
                         MeshFace(v0: v0, v1: v6, v2: v7, projectedNormal: normal, color: color)]
         }
         
@@ -212,7 +212,7 @@ extension MeshFace {
         let c0equal = Axis.Y(y: v0.y) == Axis.Y(y: v3.y)
         let c1equal = Axis.Y(y: v1.y) == Axis.Y(y: v2.y)
         
-        guard !c0equal && !c1equal else { return [] }
+        guard !c0equal || !c1equal else { return [] }
         
         let crown = SCNVector3(x: 0.0, y: TerrainEdgeLayer.crown, z: 0.0)
         
@@ -221,9 +221,11 @@ extension MeshFace {
         
         if c0equal || c1equal {
             
-            let v6 = (c0equal ? SCNVector3.lerp(from: v3, to: v2, factor: TerrainEdgeLayer.crown) : SCNVector3.lerp(from: v2, to: v3, factor: TerrainEdgeLayer.crown))
+            let v6 = (c0equal ? v5 : SCNVector3.lerp(from: v2, to: v3, factor: TerrainEdgeLayer.crown))
+            let v7 = (c1equal ? v4 : SCNVector3.lerp(from: v3, to: v2, factor: TerrainEdgeLayer.crown))
+            let v8 = (c0equal ? v2 : v3)
             
-            return [MeshFace(v0: v4, v1: v5, v2: v6, projectedNormal: normal, color: color)]
+            return [MeshFace(v0: v6, v1: v7, v2: v8, projectedNormal: normal, color: color)]
         }
         
         return [MeshFace(v0: v2, v1: v4, v2: v5, projectedNormal: normal, color: color),

@@ -69,12 +69,12 @@ extension GridEdge {
         SCNVector3.Left
     ]}
 
-    public static func edges(corner: GridCorner) -> (GridEdge, GridEdge) {
+    public static func edges(corner: GridCorner) -> (e0: GridEdge, e1: GridEdge) {
         
         return (Corners[corner.rawValue].first!, Corners[corner.rawValue].last!)
     }
 
-    public static func edges(edge: GridEdge) -> (GridEdge, GridEdge) {
+    public static func edges(edge: GridEdge) -> (e0: GridEdge, e1: GridEdge) {
         
         return (Connected[edge.rawValue].first!, Connected[edge.rawValue].last!)
     }

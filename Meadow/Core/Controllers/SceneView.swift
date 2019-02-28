@@ -8,7 +8,7 @@
 
 import SceneKit
 
-public class SceneView: SCNView {
+public class SceneView: SCNView, CursorObserver {
     
     public lazy var viewModel = {
         
@@ -21,6 +21,8 @@ public class SceneView: SCNView {
         
         viewModel.subscribe(stateDidChange(from:to:))
     }
+    
+    public var cursorIdentifier: SceneView.Cursor.CallbackReference?
 }
 
 extension SceneView {
@@ -29,15 +31,98 @@ extension SceneView {
         
         switch viewModel.state {
             
-        case .empty:
+        case .empty(let meadow):
             
             self.scene = nil
             self.delegate = nil
+            
+            if let cursorIdentifier = cursorIdentifier {
+                
+                meadow?.input.cursor.unsubscribe(cursorIdentifier)
+            }
             
         case .scene(let meadow):
             
             self.scene = meadow.scene
             self.delegate = meadow.scene
+            
+            cursorIdentifier = meadow.input.cursor.subscribe(stateDidChange(from:to:))
+        }
+    }
+}
+
+extension SceneView {
+    
+    public func stateDidChange(from: SceneView.CursorState?, to: SceneView.CursorState) {
+        
+        switch viewModel.state {
+            
+        case .scene(let meadow):
+            
+            let options: [SCNHitTestOption : Any] = [SCNHitTestOption.rootNode: meadow.scene.world,
+                                                     SCNHitTestOption.categoryBitMask: SceneGraphNodeType.terrain.rawValue | SceneGraphNodeType.floor.rawValue]
+            
+            switch to {
+            
+            case .idle(let position):
+            
+                guard let hit = meadow.sceneView.hitTest(position, options: options).first else { break }
+                
+                let closest = meadow.scene.hitTest(hit)
+                
+                switch meadow.input.graticule.state {
+                    
+                case .tracking(let position, _, _, _):
+                    
+                    if position.end != closest.coordinate {
+                        
+                        meadow.input.graticule.state = .tracking(position: (start: closest.coordinate, end: closest.coordinate), closest: (corner: closest.corner, edge: closest.edge, polytope: closest.polytope), yOffset: 0, inputType: .none)
+                    }
+                
+                default: break
+                }
+            
+            case .down(let position, let inputType),
+                 .tracking(let position, let inputType),
+                 .up(let position, let inputType):
+                
+                guard let hit = meadow.sceneView.hitTest(position.end, options: options).first, let camera = meadow.scene.cameraJib.camera else { break }
+                
+                let closest = meadow.scene.hitTest(hit)
+                
+                let scale = MDWFloat(camera.orthographicScale * 2)
+                
+                let offset = -Int((position.start.y - position.end.y) / scale)
+                
+                switch meadow.input.graticule.state {
+                    
+                case .tracking(let position, _, let yOffset, _):
+                    
+                    switch to {
+                        
+                    case .down:
+                        
+                        meadow.input.graticule.state = .down(position: closest.coordinate, closest: (corner: closest.corner, edge: closest.edge, polytope: closest.polytope), inputType: inputType)
+                        
+                    case .tracking:
+                        
+                        if position.end != closest.coordinate {
+                            
+                            meadow.input.graticule.state = .tracking(position: (start: position.start, end: closest.coordinate), closest: (corner: closest.corner, edge: closest.edge, polytope: closest.polytope), yOffset: offset, inputType: inputType)
+                        }
+                    
+                    case .up:
+                        
+                        meadow.input.graticule.state = .up(position: (start: position.start, end: closest.coordinate), closest: (corner: closest.corner, edge: closest.edge, polytope: closest.polytope), yOffset: yOffset, inputType: inputType)
+                        
+                    default: break
+                    }
+                    
+                default: break
+                }
+            }
+            
+        default: break
         }
     }
 }

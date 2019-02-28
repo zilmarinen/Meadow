@@ -22,11 +22,11 @@ extension SceneView {
                 
                 guard let touch = touches.first else { break }
                 
-                let position = touch.location(in: self)
+                let point = touch.location(in: self)
                 
                 let inputType: CursorState.InputType = (touch.tapCount == 1 ? .left : .right)
                 
-                meadow.input.cursor.state = .down(position: position, inputType: inputType)
+                meadow.input.cursor.state = .down(position: (start: point, end: point), inputType: inputType)
                 
             default: break
             }
@@ -43,14 +43,14 @@ extension SceneView {
             
             switch meadow.input.cursor.state {
                 
-            case .down(let startPosition, let inputType),
-                 .tracking(_, let inputType, let startPosition):
+            case .down(let position, let inputType),
+                 .tracking(let position, let inputType):
                 
                 guard let touch = touches.first else { break }
                 
-                let position = touch.location(in: self)
+                let point = touch.location(in: self)
                 
-                meadow.input.cursor.state = .up(position: position, inputType: inputType, startPosition: startPosition)
+                meadow.input.cursor.state = .up(position: (start: position.start, end: point), inputType: inputType)
                 
             default: break
             }
@@ -67,14 +67,14 @@ extension SceneView {
             
             switch meadow.input.cursor.state {
                 
-            case .down(let startPosition, let inputType),
-                 .tracking(_, let inputType, let startPosition):
+            case .down(let position, let inputType),
+                 .tracking(let position, let inputType):
                 
                 guard let touch = touches.first else { break }
                 
-                let position = touch.location(in: self)
+                let point = touch.location(in: self)
                 
-                meadow.input.cursor.state = .tracking(position: position, inputType: inputType, startPosition: startPosition)
+                meadow.input.cursor.state = .tracking(position: (start: position.start, end: point), inputType: inputType)
                 
             default: break
             }

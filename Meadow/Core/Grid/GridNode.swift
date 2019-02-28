@@ -27,7 +27,7 @@ public class GridNode: Encodable, MeshProvider, SceneGraphChild, SceneGraphObser
     
     var isDirty: Bool = false
     
-    var neighbours = Neighbours()
+    var neighbours = Tree<GridNodeNeighbour>()
     
     private enum CodingKeys: CodingKey {
         
@@ -99,19 +99,13 @@ extension GridNode {
         
         remove(neighbour: edge)
         
-        let neighbour = Neighbour(edge: edge, node: node)
+        let neighbour = GridNodeNeighbour(edge: edge, node: node)
         
-        switch edge {
-            
-        case .north: neighbours.north = neighbour
-        case .east: neighbours.east = neighbour
-        case .south: neighbours.south = neighbour
-        case .west: neighbours.west = neighbour
-        }
+        neighbours.append(neighbour)
         
         let oppositeEdge = GridEdge.opposite(edge: edge)
         
-        if node.find(neighbour: oppositeEdge) == nil {
+        if node.find(neighbour: oppositeEdge)?.node != self {
             
             node.add(neighbour: self, edge: oppositeEdge)
         }
@@ -119,9 +113,9 @@ extension GridNode {
         becomeDirty()
     }
     
-    public func find(neighbour edge: GridEdge) -> GridNode.Neighbour? {
+    public func find(neighbour edge: GridEdge) -> GridNodeNeighbour? {
         
-        return neighbours.find(edge: edge)
+        return neighbours.first { $0.edge == edge }
     }
     
     @discardableResult
@@ -129,13 +123,7 @@ extension GridNode {
         
         guard let neighbour = find(neighbour: edge) else { return false }
         
-        switch edge {
-            
-        case .north: neighbours.north = nil
-        case .east: neighbours.east = nil
-        case .south: neighbours.south = nil
-        case .west: neighbours.west = nil
-        }
+        neighbours.remove(neighbour)
         
         let oppositeEdge = GridEdge.opposite(edge: edge)
         

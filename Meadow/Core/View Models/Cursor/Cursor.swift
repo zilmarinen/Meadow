@@ -15,31 +15,30 @@ extension SceneView {
         
         public enum InputType {
             
+            case none
             case left
             case middle
             case right
         }
         
-        case down(position: CGPoint, inputType: InputType)
-        case tracking(position: CGPoint, inputType: InputType, startPosition: CGPoint)
-        case up(position: CGPoint, inputType: InputType, startPosition: CGPoint)
+        case down(position: (start: CGPoint, end: CGPoint), inputType: InputType)
+        case tracking(position: (start: CGPoint, end: CGPoint), inputType: InputType)
+        case up(position: (start: CGPoint, end: CGPoint), inputType: InputType)
         case idle(position: CGPoint)
         
         public func shouldTransition(to newState: CursorState) -> Should<CursorState> {
         
             switch newState {
                 
-            case .up(let position, _, _):
+            case .up(let position, _):
                 
-                return .redirect(.idle(position: position))
+                return .redirect(.idle(position: position.end))
                 
             case .down(let position, let inputType):
                 
-                return .redirect(.tracking(position: position, inputType: inputType, startPosition: position))
+                return .redirect(.tracking(position: position, inputType: inputType))
                 
-            default:
-                
-                return .continue
+            default: return .continue
             }
         }
     }

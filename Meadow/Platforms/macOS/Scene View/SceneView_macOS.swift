@@ -89,9 +89,9 @@ extension SceneView {
                 
                 let pointInView = convert(event.locationInWindow, from: nil)
                 
-                let position = CGPoint(x: pointInView.x, y: pointInView.y)
+                let point = CGPoint(x: pointInView.x, y: pointInView.y)
                 
-                meadow.input.cursor.state = .down(position: position, inputType: inputType)
+                meadow.input.cursor.state = .down(position: (start: point, end: point), inputType: inputType)
                 
             default: break
             }
@@ -108,14 +108,14 @@ extension SceneView {
             
             switch meadow.input.cursor.state {
                 
-            case .down(let startPosition, _),
-                 .tracking(_, _, let startPosition):
+            case .down(let position, _),
+                 .tracking(let position, _):
                 
                 let pointInView = convert(event.locationInWindow, from: nil)
                 
-                let position = CGPoint(x: pointInView.x, y: pointInView.y)
+                let point = CGPoint(x: pointInView.x, y: pointInView.y)
                 
-                meadow.input.cursor.state = .up(position: position, inputType: inputType, startPosition: startPosition)
+                meadow.input.cursor.state = .up(position: (start: position.start, end: point), inputType: inputType)
                 
             default: break
             }
@@ -132,14 +132,14 @@ extension SceneView {
             
             switch meadow.input.cursor.state {
                 
-            case .down(let startPosition, _),
-                 .tracking(_, _, let startPosition):
+            case .down(let position, _),
+                 .tracking(let position, _):
                 
                 let pointInView = convert(event.locationInWindow, from: nil)
                 
-                let position = CGPoint(x: pointInView.x, y: pointInView.y)
+                let point = CGPoint(x: pointInView.x, y: pointInView.y)
                 
-                meadow.input.cursor.state = .tracking(position: position, inputType: inputType, startPosition: startPosition)
+                meadow.input.cursor.state = .tracking(position: (start: position.start, end: point), inputType: inputType)
                 
             default: break
             }

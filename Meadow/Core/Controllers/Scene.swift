@@ -128,3 +128,20 @@ extension Scene: Encodable {
         try container.encode(self.world, forKey: .world)
     }
 }
+
+extension Scene {
+    
+    func hitTest(_ hit: SCNHitTestResult) -> (coordinate: Coordinate, polytope: Polytope, corner: GridCorner, edge: GridEdge) {
+        
+        let coordinate = Coordinate(vector: hit.worldCoordinates)
+        
+        let terrainNode = world.terrain.find(node: coordinate)
+        
+        let polytope = (terrainNode?.upperPolytope ?? Polytope(x: MDWFloat(coordinate.x), y0: World.floor, y1: World.floor, y2: World.floor, y3: World.floor, z: MDWFloat(coordinate.z)))
+        
+        let corner = polytope.closest(corner: hit.worldCoordinates)
+        let edge = polytope.closest(edge: hit.worldCoordinates)
+        
+        return (coordinate, polytope, corner, edge)
+    }
+}

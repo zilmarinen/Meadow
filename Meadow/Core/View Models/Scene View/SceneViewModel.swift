@@ -12,7 +12,7 @@ extension SceneView {
     
     public enum ViewState: State {
         
-        case empty
+        case empty(meadow: Meadow?)
         case scene(meadow: Meadow)
         
         public func shouldTransition(to newState: ViewState) -> Should<ViewState> {
@@ -25,7 +25,7 @@ extension SceneView {
         
         init() {
             
-            super.init(initialState: .empty)
+            super.init(initialState: .empty(meadow: nil))
         }
     }
 }

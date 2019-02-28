@@ -60,7 +60,7 @@ extension Terrain {
         return node
     }
     
-    func find(edge coordinate: Coordinate, edge: GridEdge) -> TerrainNodeEdge<TerrainEdgeLayer>? {
+    public func find(edge coordinate: Coordinate, edge: GridEdge) -> TerrainNodeEdge<TerrainEdgeLayer>? {
         
         return find(node: coordinate)?.find(edge: edge)
     }

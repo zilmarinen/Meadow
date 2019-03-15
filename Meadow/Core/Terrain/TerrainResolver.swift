@@ -26,7 +26,9 @@ class TerrainResolver: GridResolver {
 
 extension TerrainResolver {
     
-    func resolve() {
+    func clean(volume: Volume) {
+        
+        guard let terrainNode = terrain.find(node: volume.coordinate) else { return }
         
         //
     }

@@ -7,12 +7,26 @@
         "quaternary": "White"
     },
 	{
-		"name": "Grass",
+		"name": "Grass 1",
 		"primary": "Green Sheen",
 		"secondary": "Chocolate",
 		"tertiary": "Wintergreen Dream",
 		"quaternary": "Sea Green"
 	},
+    {
+        "name": "Grass 2",
+        "primary": "Wintergreen Dream",
+        "secondary": "Chocolate",
+        "tertiary": "Green Sheen",
+        "quaternary": "Sea Green"
+    },
+    {
+        "name": "Grass 3",
+        "primary": "Sea Green",
+        "secondary": "Chocolate",
+        "tertiary": "Wintergreen Dream",
+        "quaternary": "Green Sheen"
+    },
     {
 		"name": "Sand",
 		"primary": "Desert Sand",
@@ -36,10 +50,10 @@
     },
     {
         "name": "Dirt",
-        "primary": "turquoisePearl",
-        "secondary": "sasquatchSocks",
-        "tertiary": "quickSilver",
-        "quaternary": "pixiePowder"
+        "primary": "Desert Sand",
+        "secondary": "Orange Soda",
+        "tertiary": "Yellow Orange",
+        "quaternary": "Yellow Sunshine"
     },
     {
 		"name": "Water",

@@ -9,13 +9,17 @@
 public enum TerrainType: Int, Codable {
     
     case bedrock
-    case grass
+    case grass1
+    case grass2
+    case grass3
     case sand
     
     public static var allCases: [TerrainType] {
         
         return [ .bedrock,
-                 .grass,
+                 .grass1,
+                 .grass2,
+                 .grass3,
                  .sand
         ]
     }
@@ -25,7 +29,9 @@ public enum TerrainType: Int, Codable {
         switch self {
             
         case .bedrock: return "Bedrock"
-        case .grass: return "Grass"
+        case .grass1: return "Grass 1"
+        case .grass2: return "Grass 2"
+        case .grass3: return "Grass 3"
         case .sand: return "Sand"
         }
     }

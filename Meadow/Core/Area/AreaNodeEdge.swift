@@ -111,7 +111,7 @@ extension AreaNodeEdge {
     
     public static let surface: MDWFloat = 0.01
     
-    public static let areaHeight: Int = 5
+    public static let areaHeight: Int = 8
     
     static func fixedVolume(_ coordinate: Coordinate) -> Volume {
         

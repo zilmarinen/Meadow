@@ -13,6 +13,8 @@ public protocol GridResolver: class {
     func enqueue(volume: Volume)
 
     func resolve()
+    
+    func clean(volume: Volume)
 }
 
 extension GridResolver {
@@ -24,6 +26,16 @@ extension GridResolver {
         if existingVolume == nil {
             
             volumes.insert(volume)
+        }
+    }
+    
+    func resolve() {
+        
+        while volumes.count > 0 {
+            
+            let volume = volumes.removeFirst()
+            
+            clean(volume: volume)
         }
     }
 }

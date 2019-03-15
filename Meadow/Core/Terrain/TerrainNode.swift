@@ -237,6 +237,17 @@ extension TerrainNode {
         
         return totalChildren == 4
     }
+    
+    public var peak: Int {
+        
+        guard totalChildren > 0 else { return World.floor }
+        
+        return children.compactMap { $0.topLayer?.peak }.sorted { (lhs, rhs) -> Bool in
+            
+            return lhs > rhs
+            
+        }.first!
+    }
 }
 
 extension TerrainNode: TerrainCutawayProvider {

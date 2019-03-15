@@ -95,6 +95,8 @@ extension GridNode {
     
     func add(neighbour node: GridNode, edge: GridEdge) {
         
+        guard find(neighbour: edge)?.node != node else { return }
+        
         guard node.volume.coordinate.adjacency(to: volume.coordinate) == .adjacent else { return }
         
         remove(neighbour: edge)

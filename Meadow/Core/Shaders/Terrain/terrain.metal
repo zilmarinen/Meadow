@@ -35,6 +35,8 @@ struct FragmentIn {
     float4 color [[user(color)]];
 };
 
+constant half4 gridColor = half4(half3(0.35), 1.0);
+
 vertex FragmentIn terrain_vertex(VertexIn v [[ stage_in ]], constant SCNSceneBuffer& scn_frame [[buffer(0)]], constant NodeBuffer& scn_node [[buffer(1)]]) {
     
     FragmentIn f;
@@ -54,18 +56,27 @@ fragment half4 terrain_fragment(FragmentIn f [[stage_in]]) {
         return half4(f.color);
     }
     
-    float2 pos = f.worldPosition.xz;
-    float2 frac  = abs(fract(pos) - 0.5);
-    float2 df = fwidth(pos);
-    float2 g = smoothstep(-df , df, frac);
-    float grid = 1.0 - saturate(g.x * g.y);
+    float2 worldPosition = f.worldPosition.xz;
+    float2 fractional  = abs(fract(worldPosition) - 0.5);
+    float2 partial = fwidth(worldPosition);
     
-    if (grid > 0.1) {
+    float2 g = smoothstep(-partial, partial, fractional);
+    
+    float lineWidth = 1.0 - saturate(g.x * g.y);
+    
+    if (lineWidth > 0.1) {
         
-        return half4(half3(0.0), 1.0);
+        return gridColor;
     }
     else {
     
-        return half4(f.color);
+        if (lineWidth > 0.1) {
+            
+            return gridColor;
+        }
+        else {
+            
+            return half4(f.color);
+        }
     }
 }

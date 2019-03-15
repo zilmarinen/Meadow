@@ -34,6 +34,8 @@ struct FragmentIn {
     float4 color [[user(color)]];
 };
 
+constant half opacity = 0.7;
+
 vertex FragmentIn water_vertex(VertexIn v [[ stage_in ]], constant SCNSceneBuffer& scn_frame [[buffer(0)]], constant NodeBuffer& scn_node [[buffer(1)]]) {
     
     FragmentIn f;
@@ -47,5 +49,5 @@ vertex FragmentIn water_vertex(VertexIn v [[ stage_in ]], constant SCNSceneBuffe
 
 fragment half4 water_fragment(FragmentIn f [[stage_in]]) {
     
-    return half4(f.color);
+    return half4(half3(f.color.rgb), opacity);
 }

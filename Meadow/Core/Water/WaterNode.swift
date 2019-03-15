@@ -187,3 +187,15 @@ extension WaterNode {
         return false
     }
 }
+
+extension WaterNode {
+    
+    var waterTablePeak: WaterNodeEdge? {
+        
+        return children.sorted { (lhs, rhs) -> Bool in
+            
+            return lhs.waterLevel > rhs.waterLevel
+            
+        }.first
+    }
+}

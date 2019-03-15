@@ -24,85 +24,62 @@ class WaterResolver: GridResolver {
 
 extension WaterResolver {
     
-    func resolve() {
+    func clean(volume: Volume) {
         
-        while volumes.count > 0 {
-            
-            let volume = volumes.removeFirst()
-            
-            if let waterNode = water.find(node: volume.coordinate) {
-                
-                let terrainNode = terrain.find(node: volume.coordinate)
-                
-                clean(node: waterNode, terrainNode: terrainNode)
-            }
-        }
-    }
-}
-
-extension WaterResolver {
-    
-    func clean(node: WaterNode<WaterNodeEdge>, terrainNode: TerrainNode<TerrainNodeEdge<TerrainEdgeLayer>>?) {
+        guard let waterNode = water.find(node: volume.coordinate) else { return }
         
-        guard let terrainNode = terrainNode else {
+        guard let terrainNode = terrain.find(node: volume.coordinate), waterNode.totalChildren > 0 else {
             
-            water.remove(node: node)
+            water.remove(node: waterNode)
             
             return
         }
+        
+        guard let waterTable = waterNode.waterTablePeak else { return }
         
         let edges = GridEdge.Edges
         
         for edgeIndex in 0..<edges.count {
             
             let edge = edges[edgeIndex]
-         
-            guard let waterNodeEdge = node.find(edge: edge) else { continue }
             
-            guard let terrainLayer = terrainNode.find(edge: edge)?.topLayer else {
-                
-                node.remove(edge: waterNodeEdge)
-                
-                continue
-            }
+            var waterNodeEdge = waterNode.find(edge: edge)
             
-            guard Axis.Y(y: terrainLayer.upperPolytope.base) < waterNodeEdge.waterLevel else {
-                
-                node.remove(edge: waterNodeEdge)
-                
-                continue
-            }
+            let waterLevel = (waterNodeEdge?.waterLevel ?? waterTable.waterLevel)
             
-            waterNodeEdge.terrainPolytope = terrainLayer.upperPolytope
-            
-            let oppositeEdge = GridEdge.opposite(edge: edge)
-            let connectedEdges = GridEdge.edges(edge: edge)
-            
-            let neighbourWaterNode = node.find(neighbour: edge)?.node as? WaterNode
-            let neighbourTerrainNode = terrainNode.find(neighbour: edge)?.node as? TerrainNode
-            
-            if neighbourWaterNode == nil, let neighbourTerrainLayer = neighbourTerrainNode?.find(edge: oppositeEdge)?.topLayer {
+            guard let terrainNodeEdge = terrainNode.find(edge: edge), let terrainEdgeLayer = terrainNodeEdge.topLayer,  terrainEdgeLayer.base < waterLevel else {
                 
-                let nodeEdge = water.add(edge: neighbourTerrainLayer.volume.coordinate, edge: oppositeEdge, waterType: waterNodeEdge.waterType)
-                
-                nodeEdge?.waterLevel = waterNodeEdge.waterLevel
-                nodeEdge?.terrainPolytope = neighbourTerrainLayer.upperPolytope
-            }
-            
-            [connectedEdges.e0, connectedEdges.e1].forEach { connectedEdge in
-                
-                let connectedWaterNodeEdge = node.find(edge: connectedEdge)
-                let connectedTerrainEdgeLayer = terrainNode.find(edge: connectedEdge)?.topLayer
-                
-                if let connectedTerrainEdgeLayer = connectedTerrainEdgeLayer, connectedWaterNodeEdge == nil {
+                if let waterNodeEdge = waterNodeEdge {
                     
-                    if Axis.Y(y: connectedTerrainEdgeLayer.upperPolytope.base) < waterNodeEdge.waterLevel {
-                        
-                        let nodeEdge = node.add(edge: connectedEdge, waterType: waterNodeEdge.waterType)
-                        
-                        nodeEdge?.waterLevel = waterNodeEdge.waterLevel
-                        nodeEdge?.terrainPolytope = connectedTerrainEdgeLayer.upperPolytope
-                    }
+                    waterNode.remove(edge: waterNodeEdge)
+                }
+                
+                continue
+            }
+            
+            if waterNodeEdge == nil && terrainEdgeLayer.base < waterLevel {
+                
+                waterNodeEdge = water.add(edge: waterNode.volume.coordinate, edge: edge, waterType: waterTable.waterType)
+            }
+            
+            waterNodeEdge?.waterLevel = waterLevel
+            waterNodeEdge?.terrainPolytope = terrainNodeEdge.upperPolytope
+            
+            if let waterNodeEdge = waterNodeEdge {
+                
+                let terrainNodeNeighbour = terrainNode.find(neighbour: edge)?.node as? TerrainNode
+                let waterNodeNeighbour = waterNode.find(neighbour: edge)?.node as? WaterNode
+                
+                let oppositeEdge = GridEdge.opposite(edge: edge)
+                
+                let terrainNodeEdgeNeighbour = terrainNodeNeighbour?.find(edge: oppositeEdge)
+                var waterNodeEdgeNeighbour = waterNodeNeighbour?.find(edge: oppositeEdge)
+                
+                if let terrainNodeNeighbour = terrainNodeNeighbour, let terrainEdgeLayerNeighbour = terrainNodeEdgeNeighbour?.topLayer, waterNodeEdgeNeighbour == nil && terrainEdgeLayerNeighbour.base < waterLevel {
+                    
+                    waterNodeEdgeNeighbour = water.add(edge: terrainNodeNeighbour.volume.coordinate, edge: oppositeEdge, waterType: waterNodeEdge.waterType)
+                    
+                    waterNodeEdgeNeighbour?.waterLevel = waterLevel
                 }
             }
         }

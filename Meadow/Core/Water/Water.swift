@@ -60,7 +60,7 @@ extension Water {
         return node
     }
     
-    func find(edge coordinate: Coordinate, edge: GridEdge) -> WaterNodeEdge? {
+    public func find(edge coordinate: Coordinate, edge: GridEdge) -> WaterNodeEdge? {
         
         return find(node: coordinate)?.find(edge: edge)
     }

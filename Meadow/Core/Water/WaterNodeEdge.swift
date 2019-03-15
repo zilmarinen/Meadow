@@ -6,6 +6,8 @@
 //  Copyright © 2019 Script Orchard. All rights reserved.
 //
 
+import SceneKit
+
 public class WaterNodeEdge: SceneGraphChild {
     
     public var observer: SceneGraphObserver?
@@ -133,7 +135,7 @@ extension WaterNodeEdge: GridPolyhedronProvider {
     
     var upperPolytope: Polytope {
         
-        return Polytope(x: MDWFloat(volume.coordinate.x), y0: waterLevel, y1: waterLevel, y2: waterLevel, y3: waterLevel, z: MDWFloat(volume.coordinate.z))
+        return Polytope.translate(polytope: Polytope(x: MDWFloat(volume.coordinate.x), y0: waterLevel, y1: waterLevel, y2: waterLevel, y3: waterLevel, z: MDWFloat(volume.coordinate.z)), translation: SCNVector3(x: 0.0, y: -WaterNodeEdge.meniscus, z: 0.0))
     }
     
     var lowerPolytope: Polytope {

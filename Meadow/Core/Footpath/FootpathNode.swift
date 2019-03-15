@@ -50,7 +50,48 @@ public class FootpathNode: GridNode {
     
     public override var mesh: Mesh {
         
-        return Mesh(faces: [])
+        guard let colorPalette = footpathType?.colorPalette else { return Mesh(faces: []) }
+        
+        var faces: [MeshFace] = []
+        
+        var innerPolyhedron = polyhedron
+        
+        GridEdge.Edges.forEach { edge in
+            
+            innerPolyhedron = Polyhedron.inset(polyhedron: innerPolyhedron, edge: edge, inset: FootpathNode.kerb)
+        }
+        
+        faces.append(contentsOf: MeshFace.quad(polytope: Polytope.translate(polytope: innerPolyhedron.lowerPolytope, translation: SCNVector3(x: 0.0, y: FootpathNode.surface, z: 0.0)), color: colorPalette.primary.vector))
+        
+        GridEdge.Edges.forEach { edge in
+         
+            if find(neighbour: edge) != nil {
+                
+                let edges = GridEdge.edges(edge: edge)
+                
+                var polytope = lowerPolytope
+                
+                [edges.e0, edges.e1].forEach { connectedEdge in
+                    
+                    let neighbour = find(neighbour: connectedEdge)?.node as? FootpathNode
+                    
+                    let diagonal = neighbour?.find(neighbour: edge)
+                 
+                    if neighbour == nil || diagonal == nil {
+                        
+                        polytope = Polytope.inset(polytope: polytope, edge: connectedEdge, inset: FootpathNode.kerb)
+                    }
+                }
+                
+                let corners = GridCorner.corners(edge: edge)
+                
+                let edgePolytope = Polytope(v0: polytope.vertices[corners.c0.rawValue], v1: polytope.vertices[corners.c1.rawValue], v2: innerPolyhedron.lowerPolytope.vertices[corners.c1.rawValue], v3: innerPolyhedron.lowerPolytope.vertices[corners.c0.rawValue])
+                
+                faces.append(contentsOf: MeshFace.quad(polytope: Polytope.translate(polytope: edgePolytope, translation: SCNVector3(x: 0.0, y: FootpathNode.surface, z: 0.0)), color: colorPalette.primary.vector))
+            }
+        }
+        
+        return Mesh(faces: faces)
     }
 }
 
@@ -98,7 +139,7 @@ extension FootpathNode {
     static let kerb: MDWFloat = 0.1
     static let surface: MDWFloat = 0.01
     
-    static let footpathHeight: Int = 6
+    static let footpathHeight: Int = 8
     
     static func fixedVolume(_ coordinate: Coordinate) -> Volume {
         

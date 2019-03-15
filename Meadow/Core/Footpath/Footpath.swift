@@ -20,10 +20,11 @@ extension Footpath: SceneGraphIntermediate {
         
         intermediates.forEach { intermediate in
             
-            if let node = add(node: intermediate.volume.coordinate) {
+            if let footpathType = FootpathType(rawValue: intermediate.footpathType) {
+            
+                let node = add(node: intermediate.volume.coordinate, footpathType: footpathType)
                 
-                node.footpathType = FootpathType(rawValue: intermediate.footpathType)
-                node.slope = intermediate.slope
+                node?.slope = intermediate.slope
             }
         }
     }
@@ -31,27 +32,11 @@ extension Footpath: SceneGraphIntermediate {
 
 extension Footpath {
     
-    public func add(node coordinate: Coordinate) -> FootpathNode? {
+    public func add(node coordinate: Coordinate, footpathType: FootpathType) -> FootpathNode? {
         
         guard let node = add(node: FootpathNode.fixedVolume(coordinate)) else { return nil }
         
-        node.footpathType = .asphalt
-        
-        GridEdge.Edges.forEach { edge in
-            
-            if let tile = find(tile: coordinate + GridEdge.extent(edge: edge)) {
-            
-                for index in 0..<tile.children.count {
-                    
-                    let neighbour = tile.children[index]
-                    
-                    if (neighbour.volume.coordinate.y >= coordinate.y - 1 && neighbour.volume.coordinate.y <= coordinate.y + 1) {
-                        
-                        node.add(neighbour: neighbour, edge: edge)
-                    }
-                }
-            }
-        }
+        node.footpathType = footpathType
      
         return node
     }

@@ -24,33 +24,17 @@ class FoliageResolver: GridResolver {
 
 extension FoliageResolver {
     
-    func resolve() {
+    func clean(volume: Volume) {
+     
+        guard let foliageNode = foliage.find(node: volume.coordinate) else { return }
         
-        while volumes.count > 0 {
+        guard let terrainNode = terrain.find(node: volume.coordinate) else {
             
-            let volume = volumes.removeFirst()
+            foliage.remove(node: foliageNode)
             
-            if let foliageNode = foliage.find(node: volume.coordinate) {
-                
-                let terrainNode = terrain.find(node: volume.coordinate)
-                
-                clean(node: foliageNode, terrainNode: terrainNode)
-            }
+            return
         }
-    }
-}
-
-extension FoliageResolver {
-    
-    func clean(node: FoliageNode, terrainNode: TerrainNode<TerrainNodeEdge<TerrainEdgeLayer>>?) {
         
-//        if let terrainNode = terrainNode, let upperPolytope = terrainNode.topLayer?.upperPolytope {
-//
-//            node.basePolytope = upperPolytope
-//
-//            return
-//        }
-        
-        foliage.remove(node: node)
+        //
     }
 }

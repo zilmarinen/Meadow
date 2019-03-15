@@ -131,7 +131,7 @@ extension Scene: Encodable {
 
 extension Scene {
     
-    func hitTest(_ hit: SCNHitTestResult) -> (coordinate: Coordinate, polytope: Polytope, corner: GridCorner, edge: GridEdge) {
+    func hitTest(_ hit: SCNHitTestResult) -> SceneView.SceneViewHit {
         
         let coordinate = Coordinate(vector: hit.worldCoordinates)
         
@@ -142,6 +142,6 @@ extension Scene {
         let corner = polytope.closest(corner: hit.worldCoordinates)
         let edge = polytope.closest(edge: hit.worldCoordinates)
         
-        return (coordinate, polytope, corner, edge)
+        return (coordinate, corner, edge, polytope)
     }
 }

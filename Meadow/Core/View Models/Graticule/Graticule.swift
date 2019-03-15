@@ -10,23 +10,25 @@ import THRUtilities
 
 extension SceneView {
     
+    public typealias SceneViewHit = (coordinate: Coordinate, corner: GridCorner, edge: GridEdge, polytope: Polytope)
+    
     public enum GraticuleState: State {
         
-        case down(position: Coordinate, closest: (corner: GridCorner, edge: GridEdge, polytope: Polytope), inputType: SceneView.CursorState.InputType)
-        case tracking(position: (start: Coordinate, end: Coordinate), closest: (corner: GridCorner, edge: GridEdge, polytope: Polytope), yOffset: Int, inputType: SceneView.CursorState.InputType)
-        case up(position: (start: Coordinate, end: Coordinate), closest: (corner: GridCorner, edge: GridEdge, polytope: Polytope), yOffset: Int, inputType: SceneView.CursorState.InputType)
+        case down(start: SceneViewHit, inputType: SceneView.CursorState.InputType)
+        case tracking(start: SceneViewHit, end: SceneViewHit, yOffset: Int, inputType: SceneView.CursorState.InputType)
+        case up(start: SceneViewHit, end: SceneViewHit, yOffset: Int, inputType: SceneView.CursorState.InputType)
         
         public func shouldTransition(to newState: SceneView.GraticuleState) -> Should<SceneView.GraticuleState> {
             
             switch newState {
                 
-            case .up(let position, let closest, _, _):
+            case .up(let start, let end, _, _):
                 
-                return .redirect(.tracking(position: position, closest: closest, yOffset: 0, inputType: .none))
+                return .redirect(.tracking(start: start, end: end, yOffset: 0, inputType: .none))
                 
-            case .down(let position, let closest, let inputType):
+            case .down(let start, let inputType):
                 
-                return .redirect(.tracking(position: (start: position, end: position), closest: closest, yOffset: 0, inputType: inputType))
+                return .redirect(.tracking(start: start, end: start, yOffset: 0, inputType: inputType))
                 
             default: return .continue
             }
@@ -37,7 +39,9 @@ extension SceneView {
         
         public init() {
             
-            super.init(initialState: .tracking(position: (start: Coordinate.zero, end: Coordinate.zero), closest: (corner: .northWest, edge: .north, polytope: Polytope(x: 0, y0: 0, y1: 0, y2: 0, y3: 0, z: 0)), yOffset: 0, inputType: .none))
+            let hit = (Coordinate.zero, GridCorner.northWest, GridEdge.north, Polytope(x: 0, y0: 0, y1: 0, y2: 0, y3: 0, z: 0))
+            
+            super.init(initialState: .tracking(start: hit, end: hit, yOffset: 0, inputType: .none))
         }
     }
 }

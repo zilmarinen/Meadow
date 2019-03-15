@@ -72,11 +72,11 @@ extension SceneView {
                 
                 switch meadow.input.graticule.state {
                     
-                case .tracking(let position, _, _, _):
+                case .tracking(let start, _, _, _):
                     
-                    if position.end != closest.coordinate {
+                    if start.coordinate != closest.coordinate {
                         
-                        meadow.input.graticule.state = .tracking(position: (start: closest.coordinate, end: closest.coordinate), closest: (corner: closest.corner, edge: closest.edge, polytope: closest.polytope), yOffset: 0, inputType: .none)
+                        meadow.input.graticule.state = .tracking(start: closest, end: closest, yOffset: 0, inputType: .none)
                     }
                 
                 default: break
@@ -96,24 +96,24 @@ extension SceneView {
                 
                 switch meadow.input.graticule.state {
                     
-                case .tracking(let position, _, let yOffset, _):
+                case .tracking(let start, let end, let yOffset, _):
                     
                     switch to {
                         
                     case .down:
                         
-                        meadow.input.graticule.state = .down(position: closest.coordinate, closest: (corner: closest.corner, edge: closest.edge, polytope: closest.polytope), inputType: inputType)
+                        meadow.input.graticule.state = .down(start: closest, inputType: inputType)
                         
                     case .tracking:
                         
-                        if position.end != closest.coordinate {
+                        if start.coordinate != closest.coordinate {
                             
-                            meadow.input.graticule.state = .tracking(position: (start: position.start, end: closest.coordinate), closest: (corner: closest.corner, edge: closest.edge, polytope: closest.polytope), yOffset: offset, inputType: inputType)
+                            meadow.input.graticule.state = .tracking(start: start, end: closest, yOffset: offset, inputType: inputType)
                         }
                     
                     case .up:
                         
-                        meadow.input.graticule.state = .up(position: (start: position.start, end: closest.coordinate), closest: (corner: closest.corner, edge: closest.edge, polytope: closest.polytope), yOffset: yOffset, inputType: inputType)
+                        meadow.input.graticule.state = .up(start: start, end: end, yOffset: yOffset, inputType: inputType)
                         
                     default: break
                     }

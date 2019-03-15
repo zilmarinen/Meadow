@@ -31,12 +31,14 @@ public class World: SCNNode, SceneGraphChild, SceneGraphObserver, SceneGraphPare
     public let water = Water()
     
     let foliageResolver: FoliageResolver
+    let footpathResolver: FootpathResolver
     let terrainResolver: TerrainResolver
     let waterResolver: WaterResolver
     
     public override init() {
         
         self.foliageResolver = FoliageResolver(foliage: foliage, terrain: terrain)
+        self.footpathResolver = FootpathResolver(footpaths: footpaths, terrain: terrain)
         self.terrainResolver = TerrainResolver(terrain: terrain, areas: areas, footpaths: footpaths)
         self.waterResolver = WaterResolver(water: water, terrain: terrain)
         
@@ -133,8 +135,13 @@ extension World {
             
             terrainResolver.enqueue(volume: child.volume)
             
+        case is FoliageTile.Type:
+            
+            foliageResolver.enqueue(volume: child.volume)
+            
         case is FootpathTile.Type:
             
+            footpathResolver.enqueue(volume: child.volume)
             terrainResolver.enqueue(volume: child.volume)
             
         case is TerrainNodeEdge<TerrainEdgeLayer>.Type,
@@ -169,6 +176,7 @@ extension World: SceneGraphUpdatable {
         tunnels.update(deltaTime: deltaTime)
         water.update(deltaTime: deltaTime)
         
+        footpathResolver.resolve()
         foliageResolver.resolve()
         terrainResolver.resolve()
         waterResolver.resolve()

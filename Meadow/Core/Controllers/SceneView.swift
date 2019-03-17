@@ -29,24 +29,27 @@ extension SceneView {
     
     func stateDidChange(from: ViewState?, to: ViewState) {
         
-        switch viewModel.state {
-            
-        case .empty(let meadow):
-            
-            self.scene = nil
-            self.delegate = nil
-            
-            if let cursorIdentifier = cursorIdentifier {
+        DispatchQueue.main.async {
+        
+            switch self.viewModel.state {
                 
-                meadow?.input.cursor.unsubscribe(cursorIdentifier)
+            case .empty(let meadow):
+                
+                self.scene = nil
+                self.delegate = nil
+                
+                if let cursorIdentifier = self.cursorIdentifier {
+                    
+                    meadow?.input.cursor.unsubscribe(cursorIdentifier)
+                }
+                
+            case .scene(let meadow):
+                
+                self.scene = meadow.scene
+                self.delegate = meadow.scene
+                
+                self.cursorIdentifier = meadow.input.cursor.subscribe(self.stateDidChange(from:to:))
             }
-            
-        case .scene(let meadow):
-            
-            self.scene = meadow.scene
-            self.delegate = meadow.scene
-            
-            cursorIdentifier = meadow.input.cursor.subscribe(stateDidChange(from:to:))
         }
     }
 }
@@ -55,7 +58,7 @@ extension SceneView {
     
     public func stateDidChange(from: SceneView.CursorState?, to: SceneView.CursorState) {
         
-        switch viewModel.state {
+        switch self.viewModel.state {
             
         case .scene(let meadow):
             

@@ -6,7 +6,7 @@
 //  Copyright © 2019 Script Orchard. All rights reserved.
 //
 
-public class TerrainNodeEdge<EdgeLayer: TerrainEdgeLayer>: SceneGraphChild, SceneGraphObserver, SceneGraphParent {
+public class TerrainNodeEdge<EdgeLayer: TerrainNodeEdgeLayer>: SceneGraphChild, SceneGraphObserver, SceneGraphParent {
     
     var children = Tree<EdgeLayer>()
     
@@ -141,7 +141,7 @@ extension TerrainNodeEdge {
 
 extension TerrainNodeEdge {
     
-    func add(layer terrainType: TerrainType) -> TerrainEdgeLayer? {
+    func add(layer terrainType: TerrainType) -> TerrainNodeEdgeLayer? {
         
         if let topLayer = topLayer {
             
@@ -196,12 +196,12 @@ extension TerrainNodeEdge {
 
 extension TerrainNodeEdge {
     
-    public var topLayer: TerrainEdgeLayer? {
+    public var topLayer: TerrainNodeEdgeLayer? {
         
         return children.last
     }
     
-    public var bottomLayer: TerrainEdgeLayer? {
+    public var bottomLayer: TerrainNodeEdgeLayer? {
         
         return children.first
     }

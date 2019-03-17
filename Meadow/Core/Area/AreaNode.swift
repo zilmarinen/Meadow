@@ -12,6 +12,8 @@ public class AreaNode<NodeEdge: AreaNodeEdge>: GridNode, SceneGraphParent {
     
     var children = Tree<NodeEdge>()
     
+    var floorColorPalette: ColorPalette?
+    
     enum CodingKeys: CodingKey {
         
         case children
@@ -51,7 +53,18 @@ public class AreaNode<NodeEdge: AreaNodeEdge>: GridNode, SceneGraphParent {
     
     public override var mesh: Mesh {
         
-        return Mesh(faces: [])
+        var faces: [MeshFace] = []
+        
+        if let floorColorPalette = floorColorPalette {
+            
+            let polytope = Polytope.translate(polytope: lowerPolytope, translation: SCNVector3(x: 0.0, y: AreaNodeEdge.surface, z: 0.0))
+            
+            faces.append(contentsOf: MeshFace.quad(polytope: polytope, color: floorColorPalette.primary.vector))
+        }
+        
+        //
+        
+        return Mesh(faces: faces)
     }
 }
 
@@ -70,4 +83,21 @@ extension AreaNode {
         
         return children.index(of: child)
     }
+}
+
+extension AreaNode: GridPolyhedronProvider {
+    
+    var upperPolytope: Polytope {
+        
+        let y = volume.coordinate.y + volume.size.height
+        
+        return Polytope(x: MDWFloat(volume.coordinate.x), y0: y, y1: y, y2: y, y3: y, z: MDWFloat(volume.coordinate.z))
+    }
+    
+    var lowerPolytope: Polytope {
+        
+        return Polytope(x: MDWFloat(volume.coordinate.x), y0: volume.coordinate.y, y1: volume.coordinate.y, y2: volume.coordinate.y, y3: volume.coordinate.y, z: MDWFloat(volume.coordinate.z))
+    }
+    
+    public var polyhedron: Polyhedron { return Polyhedron(upperPolytope: upperPolytope, lowerPolytope: lowerPolytope) }
 }

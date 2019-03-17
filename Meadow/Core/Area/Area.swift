@@ -10,6 +10,26 @@ import Foundation
 
 public class Area: Grid<AreaChunk, AreaTile, AreaNode<AreaNodeEdge>> {
     
+    public enum WallRenderState {
+        
+        case cutaway
+        case raised
+    }
+    
+    public var wallRenderState: WallRenderState {
+        
+        get {
+            
+            let cutaway = children.filter { $0.wallRenderState == .cutaway }
+            
+            return (cutaway.count == totalChildren ? .cutaway : .raised)
+        }
+        
+        set {
+            
+            children.forEach { $0.wallRenderState = newValue }
+        }
+    }
 }
 
 extension Area: SceneGraphIntermediate {
@@ -36,6 +56,8 @@ extension Area {
     public func add(node coordinate: Coordinate) -> AreaNode<AreaNodeEdge>? {
         
         guard let node = add(node: AreaNodeEdge.fixedVolume(coordinate)) else { return nil }
+        
+        node.floorColorPalette = ArtDirector.shared?.palettes.children.last
         
         GridEdge.Edges.forEach { edge in
             

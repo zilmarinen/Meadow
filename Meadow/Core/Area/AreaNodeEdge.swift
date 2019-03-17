@@ -29,13 +29,17 @@ public class AreaNodeEdge: SceneGraphChild {
     
     var isDirty: Bool = false
     
-    public required init(observer: SceneGraphObserver, volume: Volume, edge: GridEdge) {
+    var edgeType: AreaNodeEdgeType
+    
+    public required init(observer: SceneGraphObserver, volume: Volume, edge: GridEdge, edgeType: AreaNodeEdgeType) {
         
         self.observer = observer
         
         self.volume = volume
         
         self.edge = edge
+        
+        self.edgeType = edgeType
     }
 }
 

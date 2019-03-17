@@ -144,8 +144,8 @@ extension World {
             footpathResolver.enqueue(volume: child.volume)
             terrainResolver.enqueue(volume: child.volume)
             
-        case is TerrainNodeEdge<TerrainEdgeLayer>.Type,
-             is TerrainEdgeLayer.Type:
+        case is TerrainNodeEdge<TerrainNodeEdgeLayer>.Type,
+             is TerrainNodeEdgeLayer.Type:
             
             terrainResolver.enqueue(volume: child.volume)
             waterResolver.enqueue(volume: child.volume)

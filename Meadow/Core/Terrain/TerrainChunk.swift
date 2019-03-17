@@ -7,7 +7,7 @@
 
 import SceneKit
 
-public class TerrainChunk: GridChunk<TerrainTile, TerrainNode<TerrainNodeEdge<TerrainEdgeLayer>>> {
+public class TerrainChunk: GridChunk<TerrainTile, TerrainNode<TerrainNodeEdge<TerrainNodeEdgeLayer>>> {
  
     @discardableResult public override func clean() -> Bool {
         

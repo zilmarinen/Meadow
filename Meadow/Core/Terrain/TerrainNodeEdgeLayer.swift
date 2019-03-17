@@ -1,5 +1,5 @@
 //
-//  TerrainEdgeLayer.swift
+//  TerrainNodeEdgeLayer.swift
 //  Meadow
 //
 //  Created by Zack Brown on 15/01/2019.
@@ -8,7 +8,7 @@
 
 import SceneKit
 
-public class TerrainEdgeLayer: SceneGraphChild {
+public class TerrainNodeEdgeLayer: SceneGraphChild {
     
     enum LayerCorner {
         
@@ -49,7 +49,7 @@ public class TerrainEdgeLayer: SceneGraphChild {
     
     public let edge: GridEdge
     
-    public var upper: TerrainEdgeLayer? {
+    public var upper: TerrainNodeEdgeLayer? {
         
         didSet {
             
@@ -60,7 +60,7 @@ public class TerrainEdgeLayer: SceneGraphChild {
         }
     }
     
-    public var lower: TerrainEdgeLayer? {
+    public var lower: TerrainNodeEdgeLayer? {
         
         didSet {
             
@@ -95,7 +95,7 @@ public class TerrainEdgeLayer: SceneGraphChild {
     }
 }
 
-extension TerrainEdgeLayer: Encodable {
+extension TerrainNodeEdgeLayer: Encodable {
     
     enum CodingKeys: CodingKey {
         
@@ -112,17 +112,17 @@ extension TerrainEdgeLayer: Encodable {
     }
 }
 
-extension TerrainEdgeLayer: Hashable {
+extension TerrainNodeEdgeLayer: Hashable {
     
     public var hashValue: Int { return volume.hashValue }
     
-    public static func == (lhs: TerrainEdgeLayer, rhs: TerrainEdgeLayer) -> Bool {
+    public static func == (lhs: TerrainNodeEdgeLayer, rhs: TerrainNodeEdgeLayer) -> Bool {
         
         return lhs.coordinate == rhs.coordinate && lhs.edge == rhs.edge && lhs.c0 == rhs.c0 && lhs.c1 == rhs.c1 && lhs.c2 == rhs.c2 && lhs.terrainType == rhs.terrainType
     }
 }
 
-extension TerrainEdgeLayer: SceneGraphSoilable {
+extension TerrainNodeEdgeLayer: SceneGraphSoilable {
     
     @discardableResult public func becomeDirty() -> Bool {
         
@@ -146,7 +146,7 @@ extension TerrainEdgeLayer: SceneGraphSoilable {
     }
 }
 
-extension TerrainEdgeLayer: GridPolyhedronProvider {
+extension TerrainNodeEdgeLayer: GridPolyhedronProvider {
     
     var upperPolytope: Polytope {
         
@@ -210,7 +210,7 @@ extension TerrainEdgeLayer: GridPolyhedronProvider {
     public var polyhedron: Polyhedron { return Polyhedron(upperPolytope: upperPolytope, lowerPolytope: lowerPolytope) }
 }
 
-extension TerrainEdgeLayer {
+extension TerrainNodeEdgeLayer {
     
     public var base: Int {
     
@@ -349,7 +349,7 @@ extension TerrainEdgeLayer {
     }
 }
 
-extension TerrainEdgeLayer {
+extension TerrainNodeEdgeLayer {
     
     public static let crown: MDWFloat = (Axis.unitY / 2.0)
 }

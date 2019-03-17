@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class Terrain: Grid<TerrainChunk, TerrainTile, TerrainNode<TerrainNodeEdge<TerrainEdgeLayer>>> {
+public class Terrain: Grid<TerrainChunk, TerrainTile, TerrainNode<TerrainNodeEdge<TerrainNodeEdgeLayer>>> {
     
 }
 
@@ -36,7 +36,7 @@ extension Terrain: SceneGraphIntermediate {
 
 extension Terrain {
     
-    public func add(layer coordinate: Coordinate, edge: GridEdge, terrainType: TerrainType) -> TerrainEdgeLayer? {
+    public func add(layer coordinate: Coordinate, edge: GridEdge, terrainType: TerrainType) -> TerrainNodeEdgeLayer? {
         
         let node = (find(node: coordinate) ?? add(node: coordinate))
         
@@ -45,7 +45,7 @@ extension Terrain {
         return nodeEdge?.add(layer: terrainType)
     }
     
-    func add(node coordinate: Coordinate) -> TerrainNode<TerrainNodeEdge<TerrainEdgeLayer>>? {
+    func add(node coordinate: Coordinate) -> TerrainNode<TerrainNodeEdge<TerrainNodeEdgeLayer>>? {
         
         guard let node = add(node: TerrainTile.fixedVolume(coordinate)) else { return nil }
         
@@ -60,12 +60,12 @@ extension Terrain {
         return node
     }
     
-    public func find(edge coordinate: Coordinate, edge: GridEdge) -> TerrainNodeEdge<TerrainEdgeLayer>? {
+    public func find(edge coordinate: Coordinate, edge: GridEdge) -> TerrainNodeEdge<TerrainNodeEdgeLayer>? {
         
         return find(node: coordinate)?.find(edge: edge)
     }
     
-    @discardableResult public func remove(layer: TerrainEdgeLayer) -> Bool {
+    @discardableResult public func remove(layer: TerrainNodeEdgeLayer) -> Bool {
         
         guard let node = find(node: layer.coordinate) else { return false }
         

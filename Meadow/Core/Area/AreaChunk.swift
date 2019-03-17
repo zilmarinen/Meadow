@@ -8,4 +8,5 @@
 
 public class AreaChunk: GridChunk<AreaTile, AreaNode<AreaNodeEdge>> {
     
+    public var wallRenderState: Area.WallRenderState = .cutaway
 }

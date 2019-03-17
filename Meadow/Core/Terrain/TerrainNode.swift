@@ -8,7 +8,7 @@
 
 import SceneKit
 
-public class TerrainNode<NodeEdge: TerrainNodeEdge<TerrainEdgeLayer>>: GridNode, SceneGraphParent {
+public class TerrainNode<NodeEdge: TerrainNodeEdge<TerrainNodeEdgeLayer>>: GridNode, SceneGraphParent {
     
     var children = Tree<NodeEdge>()
     

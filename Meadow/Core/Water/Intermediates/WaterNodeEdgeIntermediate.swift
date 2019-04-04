@@ -1,6 +1,6 @@
 //
 //  WaterNodeEdgeIntermediate.swift
-//  Meadow-iOS
+//  Meadow
 //
 //  Created by Zack Brown on 14/02/2019.
 //  Copyright © 2019 Script Orchard. All rights reserved.

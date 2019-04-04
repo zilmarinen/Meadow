@@ -67,7 +67,7 @@ extension CameraJib: SceneGraphUpdatable {
 extension CameraJib {
     
     static var minimumZoomLevel: MDWFloat = 1.0
-    static var maximumZoomLevel: MDWFloat = 10.0
+    static var maximumZoomLevel: MDWFloat = 7.0
 }
 
 extension CameraJib {

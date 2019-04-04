@@ -97,11 +97,14 @@ extension WaterNodeEdge: Encodable {
 
 extension WaterNodeEdge: Hashable {
     
-    public var hashValue: Int { return volume.hashValue }
-    
     public static func == (lhs: WaterNodeEdge, rhs: WaterNodeEdge) -> Bool {
         
         return lhs.volume == rhs.volume && lhs.edge == rhs.edge
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        
+        hasher.combine(volume)
     }
 }
 

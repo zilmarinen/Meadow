@@ -6,13 +6,13 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-public struct Size: Codable {
+public struct Size<T>: Codable where T: Codable, T: Hashable, T: Numeric {
     
-    public let width: Int
-    public let height: Int
-    public let depth: Int
+    public let width: T
+    public let height: T
+    public let depth: T
     
-    public init(width: Int, height: Int, depth: Int) {
+    public init(width: T, height: T, depth: T) {
         
         self.width = width
         self.height = height
@@ -27,9 +27,11 @@ extension Size: Hashable {
         return lhs.width == rhs.width && lhs.height == rhs.height && lhs.depth == rhs.depth
     }
     
-    public var hashValue: Int {
+    public func hash(into hasher: inout Hasher) {
         
-        return width ^ height ^ depth
+        hasher.combine(width)
+        hasher.combine(height)
+        hasher.combine(depth)
     }
 }
 

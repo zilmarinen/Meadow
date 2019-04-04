@@ -213,8 +213,7 @@ extension TerrainNode {
         return children.first { $0.edge == edge }
     }
     
-    @discardableResult
-    func remove(edge: NodeEdge) -> Bool {
+    @discardableResult func remove(edge: NodeEdge) -> Bool {
         
         if let index = children.index(of: edge) {
             

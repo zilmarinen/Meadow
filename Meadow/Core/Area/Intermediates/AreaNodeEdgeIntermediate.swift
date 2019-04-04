@@ -9,4 +9,6 @@
 public struct AreaNodeEdgeIntermediate: Codable {
 
     let edge: GridEdge
+    
+    let edgeType: AreaNodeEdgeType
 }

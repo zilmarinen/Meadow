@@ -50,15 +50,17 @@ public struct MeshFace {
 
 extension MeshFace {
     
-    public static func quad(polytope: Polytope, color: SCNVector4) -> [MeshFace] {
+    public static func quad(vertices: [SCNVector3], projectedNormal: SCNVector3, color: SCNVector4) -> [MeshFace] {
         
-        let v0 = polytope.vertices[0]
-        let v1 = polytope.vertices[1]
-        let v2 = polytope.vertices[2]
-        let v3 = polytope.vertices[3]
+        guard vertices.count >= 4 else { return [] }
         
-        return [ MeshFace(v0: v0, v1: v1, v2: v2, projectedNormal: SCNVector3.Up, color: color),
-                 MeshFace(v0: v0, v1: v2, v2: v3, projectedNormal: SCNVector3.Up, color: color)]
+        let v0 = vertices[0]
+        let v1 = vertices[1]
+        let v2 = vertices[2]
+        let v3 = vertices[3]
+        
+        return [ MeshFace(v0: v0, v1: v1, v2: v2, projectedNormal: projectedNormal, color: color),
+                 MeshFace(v0: v0, v1: v2, v2: v3, projectedNormal: projectedNormal, color: color)]
     }
     
     public static func apex(corners: (c0: GridCorner, c1: GridCorner), polytope: Polytope, color: SCNVector4) -> MeshFace {

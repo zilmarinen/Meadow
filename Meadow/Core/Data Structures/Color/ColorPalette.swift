@@ -18,8 +18,6 @@ public struct ColorPalette: Codable {
 
 extension ColorPalette: Hashable {
     
-    public var hashValue: Int { return name.hashValue }
-    
     public static func == (lhs: ColorPalette, rhs: ColorPalette) -> Bool {
         
         return lhs.name == rhs.name

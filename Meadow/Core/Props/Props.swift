@@ -164,8 +164,7 @@ extension Props {
         return nil
     }
     
-    @discardableResult
-    public func remove(chunk: PropChunk) -> Bool {
+    @discardableResult public func remove(chunk: PropChunk) -> Bool {
         
         if index(of: chunk) != nil {
             
@@ -188,8 +187,7 @@ extension Props {
         return false
     }
     
-    @discardableResult
-    public func remove(prop: Prop) -> Bool {
+    @discardableResult public func remove(prop: Prop) -> Bool {
         
         if let chunk = find(chunk: prop.footprint.coordinate) {
             

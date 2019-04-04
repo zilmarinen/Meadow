@@ -34,6 +34,6 @@ extension TerrainCutawayProvider {
     
     public func index(of cutaway: TerrainCutaway) -> Int? {
         
-        return cutaways.index(of: cutaway)
+        return cutaways.firstIndex(of: cutaway)
     }
 }

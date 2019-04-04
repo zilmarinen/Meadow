@@ -60,11 +60,14 @@ extension TerrainNodeEdge: Encodable {
 
 extension TerrainNodeEdge: Hashable {
     
-    public var hashValue: Int { return volume.hashValue }
-    
     public static func == (lhs: TerrainNodeEdge, rhs: TerrainNodeEdge) -> Bool {
         
         return lhs.volume == rhs.volume && lhs.edge == rhs.edge
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        
+        hasher.combine(volume)
     }
 }
 

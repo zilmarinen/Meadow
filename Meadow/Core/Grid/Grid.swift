@@ -173,8 +173,7 @@ extension Grid {
         return nil
     }
     
-    @discardableResult
-    public func remove(chunk: Chunk) -> Bool {
+    @discardableResult public func remove(chunk: Chunk) -> Bool {
         
         if index(of: chunk) != nil {
             
@@ -197,8 +196,7 @@ extension Grid {
         return false
     }
     
-    @discardableResult
-    public func remove(tile: Tile) -> Bool {
+    @discardableResult public func remove(tile: Tile) -> Bool {
         
         if let chunk = find(chunk: tile.volume.coordinate) {
             
@@ -221,8 +219,7 @@ extension Grid {
         return false
     }
     
-    @discardableResult
-    public func remove(node: Node) -> Bool {
+    @discardableResult public func remove(node: Node) -> Bool {
         
         if let tile = find(tile: node.volume.coordinate) {
             

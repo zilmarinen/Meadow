@@ -10,19 +10,6 @@ import SceneKit
 
 public class TerrainNodeEdgeLayer: SceneGraphChild {
     
-    enum LayerCorner {
-        
-        case c0
-        case c1
-        case c2
-    }
-    
-    struct LayerCornerHeight: Equatable {
-        
-        let corner: LayerCorner
-        let height: Int
-    }
-    
     public var observer: SceneGraphObserver?
     
     public var name: String? { return edge.description }
@@ -71,9 +58,9 @@ public class TerrainNodeEdgeLayer: SceneGraphChild {
         }
     }
     
-    var c0 = LayerCornerHeight(corner: .c0, height: World.floor)
-    var c1 = LayerCornerHeight(corner: .c1, height: World.floor)
-    var c2 = LayerCornerHeight(corner: .c2, height: World.floor)
+    var c0 = TerrainNodeEdgeLayerCorner(corner: .c0, height: World.floor)
+    var c1 = TerrainNodeEdgeLayerCorner(corner: .c1, height: World.floor)
+    var c2 = TerrainNodeEdgeLayerCorner(corner: .c2, height: World.floor)
     
     public var terrainType: TerrainType {
         
@@ -101,6 +88,10 @@ extension TerrainNodeEdgeLayer: Encodable {
         
         case coordinate
         case edge
+        case terrainType
+        case c0
+        case c1
+        case c2
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -109,16 +100,23 @@ extension TerrainNodeEdgeLayer: Encodable {
         
         try container.encode(self.coordinate, forKey: .coordinate)
         try container.encode(self.edge, forKey: .edge)
+        try container.encode(self.terrainType, forKey: .terrainType)
+        try container.encode(self.c0, forKey: .c0)
+        try container.encode(self.c1, forKey: .c1)
+        try container.encode(self.c2, forKey: .c2)
     }
 }
 
 extension TerrainNodeEdgeLayer: Hashable {
     
-    public var hashValue: Int { return volume.hashValue }
-    
     public static func == (lhs: TerrainNodeEdgeLayer, rhs: TerrainNodeEdgeLayer) -> Bool {
         
         return lhs.coordinate == rhs.coordinate && lhs.edge == rhs.edge && lhs.c0 == rhs.c0 && lhs.c1 == rhs.c1 && lhs.c2 == rhs.c2 && lhs.terrainType == rhs.terrainType
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        
+        hasher.combine(volume)
     }
 }
 
@@ -239,8 +237,7 @@ extension TerrainNodeEdgeLayer {
         }
     }
     
-    @discardableResult
-    public func set(corner: GridCorner, height: Int) -> Bool {
+    @discardableResult public func set(corner: GridCorner, height: Int) -> Bool {
         
         let (corner0, corner1) = GridCorner.corners(edge: edge)
         
@@ -252,16 +249,14 @@ extension TerrainNodeEdgeLayer {
         }
     }
     
-    @discardableResult
-    public func set(center height: Int) -> Bool {
+    @discardableResult public func set(center height: Int) -> Bool {
         
         return adjust(corner: c2, height: height)
     }
     
-    @discardableResult
-    func adjust(corner: LayerCornerHeight, height: Int) -> Bool {
+    @discardableResult func adjust(corner: TerrainNodeEdgeLayerCorner, height: Int) -> Bool {
         
-        func clamp(corner: LayerCornerHeight, height: Int) -> Int {
+        func clamp(corner: TerrainNodeEdgeLayerCorner, height: Int) -> Int {
             
             var upperHeight: Int = World.ceiling
             var lowerHeight: Int = World.floor
@@ -287,7 +282,7 @@ extension TerrainNodeEdgeLayer {
             return min(upperHeight, max(lowerHeight + 1, height))
         }
         
-        func resolve(connected: LayerCornerHeight, height: Int) {
+        func resolve(connected: TerrainNodeEdgeLayerCorner, height: Int) {
             
             let delta = (connected.height - height)
             
@@ -317,30 +312,30 @@ extension TerrainNodeEdgeLayer {
             
         case .c0:
             
-            c0 = LayerCornerHeight(corner: corner.corner, height: clamped)
+            c0 = TerrainNodeEdgeLayerCorner(corner: corner.corner, height: clamped)
             
             resolve(connected: c1, height: clamped)
             resolve(connected: c2, height: clamped)
             
-            c0 = LayerCornerHeight(corner: corner.corner, height: clamped)
+            c0 = TerrainNodeEdgeLayerCorner(corner: corner.corner, height: clamped)
             
         case .c1:
             
-            c1 = LayerCornerHeight(corner: corner.corner, height: clamped)
+            c1 = TerrainNodeEdgeLayerCorner(corner: corner.corner, height: clamped)
             
             resolve(connected: c0, height: clamped)
             resolve(connected: c2, height: clamped)
             
-            c1 = LayerCornerHeight(corner: corner.corner, height: clamped)
+            c1 = TerrainNodeEdgeLayerCorner(corner: corner.corner, height: clamped)
             
         case .c2:
             
-            c2 = LayerCornerHeight(corner: corner.corner, height: clamped)
+            c2 = TerrainNodeEdgeLayerCorner(corner: corner.corner, height: clamped)
             
             resolve(connected: c0, height: clamped)
             resolve(connected: c1, height: clamped)
             
-            c2 = LayerCornerHeight(corner: corner.corner, height: clamped)
+            c2 = TerrainNodeEdgeLayerCorner(corner: corner.corner, height: clamped)
         }
         
         becomeDirty()

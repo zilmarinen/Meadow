@@ -57,11 +57,14 @@ public class GridTile<Node: GridNode>: Encodable, SceneGraphChild, SceneGraphObs
 
 extension GridTile: Hashable {
     
-    public var hashValue: Int { return volume.hashValue }
-    
     public static func == (lhs: GridTile, rhs: GridTile) -> Bool {
         
         return lhs.volume == rhs.volume
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        
+        hasher.combine(volume)
     }
 }
 
@@ -176,8 +179,7 @@ extension GridTile {
         }
     }
     
-    @discardableResult
-    func remove(node: Node) -> Bool {
+    @discardableResult func remove(node: Node) -> Bool {
         
         if let index = index(of: node) {
             

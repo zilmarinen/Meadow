@@ -48,7 +48,10 @@ extension SceneView {
                 self.scene = meadow.scene
                 self.delegate = meadow.scene
                 
-                self.cursorIdentifier = meadow.input.cursor.subscribe(self.stateDidChange(from:to:))
+                if self.cursorIdentifier == nil {
+                
+                    self.cursorIdentifier = meadow.input.cursor.subscribe(self.stateDidChange(from:to:))
+                }
             }
         }
     }

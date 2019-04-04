@@ -61,7 +61,9 @@ public class FootpathNode: GridNode {
             innerPolyhedron = Polyhedron.inset(polyhedron: innerPolyhedron, edge: edge, inset: FootpathNode.kerb)
         }
         
-        faces.append(contentsOf: MeshFace.quad(polytope: Polytope.translate(polytope: innerPolyhedron.lowerPolytope, translation: SCNVector3(x: 0.0, y: FootpathNode.surface, z: 0.0)), color: colorPalette.primary.vector))
+        let surfacePolytope = Polytope.translate(polytope: innerPolyhedron.lowerPolytope, translation: SCNVector3(x: 0.0, y: FootpathNode.surface, z: 0.0))
+        
+        faces.append(contentsOf: MeshFace.quad(vertices: surfacePolytope.vertices, projectedNormal: SCNVector3.Up, color: colorPalette.primary.vector))
         
         GridEdge.Edges.forEach { edge in
          
@@ -87,7 +89,9 @@ public class FootpathNode: GridNode {
                 
                 let edgePolytope = Polytope(v0: polytope.vertices[corners.c0.rawValue], v1: polytope.vertices[corners.c1.rawValue], v2: innerPolyhedron.lowerPolytope.vertices[corners.c1.rawValue], v3: innerPolyhedron.lowerPolytope.vertices[corners.c0.rawValue])
                 
-                faces.append(contentsOf: MeshFace.quad(polytope: Polytope.translate(polytope: edgePolytope, translation: SCNVector3(x: 0.0, y: FootpathNode.surface, z: 0.0)), color: colorPalette.primary.vector))
+                let surfacePolytope = Polytope.translate(polytope: edgePolytope, translation: SCNVector3(x: 0.0, y: FootpathNode.surface, z: 0.0))
+                
+                faces.append(contentsOf: MeshFace.quad(vertices: surfacePolytope.vertices, projectedNormal: SCNVector3.Up, color: colorPalette.primary.vector))
             }
         }
         

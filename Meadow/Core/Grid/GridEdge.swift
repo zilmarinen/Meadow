@@ -10,6 +10,8 @@ import SceneKit
 
 public enum GridEdge: Int, Codable {
     
+    public typealias Pair = (e0: GridEdge, e1: GridEdge)
+    
     case north
     case east
     case south
@@ -69,12 +71,12 @@ extension GridEdge {
         SCNVector3.Left
     ]}
 
-    public static func edges(corner: GridCorner) -> (e0: GridEdge, e1: GridEdge) {
+    public static func edges(corner: GridCorner) -> Pair {
         
         return (Corners[corner.rawValue].first!, Corners[corner.rawValue].last!)
     }
 
-    public static func edges(edge: GridEdge) -> (e0: GridEdge, e1: GridEdge) {
+    public static func edges(edge: GridEdge) -> Pair {
         
         return (Connected[edge.rawValue].first!, Connected[edge.rawValue].last!)
     }
@@ -104,5 +106,27 @@ extension GridEdge {
         value = (value > 3 ? (value - 4) : value)
         
         return GridEdge(rawValue: value)!
+    }
+    
+    var next: GridEdge {
+        
+        switch self {
+            
+        case .north: return .east
+        case .east: return .south
+        case .south: return .west
+        case .west: return .north
+        }
+    }
+    
+    var previous: GridEdge {
+        
+        switch self {
+            
+        case .north: return .west
+        case .east: return .north
+        case .south: return .east
+        case .west: return .south
+        }
     }
 }

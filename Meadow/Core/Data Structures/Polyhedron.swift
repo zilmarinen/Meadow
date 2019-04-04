@@ -48,6 +48,16 @@ extension Polyhedron {
 
 extension Polyhedron {
     
+    public static func edge(polyhedron: Polyhedron, edge: GridEdge) -> Polytope {
+        
+        let corners = GridCorner.corners(edge: edge)
+        
+        return Polytope(v0: polyhedron.upperPolytope.vertices[corners.c0.rawValue], v1: polyhedron.upperPolytope.vertices[corners.c1.rawValue], v2: polyhedron.lowerPolytope.vertices[corners.c1.rawValue], v3: polyhedron.lowerPolytope.vertices[corners.c0.rawValue])
+    }
+}
+
+extension Polyhedron {
+    
     public enum Elevation {
         
         case above

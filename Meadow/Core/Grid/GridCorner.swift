@@ -8,6 +8,8 @@
 
 public enum GridCorner: Int {
     
+    public typealias Pair = (c0: GridCorner, c1: GridCorner)
+    
     case northWest
     case northEast
     case southEast
@@ -59,12 +61,12 @@ extension GridCorner {
         .northEast
     ]}
 
-    public static func corners(edge: GridEdge) -> (c0: GridCorner, c1: GridCorner) {
+    public static func corners(edge: GridEdge) -> Pair {
         
         return (Edges[edge.rawValue].first!, Edges[edge.rawValue].last!)
     }
 
-    public static func corners(corner: GridCorner) -> (c0: GridCorner, c1: GridCorner) {
+    public static func corners(corner: GridCorner) -> Pair {
         
         return (Connected[corner.rawValue].first!, Connected[corner.rawValue].last!)
     }

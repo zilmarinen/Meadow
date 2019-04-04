@@ -83,11 +83,14 @@ public class GridNode: Encodable, MeshProvider, SceneGraphChild, SceneGraphObser
 
 extension GridNode: Hashable {
     
-    public var hashValue: Int { return volume.hashValue }
-    
     public static func == (lhs: GridNode, rhs: GridNode) -> Bool {
         
         return lhs.volume == rhs.volume
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        
+        hasher.combine(volume)
     }
 }
 
@@ -120,8 +123,7 @@ extension GridNode {
         return neighbours.first { $0.edge == edge }
     }
     
-    @discardableResult
-    func remove(neighbour edge: GridEdge) -> Bool {
+    @discardableResult func remove(neighbour edge: GridEdge) -> Bool {
         
         guard let neighbour = find(neighbour: edge) else { return false }
         

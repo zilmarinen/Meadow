@@ -10,5 +10,5 @@ public struct TerrainNodeEdgeIntermediate: Decodable {
     
     let edge: GridEdge
     
-    let children: [TerrainEdgeLayerIntermediate]
+    let children: [TerrainNodeEdgeLayerIntermediate]
 }

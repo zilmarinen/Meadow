@@ -43,9 +43,11 @@ extension Coordinate: Hashable {
         return lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z
     }
     
-    public var hashValue: Int {
+    public func hash(into hasher: inout Hasher) {
         
-        return x ^ y ^ z
+        hasher.combine(x)
+        hasher.combine(y)
+        hasher.combine(z)
     }
 }
 

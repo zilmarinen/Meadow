@@ -33,9 +33,6 @@ public class Floor: SCNNode, SceneGraphChild {
         
         super.init()
         
-        self.name = "Floor"
-        self.categoryBitMask = SceneGraphNodeType.floor.rawValue
-        
         let floor = SCNFloor()
         
         floor.reflectivity = 0.0

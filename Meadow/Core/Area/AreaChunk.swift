@@ -8,5 +8,22 @@
 
 public class AreaChunk: GridChunk<AreaTile, AreaNode<AreaNodeEdge>> {
     
-    public var wallRenderState: Area.WallRenderState = .cutaway
+}
+
+extension AreaChunk {
+    
+    public var renderState: AreaNodeEdge.RenderState {
+        
+        get {
+            
+            let cutaway = children.filter { $0.renderState == .cutaway }
+            
+            return (cutaway.count == totalChildren ? .cutaway : .raised)
+        }
+        
+        set {
+            
+            children.forEach { $0.renderState = newValue }
+        }
+    }
 }

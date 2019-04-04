@@ -106,6 +106,6 @@ extension PropList {
 
     public func index(of child: ChildType) -> Int? {
         
-        return prototypes.index(of: child)
+        return prototypes.firstIndex(of: child)
     }
 }

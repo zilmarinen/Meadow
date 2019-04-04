@@ -22,11 +22,15 @@ extension Terrain: SceneGraphIntermediate {
         
             intermediate.children.forEach { nodeEdgeIntermediate in
                 
-                nodeEdgeIntermediate.children.forEach { edgeLayerIntermediate in
+                nodeEdgeIntermediate.children.forEach { nodeEdgeLayerIntermediate in
                     
-                    if let terrainType = TerrainType(rawValue: edgeLayerIntermediate.terrainType) {
+                    if let terrainType = TerrainType(rawValue: nodeEdgeLayerIntermediate.terrainType) {
                         
-                        let _ = add(layer: intermediate.volume.coordinate, edge: nodeEdgeIntermediate.edge, terrainType: terrainType)
+                        let terrainNodeEdgeLayer = add(layer: intermediate.volume.coordinate, edge: nodeEdgeIntermediate.edge, terrainType: terrainType)
+                        
+                        terrainNodeEdgeLayer?.c0 = nodeEdgeLayerIntermediate.c0
+                        terrainNodeEdgeLayer?.c1 = nodeEdgeLayerIntermediate.c1
+                        terrainNodeEdgeLayer?.c2 = nodeEdgeLayerIntermediate.c2
                     }
                 }
             }

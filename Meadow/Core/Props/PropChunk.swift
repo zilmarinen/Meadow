@@ -142,8 +142,7 @@ extension PropChunk {
         }
     }
     
-    @discardableResult
-    public func remove(prop: Prop) -> Bool {
+    @discardableResult public func remove(prop: Prop) -> Bool {
         
         if index(of: prop) != nil {
             

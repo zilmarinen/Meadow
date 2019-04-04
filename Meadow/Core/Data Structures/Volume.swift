@@ -10,9 +10,9 @@ public struct Volume: Codable {
     
     public let coordinate: Coordinate
     
-    public let size: Size
+    public let size: Size<Int>
     
-    public init(coordinate: Coordinate, size: Size) {
+    public init(coordinate: Coordinate, size: Size<Int>) {
         
         self.coordinate = coordinate
         self.size = size
@@ -26,9 +26,10 @@ extension Volume: Hashable {
         return lhs.coordinate == rhs.coordinate && lhs.size == rhs.size
     }
     
-    public var hashValue: Int {
+    public func hash(into hasher: inout Hasher) {
         
-        return coordinate.x ^ coordinate.y ^ coordinate.z ^ size.width ^ size.height ^ size.depth
+        hasher.combine(coordinate)
+        hasher.combine(size)
     }
 }
 

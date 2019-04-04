@@ -41,11 +41,11 @@ extension Tree {
     
     public var last: T? { return children.last }
     
-    public func index(of child: T) -> Int? { return children.index(of: child) }
+    public func index(of child: T) -> Int? { return children.firstIndex(of: child) }
     
     @discardableResult public func append(_ child: T) -> Bool {
         
-        guard children.index(of: child) == nil else { return false }
+        guard children.firstIndex(of: child) == nil else { return false }
         
         children.append(child)
         

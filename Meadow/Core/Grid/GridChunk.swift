@@ -158,8 +158,7 @@ extension GridChunk {
         }
     }
     
-    @discardableResult
-    func remove(tile: Tile) -> Bool {
+    @discardableResult func remove(tile: Tile) -> Bool {
         
         if let index = index(of: tile) {
             

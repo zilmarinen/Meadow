@@ -9,3 +9,21 @@
 public class AreaTile: GridTile<AreaNode<AreaNodeEdge>> {
     
 }
+
+extension AreaTile {
+    
+    public var renderState: AreaNodeEdge.RenderState {
+        
+        get {
+            
+            let cutaway = children.filter { $0.renderState == .cutaway }
+            
+            return (cutaway.count == totalChildren ? .cutaway : .raised)
+        }
+        
+        set {
+            
+            children.forEach { $0.renderState = newValue }
+        }
+    }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Printer",
+  "type": 2,
+  "props": [
+    "Printer",
+    "Photocopier"
+  ]
+}

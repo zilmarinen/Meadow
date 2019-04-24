@@ -1,0 +1,25 @@
+{
+  "name": "Cabinet Middle",
+  "type": 2,
+  "footprint": {
+    "coordinate": {
+
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "rotation": 0,
+    "nodes": [
+
+      {
+        "coordinate": {
+
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "edges": [0, 1, 2, 3]
+      }
+      ]
+  }
+}

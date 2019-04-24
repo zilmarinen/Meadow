@@ -14,6 +14,8 @@ public struct PropPrototype: Codable {
     
     public let footprint: Footprint
     
+    public let type: PropType
+    
     public init?(named: String) {
         
         let resource = named.lowercased().replacingOccurrences(of: " ", with: "_")

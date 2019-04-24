@@ -16,6 +16,17 @@ public class GridChunk<Tile: GridTile<Node>, Node: GridNode>: SCNNode, Encodable
     
     var isDirty: Bool = false
     
+    public override var isHidden: Bool {
+        
+        didSet {
+            
+            if isHidden != oldValue {
+                
+                becomeDirty()
+            }
+        }
+    }
+    
     public let volume: Volume
     
     enum CodingKeys: CodingKey {

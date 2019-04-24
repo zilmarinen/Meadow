@@ -25,9 +25,9 @@ class FootpathTests: XCTestCase {
         
         let coordinate = Coordinate(x: 13, y: 0, z: 37)
         
-        let n0 = scene.world.footpaths.add(node: Coordinate(x: 13, y: 0, z: 37))
-        let n1 = scene.world.footpaths.add(node: coordinate + Coordinate.left)
-        let n2 = scene.world.footpaths.add(node: coordinate)
+        let n0 = scene.world.footpaths.add(node: Coordinate(x: 13, y: 0, z: 37), footpathType: .asphalt)
+        let n1 = scene.world.footpaths.add(node: coordinate + Coordinate.left, footpathType: .asphalt)
+        let n2 = scene.world.footpaths.add(node: coordinate, footpathType: .asphalt)
         
         XCTAssertNotNil(n0)
         XCTAssertNotNil(n1)
@@ -44,8 +44,8 @@ class FootpathTests: XCTestCase {
         
         let coordinate = Coordinate(x: 13, y: 0, z: 37)
         
-        let n0 = scene.world.footpaths.add(node: Coordinate(x: 13, y: 0, z: 37))
-        let n1 = scene.world.footpaths.add(node: coordinate + Coordinate.left)
+        let n0 = scene.world.footpaths.add(node: Coordinate(x: 13, y: 0, z: 37), footpathType: .asphalt)
+        let n1 = scene.world.footpaths.add(node: coordinate + Coordinate.left, footpathType: .asphalt)
         
         XCTAssertNotNil(n0)
         XCTAssertNotNil(n1)

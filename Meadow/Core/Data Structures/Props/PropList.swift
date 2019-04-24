@@ -12,7 +12,7 @@ public struct PropList: Codable {
     
     public let name: String
     
-    public let category: PropType
+    public let type: PropType
     
     public let prototypes: [PropPrototype]
     
@@ -36,10 +36,10 @@ public struct PropList: Codable {
         }
     }
     
-    public init(name: String, category: PropType, prototypes: [PropPrototype]) {
+    public init(name: String, type: PropType, prototypes: [PropPrototype]) {
         
         self.name = name
-        self.category = category
+        self.type = type
         self.prototypes = prototypes
     }
 }
@@ -48,7 +48,7 @@ extension PropList: Equatable {
     
     public static func == (lhs: PropList, rhs: PropList) -> Bool {
         
-        return lhs.name == rhs.name
+        return lhs.name == rhs.name && lhs.type == rhs.type
     }
 }
 
@@ -57,7 +57,7 @@ extension PropList {
     enum CodingKeys: CodingKey {
         
         case name
-        case category
+        case type
         case props
     }
     
@@ -66,7 +66,7 @@ extension PropList {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         self.name = try container.decode(String.self, forKey: .name)
-        self.category = try container.decode(PropType.self, forKey: .category)
+        self.type = try container.decode(PropType.self, forKey: .type)
         
         let propNames = try container.decode([String].self, forKey: .props)
         
@@ -80,7 +80,10 @@ extension PropList {
             }
         }
         
-        self.prototypes = props
+        self.prototypes = props.sorted(by: { (lhs, rhs) -> Bool in
+            
+            return lhs.name < rhs.name
+        })
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -88,7 +91,7 @@ extension PropList {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         try container.encode(self.name, forKey: .name)
-        try container.encode(self.category, forKey: .category)
+        try container.encode(self.type, forKey: .type)
         try container.encode(self.prototypes.map { $0.name }, forKey: .props)
     }
 }

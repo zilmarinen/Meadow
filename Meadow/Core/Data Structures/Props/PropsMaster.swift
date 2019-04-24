@@ -32,10 +32,13 @@ public class PropsMaster {
         
         self.lists = PropLists(children: Tree<PropList>(propLists.sorted(by: { (lhs, rhs) -> Bool in
             
-            return lhs.name > rhs.name
+            return lhs.name < rhs.name
         })))
         
-        self.props = Props(children: Tree<PropPrototype>(propLists.flatMap { $0.prototypes }))
+        self.props = Props(children: Tree<PropPrototype>(propLists.flatMap { $0.prototypes }.sorted(by: { (lhs, rhs) -> Bool in
+            
+            return lhs.name < rhs.name
+        })))
     }
 }
 
@@ -51,6 +54,16 @@ extension PropsMaster {
         let name = named.lowercased()
         
         return lists.children.first { $0.name.lowercased() == name }
+    }
+    
+    public func lists(type: PropType) -> [PropList] {
+        
+        return lists.children.filter { $0.type == type }
+    }
+    
+    public func list(prop: PropPrototype) -> PropList? {
+        
+        return lists.children.first { $0.index(of: prop) != nil }
     }
 }
 

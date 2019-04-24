@@ -14,18 +14,18 @@ public struct Footprint: Codable, Hashable {
     
     public let nodes: [FootprintNode]
     
-    init(coordinate: Coordinate, rotation: GridEdge, nodes: [FootprintNode]) {
+    public init(coordinate: Coordinate, rotation: GridEdge, nodes: [FootprintNode]) {
         
         self.coordinate = coordinate
         self.rotation = rotation
         
         self.nodes = nodes.map { node -> FootprintNode in
             
-            let nodeCoordinate = Coordinate.rotate(coordinate: (node.coordinate + coordinate), rotation: rotation)
+            let nodeCoordinate = Coordinate.rotate(coordinate: node.coordinate, rotation: rotation)
             
             let edges = node.edges.map { GridEdge.rotate(edge: $0, rotation: rotation) }
             
-            return FootprintNode(coordinate: nodeCoordinate, edges: edges)
+            return FootprintNode(coordinate: coordinate + nodeCoordinate, edges: edges)
         }
     }
 }
@@ -57,5 +57,13 @@ extension Footprint {
         let node = FootprintNode(coordinate: coordinate, edges: [edge])
         
         return intersects(footprint: Footprint(coordinate: coordinate, rotation: .north, nodes: [node]))
+    }
+}
+
+extension Footprint {
+    
+    var volume: Volume {
+        
+        return Volume(coordinate: Coordinate.zero, size: Size.one)
     }
 }

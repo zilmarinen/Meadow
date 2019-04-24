@@ -176,6 +176,7 @@ extension World: SceneGraphUpdatable {
         blueprint.update(deltaTime: deltaTime)
         foliage.update(deltaTime: deltaTime)
         footpaths.update(deltaTime: deltaTime)
+        props.update(deltaTime: deltaTime)
         scaffolds.update(deltaTime: deltaTime)
         terrain.update(deltaTime: deltaTime)
         tunnels.update(deltaTime: deltaTime)

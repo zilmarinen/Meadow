@@ -16,6 +16,17 @@ public class Grid<Chunk: GridChunk<Tile, Node>, Tile: GridTile<Node>, Node: Grid
     
     var isDirty: Bool = false
     
+    public override var isHidden: Bool {
+        
+        didSet {
+            
+            if isHidden != oldValue {
+                
+                becomeDirty()
+            }
+        }
+    }
+    
     public var volume: Volume {
         
         return Volume(coordinate: Coordinate.zero, size: Size.one)

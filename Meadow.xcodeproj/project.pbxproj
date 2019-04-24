@@ -118,10 +118,6 @@
 		181D412C2204E20600FAF20C /* Tree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181D412A2204E20600FAF20C /* Tree.swift */; };
 		181D412D2204E20600FAF20C /* Tree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181D412A2204E20600FAF20C /* Tree.swift */; };
 		181D412E2204E20600FAF20C /* Tree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181D412A2204E20600FAF20C /* Tree.swift */; };
-		182003F221E79D2E00209585 /* PropChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182003F121E79D2E00209585 /* PropChunk.swift */; };
-		182003F321E79D3B00209585 /* PropChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182003F121E79D2E00209585 /* PropChunk.swift */; };
-		182003F421E79D3C00209585 /* PropChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182003F121E79D2E00209585 /* PropChunk.swift */; };
-		182003F521E79D3C00209585 /* PropChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182003F121E79D2E00209585 /* PropChunk.swift */; };
 		18259589210AFEB700F76A60 /* ColorPaletteIntermediate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18259588210AFEB700F76A60 /* ColorPaletteIntermediate.swift */; };
 		1825958A210AFEB700F76A60 /* ColorPaletteIntermediate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18259588210AFEB700F76A60 /* ColorPaletteIntermediate.swift */; };
 		1825958B210AFEB700F76A60 /* ColorPaletteIntermediate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18259588210AFEB700F76A60 /* ColorPaletteIntermediate.swift */; };
@@ -351,10 +347,61 @@
 		18C9E1D1220B070300842285 /* colors.json in Resources */ = {isa = PBXBuildFile; fileRef = 1825957F210AFD0B00F76A60 /* colors.json */; };
 		18C9E1D2220B070400842285 /* colors.json in Resources */ = {isa = PBXBuildFile; fileRef = 1825957F210AFD0B00F76A60 /* colors.json */; };
 		18C9E1D3220B070600842285 /* color_palettes.json in Resources */ = {isa = PBXBuildFile; fileRef = 1825957D210AFCE400F76A60 /* color_palettes.json */; };
+		18CB20ED2260BEA900F62292 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CB20EC2260BEA900F62292 /* Character.swift */; };
 		18CD2D532201A5180077593A /* TerrainCutaway.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CD2D522201A5180077593A /* TerrainCutaway.swift */; };
 		18CD2D542201A5180077593A /* TerrainCutaway.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CD2D522201A5180077593A /* TerrainCutaway.swift */; };
 		18CD2D552201A5180077593A /* TerrainCutaway.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CD2D522201A5180077593A /* TerrainCutaway.swift */; };
 		18CD2D562201A5180077593A /* TerrainCutaway.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CD2D522201A5180077593A /* TerrainCutaway.swift */; };
+		18D422C3225B36A700F0AD7F /* shredder.model in Resources */ = {isa = PBXBuildFile; fileRef = 18D4229D225B36A600F0AD7F /* shredder.model */; };
+		18D422C4225B36A700F0AD7F /* shredder.model in Resources */ = {isa = PBXBuildFile; fileRef = 18D4229D225B36A600F0AD7F /* shredder.model */; };
+		18D422C5225B36A700F0AD7F /* shredder.prop in Resources */ = {isa = PBXBuildFile; fileRef = 18D4229E225B36A600F0AD7F /* shredder.prop */; };
+		18D422C6225B36A700F0AD7F /* shredder.prop in Resources */ = {isa = PBXBuildFile; fileRef = 18D4229E225B36A600F0AD7F /* shredder.prop */; };
+		18D422C7225B36A700F0AD7F /* shredder.proplist in Resources */ = {isa = PBXBuildFile; fileRef = 18D4229F225B36A600F0AD7F /* shredder.proplist */; };
+		18D422C8225B36A700F0AD7F /* shredder.proplist in Resources */ = {isa = PBXBuildFile; fileRef = 18D4229F225B36A600F0AD7F /* shredder.proplist */; };
+		18D422C9225B36A700F0AD7F /* photocopier.model in Resources */ = {isa = PBXBuildFile; fileRef = 18D422A2225B36A600F0AD7F /* photocopier.model */; };
+		18D422CA225B36A700F0AD7F /* photocopier.model in Resources */ = {isa = PBXBuildFile; fileRef = 18D422A2225B36A600F0AD7F /* photocopier.model */; };
+		18D422CB225B36A700F0AD7F /* photocopier.prop in Resources */ = {isa = PBXBuildFile; fileRef = 18D422A3225B36A600F0AD7F /* photocopier.prop */; };
+		18D422CC225B36A700F0AD7F /* photocopier.prop in Resources */ = {isa = PBXBuildFile; fileRef = 18D422A3225B36A600F0AD7F /* photocopier.prop */; };
+		18D422CD225B36A700F0AD7F /* printer.model in Resources */ = {isa = PBXBuildFile; fileRef = 18D422A5225B36A600F0AD7F /* printer.model */; };
+		18D422CE225B36A700F0AD7F /* printer.model in Resources */ = {isa = PBXBuildFile; fileRef = 18D422A5225B36A600F0AD7F /* printer.model */; };
+		18D422CF225B36A700F0AD7F /* printer.prop in Resources */ = {isa = PBXBuildFile; fileRef = 18D422A6225B36A600F0AD7F /* printer.prop */; };
+		18D422D0225B36A700F0AD7F /* printer.prop in Resources */ = {isa = PBXBuildFile; fileRef = 18D422A6225B36A600F0AD7F /* printer.prop */; };
+		18D422D1225B36A700F0AD7F /* printer.proplist in Resources */ = {isa = PBXBuildFile; fileRef = 18D422A7225B36A600F0AD7F /* printer.proplist */; };
+		18D422D2225B36A700F0AD7F /* printer.proplist in Resources */ = {isa = PBXBuildFile; fileRef = 18D422A7225B36A600F0AD7F /* printer.proplist */; };
+		18D422D3225B36A700F0AD7F /* computer.proplist in Resources */ = {isa = PBXBuildFile; fileRef = 18D422A9225B36A600F0AD7F /* computer.proplist */; };
+		18D422D4225B36A700F0AD7F /* computer.proplist in Resources */ = {isa = PBXBuildFile; fileRef = 18D422A9225B36A600F0AD7F /* computer.proplist */; };
+		18D422D5225B36A700F0AD7F /* desktop.model in Resources */ = {isa = PBXBuildFile; fileRef = 18D422AB225B36A600F0AD7F /* desktop.model */; };
+		18D422D6225B36A700F0AD7F /* desktop.model in Resources */ = {isa = PBXBuildFile; fileRef = 18D422AB225B36A600F0AD7F /* desktop.model */; };
+		18D422D7225B36A700F0AD7F /* desktop.prop in Resources */ = {isa = PBXBuildFile; fileRef = 18D422AC225B36A600F0AD7F /* desktop.prop */; };
+		18D422D8225B36A700F0AD7F /* desktop.prop in Resources */ = {isa = PBXBuildFile; fileRef = 18D422AC225B36A600F0AD7F /* desktop.prop */; };
+		18D422D9225B36A700F0AD7F /* laptop.model in Resources */ = {isa = PBXBuildFile; fileRef = 18D422AE225B36A600F0AD7F /* laptop.model */; };
+		18D422DA225B36A700F0AD7F /* laptop.model in Resources */ = {isa = PBXBuildFile; fileRef = 18D422AE225B36A600F0AD7F /* laptop.model */; };
+		18D422DB225B36A700F0AD7F /* laptop.prop in Resources */ = {isa = PBXBuildFile; fileRef = 18D422AF225B36A600F0AD7F /* laptop.prop */; };
+		18D422DC225B36A700F0AD7F /* laptop.prop in Resources */ = {isa = PBXBuildFile; fileRef = 18D422AF225B36A600F0AD7F /* laptop.prop */; };
+		18D422DD225B36A700F0AD7F /* cabinet.proplist in Resources */ = {isa = PBXBuildFile; fileRef = 18D422B1225B36A600F0AD7F /* cabinet.proplist */; };
+		18D422DE225B36A700F0AD7F /* cabinet.proplist in Resources */ = {isa = PBXBuildFile; fileRef = 18D422B1225B36A600F0AD7F /* cabinet.proplist */; };
+		18D422DF225B36A700F0AD7F /* cabinet_left.model in Resources */ = {isa = PBXBuildFile; fileRef = 18D422B3225B36A600F0AD7F /* cabinet_left.model */; };
+		18D422E0225B36A700F0AD7F /* cabinet_left.model in Resources */ = {isa = PBXBuildFile; fileRef = 18D422B3225B36A600F0AD7F /* cabinet_left.model */; };
+		18D422E1225B36A700F0AD7F /* cabinet_left.prop in Resources */ = {isa = PBXBuildFile; fileRef = 18D422B4225B36A600F0AD7F /* cabinet_left.prop */; };
+		18D422E2225B36A700F0AD7F /* cabinet_left.prop in Resources */ = {isa = PBXBuildFile; fileRef = 18D422B4225B36A600F0AD7F /* cabinet_left.prop */; };
+		18D422E3225B36A700F0AD7F /* cabinet_middle.model in Resources */ = {isa = PBXBuildFile; fileRef = 18D422B6225B36A600F0AD7F /* cabinet_middle.model */; };
+		18D422E4225B36A700F0AD7F /* cabinet_middle.model in Resources */ = {isa = PBXBuildFile; fileRef = 18D422B6225B36A600F0AD7F /* cabinet_middle.model */; };
+		18D422E5225B36A700F0AD7F /* cabinet_middle.prop in Resources */ = {isa = PBXBuildFile; fileRef = 18D422B7225B36A600F0AD7F /* cabinet_middle.prop */; };
+		18D422E6225B36A700F0AD7F /* cabinet_middle.prop in Resources */ = {isa = PBXBuildFile; fileRef = 18D422B7225B36A600F0AD7F /* cabinet_middle.prop */; };
+		18D422E7225B36A700F0AD7F /* cabinet_right.model in Resources */ = {isa = PBXBuildFile; fileRef = 18D422B9225B36A600F0AD7F /* cabinet_right.model */; };
+		18D422E8225B36A700F0AD7F /* cabinet_right.model in Resources */ = {isa = PBXBuildFile; fileRef = 18D422B9225B36A600F0AD7F /* cabinet_right.model */; };
+		18D422E9225B36A700F0AD7F /* cabinet_right.prop in Resources */ = {isa = PBXBuildFile; fileRef = 18D422BA225B36A600F0AD7F /* cabinet_right.prop */; };
+		18D422EA225B36A700F0AD7F /* cabinet_right.prop in Resources */ = {isa = PBXBuildFile; fileRef = 18D422BA225B36A600F0AD7F /* cabinet_right.prop */; };
+		18D422EB225B36A700F0AD7F /* desk.proplist in Resources */ = {isa = PBXBuildFile; fileRef = 18D422BC225B36A600F0AD7F /* desk.proplist */; };
+		18D422EC225B36A700F0AD7F /* desk.proplist in Resources */ = {isa = PBXBuildFile; fileRef = 18D422BC225B36A600F0AD7F /* desk.proplist */; };
+		18D422ED225B36A700F0AD7F /* steel_desk.model in Resources */ = {isa = PBXBuildFile; fileRef = 18D422BE225B36A600F0AD7F /* steel_desk.model */; };
+		18D422EE225B36A700F0AD7F /* steel_desk.model in Resources */ = {isa = PBXBuildFile; fileRef = 18D422BE225B36A600F0AD7F /* steel_desk.model */; };
+		18D422EF225B36A700F0AD7F /* steel_desk.prop in Resources */ = {isa = PBXBuildFile; fileRef = 18D422BF225B36A600F0AD7F /* steel_desk.prop */; };
+		18D422F0225B36A700F0AD7F /* steel_desk.prop in Resources */ = {isa = PBXBuildFile; fileRef = 18D422BF225B36A600F0AD7F /* steel_desk.prop */; };
+		18D422F1225B36A700F0AD7F /* wooden_desk.model in Resources */ = {isa = PBXBuildFile; fileRef = 18D422C1225B36A600F0AD7F /* wooden_desk.model */; };
+		18D422F2225B36A700F0AD7F /* wooden_desk.model in Resources */ = {isa = PBXBuildFile; fileRef = 18D422C1225B36A600F0AD7F /* wooden_desk.model */; };
+		18D422F3225B36A700F0AD7F /* wooden_desk.prop in Resources */ = {isa = PBXBuildFile; fileRef = 18D422C2225B36A600F0AD7F /* wooden_desk.prop */; };
+		18D422F4225B36A700F0AD7F /* wooden_desk.prop in Resources */ = {isa = PBXBuildFile; fileRef = 18D422C2225B36A600F0AD7F /* wooden_desk.prop */; };
 		18D6798C2179CC3400B05EE2 /* Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D6798B2179CC3400B05EE2 /* Keyboard.swift */; };
 		18D6798D2179CC3400B05EE2 /* Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D6798B2179CC3400B05EE2 /* Keyboard.swift */; };
 		18D6798E2179CC3400B05EE2 /* Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D6798B2179CC3400B05EE2 /* Keyboard.swift */; };
@@ -736,7 +783,6 @@
 		181C6E9F224530AB0026E0A5 /* PlasterboardAreaNodeEdgeMesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlasterboardAreaNodeEdgeMesh.swift; sourceTree = "<group>"; };
 		181C6EA4224530BE0026E0A5 /* PlainAreaNodeFloorMesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainAreaNodeFloorMesh.swift; sourceTree = "<group>"; };
 		181D412A2204E20600FAF20C /* Tree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tree.swift; sourceTree = "<group>"; };
-		182003F121E79D2E00209585 /* PropChunk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropChunk.swift; sourceTree = "<group>"; };
 		1825957D210AFCE400F76A60 /* color_palettes.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = color_palettes.json; sourceTree = "<group>"; };
 		1825957F210AFD0B00F76A60 /* colors.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = colors.json; sourceTree = "<group>"; };
 		18259588210AFEB700F76A60 /* ColorPaletteIntermediate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPaletteIntermediate.swift; sourceTree = "<group>"; };
@@ -853,7 +899,33 @@
 		18C9BF0F214E84A600440DCA /* SceneGraphIntermediate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneGraphIntermediate.swift; sourceTree = "<group>"; };
 		18C9E1C8220ACD0400842285 /* ShaderProgram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaderProgram.swift; sourceTree = "<group>"; };
 		18C9E1CD220AE6FE00842285 /* terrain.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = terrain.metal; sourceTree = "<group>"; };
+		18CB20EC2260BEA900F62292 /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
 		18CD2D522201A5180077593A /* TerrainCutaway.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrainCutaway.swift; sourceTree = "<group>"; };
+		18D4229D225B36A600F0AD7F /* shredder.model */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = shredder.model; sourceTree = "<group>"; };
+		18D4229E225B36A600F0AD7F /* shredder.prop */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = shredder.prop; sourceTree = "<group>"; };
+		18D4229F225B36A600F0AD7F /* shredder.proplist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = shredder.proplist; sourceTree = "<group>"; };
+		18D422A2225B36A600F0AD7F /* photocopier.model */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = photocopier.model; sourceTree = "<group>"; };
+		18D422A3225B36A600F0AD7F /* photocopier.prop */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = photocopier.prop; sourceTree = "<group>"; };
+		18D422A5225B36A600F0AD7F /* printer.model */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = printer.model; sourceTree = "<group>"; };
+		18D422A6225B36A600F0AD7F /* printer.prop */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = printer.prop; sourceTree = "<group>"; };
+		18D422A7225B36A600F0AD7F /* printer.proplist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = printer.proplist; sourceTree = "<group>"; };
+		18D422A9225B36A600F0AD7F /* computer.proplist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = computer.proplist; sourceTree = "<group>"; };
+		18D422AB225B36A600F0AD7F /* desktop.model */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = desktop.model; sourceTree = "<group>"; };
+		18D422AC225B36A600F0AD7F /* desktop.prop */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = desktop.prop; sourceTree = "<group>"; };
+		18D422AE225B36A600F0AD7F /* laptop.model */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = laptop.model; sourceTree = "<group>"; };
+		18D422AF225B36A600F0AD7F /* laptop.prop */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = laptop.prop; sourceTree = "<group>"; };
+		18D422B1225B36A600F0AD7F /* cabinet.proplist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cabinet.proplist; sourceTree = "<group>"; };
+		18D422B3225B36A600F0AD7F /* cabinet_left.model */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cabinet_left.model; sourceTree = "<group>"; };
+		18D422B4225B36A600F0AD7F /* cabinet_left.prop */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cabinet_left.prop; sourceTree = "<group>"; };
+		18D422B6225B36A600F0AD7F /* cabinet_middle.model */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cabinet_middle.model; sourceTree = "<group>"; };
+		18D422B7225B36A600F0AD7F /* cabinet_middle.prop */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cabinet_middle.prop; sourceTree = "<group>"; };
+		18D422B9225B36A600F0AD7F /* cabinet_right.model */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cabinet_right.model; sourceTree = "<group>"; };
+		18D422BA225B36A600F0AD7F /* cabinet_right.prop */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cabinet_right.prop; sourceTree = "<group>"; };
+		18D422BC225B36A600F0AD7F /* desk.proplist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = desk.proplist; sourceTree = "<group>"; };
+		18D422BE225B36A600F0AD7F /* steel_desk.model */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = steel_desk.model; sourceTree = "<group>"; };
+		18D422BF225B36A600F0AD7F /* steel_desk.prop */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = steel_desk.prop; sourceTree = "<group>"; };
+		18D422C1225B36A600F0AD7F /* wooden_desk.model */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = wooden_desk.model; sourceTree = "<group>"; };
+		18D422C2225B36A600F0AD7F /* wooden_desk.prop */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = wooden_desk.prop; sourceTree = "<group>"; };
 		18D6798B2179CC3400B05EE2 /* Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keyboard.swift; sourceTree = "<group>"; };
 		18D679902179D32400B05EE2 /* KeyboardObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardObserver.swift; sourceTree = "<group>"; };
 		18D67A02215B928800D3570C /* SceneView_iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneView_iOS.swift; sourceTree = "<group>"; };
@@ -1537,7 +1609,6 @@
 				18C8CFDF219971A700041D09 /* Props.swift */,
 				18C8CFF421997C4A00041D09 /* Prop.swift */,
 				18EBE15621A2A75900B4F591 /* PropType.swift */,
-				182003F121E79D2E00209585 /* PropChunk.swift */,
 			);
 			path = Props;
 			sourceTree = "<group>";
@@ -1545,11 +1616,160 @@
 		18C8CFE42199726F00041D09 /* Actors */ = {
 			isa = PBXGroup;
 			children = (
+				18CB20EB2260BE9C00F62292 /* Character */,
 				18C8CFE52199727A00041D09 /* Actors.swift */,
 				18C8CFEA2199745000041D09 /* Hero.swift */,
 				18C8CFEF21997A1900041D09 /* NPCs.swift */,
 			);
 			path = Actors;
+			sourceTree = "<group>";
+		};
+		18CB20EB2260BE9C00F62292 /* Character */ = {
+			isa = PBXGroup;
+			children = (
+				18CB20EC2260BEA900F62292 /* Character.swift */,
+			);
+			path = Character;
+			sourceTree = "<group>";
+		};
+		18D4229B225B36A600F0AD7F /* shredder.lintel */ = {
+			isa = PBXGroup;
+			children = (
+				18D4229C225B36A600F0AD7F /* shredder */,
+				18D4229F225B36A600F0AD7F /* shredder.proplist */,
+			);
+			path = shredder.lintel;
+			sourceTree = "<group>";
+		};
+		18D4229C225B36A600F0AD7F /* shredder */ = {
+			isa = PBXGroup;
+			children = (
+				18D4229D225B36A600F0AD7F /* shredder.model */,
+				18D4229E225B36A600F0AD7F /* shredder.prop */,
+			);
+			path = shredder;
+			sourceTree = "<group>";
+		};
+		18D422A0225B36A600F0AD7F /* printer.lintel */ = {
+			isa = PBXGroup;
+			children = (
+				18D422A1225B36A600F0AD7F /* photocopier */,
+				18D422A4225B36A600F0AD7F /* printer */,
+				18D422A7225B36A600F0AD7F /* printer.proplist */,
+			);
+			path = printer.lintel;
+			sourceTree = "<group>";
+		};
+		18D422A1225B36A600F0AD7F /* photocopier */ = {
+			isa = PBXGroup;
+			children = (
+				18D422A2225B36A600F0AD7F /* photocopier.model */,
+				18D422A3225B36A600F0AD7F /* photocopier.prop */,
+			);
+			path = photocopier;
+			sourceTree = "<group>";
+		};
+		18D422A4225B36A600F0AD7F /* printer */ = {
+			isa = PBXGroup;
+			children = (
+				18D422A5225B36A600F0AD7F /* printer.model */,
+				18D422A6225B36A600F0AD7F /* printer.prop */,
+			);
+			path = printer;
+			sourceTree = "<group>";
+		};
+		18D422A8225B36A600F0AD7F /* computer.lintel */ = {
+			isa = PBXGroup;
+			children = (
+				18D422A9225B36A600F0AD7F /* computer.proplist */,
+				18D422AA225B36A600F0AD7F /* desktop */,
+				18D422AD225B36A600F0AD7F /* laptop */,
+			);
+			path = computer.lintel;
+			sourceTree = "<group>";
+		};
+		18D422AA225B36A600F0AD7F /* desktop */ = {
+			isa = PBXGroup;
+			children = (
+				18D422AB225B36A600F0AD7F /* desktop.model */,
+				18D422AC225B36A600F0AD7F /* desktop.prop */,
+			);
+			path = desktop;
+			sourceTree = "<group>";
+		};
+		18D422AD225B36A600F0AD7F /* laptop */ = {
+			isa = PBXGroup;
+			children = (
+				18D422AE225B36A600F0AD7F /* laptop.model */,
+				18D422AF225B36A600F0AD7F /* laptop.prop */,
+			);
+			path = laptop;
+			sourceTree = "<group>";
+		};
+		18D422B0225B36A600F0AD7F /* cabinet.lintel */ = {
+			isa = PBXGroup;
+			children = (
+				18D422B1225B36A600F0AD7F /* cabinet.proplist */,
+				18D422B2225B36A600F0AD7F /* cabinet_left */,
+				18D422B5225B36A600F0AD7F /* cabinet_middle */,
+				18D422B8225B36A600F0AD7F /* cabinet_right */,
+			);
+			path = cabinet.lintel;
+			sourceTree = "<group>";
+		};
+		18D422B2225B36A600F0AD7F /* cabinet_left */ = {
+			isa = PBXGroup;
+			children = (
+				18D422B3225B36A600F0AD7F /* cabinet_left.model */,
+				18D422B4225B36A600F0AD7F /* cabinet_left.prop */,
+			);
+			path = cabinet_left;
+			sourceTree = "<group>";
+		};
+		18D422B5225B36A600F0AD7F /* cabinet_middle */ = {
+			isa = PBXGroup;
+			children = (
+				18D422B6225B36A600F0AD7F /* cabinet_middle.model */,
+				18D422B7225B36A600F0AD7F /* cabinet_middle.prop */,
+			);
+			path = cabinet_middle;
+			sourceTree = "<group>";
+		};
+		18D422B8225B36A600F0AD7F /* cabinet_right */ = {
+			isa = PBXGroup;
+			children = (
+				18D422B9225B36A600F0AD7F /* cabinet_right.model */,
+				18D422BA225B36A600F0AD7F /* cabinet_right.prop */,
+			);
+			path = cabinet_right;
+			sourceTree = "<group>";
+		};
+		18D422BB225B36A600F0AD7F /* desk.lintel */ = {
+			isa = PBXGroup;
+			children = (
+				18D422BC225B36A600F0AD7F /* desk.proplist */,
+				18D422BD225B36A600F0AD7F /* steel_desk */,
+				18D422C0225B36A600F0AD7F /* wooden_desk */,
+			);
+			path = desk.lintel;
+			sourceTree = "<group>";
+		};
+		18D422BD225B36A600F0AD7F /* steel_desk */ = {
+			isa = PBXGroup;
+			children = (
+				18D422BE225B36A600F0AD7F /* steel_desk.model */,
+				18D422BF225B36A600F0AD7F /* steel_desk.prop */,
+			);
+			path = steel_desk;
+			sourceTree = "<group>";
+		};
+		18D422C0225B36A600F0AD7F /* wooden_desk */ = {
+			isa = PBXGroup;
+			children = (
+				18D422C1225B36A600F0AD7F /* wooden_desk.model */,
+				18D422C2225B36A600F0AD7F /* wooden_desk.prop */,
+			);
+			path = wooden_desk;
 			sourceTree = "<group>";
 		};
 		18D6798A2179CC1B00B05EE2 /* Keyboard */ = {
@@ -1705,6 +1925,11 @@
 		18F64828219C178300CE3267 /* Props */ = {
 			isa = PBXGroup;
 			children = (
+				18D422B0225B36A600F0AD7F /* cabinet.lintel */,
+				18D422A8225B36A600F0AD7F /* computer.lintel */,
+				18D422BB225B36A600F0AD7F /* desk.lintel */,
+				18D422A0225B36A600F0AD7F /* printer.lintel */,
+				18D4229B225B36A600F0AD7F /* shredder.lintel */,
 			);
 			path = Props;
 			sourceTree = "<group>";
@@ -1902,6 +2127,31 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18D422F3225B36A700F0AD7F /* wooden_desk.prop in Resources */,
+				18D422EB225B36A700F0AD7F /* desk.proplist in Resources */,
+				18D422E7225B36A700F0AD7F /* cabinet_right.model in Resources */,
+				18D422E1225B36A700F0AD7F /* cabinet_left.prop in Resources */,
+				18D422CF225B36A700F0AD7F /* printer.prop in Resources */,
+				18D422E3225B36A700F0AD7F /* cabinet_middle.model in Resources */,
+				18D422CB225B36A700F0AD7F /* photocopier.prop in Resources */,
+				18D422D5225B36A700F0AD7F /* desktop.model in Resources */,
+				18D422EF225B36A700F0AD7F /* steel_desk.prop in Resources */,
+				18D422C9225B36A700F0AD7F /* photocopier.model in Resources */,
+				18D422D3225B36A700F0AD7F /* computer.proplist in Resources */,
+				18D422C3225B36A700F0AD7F /* shredder.model in Resources */,
+				18D422C7225B36A700F0AD7F /* shredder.proplist in Resources */,
+				18D422D9225B36A700F0AD7F /* laptop.model in Resources */,
+				18D422DB225B36A700F0AD7F /* laptop.prop in Resources */,
+				18D422DD225B36A700F0AD7F /* cabinet.proplist in Resources */,
+				18D422ED225B36A700F0AD7F /* steel_desk.model in Resources */,
+				18D422D7225B36A700F0AD7F /* desktop.prop in Resources */,
+				18D422CD225B36A700F0AD7F /* printer.model in Resources */,
+				18D422F1225B36A700F0AD7F /* wooden_desk.model in Resources */,
+				18D422C5225B36A700F0AD7F /* shredder.prop in Resources */,
+				18D422E9225B36A700F0AD7F /* cabinet_right.prop in Resources */,
+				18D422D1225B36A700F0AD7F /* printer.proplist in Resources */,
+				18D422E5225B36A700F0AD7F /* cabinet_middle.prop in Resources */,
+				18D422DF225B36A700F0AD7F /* cabinet_left.model in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1918,6 +2168,31 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18D422F4225B36A700F0AD7F /* wooden_desk.prop in Resources */,
+				18D422EC225B36A700F0AD7F /* desk.proplist in Resources */,
+				18D422E8225B36A700F0AD7F /* cabinet_right.model in Resources */,
+				18D422E2225B36A700F0AD7F /* cabinet_left.prop in Resources */,
+				18D422D0225B36A700F0AD7F /* printer.prop in Resources */,
+				18D422E4225B36A700F0AD7F /* cabinet_middle.model in Resources */,
+				18D422CC225B36A700F0AD7F /* photocopier.prop in Resources */,
+				18D422D6225B36A700F0AD7F /* desktop.model in Resources */,
+				18D422F0225B36A700F0AD7F /* steel_desk.prop in Resources */,
+				18D422CA225B36A700F0AD7F /* photocopier.model in Resources */,
+				18D422D4225B36A700F0AD7F /* computer.proplist in Resources */,
+				18D422C4225B36A700F0AD7F /* shredder.model in Resources */,
+				18D422C8225B36A700F0AD7F /* shredder.proplist in Resources */,
+				18D422DA225B36A700F0AD7F /* laptop.model in Resources */,
+				18D422DC225B36A700F0AD7F /* laptop.prop in Resources */,
+				18D422DE225B36A700F0AD7F /* cabinet.proplist in Resources */,
+				18D422EE225B36A700F0AD7F /* steel_desk.model in Resources */,
+				18D422D8225B36A700F0AD7F /* desktop.prop in Resources */,
+				18D422CE225B36A700F0AD7F /* printer.model in Resources */,
+				18D422F2225B36A700F0AD7F /* wooden_desk.model in Resources */,
+				18D422C6225B36A700F0AD7F /* shredder.prop in Resources */,
+				18D422EA225B36A700F0AD7F /* cabinet_right.prop in Resources */,
+				18D422D2225B36A700F0AD7F /* printer.proplist in Resources */,
+				18D422E6225B36A700F0AD7F /* cabinet_middle.prop in Resources */,
+				18D422E0225B36A700F0AD7F /* cabinet_left.model in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2039,12 +2314,12 @@
 				18B3C8B221E75D0E007745B4 /* Bundle+Pod.swift in Sources */,
 				18EE502A20A576600059829C /* Foliage.swift in Sources */,
 				18EE502F20A576660059829C /* FootpathChunk.swift in Sources */,
-				182003F221E79D2E00209585 /* PropChunk.swift in Sources */,
 				1814692F2108914300326342 /* AreaNodeEdgeIntermediate.swift in Sources */,
 				18DB0869216B563800294789 /* Input.swift in Sources */,
 				1870ACDC21AE90B700B36D5D /* ArtDirector.swift in Sources */,
 				18EE501D20A576550059829C /* Color.swift in Sources */,
 				18EE504420A576770059829C /* Scaffold.swift in Sources */,
+				18CB20ED2260BEA900F62292 /* Character.swift in Sources */,
 				18EE503920A5766C0059829C /* GridEdge.swift in Sources */,
 				1837E48E223E932B0084E50B /* AreaNodeEdgeType.swift in Sources */,
 				183C78D1213FC20600542348 /* FoliageResolver.swift in Sources */,
@@ -2341,7 +2616,6 @@
 				18069F0D20C979980041A858 /* CameraJibModel.swift in Sources */,
 				184EB1012216005900D6227D /* WaterNodeEdge.swift in Sources */,
 				18D679922179D32400B05EE2 /* KeyboardObserver.swift in Sources */,
-				182003F321E79D3B00209585 /* PropChunk.swift in Sources */,
 				1825958A210AFEB700F76A60 /* ColorPaletteIntermediate.swift in Sources */,
 				18EE50CE20A57BE20059829C /* FootpathChunk.swift in Sources */,
 				18EBE18B21A5543000B4F591 /* PropsMaster.swift in Sources */,
@@ -2377,7 +2651,6 @@
 				18B3C8B021E75D0D007745B4 /* Bundle+Pod.swift in Sources */,
 				18EE505F20A576830059829C /* TunnelNode.swift in Sources */,
 				18EE502620A5765F0059829C /* Foliage.swift in Sources */,
-				182003F421E79D3C00209585 /* PropChunk.swift in Sources */,
 				18DB086B216B563B00294789 /* Input.swift in Sources */,
 				18EE503320A576660059829C /* FootpathChunk.swift in Sources */,
 				1870ACDE21AE90B700B36D5D /* ArtDirector.swift in Sources */,
@@ -2683,7 +2956,6 @@
 				18EBE18821A5537D00B4F591 /* PropPrototype.swift in Sources */,
 				184EB1022216005900D6227D /* WaterNodeEdge.swift in Sources */,
 				18EE50C520A57BDD0059829C /* Foliage.swift in Sources */,
-				182003F521E79D3C00209585 /* PropChunk.swift in Sources */,
 				18069F0F20C9799A0041A858 /* CameraJibModel.swift in Sources */,
 				18F64822219C120E00CE3267 /* Footprint.swift in Sources */,
 				18EE50CA20A57BE20059829C /* FootpathChunk.swift in Sources */,

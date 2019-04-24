@@ -12,15 +12,26 @@ public class Prop: SCNNode, SceneGraphChild {
     
     public var observer: SceneGraphObserver?
     
-    public var volume: Volume { return Volume(coordinate: Coordinate.zero, size: Size.one) }
+    var isDirty: Bool = false
+    
+    public override var isHidden: Bool {
+        
+        didSet {
+            
+            if isHidden != oldValue {
+                
+                becomeDirty()
+            }
+        }
+    }
+    
+    public var volume: Volume { return footprint.volume }
     
     public let footprint: Footprint
     
     public let prototype: PropPrototype
     
-    var isDirty: Bool = false
-    
-    var colorPalette: ColorPalette? {
+    public var colorPalette: ColorPalette? {
         
         didSet {
             
@@ -42,8 +53,6 @@ public class Prop: SCNNode, SceneGraphChild {
         super.init()
         
         self.name = prototype.name
-        
-        self.position = SCNVector3(x: MDWFloat(footprint.coordinate.x), y: Axis.Y(y: footprint.coordinate.y), z: MDWFloat(footprint.coordinate.z))
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -68,11 +77,49 @@ extension Prop: SceneGraphSoilable {
         
         if !isDirty { return false }
         
-        guard let model = Model(named: prototype.name), let colorPalette = colorPalette else { return false }
+        
+        
+        //
+        //
+        //
+        
+        guard let colorPalette = colorPalette else { return false }
+        
+        var meshFaces: [MeshFace] = []
+        
+        footprint.nodes.forEach { footprintNode in
+            
+            let lowerPolytope = Polytope(x: MDWFloat(footprintNode.coordinate.x), y0: footprintNode.coordinate.y, y1: footprintNode.coordinate.y, y2: footprintNode.coordinate.y, y3: footprintNode.coordinate.y, z: MDWFloat(footprintNode.coordinate.z))
+            
+            let upperPolytope = Polytope.translate(polytope: lowerPolytope, translation: SCNVector3(x: 0.0, y: Axis.unitY / 2, z: 0.0))
+            
+            let polyhedron = Polyhedron(upperPolytope: upperPolytope, lowerPolytope: lowerPolytope)
+            
+            footprintNode.edges.forEach { edge in
+                
+                let corners = GridCorner.corners(edge: edge)
+                
+                let normal = GridEdge.normal(edge: edge)
+                
+                meshFaces.append(MeshFace.apex(corners: corners, polytope: polyhedron.upperPolytope, color: colorPalette.primary.vector))
+                
+                meshFaces.append(contentsOf: MeshFace.edge(corners: corners, polyhedron: polyhedron, normal: normal, color: colorPalette.primary.vector))
+            }
+        }
+        
+        self.geometry = SCNGeometry(mesh: Mesh(faces: meshFaces))
+        
+        //
+        //
+        //
+        
+        
+        
+        /*guard let model = Model(named: prototype.name), let colorPalette = colorPalette else { return false }
         
         let mesh = model.mesh(colorPalette: colorPalette)
         
-        self.geometry = SCNGeometry(mesh: mesh)
+        self.geometry = SCNGeometry(mesh: mesh)*/
         
         isDirty = false
         

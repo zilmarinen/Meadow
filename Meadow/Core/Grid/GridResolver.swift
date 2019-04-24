@@ -29,7 +29,7 @@ extension GridResolver {
         }
     }
     
-    func resolve() {
+    public func resolve() {
         
         while volumes.count > 0 {
             

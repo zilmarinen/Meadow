@@ -29,7 +29,28 @@ public class Actors: SCNNode, SceneGraphChild, SceneGraphObserver, SceneGraphPar
     
     public var volume: Volume { return Volume(coordinate: Coordinate.zero, size: Size.one) }
     
-    public let hero = Hero()
+    public var hero: Hero? {
+        
+        didSet {
+            
+            if let oldValue = oldValue {
+                
+                oldValue.observer = nil
+                
+                if children.remove(oldValue) {
+                 
+                    oldValue.removeFromParentNode()
+                }
+            }
+            
+            if hero != oldValue, let hero = hero {
+                
+                hero.observer = self
+                
+                self.addChildNode(hero)
+            }
+        }
+    }
     
     public let npcs = NPCs()
     
@@ -37,13 +58,9 @@ public class Actors: SCNNode, SceneGraphChild, SceneGraphObserver, SceneGraphPar
         
         super.init()
         
-        hero.observer = self
-        hero.name = "Hero"
-        
         npcs.observer = self
         npcs.name = "NPCs"
         
-        self.addChildNode(hero)
         self.addChildNode(npcs)
     }
     
@@ -58,6 +75,22 @@ public class Actors: SCNNode, SceneGraphChild, SceneGraphObserver, SceneGraphPar
             
             super.addChildNode(child)
         }
+    }
+}
+
+extension Actors: SceneGraphUpdatable {
+    
+    public func update(deltaTime: TimeInterval) {
+        
+        children.forEach { child in
+            
+            if let child = child as? SceneGraphUpdatable {
+                
+                child.update(deltaTime: deltaTime)
+            }
+        }
+        
+        clean()
     }
 }
 

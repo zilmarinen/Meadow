@@ -8,7 +8,9 @@
 
 import SceneKit
 
-public class NPCs: SCNNode, SceneGraphChild {
+public class NPCs: SCNNode, SceneGraphChild, SceneGraphObserver, SceneGraphParent {
+    
+    var children = Tree<SCNNode>()
     
     public var observer: SceneGraphObserver?
     
@@ -26,6 +28,31 @@ public class NPCs: SCNNode, SceneGraphChild {
     }
     
     public var volume: Volume { return Volume(coordinate: Coordinate.zero, size: Size.one) }
+    
+    public override func addChildNode(_ child: SCNNode) {
+        
+        if children.append(child) {
+            
+            super.addChildNode(child)
+        }
+    }
+}
+
+extension NPCs {
+    
+    public var totalChildren: Int { return children.count }
+    
+    public func child(at index: Int) -> SceneGraphChild? {
+        
+        return children[index] as? SceneGraphChild
+    }
+    
+    public func index(of child: SceneGraphChild) -> Int? {
+        
+        guard let child = child as? SCNNode else { return nil }
+        
+        return children.index(of: child)
+    }
 }
 
 extension NPCs: SceneGraphSoilable {
@@ -49,5 +76,13 @@ extension NPCs: SceneGraphSoilable {
         isDirty = false
         
         return true
+    }
+}
+
+extension NPCs {
+    
+    public func child(didBecomeDirty child: SceneGraphChild) {
+        
+        observer?.child(didBecomeDirty: child)
     }
 }

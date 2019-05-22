@@ -9,7 +9,7 @@
 import SceneKit
 import THRUtilities
 
-extension SceneView {
+extension SceneKitView {
     
     public enum CursorState: State {
         

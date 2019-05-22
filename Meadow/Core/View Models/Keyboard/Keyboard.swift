@@ -8,7 +8,7 @@
 
 import THRUtilities
 
-extension SceneView {
+extension SceneKitView {
     
     public enum KeyCode: UInt16 {
         
@@ -30,7 +30,7 @@ extension SceneView {
         case keysHeld(keys: Set<KeyCode>)
         case keyUp(key: KeyCode)
         
-        public func shouldTransition(to newState: SceneView.KeyboardState) -> Should<SceneView.KeyboardState> {
+        public func shouldTransition(to newState: KeyboardState) -> Should<KeyboardState> {
             
             switch self {
             

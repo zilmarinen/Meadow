@@ -1,16 +1,16 @@
 //
-//  SceneView.swift
+//  SceneKitView.swift
 //  Meadow
 //
-//  Created by Zack Brown on 26/09/2018.
-//  Copyright © 2018 Script Orchard. All rights reserved.
+//  Created by Zack Brown on 25/04/2019.
+//  Copyright © 2019 Script Orchard. All rights reserved.
 //
 
 import SceneKit
 
-public class SceneView: SCNView, CursorObserver {
+public class SceneKitView: SCNView, CursorObserver {
     
-    public lazy var viewModel = {
+    lazy var viewModel = {
         
         return SceneViewModel()
     }()
@@ -22,21 +22,26 @@ public class SceneView: SCNView, CursorObserver {
         viewModel.subscribe(stateDidChange(from:to:))
     }
     
-    public var cursorIdentifier: SceneView.Cursor.CallbackReference?
+    public var cursorIdentifier: Cursor.CallbackReference?
+    
+    var lastUpdate: TimeInterval?
 }
 
-extension SceneView {
+extension SceneKitView {
     
     func stateDidChange(from: ViewState?, to: ViewState) {
         
         DispatchQueue.main.async {
-        
+            
             switch self.viewModel.state {
                 
             case .empty(let meadow):
                 
-                self.scene = nil
                 self.delegate = nil
+                self.isPlaying = false
+                
+                self.scene = nil
+                self.overlaySKScene = nil
                 
                 if let cursorIdentifier = self.cursorIdentifier {
                     
@@ -45,11 +50,17 @@ extension SceneView {
                 
             case .scene(let meadow):
                 
+                self.lastUpdate = nil
+                
+                self.delegate = meadow
+                self.isPlaying = true
+                
                 self.scene = meadow.scene
-                self.delegate = meadow.scene
+                self.overlaySKScene = meadow.hud
+                self.overlaySKScene?.scaleMode = .aspectFill
                 
                 if self.cursorIdentifier == nil {
-                
+                    
                     self.cursorIdentifier = meadow.input.cursor.subscribe(self.stateDidChange(from:to:))
                 }
             }
@@ -57,9 +68,9 @@ extension SceneView {
     }
 }
 
-extension SceneView {
+extension SceneKitView {
     
-    public func stateDidChange(from: SceneView.CursorState?, to: SceneView.CursorState) {
+    public func stateDidChange(from: CursorState?, to: CursorState) {
         
         switch self.viewModel.state {
             
@@ -69,10 +80,10 @@ extension SceneView {
                                                      SCNHitTestOption.categoryBitMask: SceneGraphNodeType.terrain.rawValue | SceneGraphNodeType.floor.rawValue]
             
             switch to {
-            
+                
             case .idle(let position):
-            
-                guard let hit = meadow.sceneView.hitTest(position, options: options).first else { break }
+                
+                guard let hit = meadow.view.hitTest(position, options: options).first else { break }
                 
                 let closest = meadow.scene.hitTest(hit)
                 
@@ -84,21 +95,21 @@ extension SceneView {
                         
                         meadow.input.graticule.state = .tracking(start: closest, end: closest, yOffset: 0, inputType: .none)
                     }
-                
+                    
                 default: break
                 }
-            
+                
             case .down(let position, let inputType),
                  .tracking(let position, let inputType),
                  .up(let position, let inputType):
                 
-                guard let hit = meadow.sceneView.hitTest(position.end, options: options).first, let camera = meadow.scene.cameraJib.camera else { break }
+                guard let hit = meadow.view.hitTest(position.end, options: options).first, let camera = meadow.scene.cameraJib.camera else { break }
                 
                 let closest = meadow.scene.hitTest(hit)
                 
                 let scale = MDWFloat(camera.orthographicScale * 2)
                 
-                let offset = -Int((position.start.y - position.end.y) / scale)
+                let offset = -Int(MDWFloat(position.start.y - position.end.y) / scale)
                 
                 switch meadow.input.graticule.state {
                     
@@ -116,7 +127,7 @@ extension SceneView {
                             
                             meadow.input.graticule.state = .tracking(start: start, end: closest, yOffset: offset, inputType: inputType)
                         }
-                    
+                        
                     case .up:
                         
                         meadow.input.graticule.state = .up(start: start, end: end, yOffset: yOffset, inputType: inputType)

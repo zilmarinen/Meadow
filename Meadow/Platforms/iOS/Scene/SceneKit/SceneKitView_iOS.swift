@@ -8,9 +8,11 @@
 
 import SceneKit
 
-extension SceneView {
+extension SceneKitView {
     
     override public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        super.touchesBegan(touches, with: event)
         
         switch viewModel.state {
             
@@ -37,6 +39,8 @@ extension SceneView {
     
     override public func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         
+        super.touchesEnded(touches, with: event)
+        
         switch viewModel.state {
             
         case .scene(let meadow):
@@ -60,6 +64,8 @@ extension SceneView {
     }
     
     override public func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        super.touchesMoved(touches, with: event)
         
         switch viewModel.state {
             

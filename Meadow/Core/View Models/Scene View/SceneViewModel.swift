@@ -8,7 +8,7 @@
 
 import THRUtilities
 
-extension SceneView {
+extension SceneKitView {
     
     public enum ViewState: State {
         

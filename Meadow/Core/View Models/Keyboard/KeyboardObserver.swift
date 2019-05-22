@@ -8,7 +8,7 @@
 
 public protocol KeyboardObserver {
     
-    var keyboardCallbackReference: SceneView.Keyboard.CallbackReference? { get }
+    var keyboardCallbackReference: SceneKitView.Keyboard.CallbackReference? { get }
     
-    func stateDidChange(from: SceneView.KeyboardState?, to: SceneView.KeyboardState)
+    func stateDidChange(from: SceneKitView.KeyboardState?, to: SceneKitView.KeyboardState)
 }

@@ -1,5 +1,5 @@
 //
-//  CameraJib.swift
+//  SceneKitCamera.swift
 //  Meadow
 //
 //  Created by Zack Brown on 16/05/2018.
@@ -8,15 +8,11 @@
 
 import SceneKit
 
-public class CameraJib: SCNNode, SceneGraphChild {
-    
-    public var observer: SceneGraphObserver?
-    
-    public var volume: Volume { return Volume(coordinate: Coordinate.zero, size: Size.one) }
+public class SceneKitCamera: SCNNode {
     
     public lazy var model = {
         
-        return CameraJibModel()
+        return SceneKitCameraModel(initialState: .focus(vector: SCNVector3Zero, edge: .north, zoom: SceneKitCamera.maximumZoomLevel))
     }()
 
     public override init() {
@@ -40,7 +36,7 @@ public class CameraJib: SCNNode, SceneGraphChild {
     }
 }
 
-extension CameraJib {
+extension SceneKitCamera {
 
     func stateDidChange(from: CameraState?, to: CameraState) {
         
@@ -51,7 +47,7 @@ extension CameraJib {
     }
 }
 
-extension CameraJib: SceneGraphUpdatable {
+extension SceneKitCamera: SceneGraphUpdatable {
 
     public func update(deltaTime: TimeInterval) {
         
@@ -64,19 +60,19 @@ extension CameraJib: SceneGraphUpdatable {
     }
 }
 
-extension CameraJib {
+extension SceneKitCamera {
     
     static var minimumZoomLevel: MDWFloat = 1.0
     static var maximumZoomLevel: MDWFloat = 7.0
 }
 
-extension CameraJib {
+extension SceneKitCamera {
 
     func focus(focus: SCNVector3, edge: GridEdge, zoomLevel: MDWFloat, deltaTime: TimeInterval) {
         
         guard let camera = camera else { return }
         
-        let scale = Double(min(max(zoomLevel, CameraJib.minimumZoomLevel), CameraJib.maximumZoomLevel))
+        let scale = Double(min(max(zoomLevel, SceneKitCamera.minimumZoomLevel), SceneKitCamera.maximumZoomLevel))
         
         camera.orthographicScale = scale
         

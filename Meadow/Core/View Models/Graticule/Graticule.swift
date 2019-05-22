@@ -8,17 +8,17 @@
 
 import THRUtilities
 
-extension SceneView {
+extension SceneKitView {
     
     public typealias SceneViewHit = (coordinate: Coordinate, corner: GridCorner, edge: GridEdge, polytope: Polytope)
     
     public enum GraticuleState: State {
         
-        case down(start: SceneViewHit, inputType: SceneView.CursorState.InputType)
-        case tracking(start: SceneViewHit, end: SceneViewHit, yOffset: Int, inputType: SceneView.CursorState.InputType)
-        case up(start: SceneViewHit, end: SceneViewHit, yOffset: Int, inputType: SceneView.CursorState.InputType)
+        case down(start: SceneViewHit, inputType: SceneKitView.CursorState.InputType)
+        case tracking(start: SceneViewHit, end: SceneViewHit, yOffset: Int, inputType: SceneKitView.CursorState.InputType)
+        case up(start: SceneViewHit, end: SceneViewHit, yOffset: Int, inputType: SceneKitView.CursorState.InputType)
         
-        public func shouldTransition(to newState: SceneView.GraticuleState) -> Should<SceneView.GraticuleState> {
+        public func shouldTransition(to newState: GraticuleState) -> Should<GraticuleState> {
             
             switch newState {
                 

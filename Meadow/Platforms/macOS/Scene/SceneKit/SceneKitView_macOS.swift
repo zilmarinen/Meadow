@@ -8,7 +8,7 @@
 
 import SceneKit
 
-extension SceneView {
+extension SceneKitView {
     
     public override func updateTrackingAreas() {
         
@@ -21,35 +21,49 @@ extension SceneView {
     
     public override func mouseDown(with event: NSEvent) {
         
+        super.mouseDown(with: event)
+        
         mouseDown(event: event, inputType: .left)
     }
     
     public override func rightMouseDown(with event: NSEvent) {
+        
+        super.rightMouseDown(with: event)
         
         mouseDown(event: event, inputType: .right)
     }
     
     public override func mouseUp(with event: NSEvent) {
         
+        super.mouseUp(with: event)
+        
         mouseUp(event: event, inputType: .left)
     }
     
     public override func rightMouseUp(with event: NSEvent) {
+        
+        super.rightMouseUp(with: event)
         
         mouseUp(event: event, inputType: .right)
     }
     
     public override func mouseDragged(with event: NSEvent) {
         
+        super.mouseDragged(with: event)
+        
         mouseDragged(event: event, inputType: .left)
     }
     
     public override func rightMouseDragged(with event: NSEvent) {
         
+        super.rightMouseDragged(with: event)
+        
         mouseDragged(event: event, inputType: .right)
     }
     
     public override func mouseMoved(with event: NSEvent) {
+        
+        super.mouseMoved(with: event)
         
         switch viewModel.state {
             
@@ -61,11 +75,9 @@ extension SceneView {
                 
             case .idle:
                 
-                let pointInView = convert(event.locationInWindow, from: nil)
+                let point = convert(event.locationInWindow, from: nil)
                 
-                let position = CGPoint(x: pointInView.x, y: pointInView.y)
-                
-                meadow.input.cursor.state = .idle(position: position)
+                meadow.input.cursor.state = .idle(position: point)
                 
             default: break
             }
@@ -75,9 +87,9 @@ extension SceneView {
     }
 }
 
-extension SceneView {
+extension SceneKitView {
     
-    func mouseDown(event: NSEvent, inputType: CursorState.InputType) {
+    func mouseDown(event: NSEvent, inputType: SceneKitView.CursorState.InputType) {
         
         switch viewModel.state {
             
@@ -87,9 +99,7 @@ extension SceneView {
                 
             case .idle:
                 
-                let pointInView = convert(event.locationInWindow, from: nil)
-                
-                let point = CGPoint(x: pointInView.x, y: pointInView.y)
+                let point = convert(event.locationInWindow, from: nil)
                 
                 meadow.input.cursor.state = .down(position: (start: point, end: point), inputType: inputType)
                 
@@ -100,7 +110,7 @@ extension SceneView {
         }
     }
     
-    func mouseUp(event: NSEvent, inputType: CursorState.InputType) {
+    func mouseUp(event: NSEvent, inputType: SceneKitView.CursorState.InputType) {
      
         switch viewModel.state {
             
@@ -111,9 +121,7 @@ extension SceneView {
             case .down(let position, _),
                  .tracking(let position, _):
                 
-                let pointInView = convert(event.locationInWindow, from: nil)
-                
-                let point = CGPoint(x: pointInView.x, y: pointInView.y)
+                let point = convert(event.locationInWindow, from: nil)
                 
                 meadow.input.cursor.state = .up(position: (start: position.start, end: point), inputType: inputType)
                 
@@ -124,7 +132,7 @@ extension SceneView {
         }
     }
     
-    func mouseDragged(event: NSEvent, inputType: CursorState.InputType) {
+    func mouseDragged(event: NSEvent, inputType: SceneKitView.CursorState.InputType) {
         
         switch viewModel.state {
             
@@ -135,9 +143,7 @@ extension SceneView {
             case .down(let position, _),
                  .tracking(let position, _):
                 
-                let pointInView = convert(event.locationInWindow, from: nil)
-                
-                let point = CGPoint(x: pointInView.x, y: pointInView.y)
+                let point = convert(event.locationInWindow, from: nil)
                 
                 meadow.input.cursor.state = .tracking(position: (start: position.start, end: point), inputType: inputType)
                 
@@ -149,7 +155,7 @@ extension SceneView {
     }
 }
 
-extension SceneView {
+extension SceneKitView {
     
     public override func keyDown(with event: NSEvent) {
         
@@ -157,7 +163,7 @@ extension SceneView {
             
         case .scene(let meadow):
             
-            guard let keyCode = KeyCode(rawValue: event.keyCode) else { break }
+            guard let keyCode = SceneKitView.KeyCode(rawValue: event.keyCode) else { break }
             
             switch meadow.input.keyboard.state {
                 
@@ -184,7 +190,7 @@ extension SceneView {
             
         case .scene(let meadow):
             
-            guard let keyCode = KeyCode(rawValue: event.keyCode) else { break }
+            guard let keyCode = SceneKitView.KeyCode(rawValue: event.keyCode) else { break }
             
             meadow.input.keyboard.state = .keyUp(key: keyCode)
             

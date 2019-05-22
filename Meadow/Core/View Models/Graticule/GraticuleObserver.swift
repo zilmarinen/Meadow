@@ -8,7 +8,7 @@
 
 public protocol GraticuleObserver {
     
-    var graticuleIdentifier: SceneView.Graticule.CallbackReference? { get }
+    var graticuleIdentifier: SceneKitView.Graticule.CallbackReference? { get }
     
-    func stateDidChange(from: SceneView.GraticuleState?, to: SceneView.GraticuleState)
+    func stateDidChange(from: SceneKitView.GraticuleState?, to: SceneKitView.GraticuleState)
 }

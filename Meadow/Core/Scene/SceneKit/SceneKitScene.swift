@@ -1,15 +1,14 @@
 //
-//  Scene.swift
+//  SceneKitScene.swift
 //  Meadow
 //
-//  Created by Zack Brown on 27/04/2018.
-//  Copyright © 2018 Script Orchard. All rights reserved.
+//  Created by Zack Brown on 25/04/2019.
+//  Copyright © 2019 Script Orchard. All rights reserved.
 //
 
-import Foundation
 import SceneKit
 
-public class Scene: SCNScene, SceneGraphChild, SceneGraphObserver, SceneGraphParent {
+public class SceneKitScene: SCNScene, SceneGraphChild, SceneGraphObserver, SceneGraphParent {
     
     var children = Tree<SCNNode>()
     
@@ -21,13 +20,9 @@ public class Scene: SCNScene, SceneGraphChild, SceneGraphObserver, SceneGraphPar
     
     public let world = World()
     
-    public let cameraJib = CameraJib()
+    public let cameraJib = SceneKitCamera()
     
     public var observer: SceneGraphObserver?
-    
-    public var delegate: SceneGraphUpdatable?
-    
-    var lastUpdate: TimeInterval?
     
     public init(observer: SceneGraphObserver?) {
         
@@ -57,7 +52,19 @@ public class Scene: SCNScene, SceneGraphChild, SceneGraphObserver, SceneGraphPar
     }
 }
 
-extension Scene {
+extension SceneKitScene: SceneGraphUpdatable {
+    
+    public func update(deltaTime: TimeInterval) {
+        
+        guard !isPaused else { return }
+        
+        cameraJib.update(deltaTime: deltaTime)
+        
+        world.update(deltaTime: deltaTime)
+    }
+}
+
+extension SceneKitScene {
     
     public var totalChildren: Int { return children.count }
     
@@ -74,7 +81,7 @@ extension Scene {
     }
 }
 
-extension Scene {
+extension SceneKitScene {
     
     public func child(didBecomeDirty child: SceneGraphChild) {
         
@@ -82,23 +89,7 @@ extension Scene {
     }
 }
 
-extension Scene: SCNSceneRendererDelegate {
-    
-    public func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
-        
-        let deltaTime = time - (self.lastUpdate ?? 0)
-        
-        delegate?.update(deltaTime: deltaTime)
-        
-        cameraJib.update(deltaTime: deltaTime)
-        
-        world.update(deltaTime: deltaTime)
-
-        self.lastUpdate = time
-    }
-}
-
-extension Scene: SceneGraphIntermediate {
+extension SceneKitScene: SceneGraphIntermediate {
     
     public typealias IntermediateType = SceneIntermediate
     
@@ -110,7 +101,7 @@ extension Scene: SceneGraphIntermediate {
     }
 }
 
-extension Scene: Encodable {
+extension SceneKitScene: Encodable {
     
     enum CodingKeys: CodingKey {
         
@@ -129,9 +120,9 @@ extension Scene: Encodable {
     }
 }
 
-extension Scene {
+extension SceneKitScene {
     
-    func hitTest(_ hit: SCNHitTestResult) -> SceneView.SceneViewHit {
+    func hitTest(_ hit: SCNHitTestResult) -> SceneKitView.SceneViewHit {
         
         let coordinate = Coordinate(vector: hit.worldCoordinates)
         

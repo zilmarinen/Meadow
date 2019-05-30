@@ -53,6 +53,8 @@ public class Grid<Chunk: GridChunk<Tile, Node>, Tile: GridTile<Node>, Node: Grid
         if children.append(child) {
             
             super.addChildNode(child)
+            
+            becomeDirty()
         }
     }
 }

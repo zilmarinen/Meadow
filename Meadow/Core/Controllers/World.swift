@@ -51,6 +51,7 @@ public class World: SCNNode, SceneGraphChild, SceneGraphObserver, SceneGraphPare
         floor.name = "Floor"
         floor.categoryBitMask = SceneGraphNodeType.floor.rawValue
         
+        actors.observer = self
         actors.name = "Actors"
         actors.categoryBitMask = SceneGraphNodeType.actors.rawValue
         

@@ -10,8 +10,6 @@ import SceneKit
 
 public class SceneKitScene: SCNScene, SceneGraphChild, SceneGraphObserver, SceneGraphParent {
     
-    var children = Tree<SCNNode>()
-    
     public var name: String? { return rootNode.name }
     
     public var isHidden: Bool = false
@@ -34,21 +32,13 @@ public class SceneKitScene: SCNScene, SceneGraphChild, SceneGraphObserver, Scene
         
         world.observer = self
         
-        addChildNode(cameraJib)
-        addChildNode(world)
+        rootNode.addChildNode(cameraJib)
+        rootNode.addChildNode(world)
     }
     
     public required init?(coder aDecoder: NSCoder) {
         
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    public func addChildNode(_ child: SCNNode) {
-        
-        if children.append(child) {
-            
-            rootNode.addChildNode(child)
-        }
     }
 }
 
@@ -66,6 +56,11 @@ extension SceneKitScene: SceneGraphUpdatable {
 
 extension SceneKitScene {
     
+    var children: [SCNNode] {
+        
+        return rootNode.childNodes.compactMap { ((($0 as? SceneGraphChild) != nil) ? $0 : nil) }
+    }
+    
     public var totalChildren: Int { return children.count }
     
     public func child(at index: Int) -> SceneGraphChild? {
@@ -77,7 +72,7 @@ extension SceneKitScene {
         
         guard let child = child as? SCNNode else { return nil }
         
-        return children.index(of: child)
+        return children.firstIndex(of: child)
     }
 }
 

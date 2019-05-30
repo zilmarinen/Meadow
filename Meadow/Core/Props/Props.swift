@@ -36,6 +36,8 @@ public class Props: SCNNode, SceneGraphChild, SceneGraphObserver, SceneGraphPare
         if children.append(child) {
             
             super.addChildNode(child)
+            
+            becomeDirty()
         }
     }
 }

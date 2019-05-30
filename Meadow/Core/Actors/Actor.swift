@@ -8,13 +8,13 @@
 
 import SceneKit
 
-public class Actor: SCNNode, SceneGraphChild {
+open class Actor: SCNNode, SceneGraphChild, SceneGraphSoilable, SceneGraphUpdatable {
     
     public var observer: SceneGraphObserver?
     
     var isDirty: Bool = false
     
-    public override var isHidden: Bool {
+    open override var isHidden: Bool {
         
         didSet {
             
@@ -27,35 +27,22 @@ public class Actor: SCNNode, SceneGraphChild {
     
     public var volume: Volume { return Volume(coordinate: Coordinate.zero, size: Size.one) }
     
-    var character: Character {
-        
-        didSet {
-            
-            if character != oldValue {
-                
-                becomeDirty()
-            }
-        }
-    }
-    
-    public required init(observer: SceneGraphObserver, character: Character) {
+    public init(observer: SceneGraphObserver) {
         
         self.observer = observer
         
-        self.character = character
-        
         super.init()
-        
-        self.name = character.name
     }
     
     public required init?(coder aDecoder: NSCoder) {
         
         fatalError("init(coder:) has not been implemented")
     }
-}
-
-extension Actor: SceneGraphSoilable {
+    
+    open func update(deltaTime: TimeInterval) {
+        
+        clean()
+    }
     
     @discardableResult public func becomeDirty() -> Bool {
         
@@ -67,7 +54,7 @@ extension Actor: SceneGraphSoilable {
         return isDirty
     }
     
-    @discardableResult public func clean() -> Bool {
+    @discardableResult open func clean() -> Bool {
         
         if !isDirty { return false }
         
@@ -78,4 +65,3 @@ extension Actor: SceneGraphSoilable {
         return true
     }
 }
-

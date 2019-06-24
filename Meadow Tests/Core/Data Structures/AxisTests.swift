@@ -10,7 +10,24 @@ import XCTest
 
 class AxisTests: XCTestCase {
     
-    func testAxisUnitY() {
+    func testAxisUnitYFloat() {
+        
+        let expect = expectation(description: "Converting from Axis coordinates float y value to yeilds correct y value as an integer")
+        
+        XCTAssertEqual(Axis.Y(y: 0.0), 0)
+        XCTAssertEqual(Axis.Y(y: 0.25), 1)
+        XCTAssertEqual(Axis.Y(y: -0.25), -1)
+        XCTAssertEqual(Axis.Y(y: 1.25), 5)
+        XCTAssertEqual(Axis.Y(y: -1.25), -5)
+        XCTAssertEqual(Axis.Y(y: 2.5), 10)
+        XCTAssertEqual(Axis.Y(y: -2.5), -10)
+        
+        expect.fulfill()
+        
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testAxisUnitYInt() {
         
         let expect = expectation(description: "Converting from integer y value to Axis coordinates yeilds correct y value as a float")
         

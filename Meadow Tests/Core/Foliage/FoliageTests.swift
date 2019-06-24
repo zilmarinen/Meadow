@@ -10,13 +10,13 @@ import XCTest
 
 class FoliageTests: XCTestCase {
     
-    var scene: Scene!
+    var scene: SceneKitScene!
     
     override func setUp() {
         
         super.setUp()
         
-        self.scene = Scene(observer: nil)
+        self.scene = SceneKitScene(observer: nil)
     }
     
     func testFoliageNodeAddition() {

@@ -27,11 +27,17 @@ open class Actor: SCNNode, SceneGraphChild, SceneGraphSoilable, SceneGraphUpdata
     
     public var volume: Volume { return Volume(coordinate: Coordinate.zero, size: Size.one) }
     
-    public init(observer: SceneGraphObserver) {
+    public let stateMachine: ActorStateMachine
+    
+    public init(observer: SceneGraphObserver, world: World) {
         
         self.observer = observer
         
+        self.stateMachine = ActorStateMachine(initialState: .idle(world: world))
+        
         super.init()
+        
+        stateMachine.subscribe(stateDidChange(from:to:))
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -64,4 +70,6 @@ open class Actor: SCNNode, SceneGraphChild, SceneGraphSoilable, SceneGraphUpdata
         
         return true
     }
+    
+    open func stateDidChange(from: ActorState?, to: ActorState) {}
 }

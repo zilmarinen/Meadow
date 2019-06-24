@@ -12,7 +12,7 @@ public class SpriteButton: SKSpriteNode {
     
     public typealias SpriteButtonEvent = ((SpriteButton, ViewState) -> ())
     
-    let action: SpriteButtonEvent
+    public var action: SpriteButtonEvent?
     
     lazy var viewModel: SpriteButtonViewModel = {
        
@@ -34,7 +34,11 @@ public class SpriteButton: SKSpriteNode {
     
     required init?(coder aDecoder: NSCoder) {
         
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
+        
+        self.isUserInteractionEnabled = true
+        
+        viewModel.subscribe(stateDidChange(from:to:))
     }
 }
 
@@ -44,7 +48,7 @@ extension SpriteButton {
      
         DispatchQueue.main.async {
             
-            self.action(self, to)
+            self.action?(self, to)
         }
     }
 }

@@ -6,6 +6,8 @@
 //  Copyright © 2019 Script Orchard. All rights reserved.
 //
 
+import Foundation
+
 public class Stopwatch {
     
     public let mark: TimeInterval

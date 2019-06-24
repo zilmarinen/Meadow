@@ -35,3 +35,14 @@ extension FootpathType {
         return ArtDirector.shared?.palette(named: name)
     }
 }
+
+extension FootpathType {
+    
+    public var movementCost: Int {
+        
+        switch self {
+        case .asphalt: return 1
+        case .dirt: return 2
+        }
+    }
+}

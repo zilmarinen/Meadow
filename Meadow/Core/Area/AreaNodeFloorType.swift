@@ -46,3 +46,11 @@ extension AreaNodeFloorType {
         }
     }
 }
+
+extension AreaNodeFloorType {
+    
+    public var movementCost: Int {
+        
+        return 1
+    }
+}

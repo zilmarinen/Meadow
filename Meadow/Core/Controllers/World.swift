@@ -35,12 +35,16 @@ public class World: SCNNode, SceneGraphChild, SceneGraphObserver, SceneGraphPare
     let terrainResolver: TerrainResolver
     let waterResolver: WaterResolver
     
+    public let pathfinder: Pathfinder
+    
     public override init() {
         
         self.foliageResolver = FoliageResolver(foliage: foliage, terrain: terrain)
         self.footpathResolver = FootpathResolver(footpaths: footpaths, terrain: terrain)
         self.terrainResolver = TerrainResolver(terrain: terrain, areas: areas, footpaths: footpaths)
         self.waterResolver = WaterResolver(water: water, terrain: terrain)
+        
+        self.pathfinder = Pathfinder(areas: areas, footpaths: footpaths, props: props, terrain: terrain)
         
         super.init()
         

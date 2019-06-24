@@ -44,3 +44,18 @@ extension TerrainType {
         return ArtDirector.shared?.palette(named: name)
     }
 }
+
+extension TerrainType {
+    
+    public var movementCost: Int {
+        
+        switch self {
+        case .bedrock: return 3
+        case .grass1: return 4
+        case .grass2: return 4
+        case .grass3: return 4
+        case .sand: return 5
+        }
+    }
+}
+

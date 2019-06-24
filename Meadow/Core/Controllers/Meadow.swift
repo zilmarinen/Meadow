@@ -14,21 +14,17 @@ public class Meadow: NSObject {
     
     public let scene: SceneKitScene
     
-    public let hud: SpriteKitScene
-    
     public let view: SceneKitView
     
     var lastUpdate: TimeInterval?
     
     public var delegate: SceneRendererDelegate?
     
-    public init(input: Input, scene: SceneKitScene, hud: SpriteKitScene, view: SceneKitView) {
+    public init(input: Input, scene: SceneKitScene, view: SceneKitView) {
         
         self.input = input
         
         self.scene = scene
-        
-        self.hud = hud
         
         self.view = view
         
@@ -49,7 +45,6 @@ extension Meadow: SCNSceneRendererDelegate {
         case .scene(let meadow):
             
             meadow.scene.update(deltaTime: deltaTime)
-            meadow.hud.update(deltaTime: deltaTime)
             
             delegate?.update(deltaTime: deltaTime, frameTime: renderer.sceneTime)
             

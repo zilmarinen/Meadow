@@ -6,6 +6,8 @@
 //  Copyright © 2019 Script Orchard. All rights reserved.
 //
 
+import Foundation
+
 public struct Scene {
     
     public let name: String

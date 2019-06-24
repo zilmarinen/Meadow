@@ -41,7 +41,6 @@ extension SceneKitView {
                 self.isPlaying = false
                 
                 self.scene = nil
-                self.overlaySKScene = nil
                 
                 if let cursorIdentifier = self.cursorIdentifier {
                     
@@ -56,8 +55,6 @@ extension SceneKitView {
                 self.isPlaying = true
                 
                 self.scene = meadow.scene
-                self.overlaySKScene = meadow.hud
-                self.overlaySKScene?.scaleMode = .aspectFill
                 
                 if self.cursorIdentifier == nil {
                     

@@ -109,7 +109,7 @@ extension Actors {
 
 extension Actors {
     
-    public func add(actor: Actor) -> Bool {
+    @discardableResult public func add(actor: Actor) -> Bool {
         
         if children.index(of: actor) == nil {
             
@@ -121,7 +121,7 @@ extension Actors {
         return false
     }
     
-    public func remove(actor: Actor) -> Bool {
+    @discardableResult public func remove(actor: Actor) -> Bool {
         
         if children.remove(actor) {
             

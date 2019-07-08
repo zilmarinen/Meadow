@@ -12,7 +12,7 @@ public class SceneKitCamera: SCNNode {
     
     public lazy var model = {
         
-        return SceneKitCameraModel(initialState: .focus(vector: SCNVector3Zero, edge: .north, zoom: SceneKitCamera.maximumZoomLevel))
+        return SceneKitCameraStateObserver(initialState: .idle)
     }()
 
     public override init() {
@@ -53,17 +53,19 @@ extension SceneKitCamera: SceneGraphUpdatable {
         
         switch model.state {
             
-        case .focus(let vector, let edge, let zoomLevel):
+        case .focus(let node, let edge, let zoomLevel):
             
-            focus(focus: vector, edge: edge, zoomLevel: zoomLevel, deltaTime: deltaTime)
+            focus(focus: node.position, edge: edge, zoomLevel: zoomLevel, deltaTime: deltaTime)
+            
+        default: break
         }
     }
 }
 
 extension SceneKitCamera {
     
-    static var minimumZoomLevel: MDWFloat = 1.0
-    static var maximumZoomLevel: MDWFloat = 7.0
+    public static var minimumZoomLevel: MDWFloat = 1.0
+    public static var maximumZoomLevel: MDWFloat = 7.0
 }
 
 extension SceneKitCamera {

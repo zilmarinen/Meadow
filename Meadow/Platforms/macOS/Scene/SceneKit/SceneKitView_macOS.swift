@@ -65,7 +65,7 @@ extension SceneKitView {
         
         super.mouseMoved(with: event)
         
-        switch viewModel.state {
+        switch stateObserver.state {
             
         case .scene(let meadow):
             
@@ -91,7 +91,7 @@ extension SceneKitView {
     
     func mouseDown(event: NSEvent, inputType: SceneKitView.CursorState.InputType) {
         
-        switch viewModel.state {
+        switch stateObserver.state {
             
         case .scene(let meadow):
             
@@ -112,7 +112,7 @@ extension SceneKitView {
     
     func mouseUp(event: NSEvent, inputType: SceneKitView.CursorState.InputType) {
      
-        switch viewModel.state {
+        switch stateObserver.state {
             
         case .scene(let meadow):
             
@@ -134,7 +134,7 @@ extension SceneKitView {
     
     func mouseDragged(event: NSEvent, inputType: SceneKitView.CursorState.InputType) {
         
-        switch viewModel.state {
+        switch stateObserver.state {
             
         case .scene(let meadow):
             
@@ -159,7 +159,7 @@ extension SceneKitView {
     
     public override func keyDown(with event: NSEvent) {
         
-        switch viewModel.state {
+        switch stateObserver.state {
             
         case .scene(let meadow):
             
@@ -186,7 +186,7 @@ extension SceneKitView {
     
     public override func keyUp(with event: NSEvent) {
         
-        switch viewModel.state {
+        switch stateObserver.state {
             
         case .scene(let meadow):
             

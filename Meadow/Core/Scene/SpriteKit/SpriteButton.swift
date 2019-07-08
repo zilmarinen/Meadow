@@ -14,9 +14,9 @@ public class SpriteButton: SKSpriteNode {
     
     public var action: SpriteButtonEvent?
     
-    lazy var viewModel: SpriteButtonViewModel = {
+    lazy var stateObserver = {
        
-        return SpriteButtonViewModel(initialState: .idle)
+        return SpriteButtonStateObserver(initialState: .idle)
     }()
     
     public init(imageNamed name: String, action: @escaping SpriteButtonEvent) {
@@ -29,7 +29,7 @@ public class SpriteButton: SKSpriteNode {
         
         self.isUserInteractionEnabled = true
         
-        viewModel.subscribe(stateDidChange(from:to:))
+        stateObserver.subscribe(stateDidChange(from:to:))
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -38,7 +38,7 @@ public class SpriteButton: SKSpriteNode {
         
         self.isUserInteractionEnabled = true
         
-        viewModel.subscribe(stateDidChange(from:to:))
+        stateObserver.subscribe(stateDidChange(from:to:))
     }
 }
 

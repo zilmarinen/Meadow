@@ -10,16 +10,16 @@ import SceneKit
 
 public class SceneKitView: SCNView, CursorObserver {
     
-    lazy var viewModel = {
+    lazy var stateObserver = {
         
-        return SceneViewModel()
+        return SceneViewStateObserver()
     }()
     
     public override func awakeFromNib() {
         
         super.awakeFromNib()
         
-        viewModel.subscribe(stateDidChange(from:to:))
+        stateObserver.subscribe(stateDidChange(from:to:))
     }
     
     public var cursorIdentifier: Cursor.CallbackReference?
@@ -33,7 +33,7 @@ extension SceneKitView {
         
         DispatchQueue.main.async {
             
-            switch self.viewModel.state {
+            switch self.stateObserver.state {
                 
             case .empty(let meadow):
                 
@@ -69,7 +69,7 @@ extension SceneKitView {
     
     public func stateDidChange(from: CursorState?, to: CursorState) {
         
-        switch self.viewModel.state {
+        switch self.stateObserver.state {
             
         case .scene(let meadow):
             

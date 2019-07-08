@@ -14,7 +14,7 @@ extension SceneKitView {
         
         super.touchesBegan(touches, with: event)
         
-        switch viewModel.state {
+        switch stateObserver.state {
             
         case .scene(let meadow):
             
@@ -41,7 +41,7 @@ extension SceneKitView {
         
         super.touchesEnded(touches, with: event)
         
-        switch viewModel.state {
+        switch stateObserver.state {
             
         case .scene(let meadow):
             
@@ -67,7 +67,7 @@ extension SceneKitView {
         
         super.touchesMoved(touches, with: event)
         
-        switch viewModel.state {
+        switch stateObserver.state {
             
         case .scene(let meadow):
             

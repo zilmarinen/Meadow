@@ -30,7 +30,7 @@ public class Meadow: NSObject {
         
         super.init()
         
-        self.view.viewModel.state = .scene(meadow: self)
+        self.view.stateObserver.state = .scene(meadow: self)
     }
 }
 
@@ -40,7 +40,7 @@ extension Meadow: SCNSceneRendererDelegate {
         
         let deltaTime = time - (self.lastUpdate ?? time)
         
-        switch self.view.viewModel.state {
+        switch self.view.stateObserver.state {
             
         case .scene(let meadow):
             

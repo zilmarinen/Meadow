@@ -57,13 +57,13 @@ extension SpriteButton {
         
         guard let scene = scene else { return }
         
-        switch viewModel.state {
+        switch stateObserver.state {
             
         case .idle:
             
             let point = event.location(in: scene)
             
-            self.viewModel.state = .down(position: (start: point, end: point), inputType: inputType)
+            self.stateObserver.state = .down(position: (start: point, end: point), inputType: inputType)
             
         default: break
         }
@@ -73,7 +73,7 @@ extension SpriteButton {
         
         guard let scene = scene else { return }
         
-        switch viewModel.state {
+        switch stateObserver.state {
             
         case .down(let position, _),
              .tracking(let position, _):
@@ -82,11 +82,11 @@ extension SpriteButton {
             
             if contains(point) {
             
-                self.viewModel.state = .upInside(position: (start: position.start, end: point), inputType: inputType)
+                self.stateObserver.state = .upInside(position: (start: position.start, end: point), inputType: inputType)
             }
             else {
                 
-                self.viewModel.state = .up(position: (start: position.start, end: point), inputType: inputType)
+                self.stateObserver.state = .up(position: (start: position.start, end: point), inputType: inputType)
             }
             
         default: break
@@ -97,14 +97,14 @@ extension SpriteButton {
         
         guard let scene = scene else { return }
         
-        switch viewModel.state {
+        switch stateObserver.state {
             
         case .down(let position, _),
              .tracking(let position, _):
             
             let point = event.location(in: scene)
             
-            self.viewModel.state = .tracking(position: (start: position.start, end: point), inputType: inputType)
+            self.stateObserver.state = .tracking(position: (start: position.start, end: point), inputType: inputType)
             
         default: break
         }

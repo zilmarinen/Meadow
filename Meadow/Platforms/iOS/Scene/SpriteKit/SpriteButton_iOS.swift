@@ -14,7 +14,7 @@ extension SpriteButton {
         
         guard let scene = scene else { return }
         
-        switch viewModel.state {
+        switch stateObserver.state {
             
         case .idle:
             
@@ -24,7 +24,7 @@ extension SpriteButton {
             
             let inputType: ViewState.InputType = (touch.tapCount == 1 ? .left : .right)
             
-            self.viewModel.state = .down(position: (start: point, end: point), inputType: inputType)
+            self.stateObserver.state = .down(position: (start: point, end: point), inputType: inputType)
             
         default: break
         }
@@ -36,7 +36,7 @@ extension SpriteButton {
         
         guard let scene = scene else { return }
         
-        switch viewModel.state {
+        switch stateObserver.state {
             
         case .down(let position, let inputType),
              .tracking(let position, let inputType):
@@ -47,11 +47,11 @@ extension SpriteButton {
             
             if contains(point) {
             
-                self.viewModel.state = .upInside(position: (start: position.start, end: point), inputType: inputType)
+                self.stateObserver.state = .upInside(position: (start: position.start, end: point), inputType: inputType)
             }
             else {
                 
-                self.viewModel.state = .up(position: (start: position.start, end: point), inputType: inputType)
+                self.stateObserver.state = .up(position: (start: position.start, end: point), inputType: inputType)
             }
             
         default: break
@@ -64,7 +64,7 @@ extension SpriteButton {
         
         guard let scene = scene else { return }
         
-        switch viewModel.state {
+        switch stateObserver.state {
             
         case .down(let position, let inputType),
              .tracking(let position, let inputType):
@@ -73,7 +73,7 @@ extension SpriteButton {
             
             let point = touch.location(in: scene)
             
-            self.viewModel.state = .tracking(position: (start: position.start, end: point), inputType: inputType)
+            self.stateObserver.state = .tracking(position: (start: position.start, end: point), inputType: inputType)
             
         default: break
         }

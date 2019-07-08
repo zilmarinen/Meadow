@@ -6,8 +6,6 @@
 //  Copyright © 2019 Script Orchard. All rights reserved.
 //
 
-import THRUtilities
-
 extension SceneKitView {
     
     public typealias SceneViewHit = (coordinate: Coordinate, corner: GridCorner, edge: GridEdge, polytope: Polytope)
@@ -35,7 +33,7 @@ extension SceneKitView {
         }
     }
     
-    public class Graticule: BaseViewModel<GraticuleState> {
+    public class Graticule: StateObserver<GraticuleState> {
         
         public init() {
             

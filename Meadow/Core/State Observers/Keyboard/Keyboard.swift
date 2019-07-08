@@ -6,8 +6,6 @@
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-import THRUtilities
-
 extension SceneKitView {
     
     public enum KeyCode: UInt16 {
@@ -73,7 +71,7 @@ extension SceneKitView {
         }
     }
     
-    public class Keyboard: BaseViewModel<KeyboardState> {
+    public class Keyboard: StateObserver<KeyboardState> {
         
         public init() {
             

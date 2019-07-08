@@ -1,12 +1,10 @@
 //
-//  SceneViewModel.swift
+//  SceneViewStateObserver.swift
 //  Meadow
 //
 //  Created by Zack Brown on 26/09/2018.
 //  Copyright © 2018 Script Orchard. All rights reserved.
 //
-
-import THRUtilities
 
 extension SceneKitView {
     
@@ -21,7 +19,7 @@ extension SceneKitView {
         }
     }
     
-    public class SceneViewModel: BaseViewModel<ViewState> {
+    public class SceneViewStateObserver: StateObserver<ViewState> {
         
         init() {
             

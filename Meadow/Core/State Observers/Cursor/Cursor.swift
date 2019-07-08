@@ -1,16 +1,16 @@
 //
-//  SpriteButtonViewModel.swift
+//  Cursor.swift
 //  Meadow
 //
-//  Created by Zack Brown on 03/05/2019.
-//  Copyright © 2019 Script Orchard. All rights reserved.
+//  Created by Zack Brown on 19/09/2018.
+//  Copyright © 2018 Script Orchard. All rights reserved.
 //
 
-import THRUtilities
+import SceneKit
 
-extension SpriteButton {
+extension SceneKitView {
     
-    public enum ViewState: State {
+    public enum CursorState: State {
         
         public enum InputType {
             
@@ -23,17 +23,15 @@ extension SpriteButton {
         case down(position: (start: CGPoint, end: CGPoint), inputType: InputType)
         case tracking(position: (start: CGPoint, end: CGPoint), inputType: InputType)
         case up(position: (start: CGPoint, end: CGPoint), inputType: InputType)
-        case upInside(position: (start: CGPoint, end: CGPoint), inputType: InputType)
-        case idle
+        case idle(position: CGPoint)
         
-        public func shouldTransition(to newState: ViewState) -> Should<ViewState> {
-            
+        public func shouldTransition(to newState: CursorState) -> Should<CursorState> {
+        
             switch newState {
                 
-            case .up,
-                 .upInside:
+            case .up(let position, _):
                 
-                return .redirect(.idle)
+                return .redirect(.idle(position: position.end))
                 
             case .down(let position, let inputType):
                 
@@ -44,7 +42,13 @@ extension SpriteButton {
         }
     }
     
-    public class SpriteButtonViewModel: BaseViewModel<ViewState> {
+    public class Cursor: StateObserver<CursorState> {
         
+        public var tracksIdleEvents: Bool = false
+        
+        public init() {
+            
+            super.init(initialState: .idle(position: CGPoint.zero))
+        }
     }
 }

@@ -15,8 +15,6 @@ Pod::Spec.new do |s|
   s.osx.deployment_target = '10.13'
   s.tvos.deployment_target = '11.3'
 
-  s.dependency 'THRUtilities'
-
   s.subspec 'Core' do |cs|
 
     cs.source_files = "Meadow/Core/**/*.{h,m,swift}"

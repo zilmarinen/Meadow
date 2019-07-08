@@ -1,5 +1,5 @@
 //
-//  SceneKitCameraModel.swift
+//  SceneKitCameraStateObserver.swift
 //  Meadow
 //
 //  Created by Zack Brown on 07/06/2018.
@@ -7,13 +7,13 @@
 //
 
 import SceneKit
-import THRUtilities
 
 extension SceneKitCamera {
 
     public enum CameraState: State {
         
-        case focus(vector: SCNVector3, edge: GridEdge, zoom: MDWFloat)
+        case idle
+        case focus(node: SCNNode, edge: GridEdge, zoom: MDWFloat)
         
         public func shouldTransition(to newState: CameraState) -> Should<CameraState> {
             
@@ -21,7 +21,7 @@ extension SceneKitCamera {
         }
     }
     
-    public class SceneKitCameraModel: BaseViewModel<CameraState> {
+    public class SceneKitCameraStateObserver: StateObserver<CameraState> {
     
     }
 }

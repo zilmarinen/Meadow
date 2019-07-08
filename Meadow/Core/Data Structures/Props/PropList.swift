@@ -104,6 +104,8 @@ extension PropList {
     
     public func child(at index: Int) -> ChildType? {
         
+        guard (0 ..< totalChildren).contains(index) else { return nil }
+        
         return prototypes[index]
     }
 

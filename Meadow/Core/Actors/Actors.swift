@@ -61,6 +61,8 @@ extension Actors {
     
     public func child(at index: Int) -> SceneGraphChild? {
         
+        guard (0 ..< totalChildren).contains(index) else { return nil }
+        
         return children[index]
     }
     

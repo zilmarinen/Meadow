@@ -138,6 +138,37 @@ extension FootpathNode {
     }
 }
 
+extension FootpathNode: Walkable {
+ 
+    public func pathNode(for edge: GridEdge) -> PathNode? {
+        
+        let movementCost = footpathType?.movementCost ?? 0
+        
+        return PathNode(locus: (coordinate: volume.coordinate, edge: edge), position: self.lowerPolytope.centroid(for: edge), movementCost: movementCost)
+    }
+    
+    public func neighbours(for edge: GridEdge) -> [PathNode]? {
+        
+        let movementCost = footpathType?.movementCost ?? 0
+        
+        var pathNodes: [PathNode] = []
+        
+        GridEdge.inverse(edge: edge).forEach { inverseEdge in
+            
+            pathNodes.append(PathNode(locus: (coordinate: volume.coordinate, edge: inverseEdge), position: self.lowerPolytope.centroid(for: inverseEdge), movementCost: movementCost))
+        }
+        
+        if let nodeNeighbour = find(neighbour: edge)?.node as? FootpathNode {
+            
+            let oppositeEdge = GridEdge.opposite(edge: edge)
+            
+            pathNodes.append(PathNode(locus: (coordinate: nodeNeighbour.volume.coordinate, edge: oppositeEdge), position: nodeNeighbour.lowerPolytope.centroid(for: oppositeEdge), movementCost: movementCost))
+        }
+        
+        return !pathNodes.isEmpty ? pathNodes : nil
+    }
+}
+
 extension FootpathNode {
     
     static let kerb: MDWFloat = 0.1

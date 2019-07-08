@@ -28,7 +28,7 @@ extension Pathfinder {
     
     public func path(between origin: PathNode.PathLocus, destination: PathNode.PathLocus) -> Path? {
         
-        guard let startNode = node(at: origin), let endNode = node(at: destination) else { return nil }
+        guard let startNode = pathNode(at: origin), let endNode = pathNode(at: destination) else { return nil }
         
         let queue = PriorityQueue<PathNode>()
         
@@ -62,106 +62,59 @@ extension Pathfinder {
                 return Path(nodes: pathNodes.reversed())
             }
             
-            guard let pathNodeCost = cost[pathNode] else { continue }
+            guard let pathNodeCost = cost[pathNode], let neighbours = neighbours(at: pathNode.locus) else { continue }
             
-            pathNode.neighbours?.forEach { neighbour in
+            neighbours.forEach { neighbour in
                 
-                if var neighbourNode = node(at: neighbour) {
+                let neighbourNodeCost = pathNodeCost + neighbour.movementCost
                 
-                    let neighbourNodeCost = pathNodeCost + neighbourNode.movementCost
+                if !closed.keys.contains(neighbour) && (cost[neighbour] == nil || (neighbourNodeCost < (cost[neighbour] ?? 0))) {
                     
-                    if cost[neighbourNode] == nil || (neighbourNodeCost < (cost[neighbourNode] ?? 0)) {
-                        
-                        cost[neighbourNode] = neighbourNodeCost
-                        
-                        neighbourNode.priority = neighbourNodeCost + heuristic(between: neighbourNode.locus.coordinate, destination: destination.coordinate)
-                        
-                        queue.push(node: neighbourNode)
-                        
-                        closed[neighbourNode] = pathNode
-                    }
+                    cost[neighbour] = neighbourNodeCost
+                    
+                    neighbour.priority = neighbourNodeCost + heuristic(between: neighbour.locus.coordinate, destination: destination.coordinate)
+                    
+                    queue.push(node: neighbour)
+                    
+                    closed[neighbour] = pathNode
                 }
             }
         }
      
         return nil
     }
-    
-    func heuristic(between origin: Coordinate, destination: Coordinate) -> Int {
-        
-        return abs(origin.x - destination.x) + abs(origin.y - destination.y) + abs(origin.z - destination.z)
-    }
 }
 
 extension Pathfinder {
     
-    func node(at locus: PathNode.PathLocus) -> PathNode? {
+    func gridNode(at locus: PathNode.PathLocus) -> GridNode? {
         
-        guard let gridNode = areas.find(node: locus.coordinate) ?? footpaths.find(node: locus.coordinate) ?? terrain.find(node: locus.coordinate) else { return nil }
+        guard self.pathNode(isWalkable: locus) else { return nil }
         
-        let oppositeEdge = GridEdge.opposite(edge: locus.edge)
-        
-        let adjacentEdges = GridEdge.Edges.compactMap { $0 != locus.edge ? $0 : nil }
-        
-        var movementCost = 0
-        
-        var neighbours: [PathNode.PathLocus] = []
-        
-        if let areaNode = gridNode as? AreaNode {
-            
-            movementCost = areaNode.floor?.floorType.movementCost ?? movementCost
-            
-            adjacentEdges.forEach { edge in
-                
-                neighbours.append(PathNode.PathLocus(coordinate: locus.coordinate, edge: edge))
-            }
-            
-            if let areaNodeEdge = areaNode.find(edge: locus.edge) {
-                
-                switch areaNodeEdge.edgeType {
-                    
-                case .door:
-                    
-                    neighbours.append(PathNode.PathLocus(coordinate: locus.coordinate + GridEdge.extent(edge: locus.edge), edge: oppositeEdge))
-                
-                default: break
-                }
-            }
-        }
-        else if let footpathNode = gridNode as? FootpathNode {
-            
-            movementCost = footpathNode.footpathType?.movementCost ?? movementCost
-            
-            adjacentEdges.forEach { edge in
-                
-                neighbours.append(PathNode.PathLocus(coordinate: locus.coordinate, edge: edge))
-            }
-            
-            if let footpathNeighbourNode = footpathNode.find(neighbour: locus.edge)?.node {
-                
-                neighbours.append(PathNode.PathLocus(coordinate: footpathNeighbourNode.volume.coordinate, edge: oppositeEdge))
-            }
-        }
-        else if let terrainNode = gridNode as? TerrainNode, let terrainNodeEdge = terrainNode.find(edge: locus.edge) {
-            
-            movementCost = terrainNodeEdge.topLayer?.terrainType.movementCost ?? movementCost
-            
-            adjacentEdges.forEach { edge in
-                
-                neighbours.append(PathNode.PathLocus(coordinate: locus.coordinate, edge: edge))
-            }
-            
-            if let terrainNeighbourNode = terrainNode.find(neighbour: locus.edge)?.node as? TerrainNode, let terrainNodeEdge = terrainNeighbourNode.find(edge: oppositeEdge) {
-                
-                //
-            }
-        }
-        
-        return PathNode(locus: locus, movementCost: movementCost, neighbours: neighbours)
+        return areas.find(node: locus.coordinate) ?? footpaths.find(node: locus.coordinate) ?? terrain.find(node: locus.coordinate)
     }
     
-    func node(isWalkable node: PathNode) -> Bool {
+    func pathNode(at locus: PathNode.PathLocus) -> PathNode? {
         
-        return props.find(prop: node.locus.coordinate, edge: node.locus.edge) == nil
+        guard let node = gridNode(at: locus) as? Walkable else { return nil }
+        
+        return node.pathNode(for: locus.edge)
+    }
+    
+    func neighbours(at locus: PathNode.PathLocus) -> [PathNode]? {
+        
+        guard let node = gridNode(at: locus) as? Walkable else { return nil }
+        
+        return node.neighbours(for: locus.edge)?.compactMap { pathNode(at: $0.locus) }
+    }
+    
+    func pathNode(isWalkable locus: PathNode.PathLocus) -> Bool {
+        
+        return props.find(prop: locus.coordinate, edge: locus.edge) == nil
+    }
+    
+    func heuristic(between origin: Coordinate, destination: Coordinate) -> Int {
+        
+        return abs(origin.x - destination.x) + abs(origin.y - destination.y) + abs(origin.z - destination.z)
     }
 }

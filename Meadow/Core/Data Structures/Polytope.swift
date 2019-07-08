@@ -262,3 +262,17 @@ extension Polytope {
         return closestEdge
     }
 }
+
+extension Polytope {
+    
+    public func centroid(for edge: GridEdge) -> SCNVector3 {
+        
+        let corners = GridCorner.corners(edge: edge)
+        
+        let v0 = vertices[corners.c0.rawValue]
+        let v1 = vertices[corners.c1.rawValue]
+        let v2 = center
+        
+        return SCNVector3(x: (v0.x + v1.x + v2.x) / 3, y: (v0.y + v1.y + v2.y) / 3, z: (v0.z + v1.z + v2.z) / 3)
+    }
+}

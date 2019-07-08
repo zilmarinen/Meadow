@@ -85,6 +85,11 @@ extension GridEdge {
         
         return Opposite[edge.rawValue]
     }
+    
+    public static func inverse(edge: GridEdge) -> [GridEdge] {
+        
+        return Edges.compactMap { $0 != edge ? $0 : nil }
+    }
 
     public static func normal(edge: GridEdge) -> SCNVector3 {
         

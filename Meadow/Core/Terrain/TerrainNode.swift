@@ -297,3 +297,35 @@ extension TerrainNode: TerrainCutawayProvider {
         return Polyhedron.subtract(polyhedrons: cutaways, from: nodeEdge.polyhedron)
     }
 }
+
+extension TerrainNode: Walkable {
+    
+    public func pathNode(for edge: GridEdge) -> PathNode? {
+        
+        guard let terrainNodeEdge = find(edge: edge), let terrainNodeEdgeLayer = terrainNodeEdge.topLayer else { return nil }
+        
+        return PathNode(locus: (coordinate: volume.coordinate, edge: edge), position: terrainNodeEdgeLayer.upperPolytope.centroid(for: edge), movementCost: terrainNodeEdgeLayer.terrainType.movementCost)
+    }
+    
+    public func neighbours(for edge: GridEdge) -> [PathNode]? {
+        
+        var pathNodes: [PathNode] = []
+        
+        GridEdge.inverse(edge: edge).forEach { inverseEdge in
+            
+            if let terrainNodeEdge = find(edge: inverseEdge), let terrainNodeEdgeLayer = terrainNodeEdge.topLayer {
+                
+                pathNodes.append(PathNode(locus: (coordinate: volume.coordinate, edge: inverseEdge), position: terrainNodeEdgeLayer.upperPolytope.centroid(for: inverseEdge), movementCost: terrainNodeEdgeLayer.terrainType.movementCost))
+            }
+        }
+        
+        let oppositeEdge = GridEdge.opposite(edge: edge)
+        
+        if let nodeNeighbour = find(neighbour: edge)?.node as? TerrainNode, let terrainNodeEdge = nodeNeighbour.find(edge: oppositeEdge), let terrainNodeEdgeLayer = terrainNodeEdge.topLayer {
+            
+            pathNodes.append(PathNode(locus: (coordinate: nodeNeighbour.volume.coordinate, edge: oppositeEdge), position: terrainNodeEdgeLayer.upperPolytope.centroid(for: oppositeEdge), movementCost: terrainNodeEdgeLayer.terrainType.movementCost))
+        }
+        
+        return !pathNodes.isEmpty ? pathNodes : nil
+    }
+}

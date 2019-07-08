@@ -55,6 +55,15 @@ extension SCNVector3 {
         return lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z
     }
     
+    public static func ~=(lhs: SCNVector3, rhs: SCNVector3) -> Bool {
+        
+        let threshold = MDWFloat(0.1)
+        
+        return ((lhs.x >= (rhs.x - threshold) && lhs.x <= (rhs.x + threshold)) &&
+                (lhs.y >= (rhs.y - threshold) && lhs.y <= (rhs.y + threshold)) &&
+                (lhs.z >= (rhs.z - threshold) && lhs.z <= (rhs.z + threshold)))
+    }
+    
     public static func +(lhs: SCNVector3, rhs: SCNVector3) -> SCNVector3 {
         
         let x = lhs.x + rhs.x

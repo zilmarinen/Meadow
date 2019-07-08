@@ -245,3 +245,45 @@ extension AreaNode {
         }
     }
 }
+
+extension AreaNode: Walkable {
+    
+    public func pathNode(for edge: GridEdge) -> PathNode? {
+        
+        let movementCost = floor?.floorType.movementCost ?? 0
+        
+        return PathNode(locus: (coordinate: volume.coordinate, edge: edge), position: self.lowerPolytope.centroid(for: edge), movementCost: movementCost)
+    }
+    
+    public func neighbours(for edge: GridEdge) -> [PathNode]? {
+        
+        let movementCost = floor?.floorType.movementCost ?? 0
+        
+        var pathNodes: [PathNode] = []
+        
+        GridEdge.inverse(edge: edge).forEach { inverseEdge in
+            
+            pathNodes.append(PathNode(locus: (coordinate: volume.coordinate, edge: inverseEdge), position: self.lowerPolytope.centroid(for: inverseEdge), movementCost: movementCost))
+        }
+        
+        if let areaNodeEdgeType = find(edge: edge)?.edgeType {
+            
+            switch areaNodeEdgeType {
+                
+            case .door:
+                
+                let oppositeEdge = GridEdge.opposite(edge: edge)
+                
+                let coordinate = volume.coordinate + GridEdge.extent(edge: edge)
+                
+                let polytope = Polytope.translate(polytope: lowerPolytope, translation: GridEdge.normal(edge: edge))
+                
+                pathNodes.append(PathNode(locus: (coordinate: coordinate, edge: oppositeEdge), position: polytope.centroid(for: oppositeEdge), movementCost: movementCost))
+                
+            default: break
+            }
+        }
+        
+        return pathNodes
+    }
+}

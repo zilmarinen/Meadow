@@ -6,14 +6,13 @@
 //  Copyright © 2019 Script Orchard. All rights reserved.
 //
 
-import THRUtilities
-
 extension Actor {
     
     public enum ActorState: State {
         
         case idle(world: World)
         case walking(world: World, path: Path, node: PathNode)
+        case pathfinding(world: World, origin: PathNode.PathLocus, destination: PathNode.PathLocus)
         
         public func shouldTransition(to newState: Actor.ActorState) -> Should<Actor.ActorState> {
             
@@ -21,7 +20,7 @@ extension Actor {
         }
     }
     
-    public class ActorStateMachine: BaseViewModel<ActorState> {
+    public class ActorStateMachine: StateObserver<ActorState> {
         
     }
 }

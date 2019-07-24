@@ -67,7 +67,7 @@ extension SceneKitView {
         
         switch stateObserver.state {
             
-        case .scene(let meadow):
+        case .scene(let meadow, _):
             
             guard meadow.input.cursor.tracksIdleEvents else { break }
             
@@ -93,7 +93,7 @@ extension SceneKitView {
         
         switch stateObserver.state {
             
-        case .scene(let meadow):
+        case .scene(let meadow, _):
             
             switch meadow.input.cursor.state {
                 
@@ -114,7 +114,7 @@ extension SceneKitView {
      
         switch stateObserver.state {
             
-        case .scene(let meadow):
+        case .scene(let meadow, _):
             
             switch meadow.input.cursor.state {
                 
@@ -136,7 +136,7 @@ extension SceneKitView {
         
         switch stateObserver.state {
             
-        case .scene(let meadow):
+        case .scene(let meadow, _):
             
             switch meadow.input.cursor.state {
                 
@@ -161,7 +161,7 @@ extension SceneKitView {
         
         switch stateObserver.state {
             
-        case .scene(let meadow):
+        case .scene(let meadow, _):
             
             guard let keyCode = SceneKitView.KeyCode(rawValue: event.keyCode) else { break }
             
@@ -188,7 +188,7 @@ extension SceneKitView {
         
         switch stateObserver.state {
             
-        case .scene(let meadow):
+        case .scene(let meadow, _):
             
             guard let keyCode = SceneKitView.KeyCode(rawValue: event.keyCode) else { break }
             

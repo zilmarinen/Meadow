@@ -16,7 +16,7 @@ extension SceneKitView {
         
         switch stateObserver.state {
             
-        case .scene(let meadow):
+        case .scene(let meadow, _):
             
             switch meadow.input.cursor.state {
                 
@@ -43,7 +43,7 @@ extension SceneKitView {
         
         switch stateObserver.state {
             
-        case .scene(let meadow):
+        case .scene(let meadow, _):
             
             switch meadow.input.cursor.state {
                 
@@ -69,7 +69,7 @@ extension SceneKitView {
         
         switch stateObserver.state {
             
-        case .scene(let meadow):
+        case .scene(let meadow, _):
             
             switch meadow.input.cursor.state {
                 

@@ -11,7 +11,7 @@ extension SceneKitView {
     public enum ViewState: State {
         
         case empty(meadow: Meadow?)
-        case scene(meadow: Meadow)
+        case scene(meadow: Meadow, scene: SceneKitScene)
         
         public func shouldTransition(to newState: ViewState) -> Should<ViewState> {
             
@@ -21,9 +21,5 @@ extension SceneKitView {
     
     public class SceneViewStateObserver: StateObserver<ViewState> {
         
-        init() {
-            
-            super.init(initialState: .empty(meadow: nil))
-        }
     }
 }

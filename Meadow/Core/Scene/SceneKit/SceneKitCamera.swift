@@ -52,12 +52,14 @@ extension SceneKitCamera: SceneGraphUpdatable {
     public func update(deltaTime: TimeInterval) {
         
         switch model.state {
+        
+        case .idle:
+        
+            focus(focus: SCNVector3.Zero, edge: .north, zoomLevel: SceneKitCamera.maximumZoomLevel, deltaTime: deltaTime)
             
         case .focus(let node, let edge, let zoomLevel):
             
             focus(focus: node.position, edge: edge, zoomLevel: zoomLevel, deltaTime: deltaTime)
-            
-        default: break
         }
     }
 }

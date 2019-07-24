@@ -32,8 +32,6 @@ extension AreaNodeEdgeDoorType {
         switch self {
             
         case .plain: return PlainAreaNodeEdgeDoorMesh()
-            
-        default: return PlainAreaNodeEdgeDoorMesh()
         }
     }
 }

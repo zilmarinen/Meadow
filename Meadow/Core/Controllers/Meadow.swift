@@ -12,25 +12,37 @@ public class Meadow: NSObject {
     
     public let input: Input
     
-    public let scene: SceneKitScene
-    
     public let view: SceneKitView
+    
+    let observer: SceneGraphObserver?
+    
+    let delegate: SceneRendererDelegate?
+    
+    public var scene: SceneKitScene { return view.scene as! SceneKitScene }
     
     var lastUpdate: TimeInterval?
     
-    public var delegate: SceneRendererDelegate?
-    
-    public init(input: Input, scene: SceneKitScene, view: SceneKitView) {
+    public init(input: Input, view: SceneKitView, observer: SceneGraphObserver? = nil, delegate: SceneRendererDelegate? = nil) {
         
         self.input = input
         
-        self.scene = scene
-        
         self.view = view
+        
+        self.observer = observer
+        
+        self.delegate = delegate
         
         super.init()
         
-        self.view.stateObserver.state = .scene(meadow: self)
+        self.view.stateObserver.state = .scene(meadow: self, scene: SceneKitScene(observer: self))
+    }
+}
+
+extension Meadow: SceneGraphObserver {
+    
+    public func child(didBecomeDirty child: SceneGraphChild) {
+        
+        observer?.child(didBecomeDirty: child)
     }
 }
 
@@ -42,9 +54,9 @@ extension Meadow: SCNSceneRendererDelegate {
         
         switch self.view.stateObserver.state {
             
-        case .scene(let meadow):
+        case .scene(_, let scene):
             
-            meadow.scene.update(deltaTime: deltaTime)
+            scene.update(deltaTime: deltaTime)
             
             delegate?.update(deltaTime: deltaTime, frameTime: renderer.sceneTime)
             

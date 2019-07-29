@@ -19,6 +19,8 @@ open class SpriteKitScene: SKScene {
         
         super.sceneDidLoad()
         
+        self.isUserInteractionEnabled = true
+        
         model.subscribe(stateDidChange(from:to:))
     }
 }
@@ -32,6 +34,17 @@ extension SpriteKitScene {
         case .empty:
             
             print("SpriteKitScene -> empty")
+            
+            guard let from = from else { break }
+                
+            switch from {
+                
+            case .alert(let controller):
+                
+                controller.removeFromParent()
+                    
+            default: break
+            }
             
         case .alert(let controller):
             

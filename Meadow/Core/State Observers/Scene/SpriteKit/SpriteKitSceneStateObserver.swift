@@ -32,5 +32,17 @@ extension SpriteKitScene {
             default: break
             }
         }
+        
+        public func dismiss() {
+            
+            switch state {
+                
+            case .alert(let controller):
+                
+                self.state = .empty
+                
+            default: break
+            }
+        }
     }
 }

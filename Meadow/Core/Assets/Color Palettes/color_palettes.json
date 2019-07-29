@@ -6,6 +6,13 @@
         "tertiary": "Scarlet",
         "quaternary": "White"
     },
+    {
+        "name": "AlertAction",
+        "primary": "Cerulean",
+        "secondary": "Asparagus",
+        "tertiary": "Scarlet",
+        "quaternary": "White"
+    },
 	{
 		"name": "Grass 1",
 		"primary": "Green Sheen",

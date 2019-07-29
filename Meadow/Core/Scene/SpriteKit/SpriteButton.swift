@@ -10,45 +10,37 @@ import SpriteKit
 
 public class SpriteButton: SKSpriteNode {
     
-    public typealias SpriteButtonEvent = ((SpriteButton, ViewState) -> ())
+    public typealias SpriteButtonAction = ((SpriteButton, EventType) -> ())
     
-    public var action: SpriteButtonEvent?
+    public enum EventType {
+        
+        case left
+        case middle
+        case right
+    }
     
-    lazy var stateObserver = {
-       
-        return SpriteButtonStateObserver(initialState: .idle)
-    }()
+    public var action: SpriteButtonAction?
     
-    public init(imageNamed name: String, action: @escaping SpriteButtonEvent) {
+    public init(imageNamed name: String? = nil, color: Color, size: CGSize, action: @escaping SpriteButtonAction) {
         
         self.action = action
         
-        let texture = SKTexture(imageNamed: name)
+        var texture: SKTexture?
         
-        super.init(texture: texture, color: .black, size: texture.size())
+        if let name = name {
+            
+            texture = SKTexture(imageNamed: name)
+        }
         
-        self.isUserInteractionEnabled = true
+        super.init(texture: texture, color: color.color, size: size)
         
-        stateObserver.subscribe(stateDidChange(from:to:))
+        self.isUserInteractionEnabled = false
     }
     
     required init?(coder aDecoder: NSCoder) {
         
         super.init(coder: aDecoder)
         
-        self.isUserInteractionEnabled = true
-        
-        stateObserver.subscribe(stateDidChange(from:to:))
-    }
-}
-
-extension SpriteButton {
-    
-    func stateDidChange(from: ViewState?, to: ViewState) {
-     
-        DispatchQueue.main.async {
-            
-            self.action?(self, to)
-        }
+        self.isUserInteractionEnabled = false
     }
 }

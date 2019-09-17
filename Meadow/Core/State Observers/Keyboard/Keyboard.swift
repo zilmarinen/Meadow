@@ -18,7 +18,15 @@ extension SceneKitView {
         case q = 12
         case w = 13
         case e = 14
+        case tab = 48
         case esc = 53
+        case rightCommand = 54
+        case leftCommand = 55
+        case leftShift = 56
+        case leftOption = 58
+        case leftControl = 59
+        case rightShift = 60
+        case rightOption = 61
     }
     
     public enum KeyboardState: State {

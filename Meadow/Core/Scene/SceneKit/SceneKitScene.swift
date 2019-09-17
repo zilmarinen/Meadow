@@ -68,8 +68,6 @@ extension SceneKitScene {
             
         case .loading(let map):
             
-            print("IMPLEMENT MAP LOADING")
-            
             self.rootNode.name = map.name
             
             let world = World()

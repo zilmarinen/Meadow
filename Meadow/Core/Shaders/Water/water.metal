@@ -30,8 +30,8 @@ typedef struct {
 struct FragmentIn {
     
     float4 position [[position]];
-    float4 normal [[user(normal)]];
-    float4 color [[user(color)]];
+    float4 normal;
+    float4 color;
 };
 
 constant half opacity = 0.7;

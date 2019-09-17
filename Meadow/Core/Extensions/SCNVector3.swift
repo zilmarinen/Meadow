@@ -43,10 +43,10 @@ extension SCNVector3 {
     
     public static var Zero: SCNVector3 { return SCNVector3(x: 0.0, y: 0.0, z: 0.0) }
     public static var Up: SCNVector3 { return SCNVector3(x: 0.0, y: 1.0, z: 0.0) }
-    static var Left: SCNVector3 { return SCNVector3(x: 1.0, y: 0.0, z: 0.0) }
-    static var Right: SCNVector3 { return SCNVector3(x: -1.0, y: 0.0, z: 0.0) }
-    static var Forward: SCNVector3 { return SCNVector3(x: 0.0, y: 0.0, z: 1.0) }
-    static var Backward: SCNVector3 { return SCNVector3(x: 0.0, y: 0.0, z: -1.0) }
+    public static var Left: SCNVector3 { return SCNVector3(x: 1.0, y: 0.0, z: 0.0) }
+    public static var Right: SCNVector3 { return SCNVector3(x: -1.0, y: 0.0, z: 0.0) }
+    public static var Forward: SCNVector3 { return SCNVector3(x: 0.0, y: 0.0, z: 1.0) }
+    public static var Backward: SCNVector3 { return SCNVector3(x: 0.0, y: 0.0, z: -1.0) }
 }
 
 extension SCNVector3 {

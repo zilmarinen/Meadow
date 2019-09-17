@@ -8,4 +8,18 @@
 
 public class WaterChunk: GridChunk<WaterTile, WaterNode<WaterNodeEdge>> {
     
+    @discardableResult public override func clean() -> Bool {
+        
+        let wasDirty = super.clean()
+        
+        if wasDirty {
+            
+            if geometry?.program == nil {
+                
+                geometry?.program = ArtDirector.shared?.program(named: "water")
+            }
+        }
+        
+        return wasDirty
+    }
 }

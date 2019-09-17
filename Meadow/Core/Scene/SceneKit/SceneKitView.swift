@@ -23,7 +23,7 @@ public class SceneKitView: SCNView, CursorObserver {
     public override func awakeFromNib() {
         
         super.awakeFromNib()
-        print("SceneKitView -> awakeFromNib")
+        
         stateObserver.subscribe(stateDidChange(from:to:))
         hud.subscribe(stateDidChange(from:to:))
     }
@@ -43,8 +43,6 @@ extension SceneKitView {
                 
             case .empty(let meadow):
                 
-                print("SceneKitView -> empty")
-                
                 self.delegate = nil
                 self.isPlaying = false
                 
@@ -58,8 +56,6 @@ extension SceneKitView {
                 self.cursorIdentifier = nil
                 
             case .scene(let meadow, let scene):
-                
-                print("SceneKitView -> scene")
                 
                 self.lastUpdate = nil
                 

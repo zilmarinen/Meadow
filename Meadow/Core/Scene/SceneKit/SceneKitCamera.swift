@@ -60,6 +60,10 @@ extension SceneKitCamera: SceneGraphUpdatable {
         case .focus(let node, let edge, let zoomLevel):
             
             focus(focus: node.position, edge: edge, zoomLevel: zoomLevel, deltaTime: deltaTime)
+            
+        case .orbit(let vector, let edge, let zoom):
+            
+            focus(focus: vector, edge: edge, zoomLevel: zoom, deltaTime: deltaTime)
         }
     }
 }
@@ -67,7 +71,7 @@ extension SceneKitCamera: SceneGraphUpdatable {
 extension SceneKitCamera {
     
     public static var minimumZoomLevel: MDWFloat = 1.0
-    public static var maximumZoomLevel: MDWFloat = 7.0
+    public static var maximumZoomLevel: MDWFloat = 10.0
 }
 
 extension SceneKitCamera {

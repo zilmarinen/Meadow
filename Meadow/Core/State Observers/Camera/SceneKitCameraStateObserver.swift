@@ -14,6 +14,7 @@ extension SceneKitCamera {
         
         case idle
         case focus(node: SCNNode, edge: GridEdge, zoom: MDWFloat)
+        case orbit(vector: SCNVector3, edge: GridEdge, zoom: MDWFloat)
         
         public func shouldTransition(to newState: CameraState) -> Should<CameraState> {
             

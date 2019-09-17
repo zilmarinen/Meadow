@@ -197,4 +197,36 @@ extension SceneKitView {
         default: break
         }
     }
+    
+    public override func flagsChanged(with event: NSEvent) {
+        
+        switch stateObserver.state {
+            
+        case .scene(let meadow, _):
+
+            guard let keyCode = SceneKitView.KeyCode(rawValue: event.keyCode) else { break }
+            
+            switch meadow.input.keyboard.state {
+                
+            case .idle:
+                
+                meadow.input.keyboard.state = .keyDown(key: keyCode)
+                
+            case .keysHeld(let keys):
+                
+                if !keys.contains(keyCode) {
+                
+                    meadow.input.keyboard.state = .keyDown(key: keyCode)
+                }
+                else {
+                    
+                    meadow.input.keyboard.state = .keyUp(key: keyCode)
+                }
+                
+            default: break
+            }
+            
+        default: break
+        }
+    }
 }

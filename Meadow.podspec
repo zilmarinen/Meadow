@@ -10,6 +10,7 @@ Pod::Spec.new do |s|
   s.source       = { :git => "", :tag => s.version.to_s }
   s.default_subspec = 'Core'
   s.pod_target_xcconfig = { 'SWIFT_VERSION' => '4' }
+  s.dependency 'Pasture'
 
   s.ios.deployment_target = '11.3'
   s.osx.deployment_target = '10.13'

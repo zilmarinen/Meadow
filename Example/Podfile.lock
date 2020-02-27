@@ -1,0 +1,27 @@
+PODS:
+  - Meadow (0.1):
+    - Meadow/Core (= 0.1)
+    - Pasture
+  - Meadow/Core (0.1):
+    - Pasture
+  - Pasture (0.1):
+    - Pasture/Core (= 0.1)
+  - Pasture/Core (0.1)
+
+DEPENDENCIES:
+  - Meadow (from `../`)
+  - Pasture (from `../../Pasture`)
+
+EXTERNAL SOURCES:
+  Meadow:
+    :path: "../"
+  Pasture:
+    :path: "../../Pasture"
+
+SPEC CHECKSUMS:
+  Meadow: 284274a91b424b358aae995ec6a95f4169b7586f
+  Pasture: a49f933d4866c7a3ee7413322648fc6f3a479172
+
+PODFILE CHECKSUM: e84c0b4496f23c8ad9e33524e87baefb255690de
+
+COCOAPODS: 1.8.4

@@ -281,7 +281,7 @@
 			isa = PBXGroup;
 			children = (
 				187121E220931C77002488E0 /* Meadow */,
-				187121ED20931C77002488E0 /* Meadow Tests */,
+				187121ED20931C77002488E0 /* Unit Tests */,
 				187121E120931C77002488E0 /* Products */,
 				AF15B0539F71A90D03873BF9 /* Pods */,
 				7EAFC8007E656043D995F23B /* Frameworks */,
@@ -308,13 +308,13 @@
 			path = Meadow;
 			sourceTree = "<group>";
 		};
-		187121ED20931C77002488E0 /* Meadow Tests */ = {
+		187121ED20931C77002488E0 /* Unit Tests */ = {
 			isa = PBXGroup;
 			children = (
 				18EE510320A57C9F0059829C /* Core */,
 				18EE510420A57CBA0059829C /* Platforms */,
 			);
-			path = "Meadow Tests";
+			path = "Unit Tests";
 			sourceTree = "<group>";
 		};
 		18EE506A20A578840059829C /* Platforms */ = {
@@ -925,7 +925,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = "Meadow Tests/Platforms/iOS/Info.plist";
+				INFOPLIST_FILE = "Unit Tests/Platforms/iOS/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -946,7 +946,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = "Meadow Tests/Platforms/iOS/Info.plist";
+				INFOPLIST_FILE = "Unit Tests/Platforms/iOS/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1025,7 +1025,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = "Meadow Tests/Platforms/macOS/Info.plist";
+				INFOPLIST_FILE = "Unit Tests/Platforms/macOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -1044,7 +1044,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = "Meadow Tests/Platforms/macOS/Info.plist";
+				INFOPLIST_FILE = "Unit Tests/Platforms/macOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",

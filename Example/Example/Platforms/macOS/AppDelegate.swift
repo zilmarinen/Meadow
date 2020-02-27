@@ -1,9 +1,9 @@
 //
 //  AppDelegate.swift
-//  Meadow Example macOS
+//  Meadow
 //
 //  Created by Zack Brown on 27/02/2020.
-//  Copyright © 2020 3Squared. All rights reserved.
+//  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
 import Cocoa

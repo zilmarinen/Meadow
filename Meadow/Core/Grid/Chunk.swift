@@ -8,6 +8,7 @@
 
 import Foundation
 import SceneKit
+import Pasture
 
 class Chunk<T: Tile>: SCNNode, Renderable, Soilable {
     
@@ -27,7 +28,7 @@ class Chunk<T: Tile>: SCNNode, Renderable, Soilable {
         
         super.init()
         
-        self.position = World.Axis.convert(coordinate: volume.coordinate)
+        self.position = SCNVector3(vector: World.Axis.convert(coordinate: volume.coordinate))
     }
     
     required init?(coder: NSCoder) {
@@ -81,7 +82,7 @@ extension Chunk {
             
             let node = SCNNode()
             
-            node.position = World.Axis.convert(coordinate: tile.volume.coordinate) - position
+            node.position = SCNVector3(vector: World.Axis.convert(coordinate: tile.volume.coordinate) - Vector(vector: position))
             node.geometry = SCNBox(width: 1, height: 1, length: 1, chamferRadius: 0)
             
             addChildNode(node)

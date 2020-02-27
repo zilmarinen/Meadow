@@ -47,8 +47,54 @@
 		18EF596723ED8F3A0071DF1C /* Layer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF594223ED8F3A0071DF1C /* Layer.swift */; };
 		18EF596823ED8F3A0071DF1C /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF594323ED8F3A0071DF1C /* Tile.swift */; };
 		18EF596923ED8F3A0071DF1C /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF594323ED8F3A0071DF1C /* Tile.swift */; };
-		18EF596A23ED8F3A0071DF1C /* SCNVector3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF594523ED8F3A0071DF1C /* SCNVector3.swift */; };
-		18EF596B23ED8F3A0071DF1C /* SCNVector3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF594523ED8F3A0071DF1C /* SCNVector3.swift */; };
+		18EF597423EDA7940071DF1C /* Area.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF597323EDA7940071DF1C /* Area.swift */; };
+		18EF597523EDA7940071DF1C /* Area.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF597323EDA7940071DF1C /* Area.swift */; };
+		18EF597723EDA7C00071DF1C /* AreaChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF597623EDA7C00071DF1C /* AreaChunk.swift */; };
+		18EF597823EDA7C00071DF1C /* AreaChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF597623EDA7C00071DF1C /* AreaChunk.swift */; };
+		18EF597A23EDA7C70071DF1C /* AreaTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF597923EDA7C70071DF1C /* AreaTile.swift */; };
+		18EF597B23EDA7C70071DF1C /* AreaTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF597923EDA7C70071DF1C /* AreaTile.swift */; };
+		18EF597D23EDA7CF0071DF1C /* AreaEdge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF597C23EDA7CF0071DF1C /* AreaEdge.swift */; };
+		18EF597E23EDA7CF0071DF1C /* AreaEdge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF597C23EDA7CF0071DF1C /* AreaEdge.swift */; };
+		18EF598023EDA7DA0071DF1C /* AreaLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF597F23EDA7DA0071DF1C /* AreaLayer.swift */; };
+		18EF598123EDA7DA0071DF1C /* AreaLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF597F23EDA7DA0071DF1C /* AreaLayer.swift */; };
+		18EF598323EDA8560071DF1C /* Water.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF598223EDA8560071DF1C /* Water.swift */; };
+		18EF598423EDA8560071DF1C /* Water.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF598223EDA8560071DF1C /* Water.swift */; };
+		18EF598623EDA85F0071DF1C /* WaterChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF598523EDA85F0071DF1C /* WaterChunk.swift */; };
+		18EF598723EDA85F0071DF1C /* WaterChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF598523EDA85F0071DF1C /* WaterChunk.swift */; };
+		18EF598923EDA8640071DF1C /* WaterTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF598823EDA8640071DF1C /* WaterTile.swift */; };
+		18EF598A23EDA8640071DF1C /* WaterTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF598823EDA8640071DF1C /* WaterTile.swift */; };
+		18EF598C23EDA86C0071DF1C /* WaterEdge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF598B23EDA86C0071DF1C /* WaterEdge.swift */; };
+		18EF598D23EDA86C0071DF1C /* WaterEdge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF598B23EDA86C0071DF1C /* WaterEdge.swift */; };
+		18EF598F23EDA8720071DF1C /* WaterLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF598E23EDA8720071DF1C /* WaterLayer.swift */; };
+		18EF599023EDA8720071DF1C /* WaterLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF598E23EDA8720071DF1C /* WaterLayer.swift */; };
+		18EF599223EDA87B0071DF1C /* Terrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF599123EDA87B0071DF1C /* Terrain.swift */; };
+		18EF599323EDA87B0071DF1C /* Terrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF599123EDA87B0071DF1C /* Terrain.swift */; };
+		18EF599523EDA8830071DF1C /* TerrainChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF599423EDA8830071DF1C /* TerrainChunk.swift */; };
+		18EF599623EDA8830071DF1C /* TerrainChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF599423EDA8830071DF1C /* TerrainChunk.swift */; };
+		18EF599823EDA8880071DF1C /* TerrainTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF599723EDA8880071DF1C /* TerrainTile.swift */; };
+		18EF599923EDA8880071DF1C /* TerrainTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF599723EDA8880071DF1C /* TerrainTile.swift */; };
+		18EF599B23EDA88E0071DF1C /* TerrainEdge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF599A23EDA88E0071DF1C /* TerrainEdge.swift */; };
+		18EF599C23EDA88E0071DF1C /* TerrainEdge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF599A23EDA88E0071DF1C /* TerrainEdge.swift */; };
+		18EF599E23EDA8950071DF1C /* TerrainLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF599D23EDA8950071DF1C /* TerrainLayer.swift */; };
+		18EF599F23EDA8950071DF1C /* TerrainLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF599D23EDA8950071DF1C /* TerrainLayer.swift */; };
+		18EF59A123EDA8A70071DF1C /* Footpath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF59A023EDA8A70071DF1C /* Footpath.swift */; };
+		18EF59A223EDA8A70071DF1C /* Footpath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF59A023EDA8A70071DF1C /* Footpath.swift */; };
+		18EF59A423EDA8AB0071DF1C /* FootpathChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF59A323EDA8AB0071DF1C /* FootpathChunk.swift */; };
+		18EF59A523EDA8AB0071DF1C /* FootpathChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF59A323EDA8AB0071DF1C /* FootpathChunk.swift */; };
+		18EF59A723EDA8B10071DF1C /* FootpathTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF59A623EDA8B10071DF1C /* FootpathTile.swift */; };
+		18EF59A823EDA8B10071DF1C /* FootpathTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF59A623EDA8B10071DF1C /* FootpathTile.swift */; };
+		18EF59AA23EDA8B70071DF1C /* FootpathEdge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF59A923EDA8B70071DF1C /* FootpathEdge.swift */; };
+		18EF59AB23EDA8B70071DF1C /* FootpathEdge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF59A923EDA8B70071DF1C /* FootpathEdge.swift */; };
+		18EF59AD23EDA8BC0071DF1C /* FootpathLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF59AC23EDA8BC0071DF1C /* FootpathLayer.swift */; };
+		18EF59AE23EDA8BC0071DF1C /* FootpathLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF59AC23EDA8BC0071DF1C /* FootpathLayer.swift */; };
+		18EF59B023EDA8C70071DF1C /* Foliage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF59AF23EDA8C70071DF1C /* Foliage.swift */; };
+		18EF59B123EDA8C70071DF1C /* Foliage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF59AF23EDA8C70071DF1C /* Foliage.swift */; };
+		18EF59B323EDA8CE0071DF1C /* FoliageChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF59B223EDA8CE0071DF1C /* FoliageChunk.swift */; };
+		18EF59B423EDA8CE0071DF1C /* FoliageChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF59B223EDA8CE0071DF1C /* FoliageChunk.swift */; };
+		18EF59B623EDA8D70071DF1C /* FoliageTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF59B523EDA8D70071DF1C /* FoliageTile.swift */; };
+		18EF59B723EDA8D70071DF1C /* FoliageTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF59B523EDA8D70071DF1C /* FoliageTile.swift */; };
+		18EF59B923EDAA9C0071DF1C /* Meadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF59B823EDAA9C0071DF1C /* Meadow.swift */; };
+		18EF59BA23EDAA9C0071DF1C /* Meadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF59B823EDAA9C0071DF1C /* Meadow.swift */; };
 		26370EDD3DD2CCD5C81FD563 /* libPods-Meadow-iOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B90DAC7972347872CA8BE0B /* libPods-Meadow-iOSTests.a */; };
 		36C3535850A3CC857D3ED624 /* libPods-Meadow-macOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 664ACCF9010A419ED8F6A483 /* libPods-Meadow-macOS.a */; };
 		60BDB08053671C51DA88E6BA /* libPods-Meadow-macOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 607CE98C6661872CDB81E06A /* libPods-Meadow-macOSTests.a */; };
@@ -84,7 +130,6 @@
 		1819B75020A5752000BEE585 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1819B75520A5752000BEE585 /* Meadow-macOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Meadow-macOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1819B75C20A5752000BEE585 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		187121F020931C77002488E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		18EF593023ED8F390071DF1C /* Cardinal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cardinal.swift; sourceTree = "<group>"; };
 		18EF593123ED8F390071DF1C /* Coordinate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
 		18EF593223ED8F390071DF1C /* Ordinal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ordinal.swift; sourceTree = "<group>"; };
@@ -103,7 +148,30 @@
 		18EF594123ED8F3A0071DF1C /* Grid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
 		18EF594223ED8F3A0071DF1C /* Layer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Layer.swift; sourceTree = "<group>"; };
 		18EF594323ED8F3A0071DF1C /* Tile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tile.swift; sourceTree = "<group>"; };
-		18EF594523ED8F3A0071DF1C /* SCNVector3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCNVector3.swift; sourceTree = "<group>"; };
+		18EF597323EDA7940071DF1C /* Area.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Area.swift; sourceTree = "<group>"; };
+		18EF597623EDA7C00071DF1C /* AreaChunk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaChunk.swift; sourceTree = "<group>"; };
+		18EF597923EDA7C70071DF1C /* AreaTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaTile.swift; sourceTree = "<group>"; };
+		18EF597C23EDA7CF0071DF1C /* AreaEdge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaEdge.swift; sourceTree = "<group>"; };
+		18EF597F23EDA7DA0071DF1C /* AreaLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaLayer.swift; sourceTree = "<group>"; };
+		18EF598223EDA8560071DF1C /* Water.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Water.swift; sourceTree = "<group>"; };
+		18EF598523EDA85F0071DF1C /* WaterChunk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterChunk.swift; sourceTree = "<group>"; };
+		18EF598823EDA8640071DF1C /* WaterTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterTile.swift; sourceTree = "<group>"; };
+		18EF598B23EDA86C0071DF1C /* WaterEdge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterEdge.swift; sourceTree = "<group>"; };
+		18EF598E23EDA8720071DF1C /* WaterLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterLayer.swift; sourceTree = "<group>"; };
+		18EF599123EDA87B0071DF1C /* Terrain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Terrain.swift; sourceTree = "<group>"; };
+		18EF599423EDA8830071DF1C /* TerrainChunk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrainChunk.swift; sourceTree = "<group>"; };
+		18EF599723EDA8880071DF1C /* TerrainTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrainTile.swift; sourceTree = "<group>"; };
+		18EF599A23EDA88E0071DF1C /* TerrainEdge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrainEdge.swift; sourceTree = "<group>"; };
+		18EF599D23EDA8950071DF1C /* TerrainLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrainLayer.swift; sourceTree = "<group>"; };
+		18EF59A023EDA8A70071DF1C /* Footpath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Footpath.swift; sourceTree = "<group>"; };
+		18EF59A323EDA8AB0071DF1C /* FootpathChunk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FootpathChunk.swift; sourceTree = "<group>"; };
+		18EF59A623EDA8B10071DF1C /* FootpathTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FootpathTile.swift; sourceTree = "<group>"; };
+		18EF59A923EDA8B70071DF1C /* FootpathEdge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FootpathEdge.swift; sourceTree = "<group>"; };
+		18EF59AC23EDA8BC0071DF1C /* FootpathLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FootpathLayer.swift; sourceTree = "<group>"; };
+		18EF59AF23EDA8C70071DF1C /* Foliage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Foliage.swift; sourceTree = "<group>"; };
+		18EF59B223EDA8CE0071DF1C /* FoliageChunk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoliageChunk.swift; sourceTree = "<group>"; };
+		18EF59B523EDA8D70071DF1C /* FoliageTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoliageTile.swift; sourceTree = "<group>"; };
+		18EF59B823EDAA9C0071DF1C /* Meadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meadow.swift; sourceTree = "<group>"; };
 		1A97612B550B166B0831FC9A /* Pods-MeadowTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeadowTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MeadowTests/Pods-MeadowTests.release.xcconfig"; sourceTree = "<group>"; };
 		35FDC4E9F3727471EA2160BC /* Pods_MeadowTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MeadowTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		428234701CAAFB611C6EB3D2 /* libPods-Meadow-Metal.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Meadow-Metal.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -202,9 +270,9 @@
 			isa = PBXGroup;
 			children = (
 				18EF592F23ED8F390071DF1C /* Data Types */,
-				18EF594423ED8F3A0071DF1C /* Extensions */,
 				18EF593D23ED8F3A0071DF1C /* Grid */,
 				18EF593623ED8F3A0071DF1C /* Protocols */,
+				18EF59B823EDAA9C0071DF1C /* Meadow.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -261,7 +329,6 @@
 		18EE510320A57C9F0059829C /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				187121F020931C77002488E0 /* Info.plist */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -310,16 +377,71 @@
 				18EF594123ED8F3A0071DF1C /* Grid.swift */,
 				18EF594223ED8F3A0071DF1C /* Layer.swift */,
 				18EF594323ED8F3A0071DF1C /* Tile.swift */,
+				18EF597223EDA7590071DF1C /* Area */,
+				18EF597023EDA74C0071DF1C /* Foliage */,
+				18EF597123EDA7520071DF1C /* Footpath */,
+				18EF596D23EDA7310071DF1C /* Terrain */,
+				18EF596C23EDA7280071DF1C /* Water */,
 			);
 			path = Grid;
 			sourceTree = "<group>";
 		};
-		18EF594423ED8F3A0071DF1C /* Extensions */ = {
+		18EF596C23EDA7280071DF1C /* Water */ = {
 			isa = PBXGroup;
 			children = (
-				18EF594523ED8F3A0071DF1C /* SCNVector3.swift */,
+				18EF598223EDA8560071DF1C /* Water.swift */,
+				18EF598523EDA85F0071DF1C /* WaterChunk.swift */,
+				18EF598823EDA8640071DF1C /* WaterTile.swift */,
+				18EF598B23EDA86C0071DF1C /* WaterEdge.swift */,
+				18EF598E23EDA8720071DF1C /* WaterLayer.swift */,
 			);
-			path = Extensions;
+			path = Water;
+			sourceTree = "<group>";
+		};
+		18EF596D23EDA7310071DF1C /* Terrain */ = {
+			isa = PBXGroup;
+			children = (
+				18EF599123EDA87B0071DF1C /* Terrain.swift */,
+				18EF599423EDA8830071DF1C /* TerrainChunk.swift */,
+				18EF599723EDA8880071DF1C /* TerrainTile.swift */,
+				18EF599A23EDA88E0071DF1C /* TerrainEdge.swift */,
+				18EF599D23EDA8950071DF1C /* TerrainLayer.swift */,
+			);
+			path = Terrain;
+			sourceTree = "<group>";
+		};
+		18EF597023EDA74C0071DF1C /* Foliage */ = {
+			isa = PBXGroup;
+			children = (
+				18EF59AF23EDA8C70071DF1C /* Foliage.swift */,
+				18EF59B223EDA8CE0071DF1C /* FoliageChunk.swift */,
+				18EF59B523EDA8D70071DF1C /* FoliageTile.swift */,
+			);
+			path = Foliage;
+			sourceTree = "<group>";
+		};
+		18EF597123EDA7520071DF1C /* Footpath */ = {
+			isa = PBXGroup;
+			children = (
+				18EF59A023EDA8A70071DF1C /* Footpath.swift */,
+				18EF59A323EDA8AB0071DF1C /* FootpathChunk.swift */,
+				18EF59A623EDA8B10071DF1C /* FootpathTile.swift */,
+				18EF59A923EDA8B70071DF1C /* FootpathEdge.swift */,
+				18EF59AC23EDA8BC0071DF1C /* FootpathLayer.swift */,
+			);
+			path = Footpath;
+			sourceTree = "<group>";
+		};
+		18EF597223EDA7590071DF1C /* Area */ = {
+			isa = PBXGroup;
+			children = (
+				18EF597323EDA7940071DF1C /* Area.swift */,
+				18EF597623EDA7C00071DF1C /* AreaChunk.swift */,
+				18EF597923EDA7C70071DF1C /* AreaTile.swift */,
+				18EF597C23EDA7CF0071DF1C /* AreaEdge.swift */,
+				18EF597F23EDA7DA0071DF1C /* AreaLayer.swift */,
+			);
+			path = Area;
 			sourceTree = "<group>";
 		};
 		7EAFC8007E656043D995F23B /* Frameworks */ = {
@@ -618,21 +740,44 @@
 				18EF595623ED8F3A0071DF1C /* Neighbour.swift in Sources */,
 				18EF595223ED8F3A0071DF1C /* Clearable.swift in Sources */,
 				18EF595023ED8F3A0071DF1C /* World.swift in Sources */,
+				18EF598F23EDA8720071DF1C /* WaterLayer.swift in Sources */,
 				18EF596623ED8F3A0071DF1C /* Layer.swift in Sources */,
 				18EF596023ED8F3A0071DF1C /* Corner.swift in Sources */,
+				18EF59B023EDA8C70071DF1C /* Foliage.swift in Sources */,
+				18EF599223EDA87B0071DF1C /* Terrain.swift in Sources */,
+				18EF599523EDA8830071DF1C /* TerrainChunk.swift in Sources */,
+				18EF598C23EDA86C0071DF1C /* WaterEdge.swift in Sources */,
 				18EF595823ED8F3A0071DF1C /* Renderable.swift in Sources */,
+				18EF599E23EDA8950071DF1C /* TerrainLayer.swift in Sources */,
 				18EF594E23ED8F3A0071DF1C /* Volume.swift in Sources */,
+				18EF598023EDA7DA0071DF1C /* AreaLayer.swift in Sources */,
+				18EF598923EDA8640071DF1C /* WaterTile.swift in Sources */,
 				18EF595A23ED8F3A0071DF1C /* Soilable.swift in Sources */,
+				18EF599823EDA8880071DF1C /* TerrainTile.swift in Sources */,
+				18EF597D23EDA7CF0071DF1C /* AreaEdge.swift in Sources */,
 				18EF596223ED8F3A0071DF1C /* Edge.swift in Sources */,
+				18EF597423EDA7940071DF1C /* Area.swift in Sources */,
+				18EF59B623EDA8D70071DF1C /* FoliageTile.swift in Sources */,
+				18EF59A423EDA8AB0071DF1C /* FootpathChunk.swift in Sources */,
 				18EF595423ED8F3A0071DF1C /* Layerable.swift in Sources */,
 				18EF594C23ED8F3A0071DF1C /* Size.swift in Sources */,
 				18EF596423ED8F3A0071DF1C /* Grid.swift in Sources */,
+				18EF597723EDA7C00071DF1C /* AreaChunk.swift in Sources */,
+				18EF59B323EDA8CE0071DF1C /* FoliageChunk.swift in Sources */,
 				18EF594623ED8F3A0071DF1C /* Cardinal.swift in Sources */,
+				18EF59A723EDA8B10071DF1C /* FootpathTile.swift in Sources */,
+				18EF59AD23EDA8BC0071DF1C /* FootpathLayer.swift in Sources */,
+				18EF59AA23EDA8B70071DF1C /* FootpathEdge.swift in Sources */,
 				18EF595E23ED8F3A0071DF1C /* Chunk.swift in Sources */,
+				18EF59B923EDAA9C0071DF1C /* Meadow.swift in Sources */,
+				18EF598623EDA85F0071DF1C /* WaterChunk.swift in Sources */,
 				18EF596823ED8F3A0071DF1C /* Tile.swift in Sources */,
 				18EF594A23ED8F3A0071DF1C /* Ordinal.swift in Sources */,
 				18EF594823ED8F3A0071DF1C /* Coordinate.swift in Sources */,
-				18EF596A23ED8F3A0071DF1C /* SCNVector3.swift in Sources */,
+				18EF597A23EDA7C70071DF1C /* AreaTile.swift in Sources */,
+				18EF598323EDA8560071DF1C /* Water.swift in Sources */,
+				18EF599B23EDA88E0071DF1C /* TerrainEdge.swift in Sources */,
+				18EF59A123EDA8A70071DF1C /* Footpath.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -651,21 +796,44 @@
 				18EF595723ED8F3A0071DF1C /* Neighbour.swift in Sources */,
 				18EF595323ED8F3A0071DF1C /* Clearable.swift in Sources */,
 				18EF595123ED8F3A0071DF1C /* World.swift in Sources */,
+				18EF599023EDA8720071DF1C /* WaterLayer.swift in Sources */,
 				18EF596723ED8F3A0071DF1C /* Layer.swift in Sources */,
 				18EF596123ED8F3A0071DF1C /* Corner.swift in Sources */,
+				18EF59B123EDA8C70071DF1C /* Foliage.swift in Sources */,
+				18EF599323EDA87B0071DF1C /* Terrain.swift in Sources */,
+				18EF599623EDA8830071DF1C /* TerrainChunk.swift in Sources */,
+				18EF598D23EDA86C0071DF1C /* WaterEdge.swift in Sources */,
 				18EF595923ED8F3A0071DF1C /* Renderable.swift in Sources */,
+				18EF599F23EDA8950071DF1C /* TerrainLayer.swift in Sources */,
 				18EF594F23ED8F3A0071DF1C /* Volume.swift in Sources */,
+				18EF598123EDA7DA0071DF1C /* AreaLayer.swift in Sources */,
+				18EF598A23EDA8640071DF1C /* WaterTile.swift in Sources */,
 				18EF595B23ED8F3A0071DF1C /* Soilable.swift in Sources */,
+				18EF599923EDA8880071DF1C /* TerrainTile.swift in Sources */,
+				18EF597E23EDA7CF0071DF1C /* AreaEdge.swift in Sources */,
 				18EF596323ED8F3A0071DF1C /* Edge.swift in Sources */,
+				18EF597523EDA7940071DF1C /* Area.swift in Sources */,
+				18EF59B723EDA8D70071DF1C /* FoliageTile.swift in Sources */,
+				18EF59A523EDA8AB0071DF1C /* FootpathChunk.swift in Sources */,
 				18EF595523ED8F3A0071DF1C /* Layerable.swift in Sources */,
 				18EF594D23ED8F3A0071DF1C /* Size.swift in Sources */,
 				18EF596523ED8F3A0071DF1C /* Grid.swift in Sources */,
+				18EF597823EDA7C00071DF1C /* AreaChunk.swift in Sources */,
+				18EF59B423EDA8CE0071DF1C /* FoliageChunk.swift in Sources */,
 				18EF594723ED8F3A0071DF1C /* Cardinal.swift in Sources */,
+				18EF59A823EDA8B10071DF1C /* FootpathTile.swift in Sources */,
+				18EF59AE23EDA8BC0071DF1C /* FootpathLayer.swift in Sources */,
+				18EF59AB23EDA8B70071DF1C /* FootpathEdge.swift in Sources */,
 				18EF595F23ED8F3A0071DF1C /* Chunk.swift in Sources */,
+				18EF59BA23EDAA9C0071DF1C /* Meadow.swift in Sources */,
+				18EF598723EDA85F0071DF1C /* WaterChunk.swift in Sources */,
 				18EF596923ED8F3A0071DF1C /* Tile.swift in Sources */,
 				18EF594B23ED8F3A0071DF1C /* Ordinal.swift in Sources */,
 				18EF594923ED8F3A0071DF1C /* Coordinate.swift in Sources */,
-				18EF596B23ED8F3A0071DF1C /* SCNVector3.swift in Sources */,
+				18EF597B23EDA7C70071DF1C /* AreaTile.swift in Sources */,
+				18EF598423EDA8560071DF1C /* Water.swift in Sources */,
+				18EF599C23EDA88E0071DF1C /* TerrainEdge.swift in Sources */,
+				18EF59A223EDA8A70071DF1C /* Footpath.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

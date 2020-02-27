@@ -6,8 +6,7 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
-import Foundation
-import SceneKit
+import Pasture
 
 struct World {
     
@@ -15,7 +14,7 @@ struct World {
         
         public static let ceiling = 20
         public static let floor = -World.Constants.ceiling
-        public static let yStep = CGFloat(0.25)
+        public static let yStep = Double(0.25)
         
         public static let chunkSize = 5
         public static let tileSize = 1
@@ -50,14 +49,14 @@ struct World {
             return Coordinate(x: coordinate.x, y: World.Constants.floor, z: coordinate.z)
         }
         
-        static func y(y: Int) -> CGFloat {
+        static func y(y: Int) -> Double {
             
-            return CGFloat(y) * World.Constants.yStep
+            return Double(y) * World.Constants.yStep
         }
         
-        static func convert(coordinate: Coordinate) -> SCNVector3 {
+        static func convert(coordinate: Coordinate) -> Vector {
             
-            return SCNVector3(x: CGFloat(coordinate.x), y: World.Axis.y(y: coordinate.y), z: CGFloat(coordinate.z))
+            return Vector(x: Double(coordinate.x), y: World.Axis.y(y: coordinate.y), z: Double(coordinate.z))
         }
     }
 }

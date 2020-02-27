@@ -1,3 +1,18 @@
-PODFILE CHECKSUM: c80e860720e35aeede2054ff093b700342291144
+PODS:
+  - Pasture (0.1):
+    - Pasture/Core (= 0.1)
+  - Pasture/Core (0.1)
+
+DEPENDENCIES:
+  - Pasture (from `../Pasture`)
+
+EXTERNAL SOURCES:
+  Pasture:
+    :path: "../Pasture"
+
+SPEC CHECKSUMS:
+  Pasture: a49f933d4866c7a3ee7413322648fc6f3a479172
+
+PODFILE CHECKSUM: 81414081e67269f3dfdd75d291725b000032155d
 
 COCOAPODS: 1.8.4

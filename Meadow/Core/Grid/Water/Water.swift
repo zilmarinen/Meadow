@@ -6,7 +6,7 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
-class Water: Grid<WaterChunk, WaterTile<WaterEdge>> {
+public class Water: Grid<WaterChunk, WaterTile<WaterEdge>> {
     
     override init() {
         

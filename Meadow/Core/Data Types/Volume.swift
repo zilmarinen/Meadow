@@ -14,7 +14,7 @@ struct Volume {
 
 extension Volume {
     
-    public static var zero: Volume { return Volume(coordinate: .zero, size: .zero) }
+    public static var zero = Volume(coordinate: .zero, size: .zero)
 }
 
 extension Volume {

@@ -6,6 +6,6 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
-class WaterEdge: Edge<WaterLayer> {
+public class WaterEdge: Edge<WaterLayer> {
     
 }

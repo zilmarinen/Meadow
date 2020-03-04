@@ -10,7 +10,7 @@ import Foundation
 import SceneKit
 import Pasture
 
-class Chunk<T: Tile>: SCNNode, Renderable, Soilable {
+public class Chunk<T: Tile>: SCNNode, Hideable, Soilable {
     
     internal weak var ancestor: SoilableParent?
     
@@ -28,7 +28,7 @@ class Chunk<T: Tile>: SCNNode, Renderable, Soilable {
         
         super.init()
         
-        self.position = SCNVector3(vector: World.Axis.convert(coordinate: volume.coordinate))
+        self.position = SCNVector3(vector: Vector(coordinate: volume.coordinate))
     }
     
     required init?(coder: NSCoder) {
@@ -76,17 +76,26 @@ extension Chunk {
         
         guard isDirty else { return false }
         
+        var mesh: Mesh?
+        
         tiles.forEach { tile in
             
             tile.clean()
             
-            let node = SCNNode()
+            if let tileMesh = tile.mesh {
             
-            node.position = SCNVector3(vector: World.Axis.convert(coordinate: tile.volume.coordinate) - Vector(vector: position))
-            node.geometry = SCNBox(width: 1, height: 1, length: 1, chamferRadius: 0)
-            
-            addChildNode(node)
+                mesh = mesh?.union(mesh: tileMesh) ?? tileMesh
+            }
         }
+        
+        geometry = SCNGeometry(mesh: mesh ?? Mesh(polygons: []), materialSearch: {
+            
+            let material = SCNMaterial()
+            
+            material.diffuse.contents = $0 as? MDWColor
+            
+            return material
+        })
         
         isDirty = false
         
@@ -115,7 +124,7 @@ extension Chunk: Encodable {
         case tiles
     }
     
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         
         var container = encoder.container(keyedBy: CodingKeys.self)
         

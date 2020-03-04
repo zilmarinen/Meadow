@@ -6,6 +6,27 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
-class TerrainLayer: Layer {
+public class TerrainLayer: Layer {
     
+    public struct Color {
+        
+        var primary: MDWColor
+        var secondary: MDWColor
+        
+        static var `default`: Color = Color(primary: .green, secondary: .brown)
+        
+        public init(primary: MDWColor, secondary: MDWColor) {
+            
+            self.primary = primary
+            self.secondary = secondary
+        }
+    }
+    
+    public var color = Color.default {
+        
+        didSet {
+            
+            becomeDirty()
+        }
+    }
 }

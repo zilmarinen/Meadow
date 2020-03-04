@@ -6,6 +6,6 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
-class FoliageChunk: Chunk<FoliageTile> {
+public class FoliageChunk: Chunk<FoliageTile> {
     
 }

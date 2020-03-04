@@ -6,6 +6,6 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
-class AreaEdge: Edge<AreaLayer> {
+public class AreaEdge: Edge<AreaLayer> {
     
 }

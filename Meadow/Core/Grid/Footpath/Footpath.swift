@@ -6,7 +6,7 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
-class Footpath: Grid<FootpathChunk, FootpathTile<FootpathEdge>> {
+public class Footpath: Grid<FootpathChunk, FootpathTile<FootpathEdge>> {
     
     override init() {
         

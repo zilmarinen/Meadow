@@ -6,6 +6,6 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
-class AreaLayer: Layer {
+public class AreaLayer: Layer {
     
 }

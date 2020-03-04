@@ -6,9 +6,9 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
-import Foundation
+import Pasture
 
-class Edge<L: Layer>: Soilable, Clearable, Encodable, Renderable, Updatable {
+public class Edge<L: Layer>: Soilable, Clearable, Encodable, Renderable, Updatable {
     
     private enum CodingKeys: CodingKey {
         
@@ -24,6 +24,8 @@ class Edge<L: Layer>: Soilable, Clearable, Encodable, Renderable, Updatable {
     
     var name: String?
     
+    var mesh: Mesh?
+    
     let cardinal: Cardinal
     
     var layers: [L] = []
@@ -35,7 +37,7 @@ class Edge<L: Layer>: Soilable, Clearable, Encodable, Renderable, Updatable {
         self.cardinal = cardinal
     }
     
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
      
         var container = encoder.container(keyedBy: CodingKeys.self)
         
@@ -46,6 +48,8 @@ class Edge<L: Layer>: Soilable, Clearable, Encodable, Renderable, Updatable {
     @discardableResult func clean() -> Bool {
         
         guard isDirty else { return false }
+        
+        mesh = render(transform: .identity)
         
         isDirty = false
         
@@ -71,15 +75,20 @@ class Edge<L: Layer>: Soilable, Clearable, Encodable, Renderable, Updatable {
         
         clean()
     }
+    
+    func render(transform: Transform) -> Mesh { return Mesh(polygons: []) }
 }
 
 extension Edge {
+    
+    typealias LayerConfiguration = ((L) -> Void)
     
     var bottomLayer: L? { return layers.first }
     var topLayer: L? { return layers.last }
     var totalLayers: Int { return layers.count }
     
-    func addLayer() -> L? {
+    @discardableResult
+    func add(layer configurator: Layer.Configurator) -> L? {
         
         if topLayer?.base == World.Constants.ceiling { return nil }
         
@@ -88,18 +97,25 @@ extension Edge {
         layer.lower = topLayer
         topLayer?.upper = layer
         
-        layers.append(layer)
-        
         if let topLayer = topLayer {
             
-            let (o1, o2) = Cardinal.ordinals(cardinal)
+            let (o1, o2) = Cardinal.ordinals(cardinal: cardinal)
             
-            let peak = topLayer.peak
+            var peak = topLayer.peak
+            
+            if peak < World.Constants.ceiling {
+                
+                peak += 1
+            }
             
             layer.set(ordinal: o1, elevation: peak)
             layer.set(ordinal: o2, elevation: peak)
             layer.set(center: peak)
         }
+        
+        configurator(layer)
+        
+        layers.append(layer)
         
         topLayer?.becomeDirty()
         

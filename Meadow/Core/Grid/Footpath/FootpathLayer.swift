@@ -6,6 +6,6 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
-class FootpathLayer: Layer {
+public class FootpathLayer: Layer {
     
 }

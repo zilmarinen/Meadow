@@ -6,6 +6,6 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
-class TerrainChunk: Chunk<TerrainTile<TerrainEdge>> {
+public class TerrainChunk: Chunk<TerrainTile<TerrainEdge>> {
     
 }

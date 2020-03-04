@@ -6,20 +6,29 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
-struct Coordinate: Encodable {
+public struct Coordinate: Encodable {
     
     public let x: Int
     public let y: Int
     public let z: Int
+    
+    public init(x: Int, y: Int, z: Int) {
+        
+        self.x = x
+        self.y = y
+        self.z = z
+    }
 }
 
-extension Coordinate {
+public extension Coordinate {
     
-    public static var zero: Coordinate { return Coordinate(x: 0, y: 0, z: 0) }
-    public static var left: Coordinate { return Coordinate(x: 1, y: 0, z: 0) }
-    public static var right: Coordinate { return Coordinate(x: -1, y: 0, z: 0) }
-    public static var forward: Coordinate { return Coordinate(x: 0, y: 0, z: 1) }
-    public static var backward: Coordinate { return Coordinate(x: 0, y: 0, z: -1) }
+    static var zero = Coordinate(x: 0, y: 0, z: 0)
+    static var left = Coordinate(x: 1, y: 0, z: 0)
+    static var right = Coordinate(x: -1, y: 0, z: 0)
+    static var forward = Coordinate(x: 0, y: 0, z: 1)
+    static var backward = Coordinate(x: 0, y: 0, z: -1)
+    static var up = Coordinate(x: 0, y: 1, z: 0)
+    static var down = Coordinate(x: 0, y: -1, z: 0)
 }
 
 extension Coordinate {
@@ -40,9 +49,9 @@ extension Coordinate {
     enum Adjacency {
         
         case adjacent
+        case adrift
         case diagonal
         case equal
-        case floating
     }
     
     func adjacency(to coordinate: Coordinate) -> Adjacency {
@@ -64,7 +73,7 @@ extension Coordinate {
             return .diagonal;
         }
         
-        return .floating
+        return .adrift
     }
 }
 
@@ -72,13 +81,13 @@ extension Coordinate {
     
     private static var Cardinals: [Coordinate] { return [
     
-        .forward,
-        .right,
         .backward,
+        .right,
+        .forward,
         .left
     ]}
     
-    public static func cardinal(_ cardinal: Cardinal) -> Coordinate {
+    public static func cardinal(cardinal: Cardinal) -> Coordinate {
         
         return Cardinals[cardinal.rawValue]
     }
@@ -86,7 +95,7 @@ extension Coordinate {
 
 extension Coordinate: Equatable {
     
-    static func == (lhs: Coordinate, rhs: Coordinate) -> Bool {
+    public static func == (lhs: Coordinate, rhs: Coordinate) -> Bool {
         
         return lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z
     }
@@ -94,7 +103,7 @@ extension Coordinate: Equatable {
 
 extension Coordinate: Hashable {
     
-    func hash(into hasher: inout Hasher) {
+    public func hash(into hasher: inout Hasher) {
         
         hasher.combine(x)
         hasher.combine(y)

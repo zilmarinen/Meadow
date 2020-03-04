@@ -6,6 +6,6 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
-class FootpathChunk: Chunk<FootpathTile<FootpathEdge>> {
+public class FootpathChunk: Chunk<FootpathTile<FootpathEdge>> {
     
 }

@@ -6,6 +6,6 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
-class AreaTile<E: AreaEdge>: Tile {
+public class AreaTile<E: AreaEdge>: Tile {
     
 }

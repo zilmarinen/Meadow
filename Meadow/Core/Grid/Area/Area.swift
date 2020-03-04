@@ -6,7 +6,7 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
-class Area: Grid<AreaChunk, AreaTile<AreaEdge>> {
+public class Area: Grid<AreaChunk, AreaTile<AreaEdge>> {
     
     override init() {
         

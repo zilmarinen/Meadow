@@ -6,6 +6,6 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
-class FootpathTile<E: FootpathEdge>: Tile {
+public class FootpathTile<E: FootpathEdge>: Tile {
     
 }

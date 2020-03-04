@@ -6,7 +6,7 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
-class Foliage: Grid<FoliageChunk, FoliageTile> {
+public class Foliage: Grid<FoliageChunk, FoliageTile> {
     
     override init() {
         

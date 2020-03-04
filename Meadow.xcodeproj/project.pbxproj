@@ -11,6 +11,12 @@
 		1819B74120A574F800BEE585 /* Meadow_iOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 1819B73320A574F800BEE585 /* Meadow_iOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1819B75620A5752000BEE585 /* Meadow_macOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1819B74D20A5752000BEE585 /* Meadow_macOS.framework */; };
 		1819B75D20A5752000BEE585 /* Meadow_macOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 1819B74F20A5752000BEE585 /* Meadow_macOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		184AF116240930A8009FF8E3 /* Hideable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184AF115240930A8009FF8E3 /* Hideable.swift */; };
+		184AF117240930A8009FF8E3 /* Hideable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184AF115240930A8009FF8E3 /* Hideable.swift */; };
+		184AF11A24093730009FF8E3 /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184AF11924093730009FF8E3 /* Vector.swift */; };
+		184AF11B24093730009FF8E3 /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184AF11924093730009FF8E3 /* Vector.swift */; };
+		184AF11D24094102009FF8E3 /* Typealiases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184AF11C24094102009FF8E3 /* Typealiases.swift */; };
+		184AF11E24094102009FF8E3 /* Typealiases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184AF11C24094102009FF8E3 /* Typealiases.swift */; };
 		18EF594623ED8F3A0071DF1C /* Cardinal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF593023ED8F390071DF1C /* Cardinal.swift */; };
 		18EF594723ED8F3A0071DF1C /* Cardinal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF593023ED8F390071DF1C /* Cardinal.swift */; };
 		18EF594823ED8F3A0071DF1C /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF593123ED8F390071DF1C /* Coordinate.swift */; };
@@ -130,6 +136,9 @@
 		1819B75020A5752000BEE585 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1819B75520A5752000BEE585 /* Meadow-macOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Meadow-macOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1819B75C20A5752000BEE585 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		184AF115240930A8009FF8E3 /* Hideable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hideable.swift; sourceTree = "<group>"; };
+		184AF11924093730009FF8E3 /* Vector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vector.swift; sourceTree = "<group>"; };
+		184AF11C24094102009FF8E3 /* Typealiases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typealiases.swift; sourceTree = "<group>"; };
 		18EF593023ED8F390071DF1C /* Cardinal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cardinal.swift; sourceTree = "<group>"; };
 		18EF593123ED8F390071DF1C /* Coordinate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
 		18EF593223ED8F390071DF1C /* Ordinal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ordinal.swift; sourceTree = "<group>"; };
@@ -269,12 +278,22 @@
 		18496C572093230900992AF3 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				184AF1182409371B009FF8E3 /* Extensions */,
 				18EF592F23ED8F390071DF1C /* Data Types */,
 				18EF593D23ED8F3A0071DF1C /* Grid */,
 				18EF593623ED8F3A0071DF1C /* Protocols */,
 				18EF59B823EDAA9C0071DF1C /* Meadow.swift */,
 			);
 			path = Core;
+			sourceTree = "<group>";
+		};
+		184AF1182409371B009FF8E3 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				184AF11924093730009FF8E3 /* Vector.swift */,
+				184AF11C24094102009FF8E3 /* Typealiases.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		187121D620931C77002488E0 = {
@@ -359,6 +378,7 @@
 			isa = PBXGroup;
 			children = (
 				18EF593723ED8F3A0071DF1C /* Clearable.swift */,
+				184AF115240930A8009FF8E3 /* Hideable.swift */,
 				18EF593823ED8F3A0071DF1C /* Layerable.swift */,
 				18EF593923ED8F3A0071DF1C /* Neighbour.swift */,
 				18EF593A23ED8F3A0071DF1C /* Renderable.swift */,
@@ -744,6 +764,7 @@
 				18EF596623ED8F3A0071DF1C /* Layer.swift in Sources */,
 				18EF596023ED8F3A0071DF1C /* Corner.swift in Sources */,
 				18EF59B023EDA8C70071DF1C /* Foliage.swift in Sources */,
+				184AF116240930A8009FF8E3 /* Hideable.swift in Sources */,
 				18EF599223EDA87B0071DF1C /* Terrain.swift in Sources */,
 				18EF599523EDA8830071DF1C /* TerrainChunk.swift in Sources */,
 				18EF598C23EDA86C0071DF1C /* WaterEdge.swift in Sources */,
@@ -767,8 +788,10 @@
 				18EF594623ED8F3A0071DF1C /* Cardinal.swift in Sources */,
 				18EF59A723EDA8B10071DF1C /* FootpathTile.swift in Sources */,
 				18EF59AD23EDA8BC0071DF1C /* FootpathLayer.swift in Sources */,
+				184AF11D24094102009FF8E3 /* Typealiases.swift in Sources */,
 				18EF59AA23EDA8B70071DF1C /* FootpathEdge.swift in Sources */,
 				18EF595E23ED8F3A0071DF1C /* Chunk.swift in Sources */,
+				184AF11A24093730009FF8E3 /* Vector.swift in Sources */,
 				18EF59B923EDAA9C0071DF1C /* Meadow.swift in Sources */,
 				18EF598623EDA85F0071DF1C /* WaterChunk.swift in Sources */,
 				18EF596823ED8F3A0071DF1C /* Tile.swift in Sources */,
@@ -800,6 +823,7 @@
 				18EF596723ED8F3A0071DF1C /* Layer.swift in Sources */,
 				18EF596123ED8F3A0071DF1C /* Corner.swift in Sources */,
 				18EF59B123EDA8C70071DF1C /* Foliage.swift in Sources */,
+				184AF117240930A8009FF8E3 /* Hideable.swift in Sources */,
 				18EF599323EDA87B0071DF1C /* Terrain.swift in Sources */,
 				18EF599623EDA8830071DF1C /* TerrainChunk.swift in Sources */,
 				18EF598D23EDA86C0071DF1C /* WaterEdge.swift in Sources */,
@@ -823,8 +847,10 @@
 				18EF594723ED8F3A0071DF1C /* Cardinal.swift in Sources */,
 				18EF59A823EDA8B10071DF1C /* FootpathTile.swift in Sources */,
 				18EF59AE23EDA8BC0071DF1C /* FootpathLayer.swift in Sources */,
+				184AF11E24094102009FF8E3 /* Typealiases.swift in Sources */,
 				18EF59AB23EDA8B70071DF1C /* FootpathEdge.swift in Sources */,
 				18EF595F23ED8F3A0071DF1C /* Chunk.swift in Sources */,
+				184AF11B24093730009FF8E3 /* Vector.swift in Sources */,
 				18EF59BA23EDAA9C0071DF1C /* Meadow.swift in Sources */,
 				18EF598723EDA85F0071DF1C /* WaterChunk.swift in Sources */,
 				18EF596923ED8F3A0071DF1C /* Tile.swift in Sources */,
@@ -884,7 +910,6 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -912,7 +937,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -986,7 +1010,6 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -1014,7 +1037,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};

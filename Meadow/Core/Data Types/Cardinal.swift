@@ -6,7 +6,9 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
-enum Cardinal: Int, CaseIterable, Encodable {
+import Pasture
+
+public enum Cardinal: Int, CaseIterable, Encodable {
     
     case north
     case east
@@ -16,34 +18,57 @@ enum Cardinal: Int, CaseIterable, Encodable {
 
 extension Cardinal {
     
-    private static var Opposites: [Cardinal] { return [
+    private static var Opposites: [Cardinal] = [
     
         south,
         west,
         north,
         east
-    ]}
+    ]
     
-    private static var Ordinals: [(Ordinal, Ordinal)] { return [
+    private static var Ordinals: [(Ordinal, Ordinal)] = [
     
-        (.northEast, .northWest),
+        (.northWest, .northEast),
         (.northEast, .southEast),
         (.southEast, .southWest),
         (.southWest, .northWest)
-    ]}
+    ]
     
-    public static func opposite(_ cardinal: Cardinal) -> Cardinal {
+    private static var Normals: [Vector] = [
+    
+        .backward,
+        .right,
+        .forward,
+        .left
+    ]
+    
+    public static func opposite(cardinal: Cardinal) -> Cardinal {
         
         return Opposites[cardinal.rawValue]
     }
     
-    var opposite: Cardinal {
+    public var opposite: Cardinal {
         
-        return Cardinal.opposite(self)
+        return Cardinal.opposite(cardinal: self)
     }
     
-    public static func ordinals(_ cardinal: Cardinal) -> (Ordinal, Ordinal) {
+    public static func ordinals(cardinal: Cardinal) -> (Ordinal, Ordinal) {
         
         return Ordinals[cardinal.rawValue]
+    }
+    
+    public var ordinals: (Ordinal, Ordinal) {
+        
+        return Cardinal.ordinals(cardinal: self)
+    }
+    
+    public static func normal(cardinal: Cardinal) -> Vector {
+        
+        return Normals[cardinal.rawValue]
+    }
+    
+    public var normal: Vector {
+        
+        return Cardinal.normal(cardinal: self)
     }
 }

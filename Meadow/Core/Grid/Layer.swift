@@ -8,7 +8,9 @@
 
 import Foundation
 
-class Layer: Soilable, Clearable, Encodable, Renderable, Updatable {
+public class Layer: Soilable, Clearable, Encodable, Hideable, Updatable {
+    
+    public typealias Configurator = ((Layer) -> Void)
     
     private enum CodingKeys: CodingKey {
         
@@ -24,9 +26,9 @@ class Layer: Soilable, Clearable, Encodable, Renderable, Updatable {
     
     var name: String?
     
-    let cardinal: Cardinal
+    public let cardinal: Cardinal
     
-    var upper: Layer? {
+    public var upper: Layer? {
         
         didSet {
             
@@ -34,7 +36,7 @@ class Layer: Soilable, Clearable, Encodable, Renderable, Updatable {
         }
     }
     
-    var lower: Layer? {
+    public var lower: Layer? {
         
         didSet {
             
@@ -42,9 +44,9 @@ class Layer: Soilable, Clearable, Encodable, Renderable, Updatable {
         }
     }
     
-    var left = Corner(anchor: .left, elevation: World.Constants.floor)
-    var right = Corner(anchor: .right, elevation: World.Constants.floor)
-    var center = Corner(anchor: .center, elevation: World.Constants.floor)
+    var left = Corner(anchor: .left, elevation: World.Constants.floor + 1)
+    var right = Corner(anchor: .right, elevation: World.Constants.floor + 1)
+    var center = Corner(anchor: .center, elevation: World.Constants.floor + 1)
     
     required init(ancestor: SoilableParent, cardinal: Cardinal) {
         
@@ -53,7 +55,7 @@ class Layer: Soilable, Clearable, Encodable, Renderable, Updatable {
         self.cardinal = cardinal
     }
     
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
      
         var container = encoder.container(keyedBy: CodingKeys.self)
         
@@ -77,11 +79,19 @@ class Layer: Soilable, Clearable, Encodable, Renderable, Updatable {
 
 extension Layer {
     
-    var base: Int { return min(left.elevation, right.elevation, center.elevation) }
-    var peak: Int{ return max(left.elevation, right.elevation, center.elevation) }
-    var centerElevation: Int { return center.elevation }
+    enum Adjustment {
+        
+        case corner
+        case edge
+        case layer
+        case recursive
+    }
     
-    func set(ordinal: Ordinal, elevation: Int) {
+    public var base: Int { return min(left.elevation, right.elevation, center.elevation) }
+    public var peak: Int{ return max(left.elevation, right.elevation, center.elevation) }
+    public var centerElevation: Int { return center.elevation }
+    
+    public func set(ordinal: Ordinal, elevation: Int) {
         
         switch ordinal {
             
@@ -97,12 +107,12 @@ extension Layer {
         }
     }
     
-    func set(center elevation: Int) {
+    public func set(center elevation: Int) {
         
         adjust(corner: Corner(anchor: .center, elevation: elevation))
     }
     
-    func get(elevation ordinal: Ordinal) -> Int {
+    public func get(elevation ordinal: Ordinal) -> Int {
         
         switch ordinal {
             
@@ -120,6 +130,21 @@ extension Layer {
     
     func adjust(corner: Corner) {
         
-        //TODO
+        switch corner.anchor {
+            
+        case .center:
+            
+            self.center = corner
+            
+        case .left:
+            
+            self.left = corner
+            
+        case .right:
+            
+            self.right = corner
+        }
+        
+        becomeDirty()
     }
 }

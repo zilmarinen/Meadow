@@ -6,7 +6,11 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
-protocol Renderable {
+import Pasture
+
+protocol Renderable: Hideable {
     
-    var isHidden: Bool { get }
+    var mesh: Mesh? { get }
+    
+    func render(transform: Transform) -> Mesh
 }

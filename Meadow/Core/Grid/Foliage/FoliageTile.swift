@@ -6,6 +6,6 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
-class FoliageTile: Tile {
+public class FoliageTile: Tile {
     
 }

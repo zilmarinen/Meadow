@@ -6,6 +6,6 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
-class AreaChunk: Chunk<AreaTile<AreaEdge>> {
+public class AreaChunk: Chunk<AreaTile<AreaEdge>> {
     
 }

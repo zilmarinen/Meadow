@@ -6,7 +6,7 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
-struct Corner {
+public struct Corner {
     
     enum Anchor {
         

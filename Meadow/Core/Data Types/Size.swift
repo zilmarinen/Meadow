@@ -15,7 +15,7 @@ struct Size {
 
 extension Size {
     
-    public static var zero: Size { return Size(width: 0, depth: 0, height: 0) }
+    public static var zero = Size(width: 0, depth: 0, height: 0)
 }
 
 extension Size: Equatable {

@@ -6,10 +6,30 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
-enum Ordinal {
+import Pasture
+
+public enum Ordinal: Int, CaseIterable, Encodable {
     
     case northEast
     case southEast
     case southWest
     case northWest
+}
+
+extension Ordinal {
+    
+    private static var corners: [Vector] = [Vector(x: -0.5, y: 0.0, z: -0.5),
+                                            Vector(x: 0.5, y: 0.0, z: -0.5),
+                                            Vector(x: 0.5, y: 0.0, z: 0.5),
+                                            Vector(x: -0.5, y: 0.0, z: 0.5)]
+    
+    public static func vector(ordinal: Ordinal) -> Vector {
+        
+        return corners[ordinal.rawValue]
+    }
+    
+    var vector: Vector {
+        
+        return Ordinal.vector(ordinal: self)
+    }
 }

@@ -8,9 +8,9 @@
 
 import Pasture
 
-struct World {
+public struct World {
     
-    enum Constants {
+    public enum Constants {
         
         public static let ceiling = 20
         public static let floor = -World.Constants.ceiling
@@ -52,11 +52,6 @@ struct World {
         static func y(y: Int) -> Double {
             
             return Double(y) * World.Constants.yStep
-        }
-        
-        static func convert(coordinate: Coordinate) -> Vector {
-            
-            return Vector(x: Double(coordinate.x), y: World.Axis.y(y: coordinate.y), z: Double(coordinate.z))
         }
     }
 }

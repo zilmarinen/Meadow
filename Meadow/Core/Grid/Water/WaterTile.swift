@@ -6,6 +6,6 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
-class WaterTile<E: WaterEdge>: Tile {
+public class WaterTile<E: WaterEdge>: Tile {
     
 }

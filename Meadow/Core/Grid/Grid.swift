@@ -9,7 +9,7 @@
 import Foundation
 import SceneKit
 
-class Grid<C: Chunk<T>, T: Tile>: SCNNode, Renderable, Soilable {
+public class Grid<C: Chunk<T>, T: Tile>: SCNNode, Hideable, Soilable {
 
     internal weak var ancestor: SoilableParent?
 
@@ -17,7 +17,7 @@ class Grid<C: Chunk<T>, T: Tile>: SCNNode, Renderable, Soilable {
     
     var chunks: [C] = []
     
-    override func addChildNode(_ child: SCNNode) {
+    public override func addChildNode(_ child: SCNNode) {
         
         guard let chunk = child as? C else { return }
         
@@ -59,7 +59,7 @@ extension Grid {
         
         Cardinal.allCases.forEach { cardinal in
             
-            if let neighbour = find(tile: coordinate + Coordinate.cardinal(cardinal)) {
+            if let neighbour = find(tile: coordinate + Coordinate.cardinal(cardinal: cardinal)) {
                 
                 tile.add(neighbour: neighbour, cardinal: cardinal)
             }
@@ -121,7 +121,7 @@ extension Grid: Encodable {
         case chunks
     }
     
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         
         var container = encoder.container(keyedBy: CodingKeys.self)
         

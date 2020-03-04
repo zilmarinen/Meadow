@@ -6,9 +6,9 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
-import Foundation
+import Pasture
 
-class Tile: Soilable, Clearable, Encodable, Neighbour, Renderable, Updatable {
+public class Tile: Soilable, Clearable, Encodable, Neighbour, Renderable, Updatable {
     
     private enum CodingKeys: CodingKey {
         
@@ -24,6 +24,8 @@ class Tile: Soilable, Clearable, Encodable, Neighbour, Renderable, Updatable {
     
     var name: String?
     
+    var mesh: Mesh?
+    
     let volume: Volume
     
     var neighbours: [Cardinal : Tile] = [:]
@@ -35,7 +37,7 @@ class Tile: Soilable, Clearable, Encodable, Neighbour, Renderable, Updatable {
         self.volume = World.Axis.aligned(tile: coordinate)
     }
     
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         
         var container = encoder.container(keyedBy: CodingKeys.self)
         
@@ -46,6 +48,14 @@ class Tile: Soilable, Clearable, Encodable, Neighbour, Renderable, Updatable {
     @discardableResult func clean() -> Bool {
         
         guard isDirty else { return false }
+        
+        let offset = World.Axis.aligned(chunk: volume.coordinate)
+        
+        let position = Vector(coordinate: volume.coordinate) - Vector(coordinate: offset.coordinate)
+        
+        let transform = Transform(position: position, rotation: .identity, scale: .one)
+        
+        mesh = render(transform: transform)
         
         isDirty = false
         
@@ -61,11 +71,13 @@ class Tile: Soilable, Clearable, Encodable, Neighbour, Renderable, Updatable {
     }
     
     func update(delta: TimeInterval, time: TimeInterval) {}
+    
+    func render(transform: Transform) -> Mesh { return Mesh(polygons: []) }
 }
 
 extension Tile: Equatable {
     
-    static func == (lhs: Tile, rhs: Tile) -> Bool {
+    public static func == (lhs: Tile, rhs: Tile) -> Bool {
         
         return lhs.volume == rhs.volume
     }
@@ -73,7 +85,7 @@ extension Tile: Equatable {
 
 extension Tile: Hashable {
     
-    func hash(into hasher: inout Hasher) {
+    public func hash(into hasher: inout Hasher) {
         
         hasher.combine(volume)
     }

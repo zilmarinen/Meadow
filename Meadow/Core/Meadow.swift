@@ -8,17 +8,17 @@
 
 import SceneKit
 
-class Meadow: SCNNode {
+public class Meadow: SCNNode {
     
     var lastUpdate: TimeInterval?
     
-    let area = Area()
-    let foliage = Foliage()
-    let footpath = Footpath()
-    let terrain = Terrain()
-    let water = Water()
+    public let area = Area()
+    public let foliage = Foliage()
+    public let footpath = Footpath()
+    public let terrain = Terrain()
+    public let water = Water()
     
-    override init() {
+    public override init() {
         
         super.init()
         
@@ -37,7 +37,7 @@ class Meadow: SCNNode {
 
 extension Meadow: SCNSceneRendererDelegate {
     
-    func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
+    public func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
         
         let delta = time - (lastUpdate ?? time)
         

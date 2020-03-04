@@ -6,6 +6,6 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
-class WaterLayer: Layer {
+public class WaterLayer: Layer {
     
 }

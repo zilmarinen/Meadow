@@ -19,4 +19,16 @@ public class Area: Grid<AreaChunk, AreaTile<AreaEdge>> {
         
         fatalError("init(coder:) has not been implemented")
     }
+    
+    public override var category: SceneGraphNodeCategory { return .area }
+}
+
+extension Area: GridDecodable {
+    
+    typealias JSON = AreaJSON
+    
+    func decode(json: AreaJSON) {
+        
+        //
+    }
 }

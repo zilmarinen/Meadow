@@ -8,4 +8,5 @@
 
 public class FootpathChunk: Chunk<FootpathTile<FootpathEdge>> {
     
+    public override var category: SceneGraphNodeCategory { return .footpath }
 }

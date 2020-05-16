@@ -8,4 +8,5 @@
 
 public class WaterTile<E: WaterEdge>: Tile {
     
+    public override var category: SceneGraphNodeCategory { return .water }
 }

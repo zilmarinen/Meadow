@@ -49,8 +49,8 @@ class GameController: NSObject, SCNSceneRendererDelegate {
         let cameraNode = SCNNode()
         
         cameraNode.camera = SCNCamera()
-        cameraNode.position = SCNVector3(x: 5.0, y: -5.0, z: 10.0)
-        //cameraNode.look(at: meadow.position)
+        cameraNode.position = SCNVector3(x: 2.5, y: CGFloat(World.Axis.y(y: World.Constants.floor)), z: 10.0)
+        cameraNode.look(at: SCNVector3(x: 0, y: CGFloat(World.Axis.y(y: World.Constants.floor)), z: 0.0))
         
         scene.rootNode.addChildNode(cameraNode)
         scene.rootNode.addChildNode(meadow)
@@ -65,8 +65,8 @@ extension GameController {
         
         DispatchQueue.main.async {
             
-            let width = 5
-            let depth = 2
+            let width = 1
+            let depth = 1
             
             for x in 0..<width {
                 
@@ -76,10 +76,7 @@ extension GameController {
                     
                     self.meadow.terrain.add(tile: coordinate) { layer in
                         
-                        if let layer = layer as? TerrainLayer {
-                            
-                            layer.color = TerrainLayer.Color(primary: .darkGray, secondary: .gray)
-                        }
+                        layer.color = TerrainLayer.Color(primary: .systemOrange, secondary: .systemPink)
                     }
                 }
             }

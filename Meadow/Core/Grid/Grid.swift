@@ -9,13 +9,33 @@
 import Foundation
 import SceneKit
 
-public class Grid<C: Chunk<T>, T: Tile>: SCNNode, Hideable, Soilable {
+public class Grid<C: Chunk<T>, T: Tile>: SCNNode, Hideable, SceneGraphIdentifiable, SceneGraphNode, Soilable {
 
-    internal weak var ancestor: SoilableParent?
+    public weak var ancestor: SoilableParent?
 
     internal var isDirty = false
     
     var chunks: [C] = []
+    
+    public override var isHidden: Bool {
+        
+        didSet {
+            
+            becomeDirty()
+        }
+    }
+    
+    override public init() {
+        
+        super.init()
+        
+        categoryBitMask = category.rawValue
+    }
+    
+    required init?(coder: NSCoder) {
+        
+        fatalError("init(coder:) has not been implemented")
+    }
     
     public override func addChildNode(_ child: SCNNode) {
         
@@ -27,6 +47,16 @@ public class Grid<C: Chunk<T>, T: Tile>: SCNNode, Hideable, Soilable {
         
         becomeDirty()
     }
+    
+    public var children: [SceneGraphNode] { return chunks }
+    
+    public var childCount: Int { return children.count }
+    
+    public var isLeaf: Bool { return children.isEmpty }
+    
+    public var category: SceneGraphNodeCategory { fatalError("SceneGraphIdentifiable.category must be overridden") }
+    
+    public var type: SceneGraphNodeType { return .grid }
 }
 
 extension Grid {

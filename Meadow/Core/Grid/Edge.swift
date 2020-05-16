@@ -8,25 +8,30 @@
 
 import Pasture
 
-public class Edge<L: Layer>: Soilable, Clearable, Encodable, Renderable, Updatable {
+public class Edge<L: Layer>: NSObject, Soilable, Clearable, Encodable, Renderable, SceneGraphIdentifiable, SceneGraphNode, Updatable {
     
     private enum CodingKeys: CodingKey {
-        
-        case name
+
         case cardinal
     }
     
-    internal weak var ancestor: SoilableParent?
+    public weak var ancestor: SoilableParent?
     
     internal var isDirty = false
     
-    var isHidden: Bool = false
+    public var isHidden: Bool = false {
+        
+        didSet {
+            
+            becomeDirty()
+        }
+    }
     
-    var name: String?
+    public var name: String?
     
     var mesh: Mesh?
     
-    let cardinal: Cardinal
+    public let cardinal: Cardinal
     
     var layers: [L] = []
     
@@ -35,13 +40,14 @@ public class Edge<L: Layer>: Soilable, Clearable, Encodable, Renderable, Updatab
         self.ancestor = ancestor
         
         self.cardinal = cardinal
+        
+        self.name = "Edge [\(cardinal.description)]"
     }
     
     public func encode(to encoder: Encoder) throws {
      
         var container = encoder.container(keyedBy: CodingKeys.self)
         
-        try container.encodeIfPresent(name, forKey: .name)
         try container.encode(cardinal, forKey: .cardinal)
     }
     
@@ -77,18 +83,28 @@ public class Edge<L: Layer>: Soilable, Clearable, Encodable, Renderable, Updatab
     }
     
     func render(transform: Transform) -> Mesh { return Mesh(polygons: []) }
+    
+    public var children: [SceneGraphNode] { return layers }
+    
+    public var childCount: Int { return children.count }
+    
+    public var isLeaf: Bool { return children.isEmpty }
+    
+    public var category: SceneGraphNodeCategory { fatalError("SceneGraphIdentifiable.category must be overridden") }
+    
+    public var type: SceneGraphNodeType { return .edge }
 }
 
 extension Edge {
     
-    typealias LayerConfiguration = ((L) -> Void)
+    public typealias LayerConfigurator = ((L) -> Void)
     
     var bottomLayer: L? { return layers.first }
     var topLayer: L? { return layers.last }
     var totalLayers: Int { return layers.count }
     
     @discardableResult
-    func add(layer configurator: Layer.Configurator) -> L? {
+    func add(layer configurator: LayerConfigurator) -> L? {
         
         if topLayer?.base == World.Constants.ceiling { return nil }
         

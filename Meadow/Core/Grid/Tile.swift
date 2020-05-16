@@ -8,21 +8,26 @@
 
 import Pasture
 
-public class Tile: Soilable, Clearable, Encodable, Neighbour, Renderable, Updatable {
+public class Tile: NSObject, Soilable, Clearable, Encodable, Neighbour, Renderable, SceneGraphIdentifiable, SceneGraphNode, Updatable {
     
     private enum CodingKeys: CodingKey {
         
-        case name
         case coordinate
     }
     
-    internal weak var ancestor: SoilableParent?
+    public weak var ancestor: SoilableParent?
     
     internal var isDirty = false
     
-    var isHidden: Bool = false
+    public var isHidden: Bool = false {
+        
+        didSet {
+            
+            becomeDirty()
+        }
+    }
     
-    var name: String?
+    public var name: String?
     
     var mesh: Mesh?
     
@@ -35,13 +40,14 @@ public class Tile: Soilable, Clearable, Encodable, Neighbour, Renderable, Updata
         self.ancestor = ancestor
         
         self.volume = World.Axis.aligned(tile: coordinate)
+        
+        self.name = "Tile [\(coordinate.x), \(coordinate.y), \(coordinate.z)]"
     }
     
     public func encode(to encoder: Encoder) throws {
         
         var container = encoder.container(keyedBy: CodingKeys.self)
         
-        try container.encodeIfPresent(name, forKey: .name)
         try container.encode(volume.coordinate, forKey: .coordinate)
     }
     
@@ -73,20 +79,14 @@ public class Tile: Soilable, Clearable, Encodable, Neighbour, Renderable, Updata
     func update(delta: TimeInterval, time: TimeInterval) {}
     
     func render(transform: Transform) -> Mesh { return Mesh(polygons: []) }
-}
-
-extension Tile: Equatable {
     
-    public static func == (lhs: Tile, rhs: Tile) -> Bool {
-        
-        return lhs.volume == rhs.volume
-    }
-}
-
-extension Tile: Hashable {
+    public var children: [SceneGraphNode] { return [] }
     
-    public func hash(into hasher: inout Hasher) {
-        
-        hasher.combine(volume)
-    }
+    public var childCount: Int { return children.count }
+    
+    public var isLeaf: Bool { return children.isEmpty }
+    
+    public var category: SceneGraphNodeCategory { fatalError("SceneGraphIdentifiable.category must be overridden") }
+    
+    public var type: SceneGraphNodeType { return .tile }
 }

@@ -8,4 +8,5 @@
 
 public class AreaTile<E: AreaEdge>: Tile {
     
+    public override var category: SceneGraphNodeCategory { return .area }
 }

@@ -15,6 +15,8 @@ public class TerrainEdge: Edge<TerrainLayer> {
         static let lip = 0.07
     }
     
+    public override var category: SceneGraphNodeCategory { return .terrain }
+    
     override func render(transform: Transform) -> Mesh {
         
         let (o0, o1) = cardinal.ordinals
@@ -25,7 +27,7 @@ public class TerrainEdge: Edge<TerrainLayer> {
         
         var polygons: [Pasture.Polygon] = []
         
-        for layer in layers {
+        for layer in layers where !layer.isHidden {
             
             let c0 = layer.lower?.get(elevation: o0) ?? World.Constants.floor
             let c1 = layer.lower?.centerElevation ?? World.Constants.floor

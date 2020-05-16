@@ -12,7 +12,7 @@ protocol Layerable: Tile {
     
     var edges: [Cardinal: E] { get set }
     
-    func add(edge cardinal: Cardinal, configurator: Layer.Configurator) -> E
+    func add(edge cardinal: Cardinal, configurator: TerrainEdge.LayerConfigurator) -> E
     func find(edge cardinal: Cardinal) -> E?
     func remove(edge cardinal: Cardinal)
 }

@@ -27,7 +27,7 @@ Pod::Spec.new do |s|
 
     	'Meadow' => [
 
-    		"Meadow/Core/**/*.{json,lintel,model,prop,proplist,metal}"
+    		"Meadow/Core/**/*.{metal}"
     	]
     }
     

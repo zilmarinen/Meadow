@@ -8,4 +8,5 @@
 
 public class FoliageTile: Tile {
     
+    public override var category: SceneGraphNodeCategory { return .foliage }
 }

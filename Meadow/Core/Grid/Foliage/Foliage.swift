@@ -19,4 +19,16 @@ public class Foliage: Grid<FoliageChunk, FoliageTile> {
         
         fatalError("init(coder:) has not been implemented")
     }
+    
+    public override var category: SceneGraphNodeCategory { return .foliage }
+}
+
+extension Foliage: GridDecodable {
+    
+    typealias JSON = FoliageJSON
+    
+    func decode(json: FoliageJSON) {
+        
+        //
+    }
 }

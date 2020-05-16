@@ -6,7 +6,7 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
-public struct Coordinate: Encodable {
+public struct Coordinate: Codable {
     
     public let x: Int
     public let y: Int

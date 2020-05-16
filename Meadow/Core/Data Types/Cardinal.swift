@@ -8,12 +8,23 @@
 
 import Pasture
 
-public enum Cardinal: Int, CaseIterable, Encodable {
+public enum Cardinal: Int, CaseIterable, Codable {
     
     case north
     case east
     case south
     case west
+    
+    public var description: String {
+        
+        switch self {
+            
+        case .north: return "North"
+        case .east: return "East"
+        case .south: return "South"
+        case .west: return "West"
+        }
+    }
 }
 
 extension Cardinal {

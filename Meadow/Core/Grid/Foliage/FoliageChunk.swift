@@ -8,4 +8,5 @@
 
 public class FoliageChunk: Chunk<FoliageTile> {
     
+    public override var category: SceneGraphNodeCategory { return .foliage }
 }

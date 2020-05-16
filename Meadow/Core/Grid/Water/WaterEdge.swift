@@ -8,4 +8,5 @@
 
 public class WaterEdge: Edge<WaterLayer> {
     
+    public override var category: SceneGraphNodeCategory { return .water }
 }

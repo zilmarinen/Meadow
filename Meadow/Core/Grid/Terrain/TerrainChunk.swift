@@ -8,4 +8,5 @@
 
 public class TerrainChunk: Chunk<TerrainTile<TerrainEdge>> {
     
+    public override var category: SceneGraphNodeCategory { return .terrain }
 }

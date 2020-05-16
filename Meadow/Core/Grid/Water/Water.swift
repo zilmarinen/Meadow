@@ -19,4 +19,16 @@ public class Water: Grid<WaterChunk, WaterTile<WaterEdge>> {
         
         fatalError("init(coder:) has not been implemented")
     }
+    
+    public override var category: SceneGraphNodeCategory { return .water }
+}
+
+extension Water: GridDecodable {
+    
+    typealias JSON = WaterJSON
+    
+    func decode(json: WaterJSON) {
+        
+        //
+    }
 }

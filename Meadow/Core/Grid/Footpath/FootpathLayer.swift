@@ -8,4 +8,5 @@
 
 public class FootpathLayer: Layer {
     
+    public override var category: SceneGraphNodeCategory { return .footpath }
 }

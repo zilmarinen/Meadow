@@ -8,4 +8,5 @@
 
 public class FootpathEdge: Edge<FootpathLayer> {
     
+    public override var category: SceneGraphNodeCategory { return .footpath }
 }

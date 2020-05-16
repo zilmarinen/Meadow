@@ -6,9 +6,9 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
-protocol SoilableChild {}
+public protocol SoilableChild {}
 
-protocol SoilableParent: class {
+public protocol SoilableParent: class {
     
     func child(didBecomeDirty child: SoilableChild)
 }
@@ -36,7 +36,7 @@ extension Soilable {
         return true
     }
     
-    func child(didBecomeDirty child: SoilableChild) {
+    public func child(didBecomeDirty child: SoilableChild) {
         
         becomeDirty()
     }

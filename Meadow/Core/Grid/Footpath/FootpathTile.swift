@@ -8,4 +8,5 @@
 
 public class FootpathTile<E: FootpathEdge>: Tile {
     
+    public override var category: SceneGraphNodeCategory { return .footpath }
 }

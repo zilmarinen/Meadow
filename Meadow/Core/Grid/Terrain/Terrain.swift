@@ -19,12 +19,39 @@ public class Terrain: Grid<TerrainChunk, TerrainTile<TerrainEdge>> {
         
         fatalError("init(coder:) has not been implemented")
     }
+    
+    public override var category: SceneGraphNodeCategory { return .terrain }
+}
+
+extension Terrain: GridDecodable {
+    
+    typealias JSON = TerrainJSON
+    
+    func decode(json: TerrainJSON) {
+        
+        json.chunks.forEach { chunkJSON in
+            
+            chunkJSON.tiles.forEach { tileJSON in
+                
+                tileJSON.edges.forEach { edgeJSON in
+                    
+                    edgeJSON.layers.forEach { layerJSON in
+                        
+                        self.add(layer: tileJSON.coordinate, cardinal: edgeJSON.cardinal) { layer in
+                            
+                            layer.color = .default
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 public extension Terrain {
     
     @discardableResult
-    func add(tile coordinate: Coordinate, configurator: Layer.Configurator) -> TerrainTile<TerrainEdge> {
+    func add(tile coordinate: Coordinate, configurator: TerrainEdge.LayerConfigurator) -> TerrainTile<TerrainEdge> {
         
         let tile = find(tile: coordinate) ?? add(tile: coordinate)
         
@@ -40,7 +67,7 @@ public extension Terrain {
     }
     
     @discardableResult
-    func add(layer coordinate: Coordinate, cardinal: Cardinal, configurator: Layer.Configurator) -> TerrainLayer? {
+    func add(layer coordinate: Coordinate, cardinal: Cardinal, configurator: TerrainEdge.LayerConfigurator) -> TerrainLayer? {
         
         let tile = find(tile: coordinate) ?? add(tile: coordinate)
         

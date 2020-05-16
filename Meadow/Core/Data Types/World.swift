@@ -13,14 +13,14 @@ public struct World {
     public enum Constants {
         
         public static let ceiling = 20
-        public static let floor = -World.Constants.ceiling
+        public static let floor = -ceiling
         public static let yStep = Double(0.25)
         
         public static let chunkSize = 5
         public static let tileSize = 1
     }
     
-    enum Axis {
+    public enum Axis {
         
         static func aligned(chunk coordinate: Coordinate) -> Volume {
             
@@ -49,7 +49,7 @@ public struct World {
             return Coordinate(x: coordinate.x, y: World.Constants.floor, z: coordinate.z)
         }
         
-        static func y(y: Int) -> Double {
+        public static func y(y: Int) -> Double {
             
             return Double(y) * World.Constants.yStep
         }

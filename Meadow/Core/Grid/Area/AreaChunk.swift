@@ -8,4 +8,5 @@
 
 public class AreaChunk: Chunk<AreaTile<AreaEdge>> {
     
+    public override var category: SceneGraphNodeCategory { return .area }
 }

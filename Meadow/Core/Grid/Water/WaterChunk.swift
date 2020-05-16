@@ -8,4 +8,5 @@
 
 public class WaterChunk: Chunk<WaterTile<WaterEdge>> {
     
+    public override var category: SceneGraphNodeCategory { return .water }
 }

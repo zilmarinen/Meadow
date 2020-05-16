@@ -19,4 +19,16 @@ public class Footpath: Grid<FootpathChunk, FootpathTile<FootpathEdge>> {
         
         fatalError("init(coder:) has not been implemented")
     }
+    
+    public override var category: SceneGraphNodeCategory { return .footpath }
+}
+
+extension Footpath: GridDecodable {
+    
+    typealias JSON = FootpathJSON
+    
+    func decode(json: FootpathJSON) {
+        
+        //
+    }
 }

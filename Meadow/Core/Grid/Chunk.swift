@@ -10,15 +10,23 @@ import Foundation
 import SceneKit
 import Pasture
 
-public class Chunk<T: Tile>: SCNNode, Hideable, Soilable {
+public class Chunk<T: Tile>: SCNNode, Hideable, SceneGraphIdentifiable, SceneGraphNode, Soilable {
     
-    internal weak var ancestor: SoilableParent?
+    public weak var ancestor: SoilableParent?
     
     internal var isDirty = false
     
     let volume: Volume
     
     var tiles: [T] = []
+    
+    public override var isHidden: Bool {
+        
+        didSet {
+            
+            becomeDirty()
+        }
+    }
     
     required init(ancestor: SoilableParent, coordinate: Coordinate) {
         
@@ -28,6 +36,8 @@ public class Chunk<T: Tile>: SCNNode, Hideable, Soilable {
         
         super.init()
         
+        self.name = "Chunk [\(coordinate.x), \(coordinate.y), \(coordinate.z)]"
+        
         self.position = SCNVector3(vector: Vector(coordinate: volume.coordinate))
     }
     
@@ -35,6 +45,16 @@ public class Chunk<T: Tile>: SCNNode, Hideable, Soilable {
         
         fatalError("init(coder:) has not been implemented")
     }
+    
+    public var children: [SceneGraphNode] { return tiles }
+    
+    public var childCount: Int { return children.count }
+    
+    public var isLeaf: Bool { return children.isEmpty }
+    
+    public var category: SceneGraphNodeCategory { fatalError("SceneGraphIdentifiable.category must be overridden") }
+    
+    public var type: SceneGraphNodeType { return .chunk }
 }
 
 extension Chunk {
@@ -76,19 +96,19 @@ extension Chunk {
         
         guard isDirty else { return false }
         
-        var mesh: Mesh?
+        var meshes: [Mesh] = []
         
         tiles.forEach { tile in
             
             tile.clean()
             
-            if let tileMesh = tile.mesh {
-            
-                mesh = mesh?.union(mesh: tileMesh) ?? tileMesh
+            if !tile.isHidden, let mesh = tile.mesh {
+                
+                meshes.append(mesh)
             }
         }
         
-        geometry = SCNGeometry(mesh: mesh ?? Mesh(polygons: []), materialSearch: {
+        geometry = SCNGeometry(mesh: meshes.union(), materialSearch: {
             
             let material = SCNMaterial()
             
@@ -120,7 +140,6 @@ extension Chunk: Encodable {
     
     enum CodingKeys: CodingKey {
         
-        case name
         case tiles
     }
     
@@ -128,7 +147,6 @@ extension Chunk: Encodable {
         
         var container = encoder.container(keyedBy: CodingKeys.self)
         
-        try container.encode(name, forKey: .name)
         try container.encode(tiles, forKey: .tiles)
     }
 }

@@ -10,10 +10,10 @@ public class TerrainLayer: Layer {
     
     public struct Color {
         
-        var primary: MDWColor
-        var secondary: MDWColor
+        public var primary: MDWColor
+        public var secondary: MDWColor
         
-        static var `default`: Color = Color(primary: .green, secondary: .brown)
+        public static var `default`: Color = Color(primary: .green, secondary: .brown)
         
         public init(primary: MDWColor, secondary: MDWColor) {
             
@@ -29,4 +29,6 @@ public class TerrainLayer: Layer {
             becomeDirty()
         }
     }
+    
+    public override var category: SceneGraphNodeCategory { return .terrain }
 }

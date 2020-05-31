@@ -10,7 +10,7 @@ import Pasture
 
 protocol Renderable: Hideable {
     
-    var mesh: Mesh? { get }
+    var mesh: Mesh { get }
     
     func render(transform: Transform) -> Mesh
 }

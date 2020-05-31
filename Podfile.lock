@@ -2,17 +2,24 @@ PODS:
   - Pasture (0.1):
     - Pasture/Core (= 0.1)
   - Pasture/Core (0.1)
+  - Terrace (0.1):
+    - Terrace/Core (= 0.1)
+  - Terrace/Core (0.1)
 
 DEPENDENCIES:
   - Pasture (from `../Pasture`)
+  - Terrace (from `../Terrace`)
 
 EXTERNAL SOURCES:
   Pasture:
     :path: "../Pasture"
+  Terrace:
+    :path: "../Terrace"
 
 SPEC CHECKSUMS:
   Pasture: a49f933d4866c7a3ee7413322648fc6f3a479172
+  Terrace: 76c2ba0146f94bec782193635b1ce7552ce6c59f
 
-PODFILE CHECKSUM: 81414081e67269f3dfdd75d291725b000032155d
+PODFILE CHECKSUM: 962d57fd5a33a5a3dabbf59942d4c9be4ce7b6cf
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.9.1

@@ -6,9 +6,9 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
-public struct Corner {
+public struct Corner: Codable {
     
-    enum Anchor {
+    enum Anchor: Int, Codable {
         
         case left
         case right

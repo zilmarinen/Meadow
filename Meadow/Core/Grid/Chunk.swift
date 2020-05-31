@@ -14,7 +14,7 @@ public class Chunk<T: Tile>: SCNNode, Hideable, SceneGraphIdentifiable, SceneGra
     
     public weak var ancestor: SoilableParent?
     
-    internal var isDirty = false
+    public var isDirty = false
     
     let volume: Volume
     
@@ -92,7 +92,7 @@ extension Chunk {
 
 extension Chunk {
     
-    @discardableResult func clean() -> Bool {
+    @discardableResult public func clean() -> Bool {
         
         guard isDirty else { return false }
         
@@ -102,9 +102,9 @@ extension Chunk {
             
             tile.clean()
             
-            if !tile.isHidden, let mesh = tile.mesh {
+            if !tile.isHidden {
                 
-                meshes.append(mesh)
+                meshes.append(tile.mesh)
             }
         }
         
@@ -159,7 +159,5 @@ extension Chunk: Updatable {
             
             tile.update(delta: delta, time: time)
         }
-        
-        clean()
     }
 }

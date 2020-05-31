@@ -9,9 +9,11 @@
 #if os(macOS)
 
     public typealias MDWColor = NSColor
+    public typealias MDWFloat = CGFloat
 
 #else
 
     public typealias MDWColor = UIColor
+    public typealias MDWFloat = Float
 
 #endif

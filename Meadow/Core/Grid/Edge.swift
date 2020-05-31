@@ -17,7 +17,7 @@ public class Edge<L: Layer>: NSObject, Soilable, Clearable, Encodable, Renderabl
     
     public weak var ancestor: SoilableParent?
     
-    internal var isDirty = false
+    public var isDirty = false
     
     public var isHidden: Bool = false {
         
@@ -29,7 +29,7 @@ public class Edge<L: Layer>: NSObject, Soilable, Clearable, Encodable, Renderabl
     
     public var name: String?
     
-    var mesh: Mesh?
+    var mesh: Mesh = Mesh(polygons: [])
     
     public let cardinal: Cardinal
     
@@ -51,9 +51,14 @@ public class Edge<L: Layer>: NSObject, Soilable, Clearable, Encodable, Renderabl
         try container.encode(cardinal, forKey: .cardinal)
     }
     
-    @discardableResult func clean() -> Bool {
+    @discardableResult public func clean() -> Bool {
         
         guard isDirty else { return false }
+        
+        layers.forEach { layer in
+            
+            layer.clean()
+        }
         
         mesh = render(transform: .identity)
         
@@ -78,11 +83,9 @@ public class Edge<L: Layer>: NSObject, Soilable, Clearable, Encodable, Renderabl
             
             layer.update(delta: delta, time: time)
         }
-        
-        clean()
     }
     
-    func render(transform: Transform) -> Mesh { return Mesh(polygons: []) }
+    func render(transform: Transform) -> Mesh { fatalError("Edge.render must be overridden") }
     
     public var children: [SceneGraphNode] { return layers }
     

@@ -8,29 +8,22 @@ Pod::Spec.new do |s|
   s.author       = { "Zack Brown" => "zack@zackbrown.co.uk" }
   s.requires_arc = true
   s.source       = { :git => "", :tag => s.version.to_s }
-  s.default_subspec = 'Core'
   s.pod_target_xcconfig = { 'SWIFT_VERSION' => '4' }
   s.dependency 'Pasture'
+  s.dependency 'Terrace'
 
   s.ios.deployment_target = '11.3'
   s.osx.deployment_target = '10.13'
   s.tvos.deployment_target = '11.3'
 
-  s.subspec 'Core' do |cs|
+  s.source_files = "Meadow/Core/**/*.{h,m,swift}"
+  s.ios.source_files = "Meadow/Platforms/iOS/**/*.{h,m,swift}"
+  s.osx.source_files = "Meadow/Platforms/macOS/**/*.{h,m,swift}"
+  s.tvos.source_files = "Meadow/Platforms/iOS/**/*.{h,m,swift}"
 
-    cs.source_files = "Meadow/Core/**/*.{h,m,swift}"
-    cs.ios.source_files = "Meadow/Platforms/iOS/**/*.{h,m,swift}"
-    cs.osx.source_files = "Meadow/Platforms/macOS/**/*.{h,m,swift}"
-    cs.tvos.source_files = "Meadow/Platforms/iOS/**/*.{h,m,swift}"
-
-    cs.resource_bundles = {
-
-    	'Meadow' => [
-
-    		"Meadow/Core/**/*.{metal}"
-    	]
-    }
+  s.resources = [
     
-  end
+    "*.{metallib}"
+  ]
 
 end

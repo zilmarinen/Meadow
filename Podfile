@@ -6,6 +6,7 @@ target 'Meadow-iOS' do
 	platform :ios, '11.3'
 
 	pod 'Pasture', :path => '../Pasture'
+  pod 'Terrace', :path => '../Terrace'
 
   target 'Meadow-iOSTests' do
     
@@ -20,6 +21,7 @@ target 'Meadow-macOS' do
 	platform :osx, '10.13'
 
 	pod 'Pasture', :path => '../Pasture'
+  pod 'Terrace', :path => '../Terrace'
 
   target 'Meadow-macOSTests' do
     

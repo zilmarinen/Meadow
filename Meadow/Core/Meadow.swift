@@ -8,24 +8,28 @@
 
 import SceneKit
 
-public final class Meadow: SCNNode, SceneGraphIdentifiable, SceneGraphNode {
+public final class Meadow: SCNNode, SceneGraphIdentifiable, SceneGraphNode, Soilable {
     
-    var lastUpdate: TimeInterval?
+    public var ancestor: SoilableParent?
     
-    public let actors = Actors()
-    public let area = Area()
-    public let foliage = Foliage()
-    public let footpath = Footpath()
-    public let terrain = Terrain()
-    public let water = Water()
+    public var isDirty: Bool = false
+    
+    public static var bundle: Bundle? { return Bundle(for: Meadow.self) }
+    
+    public lazy var actors: Actors = { return Actors(ancestor: self) }()
+    public lazy var area: Area = { return Area(ancestor: self) }()
+    public lazy var foliage: Foliage = { return Foliage(ancestor: self) }()
+    public lazy var footpath: Footpath = { return Footpath(ancestor: self) }()
+    public lazy var terrain: Terrain = { return Terrain(ancestor: self) }()
+    public lazy var water: Water = { return Water(ancestor: self) }()
     
     public let floor = Floor()
     
-    public override init() {
+    public required init(json: MeadowJSON? = nil) {
         
         super.init()
         
-        self.name = "Meadow"
+        self.name = json?.name ?? "Meadow"
         
         addChildNode(actors)
         addChildNode(area)
@@ -35,13 +39,8 @@ public final class Meadow: SCNNode, SceneGraphIdentifiable, SceneGraphNode {
         addChildNode(water)
         
         geometry = floor
-    }
-    
-    public init(json: MeadowJSON) {
         
-        super.init()
-        
-        self.name = json.name
+        guard let json = json else { return }
         
         area.decode(json: json.area)
         foliage.decode(json: json.foliage)
@@ -66,11 +65,27 @@ public final class Meadow: SCNNode, SceneGraphIdentifiable, SceneGraphNode {
     public var type: SceneGraphNodeType { return .grid }
 }
 
-extension Meadow: SCNSceneRendererDelegate {
+extension Meadow {
     
-    public func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
+    @discardableResult public func clean() -> Bool {
         
-        let delta = time - (lastUpdate ?? time)
+        guard isDirty else { return false }
+        
+        area.clean()
+        foliage.clean()
+        footpath.clean()
+        terrain.clean()
+        water.clean()
+        
+        isDirty = false
+        
+        return true
+    }
+}
+
+extension Meadow: Updatable {
+    
+    public func update(delta: TimeInterval, time: TimeInterval) {
         
         actors.update(delta: delta, time: time)
         area.update(delta: delta, time: time)
@@ -78,8 +93,6 @@ extension Meadow: SCNSceneRendererDelegate {
         footpath.update(delta: delta, time: time)
         terrain.update(delta: delta, time: time)
         water.update(delta: delta, time: time)
-        
-        lastUpdate = time
     }
 }
 

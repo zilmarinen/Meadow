@@ -8,9 +8,9 @@
 
 public class Area: Grid<AreaChunk, AreaTile<AreaEdge>> {
     
-    override init() {
-        
-        super.init()
+    override init(ancestor: SoilableParent) {
+    
+        super.init(ancestor: ancestor)
         
         name = "Area"
     }

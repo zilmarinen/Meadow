@@ -8,9 +8,9 @@
 
 public class Terrain: Grid<TerrainChunk, TerrainTile<TerrainEdge>> {
     
-    override init() {
-        
-        super.init()
+    override init(ancestor: SoilableParent) {
+    
+    super.init(ancestor: ancestor)
         
         name = "Terrain"
     }
@@ -39,7 +39,7 @@ extension Terrain: GridDecodable {
                         
                         self.add(layer: tileJSON.coordinate, cardinal: edgeJSON.cardinal) { layer in
                             
-                            layer.color = .default
+                            layer.color = .black
                         }
                     }
                 }

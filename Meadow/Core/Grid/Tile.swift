@@ -17,7 +17,7 @@ public class Tile: NSObject, Soilable, Clearable, Encodable, Neighbour, Renderab
     
     public weak var ancestor: SoilableParent?
     
-    internal var isDirty = false
+    public var isDirty = false
     
     public var isHidden: Bool = false {
         
@@ -29,7 +29,7 @@ public class Tile: NSObject, Soilable, Clearable, Encodable, Neighbour, Renderab
     
     public var name: String?
     
-    var mesh: Mesh?
+    var mesh: Mesh = Mesh(polygons: [])
     
     let volume: Volume
     
@@ -51,7 +51,7 @@ public class Tile: NSObject, Soilable, Clearable, Encodable, Neighbour, Renderab
         try container.encode(volume.coordinate, forKey: .coordinate)
     }
     
-    @discardableResult func clean() -> Bool {
+    @discardableResult public func clean() -> Bool {
         
         guard isDirty else { return false }
         

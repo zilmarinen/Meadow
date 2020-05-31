@@ -26,6 +26,18 @@ public class TerrainTile<E: TerrainEdge>: Tile, Layerable {
         try container.encode(edges, forKey: .edges)
     }
     
+    public override func clean() -> Bool {
+        
+        guard super.clean() else { return false }
+        
+        edges.forEach { (_, edge) in
+            
+            edge.clean()
+        }
+        
+        return true
+    }
+    
     override func render(transform: Transform) -> Mesh {
         
         var meshes: [Mesh] = []

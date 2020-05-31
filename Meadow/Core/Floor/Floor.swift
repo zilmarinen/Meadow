@@ -12,22 +12,26 @@ public class Floor: SCNPlane {
     
     struct Uniform: ShaderUniform {
         
+        let worldFloor: float_t
+        
         let backgroundColor: vector_float4
         let gridColor: vector_float4
         
         let rendersGridLines: Bool
         
-        init(backgroundColor: MDWColor, gridColor: MDWColor, rendersGridLines: Bool = false) {
+        init(worldFloor: Double, backgroundColor: Color, gridColor: Color, rendersGridLines: Bool = false) {
             
-            self.backgroundColor = vector_float4(Float(backgroundColor.redComponent), Float(backgroundColor.greenComponent), Float(backgroundColor.blueComponent), Float(backgroundColor.alphaComponent))
+            self.worldFloor = float_t(worldFloor)
             
-            self.gridColor = vector_float4(Float(gridColor.redComponent), Float(gridColor.greenComponent), Float(gridColor.blueComponent), Float(gridColor.alphaComponent))
+            self.backgroundColor = backgroundColor.uniform
+            
+            self.gridColor = gridColor.uniform
             
             self.rendersGridLines = rendersGridLines
         }
     }
     
-    public var backgroundColor: MDWColor = MDWColor(calibratedRed: 0.35, green: 0.35, blue: 0.35, alpha: 1) {
+    public var backgroundColor: Color = .black {
         
         didSet {
             
@@ -35,7 +39,7 @@ public class Floor: SCNPlane {
         }
     }
     
-    public var gridColor: MDWColor = MDWColor(calibratedRed: 0, green: 0, blue: 0, alpha: 1) {
+    public var gridColor: Color = .white {
         
         didSet {
             
@@ -53,7 +57,7 @@ public class Floor: SCNPlane {
     
     var uniform: Uniform {
         
-        return Uniform(backgroundColor: backgroundColor, gridColor: gridColor, rendersGridLines: rendersGridLines)
+        return Uniform(worldFloor: World.Axis.y(y: World.Constants.floor), backgroundColor: backgroundColor, gridColor: gridColor, rendersGridLines: rendersGridLines)
     }
     
     override init() {
@@ -64,6 +68,7 @@ public class Floor: SCNPlane {
         height = 1.5
         
         program = ShaderProgram(named: "floor")
+        program?.library = Stage.shaderLibrary
         
         set(uniform: uniform)
     }

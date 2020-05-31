@@ -8,9 +8,9 @@
 
 public class Footpath: Grid<FootpathChunk, FootpathTile<FootpathEdge>> {
     
-    override init() {
+    override init(ancestor: SoilableParent) {
         
-        super.init()
+        super.init(ancestor: ancestor)
         
         name = "Footpath"
     }

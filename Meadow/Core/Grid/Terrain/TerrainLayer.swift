@@ -8,21 +8,7 @@
 
 public class TerrainLayer: Layer {
     
-    public struct Color {
-        
-        public var primary: MDWColor
-        public var secondary: MDWColor
-        
-        public static var `default`: Color = Color(primary: .green, secondary: .brown)
-        
-        public init(primary: MDWColor, secondary: MDWColor) {
-            
-            self.primary = primary
-            self.secondary = secondary
-        }
-    }
-    
-    public var color = Color.default {
+    public var color: Color = .black {
         
         didSet {
             

@@ -17,7 +17,7 @@ public class Layer: NSObject, Soilable, Clearable, Encodable, Hideable, SceneGra
     
     public weak var ancestor: SoilableParent?
     
-    internal var isDirty = false
+    public var isDirty = false
     
     public var isHidden: Bool = false {
         
@@ -67,7 +67,7 @@ public class Layer: NSObject, Soilable, Clearable, Encodable, Hideable, SceneGra
         try container.encode(cardinal, forKey: .cardinal)
     }
     
-    @discardableResult func clean() -> Bool {
+    @discardableResult public func clean() -> Bool {
         
         guard isDirty else { return false }
         

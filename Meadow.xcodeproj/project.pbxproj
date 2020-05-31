@@ -3,145 +3,187 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		18087D53247526B800D02BCF /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18087D52247526B800D02BCF /* Color.swift */; platformFilter = ios; };
+		18087D54247526B800D02BCF /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18087D52247526B800D02BCF /* Color.swift */; };
 		1819B73A20A574F800BEE585 /* Meadow_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1819B73120A574F800BEE585 /* Meadow_iOS.framework */; };
 		1819B74120A574F800BEE585 /* Meadow_iOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 1819B73320A574F800BEE585 /* Meadow_iOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1819B75620A5752000BEE585 /* Meadow_macOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1819B74D20A5752000BEE585 /* Meadow_macOS.framework */; };
 		1819B75D20A5752000BEE585 /* Meadow_macOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 1819B74F20A5752000BEE585 /* Meadow_macOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		181EDF992451849F0030D23C /* SceneGraphNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181EDF982451849F0030D23C /* SceneGraphNode.swift */; };
+		181EDF992451849F0030D23C /* SceneGraphNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181EDF982451849F0030D23C /* SceneGraphNode.swift */; platformFilter = ios; };
 		181EDF9A2451849F0030D23C /* SceneGraphNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181EDF982451849F0030D23C /* SceneGraphNode.swift */; };
-		181EDF9D2451B9790030D23C /* Actors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181EDF9C2451B9790030D23C /* Actors.swift */; };
+		181EDF9D2451B9790030D23C /* Actors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181EDF9C2451B9790030D23C /* Actors.swift */; platformFilter = ios; };
 		181EDF9E2451B9790030D23C /* Actors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181EDF9C2451B9790030D23C /* Actors.swift */; };
-		181EDFA02451B9F90030D23C /* NPCs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181EDF9F2451B9F90030D23C /* NPCs.swift */; };
+		181EDFA02451B9F90030D23C /* NPCs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181EDF9F2451B9F90030D23C /* NPCs.swift */; platformFilter = ios; };
 		181EDFA12451B9F90030D23C /* NPCs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181EDF9F2451B9F90030D23C /* NPCs.swift */; };
-		183479DD245026C400E6516C /* GridDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183479DC245026C400E6516C /* GridDecodable.swift */; };
+		18264FA12481411900D5B8AF /* CameraObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18264FA02481411900D5B8AF /* CameraObserver.swift */; };
+		18264FA22481411900D5B8AF /* CameraObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18264FA02481411900D5B8AF /* CameraObserver.swift */; };
+		183479DD245026C400E6516C /* GridDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183479DC245026C400E6516C /* GridDecodable.swift */; platformFilter = ios; };
 		183479DE245026C400E6516C /* GridDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183479DC245026C400E6516C /* GridDecodable.swift */; };
-		184AF116240930A8009FF8E3 /* Hideable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184AF115240930A8009FF8E3 /* Hideable.swift */; };
+		184AF116240930A8009FF8E3 /* Hideable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184AF115240930A8009FF8E3 /* Hideable.swift */; platformFilter = ios; };
 		184AF117240930A8009FF8E3 /* Hideable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184AF115240930A8009FF8E3 /* Hideable.swift */; };
-		184AF11A24093730009FF8E3 /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184AF11924093730009FF8E3 /* Vector.swift */; };
+		184AF11A24093730009FF8E3 /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184AF11924093730009FF8E3 /* Vector.swift */; platformFilter = ios; };
 		184AF11B24093730009FF8E3 /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184AF11924093730009FF8E3 /* Vector.swift */; };
-		184AF11D24094102009FF8E3 /* Typealiases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184AF11C24094102009FF8E3 /* Typealiases.swift */; };
+		184AF11D24094102009FF8E3 /* Typealiases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184AF11C24094102009FF8E3 /* Typealiases.swift */; platformFilter = ios; };
 		184AF11E24094102009FF8E3 /* Typealiases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184AF11C24094102009FF8E3 /* Typealiases.swift */; };
-		184E62EF244DDB9F00D2B6F8 /* Grid+Encodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184E62EE244DDB9F00D2B6F8 /* Grid+Encodable.swift */; };
+		184E62EF244DDB9F00D2B6F8 /* Grid+Encodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184E62EE244DDB9F00D2B6F8 /* Grid+Encodable.swift */; platformFilter = ios; };
 		184E62F0244DDBB700D2B6F8 /* Grid+Encodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184E62EE244DDB9F00D2B6F8 /* Grid+Encodable.swift */; };
-		184E62F3244DE3EA00D2B6F8 /* Terrain+Encodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184E62F2244DE3EA00D2B6F8 /* Terrain+Encodable.swift */; };
-		184E62F5244DE40D00D2B6F8 /* Meadow+Encodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184E62F4244DE40D00D2B6F8 /* Meadow+Encodable.swift */; };
+		184E62F3244DE3EA00D2B6F8 /* Terrain+Encodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184E62F2244DE3EA00D2B6F8 /* Terrain+Encodable.swift */; platformFilter = ios; };
+		184E62F5244DE40D00D2B6F8 /* Meadow+Encodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184E62F4244DE40D00D2B6F8 /* Meadow+Encodable.swift */; platformFilter = ios; };
 		184E62FA244DE43E00D2B6F8 /* Terrain+Encodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184E62F2244DE3EA00D2B6F8 /* Terrain+Encodable.swift */; };
-		184E62FC244DE44A00D2B6F8 /* Water+Encodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184E62FB244DE44A00D2B6F8 /* Water+Encodable.swift */; };
+		184E62FC244DE44A00D2B6F8 /* Water+Encodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184E62FB244DE44A00D2B6F8 /* Water+Encodable.swift */; platformFilter = ios; };
 		184E62FD244DE44A00D2B6F8 /* Water+Encodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184E62FB244DE44A00D2B6F8 /* Water+Encodable.swift */; };
-		184E62FF244DE45400D2B6F8 /* Footpath+Encodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184E62FE244DE45400D2B6F8 /* Footpath+Encodable.swift */; };
+		184E62FF244DE45400D2B6F8 /* Footpath+Encodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184E62FE244DE45400D2B6F8 /* Footpath+Encodable.swift */; platformFilter = ios; };
 		184E6300244DE45400D2B6F8 /* Footpath+Encodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184E62FE244DE45400D2B6F8 /* Footpath+Encodable.swift */; };
-		184E6302244DE45D00D2B6F8 /* Foliage+Encodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184E6301244DE45D00D2B6F8 /* Foliage+Encodable.swift */; };
+		184E6302244DE45D00D2B6F8 /* Foliage+Encodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184E6301244DE45D00D2B6F8 /* Foliage+Encodable.swift */; platformFilter = ios; };
 		184E6303244DE45D00D2B6F8 /* Foliage+Encodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184E6301244DE45D00D2B6F8 /* Foliage+Encodable.swift */; };
-		184E6305244DE46600D2B6F8 /* Area+Encodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184E6304244DE46600D2B6F8 /* Area+Encodable.swift */; };
+		184E6305244DE46600D2B6F8 /* Area+Encodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184E6304244DE46600D2B6F8 /* Area+Encodable.swift */; platformFilter = ios; };
 		184E6306244DE46600D2B6F8 /* Area+Encodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184E6304244DE46600D2B6F8 /* Area+Encodable.swift */; };
 		184E6307244DE5C500D2B6F8 /* Meadow+Encodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184E62F4244DE40D00D2B6F8 /* Meadow+Encodable.swift */; };
-		185172B02463FA92006C9223 /* ShaderProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185172AF2463FA92006C9223 /* ShaderProgram.swift */; };
+		185172B02463FA92006C9223 /* ShaderProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185172AF2463FA92006C9223 /* ShaderProgram.swift */; platformFilter = ios; };
 		185172B12463FA92006C9223 /* ShaderProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185172AF2463FA92006C9223 /* ShaderProgram.swift */; };
-		189A6025246D4DC400DD68A7 /* Floor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189A6024246D4DC400DD68A7 /* Floor.swift */; };
+		189A6025246D4DC400DD68A7 /* Floor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189A6024246D4DC400DD68A7 /* Floor.swift */; platformFilter = ios; };
 		189A6026246D4DD300DD68A7 /* Floor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189A6024246D4DC400DD68A7 /* Floor.swift */; };
-		189A6028246D4E3200DD68A7 /* ShaderUniform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189A6027246D4E3200DD68A7 /* ShaderUniform.swift */; };
+		189A6028246D4E3200DD68A7 /* ShaderUniform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189A6027246D4E3200DD68A7 /* ShaderUniform.swift */; platformFilter = ios; };
 		189A6029246D4E3200DD68A7 /* ShaderUniform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189A6027246D4E3200DD68A7 /* ShaderUniform.swift */; };
-		189A602B246D4E5500DD68A7 /* SCNGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189A602A246D4E5500DD68A7 /* SCNGeometry.swift */; };
+		189A602B246D4E5500DD68A7 /* SCNGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189A602A246D4E5500DD68A7 /* SCNGeometry.swift */; platformFilter = ios; };
 		189A602C246D4E5500DD68A7 /* SCNGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189A602A246D4E5500DD68A7 /* SCNGeometry.swift */; };
-		18B567202456D17B00B79DA9 /* SceneGraphNodeCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B5671F2456D17B00B79DA9 /* SceneGraphNodeCategory.swift */; };
+		18B567202456D17B00B79DA9 /* SceneGraphNodeCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B5671F2456D17B00B79DA9 /* SceneGraphNodeCategory.swift */; platformFilter = ios; };
 		18B567212456D17B00B79DA9 /* SceneGraphNodeCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B5671F2456D17B00B79DA9 /* SceneGraphNodeCategory.swift */; };
-		18B567232456D1AA00B79DA9 /* SceneGraphNodeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B567222456D1AA00B79DA9 /* SceneGraphNodeType.swift */; };
+		18B567232456D1AA00B79DA9 /* SceneGraphNodeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B567222456D1AA00B79DA9 /* SceneGraphNodeType.swift */; platformFilter = ios; };
 		18B567242456D1AA00B79DA9 /* SceneGraphNodeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B567222456D1AA00B79DA9 /* SceneGraphNodeType.swift */; };
-		18B567262456D1B800B79DA9 /* SceneGraphIdentifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B567252456D1B800B79DA9 /* SceneGraphIdentifiable.swift */; };
+		18B567262456D1B800B79DA9 /* SceneGraphIdentifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B567252456D1B800B79DA9 /* SceneGraphIdentifiable.swift */; platformFilter = ios; };
 		18B567272456D1B800B79DA9 /* SceneGraphIdentifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B567252456D1B800B79DA9 /* SceneGraphIdentifiable.swift */; };
-		18EF594623ED8F3A0071DF1C /* Cardinal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF593023ED8F390071DF1C /* Cardinal.swift */; };
+		18CCCA202473EC0200E0A94B /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CCCA1F2473EC0200E0A94B /* Scene.swift */; platformFilter = ios; };
+		18CCCA212473EC0200E0A94B /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CCCA1F2473EC0200E0A94B /* Scene.swift */; };
+		18CCCA232473EC0C00E0A94B /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CCCA222473EC0C00E0A94B /* Camera.swift */; platformFilter = ios; };
+		18CCCA242473EC0C00E0A94B /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CCCA222473EC0C00E0A94B /* Camera.swift */; };
+		18EF594623ED8F3A0071DF1C /* Cardinal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF593023ED8F390071DF1C /* Cardinal.swift */; platformFilter = ios; };
 		18EF594723ED8F3A0071DF1C /* Cardinal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF593023ED8F390071DF1C /* Cardinal.swift */; };
-		18EF594823ED8F3A0071DF1C /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF593123ED8F390071DF1C /* Coordinate.swift */; };
+		18EF594823ED8F3A0071DF1C /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF593123ED8F390071DF1C /* Coordinate.swift */; platformFilter = ios; };
 		18EF594923ED8F3A0071DF1C /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF593123ED8F390071DF1C /* Coordinate.swift */; };
-		18EF594A23ED8F3A0071DF1C /* Ordinal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF593223ED8F390071DF1C /* Ordinal.swift */; };
+		18EF594A23ED8F3A0071DF1C /* Ordinal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF593223ED8F390071DF1C /* Ordinal.swift */; platformFilter = ios; };
 		18EF594B23ED8F3A0071DF1C /* Ordinal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF593223ED8F390071DF1C /* Ordinal.swift */; };
-		18EF594C23ED8F3A0071DF1C /* Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF593323ED8F390071DF1C /* Size.swift */; };
+		18EF594C23ED8F3A0071DF1C /* Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF593323ED8F390071DF1C /* Size.swift */; platformFilter = ios; };
 		18EF594D23ED8F3A0071DF1C /* Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF593323ED8F390071DF1C /* Size.swift */; };
-		18EF594E23ED8F3A0071DF1C /* Volume.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF593423ED8F390071DF1C /* Volume.swift */; };
+		18EF594E23ED8F3A0071DF1C /* Volume.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF593423ED8F390071DF1C /* Volume.swift */; platformFilter = ios; };
 		18EF594F23ED8F3A0071DF1C /* Volume.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF593423ED8F390071DF1C /* Volume.swift */; };
-		18EF595023ED8F3A0071DF1C /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF593523ED8F390071DF1C /* World.swift */; };
+		18EF595023ED8F3A0071DF1C /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF593523ED8F390071DF1C /* World.swift */; platformFilter = ios; };
 		18EF595123ED8F3A0071DF1C /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF593523ED8F390071DF1C /* World.swift */; };
-		18EF595223ED8F3A0071DF1C /* Clearable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF593723ED8F3A0071DF1C /* Clearable.swift */; };
+		18EF595223ED8F3A0071DF1C /* Clearable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF593723ED8F3A0071DF1C /* Clearable.swift */; platformFilter = ios; };
 		18EF595323ED8F3A0071DF1C /* Clearable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF593723ED8F3A0071DF1C /* Clearable.swift */; };
-		18EF595423ED8F3A0071DF1C /* Layerable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF593823ED8F3A0071DF1C /* Layerable.swift */; };
+		18EF595423ED8F3A0071DF1C /* Layerable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF593823ED8F3A0071DF1C /* Layerable.swift */; platformFilter = ios; };
 		18EF595523ED8F3A0071DF1C /* Layerable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF593823ED8F3A0071DF1C /* Layerable.swift */; };
-		18EF595623ED8F3A0071DF1C /* Neighbour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF593923ED8F3A0071DF1C /* Neighbour.swift */; };
+		18EF595623ED8F3A0071DF1C /* Neighbour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF593923ED8F3A0071DF1C /* Neighbour.swift */; platformFilter = ios; };
 		18EF595723ED8F3A0071DF1C /* Neighbour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF593923ED8F3A0071DF1C /* Neighbour.swift */; };
-		18EF595823ED8F3A0071DF1C /* Renderable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF593A23ED8F3A0071DF1C /* Renderable.swift */; };
+		18EF595823ED8F3A0071DF1C /* Renderable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF593A23ED8F3A0071DF1C /* Renderable.swift */; platformFilter = ios; };
 		18EF595923ED8F3A0071DF1C /* Renderable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF593A23ED8F3A0071DF1C /* Renderable.swift */; };
-		18EF595A23ED8F3A0071DF1C /* Soilable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF593B23ED8F3A0071DF1C /* Soilable.swift */; };
+		18EF595A23ED8F3A0071DF1C /* Soilable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF593B23ED8F3A0071DF1C /* Soilable.swift */; platformFilter = ios; };
 		18EF595B23ED8F3A0071DF1C /* Soilable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF593B23ED8F3A0071DF1C /* Soilable.swift */; };
-		18EF595C23ED8F3A0071DF1C /* Updatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF593C23ED8F3A0071DF1C /* Updatable.swift */; };
+		18EF595C23ED8F3A0071DF1C /* Updatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF593C23ED8F3A0071DF1C /* Updatable.swift */; platformFilter = ios; };
 		18EF595D23ED8F3A0071DF1C /* Updatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF593C23ED8F3A0071DF1C /* Updatable.swift */; };
-		18EF595E23ED8F3A0071DF1C /* Chunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF593E23ED8F3A0071DF1C /* Chunk.swift */; };
+		18EF595E23ED8F3A0071DF1C /* Chunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF593E23ED8F3A0071DF1C /* Chunk.swift */; platformFilter = ios; };
 		18EF595F23ED8F3A0071DF1C /* Chunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF593E23ED8F3A0071DF1C /* Chunk.swift */; };
-		18EF596023ED8F3A0071DF1C /* Corner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF593F23ED8F3A0071DF1C /* Corner.swift */; };
+		18EF596023ED8F3A0071DF1C /* Corner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF593F23ED8F3A0071DF1C /* Corner.swift */; platformFilter = ios; };
 		18EF596123ED8F3A0071DF1C /* Corner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF593F23ED8F3A0071DF1C /* Corner.swift */; };
-		18EF596223ED8F3A0071DF1C /* Edge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF594023ED8F3A0071DF1C /* Edge.swift */; };
+		18EF596223ED8F3A0071DF1C /* Edge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF594023ED8F3A0071DF1C /* Edge.swift */; platformFilter = ios; };
 		18EF596323ED8F3A0071DF1C /* Edge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF594023ED8F3A0071DF1C /* Edge.swift */; };
-		18EF596423ED8F3A0071DF1C /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF594123ED8F3A0071DF1C /* Grid.swift */; };
+		18EF596423ED8F3A0071DF1C /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF594123ED8F3A0071DF1C /* Grid.swift */; platformFilter = ios; };
 		18EF596523ED8F3A0071DF1C /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF594123ED8F3A0071DF1C /* Grid.swift */; };
-		18EF596623ED8F3A0071DF1C /* Layer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF594223ED8F3A0071DF1C /* Layer.swift */; };
+		18EF596623ED8F3A0071DF1C /* Layer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF594223ED8F3A0071DF1C /* Layer.swift */; platformFilter = ios; };
 		18EF596723ED8F3A0071DF1C /* Layer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF594223ED8F3A0071DF1C /* Layer.swift */; };
-		18EF596823ED8F3A0071DF1C /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF594323ED8F3A0071DF1C /* Tile.swift */; };
+		18EF596823ED8F3A0071DF1C /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF594323ED8F3A0071DF1C /* Tile.swift */; platformFilter = ios; };
 		18EF596923ED8F3A0071DF1C /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF594323ED8F3A0071DF1C /* Tile.swift */; };
-		18EF597423EDA7940071DF1C /* Area.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF597323EDA7940071DF1C /* Area.swift */; };
+		18EF597423EDA7940071DF1C /* Area.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF597323EDA7940071DF1C /* Area.swift */; platformFilter = ios; };
 		18EF597523EDA7940071DF1C /* Area.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF597323EDA7940071DF1C /* Area.swift */; };
-		18EF597723EDA7C00071DF1C /* AreaChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF597623EDA7C00071DF1C /* AreaChunk.swift */; };
+		18EF597723EDA7C00071DF1C /* AreaChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF597623EDA7C00071DF1C /* AreaChunk.swift */; platformFilter = ios; };
 		18EF597823EDA7C00071DF1C /* AreaChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF597623EDA7C00071DF1C /* AreaChunk.swift */; };
-		18EF597A23EDA7C70071DF1C /* AreaTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF597923EDA7C70071DF1C /* AreaTile.swift */; };
+		18EF597A23EDA7C70071DF1C /* AreaTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF597923EDA7C70071DF1C /* AreaTile.swift */; platformFilter = ios; };
 		18EF597B23EDA7C70071DF1C /* AreaTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF597923EDA7C70071DF1C /* AreaTile.swift */; };
-		18EF597D23EDA7CF0071DF1C /* AreaEdge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF597C23EDA7CF0071DF1C /* AreaEdge.swift */; };
+		18EF597D23EDA7CF0071DF1C /* AreaEdge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF597C23EDA7CF0071DF1C /* AreaEdge.swift */; platformFilter = ios; };
 		18EF597E23EDA7CF0071DF1C /* AreaEdge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF597C23EDA7CF0071DF1C /* AreaEdge.swift */; };
-		18EF598023EDA7DA0071DF1C /* AreaLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF597F23EDA7DA0071DF1C /* AreaLayer.swift */; };
+		18EF598023EDA7DA0071DF1C /* AreaLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF597F23EDA7DA0071DF1C /* AreaLayer.swift */; platformFilter = ios; };
 		18EF598123EDA7DA0071DF1C /* AreaLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF597F23EDA7DA0071DF1C /* AreaLayer.swift */; };
-		18EF598323EDA8560071DF1C /* Water.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF598223EDA8560071DF1C /* Water.swift */; };
+		18EF598323EDA8560071DF1C /* Water.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF598223EDA8560071DF1C /* Water.swift */; platformFilter = ios; };
 		18EF598423EDA8560071DF1C /* Water.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF598223EDA8560071DF1C /* Water.swift */; };
-		18EF598623EDA85F0071DF1C /* WaterChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF598523EDA85F0071DF1C /* WaterChunk.swift */; };
+		18EF598623EDA85F0071DF1C /* WaterChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF598523EDA85F0071DF1C /* WaterChunk.swift */; platformFilter = ios; };
 		18EF598723EDA85F0071DF1C /* WaterChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF598523EDA85F0071DF1C /* WaterChunk.swift */; };
-		18EF598923EDA8640071DF1C /* WaterTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF598823EDA8640071DF1C /* WaterTile.swift */; };
+		18EF598923EDA8640071DF1C /* WaterTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF598823EDA8640071DF1C /* WaterTile.swift */; platformFilter = ios; };
 		18EF598A23EDA8640071DF1C /* WaterTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF598823EDA8640071DF1C /* WaterTile.swift */; };
-		18EF598C23EDA86C0071DF1C /* WaterEdge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF598B23EDA86C0071DF1C /* WaterEdge.swift */; };
+		18EF598C23EDA86C0071DF1C /* WaterEdge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF598B23EDA86C0071DF1C /* WaterEdge.swift */; platformFilter = ios; };
 		18EF598D23EDA86C0071DF1C /* WaterEdge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF598B23EDA86C0071DF1C /* WaterEdge.swift */; };
-		18EF598F23EDA8720071DF1C /* WaterLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF598E23EDA8720071DF1C /* WaterLayer.swift */; };
+		18EF598F23EDA8720071DF1C /* WaterLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF598E23EDA8720071DF1C /* WaterLayer.swift */; platformFilter = ios; };
 		18EF599023EDA8720071DF1C /* WaterLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF598E23EDA8720071DF1C /* WaterLayer.swift */; };
-		18EF599223EDA87B0071DF1C /* Terrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF599123EDA87B0071DF1C /* Terrain.swift */; };
+		18EF599223EDA87B0071DF1C /* Terrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF599123EDA87B0071DF1C /* Terrain.swift */; platformFilter = ios; };
 		18EF599323EDA87B0071DF1C /* Terrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF599123EDA87B0071DF1C /* Terrain.swift */; };
-		18EF599523EDA8830071DF1C /* TerrainChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF599423EDA8830071DF1C /* TerrainChunk.swift */; };
+		18EF599523EDA8830071DF1C /* TerrainChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF599423EDA8830071DF1C /* TerrainChunk.swift */; platformFilter = ios; };
 		18EF599623EDA8830071DF1C /* TerrainChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF599423EDA8830071DF1C /* TerrainChunk.swift */; };
-		18EF599823EDA8880071DF1C /* TerrainTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF599723EDA8880071DF1C /* TerrainTile.swift */; };
+		18EF599823EDA8880071DF1C /* TerrainTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF599723EDA8880071DF1C /* TerrainTile.swift */; platformFilter = ios; };
 		18EF599923EDA8880071DF1C /* TerrainTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF599723EDA8880071DF1C /* TerrainTile.swift */; };
-		18EF599B23EDA88E0071DF1C /* TerrainEdge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF599A23EDA88E0071DF1C /* TerrainEdge.swift */; };
+		18EF599B23EDA88E0071DF1C /* TerrainEdge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF599A23EDA88E0071DF1C /* TerrainEdge.swift */; platformFilter = ios; };
 		18EF599C23EDA88E0071DF1C /* TerrainEdge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF599A23EDA88E0071DF1C /* TerrainEdge.swift */; };
-		18EF599E23EDA8950071DF1C /* TerrainLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF599D23EDA8950071DF1C /* TerrainLayer.swift */; };
+		18EF599E23EDA8950071DF1C /* TerrainLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF599D23EDA8950071DF1C /* TerrainLayer.swift */; platformFilter = ios; };
 		18EF599F23EDA8950071DF1C /* TerrainLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF599D23EDA8950071DF1C /* TerrainLayer.swift */; };
-		18EF59A123EDA8A70071DF1C /* Footpath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF59A023EDA8A70071DF1C /* Footpath.swift */; };
+		18EF59A123EDA8A70071DF1C /* Footpath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF59A023EDA8A70071DF1C /* Footpath.swift */; platformFilter = ios; };
 		18EF59A223EDA8A70071DF1C /* Footpath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF59A023EDA8A70071DF1C /* Footpath.swift */; };
-		18EF59A423EDA8AB0071DF1C /* FootpathChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF59A323EDA8AB0071DF1C /* FootpathChunk.swift */; };
+		18EF59A423EDA8AB0071DF1C /* FootpathChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF59A323EDA8AB0071DF1C /* FootpathChunk.swift */; platformFilter = ios; };
 		18EF59A523EDA8AB0071DF1C /* FootpathChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF59A323EDA8AB0071DF1C /* FootpathChunk.swift */; };
-		18EF59A723EDA8B10071DF1C /* FootpathTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF59A623EDA8B10071DF1C /* FootpathTile.swift */; };
+		18EF59A723EDA8B10071DF1C /* FootpathTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF59A623EDA8B10071DF1C /* FootpathTile.swift */; platformFilter = ios; };
 		18EF59A823EDA8B10071DF1C /* FootpathTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF59A623EDA8B10071DF1C /* FootpathTile.swift */; };
-		18EF59AA23EDA8B70071DF1C /* FootpathEdge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF59A923EDA8B70071DF1C /* FootpathEdge.swift */; };
+		18EF59AA23EDA8B70071DF1C /* FootpathEdge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF59A923EDA8B70071DF1C /* FootpathEdge.swift */; platformFilter = ios; };
 		18EF59AB23EDA8B70071DF1C /* FootpathEdge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF59A923EDA8B70071DF1C /* FootpathEdge.swift */; };
-		18EF59AD23EDA8BC0071DF1C /* FootpathLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF59AC23EDA8BC0071DF1C /* FootpathLayer.swift */; };
+		18EF59AD23EDA8BC0071DF1C /* FootpathLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF59AC23EDA8BC0071DF1C /* FootpathLayer.swift */; platformFilter = ios; };
 		18EF59AE23EDA8BC0071DF1C /* FootpathLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF59AC23EDA8BC0071DF1C /* FootpathLayer.swift */; };
-		18EF59B023EDA8C70071DF1C /* Foliage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF59AF23EDA8C70071DF1C /* Foliage.swift */; };
+		18EF59B023EDA8C70071DF1C /* Foliage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF59AF23EDA8C70071DF1C /* Foliage.swift */; platformFilter = ios; };
 		18EF59B123EDA8C70071DF1C /* Foliage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF59AF23EDA8C70071DF1C /* Foliage.swift */; };
-		18EF59B323EDA8CE0071DF1C /* FoliageChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF59B223EDA8CE0071DF1C /* FoliageChunk.swift */; };
+		18EF59B323EDA8CE0071DF1C /* FoliageChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF59B223EDA8CE0071DF1C /* FoliageChunk.swift */; platformFilter = ios; };
 		18EF59B423EDA8CE0071DF1C /* FoliageChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF59B223EDA8CE0071DF1C /* FoliageChunk.swift */; };
-		18EF59B623EDA8D70071DF1C /* FoliageTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF59B523EDA8D70071DF1C /* FoliageTile.swift */; };
+		18EF59B623EDA8D70071DF1C /* FoliageTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF59B523EDA8D70071DF1C /* FoliageTile.swift */; platformFilter = ios; };
 		18EF59B723EDA8D70071DF1C /* FoliageTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF59B523EDA8D70071DF1C /* FoliageTile.swift */; };
-		18EF59B923EDAA9C0071DF1C /* Meadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF59B823EDAA9C0071DF1C /* Meadow.swift */; };
+		18EF59B923EDAA9C0071DF1C /* Meadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF59B823EDAA9C0071DF1C /* Meadow.swift */; platformFilter = ios; };
 		18EF59BA23EDAA9C0071DF1C /* Meadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF59B823EDAA9C0071DF1C /* Meadow.swift */; };
+		18FEA81C2477E0BC00E524EF /* Floor.metal in Sources */ = {isa = PBXBuildFile; fileRef = 18FEA80D2477D92700E524EF /* Floor.metal */; };
+		18FEA81D2477E0BD00E524EF /* Floor.metal in Sources */ = {isa = PBXBuildFile; fileRef = 18FEA80D2477D92700E524EF /* Floor.metal */; };
+		18FEA8232477E75A00E524EF /* Terrain.metal in Sources */ = {isa = PBXBuildFile; fileRef = 18FEA8222477E75A00E524EF /* Terrain.metal */; };
+		18FEA8242477E75A00E524EF /* Terrain.metal in Sources */ = {isa = PBXBuildFile; fileRef = 18FEA8222477E75A00E524EF /* Terrain.metal */; };
+		18FEA82B24781BFF00E524EF /* Stage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FEA82A24781BFF00E524EF /* Stage.swift */; };
+		18FEA82C24781BFF00E524EF /* Stage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FEA82A24781BFF00E524EF /* Stage.swift */; };
 		26370EDD3DD2CCD5C81FD563 /* libPods-Meadow-iOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B90DAC7972347872CA8BE0B /* libPods-Meadow-iOSTests.a */; };
 		36C3535850A3CC857D3ED624 /* libPods-Meadow-macOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 664ACCF9010A419ED8F6A483 /* libPods-Meadow-macOS.a */; };
 		60BDB08053671C51DA88E6BA /* libPods-Meadow-macOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 607CE98C6661872CDB81E06A /* libPods-Meadow-macOSTests.a */; };
 		82446BBBE4800FB80418B974 /* libPods-Meadow-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F95E2E677392B301D2226B89 /* libPods-Meadow-iOS.a */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXBuildRule section */
+		18FEA81E2477E48500E524EF /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			fileType = sourcecode.metal;
+			inputFiles = (
+			);
+			isEditable = 1;
+			outputFiles = (
+				"${DERIVED_FILES_DIR}/${INPUT_FILE_BASE}.metallib",
+			);
+			runOncePerArchitecture = 0;
+			script = "xcrun metal ${INPUT_FILE_PATH} -ffast-math -arch air64 -c -o \"${DERIVED_FILES_DIR}/${INPUT_FILE_BASE}.air\"\nxcrun metal-ar rcs \"${DERIVED_FILES_DIR}/Meadow.metal-ar\" \"${DERIVED_FILES_DIR}/${INPUT_FILE_BASE}.air\"\nxcrun metallib -o \"${DERIVED_FILES_DIR}/Meadow.metallib\" \"${DERIVED_FILES_DIR}/Meadow.metal-ar\"\n";
+		};
+		18FEA82624780F2200E524EF /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			fileType = sourcecode.metal;
+			inputFiles = (
+			);
+			isEditable = 1;
+			outputFiles = (
+				"${DERIVED_FILES_DIR}/${INPUT_FILE_BASE}.metallib",
+			);
+			script = "xcrun metal ${INPUT_FILE_PATH} -ffast-math -arch air64 -c -o \"${DERIVED_FILES_DIR}/${INPUT_FILE_BASE}.air\"\nxcrun metal-ar rcs \"${DERIVED_FILES_DIR}/Meadow.metal-ar\" \"${DERIVED_FILES_DIR}/${INPUT_FILE_BASE}.air\"\nxcrun metallib -o \"${DERIVED_FILES_DIR}/Meadow.metallib\" \"${DERIVED_FILES_DIR}/Meadow.metal-ar\"\n";
+		};
+/* End PBXBuildRule section */
 
 /* Begin PBXContainerItemProxy section */
 		1819B73B20A574F800BEE585 /* PBXContainerItemProxy */ = {
@@ -162,6 +204,7 @@
 
 /* Begin PBXFileReference section */
 		14A74BE995E1DD6F159F97B0 /* Pods-Meadow.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Meadow.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Meadow/Pods-Meadow.debug.xcconfig"; sourceTree = "<group>"; };
+		18087D52247526B800D02BCF /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		1819B73120A574F800BEE585 /* Meadow_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Meadow_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1819B73320A574F800BEE585 /* Meadow_iOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Meadow_iOS.h; sourceTree = "<group>"; };
 		1819B73420A574F800BEE585 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -175,6 +218,7 @@
 		181EDF982451849F0030D23C /* SceneGraphNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneGraphNode.swift; sourceTree = "<group>"; };
 		181EDF9C2451B9790030D23C /* Actors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Actors.swift; sourceTree = "<group>"; };
 		181EDF9F2451B9F90030D23C /* NPCs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NPCs.swift; sourceTree = "<group>"; };
+		18264FA02481411900D5B8AF /* CameraObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraObserver.swift; sourceTree = "<group>"; };
 		183479DC245026C400E6516C /* GridDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridDecodable.swift; sourceTree = "<group>"; };
 		184AF115240930A8009FF8E3 /* Hideable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hideable.swift; sourceTree = "<group>"; };
 		184AF11924093730009FF8E3 /* Vector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vector.swift; sourceTree = "<group>"; };
@@ -193,6 +237,8 @@
 		18B5671F2456D17B00B79DA9 /* SceneGraphNodeCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneGraphNodeCategory.swift; sourceTree = "<group>"; };
 		18B567222456D1AA00B79DA9 /* SceneGraphNodeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneGraphNodeType.swift; sourceTree = "<group>"; };
 		18B567252456D1B800B79DA9 /* SceneGraphIdentifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneGraphIdentifiable.swift; sourceTree = "<group>"; };
+		18CCCA1F2473EC0200E0A94B /* Scene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
+		18CCCA222473EC0C00E0A94B /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		18EF593023ED8F390071DF1C /* Cardinal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cardinal.swift; sourceTree = "<group>"; };
 		18EF593123ED8F390071DF1C /* Coordinate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
 		18EF593223ED8F390071DF1C /* Ordinal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ordinal.swift; sourceTree = "<group>"; };
@@ -235,6 +281,9 @@
 		18EF59B223EDA8CE0071DF1C /* FoliageChunk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoliageChunk.swift; sourceTree = "<group>"; };
 		18EF59B523EDA8D70071DF1C /* FoliageTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoliageTile.swift; sourceTree = "<group>"; };
 		18EF59B823EDAA9C0071DF1C /* Meadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meadow.swift; sourceTree = "<group>"; };
+		18FEA80D2477D92700E524EF /* Floor.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Floor.metal; sourceTree = "<group>"; };
+		18FEA8222477E75A00E524EF /* Terrain.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Terrain.metal; sourceTree = "<group>"; };
+		18FEA82A24781BFF00E524EF /* Stage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stage.swift; sourceTree = "<group>"; };
 		1A97612B550B166B0831FC9A /* Pods-MeadowTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeadowTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MeadowTests/Pods-MeadowTests.release.xcconfig"; sourceTree = "<group>"; };
 		35FDC4E9F3727471EA2160BC /* Pods_MeadowTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MeadowTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		428234701CAAFB611C6EB3D2 /* libPods-Meadow-Metal.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Meadow-Metal.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -349,19 +398,31 @@
 			path = Actors;
 			sourceTree = "<group>";
 		};
+		18264F9F2481410B00D5B8AF /* Observers */ = {
+			isa = PBXGroup;
+			children = (
+				18264FA02481411900D5B8AF /* CameraObserver.swift */,
+			);
+			path = Observers;
+			sourceTree = "<group>";
+		};
 		18496C572093230900992AF3 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				189A6023246D4DBB00DD68A7 /* Floor */,
-				185172AE2463FA82006C9223 /* Shaders */,
+				18264F9F2481410B00D5B8AF /* Observers */,
 				181EDF9B2451B96E0030D23C /* Actors */,
-				181EDF97245184900030D23C /* Scene Graph */,
+				18CCCA1D2473EBE300E0A94B /* Camera */,
 				184E62EC244DDB8700D2B6F8 /* Codable */,
-				184AF1182409371B009FF8E3 /* Extensions */,
 				18EF592F23ED8F390071DF1C /* Data Types */,
+				184AF1182409371B009FF8E3 /* Extensions */,
+				189A6023246D4DBB00DD68A7 /* Floor */,
 				18EF593D23ED8F3A0071DF1C /* Grid */,
-				18EF593623ED8F3A0071DF1C /* Protocols */,
 				18EF59B823EDAA9C0071DF1C /* Meadow.swift */,
+				18EF593623ED8F3A0071DF1C /* Protocols */,
+				18CCCA1E2473EBF000E0A94B /* Scene */,
+				181EDF97245184900030D23C /* Scene Graph */,
+				185172AE2463FA82006C9223 /* Shaders */,
+				18FEA82924781BF200E524EF /* Stage */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -442,6 +503,7 @@
 		185172AE2463FA82006C9223 /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
+				18FEA80C2477D91800E524EF /* Floor */,
 				185172AF2463FA92006C9223 /* ShaderProgram.swift */,
 				189A6027246D4E3200DD68A7 /* ShaderUniform.swift */,
 			);
@@ -496,6 +558,22 @@
 			path = Floor;
 			sourceTree = "<group>";
 		};
+		18CCCA1D2473EBE300E0A94B /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				18CCCA222473EC0C00E0A94B /* Camera.swift */,
+			);
+			path = Camera;
+			sourceTree = "<group>";
+		};
+		18CCCA1E2473EBF000E0A94B /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+				18CCCA1F2473EC0200E0A94B /* Scene.swift */,
+			);
+			path = Scene;
+			sourceTree = "<group>";
+		};
 		18EE506A20A578840059829C /* Platforms */ = {
 			isa = PBXGroup;
 			children = (
@@ -530,6 +608,7 @@
 				18EF593323ED8F390071DF1C /* Size.swift */,
 				18EF593423ED8F390071DF1C /* Volume.swift */,
 				18EF593523ED8F390071DF1C /* World.swift */,
+				18087D52247526B800D02BCF /* Color.swift */,
 			);
 			path = "Data Types";
 			sourceTree = "<group>";
@@ -624,6 +703,23 @@
 			path = Area;
 			sourceTree = "<group>";
 		};
+		18FEA80C2477D91800E524EF /* Floor */ = {
+			isa = PBXGroup;
+			children = (
+				18FEA80D2477D92700E524EF /* Floor.metal */,
+				18FEA8222477E75A00E524EF /* Terrain.metal */,
+			);
+			path = Floor;
+			sourceTree = "<group>";
+		};
+		18FEA82924781BF200E524EF /* Stage */ = {
+			isa = PBXGroup;
+			children = (
+				18FEA82A24781BFF00E524EF /* Stage.swift */,
+			);
+			path = Stage;
+			sourceTree = "<group>";
+		};
 		7EAFC8007E656043D995F23B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -690,8 +786,10 @@
 				1819B72D20A574F800BEE585 /* Frameworks */,
 				1819B72E20A574F800BEE585 /* Headers */,
 				1819B72F20A574F800BEE585 /* Resources */,
+				18FEA82524780F0A00E524EF /* ShellScript */,
 			);
 			buildRules = (
+				18FEA82624780F2200E524EF /* PBXBuildRule */,
 			);
 			dependencies = (
 			);
@@ -728,8 +826,10 @@
 				1819B74920A5752000BEE585 /* Frameworks */,
 				1819B74A20A5752000BEE585 /* Headers */,
 				1819B74B20A5752000BEE585 /* Resources */,
+				18FEA8212477E65400E524EF /* ShellScript */,
 			);
 			buildRules = (
+				18FEA81E2477E48500E524EF /* PBXBuildRule */,
 			);
 			dependencies = (
 			);
@@ -837,6 +937,42 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		18FEA8212477E65400E524EF /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DERIVED_FILES_DIR}/Meadow.metallib",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cp \"${DERIVED_FILES_DIR}/Meadow.metallib\" ${PROJECT_DIR}\n";
+		};
+		18FEA82524780F0A00E524EF /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DERIVED_FILES_DIR}/Meadow.metallib",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cp \"${DERIVED_FILES_DIR}/Meadow.metallib\" ${PROJECT_DIR}\n";
+		};
 		2747B8D0A68407DACBEC4AEA /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -920,6 +1056,7 @@
 				185172B02463FA92006C9223 /* ShaderProgram.swift in Sources */,
 				181EDFA02451B9F90030D23C /* NPCs.swift in Sources */,
 				18EF595623ED8F3A0071DF1C /* Neighbour.swift in Sources */,
+				18FEA81C2477E0BC00E524EF /* Floor.metal in Sources */,
 				18EF595223ED8F3A0071DF1C /* Clearable.swift in Sources */,
 				18EF595023ED8F3A0071DF1C /* World.swift in Sources */,
 				18EF598F23EDA8720071DF1C /* WaterLayer.swift in Sources */,
@@ -933,9 +1070,11 @@
 				181EDF9D2451B9790030D23C /* Actors.swift in Sources */,
 				18B567232456D1AA00B79DA9 /* SceneGraphNodeType.swift in Sources */,
 				18EF599523EDA8830071DF1C /* TerrainChunk.swift in Sources */,
+				18FEA82B24781BFF00E524EF /* Stage.swift in Sources */,
 				184E6302244DE45D00D2B6F8 /* Foliage+Encodable.swift in Sources */,
 				189A6028246D4E3200DD68A7 /* ShaderUniform.swift in Sources */,
 				183479DD245026C400E6516C /* GridDecodable.swift in Sources */,
+				18CCCA202473EC0200E0A94B /* Scene.swift in Sources */,
 				18EF598C23EDA86C0071DF1C /* WaterEdge.swift in Sources */,
 				18EF595823ED8F3A0071DF1C /* Renderable.swift in Sources */,
 				18EF599E23EDA8950071DF1C /* TerrainLayer.swift in Sources */,
@@ -945,12 +1084,15 @@
 				18B567202456D17B00B79DA9 /* SceneGraphNodeCategory.swift in Sources */,
 				184E62F5244DE40D00D2B6F8 /* Meadow+Encodable.swift in Sources */,
 				181EDF992451849F0030D23C /* SceneGraphNode.swift in Sources */,
+				18FEA8232477E75A00E524EF /* Terrain.metal in Sources */,
 				18EF595A23ED8F3A0071DF1C /* Soilable.swift in Sources */,
 				189A6025246D4DC400DD68A7 /* Floor.swift in Sources */,
 				18EF599823EDA8880071DF1C /* TerrainTile.swift in Sources */,
 				18EF597D23EDA7CF0071DF1C /* AreaEdge.swift in Sources */,
 				18EF596223ED8F3A0071DF1C /* Edge.swift in Sources */,
+				18087D53247526B800D02BCF /* Color.swift in Sources */,
 				18EF597423EDA7940071DF1C /* Area.swift in Sources */,
+				18CCCA232473EC0C00E0A94B /* Camera.swift in Sources */,
 				18EF59B623EDA8D70071DF1C /* FoliageTile.swift in Sources */,
 				184E62F3244DE3EA00D2B6F8 /* Terrain+Encodable.swift in Sources */,
 				18EF59A423EDA8AB0071DF1C /* FootpathChunk.swift in Sources */,
@@ -976,6 +1118,7 @@
 				18EF594823ED8F3A0071DF1C /* Coordinate.swift in Sources */,
 				184E6305244DE46600D2B6F8 /* Area+Encodable.swift in Sources */,
 				18EF597A23EDA7C70071DF1C /* AreaTile.swift in Sources */,
+				18264FA12481411900D5B8AF /* CameraObserver.swift in Sources */,
 				18EF598323EDA8560071DF1C /* Water.swift in Sources */,
 				18EF599B23EDA88E0071DF1C /* TerrainEdge.swift in Sources */,
 				18EF59A123EDA8A70071DF1C /* Footpath.swift in Sources */,
@@ -997,6 +1140,7 @@
 				185172B12463FA92006C9223 /* ShaderProgram.swift in Sources */,
 				181EDFA12451B9F90030D23C /* NPCs.swift in Sources */,
 				18EF595723ED8F3A0071DF1C /* Neighbour.swift in Sources */,
+				18FEA81D2477E0BD00E524EF /* Floor.metal in Sources */,
 				18EF595323ED8F3A0071DF1C /* Clearable.swift in Sources */,
 				18EF595123ED8F3A0071DF1C /* World.swift in Sources */,
 				18EF599023EDA8720071DF1C /* WaterLayer.swift in Sources */,
@@ -1010,9 +1154,11 @@
 				181EDF9E2451B9790030D23C /* Actors.swift in Sources */,
 				18B567242456D1AA00B79DA9 /* SceneGraphNodeType.swift in Sources */,
 				18EF599623EDA8830071DF1C /* TerrainChunk.swift in Sources */,
+				18FEA82C24781BFF00E524EF /* Stage.swift in Sources */,
 				18EF598D23EDA86C0071DF1C /* WaterEdge.swift in Sources */,
 				189A6029246D4E3200DD68A7 /* ShaderUniform.swift in Sources */,
 				183479DE245026C400E6516C /* GridDecodable.swift in Sources */,
+				18CCCA212473EC0200E0A94B /* Scene.swift in Sources */,
 				18EF595923ED8F3A0071DF1C /* Renderable.swift in Sources */,
 				18EF599F23EDA8950071DF1C /* TerrainLayer.swift in Sources */,
 				18EF594F23ED8F3A0071DF1C /* Volume.swift in Sources */,
@@ -1022,12 +1168,15 @@
 				18B567212456D17B00B79DA9 /* SceneGraphNodeCategory.swift in Sources */,
 				18EF595B23ED8F3A0071DF1C /* Soilable.swift in Sources */,
 				181EDF9A2451849F0030D23C /* SceneGraphNode.swift in Sources */,
+				18FEA8242477E75A00E524EF /* Terrain.metal in Sources */,
 				184E6303244DE45D00D2B6F8 /* Foliage+Encodable.swift in Sources */,
 				189A6026246D4DD300DD68A7 /* Floor.swift in Sources */,
 				18EF599923EDA8880071DF1C /* TerrainTile.swift in Sources */,
 				184E6300244DE45400D2B6F8 /* Footpath+Encodable.swift in Sources */,
 				18EF597E23EDA7CF0071DF1C /* AreaEdge.swift in Sources */,
+				18087D54247526B800D02BCF /* Color.swift in Sources */,
 				18EF596323ED8F3A0071DF1C /* Edge.swift in Sources */,
+				18CCCA242473EC0C00E0A94B /* Camera.swift in Sources */,
 				18EF597523EDA7940071DF1C /* Area.swift in Sources */,
 				184E62FD244DE44A00D2B6F8 /* Water+Encodable.swift in Sources */,
 				18EF59B723EDA8D70071DF1C /* FoliageTile.swift in Sources */,
@@ -1053,6 +1202,7 @@
 				18EF594B23ED8F3A0071DF1C /* Ordinal.swift in Sources */,
 				18EF594923ED8F3A0071DF1C /* Coordinate.swift in Sources */,
 				18EF597B23EDA7C70071DF1C /* AreaTile.swift in Sources */,
+				18264FA22481411900D5B8AF /* CameraObserver.swift in Sources */,
 				18EF598423EDA8560071DF1C /* Water.swift in Sources */,
 				18EF599C23EDA88E0071DF1C /* TerrainEdge.swift in Sources */,
 				18EF59A223EDA8A70071DF1C /* Footpath.swift in Sources */,
@@ -1105,6 +1255,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1133,6 +1284,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};

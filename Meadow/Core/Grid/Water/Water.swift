@@ -8,9 +8,9 @@
 
 public class Water: Grid<WaterChunk, WaterTile<WaterEdge>> {
     
-    override init() {
-        
-        super.init()
+    override init(ancestor: SoilableParent) {
+    
+    super.init(ancestor: ancestor)
         
         name = "Water"
     }

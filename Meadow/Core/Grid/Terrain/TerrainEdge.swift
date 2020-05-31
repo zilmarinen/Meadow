@@ -53,7 +53,7 @@ public class TerrainEdge: Edge<TerrainLayer> {
             var faces: [[Vector]] = []
             var normals: [Vector] = []
             var materials: [Pasture.Polygon.Material] = []
-            
+            /*
             if layer.upper == nil {
                 
                 let fv0 = Vertex(position: uv0, normal: n0)
@@ -91,7 +91,7 @@ public class TerrainEdge: Edge<TerrainLayer> {
                 
                 materials.append(contentsOf: [layer.color.secondary, layer.color.secondary, layer.color.secondary])
             }
-            
+            */
             for i in 0..<faces.count {
                 
                 let vectors = faces[i]

@@ -8,12 +8,18 @@
 
 import SceneKit
 
-public class Actors: SCNNode, SceneGraphIdentifiable, SceneGraphNode {
+public class Actors: SCNNode, SceneGraphIdentifiable, SceneGraphNode, Soilable {
     
-    let npcs = NPCs()
+    public weak var ancestor: SoilableParent?
     
-    override init() {
+    public var isDirty = false
+    
+    public lazy var npcs: NPCs = { return NPCs(ancestor: self) }()
+    
+    public init(ancestor: SoilableParent) {
         
+        self.ancestor = ancestor
+    
         super.init()
         
         name = "Actors"
@@ -35,6 +41,20 @@ public class Actors: SCNNode, SceneGraphIdentifiable, SceneGraphNode {
     public var category: SceneGraphNodeCategory { .actors }
     
     public var type: SceneGraphNodeType { return .grid }
+}
+
+extension Actors {
+    
+    @discardableResult public func clean() -> Bool {
+        
+        guard isDirty else { return false }
+        
+        //
+        
+        isDirty = false
+        
+        return true
+    }
 }
 
 extension Actors: Updatable {

@@ -10,7 +10,11 @@ import SceneKit
 
 public class NPCs: SCNNode, SceneGraphIdentifiable, SceneGraphNode {
     
-    override init() {
+    public weak var ancestor: SoilableParent?
+    
+    public init(ancestor: SoilableParent) {
+        
+        self.ancestor = ancestor
         
         super.init()
         

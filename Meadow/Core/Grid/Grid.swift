@@ -13,7 +13,7 @@ public class Grid<C: Chunk<T>, T: Tile>: SCNNode, Hideable, SceneGraphIdentifiab
 
     public weak var ancestor: SoilableParent?
 
-    internal var isDirty = false
+    public var isDirty = false
     
     var chunks: [C] = []
     
@@ -25,7 +25,9 @@ public class Grid<C: Chunk<T>, T: Tile>: SCNNode, Hideable, SceneGraphIdentifiab
         }
     }
     
-    override public init() {
+    public init(ancestor: SoilableParent) {
+        
+        self.ancestor = ancestor
         
         super.init()
         
@@ -113,7 +115,7 @@ extension Grid {
 
 extension Grid {
     
-    @discardableResult func clean() -> Bool {
+    @discardableResult public func clean() -> Bool {
         
         guard isDirty else { return false }
         
@@ -168,7 +170,5 @@ extension Grid: Updatable {
             
             chunk.update(delta: delta, time: time)
         }
-        
-        clean()
     }
 }

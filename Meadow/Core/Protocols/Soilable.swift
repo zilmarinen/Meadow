@@ -13,7 +13,7 @@ public protocol SoilableParent: class {
     func child(didBecomeDirty child: SoilableChild)
 }
 
-protocol Soilable: SoilableChild & SoilableParent {
+public protocol Soilable: SoilableChild & SoilableParent {
     
     var ancestor: SoilableParent? { get }
     
@@ -25,7 +25,7 @@ protocol Soilable: SoilableChild & SoilableParent {
 
 extension Soilable {
     
-    @discardableResult func becomeDirty() -> Bool {
+    @discardableResult public func becomeDirty() -> Bool {
         
         guard !isDirty else { return false }
         

@@ -10,10 +10,10 @@ import Pasture
 
 public enum Ordinal: Int, CaseIterable, Encodable {
     
+    case northWest
     case northEast
     case southEast
     case southWest
-    case northWest
 }
 
 extension Ordinal {
@@ -21,7 +21,7 @@ extension Ordinal {
     private static var corners: [Vector] = [Vector(x: -0.5, y: 0.0, z: -0.5),
                                             Vector(x: 0.5, y: 0.0, z: -0.5),
                                             Vector(x: 0.5, y: 0.0, z: 0.5),
-                                            Vector(x: -0.5, y: 0.0, z: 0.5)]
+                                            Vector(x: -0.5, y: 0.0, z: 0.5),]
     
     public static func vector(ordinal: Ordinal) -> Vector {
         

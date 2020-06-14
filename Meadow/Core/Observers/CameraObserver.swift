@@ -13,6 +13,7 @@ extension Camera {
     
     public enum CameraState: State {
         
+        case dolly(node: SCNNode)
         case focus(node: SCNNode)
         
         public func shouldTransition(to newState: Camera.CameraState) -> Should<Camera.CameraState> {
@@ -30,11 +31,14 @@ extension Camera {
         
         public func focus(vector: SCNVector3) {
             
-            let node = SCNNode()
-            
-            node.position = vector
-            
-            focus(node: node)
+            switch state {
+                
+            case .focus(let node):
+             
+                node.position = vector
+                
+            default: break
+            }
         }
     }
 }

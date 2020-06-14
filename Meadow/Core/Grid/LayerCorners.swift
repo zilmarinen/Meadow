@@ -1,0 +1,53 @@
+//
+//  LayerCorners.swift
+//  Meadow
+//
+//  Created by Zack Brown on 07/02/2020.
+//  Copyright © 2020 Script Orchard. All rights reserved.
+//
+
+public class LayerCorners: Equatable {
+    
+    struct Constants {
+        
+        static let maximumPitch = 2
+    }
+    
+    public enum Anchor: Int, Codable {
+        
+        case left
+        case right
+        case centre
+    }
+    
+    public struct Elevation: Equatable {
+        
+        let anchor: Anchor
+        var elevation: Int
+    }
+    
+    var left = Elevation(anchor: .left, elevation: 0)
+    var right = Elevation(anchor: .right, elevation: 0)
+    var centre = Elevation(anchor: .centre, elevation: 0)
+}
+
+extension LayerCorners {
+    
+    public static func == (lhs: LayerCorners, rhs: LayerCorners) -> Bool {
+        
+        return lhs.left == rhs.left && lhs.right == rhs.right && lhs.centre == rhs.centre
+    }
+}
+
+extension LayerCorners {
+    
+    public var base: Int { return min(left.elevation, right.elevation, centre.elevation) }
+    public var peak: Int{ return max(left.elevation, right.elevation, centre.elevation) }
+    
+    func set(elevation: Int) {
+        
+        left.elevation = elevation
+        right.elevation = elevation
+        centre.elevation = elevation
+    }
+}

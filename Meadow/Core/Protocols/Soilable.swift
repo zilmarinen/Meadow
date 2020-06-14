@@ -6,7 +6,10 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
-public protocol SoilableChild {}
+public protocol SoilableChild {
+    
+    var coordinate: Coordinate { get }
+}
 
 public protocol SoilableParent: class {
     
@@ -37,6 +40,8 @@ extension Soilable {
     }
     
     public func child(didBecomeDirty child: SoilableChild) {
+        
+        ancestor?.child(didBecomeDirty: child)
         
         becomeDirty()
     }

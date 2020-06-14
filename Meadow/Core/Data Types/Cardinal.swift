@@ -48,9 +48,9 @@ extension Cardinal {
     private static var Normals: [Vector] = [
     
         .backward,
-        .right,
+        .left,
         .forward,
-        .left
+        .right
     ]
     
     public static func opposite(cardinal: Cardinal) -> Cardinal {

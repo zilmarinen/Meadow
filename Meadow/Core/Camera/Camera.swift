@@ -13,11 +13,7 @@ public class Camera: SCNNode {
     
     public lazy var observer: CameraObserver = {
         
-        let node = SCNNode()
-        
-        node.position = .zero
-       
-        return CameraObserver(initialState: .focus(node: node))
+        return CameraObserver(initialState: .focus(node: SCNNode()))
     }()
     
     lazy var jig: SCNNode = {
@@ -44,31 +40,34 @@ extension Camera {
 }
 
 extension Camera {
+    
+    func dolly(to: SCNVector3, focus: SCNVector3, ordinal: Ordinal, zoom: Float, delta: TimeInterval) {
+        
+    }
 
-    func focus(focus: SCNVector3, ordinal: Ordinal, zoomLevel: Float, delta: TimeInterval) {
+    func focus(focus: SCNVector3, ordinal: Ordinal, zoom: Float, delta: TimeInterval) {
         
         guard let camera = jig.camera else { return }
         
-        let scale = Double(min(max(zoomLevel, Camera.minimumZoomLevel), Camera.maximumZoomLevel))
+        let scale = Double(min(max(zoom, Camera.minimumZoomLevel), Camera.maximumZoomLevel))
         
         camera.orthographicScale = scale
         
-        let radius = Float(camera.zFar / 2.0)
-        let yAngle = Float(35.0)
-        let xzAngle = Float((ordinal.rawValue * 90) + 42)
-        let i = GLKMathDegreesToRadians(xzAngle)
-        let j = GLKMathDegreesToRadians(yAngle)
-        let k = GLKMathDegreesToRadians(xzAngle)
+        let ordinalAngle = (ordinal.rawValue * 90)
         
-        let x = focus.x + MDWFloat(cos(i) * radius)
-        let y = focus.y + MDWFloat(cos(j) * radius)
-        let z = focus.z + MDWFloat(sin(k) * radius)
+        let radius = camera.zFar / 2.0
+        let yAngle = Math.radians(degrees: 35.0)
+        let xzAngle = Math.radians(degrees: Float(ordinalAngle + 42))
+        
+        let x = focus.x + SKFloat(cos(xzAngle) * radius)
+        let y = focus.y + SKFloat(cos(yAngle) * radius)
+        let z = focus.z + SKFloat(sin(xzAngle) * radius)
         
         let fv = Vector(vector: focus)
         let pv0 = Vector(vector: jig.position)
         let pv1 = Vector(vector: SCNVector3(x: x, y: y, z: z))
         
-        let targetOrientation = Rotation.focus(vector: pv0, focus: fv, up: .up)
+        let targetOrientation = Rotation.focus(eye: pv0, focus: fv, up: .up)
         
         position = focus
         
@@ -84,9 +83,13 @@ extension Camera: Updatable {
         
         switch observer.state {
             
+        case .dolly(let node):
+            
+            dolly(to: node.position, focus: node.position, ordinal: .northWest, zoom: 50, delta: delta)
+            
         case .focus(let node):
             
-            focus(focus: node.position, ordinal: .northWest, zoomLevel: 50, delta: delta)
+            focus(focus: node.position, ordinal: .northWest, zoom: 50, delta: delta)
         }
     }
 }

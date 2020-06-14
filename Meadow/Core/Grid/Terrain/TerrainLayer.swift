@@ -8,13 +8,13 @@
 
 public class TerrainLayer: Layer {
     
-    public var color: Color = .black {
+    public override var category: SceneGraphNodeCategory { return .terrain }
+    
+    public var terrainType: TerrainType = .bedrock {
         
         didSet {
             
             becomeDirty()
         }
     }
-    
-    public override var category: SceneGraphNodeCategory { return .terrain }
 }

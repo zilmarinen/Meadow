@@ -25,21 +25,6 @@ class GameViewController: UIViewController {
         self.gameController = GameController(sceneRenderer: gameView)
     }
     
-    override var shouldAutorotate: Bool {
-        
-        return true
-    }
-    
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        
-        if UIDevice.current.userInterfaceIdiom == .phone {
-            
-            return .allButUpsideDown
-        }
-        
-        return .all
-    }
-    
     override var prefersStatusBarHidden: Bool {
         
         return true

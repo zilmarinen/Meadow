@@ -9,4 +9,12 @@
 public class WaterLayer: Layer {
     
     public override var category: SceneGraphNodeCategory { return .water }
+    
+    public var waterType: WaterType = .saltWater {
+        
+        didSet {
+            
+            becomeDirty()
+        }
+    }
 }

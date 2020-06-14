@@ -25,4 +25,5 @@ class WaterEdgeJSON: EdgeJSON<WaterLayerJSON> {
 
 class WaterLayerJSON: LayerJSON {
     
+    let waterType: WaterType = .saltWater
 }

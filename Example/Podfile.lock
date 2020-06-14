@@ -1,27 +1,32 @@
 PODS:
   - Meadow (0.1):
-    - Meadow/Core (= 0.1)
     - Pasture
-  - Meadow/Core (0.1):
-    - Pasture
+    - Terrace
   - Pasture (0.1):
     - Pasture/Core (= 0.1)
   - Pasture/Core (0.1)
+  - Terrace (0.1):
+    - Terrace/Core (= 0.1)
+  - Terrace/Core (0.1)
 
 DEPENDENCIES:
   - Meadow (from `../`)
   - Pasture (from `../../Pasture`)
+  - Terrace (from `../../Terrace`)
 
 EXTERNAL SOURCES:
   Meadow:
     :path: "../"
   Pasture:
     :path: "../../Pasture"
+  Terrace:
+    :path: "../../Terrace"
 
 SPEC CHECKSUMS:
-  Meadow: 21f8e81fab8869da78d4336f46ac8d498eee7572
+  Meadow: 5c812407d94720976645836f5f873c3c68281cbc
   Pasture: a49f933d4866c7a3ee7413322648fc6f3a479172
+  Terrace: 76c2ba0146f94bec782193635b1ce7552ce6c59f
 
-PODFILE CHECKSUM: e84c0b4496f23c8ad9e33524e87baefb255690de
+PODFILE CHECKSUM: e6c6f38efef320de4d1cb8f2793059ab4e2d8558
 
 COCOAPODS: 1.9.1

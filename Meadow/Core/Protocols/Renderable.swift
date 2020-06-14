@@ -12,5 +12,7 @@ protocol Renderable: Hideable {
     
     var mesh: Mesh { get }
     
+    var transform: Transform { get }
+    
     func render(transform: Transform) -> Mesh
 }

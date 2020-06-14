@@ -17,6 +17,8 @@ public class Edge<L: Layer>: NSObject, Soilable, Clearable, Encodable, Renderabl
     
     public weak var ancestor: SoilableParent?
     
+    public var coordinate: Coordinate
+    
     public var isDirty = false
     
     public var isHidden: Bool = false {
@@ -31,13 +33,17 @@ public class Edge<L: Layer>: NSObject, Soilable, Clearable, Encodable, Renderabl
     
     var mesh: Mesh = Mesh(polygons: [])
     
+    var transform: Transform { fatalError("Edge.transform must be overridden") }
+    
     public let cardinal: Cardinal
     
     var layers: [L] = []
     
-    required init(ancestor: SoilableParent, cardinal: Cardinal) {
+    required init(ancestor: SoilableParent, coordinate: Coordinate, cardinal: Cardinal) {
         
         self.ancestor = ancestor
+        
+        self.coordinate = coordinate
         
         self.cardinal = cardinal
         
@@ -93,46 +99,37 @@ public class Edge<L: Layer>: NSObject, Soilable, Clearable, Encodable, Renderabl
     
     public var isLeaf: Bool { return children.isEmpty }
     
-    public var category: SceneGraphNodeCategory { fatalError("SceneGraphIdentifiable.category must be overridden") }
+    public var category: SceneGraphNodeCategory { fatalError("Edge.category must be overridden") }
     
     public var type: SceneGraphNodeType { return .edge }
 }
 
-extension Edge {
-    
-    public typealias LayerConfigurator = ((L) -> Void)
+public extension Edge {
     
     var bottomLayer: L? { return layers.first }
     var topLayer: L? { return layers.last }
     var totalLayers: Int { return layers.count }
     
-    @discardableResult
-    func add(layer configurator: LayerConfigurator) -> L? {
+    func addLayer() -> L? {
         
-        if topLayer?.base == World.Constants.ceiling { return nil }
+        if topLayer?.corners.base == World.Constants.ceiling { return nil }
         
-        let layer = L(ancestor: self, cardinal: cardinal)
+        let layer = L(ancestor: self, coordinate: coordinate, cardinal: cardinal)
         
         layer.lower = topLayer
         topLayer?.upper = layer
         
         if let topLayer = topLayer {
             
-            let (o1, o2) = Cardinal.ordinals(cardinal: cardinal)
-            
-            var peak = topLayer.peak
+            var peak = topLayer.corners.peak
             
             if peak < World.Constants.ceiling {
                 
                 peak += 1
             }
             
-            layer.set(ordinal: o1, elevation: peak)
-            layer.set(ordinal: o2, elevation: peak)
-            layer.set(center: peak)
+            layer.corners.set(elevation: peak)
         }
-        
-        configurator(layer)
         
         layers.append(layer)
         
@@ -167,5 +164,10 @@ extension Edge {
             
             becomeDirty()
         }
+    }
+    
+    func index(of layer: L) -> Int? {
+        
+        return layers.firstIndex(of: layer)
     }
 }

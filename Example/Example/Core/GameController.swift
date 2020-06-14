@@ -6,67 +6,95 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
-import SceneKit
 import Meadow
+import Pasture
+import SceneKit
+import Terrace
 
-#if os(watchOS)
+class GameController: NSObject {
 
-    import WatchKit
-
-#endif
-
-#if os(macOS)
-
-    typealias SCNColor = NSColor
-
-#else
-
-    typealias SCNColor = UIColor
-
-#endif
-
-class GameController: NSObject, SCNSceneRendererDelegate {
-
-    let scene: SCNScene
-    let sceneRenderer: SCNView & SCNSceneRenderer
+    let sceneView: SceneView
     
-    let meadow = Meadow()
-
-    init(sceneRenderer renderer: SCNView & SCNSceneRenderer) {
+    let scene: Scene
+    
+    init(sceneRenderer renderer: SceneView & SCNSceneRenderer) {
         
-        self.sceneRenderer = renderer
-        self.scene = SCNScene()
+        do {
+            
+            guard let device = renderer.device else { fatalError("Invalid device for SceneView") }
+            
+            guard let path = Meadow.bundle?.path(forResource: "Meadow", ofType: "metallib") else { fatalError("Missing required Meadow.metallib") }
+            
+            Stage.shaderLibrary = try device.makeLibrary(filepath: path)
+            
+            print("loaded shaders: \(Stage.shaderLibrary?.functionNames)")
+        }
+        catch {
+            
+            fatalError("Unable to make Meadow.metallib default device program library: \(error)")
+        }
+        
+        let meadow = Meadow()
+        
+        meadow.floor.rendersGridLines = true
+        meadow.floor.backgroundColor = .white
+        meadow.floor.gridColor = .black
+        
+        self.sceneView = renderer
+        self.scene = Scene(meadow: meadow)
         
         super.init()
         
-        sceneRenderer.delegate = meadow
-        sceneRenderer.scene = scene
-        sceneRenderer.allowsCameraControl = true
-        sceneRenderer.showsStatistics = true
-        sceneRenderer.backgroundColor = SCNColor.darkGray
-        sceneRenderer.autoenablesDefaultLighting = true
+        sceneView.delegate = self
+        sceneView.scene = scene
+        sceneView.allowsCameraControl = true
+        sceneView.showsStatistics = true
+        sceneView.backgroundColor = SKColor.black
+        sceneView.autoenablesDefaultLighting = false
+        sceneView.isPlaying = true
+        
+        loadScene(meadow: meadow)
+    }
+}
 
-        let cameraNode = SCNNode()
+extension GameController: SCNSceneRendererDelegate {
+    
+    func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
         
-        cameraNode.camera = SCNCamera()
-        cameraNode.position = SCNVector3(x: 2.5, y: CGFloat(World.Axis.y(y: World.Constants.floor)), z: 10.0)
-        cameraNode.look(at: SCNVector3(x: 0, y: CGFloat(World.Axis.y(y: World.Constants.floor)), z: 0.0))
+        scene.renderer(renderer, updateAtTime: time)
         
-        scene.rootNode.addChildNode(cameraNode)
-        scene.rootNode.addChildNode(meadow)
-        
-        loadScene()
+        DispatchQueue.main.async {
+            
+            switch self.sceneView.keyboardObserver.state {
+                
+            case .keysHeld(let keys):
+                
+                keys.forEach { key in
+                    
+                    switch key {
+                        
+                    case .w: self.scene.camera.observer.focus(vector: SCNVector3(x: -1, y: 0, z: 0))
+                    case .a: self.scene.camera.observer.focus(vector: SCNVector3(x: 1, y: 0, z: 0))
+                    case .s: self.scene.camera.observer.focus(vector: SCNVector3(x: 0, y: 0, z: 1))
+                    case .d: self.scene.camera.observer.focus(vector: SCNVector3(x: 0, y: 0, z: -1))
+                    default: break
+                    }
+                }
+                
+            default: break
+            }
+        }
     }
 }
 
 extension GameController {
     
-    func loadScene() {
+    func loadScene(meadow: Meadow) {
         
         DispatchQueue.main.async {
             
-            let width = 1
-            let depth = 1
+            let width = 10
+            let depth = 10
             
             for x in 0..<width {
                 
@@ -74,12 +102,41 @@ extension GameController {
                     
                     let coordinate = Coordinate(x: x, y: 0, z: z)
                     
-                    self.meadow.terrain.add(tile: coordinate) { layer in
-                        
-                        layer.color = TerrainLayer.Color(primary: .systemOrange, secondary: .systemPink)
+                    let _ = meadow.terrain.add(layer: coordinate, cardinal: .north)
+                    let _ = meadow.terrain.add(layer: coordinate, cardinal: .east)
+                    let _ = meadow.terrain.add(layer: coordinate, cardinal: .south)
+                    let _ = meadow.terrain.add(layer: coordinate, cardinal: .west)
+                    
+                    if x >= 1 && x < (width - 1) && z >= 1 && z < (depth - 1) {
+                    
+                        let l0 = meadow.water.add(layer: coordinate, cardinal: .north)
+                        let l1 = meadow.water.add(layer: coordinate, cardinal: .east)
+                        let l2 = meadow.water.add(layer: coordinate, cardinal: .south)
+                        let l3 = meadow.water.add(layer: coordinate, cardinal: .west)
+                    
+                        l0?.corners.set(elevation: 2)
+                        l1?.corners.set(elevation: 2)
+                        l2?.corners.set(elevation: 2)
+                        l3?.corners.set(elevation: 2)
                     }
                 }
             }
+            
+            let n0 = SCNNode(geometry: SCNBox(width: 0.5, height: 1, length: 0.5, chamferRadius: 0))
+            let n1 = SCNNode(geometry: SCNBox(width: 0.5, height: 1, length: 0.5, chamferRadius: 0))
+            let n2 = SCNNode(geometry: SCNBox(width: 0.5, height: 1, length: 0.5, chamferRadius: 0))
+            
+            n0.position = SCNVector3(x: 0.0, y: CGFloat(World.Axis.y(y: World.Constants.floor) + 0.5), z: 0.0)
+            n1.position = SCNVector3(x: 1.0, y: CGFloat(World.Axis.y(y: World.Constants.floor) + 0.5), z: 0.0)
+            n2.position = SCNVector3(x: 2.0, y: CGFloat(World.Axis.y(y: World.Constants.floor) + 0.5), z: 0.0)
+            
+            n0.geometry?.firstMaterial?.diffuse.contents = SKColor.systemPink
+            n1.geometry?.firstMaterial?.diffuse.contents = SKColor.systemOrange
+            n2.geometry?.firstMaterial?.diffuse.contents = SKColor.systemPurple
+            
+            self.scene.rootNode.addChildNode(n0)
+            self.scene.rootNode.addChildNode(n1)
+            self.scene.rootNode.addChildNode(n2)
         }
     }
 }

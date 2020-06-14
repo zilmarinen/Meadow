@@ -25,4 +25,5 @@ class TerrainEdgeJSON: EdgeJSON<TerrainLayerJSON> {
 
 class TerrainLayerJSON: LayerJSON {
     
+    let terrainType: TerrainType = .bedrock
 }

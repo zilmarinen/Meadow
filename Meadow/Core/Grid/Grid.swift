@@ -8,10 +8,13 @@
 
 import Foundation
 import SceneKit
+import Pasture
 
 public class Grid<C: Chunk<T>, T: Tile>: SCNNode, Hideable, SceneGraphIdentifiable, SceneGraphNode, Soilable {
 
     public weak var ancestor: SoilableParent?
+    
+    public var coordinate: Coordinate { return .zero }
 
     public var isDirty = false
     
@@ -56,27 +59,9 @@ public class Grid<C: Chunk<T>, T: Tile>: SCNNode, Hideable, SceneGraphIdentifiab
     
     public var isLeaf: Bool { return children.isEmpty }
     
-    public var category: SceneGraphNodeCategory { fatalError("SceneGraphIdentifiable.category must be overridden") }
+    public var category: SceneGraphNodeCategory { fatalError("Grid.category must be overridden") }
     
     public var type: SceneGraphNodeType { return .grid }
-}
-
-extension Grid {
-    
-    func find(chunk coordinate: Coordinate) -> C? {
-        
-        return chunks.first { chunk in
-            
-            return chunk.volume.contains(coordinate: coordinate)
-        }
-    }
-    
-    func find(tile coordinate: Coordinate) -> T? {
-        
-        guard let chunk = find(chunk: coordinate), let tile = chunk.find(tile: coordinate) else { return nil }
-        
-        return tile
-    }
     
     func add(tile coordinate: Coordinate) -> T {
         
@@ -96,6 +81,24 @@ extension Grid {
                 tile.add(neighbour: neighbour, cardinal: cardinal)
             }
         }
+        
+        return tile
+    }
+}
+
+extension Grid {
+    
+    func find(chunk coordinate: Coordinate) -> C? {
+        
+        return chunks.first { chunk in
+            
+            return chunk.volume.contains(coordinate: coordinate)
+        }
+    }
+    
+    func find(tile coordinate: Coordinate) -> T? {
+        
+        guard let chunk = find(chunk: coordinate), let tile = chunk.find(tile: coordinate) else { return nil }
         
         return tile
     }

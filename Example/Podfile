@@ -9,6 +9,7 @@ target 'Meadow Example iOS' do
 
 	pod 'Meadow', :path => '../'
 	pod 'Pasture', :path => '../../Pasture'
+	pod 'Terrace', :path => '../../Terrace'
 
 end
 
@@ -20,5 +21,6 @@ target 'Meadow Example macOS' do
 
 	pod 'Meadow', :path => '../'
 	pod 'Pasture', :path => '../../Pasture'
+	pod 'Terrace', :path => '../../Terrace'
 
 end

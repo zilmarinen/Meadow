@@ -10,8 +10,15 @@ import SceneKit
 
 extension SCNGeometry {
     
-    public func set(uniform: ShaderUniform, forKey key: String = "uniform") {
+    public func set(uniform: ShaderUniform) {
         
-        setValue(uniform.bytes, forKey: key)
+        if let uniform = uniform as? SCNMaterialProperty {
+        
+            setValue(uniform, forKey: uniform.key)
+        }
+        else {
+        
+            setValue(uniform.bytes, forKey: uniform.key)
+        }
     }
 }

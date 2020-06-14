@@ -12,12 +12,14 @@ public class TerrainEdge: Edge<TerrainLayer> {
     
     enum Constants {
         
-        static let lip = 0.07
+        static let crown = 0.1
     }
     
     public override var category: SceneGraphNodeCategory { return .terrain }
     
     override func render(transform: Transform) -> Mesh {
+        
+        var mesh = Mesh(polygons: [])
         
         let (o0, o1) = cardinal.ordinals
         
@@ -25,85 +27,93 @@ public class TerrainEdge: Edge<TerrainLayer> {
         let v1 = transform.position
         let v2 = o1.vector + transform.position
         
+        let faceNormals = [cardinal.normal,
+                           (v0 - v1).cross(vector: (v1 - (v1 + .up))),
+                           (v1 - v2).cross(vector: (v2 - (v2 + .up)))]
+        
+        let textureCoordinates = [CGPoint(x: 0, y: 0), CGPoint(x: 1, y: 0), CGPoint(x: 1, y: 1), CGPoint(x: 0, y: 1), CGPoint(x: 0.5, y: 0.5)]
+        
         var polygons: [Pasture.Polygon] = []
         
         for layer in layers where !layer.isHidden {
             
-            let c0 = layer.lower?.get(elevation: o0) ?? World.Constants.floor
-            let c1 = layer.lower?.centerElevation ?? World.Constants.floor
-            let c2 = layer.lower?.get(elevation: o1) ?? World.Constants.floor
+            let lc0 = World.Constants.floor + (layer.lower?.corners.left.elevation ?? -1)
+            let lc1 = World.Constants.floor + (layer.lower?.corners.centre.elevation ?? -1)
+            let lc2 = World.Constants.floor + (layer.lower?.corners.right.elevation ?? -1)
             
-            let c3 = layer.get(elevation: o0)
-            let c4 = layer.centerElevation
-            let c5 = layer.get(elevation: o1)
+            let uc0 = World.Constants.floor + layer.corners.left.elevation
+            let uc1 = World.Constants.floor + layer.corners.centre.elevation
+            let uc2 = World.Constants.floor + layer.corners.right.elevation
             
-            let lv0 = Vector(x: v0.x, y: World.Axis.y(y: c0), z: v0.z)
-            let lv1 = Vector(x: v1.x, y: World.Axis.y(y: c1), z: v1.z)
-            let lv2 = Vector(x: v2.x, y: World.Axis.y(y: c2), z: v2.z)
+            let lv0 = Vector(x: v0.x, y: World.Axis.y(y: lc0), z: v0.z)
+            let lv1 = Vector(x: v1.x, y: World.Axis.y(y: lc1), z: v1.z)
+            let lv2 = Vector(x: v2.x, y: World.Axis.y(y: lc2), z: v2.z)
             
-            let uv0 = Vector(x: v0.x, y: World.Axis.y(y: c3), z: v0.z)
-            let uv1 = Vector(x: v1.x, y: World.Axis.y(y: c4), z: v1.z)
-            let uv2 = Vector(x: v2.x, y: World.Axis.y(y: c5), z: v2.z)
+            let uv0 = Vector(x: v0.x, y: World.Axis.y(y: uc0), z: v0.z)
+            let uv1 = Vector(x: v1.x, y: World.Axis.y(y: uc1), z: v1.z)
+            let uv2 = Vector(x: v2.x, y: World.Axis.y(y: uc2), z: v2.z)
             
-            let n0 = (uv0 - uv1).cross(vector: (uv0 - uv2))
-            let n1 = -cardinal.normal
-            let n2 = (uv1 - uv0).cross(vector: (uv1 - lv1))
-            let n3 = (uv2 - uv1).cross(vector: (uv2 - lv2))
+            let cv0 = Vector(x: v0.x, y: World.Axis.y(y: uc0) - Constants.crown, z: v0.z)
+            let cv1 = Vector(x: v1.x, y: World.Axis.y(y: uc1) - Constants.crown, z: v1.z)
+            let cv2 = Vector(x: v2.x, y: World.Axis.y(y: uc2) - Constants.crown, z: v2.z)
+            
+            if layer.upper == nil || layer.upper?.isHidden ?? false {
+                
+                let color = layer.terrainType.primaryColor
+                
+                let normal = (uv0 - uv2).cross(vector: (uv1 - uv0))
+                
+                let uv = textureCoordinates.last!
+                
+                let fv0 = Vertex(position: uv0, normal: normal, color: color, textureCoordinates: uv)
+                let fv1 = Vertex(position: uv1, normal: normal, color: color, textureCoordinates: uv)
+                let fv2 = Vertex(position: uv2, normal: normal, color: color, textureCoordinates: uv)
+                
+                polygons.append(Polygon(vertices: [fv0, fv1, fv2], convex: true))
+            }
             
             var faces: [[Vector]] = []
             var normals: [Vector] = []
-            var materials: [Pasture.Polygon.Material] = []
-            /*
-            if layer.upper == nil {
+            
+            if lc0 != uc0 || lc2 != uc2 {
                 
-                let fv0 = Vertex(position: uv0, normal: n0)
-                let fv1 = Vertex(position: uv1, normal: n0)
-                let fv2 = Vertex(position: uv2, normal: n0)
+                faces.append([uv0, uv2, cv2, cv0])
+                faces.append([cv0, cv2, lv2, lv0])
                 
-                polygons.append(Polygon(vertices: [fv0, fv1, fv2], convex: true, material: layer.color.primary))
-                
-                let uv3 = Vector(x: v0.x, y: World.Axis.y(y: c3) - Constants.lip, z: v0.z)
-                let uv4 = Vector(x: v1.x, y: World.Axis.y(y: c4) - Constants.lip, z: v1.z)
-                let uv5 = Vector(x: v2.x, y: World.Axis.y(y: c5) - Constants.lip, z: v2.z)
-                
-                faces.append([uv0, uv2, uv5, uv3])
-                faces.append([uv3, uv5, lv2, lv0])
-                
-                faces.append([uv1, uv0, uv3, uv4])
-                faces.append([uv4, uv3, lv0, lv1])
-                
-                faces.append([uv2, uv1, uv4, uv5])
-                faces.append([uv5, uv4, lv1, lv2])
-                
-                normals.append(contentsOf: [n1, n1, n2, n2, n3, n3])
-                
-                materials.append(contentsOf: [layer.color.primary, layer.color.secondary,
-                                              layer.color.primary, layer.color.secondary,
-                                              layer.color.primary, layer.color.secondary])
+                normals.append(contentsOf: [faceNormals[0], faceNormals[0]])
             }
-            else {
+            
+            if lc0 != uc0 || lc1 != uc1 {
                 
-                faces.append([uv0, uv2, lv2, lv0])
-                faces.append([uv1, uv0, lv0, lv1])
-                faces.append([uv2, uv1, lv1, lv2])
+                faces.append([uv1, uv0, cv0, cv1])
+                faces.append([cv1, cv0, lv0, lv1])
                 
-                normals.append(contentsOf: [n1, n2, n3])
-                
-                materials.append(contentsOf: [layer.color.secondary, layer.color.secondary, layer.color.secondary])
+                normals.append(contentsOf: [faceNormals[1], faceNormals[1]])
             }
-            */
+            
+            if lc1 != uc1 || lc2 != uc2 {
+                
+                faces.append([uv2, uv1, cv1, cv2])
+                faces.append([cv2, cv1, lv1, lv2])
+                
+                normals.append(contentsOf: [faceNormals[2], faceNormals[2]])
+            }
+            
             for i in 0..<faces.count {
                 
-                let vectors = faces[i]
-                let normal = normals[i]
-                let material = materials[i]
+                let color = (i % 2 == 0 ? layer.terrainType.primaryColor : layer.terrainType.secondaryColor)
                 
-                let vertices = vectors.map { Vertex(position: $0, normal: normal) }
+                let v0 = Vertex(position: faces[i][0], normal: normals[i], color: color, textureCoordinates: textureCoordinates[0])
+                let v1 = Vertex(position: faces[i][1], normal: normals[i], color: color, textureCoordinates: textureCoordinates[1])
+                let v2 = Vertex(position: faces[i][2], normal: normals[i], color: color, textureCoordinates: textureCoordinates[2])
+                let v3 = Vertex(position: faces[i][3], normal: normals[i], color: color, textureCoordinates: textureCoordinates[3])
                 
-                polygons.append(Polygon(vertices: vertices, convex: true, material: material))
+                polygons.append(Polygon(vertices: [v0, v1, v2, v3], convex: true))
             }
+            
+            mesh = Mesh(polygons: polygons).union(mesh: mesh)
         }
         
-        return Mesh(polygons: polygons)
+        return mesh
     }
 }

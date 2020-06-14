@@ -6,9 +6,10 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
+import Pasture
 import SceneKit
 
-public class Floor: SCNPlane {
+public class Floor: SCNPlane, Shadable {
     
     struct Uniform: ShaderUniform {
         
@@ -31,9 +32,25 @@ public class Floor: SCNPlane {
         }
     }
     
-    public var backgroundColor: Color = .black {
+    var shader: ShaderProgram {
+        
+        let program = ShaderProgram(named: "floor")
+        
+        program.library = Stage.shaderLibrary
+        
+        return program
+    }
+    
+    var uniform: ShaderUniform? {
+        
+        return Uniform(worldFloor: World.Axis.y(y: World.Constants.floor), backgroundColor: backgroundColor, gridColor: gridColor, rendersGridLines: rendersGridLines)
+    }
+    
+    public var backgroundColor: Color = .grey {
         
         didSet {
+            
+            guard let uniform = uniform else { return }
             
             set(uniform: uniform)
         }
@@ -43,6 +60,8 @@ public class Floor: SCNPlane {
         
         didSet {
             
+            guard let uniform = uniform else { return }
+            
             set(uniform: uniform)
         }
     }
@@ -51,24 +70,22 @@ public class Floor: SCNPlane {
         
         didSet {
             
+            guard let uniform = uniform else { return }
+            
             set(uniform: uniform)
         }
-    }
-    
-    var uniform: Uniform {
-        
-        return Uniform(worldFloor: World.Axis.y(y: World.Constants.floor), backgroundColor: backgroundColor, gridColor: gridColor, rendersGridLines: rendersGridLines)
     }
     
     override init() {
         
         super.init()
         
-        width = 1.5
-        height = 1.5
+        width = 2
+        height = 2
         
-        program = ShaderProgram(named: "floor")
-        program?.library = Stage.shaderLibrary
+        program = shader
+        
+        guard let uniform = uniform else { return }
         
         set(uniform: uniform)
     }

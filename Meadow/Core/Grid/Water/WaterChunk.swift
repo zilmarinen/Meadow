@@ -9,4 +9,15 @@
 public class WaterChunk: Chunk<WaterTile<WaterEdge>> {
     
     public override var category: SceneGraphNodeCategory { return .water }
+    
+    var shader: ShaderProgram {
+        
+        let program = ShaderProgram(named: "water")
+        
+        program.library = Stage.shaderLibrary
+        
+        return program
+    }
+    
+    var uniform: ShaderUniform? { return nil }
 }

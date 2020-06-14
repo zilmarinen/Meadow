@@ -6,25 +6,25 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
-protocol Layerable: Tile {
+public protocol Layerable: Tile {
     
     associatedtype E: Soilable
     
     var edges: [Cardinal: E] { get set }
     
-    func add(edge cardinal: Cardinal, configurator: TerrainEdge.LayerConfigurator) -> E
+    func add(edge cardinal: Cardinal) -> E
     func find(edge cardinal: Cardinal) -> E?
     func remove(edge cardinal: Cardinal)
 }
 
 extension Layerable {
     
-    func find(edge cardinal: Cardinal) -> E? {
+    public func find(edge cardinal: Cardinal) -> E? {
         
         return edges[cardinal]
     }
     
-    func remove(edge cardinal: Cardinal) {
+    public func remove(edge cardinal: Cardinal) {
         
         if find(edge: cardinal) != nil {
             

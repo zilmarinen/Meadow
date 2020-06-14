@@ -21,6 +21,21 @@ public class Terrain: Grid<TerrainChunk, TerrainTile<TerrainEdge>> {
     }
     
     public override var category: SceneGraphNodeCategory { return .terrain }
+    
+    public override func add(tile coordinate: Coordinate) -> TerrainTile<TerrainEdge> {
+        
+        let tile = super.add(tile: coordinate)
+        
+        for cardinal in Cardinal.allCases {
+            
+            if tile.find(edge: cardinal) == nil {
+                
+                let _ = tile.add(edge: cardinal)
+            }
+        }
+        
+        return tile
+    }
 }
 
 extension Terrain: GridDecodable {
@@ -37,10 +52,9 @@ extension Terrain: GridDecodable {
                     
                     edgeJSON.layers.forEach { layerJSON in
                         
-                        self.add(layer: tileJSON.coordinate, cardinal: edgeJSON.cardinal) { layer in
+                        let layer = self.add(layer: tileJSON.coordinate, cardinal: edgeJSON.cardinal)
                             
-                            layer.color = .black
-                        }
+                        layer?.terrainType = layerJSON.terrainType
                     }
                 }
             }
@@ -50,33 +64,16 @@ extension Terrain: GridDecodable {
 
 public extension Terrain {
     
-    @discardableResult
-    func add(tile coordinate: Coordinate, configurator: TerrainEdge.LayerConfigurator) -> TerrainTile<TerrainEdge> {
+    func add(layer coordinate: Coordinate, cardinal: Cardinal) -> TerrainLayer? {
         
-        let tile = find(tile: coordinate) ?? add(tile: coordinate)
-        
-        for cardinal in Cardinal.allCases {
-            
-            if tile.find(edge: cardinal) == nil {
-                
-                tile.add(edge: cardinal, configurator: configurator)
-            }
-        }
-        
-        return tile
-    }
-    
-    @discardableResult
-    func add(layer coordinate: Coordinate, cardinal: Cardinal, configurator: TerrainEdge.LayerConfigurator) -> TerrainLayer? {
-        
-        let tile = find(tile: coordinate) ?? add(tile: coordinate)
+        let tile = find(tile: coordinate) ?? super.add(tile: coordinate)
         
         if let edge = tile.find(edge: cardinal) {
             
-            return edge.add(layer: configurator)
+            return edge.addLayer()
         }
         
-        let edge = tile.add(edge: cardinal, configurator: configurator)
+        let edge = tile.add(edge: cardinal)
         
         return edge.topLayer
     }

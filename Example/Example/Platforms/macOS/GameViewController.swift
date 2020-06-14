@@ -8,12 +8,13 @@
 
 import Cocoa
 import SceneKit
+import Terrace
 
 class GameViewController: NSViewController {
     
-    var gameView: SCNView {
+    var gameView: SceneView {
         
-        return self.view as! SCNView
+        return self.view as! SceneView
     }
     
     var gameController: GameController!

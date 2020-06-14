@@ -6,7 +6,9 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
-public protocol SceneGraphIdentifiable: SceneGraphNode {
+import Terrace
+
+public protocol SceneGraphIdentifiable: SceneGraphNode, StartOption {
     
     var category: SceneGraphNodeCategory { get }
     

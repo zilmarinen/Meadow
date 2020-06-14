@@ -14,6 +14,7 @@ class ShaderProgram: SCNProgram {
         
         super.init()
         
+        self.delegate = self
         self.fragmentFunctionName = "\(name)_fragment"
         self.vertexFunctionName = "\(name)_vertex"
     }

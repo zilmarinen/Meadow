@@ -23,7 +23,8 @@ Pod::Spec.new do |s|
 
   s.resources = [
     
-    "*.{metallib}"
+    "*.{metallib, xcassets}",
+    "Meadow/**/*.{xcassets}",
   ]
 
 end

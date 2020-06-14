@@ -6,9 +6,16 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
-public protocol ShaderUniform {}
+public protocol ShaderUniform {
+    
+    var key: String { get }
+    
+    var bytes: Data { get }
+}
 
 extension ShaderUniform {
+    
+    public var key: String { return "uniform" }
     
     public var bytes: Data {
         

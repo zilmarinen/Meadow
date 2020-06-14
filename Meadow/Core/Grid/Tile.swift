@@ -17,6 +17,8 @@ public class Tile: NSObject, Soilable, Clearable, Encodable, Neighbour, Renderab
     
     public weak var ancestor: SoilableParent?
     
+    public var coordinate: Coordinate { return volume.coordinate }
+    
     public var isDirty = false
     
     public var isHidden: Bool = false {
@@ -30,6 +32,15 @@ public class Tile: NSObject, Soilable, Clearable, Encodable, Neighbour, Renderab
     public var name: String?
     
     var mesh: Mesh = Mesh(polygons: [])
+    
+    var transform: Transform {
+        
+        let offset = World.Axis.aligned(chunk: volume.coordinate)
+        
+        let position = Vector(coordinate: volume.coordinate) - Vector(coordinate: offset.coordinate)
+        
+        return Transform(position: position, rotation: .identity, scale: .one)
+    }
     
     let volume: Volume
     
@@ -55,12 +66,6 @@ public class Tile: NSObject, Soilable, Clearable, Encodable, Neighbour, Renderab
         
         guard isDirty else { return false }
         
-        let offset = World.Axis.aligned(chunk: volume.coordinate)
-        
-        let position = Vector(coordinate: volume.coordinate) - Vector(coordinate: offset.coordinate)
-        
-        let transform = Transform(position: position, rotation: .identity, scale: .one)
-        
         mesh = render(transform: transform)
         
         isDirty = false
@@ -78,7 +83,7 @@ public class Tile: NSObject, Soilable, Clearable, Encodable, Neighbour, Renderab
     
     func update(delta: TimeInterval, time: TimeInterval) {}
     
-    func render(transform: Transform) -> Mesh { return Mesh(polygons: []) }
+    func render(transform: Transform) -> Mesh { fatalError("Tile.render must be overridden") }
     
     public var children: [SceneGraphNode] { return [] }
     
@@ -86,7 +91,7 @@ public class Tile: NSObject, Soilable, Clearable, Encodable, Neighbour, Renderab
     
     public var isLeaf: Bool { return children.isEmpty }
     
-    public var category: SceneGraphNodeCategory { fatalError("SceneGraphIdentifiable.category must be overridden") }
+    public var category: SceneGraphNodeCategory { fatalError("Tile.category must be overridden") }
     
     public var type: SceneGraphNodeType { return .tile }
 }

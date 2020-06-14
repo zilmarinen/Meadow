@@ -8,29 +8,9 @@
 
 #include <metal_stdlib>
 using namespace metal;
-
 #include <SceneKit/scn_metal>
-
-constant float epsilon = 0.0001;
-
-struct Plane {
-    
-    float3 position;
-    float3 normal;
-};
-
-struct Ray {
-    
-    float3 origin;
-    float3 direction;
-};
-
-struct RayHitTest {
-    
-    bool hit;
-    float3 vector;
-    float distance;
-};
+#include "../Meadow.h"
+using namespace Meadow;
 
 struct Uniform {
     
@@ -42,15 +22,10 @@ struct Uniform {
     bool rendersGridLines;
 };
 
-typedef struct {
-    
-    float3 position [[ attribute(SCNVertexSemanticPosition) ]];
-    
-} Vertex;
-
 struct Fragment {
     
     float4 position [[position]];
+    float2 xz;
     
     float worldFloor;
     
@@ -64,26 +39,24 @@ RayHitTest intersect(Plane plane, Ray ray) {
     
     float denominator = dot(plane.normal, ray.direction);
     
-    if (fabs(denominator) > epsilon) {
+    if (fabs(denominator) < epsilon) {
         
-        float3 difference = normalize(plane.position - ray.origin);
-        
-        float distance = dot(difference, plane.normal) / denominator;
-        
-        if (distance > epsilon) {
-            
-            return RayHitTest { .hit = true, .distance = distance, .vector = ray.origin + (ray.direction * distance) };
-        }
+        return RayHitTest { .hit = false };
     }
+        
+    float3 v0 = (plane.position - ray.origin);
     
-    return RayHitTest { .hit = false };
+    float distance = dot(v0, plane.normal) / denominator;
+    
+    return RayHitTest { .hit = distance > epsilon, .distance = distance, .vector = ray.origin + (ray.direction * distance) };
 }
 
-vertex Fragment floor_vertex(Vertex v [[ stage_in ]], constant Uniform& uniform [[buffer(2)]]) {
+vertex Fragment floor_vertex(SimpleVertex v [[ stage_in ]], constant Uniform& uniform [[buffer(2)]]) {
     
     Fragment f;
     
     f.position = float4(v.position, 1.0);
+    f.xz = v.position.xy;
     f.worldFloor = uniform.worldFloor;
     f.backgroundColor = half4(uniform.backgroundColor);
     f.gridColor = half4(uniform.gridColor);
@@ -92,20 +65,18 @@ vertex Fragment floor_vertex(Vertex v [[ stage_in ]], constant Uniform& uniform 
     return f;
 }
 
-fragment half4 floor_fragment(Fragment f [[stage_in]], constant SCNSceneBuffer& scn_frame [[buffer(0)]]) {
+fragment half4 floor_fragment(Fragment f [[stage_in]], constant SCNSceneBuffer& scn_frame [[buffer(0)]], constant NodeBuffer& scn_node [[buffer(1)]]) {
     
     if (!f.rendersGridLines) {
         
         return f.backgroundColor;
     }
-
-    float3 position = (scn_frame.inverseProjectionTransform * f.position).xyz;
-
-    float3 camera = (float4(float3(0.0), 1.0)).xyz;
     
-    float3 direction = normalize(position - camera);
+    float4 position = (scn_frame.inverseViewProjectionTransform * float4(f.xz.x, f.xz.y, 0.0, 1.0));
+    
+    float3 direction = normalize(position.xyz);
 
-    Ray ray = Ray { .origin = camera, .direction = direction };
+    Ray ray = Ray { .origin = float3(0.0), .direction = direction };
     
     float3 worldFloor = (scn_frame.viewTransform * float4(float3(0.0, f.worldFloor, 0.0), 1.0)).xyz;
     
@@ -115,11 +86,13 @@ fragment half4 floor_fragment(Fragment f [[stage_in]], constant SCNSceneBuffer& 
 
     if(!hitTest.hit) {
         
-        return half4(0.5, 0.5, 0.5, 1.0);
+        return f.backgroundColor;
     }
     
-    float2 fractional  = abs(fract(hitTest.vector.xz + 0.5));
-    float2 partial = fwidth(hitTest.vector.xz);
+    float2 uv = hitTest.vector.xz;
+    
+    float2 fractional  = abs(fract(uv + 0.5));
+    float2 partial = fwidth(uv);
     
     float2 point = smoothstep(-partial, partial, fractional);
     

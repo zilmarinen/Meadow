@@ -12,11 +12,13 @@ public final class Meadow: SCNNode, SceneGraphIdentifiable, SceneGraphNode, Soil
     
     public var ancestor: SoilableParent?
     
+    public var coordinate: Coordinate { return .zero }
+    
     public var isDirty: Bool = false
     
     public static var bundle: Bundle? { return Bundle(for: Meadow.self) }
     
-    public lazy var actors: Actors = { return Actors(ancestor: self) }()
+    public lazy var actors: Actors = { return Actors() }()
     public lazy var area: Area = { return Area(ancestor: self) }()
     public lazy var foliage: Foliage = { return Foliage(ancestor: self) }()
     public lazy var footpath: Footpath = { return Footpath(ancestor: self) }()
@@ -24,6 +26,8 @@ public final class Meadow: SCNNode, SceneGraphIdentifiable, SceneGraphNode, Soil
     public lazy var water: Water = { return Water(ancestor: self) }()
     
     public let floor = Floor()
+    
+    lazy var waterResolver: WaterResolver = { return WaterResolver(terrain: terrain, water: water) }()
     
     public required init(json: MeadowJSON? = nil) {
         
@@ -67,6 +71,26 @@ public final class Meadow: SCNNode, SceneGraphIdentifiable, SceneGraphNode, Soil
 
 extension Meadow {
     
+    public func child(didBecomeDirty child: SoilableChild) {
+        
+        becomeDirty()
+        
+        guard let grid = child as? SceneGraphIdentifiable else { return }
+        
+        switch grid.category {
+            
+        case .terrain:
+            
+            self.waterResolver.enqueue(coordinate: child.coordinate)
+            
+        case .water:
+            
+            self.waterResolver.enqueue(coordinate: child.coordinate)
+            
+        default: break
+        }
+    }
+    
     @discardableResult public func clean() -> Bool {
         
         guard isDirty else { return false }
@@ -86,6 +110,8 @@ extension Meadow {
 extension Meadow: Updatable {
     
     public func update(delta: TimeInterval, time: TimeInterval) {
+        
+        waterResolver.update(delta: delta, time: time)
         
         actors.update(delta: delta, time: time)
         area.update(delta: delta, time: time)

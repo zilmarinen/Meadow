@@ -15,7 +15,7 @@ public class TerrainTile<E: TerrainEdge>: Tile, Layerable {
         case edges
     }
     
-    var edges: [Cardinal : E] = [:]
+    public var edges: [Cardinal : E] = [:]
     
     public override func encode(to encoder: Encoder) throws {
         
@@ -28,52 +28,28 @@ public class TerrainTile<E: TerrainEdge>: Tile, Layerable {
     
     public override func clean() -> Bool {
         
-        guard super.clean() else { return false }
+        guard isDirty else { return false }
         
         edges.forEach { (_, edge) in
             
             edge.clean()
         }
         
-        return true
+        return super.clean()
     }
     
     override func render(transform: Transform) -> Mesh {
         
-        var meshes: [Mesh] = []
+        guard isDirty else { return self.mesh }
+        
+        var mesh = Mesh(polygons: [])
         
         for (_, edge) in edges where !edge.isHidden {
             
-            var mesh = edge.render(transform: transform)
-            
-            if let edgeMesh = find(neighbour: edge.cardinal)?.find(edge: edge.cardinal.opposite)?.mesh {
-                
-                mesh = Mesh(polygons: edgeMesh.clip(polygons: mesh.polygons, rule: .greaterThan))
-            }
-            
-            meshes.append(mesh)
+            mesh = mesh.union(mesh: edge.render(transform: transform))
         }
         
-        var result: [Mesh] = []
-        
-        for i in meshes.indices {
-            
-            var m0 = meshes[i]
-            
-            for j in meshes.indices {
-                
-                if i != j {
-                    
-                    let m1 = meshes[j]
-                    
-                    m0 = Mesh(polygons: m1.clip(polygons: m0.polygons, rule: .greaterThan))
-                }
-            }
-            
-            result.append(m0)
-        }
-        
-        return result.union()
+        return mesh
     }
     
     public override var children: [SceneGraphNode] { return Array(edges.values) }
@@ -83,25 +59,13 @@ public class TerrainTile<E: TerrainEdge>: Tile, Layerable {
 
 extension TerrainTile {
     
-    @discardableResult
-    func add(edge cardinal: Cardinal, configurator: TerrainEdge.LayerConfigurator) -> E {
+    public func add(edge cardinal: Cardinal) -> E {
         
-        let edge = find(edge: cardinal) ?? E(ancestor: self, cardinal: cardinal)
+        let edge = find(edge: cardinal) ?? E(ancestor: self, coordinate: volume.coordinate, cardinal: cardinal)
         
         if edge.layers.isEmpty {
             
-            edge.add { layer in
-                
-                let (o0, o1) = layer.cardinal.ordinals
-                
-                let elevation = (layer.lower?.peak ?? World.Constants.floor) + 1
-                
-                layer.set(center: elevation)
-                layer.set(ordinal: o0, elevation: elevation)
-                layer.set(ordinal: o1, elevation: elevation)
-                
-                configurator(layer)
-            }
+            let _ = edge.addLayer()
         }
         
         self.edges.updateValue(edge, forKey: cardinal)

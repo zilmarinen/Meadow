@@ -17,6 +17,8 @@ public class Layer: NSObject, Soilable, Clearable, Encodable, Hideable, SceneGra
     
     public weak var ancestor: SoilableParent?
     
+    public var coordinate: Coordinate
+    
     public var isDirty = false
     
     public var isHidden: Bool = false {
@@ -47,13 +49,13 @@ public class Layer: NSObject, Soilable, Clearable, Encodable, Hideable, SceneGra
         }
     }
     
-    var left = Corner(anchor: .left, elevation: World.Constants.floor + 1)
-    var right = Corner(anchor: .right, elevation: World.Constants.floor + 1)
-    var center = Corner(anchor: .center, elevation: World.Constants.floor + 1)
+    public var corners = LayerCorners()
     
-    required init(ancestor: SoilableParent, cardinal: Cardinal) {
+    required init(ancestor: SoilableParent, coordinate: Coordinate, cardinal: Cardinal) {
         
         self.ancestor = ancestor
+        
+        self.coordinate = coordinate
         
         self.cardinal = cardinal
         
@@ -86,77 +88,37 @@ public class Layer: NSObject, Soilable, Clearable, Encodable, Hideable, SceneGra
     
     public var isLeaf: Bool { return children.isEmpty }
     
-    public var category: SceneGraphNodeCategory { fatalError("SceneGraphIdentifiable.category must be overridden") }
+    public var category: SceneGraphNodeCategory { fatalError("Layer.category must be overridden") }
     
     public var type: SceneGraphNodeType { return .layer }
 }
 
-extension Layer {
+public extension Layer {
     
-    enum Adjustment {
+    func get(elevation corner: LayerCorners.Anchor) -> Int {
         
-        case corner
-        case edge
-        case layer
-        case recursive
-    }
-    
-    public var base: Int { return min(left.elevation, right.elevation, center.elevation) }
-    public var peak: Int{ return max(left.elevation, right.elevation, center.elevation) }
-    public var centerElevation: Int { return center.elevation }
-    
-    public func set(ordinal: Ordinal, elevation: Int) {
-        
-        switch ordinal {
+        switch corner {
             
-        case .northEast,
-             .southWest:
-            
-            adjust(corner: Corner(anchor: .left, elevation: elevation))
-            
-        case .southEast,
-             .northWest:
-            
-            adjust(corner: Corner(anchor: .right, elevation: elevation))
+        case .left: return corners.left.elevation
+        case .right: return corners.right.elevation
+        case .centre: return corners.centre.elevation
         }
     }
     
-    public func set(center elevation: Int) {
+    func set(elevation: Int) {
         
-        adjust(corner: Corner(anchor: .center, elevation: elevation))
+        corners.set(elevation: elevation)
+        
+        becomeDirty()
     }
     
-    public func get(elevation ordinal: Ordinal) -> Int {
+    func set(elevation: Int, corner: LayerCorners.Anchor) {
         
-        switch ordinal {
+        switch corner {
             
-        case .northEast,
-             .southWest:
-            
-            return left.elevation
-            
-        case .southEast,
-             .northWest:
-            
-            return right.elevation
-        }
-    }
-    
-    func adjust(corner: Corner) {
-        
-        switch corner.anchor {
-            
-        case .center:
-            
-            self.center = corner
-            
-        case .left:
-            
-            self.left = corner
-            
-        case .right:
-            
-            self.right = corner
+        case .left: corners.left.elevation = elevation
+        case .right: corners.right.elevation = elevation
+        case .centre: corners.centre.elevation = elevation
         }
         
         becomeDirty()

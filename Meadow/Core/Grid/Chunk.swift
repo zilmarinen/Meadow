@@ -14,6 +14,8 @@ public class Chunk<T: Tile>: SCNNode, Hideable, SceneGraphIdentifiable, SceneGra
     
     public weak var ancestor: SoilableParent?
     
+    public var coordinate: Coordinate { return volume.coordinate }
+    
     public var isDirty = false
     
     let volume: Volume
@@ -36,9 +38,9 @@ public class Chunk<T: Tile>: SCNNode, Hideable, SceneGraphIdentifiable, SceneGra
         
         super.init()
         
-        self.name = "Chunk [\(coordinate.x), \(coordinate.y), \(coordinate.z)]"
+        self.name = "Chunk [\(volume.coordinate.x), \(volume.coordinate.y), \(volume.coordinate.z)]"
         
-        self.position = SCNVector3(vector: Vector(coordinate: volume.coordinate))
+        self.position = SCNVector3(coordinate: Coordinate(x: volume.coordinate.x, y: 0, z: volume.coordinate.z))
     }
     
     required init?(coder: NSCoder) {
@@ -52,7 +54,7 @@ public class Chunk<T: Tile>: SCNNode, Hideable, SceneGraphIdentifiable, SceneGra
     
     public var isLeaf: Bool { return children.isEmpty }
     
-    public var category: SceneGraphNodeCategory { fatalError("SceneGraphIdentifiable.category must be overridden") }
+    public var category: SceneGraphNodeCategory { fatalError("Chunk.category must be overridden") }
     
     public var type: SceneGraphNodeType { return .chunk }
 }
@@ -96,7 +98,7 @@ extension Chunk {
         
         guard isDirty else { return false }
         
-        var meshes: [Mesh] = []
+        var mesh = Mesh(polygons: [])
         
         tiles.forEach { tile in
             
@@ -104,18 +106,30 @@ extension Chunk {
             
             if !tile.isHidden {
                 
-                meshes.append(tile.mesh)
+                mesh = mesh.union(mesh: tile.mesh)
             }
         }
         
-        geometry = SCNGeometry(mesh: meshes.union(), materialSearch: {
+        geometry = SCNGeometry(mesh: mesh)
+        
+        let node = childNodes.first ?? SCNNode()
+        
+        if node.parent == nil {
             
-            let material = SCNMaterial()
+            addChildNode(node)
+        }
+        
+        node.geometry = SCNGeometry(normals: mesh)
+        
+        if let shadable = self as? Shadable {
             
-            material.diffuse.contents = $0 as? MDWColor
+            geometry?.program = shadable.shader
             
-            return material
-        })
+            if let uniform = shadable.uniform {
+                
+                geometry?.set(uniform: uniform)
+            }
+        }
         
         isDirty = false
         

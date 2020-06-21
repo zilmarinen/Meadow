@@ -35,69 +35,61 @@ public class TerrainEdge: Edge<TerrainLayer> {
         
         var polygons: [Pasture.Polygon] = []
         
+        let lowerCorners = LayerCorners()
+        let layerCorners = LayerCorners()
+        let upperCorners = LayerCorners()
+        
         for layer in layers where !layer.isHidden {
             
-            let lc0 = World.Constants.floor + (layer.lower?.corners.left.elevation ?? -1)
-            let lc1 = World.Constants.floor + (layer.lower?.corners.centre.elevation ?? -1)
-            let lc2 = World.Constants.floor + (layer.lower?.corners.right.elevation ?? -1)
+            lowerCorners.left.elevation = World.Constants.floor + (layer.lower?.corners.left.elevation ?? 0)
+            lowerCorners.centre.elevation = World.Constants.floor + (layer.lower?.corners.centre.elevation ?? 0)
+            lowerCorners.right.elevation = World.Constants.floor + (layer.lower?.corners.right.elevation ?? 0)
+            
+            layerCorners.left.elevation = World.Constants.floor + layer.corners.left.elevation
+            layerCorners.centre.elevation = World.Constants.floor + layer.corners.centre.elevation
+            layerCorners.right.elevation = World.Constants.floor + layer.corners.right.elevation
+            
+            upperCorners.left.elevation = World.Constants.floor + (layer.upper?.corners.left.elevation ?? 0)
+            upperCorners.centre.elevation = World.Constants.floor + (layer.upper?.corners.centre.elevation ?? 0)
+            upperCorners.right.elevation = World.Constants.floor + (layer.upper?.corners.right.elevation ?? 0)
+            
+            
+            
+            
+            
+            
+            
+            
+            let lc0 = World.Constants.floor + (layer.lower?.corners.left.elevation ?? 0) - 1
+            let lc1 = World.Constants.floor + (layer.lower?.corners.centre.elevation ?? 0) - 1
+            let lc2 = World.Constants.floor + (layer.lower?.corners.right.elevation ?? 0) - 1
             
             let uc0 = World.Constants.floor + layer.corners.left.elevation
             let uc1 = World.Constants.floor + layer.corners.centre.elevation
             let uc2 = World.Constants.floor + layer.corners.right.elevation
             
-            let lv0 = Vector(x: v0.x, y: World.Axis.y(y: lc0), z: v0.z)
-            let lv1 = Vector(x: v1.x, y: World.Axis.y(y: lc1), z: v1.z)
-            let lv2 = Vector(x: v2.x, y: World.Axis.y(y: lc2), z: v2.z)
+            let lv0 = Vector(x: v0.x, y: World.Axis.y(value: lc0), z: v0.z)
+            let lv1 = Vector(x: v1.x, y: World.Axis.y(value: lc1), z: v1.z)
+            let lv2 = Vector(x: v2.x, y: World.Axis.y(value: lc2), z: v2.z)
             
-            let uv0 = Vector(x: v0.x, y: World.Axis.y(y: uc0), z: v0.z)
-            let uv1 = Vector(x: v1.x, y: World.Axis.y(y: uc1), z: v1.z)
-            let uv2 = Vector(x: v2.x, y: World.Axis.y(y: uc2), z: v2.z)
+            let uv0 = Vector(x: v0.x, y: World.Axis.y(value: uc0), z: v0.z)
+            let uv1 = Vector(x: v1.x, y: World.Axis.y(value: uc1), z: v1.z)
+            let uv2 = Vector(x: v2.x, y: World.Axis.y(value: uc2), z: v2.z)
             
-            let cv0 = Vector(x: v0.x, y: World.Axis.y(y: uc0) - Constants.crown, z: v0.z)
-            let cv1 = Vector(x: v1.x, y: World.Axis.y(y: uc1) - Constants.crown, z: v1.z)
-            let cv2 = Vector(x: v2.x, y: World.Axis.y(y: uc2) - Constants.crown, z: v2.z)
+            let cv0 = Vector(x: v0.x, y: World.Axis.y(value: uc0) - Constants.crown, z: v0.z)
+            let cv1 = Vector(x: v1.x, y: World.Axis.y(value: uc1) - Constants.crown, z: v1.z)
+            let cv2 = Vector(x: v2.x, y: World.Axis.y(value: uc2) - Constants.crown, z: v2.z)
             
-            if layer.upper == nil || layer.upper?.isHidden ?? false {
-                
-                let color = layer.terrainType.primaryColor
-                
-                let normal = (uv0 - uv2).cross(vector: (uv1 - uv0))
-                
-                let uv = textureCoordinates.last!
-                
-                let fv0 = Vertex(position: uv0, normal: normal, color: color, textureCoordinates: uv)
-                let fv1 = Vertex(position: uv1, normal: normal, color: color, textureCoordinates: uv)
-                let fv2 = Vertex(position: uv2, normal: normal, color: color, textureCoordinates: uv)
-                
-                polygons.append(Polygon(vertices: [fv0, fv1, fv2], convex: true))
-            }
+            let faces = [[uv0, uv2, cv2, cv0],
+                         [cv0, cv2, lv2, lv0],
+                         [uv1, uv0, cv0, cv1],
+                         [cv1, cv0, lv0, lv1],
+                         [uv2, uv1, cv1, cv2],
+                         [cv2, cv1, lv1, lv2]]
             
-            var faces: [[Vector]] = []
-            var normals: [Vector] = []
-            
-            if lc0 != uc0 || lc2 != uc2 {
-                
-                faces.append([uv0, uv2, cv2, cv0])
-                faces.append([cv0, cv2, lv2, lv0])
-                
-                normals.append(contentsOf: [faceNormals[0], faceNormals[0]])
-            }
-            
-            if lc0 != uc0 || lc1 != uc1 {
-                
-                faces.append([uv1, uv0, cv0, cv1])
-                faces.append([cv1, cv0, lv0, lv1])
-                
-                normals.append(contentsOf: [faceNormals[1], faceNormals[1]])
-            }
-            
-            if lc1 != uc1 || lc2 != uc2 {
-                
-                faces.append([uv2, uv1, cv1, cv2])
-                faces.append([cv2, cv1, lv1, lv2])
-                
-                normals.append(contentsOf: [faceNormals[2], faceNormals[2]])
-            }
+            let normals = [faceNormals[0], faceNormals[0],
+                           faceNormals[1], faceNormals[1],
+                           faceNormals[2], faceNormals[2]]
             
             for i in 0..<faces.count {
                 
@@ -111,7 +103,7 @@ public class TerrainEdge: Edge<TerrainLayer> {
                 polygons.append(Polygon(vertices: [v0, v1, v2, v3], convex: true))
             }
             
-            mesh = Mesh(polygons: polygons).union(mesh: mesh)
+            mesh = mesh.union(mesh: Mesh(polygons: polygons))
         }
         
         return mesh

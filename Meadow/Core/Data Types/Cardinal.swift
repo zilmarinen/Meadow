@@ -7,6 +7,7 @@
 //
 
 import Pasture
+import SceneKit
 
 public enum Cardinal: Int, CaseIterable, Codable {
     
@@ -81,5 +82,38 @@ extension Cardinal {
     public var normal: Vector {
         
         return Cardinal.normal(cardinal: self)
+    }
+    
+    static func closest(vector: Vector) -> Cardinal {
+        
+        var match = Cardinal.north
+        
+        var smallestDistance = Double.infinity
+        
+        let x = Double(World.Axis.xz(value: vector.x))
+        let z = Double(World.Axis.xz(value: vector.z))
+        
+        let centre = Vector(x: x, y: vector.y, z: z)
+        
+        Cardinal.allCases.forEach { cardinal in
+            
+            let (o0, o1) = cardinal.ordinals
+            
+            let c0 = centre + o0.vector
+            let c1 = centre + o1.vector
+            
+            let edge = c0.lerp(vector: c1, interpolater: 0.5)
+            
+            let distance = (edge - vector).magnitude
+            
+            if distance < smallestDistance {
+                
+                match = cardinal
+                
+                smallestDistance = distance
+            }
+        }
+        
+        return match
     }
 }

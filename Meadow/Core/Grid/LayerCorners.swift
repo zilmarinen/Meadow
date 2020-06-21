@@ -6,6 +6,8 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
+import Pasture
+
 public class LayerCorners: Equatable {
     
     struct Constants {
@@ -43,6 +45,9 @@ extension LayerCorners {
     
     public var base: Int { return min(left.elevation, right.elevation, centre.elevation) }
     public var peak: Int{ return max(left.elevation, right.elevation, centre.elevation) }
+}
+
+extension LayerCorners {
     
     func set(elevation: Int) {
         

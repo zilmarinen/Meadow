@@ -6,7 +6,7 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
-public class WaterChunk: Chunk<WaterTile<WaterEdge>> {
+public class WaterChunk: Chunk<WaterTile> {
     
     public override var category: SceneGraphNodeCategory { return .water }
     

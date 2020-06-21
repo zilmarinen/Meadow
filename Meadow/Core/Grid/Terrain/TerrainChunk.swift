@@ -8,7 +8,7 @@
 
 import SceneKit
 
-public class TerrainChunk: Chunk<TerrainTile<TerrainEdge>>, Shadable {
+public class TerrainChunk: Chunk<TerrainTile>, Shadable {
     
     struct Uniform: ShaderUniform {
         

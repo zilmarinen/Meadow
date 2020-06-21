@@ -6,7 +6,7 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
-public class Water: Grid<WaterChunk, WaterTile<WaterEdge>> {
+public class Water: Grid<WaterChunk, WaterTile> {
     
     override init(ancestor: SoilableParent) {
     
@@ -22,7 +22,7 @@ public class Water: Grid<WaterChunk, WaterTile<WaterEdge>> {
     
     public override var category: SceneGraphNodeCategory { return .water }
     
-    public override func add(tile coordinate: Coordinate) -> WaterTile<WaterEdge> {
+    public override func add(tile coordinate: Coordinate) -> WaterTile {
         
         let tile = super.add(tile: coordinate)
         

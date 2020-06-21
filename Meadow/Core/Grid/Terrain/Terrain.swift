@@ -6,7 +6,7 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
-public class Terrain: Grid<TerrainChunk, TerrainTile<TerrainEdge>> {
+public class Terrain: Grid<TerrainChunk, TerrainTile> {
     
     override init(ancestor: SoilableParent) {
     
@@ -22,7 +22,7 @@ public class Terrain: Grid<TerrainChunk, TerrainTile<TerrainEdge>> {
     
     public override var category: SceneGraphNodeCategory { return .terrain }
     
-    public override func add(tile coordinate: Coordinate) -> TerrainTile<TerrainEdge> {
+    public override func add(tile coordinate: Coordinate) -> TerrainTile {
         
         let tile = super.add(tile: coordinate)
         

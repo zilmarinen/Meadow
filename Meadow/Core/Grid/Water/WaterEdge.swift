@@ -53,13 +53,13 @@ public class WaterEdge: Edge<WaterLayer> {
             let uc1 = World.Constants.floor + layer.corners.centre.elevation
             let uc2 = World.Constants.floor + layer.corners.right.elevation
             
-            let lv0 = Vector(x: v0.x, y: World.Axis.y(y: lc0), z: v0.z)
-            let lv1 = Vector(x: v1.x, y: World.Axis.y(y: lc1), z: v1.z)
-            let lv2 = Vector(x: v2.x, y: World.Axis.y(y: lc2), z: v2.z)
+            let lv0 = Vector(x: v0.x, y: World.Axis.y(value: lc0), z: v0.z)
+            let lv1 = Vector(x: v1.x, y: World.Axis.y(value: lc1), z: v1.z)
+            let lv2 = Vector(x: v2.x, y: World.Axis.y(value: lc2), z: v2.z)
             
-            let uv0 = Vector(x: v0.x, y: World.Axis.y(y: uc0), z: v0.z)
-            let uv1 = Vector(x: v1.x, y: World.Axis.y(y: uc1), z: v1.z)
-            let uv2 = Vector(x: v2.x, y: World.Axis.y(y: uc2), z: v2.z)
+            let uv0 = Vector(x: v0.x, y: World.Axis.y(value: uc0), z: v0.z)
+            let uv1 = Vector(x: v1.x, y: World.Axis.y(value: uc1), z: v1.z)
+            let uv2 = Vector(x: v2.x, y: World.Axis.y(value: uc2), z: v2.z)
             
             let normal = (uv0 - uv2).cross(vector: (uv1 - uv0))
             
@@ -74,21 +74,21 @@ public class WaterEdge: Edge<WaterLayer> {
             var faces: [[Vector]] = []
             var normals: [Vector] = []
             
-            if lc0 != uc0 || lc2 != uc2 {
+            if lc0 != uc0 && lc2 != uc2 {
                 
                 faces.append([uv0, uv2, lv2, lv0])
                 
                 normals.append(faceNormals[0])
             }
             
-            if lc0 != uc0 || lc1 != uc1 {
+            if lc0 != uc0 && lc1 != uc1 {
                 
                 faces.append([uv1, uv0, lv0, lv1])
                 
                 normals.append(faceNormals[1])
             }
             
-            if lc1 != uc1 || lc2 != uc2 {
+            if lc1 != uc1 && lc2 != uc2 {
                 
                 faces.append([uv2, uv1, lv1, lv2])
                 

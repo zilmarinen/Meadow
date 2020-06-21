@@ -43,7 +43,7 @@ public class Floor: SCNPlane, Shadable {
     
     var uniform: ShaderUniform? {
         
-        return Uniform(worldFloor: World.Axis.y(y: World.Constants.floor), backgroundColor: backgroundColor, gridColor: gridColor, rendersGridLines: rendersGridLines)
+        return Uniform(worldFloor: World.Axis.y(value: World.Constants.floor), backgroundColor: backgroundColor, gridColor: gridColor, rendersGridLines: rendersGridLines)
     }
     
     public var backgroundColor: Color = .grey {

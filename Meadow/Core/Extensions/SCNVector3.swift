@@ -13,6 +13,6 @@ extension SCNVector3 {
     
     public init(coordinate: Coordinate) {
         
-        self.init(x: SKFloat(coordinate.x), y: SKFloat(World.Axis.y(y: coordinate.y)), z: SKFloat(coordinate.z))
+        self.init(x: SKFloat(coordinate.x), y: SKFloat(World.Axis.y(value: coordinate.y)), z: SKFloat(coordinate.z))
     }
 }

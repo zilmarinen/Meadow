@@ -12,7 +12,7 @@ extension Vector {
     
     public init(coordinate: Coordinate) {
         
-        self.init(x: Double(coordinate.x), y: World.Axis.y(y: coordinate.y), z: Double(coordinate.z))
+        self.init(x: Double(coordinate.x), y: World.Axis.y(value: coordinate.y), z: Double(coordinate.z))
     }
 }
 

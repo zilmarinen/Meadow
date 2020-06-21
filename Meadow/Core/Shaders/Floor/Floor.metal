@@ -25,7 +25,7 @@ struct Uniform {
 struct Fragment {
     
     float4 position [[position]];
-    float2 xz;
+    float4 vector;
     
     float worldFloor;
     
@@ -56,7 +56,7 @@ vertex Fragment floor_vertex(SimpleVertex v [[ stage_in ]], constant Uniform& un
     Fragment f;
     
     f.position = float4(v.position, 1.0);
-    f.xz = v.position.xy;
+    f.vector = float4(v.position, 1.0);
     f.worldFloor = uniform.worldFloor;
     f.backgroundColor = half4(uniform.backgroundColor);
     f.gridColor = half4(uniform.gridColor);
@@ -72,7 +72,7 @@ fragment half4 floor_fragment(Fragment f [[stage_in]], constant SCNSceneBuffer& 
         return f.backgroundColor;
     }
     
-    float4 position = (scn_frame.inverseViewProjectionTransform * float4(f.xz.x, f.xz.y, 0.0, 1.0));
+    float4 position = (scn_frame.inverseViewProjectionTransform * f.vector);
     
     float3 direction = normalize(position.xyz);
 

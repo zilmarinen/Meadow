@@ -6,6 +6,9 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
+import Pasture
+import SceneKit
+
 public struct Coordinate: Codable {
     
     public let x: Int
@@ -17,6 +20,20 @@ public struct Coordinate: Codable {
         self.x = x
         self.y = y
         self.z = z
+    }
+    
+    public init(vector: SCNVector3) {
+        
+        self.x = World.Axis.xz(value: Double(vector.x))
+        self.y = World.Axis.y(value: Double(vector.y))
+        self.z = World.Axis.xz(value: Double(vector.z))
+    }
+    
+    public init(vector: Vector) {
+        
+        self.x = World.Axis.xz(value: Double(vector.x))
+        self.y = World.Axis.y(value: Double(vector.y))
+        self.z = World.Axis.xz(value: Double(vector.z))
     }
 }
 

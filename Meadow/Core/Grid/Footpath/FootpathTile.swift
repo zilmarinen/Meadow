@@ -6,7 +6,9 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
-public class FootpathTile<E: FootpathEdge>: Tile {
+import Pasture
+
+public class FootpathTile: LayerableTile<FootpathEdge, FootpathLayer> {
     
     public override var category: SceneGraphNodeCategory { return .footpath }
 }

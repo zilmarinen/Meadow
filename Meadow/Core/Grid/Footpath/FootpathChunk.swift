@@ -6,7 +6,7 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
-public class FootpathChunk: Chunk<FootpathTile<FootpathEdge>> {
+public class FootpathChunk: Chunk<FootpathTile> {
     
     public override var category: SceneGraphNodeCategory { return .footpath }
 }

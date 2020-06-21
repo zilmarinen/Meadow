@@ -49,10 +49,19 @@ public struct World {
             return Coordinate(x: coordinate.x, y: World.Constants.floor, z: coordinate.z)
         }
         
-        public static func y(y: Int) -> Double {
+        public static func xz(value: Double) -> Int {
             
-            return Double(y) * World.Constants.yStep
+            return Int(round(value))
+        }
+        
+        public static func y(value: Int) -> Double {
+            
+            return Double(value) * World.Constants.yStep
+        }
+        
+        public static func y(value: Double) -> Int {
+            
+            return Int(value / World.Constants.yStep)
         }
     }
 }
-

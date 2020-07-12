@@ -6,7 +6,7 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
-public class AreaTile<E: AreaEdge>: Tile {
+public class AreaTile: LayeredTile<AreaEdge, AreaLayer> {
     
     public override var category: SceneGraphNodeCategory { return .area }
 }

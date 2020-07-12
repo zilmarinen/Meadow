@@ -31,6 +31,13 @@ public class LayerCorners: Equatable {
     var left = Elevation(anchor: .left, elevation: 0)
     var right = Elevation(anchor: .right, elevation: 0)
     var centre = Elevation(anchor: .centre, elevation: 0)
+    
+    init(left: Int = 0, right: Int = 0, center: Int = 0) {
+        
+        self.left.elevation = left
+        self.right.elevation = right
+        self.centre.elevation = center
+    }
 }
 
 extension LayerCorners {

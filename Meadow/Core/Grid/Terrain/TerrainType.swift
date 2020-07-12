@@ -38,6 +38,8 @@ public enum TerrainType: Int, CaseIterable, Codable {
             
         case .bedrock: return Color(red: 0.35, green: 0.35, blue: 0.35)
             
+        case .dirt: return Color(red: 0.54, green: 0.34, blue: 0.16)
+            
         case .grass: return Color(red: 0.51, green: 0.92, blue: 0.49)
             
         default: return .black
@@ -48,7 +50,9 @@ public enum TerrainType: Int, CaseIterable, Codable {
         
         switch self {
             
-        case .bedrock: return Color(red: 0.75, green: 0.75, blue: 0.75)
+        case .bedrock: return Color(red: 0.63, green: 0.63, blue: 0.63)
+            
+        case .dirt: return Color(red: 0.54, green: 0.40, blue: 0.16)
             
         case .grass: return Color(red: 0.72, green: 0.53, blue: 0.41)
             

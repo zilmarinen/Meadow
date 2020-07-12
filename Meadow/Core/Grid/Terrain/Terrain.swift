@@ -6,7 +6,7 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
-public class Terrain: Grid<TerrainChunk, TerrainTile> {
+public class Terrain: LayeredGrid<TerrainChunk, TerrainTile, TerrainEdge, TerrainLayer> {
     
     override init(ancestor: SoilableParent) {
     
@@ -21,21 +21,6 @@ public class Terrain: Grid<TerrainChunk, TerrainTile> {
     }
     
     public override var category: SceneGraphNodeCategory { return .terrain }
-    
-    public override func add(tile coordinate: Coordinate) -> TerrainTile {
-        
-        let tile = super.add(tile: coordinate)
-        
-        for cardinal in Cardinal.allCases {
-            
-            if tile.find(edge: cardinal) == nil {
-                
-                let _ = tile.add(edge: cardinal)
-            }
-        }
-        
-        return tile
-    }
 }
 
 extension Terrain: GridDecodable {
@@ -59,22 +44,5 @@ extension Terrain: GridDecodable {
                 }
             }
         }
-    }
-}
-
-public extension Terrain {
-    
-    func add(layer coordinate: Coordinate, cardinal: Cardinal) -> TerrainLayer? {
-        
-        let tile = find(tile: coordinate) ?? super.add(tile: coordinate)
-        
-        if let edge = tile.find(edge: cardinal) {
-            
-            return edge.addLayer()
-        }
-        
-        let edge = tile.add(edge: cardinal)
-        
-        return edge.topLayer
     }
 }

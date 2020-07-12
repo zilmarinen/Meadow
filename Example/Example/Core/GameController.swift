@@ -26,8 +26,6 @@ class GameController: NSObject {
             guard let path = Meadow.bundle?.path(forResource: "Meadow", ofType: "metallib") else { fatalError("Missing required Meadow.metallib") }
             
             Stage.shaderLibrary = try device.makeLibrary(filepath: path)
-            
-            print("loaded shaders: \(Stage.shaderLibrary?.functionNames)")
         }
         catch {
             
@@ -93,31 +91,29 @@ extension GameController {
         
         DispatchQueue.main.async {
             
-            let width = 10
-            let depth = 10
+            let width = 1
+            let depth = 1
             
             for x in 0..<width {
                 
                 for z in 0..<depth {
                     
                     let coordinate = Coordinate(x: x, y: 0, z: z)
-                    
-                    let _ = meadow.terrain.add(layer: coordinate, cardinal: .north)
-                    let _ = meadow.terrain.add(layer: coordinate, cardinal: .east)
-                    let _ = meadow.terrain.add(layer: coordinate, cardinal: .south)
-                    let _ = meadow.terrain.add(layer: coordinate, cardinal: .west)
+                    let _ = meadow.terrain.add(tile: coordinate)
                     
                     if x >= 1 && x < (width - 1) && z >= 1 && z < (depth - 1) {
                     
-                        let l0 = meadow.water.add(layer: coordinate, cardinal: .north)
-                        let l1 = meadow.water.add(layer: coordinate, cardinal: .east)
-                        let l2 = meadow.water.add(layer: coordinate, cardinal: .south)
-                        let l3 = meadow.water.add(layer: coordinate, cardinal: .west)
+                        let waterTile = meadow.water.add(tile: coordinate)
+                        
+                        let l0 = waterTile.add(edge: .north).addLayer()
+                        let l1 = waterTile.add(edge: .east).addLayer()
+                        let l2 = waterTile.add(edge: .south).addLayer()
+                        let l3 = waterTile.add(edge: .west).addLayer()
                     
-                        l0?.corners.set(elevation: 2)
-                        l1?.corners.set(elevation: 2)
-                        l2?.corners.set(elevation: 2)
-                        l3?.corners.set(elevation: 2)
+                        l0?.set(elevation: 2)
+                        l1?.set(elevation: 2)
+                        l2?.set(elevation: 2)
+                        l3?.set(elevation: 2)
                     }
                 }
             }
@@ -126,9 +122,9 @@ extension GameController {
             let n1 = SCNNode(geometry: SCNBox(width: 0.5, height: 1, length: 0.5, chamferRadius: 0))
             let n2 = SCNNode(geometry: SCNBox(width: 0.5, height: 1, length: 0.5, chamferRadius: 0))
             
-            n0.position = SCNVector3(x: 0.0, y: CGFloat(World.Axis.y(y: World.Constants.floor) + 0.5), z: 0.0)
-            n1.position = SCNVector3(x: 1.0, y: CGFloat(World.Axis.y(y: World.Constants.floor) + 0.5), z: 0.0)
-            n2.position = SCNVector3(x: 2.0, y: CGFloat(World.Axis.y(y: World.Constants.floor) + 0.5), z: 0.0)
+            n0.position = SCNVector3(x: 0.0, y: CGFloat(World.Axis.y(value: World.Constants.floor) + 0.5), z: 0.0)
+            n1.position = SCNVector3(x: 1.0, y: CGFloat(World.Axis.y(value: World.Constants.floor) + 0.5), z: 0.0)
+            n2.position = SCNVector3(x: 2.0, y: CGFloat(World.Axis.y(value: World.Constants.floor) + 0.5), z: 0.0)
             
             n0.geometry?.firstMaterial?.diffuse.contents = SKColor.systemPink
             n1.geometry?.firstMaterial?.diffuse.contents = SKColor.systemOrange

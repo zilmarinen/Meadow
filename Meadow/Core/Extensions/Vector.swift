@@ -14,6 +14,11 @@ extension Vector {
         
         self.init(x: Double(coordinate.x), y: World.Axis.y(value: coordinate.y), z: Double(coordinate.z))
     }
+    
+    public init(vector: Vector, elevation: Int) {
+        
+        self.init(x: vector.x, y: World.Axis.y(value: elevation), z: vector.z)
+    }
 }
 
 extension Vector {

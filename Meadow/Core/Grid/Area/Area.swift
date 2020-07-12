@@ -6,7 +6,7 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
-public class Area: Grid<AreaChunk, AreaTile<AreaEdge>> {
+public class Area: LayeredGrid<AreaChunk, AreaTile, AreaEdge, AreaLayer> {
     
     override init(ancestor: SoilableParent) {
     

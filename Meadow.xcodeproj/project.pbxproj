@@ -17,6 +17,8 @@
 		181EDF9E2451B9790030D23C /* Actors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181EDF9C2451B9790030D23C /* Actors.swift */; };
 		181EDFA02451B9F90030D23C /* NPCs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181EDF9F2451B9F90030D23C /* NPCs.swift */; platformFilter = ios; };
 		181EDFA12451B9F90030D23C /* NPCs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181EDF9F2451B9F90030D23C /* NPCs.swift */; };
+		182204F724B304E40079B4D9 /* GridMeshBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182204F624B304E40079B4D9 /* GridMeshBuilder.swift */; };
+		182204F824B304E40079B4D9 /* GridMeshBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182204F624B304E40079B4D9 /* GridMeshBuilder.swift */; };
 		18264FA12481411900D5B8AF /* CameraObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18264FA02481411900D5B8AF /* CameraObserver.swift */; };
 		18264FA22481411900D5B8AF /* CameraObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18264FA02481411900D5B8AF /* CameraObserver.swift */; };
 		183479DD245026C400E6516C /* GridDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183479DC245026C400E6516C /* GridDecodable.swift */; platformFilter = ios; };
@@ -67,8 +69,14 @@
 		18CCCA212473EC0200E0A94B /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CCCA1F2473EC0200E0A94B /* Scene.swift */; };
 		18CCCA232473EC0C00E0A94B /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CCCA222473EC0C00E0A94B /* Camera.swift */; platformFilter = ios; };
 		18CCCA242473EC0C00E0A94B /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CCCA222473EC0C00E0A94B /* Camera.swift */; };
-		18DD6178249B514200BA114D /* LayerableTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DD6177249B514200BA114D /* LayerableTile.swift */; };
-		18DD6179249B515D00BA114D /* LayerableTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DD6177249B514200BA114D /* LayerableTile.swift */; };
+		18DD6178249B514200BA114D /* LayeredTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DD6177249B514200BA114D /* LayeredTile.swift */; };
+		18DD6179249B515D00BA114D /* LayeredTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DD6177249B514200BA114D /* LayeredTile.swift */; };
+		18E0083424B8495A00AD85C4 /* ColorPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E0083324B8495A00AD85C4 /* ColorPalette.swift */; };
+		18E0083524B8495A00AD85C4 /* ColorPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E0083324B8495A00AD85C4 /* ColorPalette.swift */; };
+		18E0083724B84AFA00AD85C4 /* GridMesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E0083624B84AFA00AD85C4 /* GridMesh.swift */; };
+		18E0083824B84AFA00AD85C4 /* GridMesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E0083624B84AFA00AD85C4 /* GridMesh.swift */; };
+		18E7D65324A3771B0045447E /* LayeredGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E7D65224A3771B0045447E /* LayeredGrid.swift */; };
+		18E7D65424A3771B0045447E /* LayeredGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E7D65224A3771B0045447E /* LayeredGrid.swift */; };
 		18EF594623ED8F3A0071DF1C /* Cardinal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF593023ED8F390071DF1C /* Cardinal.swift */; platformFilter = ios; };
 		18EF594723ED8F3A0071DF1C /* Cardinal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF593023ED8F390071DF1C /* Cardinal.swift */; };
 		18EF594823ED8F3A0071DF1C /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF593123ED8F390071DF1C /* Coordinate.swift */; platformFilter = ios; };
@@ -237,6 +245,7 @@
 		181EDF982451849F0030D23C /* SceneGraphNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneGraphNode.swift; sourceTree = "<group>"; };
 		181EDF9C2451B9790030D23C /* Actors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Actors.swift; sourceTree = "<group>"; };
 		181EDF9F2451B9F90030D23C /* NPCs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NPCs.swift; sourceTree = "<group>"; };
+		182204F624B304E40079B4D9 /* GridMeshBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridMeshBuilder.swift; sourceTree = "<group>"; };
 		18264FA02481411900D5B8AF /* CameraObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraObserver.swift; sourceTree = "<group>"; };
 		183479DC245026C400E6516C /* GridDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridDecodable.swift; sourceTree = "<group>"; };
 		184AF115240930A8009FF8E3 /* Hideable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hideable.swift; sourceTree = "<group>"; };
@@ -263,7 +272,10 @@
 		18C0F888248913210030D633 /* SCNMaterialProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCNMaterialProperty.swift; sourceTree = "<group>"; };
 		18CCCA1F2473EC0200E0A94B /* Scene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
 		18CCCA222473EC0C00E0A94B /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
-		18DD6177249B514200BA114D /* LayerableTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerableTile.swift; sourceTree = "<group>"; };
+		18DD6177249B514200BA114D /* LayeredTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayeredTile.swift; sourceTree = "<group>"; };
+		18E0083324B8495A00AD85C4 /* ColorPalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPalette.swift; sourceTree = "<group>"; };
+		18E0083624B84AFA00AD85C4 /* GridMesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridMesh.swift; sourceTree = "<group>"; };
+		18E7D65224A3771B0045447E /* LayeredGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayeredGrid.swift; sourceTree = "<group>"; };
 		18EF593023ED8F390071DF1C /* Cardinal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cardinal.swift; sourceTree = "<group>"; };
 		18EF593123ED8F390071DF1C /* Coordinate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
 		18EF593223ED8F390071DF1C /* Ordinal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ordinal.swift; sourceTree = "<group>"; };
@@ -437,9 +449,19 @@
 			path = Observers;
 			sourceTree = "<group>";
 		};
+		182DEF3C24A9FB90003DEA75 /* Geometry */ = {
+			isa = PBXGroup;
+			children = (
+				182204F624B304E40079B4D9 /* GridMeshBuilder.swift */,
+				18E0083624B84AFA00AD85C4 /* GridMesh.swift */,
+			);
+			path = Geometry;
+			sourceTree = "<group>";
+		};
 		18496C572093230900992AF3 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				182DEF3C24A9FB90003DEA75 /* Geometry */,
 				181EDF9B2451B96E0030D23C /* Actors */,
 				18CCCA1D2473EBE300E0A94B /* Camera */,
 				184E62EC244DDB8700D2B6F8 /* Codable */,
@@ -663,6 +685,7 @@
 				18EF593423ED8F390071DF1C /* Volume.swift */,
 				18EF593523ED8F390071DF1C /* World.swift */,
 				18FFD2392487E3ED00C52A54 /* Typealiases.swift */,
+				18E0083324B8495A00AD85C4 /* ColorPalette.swift */,
 			);
 			path = "Data Types";
 			sourceTree = "<group>";
@@ -689,8 +712,9 @@
 				18EF594023ED8F3A0071DF1C /* Edge.swift */,
 				18EF594123ED8F3A0071DF1C /* Grid.swift */,
 				18EF594223ED8F3A0071DF1C /* Layer.swift */,
-				18DD6177249B514200BA114D /* LayerableTile.swift */,
 				18EF593F23ED8F3A0071DF1C /* LayerCorners.swift */,
+				18E7D65224A3771B0045447E /* LayeredGrid.swift */,
+				18DD6177249B514200BA114D /* LayeredTile.swift */,
 				18EF594323ED8F3A0071DF1C /* Tile.swift */,
 				18EF597223EDA7590071DF1C /* Area */,
 				18EF597023EDA74C0071DF1C /* Foliage */,
@@ -1134,6 +1158,7 @@
 				185172B02463FA92006C9223 /* ShaderProgram.swift in Sources */,
 				181EDFA02451B9F90030D23C /* NPCs.swift in Sources */,
 				18EF595623ED8F3A0071DF1C /* Neighbour.swift in Sources */,
+				182204F724B304E40079B4D9 /* GridMeshBuilder.swift in Sources */,
 				18FEA81C2477E0BC00E524EF /* Floor.metal in Sources */,
 				18EF595223ED8F3A0071DF1C /* Clearable.swift in Sources */,
 				18EF595023ED8F3A0071DF1C /* World.swift in Sources */,
@@ -1141,6 +1166,7 @@
 				18EF598F23EDA8720071DF1C /* WaterLayer.swift in Sources */,
 				184E62FF244DE45400D2B6F8 /* Footpath+Encodable.swift in Sources */,
 				18FFD2242485209700C52A54 /* Shadable.swift in Sources */,
+				18E0083724B84AFA00AD85C4 /* GridMesh.swift in Sources */,
 				18C0F889248913210030D633 /* SCNMaterialProperty.swift in Sources */,
 				18EF596623ED8F3A0071DF1C /* Layer.swift in Sources */,
 				18EF596023ED8F3A0071DF1C /* LayerCorners.swift in Sources */,
@@ -1157,7 +1183,7 @@
 				189A6028246D4E3200DD68A7 /* ShaderUniform.swift in Sources */,
 				183479DD245026C400E6516C /* GridDecodable.swift in Sources */,
 				18CCCA202473EC0200E0A94B /* Scene.swift in Sources */,
-				18DD6178249B514200BA114D /* LayerableTile.swift in Sources */,
+				18DD6178249B514200BA114D /* LayeredTile.swift in Sources */,
 				18EF598C23EDA86C0071DF1C /* WaterEdge.swift in Sources */,
 				18EF595823ED8F3A0071DF1C /* Renderable.swift in Sources */,
 				18EF599E23EDA8950071DF1C /* TerrainLayer.swift in Sources */,
@@ -1176,6 +1202,7 @@
 				18EF597D23EDA7CF0071DF1C /* AreaEdge.swift in Sources */,
 				18EF596223ED8F3A0071DF1C /* Edge.swift in Sources */,
 				18EF597423EDA7940071DF1C /* Area.swift in Sources */,
+				18E0083424B8495A00AD85C4 /* ColorPalette.swift in Sources */,
 				18CCCA232473EC0C00E0A94B /* Camera.swift in Sources */,
 				18EF59B623EDA8D70071DF1C /* FoliageTile.swift in Sources */,
 				184E62F3244DE3EA00D2B6F8 /* Terrain+Encodable.swift in Sources */,
@@ -1184,6 +1211,7 @@
 				18EF596423ED8F3A0071DF1C /* Grid.swift in Sources */,
 				18EF597723EDA7C00071DF1C /* AreaChunk.swift in Sources */,
 				18B9378B248D676F00EE16A0 /* GridResolver.swift in Sources */,
+				18E7D65324A3771B0045447E /* LayeredGrid.swift in Sources */,
 				18EF59B323EDA8CE0071DF1C /* FoliageChunk.swift in Sources */,
 				18EF594623ED8F3A0071DF1C /* Cardinal.swift in Sources */,
 				18EF59A723EDA8B10071DF1C /* FootpathTile.swift in Sources */,
@@ -1227,6 +1255,7 @@
 				185172B12463FA92006C9223 /* ShaderProgram.swift in Sources */,
 				181EDFA12451B9F90030D23C /* NPCs.swift in Sources */,
 				18EF595723ED8F3A0071DF1C /* Neighbour.swift in Sources */,
+				182204F824B304E40079B4D9 /* GridMeshBuilder.swift in Sources */,
 				18FEA81D2477E0BD00E524EF /* Floor.metal in Sources */,
 				18EF595323ED8F3A0071DF1C /* Clearable.swift in Sources */,
 				18EF595123ED8F3A0071DF1C /* World.swift in Sources */,
@@ -1234,6 +1263,7 @@
 				18EF599023EDA8720071DF1C /* WaterLayer.swift in Sources */,
 				18EF596723ED8F3A0071DF1C /* Layer.swift in Sources */,
 				18FFD2252485209700C52A54 /* Shadable.swift in Sources */,
+				18E0083824B84AFA00AD85C4 /* GridMesh.swift in Sources */,
 				18C0F88A248913210030D633 /* SCNMaterialProperty.swift in Sources */,
 				18EF596123ED8F3A0071DF1C /* LayerCorners.swift in Sources */,
 				18EF59B123EDA8C70071DF1C /* Foliage.swift in Sources */,
@@ -1250,7 +1280,7 @@
 				189A6029246D4E3200DD68A7 /* ShaderUniform.swift in Sources */,
 				183479DE245026C400E6516C /* GridDecodable.swift in Sources */,
 				18CCCA212473EC0200E0A94B /* Scene.swift in Sources */,
-				18DD6179249B515D00BA114D /* LayerableTile.swift in Sources */,
+				18DD6179249B515D00BA114D /* LayeredTile.swift in Sources */,
 				18EF595923ED8F3A0071DF1C /* Renderable.swift in Sources */,
 				18EF599F23EDA8950071DF1C /* TerrainLayer.swift in Sources */,
 				18EF594F23ED8F3A0071DF1C /* Volume.swift in Sources */,
@@ -1269,6 +1299,7 @@
 				184E6300244DE45400D2B6F8 /* Footpath+Encodable.swift in Sources */,
 				18EF597E23EDA7CF0071DF1C /* AreaEdge.swift in Sources */,
 				18EF596323ED8F3A0071DF1C /* Edge.swift in Sources */,
+				18E0083524B8495A00AD85C4 /* ColorPalette.swift in Sources */,
 				18CCCA242473EC0C00E0A94B /* Camera.swift in Sources */,
 				18EF597523EDA7940071DF1C /* Area.swift in Sources */,
 				184E62FD244DE44A00D2B6F8 /* Water+Encodable.swift in Sources */,
@@ -1277,6 +1308,7 @@
 				18EF59A523EDA8AB0071DF1C /* FootpathChunk.swift in Sources */,
 				18EF594D23ED8F3A0071DF1C /* Size.swift in Sources */,
 				18B9378C248D676F00EE16A0 /* GridResolver.swift in Sources */,
+				18E7D65424A3771B0045447E /* LayeredGrid.swift in Sources */,
 				18EF596523ED8F3A0071DF1C /* Grid.swift in Sources */,
 				18EF597823EDA7C00071DF1C /* AreaChunk.swift in Sources */,
 				18EF59B423EDA8CE0071DF1C /* FoliageChunk.swift in Sources */,

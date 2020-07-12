@@ -6,7 +6,7 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
-public class Footpath: Grid<FootpathChunk, FootpathTile> {
+public class Footpath: LayeredGrid<FootpathChunk, FootpathTile, FootpathEdge, FootpathLayer> {
     
     override init(ancestor: SoilableParent) {
         

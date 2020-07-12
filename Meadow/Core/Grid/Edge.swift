@@ -8,7 +8,7 @@
 
 import Pasture
 
-public class Edge<L: Layer>: NSObject, Soilable, Clearable, Encodable, Renderable, SceneGraphIdentifiable, SceneGraphNode, Updatable {
+public class Edge<L: Layer>: NSObject, Soilable, Clearable, Encodable, SceneGraphIdentifiable, SceneGraphNode, Updatable {
     
     private enum CodingKeys: CodingKey {
 
@@ -30,10 +30,6 @@ public class Edge<L: Layer>: NSObject, Soilable, Clearable, Encodable, Renderabl
     }
     
     public var name: String?
-    
-    var mesh: Mesh = Mesh(polygons: [])
-    
-    var transform: Transform { fatalError("Edge.transform must be overridden") }
     
     public let cardinal: Cardinal
     
@@ -66,8 +62,6 @@ public class Edge<L: Layer>: NSObject, Soilable, Clearable, Encodable, Renderabl
             layer.clean()
         }
         
-        mesh = render(transform: .identity)
-        
         isDirty = false
         
         return true
@@ -90,8 +84,6 @@ public class Edge<L: Layer>: NSObject, Soilable, Clearable, Encodable, Renderabl
             layer.update(delta: delta, time: time)
         }
     }
-    
-    func render(transform: Transform) -> Mesh { fatalError("Edge.render must be overridden") }
     
     public var children: [SceneGraphNode] { return layers }
     

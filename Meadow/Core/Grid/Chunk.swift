@@ -98,7 +98,7 @@ extension Chunk {
         
         guard isDirty else { return false }
         
-        var mesh = Mesh(polygons: [])
+        var polygons: [Pasture.Polygon] = []
         
         tiles.forEach { tile in
             
@@ -106,22 +106,24 @@ extension Chunk {
             
             if !tile.isHidden {
                 
-                mesh = mesh.union(mesh: tile.mesh)
+                polygons.append(contentsOf: tile.mesh.polygons)
             }
         }
+        
+        let mesh = Mesh(polygons: polygons)
         
         geometry = SCNGeometry(mesh: mesh)
         
         let node = childNodes.first ?? SCNNode()
-        
+
         if node.parent == nil {
-            
+
             addChildNode(node)
-            
+
             node.addChildNode(SCNNode())
             node.addChildNode(SCNNode())
         }
-        
+
         node.childNodes.first?.geometry = SCNGeometry(wireframe: mesh)
         node.childNodes.last?.geometry = SCNGeometry(normals: mesh)
         

@@ -43,7 +43,7 @@ fragment float4 terrain_fragment(Fragment f [[stage_in]], texture2d<float, acces
     
     float4 noise = float4(uniform.sample(textureSampler, f.uv));
     
-    float4 color = float4(mix(f.color.rgb, noise.rgb, 0.21), 1.0);
+    float4 color = float4(mix(f.color.rgb, noise.rgb, 0.14), 1.0);
     
     float denominator = dot(float3(0.0, 1.0, 0.0), f.normal);
     

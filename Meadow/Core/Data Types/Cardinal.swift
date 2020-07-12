@@ -30,6 +30,14 @@ public enum Cardinal: Int, CaseIterable, Codable {
 
 extension Cardinal {
     
+    private static var Cardinals: [(Cardinal, Cardinal)] = [
+    
+        (.east, .west),
+        (.south, .north),
+        (.west, .east),
+        (.north, .south)
+    ]
+    
     private static var Opposites: [Cardinal] = [
     
         south,
@@ -49,10 +57,28 @@ extension Cardinal {
     private static var Normals: [Vector] = [
     
         .backward,
-        .left,
+        .right,
         .forward,
-        .right
+        .left
     ]
+    
+    private static var NeighbourNormals: [[Cardinal : Vector]] = [
+    
+        [.east : Vector(x: 0.5, y: 0.0, z: 0.5), .west: Vector(x: -0.5, y: 0.0, z: 0.5)],
+        [.south : Vector(x: -0.5, y: 0.0, z: 0.5), .north: Vector(x: -0.5, y: 0.0, z: -0.5)],
+        [.west : Vector(x: -0.5, y: 0.0, z: -0.5), .east: Vector(x: 0.5, y: 0.0, z: -0.5)],
+        [.north : Vector(x: 0.5, y: 0.0, z: -0.5), .south: Vector(x: 0.5, y: 0.0, z: 0.5)],
+    ]
+    
+    public static func cardinals(cardinal: Cardinal) -> (Cardinal, Cardinal) {
+        
+        return Cardinals[cardinal.rawValue]
+    }
+    
+    public var cardinals: (Cardinal, Cardinal) {
+        
+        return Cardinal.cardinals(cardinal: self)
+    }
     
     public static func opposite(cardinal: Cardinal) -> Cardinal {
         
@@ -82,6 +108,16 @@ extension Cardinal {
     public var normal: Vector {
         
         return Cardinal.normal(cardinal: self)
+    }
+    
+    public static func normal(cardinal: Cardinal, neighbour: Cardinal) -> Vector {
+        
+        return NeighbourNormals[cardinal.rawValue][neighbour]!
+    }
+    
+    public func normal(neighbour: Cardinal) -> Vector {
+        
+        return Cardinal.normal(cardinal: self, neighbour: neighbour)
     }
     
     static func closest(vector: Vector) -> Cardinal {

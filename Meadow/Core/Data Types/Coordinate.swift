@@ -40,8 +40,8 @@ public struct Coordinate: Codable {
 public extension Coordinate {
     
     static var zero = Coordinate(x: 0, y: 0, z: 0)
-    static var left = Coordinate(x: 1, y: 0, z: 0)
-    static var right = Coordinate(x: -1, y: 0, z: 0)
+    static var left = Coordinate(x: -1, y: 0, z: 0)
+    static var right = Coordinate(x: 1, y: 0, z: 0)
     static var forward = Coordinate(x: 0, y: 0, z: 1)
     static var backward = Coordinate(x: 0, y: 0, z: -1)
     static var up = Coordinate(x: 0, y: 1, z: 0)

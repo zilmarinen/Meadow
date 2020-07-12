@@ -62,6 +62,18 @@ public class Tile: NSObject, Soilable, Clearable, Encodable, Neighbour, Renderab
         try container.encode(volume.coordinate, forKey: .coordinate)
     }
     
+    public func child(didBecomeDirty child: SoilableChild) {
+        
+        ancestor?.child(didBecomeDirty: child)
+        
+        becomeDirty()
+        
+        neighbours.forEach { (_, tile) in
+            
+            tile.becomeDirty()
+        }
+    }
+    
     @discardableResult public func clean() -> Bool {
         
         guard isDirty else { return false }

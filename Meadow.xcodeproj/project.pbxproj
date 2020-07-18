@@ -45,6 +45,8 @@
 		185172B12463FA92006C9223 /* ShaderProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185172AF2463FA92006C9223 /* ShaderProgram.swift */; };
 		1865A77A2497A35E008F5EA3 /* SCNView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1865A7792497A35E008F5EA3 /* SCNView.swift */; };
 		1865A77B2497A387008F5EA3 /* SCNView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1865A7792497A35E008F5EA3 /* SCNView.swift */; };
+		18938F9D24BC3FA1006CEAE2 /* Graph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18938F9C24BC3FA1006CEAE2 /* Graph.swift */; };
+		18938F9E24BC3FA1006CEAE2 /* Graph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18938F9C24BC3FA1006CEAE2 /* Graph.swift */; };
 		189A6025246D4DC400DD68A7 /* Floor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189A6024246D4DC400DD68A7 /* Floor.swift */; platformFilter = ios; };
 		189A6026246D4DD300DD68A7 /* Floor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189A6024246D4DC400DD68A7 /* Floor.swift */; };
 		189A6028246D4E3200DD68A7 /* ShaderUniform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189A6027246D4E3200DD68A7 /* ShaderUniform.swift */; platformFilter = ios; };
@@ -260,6 +262,7 @@
 		185172AF2463FA92006C9223 /* ShaderProgram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaderProgram.swift; sourceTree = "<group>"; };
 		1865A7792497A35E008F5EA3 /* SCNView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCNView.swift; sourceTree = "<group>"; };
 		1868ABAC248FC84400DB7BBD /* Meadow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Meadow.h; sourceTree = "<group>"; };
+		18938F9C24BC3FA1006CEAE2 /* Graph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Graph.swift; sourceTree = "<group>"; };
 		189A6024246D4DC400DD68A7 /* Floor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Floor.swift; sourceTree = "<group>"; };
 		189A6027246D4E3200DD68A7 /* ShaderUniform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaderUniform.swift; sourceTree = "<group>"; };
 		189A602A246D4E5500DD68A7 /* SCNGeometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCNGeometry.swift; sourceTree = "<group>"; };
@@ -461,6 +464,7 @@
 		18496C572093230900992AF3 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				18938F9B24BC3F93006CEAE2 /* Graph */,
 				182DEF3C24A9FB90003DEA75 /* Geometry */,
 				181EDF9B2451B96E0030D23C /* Actors */,
 				18CCCA1D2473EBE300E0A94B /* Camera */,
@@ -607,6 +611,14 @@
 				18EE510420A57CBA0059829C /* Platforms */,
 			);
 			path = "Unit Tests";
+			sourceTree = "<group>";
+		};
+		18938F9B24BC3F93006CEAE2 /* Graph */ = {
+			isa = PBXGroup;
+			children = (
+				18938F9C24BC3FA1006CEAE2 /* Graph.swift */,
+			);
+			path = Graph;
 			sourceTree = "<group>";
 		};
 		189A6023246D4DBB00DD68A7 /* Floor */ = {
@@ -1224,6 +1236,7 @@
 				18EF595E23ED8F3A0071DF1C /* Chunk.swift in Sources */,
 				184AF11A24093730009FF8E3 /* Vector.swift in Sources */,
 				18EF59B923EDAA9C0071DF1C /* Meadow.swift in Sources */,
+				18938F9D24BC3FA1006CEAE2 /* Graph.swift in Sources */,
 				18EF598623EDA85F0071DF1C /* WaterChunk.swift in Sources */,
 				184E62EF244DDB9F00D2B6F8 /* Grid+Encodable.swift in Sources */,
 				18EF596823ED8F3A0071DF1C /* Tile.swift in Sources */,
@@ -1321,6 +1334,7 @@
 				18EF59AB23EDA8B70071DF1C /* FootpathEdge.swift in Sources */,
 				18EF595F23ED8F3A0071DF1C /* Chunk.swift in Sources */,
 				184AF11B24093730009FF8E3 /* Vector.swift in Sources */,
+				18938F9E24BC3FA1006CEAE2 /* Graph.swift in Sources */,
 				18EF59BA23EDAA9C0071DF1C /* Meadow.swift in Sources */,
 				18EF598723EDA85F0071DF1C /* WaterChunk.swift in Sources */,
 				184E62F0244DDBB700D2B6F8 /* Grid+Encodable.swift in Sources */,

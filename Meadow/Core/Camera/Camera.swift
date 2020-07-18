@@ -85,11 +85,11 @@ extension Camera: Updatable {
             
         case .dolly(let node):
             
-            dolly(to: node.position, focus: node.position, ordinal: .northWest, zoom: 50, delta: delta)
+            dolly(to: node.position, focus: node.position, ordinal: .northWest, zoom: 70, delta: delta)
             
         case .focus(let node):
             
-            focus(focus: node.position, ordinal: .northWest, zoom: 50, delta: delta)
+            focus(focus: node.position, ordinal: .northWest, zoom: 70, delta: delta)
         }
     }
 }

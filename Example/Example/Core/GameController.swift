@@ -90,49 +90,19 @@ extension GameController {
     func loadScene(meadow: Meadow) {
         
         DispatchQueue.main.async {
+
+            let g = Graph(origin: .zero, rings: 10)
             
-            let width = 1
-            let depth = 1
-            
-            for x in 0..<width {
-                
-                for z in 0..<depth {
-                    
-                    let coordinate = Coordinate(x: x, y: 0, z: z)
-                    let _ = meadow.terrain.add(tile: coordinate)
-                    
-                    if x >= 1 && x < (width - 1) && z >= 1 && z < (depth - 1) {
-                    
-                        let waterTile = meadow.water.add(tile: coordinate)
-                        
-                        let l0 = waterTile.add(edge: .north).addLayer()
-                        let l1 = waterTile.add(edge: .east).addLayer()
-                        let l2 = waterTile.add(edge: .south).addLayer()
-                        let l3 = waterTile.add(edge: .west).addLayer()
-                    
-                        l0?.set(elevation: 2)
-                        l1?.set(elevation: 2)
-                        l2?.set(elevation: 2)
-                        l3?.set(elevation: 2)
-                    }
-                }
-            }
-            
-            let n0 = SCNNode(geometry: SCNBox(width: 0.5, height: 1, length: 0.5, chamferRadius: 0))
-            let n1 = SCNNode(geometry: SCNBox(width: 0.5, height: 1, length: 0.5, chamferRadius: 0))
-            let n2 = SCNNode(geometry: SCNBox(width: 0.5, height: 1, length: 0.5, chamferRadius: 0))
+            let n0 = SCNNode(geometry: SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0))
+            let n1 = SCNNode(geometry: g.geometry)
             
             n0.position = SCNVector3(x: 0.0, y: CGFloat(World.Axis.y(value: World.Constants.floor) + 0.5), z: 0.0)
-            n1.position = SCNVector3(x: 1.0, y: CGFloat(World.Axis.y(value: World.Constants.floor) + 0.5), z: 0.0)
-            n2.position = SCNVector3(x: 2.0, y: CGFloat(World.Axis.y(value: World.Constants.floor) + 0.5), z: 0.0)
+            n1.position = SCNVector3(x: 0.0, y: CGFloat(World.Axis.y(value: World.Constants.floor) + 0.5), z: 0.0)
             
             n0.geometry?.firstMaterial?.diffuse.contents = SKColor.systemPink
-            n1.geometry?.firstMaterial?.diffuse.contents = SKColor.systemOrange
-            n2.geometry?.firstMaterial?.diffuse.contents = SKColor.systemPurple
             
             self.scene.rootNode.addChildNode(n0)
             self.scene.rootNode.addChildNode(n1)
-            self.scene.rootNode.addChildNode(n2)
         }
     }
 }

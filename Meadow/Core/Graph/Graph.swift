@@ -11,65 +11,12 @@ import SceneKit
 
 public class Graph {
     
-    struct Edge {
+    struct Result {
         
-        let i: Int
-        
-        var j: Int = -1
-        
-        let v0: Int
-        let v1: Int
-        
-        init(i: Int, v0: Int, v1: Int, j: Int = -1) {
-            
-            self.i = i
-            self.j = j
-            self.v0 = v0
-            self.v1 = v1
-        }
-        
-        func spans(v0: Int, v1: Int) -> Bool {
-            
-            return (self.v0 == v0 && self.v1 == v1) || (self.v0 == v1 && self.v1 == v0)
-        }
-    }
-    
-    struct Joint {
-        
-        let i: Int
-        
-        var v: Int = -1
-        
-        let e0: Int
-        var e1: Int
-
-        let i0: Int
-        var i1: Int = -1
-        
-        init(i: Int, e0: Int, e1: Int = -1, i0: Int, i1: Int = -1, v: Int = -1) {
-            
-            self.i = i
-            self.v = v
-            self.e0 = e0
-            self.e1 = e1
-            self.i0 = i0
-            self.i1 = i1
-        }
-    }
-    
-    struct Triangle {
-        
-        let e0: Int
-        let e1: Int
-        let e2: Int
-    }
-    
-    struct Quad {
-        
-        let e0: Int
-        let e1: Int
-        let e2: Int
-        let e3: Int
+        var vectors: [Vector] = []
+        var quads: [GraphCache.Quad] = []
+        var edges: [GraphCache.Edge] = []
+        var joints: [GraphCache.Joint] = []
     }
     
     enum Constants {
@@ -77,270 +24,55 @@ public class Graph {
         static let slices = 6
     }
     
-    var vectors: [Vector] = []
-    var edges: [Edge] = []
-    var triangles: [Triangle] = []
-    var joints: [Joint] = []
-    var pairs: [Joint] = []
-    var quads: [Quad] = []
+    var cache = GraphCache()
+    var data = Result()
     
-    public init(origin: Vector, rings: Int, size: Double = 1.0) {
+    public init(rings: Int, size: Double = 1.0, iterations: Int = 1) {
         
         let start = Date()
         
-        generate(origin: origin, rings: rings, size: size)
+        generate(rings: rings, size: size)
         
-        let mid = Date()
+        let tris = Date()
         
         quadrangulate()
         
-        let end = Date()
+        let quads = Date()
         
-        let m0 = (mid.timeIntervalSince1970 - start.timeIntervalSince1970)
-        let m1 = (end.timeIntervalSince1970 - mid.timeIntervalSince1970)
-        let elapsed = (end.timeIntervalSince1970 - start.timeIntervalSince1970)
+        relax(iterations: iterations)
+        
+        let smooth = Date()
+        
+        let m0 = (tris.timeIntervalSince1970 - start.timeIntervalSince1970)
+        let m1 = (quads.timeIntervalSince1970 - tris.timeIntervalSince1970)
+        let m2 = (smooth.timeIntervalSince1970 - quads.timeIntervalSince1970)
+        let elapsed = (smooth.timeIntervalSince1970 - start.timeIntervalSince1970)
         
         print("creating [\(rings)] hex rings")
         print("Triangulation: \(m0)")
         print("Quadrangulation: \(m1)")
+        print("Relaxing: \(m2)")
         print("elapsed: \(elapsed)")
         
         print("-------")
-        print("vectors: \(vectors.count)")
-        print("edges: \(edges.count)")
-        print("triangles: \(triangles.count)")
-        print("joints: \(joints.count)")
-        print("pairs: \(pairs.count)")
-        print("quads: \(quads.count)")
-    }
-    
-    public var geometry: SCNGeometry {
-    
-        var vertexCache: [Vector : UInt32] = [:]
-        var vertices: [SCNVector3] = []
-        var meshIndices: [UInt32] = []
-        var colors: [SCNVector4] = []
+        print("vectors: \(data.vectors.count)")
+        print("edges: \(data.edges.count)")
+        print("triangles: \(cache.triangles.count)")
+        print("joints: \(data.joints.count)")
+        print("pairs: \(cache.pairs.count)")
+        print("quads: \(data.quads.count)")
         
-        let drawEdges = false
-        let drawJoints = false
-        let drawPairs = false
-        let drawQuads = true
-        
-        if drawEdges {
-            
-            print("drawing [\(edges.count)] edges")
-        
-            for edge in edges {
-
-                let v0 = vectors[edge.v0]
-                let v1 = vectors[edge.v1]
-
-                for v2 in [v0, v1] {
-
-                    if let index = vertexCache[v2] {
-
-                        meshIndices.append(index)
-                    }
-                    else {
-
-                        let index = UInt32(vertexCache.count)
-
-                        vertexCache[v2] = index
-
-                        vertices.append(SCNVector3(vector: v2))
-                        colors.append(SCNVector4(x: 1.0, y: 0.0, z: 0.0, w: 1.0))
-
-                        meshIndices.append(index)
-                    }
-                }
-            }
-        }
-        
-        if drawJoints {
-            
-            let joins = joints.filter { $0.i1 != -1 }
-            
-            print("drawing [\(joins.count)] joints of [\(joints.count)]")
-            
-            for joint in joins {
-                
-                let t0 = triangles[joint.i0]
-                let t1 = triangles[joint.i1]
-                
-                let e0 = edges[t0.e0]
-                let e1 = edges[t0.e1]
-                let e2 = edges[t0.e2]
-                let e3 = edges[t1.e0]
-                let e4 = edges[t1.e1]
-                let e5 = edges[t1.e2]
-                
-                let v0 = (vectors[e0.v0] + vectors[e1.v0] + vectors[e2.v0]) / 3
-                let v1 = (vectors[e3.v0] + vectors[e4.v0] + vectors[e5.v0]) / 3
-
-                for v2 in [v0, v1] {
-
-                    if let index = vertexCache[v2] {
-
-                        meshIndices.append(index)
-                    }
-                    else {
-
-                        let index = UInt32(vertexCache.count)
-
-                        vertexCache[v2] = index
-
-                        vertices.append(SCNVector3(vector: v2))
-                        colors.append(SCNVector4(x: 0.0, y: 1.0, z: 0.0, w: 1.0))
-
-                        meshIndices.append(index)
-                    }
-                }
-            }
-        }
-        
-        if drawPairs {
-            
-            let joins = pairs.filter { $0.i1 != -1 }
-            
-            print("drawing [\(joins.count)] pairs of [\(pairs.count)]")
-            
-            for joint in joins {
-                
-                let q = quad(for: joint)
-                
-                let t0 = triangles[joint.i0]
-                let t1 = triangles[joint.i1]
-                
-                let e0 = edges[q.e0]
-                let e1 = edges[q.e1]
-                let e2 = edges[q.e2]
-                let e3 = edges[q.e3]
-                
-                let v0 = vectors[e0.v0]
-                let v1 = vectors[e1.v0]
-                let v2 = vectors[e2.v0]
-                let v3 = vectors[e3.v0]
-
-                for v2 in [v0, v1, v1, v2, v2, v3, v3, v0] {
-                    
-                    var v2 = v2
-                    v2.y = -3
-
-                    if let index = vertexCache[v2] {
-
-                        meshIndices.append(index)
-                    }
-                    else {
-
-                        let index = UInt32(vertexCache.count)
-
-                        vertexCache[v2] = index
-
-                        vertices.append(SCNVector3(vector: v2))
-                        colors.append(SCNVector4(x: 0.0, y: 0.0, z: 1.0, w: 1.0))
-
-                        meshIndices.append(index)
-                    }
-                }
-                
-                let e4 = edges[t0.e0]
-                let e5 = edges[t0.e1]
-                let e6 = edges[t0.e2]
-                
-                let e7 = edges[t1.e0]
-                let e8 = edges[t1.e1]
-                let e9 = edges[t1.e2]
-                
-                let v4 = (vectors[e4.v0] + vectors[e5.v0] + vectors[e6.v0]) / 3
-                let v5 = (vectors[e7.v0] + vectors[e8.v0] + vectors[e9.v0]) / 3
-
-                for v2 in [v4, v5] {
-                    
-                    var v2 = v2
-                    v2.y = -3
-
-                    if let index = vertexCache[v2] {
-
-                        meshIndices.append(index)
-                    }
-                    else {
-
-                        let index = UInt32(vertexCache.count)
-
-                        vertexCache[v2] = index
-
-                        vertices.append(SCNVector3(vector: v2))
-                        colors.append(SCNVector4(x: 1.0, y: 1.0, z: 0.0, w: 1.0))
-
-                        meshIndices.append(index)
-                    }
-                }
-            }
-        }
-        
-        if drawQuads {
-            
-            print("drawing [\(quads.count)] quads")
-            
-            for quad in quads {
-                
-                let e0 = edges[quad.e0]
-                let e1 = edges[quad.e1]
-                let e2 = edges[quad.e2]
-                let e3 = edges[quad.e3]
-                
-                let v0 = vectors[e0.v0]
-                let v1 = vectors[e1.v0]
-                let v2 = vectors[e2.v0]
-                let v3 = vectors[e3.v0]
-                
-                for v2 in [v0, v1, v1, v2, v2, v3, v3, v0] {
-                    
-                    var v2 = v2
-                    v2.y = 3.0
-
-                    if let index = vertexCache[v2] {
-
-                        meshIndices.append(index)
-                    }
-                    else {
-
-                        let index = UInt32(vertexCache.count)
-
-                        vertexCache[v2] = index
-
-                        vertices.append(SCNVector3(vector: v2))
-                        colors.append(SCNVector4(x: 1.0, y: 1.0, z: 1.0, w: 1.0))
-
-                        meshIndices.append(index)
-                    }
-                }
-            }
-        }
-
-        let data = Data(bytes: colors, count: MemoryLayout<SCNVector4>.size * colors.count)
-        
-        let colorSource = SCNGeometrySource(data: data, semantic: .color, vectorCount: colors.count, usesFloatComponents: true, componentsPerVector: 4, bytesPerComponent: MemoryLayout<SKFloat>.size, dataOffset: 0, dataStride: 0)
-        
-        let sources = [SCNGeometrySource(vertices: vertices),
-                       colorSource]
-        
-        let elements = [SCNGeometryElement(indices: meshIndices, primitiveType: .line)]
-        
-        return SCNGeometry(sources: sources, elements: elements)
+        cache.clear()
     }
 }
 
 extension Graph {
     
-    func generate(origin: Vector, rings: Int, size: Double = 1.0) {
+    func generate(rings: Int, size: Double = 1.0) {
         
-        vectors.removeAll()
-        edges.removeAll()
-        triangles.removeAll()
-        joints.removeAll()
+        cache.clear()
         
-        vectors.append(origin)
+        cache.vectors.append(Vector.zero)
         
         let rings = max(rings, 1)
         
@@ -382,7 +114,7 @@ extension Graph {
                 let v0 = corners[index]
                 let v1 = corners[((index + 1) % Constants.slices)]
                 
-                vectors.append(v0)
+                cache.vectors.append(v0)
                 
                 if ring > 0 {
                 
@@ -390,7 +122,7 @@ extension Graph {
                     
                     for division in 1..<(ring + 1) {
                         
-                        vectors.append(v0.lerp(vector: v1, interpolater: step * Double(division)))
+                        cache.vectors.append(v0.lerp(vector: v1, interpolater: step * Double(division)))
                     }
                 }
                 
@@ -407,12 +139,12 @@ extension Graph {
                 
                 for k in 0..<lhs.count {
                     
-                    create(triangle: lhs[k][0], v1: lhs[k][1], v2: rhs[k])
+                    cache.create(triangle: lhs[k][0], v1: lhs[k][1], v2: rhs[k])
                 }
 
                 for k in 0..<inside.count {
                     
-                    create(triangle: adjacent[k][0], v1: inside[k], v2: adjacent[k][1])
+                    cache.create(triangle: adjacent[k][0], v1: inside[k], v2: adjacent[k][1])
                 }
             }
             
@@ -422,31 +154,30 @@ extension Graph {
     
     func quadrangulate() {
         
-        pairs.removeAll()
-        quads.removeAll()
-        
-        for index in joints.indices {
+        for index in cache.joints.indices {
             
-            let joint = joints[index]
+            let joint = cache.joints[index]
             
-            let edge = edges[joint.e0]
+            let edge = cache.edges[joint.e0]
             
-            let v0 = vectors[edge.v0]
-            let v1 = vectors[edge.v1]
+            let v0 = cache.vectors[edge.v0]
+            let v1 = cache.vectors[edge.v1]
             let v2 = (v0 + v1) / 2
             
-            joints[index].v = vectors.count
+            cache.joints[index].v = cache.vectors.count
             
-            vectors.append(v2)
+            cache.vectors.append(v2)
         }
         
-        let indices = triangles.indices.shuffled()
+        data.vectors = Array(cache.vectors)
+        
+        let indices = cache.triangles.indices.shuffled()
     
         for index in indices {
             
-            guard find(pair: index) == nil else { continue }
+            guard cache.find(pair: index) == nil else { continue }
             
-            let joins = find(joints: index).shuffled()
+            let joins = cache.find(joints: index).shuffled()
             
             var connected = false
             
@@ -456,11 +187,11 @@ extension Graph {
                 
                 let adjacentIndex = (joint.i0 != index ? joint.i0 : joint.i1)
                 
-                if find(pair: adjacentIndex) == nil {
+                if cache.find(pair: adjacentIndex) == nil {
                     
-                    pairs.append(Joint(i: pairs.count, e0: joint.e0, e1: joint.e1, i0: joint.i0, i1: joint.i1, v: joint.v))
+                    let pair = cache.create(pair: joint)
                     
-                    divide(pair: pairs[pairs.count - 1])
+                    divide(pair: pair)
                     
                     connected = true
                     
@@ -470,7 +201,65 @@ extension Graph {
             
             if !connected {
             
-                divide(triangle: triangles[index])
+                divide(triangle: cache.triangles[index])
+            }
+        }
+        
+        data.joints.removeAll { $0.i1 == -1 }
+    }
+    
+    func relax(iterations: Int) {
+        
+        for _ in 0..<iterations {
+            
+            let indices = data.quads.indices.shuffled()
+            
+            for index in indices {
+                
+                let quad = data.quads[index]
+                
+                let e0 = data.edges[quad.e0]
+                let e1 = data.edges[quad.e1]
+                let e2 = data.edges[quad.e2]
+                let e3 = data.edges[quad.e3]
+                
+                var maximum = 0.0
+                var edges: [GraphCache.Edge : Double] = [:]
+                
+                for edge in [e0, e1, e2, e3] {
+
+                    edges[edge] = (1.0 + (quad.v - data.vectors[edge.v0]).squaredMagnitude)
+                    
+                    maximum = max(maximum, edges[edge]!)
+                }
+                
+                let interpolator = (1 / maximum)
+                
+                for (edge, magnitude) in edges {
+                    
+                    data.vectors[edge.v0] = quad.v.lerp(vector: data.vectors[edge.v0], interpolater: interpolator * magnitude)
+                }
+            }
+            
+            for index in data.vectors.indices {
+
+                let joins: [Int] = data.joints.compactMap {
+
+                    let e0 = data.edges[$0.e0]
+
+                    return (e0.v0 == index ? e0.v1 : (e0.v1 == index ? e0.v0 : nil))
+                }
+
+                guard joins.count > 3 else { continue }
+
+                var v0 = Vector.zero
+
+                for i in joins {
+
+                    v0 = v0 + data.vectors[i]
+                }
+
+                data.vectors[index] = (v0 / Double(joins.count))
             }
         }
     }
@@ -478,55 +267,55 @@ extension Graph {
 
 extension Graph {
     
-    func divide(triangle: Triangle) {
+    func divide(triangle: GraphCache.Triangle) {
         
-        let e0 = edges[triangle.e0]
-        let e1 = edges[triangle.e1]
-        let e2 = edges[triangle.e2]
+        let e0 = cache.edges[triangle.e0]
+        let e1 = cache.edges[triangle.e1]
+        let e2 = cache.edges[triangle.e2]
         
-        let j0 = joints[e0.j]
-        let j1 = joints[e1.j]
-        let j2 = joints[e2.j]
+        let j0 = cache.joints[e0.j]
+        let j1 = cache.joints[e1.j]
+        let j2 = cache.joints[e2.j]
         
-        let v0 = vectors[e0.v0]
-        let v1 = vectors[e1.v0]
-        let v2 = vectors[e2.v0]
+        let v0 = cache.vectors[e0.v0]
+        let v1 = cache.vectors[e1.v0]
+        let v2 = cache.vectors[e2.v0]
         
         let v6 = (v0 + v1 + v2) / 3
         
-        let index = vectors.count
+        let index = data.vectors.count
         
-        vectors.append(v6)
+        data.vectors.append(v6)
         
         create(quad: e0.v0, v1: j0.v, v2: index, v3: j2.v)
         create(quad: e1.v0, v1: j1.v, v2: index, v3: j0.v)
         create(quad: e2.v0, v1: j2.v, v2: index, v3: j1.v)
     }
     
-    func divide(pair: Joint) {
+    func divide(pair: GraphCache.Joint) {
         
-        let q = quad(for: pair)
+        let q = cache.quad(for: pair)
         
-        let e0 = edges[q.e0]
-        let e1 = edges[q.e1]
-        let e2 = edges[q.e2]
-        let e3 = edges[q.e3]
+        let e0 = cache.edges[q.e0]
+        let e1 = cache.edges[q.e1]
+        let e2 = cache.edges[q.e2]
+        let e3 = cache.edges[q.e3]
         
-        let j0 = joints[e0.j]
-        let j1 = joints[e1.j]
-        let j2 = joints[e2.j]
-        let j3 = joints[e3.j]
+        let j0 = cache.joints[e0.j]
+        let j1 = cache.joints[e1.j]
+        let j2 = cache.joints[e2.j]
+        let j3 = cache.joints[e3.j]
         
-        let v0 = vectors[e0.v0]
-        let v1 = vectors[e1.v0]
-        let v2 = vectors[e2.v0]
-        let v3 = vectors[e3.v0]
+        let v0 = cache.vectors[e0.v0]
+        let v1 = cache.vectors[e1.v0]
+        let v2 = cache.vectors[e2.v0]
+        let v3 = cache.vectors[e3.v0]
         
         let v8 = (v0 + v1 + v2 + v3) / 4
         
-        let index = vectors.count
+        let index = data.vectors.count
         
-        vectors.append(v8)
+        data.vectors.append(v8)
         
         create(quad: e0.v0, v1: j0.v, v2: index, v3: j3.v)
         create(quad: j0.v, v1: e1.v0, v2: j1.v, v3: index)
@@ -537,37 +326,11 @@ extension Graph {
 
 extension Graph {
     
-    func create(triangle v0: Int, v1: Int, v2: Int) {
-        
-        let e0 = create(edge: v0, v1: v1)
-        let e1 = create(edge: v1, v1: v2)
-        let e2 = create(edge: v2, v1: v0)
-        
-        let index = triangles.count
-        
-        let triangle = Triangle(e0: e0.i, e1: e1.i, e2: e2.i)
-        
-        triangles.append(triangle)
-        
-        for edge in [e0, e1, e2] {
-            
-            let joint = findOrCreate(joint: edge, neighbour: index)
-            
-            joints[joint.i].i1 = (joint.i0 != index && joint.i1 == -1 ? index : joint.i1)
-            joints[joint.i].e1 = (joint.e0 != edge.i && joint.e1 == -1 ? edge.i : joint.e1)
-            
-            edges[edge.i].j = joint.i
-        }
-    }
+    func create(edge v0: Int, v1: Int) -> GraphCache.Edge {
     
-    func create(edge v0: Int, v1: Int) -> Edge {
+        let edge = GraphCache.Edge(i: data.edges.count, v0: v0, v1: v1)
         
-        assert(v0 != -1)
-        assert(v1 != -1)
-        
-       let edge = Edge(i: edges.count, v0: v0, v1: v1)
-        
-        edges.append(edge)
+        data.edges.append(edge)
         
         return edge
     }
@@ -579,94 +342,254 @@ extension Graph {
         let e2 = create(edge: v2, v1: v3)
         let e3 = create(edge: v3, v1: v0)
         
-        let index = quads.count
+        let v = (data.vectors[e0.v0] + data.vectors[e1.v0] + data.vectors[e2.v0] + data.vectors[e3.v0]) / 4
         
-        let quad = Quad(e0: e0.i, e1: e1.i, e2: e2.i, e3: e3.i)
+        let index = data.quads.count
         
-        quads.append(quad)
+        let quad = GraphCache.Quad(e0: e0.i, e1: e1.i, e2: e2.i, e3: e3.i, v: v)
+        
+        data.quads.append(quad)
+        
+        for edge in [e0, e1, e2, e3] {
+            
+            let joint = findOrCreate(joint: edge, neighbour: index)
+            
+            data.joints[joint.i].i1 = (joint.i0 != index && joint.i1 == -1 ? index : joint.i1)
+            data.joints[joint.i].e1 = (joint.e0 != edge.i && joint.e1 == -1 ? edge.i : joint.e1)
+            
+            data.edges[edge.i].j = joint.i
+        }
     }
     
-    func findOrCreate(joint edge: Edge, neighbour: Int) -> Joint {
+    func findOrCreate(joint edge: GraphCache.Edge, neighbour: Int) -> GraphCache.Joint {
         
         if let joint = find(joint: edge) {
             
             return joint
         }
         
-        let joint = Joint(i: joints.count, e0: edge.i, i0: neighbour)
+        let joint = GraphCache.Joint(i: data.joints.count, e0: edge.i, i0: neighbour)
         
-        joints.append(joint)
+        data.joints.append(joint)
         
         return joint
     }
     
-    func find(joint edge: Edge) -> Joint? {
+    func find(joint edge: GraphCache.Edge) -> GraphCache.Joint? {
         
-        return joints.first { edges[$0.e0].spans(v0: edge.v0, v1: edge.v1) }
-    }
-    
-    func find(joints triangle: Int) -> [Joint] {
-        
-        let t0 = triangles[triangle]
-        
-        return joints.filter{ $0.i0 == triangle || $0.i1 == triangle}.filter { $0.e0 == t0.e0 || $0.e0 == t0.e1 || $0.e0 == t0.e2 || $0.e1 == t0.e0 || $0.e1 == t0.e1 || $0.e1 == t0.e2}.filter { $0.e1 != -1 && $0.i0 != -1 }
-    }
-    
-    func find(pair triangle: Int) -> Joint? {
-        
-        return pairs.first { $0.i0 == triangle || $0.i1 == triangle }
-    }
-    
-    func quad(for pair: Joint) -> Quad {
-        
-        let t0 = triangles[pair.i0]
-        let t1 = triangles[pair.i1]
-        
-        let e0 = edges[t0.e0]
-        let e1 = edges[t0.e1]
-        let e2 = edges[t0.e2]
-        
-        let e3 = edges[t1.e0]
-        let e4 = edges[t1.e1]
-        let e5 = edges[t1.e2]
-        
-        let diagonal = edges[pair.e0]
-        
-        let e0d = e0.spans(v0: diagonal.v0, v1: diagonal.v1)
-        let e1d = e1.spans(v0: diagonal.v0, v1: diagonal.v1)
-        
-        let e0s = e0.spans(v0: e5.v0, v1: e5.v1)
-        let e1s = e1.spans(v0: e3.v0, v1: e3.v1)
-        let e2s = e2.spans(v0: e4.v0, v1: e4.v1)
-        
-        let x = (e0s || e2s ? e3 : e5)
-        let y = (e0s || e1s ? e4 : e3)
-        let z = (e1s || e2s ? e5 : e4)
-        
-        let e6 = (e0d ? e1 : e0)
-        let e7 = (e0d ? e2 : (e1d ? y : e1))
-        let e8 = (e0d ? x : z)
-        let e9 = (e0d ? y : (e1s ? e2 : x))
-        
-        return Quad(e0: e6.i, e1: e7.i, e2: e8.i, e3: e9.i)
+        return data.joints.first { data.edges[$0.e0].spans(v0: edge.v0, v1: edge.v1) }
     }
 }
 
-extension Array where Element == Int {
+extension Graph {
     
-    func wind(steps: Int, slices: Int) -> [[Int]] {
+    public var geometry: SCNGeometry {
+    
+        var vertexCache: [Vector : UInt32] = [:]
+        var vertices: [SCNVector3] = []
+        var meshIndices: [UInt32] = []
+        var colors: [SCNVector4] = []
         
-        var result: [[Int]] = []
+        let drawEdges = false
+        let drawJoints = true
+        let drawPairs = false
+        let drawQuads = true
         
-        let step = (steps - 1)
-        
-        for index in 0..<slices {
+        if drawEdges {
             
-            let range = Range((index * step)...((index * step) + step))
-            
-            result.append(range.map { return self[($0 % count)] })
+            print("drawing [\(data.edges.count)] edges")
+        
+            for edge in data.edges {
+
+                let v0 = data.vectors[edge.v0]
+                let v1 = data.vectors[edge.v1]
+
+                for v2 in [v0, v1] {
+
+                    if let index = vertexCache[v2] {
+
+                        meshIndices.append(index)
+                    }
+                    else {
+
+                        let index = UInt32(vertexCache.count)
+
+                        vertexCache[v2] = index
+
+                        vertices.append(SCNVector3(vector: v2))
+                        colors.append(SCNVector4(x: 1.0, y: 0.0, z: 0.0, w: 1.0))
+
+                        meshIndices.append(index)
+                    }
+                }
+            }
         }
         
-        return result
+        if drawJoints {
+            
+            let joins = data.joints.filter { $0.i1 != -1 }
+            
+            print("drawing [\(joins.count)] joints of [\(data.joints.count)]")
+            
+            for joint in joins {
+                
+                let t0 = data.quads[joint.i0]
+                let t1 = data.quads[joint.i1]
+                
+                let e0 = data.edges[t0.e0]
+                let e1 = data.edges[t0.e1]
+                let e2 = data.edges[t0.e2]
+                let e3 = data.edges[t0.e3]
+                
+                let e4 = data.edges[t1.e0]
+                let e5 = data.edges[t1.e1]
+                let e6 = data.edges[t1.e2]
+                let e7 = data.edges[t1.e3]
+                
+                let v0 = (data.vectors[e0.v0] + data.vectors[e1.v0] + data.vectors[e2.v0] + data.vectors[e3.v0]) / 4
+                let v1 = (data.vectors[e4.v0] + data.vectors[e5.v0] + data.vectors[e6.v0] + data.vectors[e7.v0]) / 4
+
+                for v2 in [v0, v1] {
+
+                    if let index = vertexCache[v2] {
+
+                        meshIndices.append(index)
+                    }
+                    else {
+
+                        let index = UInt32(vertexCache.count)
+
+                        vertexCache[v2] = index
+
+                        vertices.append(SCNVector3(vector: v2))
+                        colors.append(SCNVector4(x: 1.0, y: 0.0, z: 1.0, w: 1.0))
+
+                        meshIndices.append(index)
+                    }
+                }
+            }
+        }
+        
+        if drawPairs {
+            
+            let joins = cache.pairs.filter { $0.i1 != -1 }
+            
+            print("drawing [\(joins.count)] pairs of [\(cache.pairs.count)]")
+            
+            for joint in joins {
+                
+                let q = cache.quad(for: joint)
+                
+                let t0 = cache.triangles[joint.i0]
+                let t1 = cache.triangles[joint.i1]
+                
+                let e0 = cache.edges[q.e0]
+                let e1 = cache.edges[q.e1]
+                let e2 = cache.edges[q.e2]
+                let e3 = cache.edges[q.e3]
+                
+                let v0 = cache.vectors[e0.v0]
+                let v1 = cache.vectors[e1.v0]
+                let v2 = cache.vectors[e2.v0]
+                let v3 = cache.vectors[e3.v0]
+
+                for v2 in [v0, v1, v1, v2, v2, v3, v3, v0] {
+
+                    if let index = vertexCache[v2] {
+
+                        meshIndices.append(index)
+                    }
+                    else {
+
+                        let index = UInt32(vertexCache.count)
+
+                        vertexCache[v2] = index
+
+                        vertices.append(SCNVector3(vector: v2))
+                        colors.append(SCNVector4(x: 0.0, y: 0.0, z: 1.0, w: 1.0))
+
+                        meshIndices.append(index)
+                    }
+                }
+                
+                let e4 = cache.edges[t0.e0]
+                let e5 = cache.edges[t0.e1]
+                let e6 = cache.edges[t0.e2]
+                
+                let e7 = cache.edges[t1.e0]
+                let e8 = cache.edges[t1.e1]
+                let e9 = cache.edges[t1.e2]
+                
+                let v4 = (cache.vectors[e4.v0] + cache.vectors[e5.v0] + cache.vectors[e6.v0]) / 3
+                let v5 = (cache.vectors[e7.v0] + cache.vectors[e8.v0] + cache.vectors[e9.v0]) / 3
+
+                for v2 in [v4, v5] {
+
+                    if let index = vertexCache[v2] {
+
+                        meshIndices.append(index)
+                    }
+                    else {
+
+                        let index = UInt32(vertexCache.count)
+
+                        vertexCache[v2] = index
+
+                        vertices.append(SCNVector3(vector: v2))
+                        colors.append(SCNVector4(x: 1.0, y: 1.0, z: 0.0, w: 1.0))
+
+                        meshIndices.append(index)
+                    }
+                }
+            }
+        }
+        
+        if drawQuads {
+            
+            print("drawing [\(data.quads.count)] quads")
+            
+            for quad in data.quads {
+                
+                let e0 = data.edges[quad.e0]
+                let e1 = data.edges[quad.e1]
+                let e2 = data.edges[quad.e2]
+                let e3 = data.edges[quad.e3]
+                
+                let v0 = data.vectors[e0.v0]
+                let v1 = data.vectors[e1.v0]
+                let v2 = data.vectors[e2.v0]
+                let v3 = data.vectors[e3.v0]
+                
+                for v2 in [v0, v1, v1, v2, v2, v3, v3, v0] {
+
+                    if let index = vertexCache[v2] {
+
+                        meshIndices.append(index)
+                    }
+                    else {
+
+                        let index = UInt32(vertexCache.count)
+
+                        vertexCache[v2] = index
+
+                        vertices.append(SCNVector3(vector: v2))
+                        colors.append(SCNVector4(x: 1.0, y: 1.0, z: 1.0, w: 1.0))
+
+                        meshIndices.append(index)
+                    }
+                }
+            }
+        }
+
+        let data = Data(bytes: colors, count: MemoryLayout<SCNVector4>.size * colors.count)
+        
+        let colorSource = SCNGeometrySource(data: data, semantic: .color, vectorCount: colors.count, usesFloatComponents: true, componentsPerVector: 4, bytesPerComponent: MemoryLayout<SKFloat>.size, dataOffset: 0, dataStride: 0)
+        
+        let sources = [SCNGeometrySource(vertices: vertices),
+                       colorSource]
+        
+        let elements = [SCNGeometryElement(indices: meshIndices, primitiveType: .line)]
+        
+        return SCNGeometry(sources: sources, elements: elements)
     }
 }

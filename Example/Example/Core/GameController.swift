@@ -35,7 +35,7 @@ class GameController: NSObject {
         let meadow = Meadow()
         
         meadow.floor.rendersGridLines = true
-        meadow.floor.backgroundColor = .white
+        meadow.floor.backgroundColor = .black
         meadow.floor.gridColor = .black
         
         self.sceneView = renderer
@@ -91,7 +91,7 @@ extension GameController {
         
         DispatchQueue.main.async {
 
-            let g = Graph(origin: .zero, rings: 10)
+            let g = Graph(rings: 10)
             
             let n0 = SCNNode(geometry: SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0))
             let n1 = SCNNode(geometry: g.geometry)

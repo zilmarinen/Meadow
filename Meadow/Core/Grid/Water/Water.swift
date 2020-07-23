@@ -8,9 +8,9 @@
 
 public class Water: LayeredGrid<WaterChunk, WaterTile, WaterEdge, WaterLayer> {
     
-    override init(ancestor: SoilableParent) {
+    override init(graph: Graph, ancestor: SoilableParent) {
     
-    super.init(ancestor: ancestor)
+        super.init(graph: graph, ancestor: ancestor)
         
         name = "Water"
     }
@@ -29,20 +29,20 @@ extension Water: GridDecodable {
     
     func decode(json: WaterJSON) {
         
-        json.chunks.forEach { chunkJSON in
-            
-            chunkJSON.tiles.forEach { tileJSON in
-                
-                tileJSON.edges.forEach { edgeJSON in
-                    
-                    edgeJSON.layers.forEach { layerJSON in
-                        
-                        let layer = self.add(layer: tileJSON.coordinate, cardinal: edgeJSON.cardinal)
-                        
-                        layer?.waterType = layerJSON.waterType
-                    }
-                }
-            }
-        }
+//        json.chunks.forEach { chunkJSON in
+//            
+//            chunkJSON.tiles.forEach { tileJSON in
+//
+//                tileJSON.edges.forEach { edgeJSON in
+//
+//                    edgeJSON.layers.forEach { layerJSON in
+//
+//                        let layer = self.add(layer: tileJSON.coordinate, cardinal: edgeJSON.cardinal)
+//
+//                        layer?.waterType = layerJSON.waterType
+//                    }
+//                }
+//            }
+//        }
     }
 }

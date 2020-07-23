@@ -51,7 +51,7 @@ fragment float4 terrain_fragment(Fragment f [[stage_in]], texture2d<float, acces
         
         return color;
     }
-    
+    return color;
     float2 fractional  = abs(fract(f.xz + 0.5));
     float2 partial = fwidth(f.xz);
     

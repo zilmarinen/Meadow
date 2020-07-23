@@ -12,12 +12,10 @@ public class Layer: NSObject, Soilable, Clearable, Encodable, Hideable, SceneGra
     
     private enum CodingKeys: CodingKey {
         
-        case cardinal
+        case identifier
     }
     
     public weak var ancestor: SoilableParent?
-    
-    public var coordinate: Coordinate
     
     public var isDirty = false
     
@@ -31,7 +29,7 @@ public class Layer: NSObject, Soilable, Clearable, Encodable, Hideable, SceneGra
     
     public var name: String?
     
-    public let cardinal: Cardinal
+    public let identifier: Int
     
     public var upper: Layer? {
         
@@ -51,13 +49,11 @@ public class Layer: NSObject, Soilable, Clearable, Encodable, Hideable, SceneGra
     
     public var corners = LayerCorners()
     
-    required init(ancestor: SoilableParent, coordinate: Coordinate, cardinal: Cardinal) {
+    required init(ancestor: SoilableParent, identifier: Int) {
         
         self.ancestor = ancestor
         
-        self.coordinate = coordinate
-        
-        self.cardinal = cardinal
+        self.identifier = identifier
         
         self.name = "Layer"
     }
@@ -66,7 +62,7 @@ public class Layer: NSObject, Soilable, Clearable, Encodable, Hideable, SceneGra
      
         var container = encoder.container(keyedBy: CodingKeys.self)
         
-        try container.encode(cardinal, forKey: .cardinal)
+        try container.encode(identifier, forKey: .identifier)
     }
     
     @discardableResult public func clean() -> Bool {

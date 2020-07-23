@@ -18,16 +18,14 @@ class ChunkJSON<T: TileJSON>: Decodable {
 
 class TileJSON: Decodable {
     
-    let coordinate: Coordinate
+    
 }
 
 class EdgeJSON<L: LayerJSON>: Decodable {
     
-    let cardinal: Cardinal
     let layers: [L]
 }
 
 class LayerJSON: Decodable {
 
-    let cardinal: Cardinal
 }

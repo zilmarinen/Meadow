@@ -6,34 +6,37 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
+import Pasture
+
 public class LayeredGrid<C: Chunk<T>, T: LayeredTile<E, L>, E: Edge<L>, L:Layer>: Grid<C, T> {
     
-    public override func add(tile coordinate: Coordinate) -> T {
+    public override func add(tile vector: Vector) -> T? {
         
-        let tile = super.add(tile: coordinate)
+        guard let tile = super.add(tile: vector) else { return nil }
         
-        for cardinal in Cardinal.allCases {
+        for edge in tile.joints {
             
-            if tile.find(edge: cardinal) == nil {
+            if tile.find(edge: edge) == nil {
                 
-                let _ = tile.add(edge: cardinal)
+                let _ = tile.add(edge: edge)
             }
         }
         
         return tile
     }
     
-    func add(layer coordinate: Coordinate, cardinal: Cardinal) -> L? {
+    public override func add(tile identifier: Int) -> T? {
         
-        let tile = find(tile: coordinate) ?? add(tile: coordinate)
+        guard let tile = super.add(tile: identifier) else { return nil }
         
-        if let edge = tile.find(edge: cardinal) {
+        for edge in tile.joints {
             
-            return edge.addLayer()
+            if tile.find(edge: edge) == nil {
+                
+                let _ = tile.add(edge: edge)
+            }
         }
         
-        let edge = tile.add(edge: cardinal)
-        
-        return edge.topLayer
+        return tile
     }
 }

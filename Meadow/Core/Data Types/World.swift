@@ -18,36 +18,13 @@ public struct World {
         
         public static let chunkSize = 5
         public static let tileSize = 1
+        
+        public static let x = Plane(normal: .x, distance: 0.0)
+        public static let y = Plane(normal: .y, distance: 0.0)
+        public static let z = Plane(normal: .z, distance: 0.0)
     }
     
     public enum Axis {
-        
-        static func aligned(chunk coordinate: Coordinate) -> Volume {
-            
-            let size = Size(width: World.Constants.chunkSize, depth: World.Constants.chunkSize, height: (World.Constants.ceiling - World.Constants.floor))
-            
-            return Volume(coordinate: chunked(coordinate: coordinate), size: size)
-        }
-        
-        static func aligned(tile coordinate: Coordinate) -> Volume {
-            
-            let size = Size(width: World.Constants.tileSize, depth: World.Constants.tileSize, height: (World.Constants.ceiling - World.Constants.floor))
-            
-            return Volume(coordinate: floored(coordinate: coordinate), size: size)
-        }
-        
-        static func chunked(coordinate: Coordinate) -> Coordinate {
-            
-            let x = Int(floor(Double(coordinate.x) / Double(World.Constants.chunkSize))) * World.Constants.chunkSize
-            let z = Int(floor(Double(coordinate.z) / Double(World.Constants.chunkSize))) * World.Constants.chunkSize
-            
-            return Coordinate(x: x, y: World.Constants.floor, z: z)
-        }
-        
-        static func floored(coordinate: Coordinate) -> Coordinate {
-            
-            return Coordinate(x: coordinate.x, y: World.Constants.floor, z: coordinate.z)
-        }
         
         public static func xz(value: Double) -> Int {
             
@@ -62,6 +39,19 @@ public struct World {
         public static func y(value: Double) -> Int {
             
             return Int(value / World.Constants.yStep)
+        }
+        
+        public static func segment(vector: Vector) -> Int {
+            
+            let x = vector.compare(with: Constants.x) == .back
+            let z = vector.compare(with: Constants.z) == .back
+            
+            return (x ? (z ? 1 : 0) : (z ? 2 : 3))
+        }
+        
+        public static func radius(vector: Vector) -> Int {
+            
+            return Int(floor(vector.magnitude / Double(World.Constants.chunkSize))) * World.Constants.chunkSize
         }
     }
 }

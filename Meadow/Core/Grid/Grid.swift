@@ -14,7 +14,9 @@ public class Grid<C: Chunk<T>, T: Tile>: SCNNode, Hideable, SceneGraphIdentifiab
 
     public weak var ancestor: SoilableParent?
     
-    public var coordinate: Coordinate { return .zero }
+    public var identifier: Int = SceneGraphNodeType.grid.rawValue
+    
+    public weak var graph: Graph?
 
     public var isDirty = false
     
@@ -28,9 +30,11 @@ public class Grid<C: Chunk<T>, T: Tile>: SCNNode, Hideable, SceneGraphIdentifiab
         }
     }
     
-    public init(ancestor: SoilableParent) {
+    public init(graph: Graph, ancestor: SoilableParent) {
         
         self.ancestor = ancestor
+        
+        self.graph = graph
         
         super.init()
         
@@ -44,7 +48,7 @@ public class Grid<C: Chunk<T>, T: Tile>: SCNNode, Hideable, SceneGraphIdentifiab
     
     public override func addChildNode(_ child: SCNNode) {
         
-        guard let chunk = child as? C else { return }
+        guard let chunk = child as? C, chunk.parent == nil else { return }
         
         super.addChildNode(chunk)
         
@@ -63,22 +67,50 @@ public class Grid<C: Chunk<T>, T: Tile>: SCNNode, Hideable, SceneGraphIdentifiab
     
     public var type: SceneGraphNodeType { return .grid }
     
-    func add(tile coordinate: Coordinate) -> T {
+    public func add(tile vector: Vector) -> T? {
         
-        let chunk = find(chunk: coordinate) ?? C(ancestor: self, coordinate: coordinate)
+        guard let quad = graph?.data.quads.first, let joints = graph?.joints(for: quad).reversed(), let vectors = graph?.vectors(for: quad).reversed() else { return nil }
         
-        let tile = chunk.add(tile: coordinate)
+        let slice = chunkSlice(for: vector)
         
-        if chunk.parent == nil {
+        let chunk = find(chunk: vector) ?? C(ancestor: self, slice: slice)
+        
+        let tile = chunk.add(tile: quad.i, joints: Array(joints), vectors: Array(vectors))
+        
+        addChildNode(chunk)
+        
+        for joint in joints where joint.e1 != -1 {
             
-            addChildNode(chunk)
+            let identifier = (joint.e0 == tile.identifier ? joint.e1 : joint.e0)
+            
+            if let neighbour = find(tile: identifier) {
+                
+                tile.add(neighbour: neighbour, identifier: joint.i)
+            }
         }
         
-        Cardinal.allCases.forEach { cardinal in
+        return tile
+    }
+    
+    public func add(tile identifier: Int) -> T? {
+        
+        guard let quad = graph?.quad(at: identifier), let joints = graph?.joints(for: quad).reversed(), let vectors = graph?.vectors(for: quad).reversed() else { return nil }
+        
+        let slice = chunkSlice(for: quad.v)
+        
+        let chunk = find(chunk: quad.v) ?? C(ancestor: self, slice: slice)
+        
+        let tile = chunk.add(tile: quad.i, joints: Array(joints), vectors: Array(vectors))
+        
+        addChildNode(chunk)
+        
+        for joint in joints where joint.e1 != -1 {
             
-            if let neighbour = find(tile: coordinate + Coordinate.cardinal(cardinal: cardinal)) {
+            let identifier = (joint.e0 == tile.identifier ? joint.e1 : joint.e0)
+            
+            if let neighbour = find(tile: identifier) {
                 
-                tile.add(neighbour: neighbour, cardinal: cardinal)
+                tile.add(neighbour: neighbour, identifier: joint.i)
             }
         }
         
@@ -88,31 +120,51 @@ public class Grid<C: Chunk<T>, T: Tile>: SCNNode, Hideable, SceneGraphIdentifiab
 
 extension Grid {
     
-    func find(chunk coordinate: Coordinate) -> C? {
+    func find(chunk vector: Vector) -> C? {
+        
+        let slice = chunkSlice(for: vector)
         
         return chunks.first { chunk in
             
-            return chunk.volume.contains(coordinate: coordinate)
+            return chunk.slice == slice
         }
     }
     
-    func find(tile coordinate: Coordinate) -> T? {
+    func find(tile identifier: Int) -> T? {
         
-        guard let chunk = find(chunk: coordinate), let tile = chunk.find(tile: coordinate) else { return nil }
+        for index in chunks.indices {
+            
+            if let tile = chunks[index].find(tile: identifier) {
+                
+                return tile
+            }
+        }
+        
+        return nil
+    }
+    
+    func find(tile vector: Vector) -> T? {
+        
+        guard let chunk = find(chunk: vector), let tile = chunk.find(tile: vector) else { return nil }
         
         return tile
     }
     
-    func remove(tile coordinate: Coordinate) {
+    func remove(tile vector: Vector) {
         
-        guard let chunk = find(chunk: coordinate) else { return }
+         guard let chunk = find(chunk: vector), let tile = chunk.find(tile: vector) else { return }
         
-        chunk.remove(tile: coordinate)
+        chunk.remove(tile: tile.identifier)
         
         if chunk.tiles.count == 0 {
             
             chunk.removeFromParentNode()
         }
+    }
+    
+    func chunkSlice(for vector: Vector) -> C.Slice {
+        
+        return C.Slice(vector: vector)
     }
 }
 

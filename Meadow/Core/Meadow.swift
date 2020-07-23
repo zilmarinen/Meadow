@@ -10,26 +10,28 @@ import SceneKit
 
 public final class Meadow: SCNNode, SceneGraphIdentifiable, SceneGraphNode, Soilable {
     
+    public let graph: Graph
+    
     public var ancestor: SoilableParent?
     
-    public var coordinate: Coordinate { return .zero }
+    public var identifier: Int = -1
     
     public var isDirty: Bool = false
     
     public static var bundle: Bundle? { return Bundle(for: Meadow.self) }
     
     public lazy var actors: Actors = { return Actors() }()
-    public lazy var area: Area = { return Area(ancestor: self) }()
-    public lazy var foliage: Foliage = { return Foliage(ancestor: self) }()
-    public lazy var footpath: Footpath = { return Footpath(ancestor: self) }()
-    public lazy var terrain: Terrain = { return Terrain(ancestor: self) }()
-    public lazy var water: Water = { return Water(ancestor: self) }()
-    
-    public let floor = Floor()
+    public lazy var area: Area = { return Area(graph: graph, ancestor: self) }()
+    public lazy var foliage: Foliage = { return Foliage(graph: graph, ancestor: self) }()
+    public lazy var footpath: Footpath = { return Footpath(graph: graph, ancestor: self) }()
+    public lazy var terrain: Terrain = { return Terrain(graph: graph, ancestor: self) }()
+    public lazy var water: Water = { return Water(graph: graph, ancestor: self) }()
     
     lazy var waterResolver: WaterResolver = { return WaterResolver(terrain: terrain, water: water) }()
     
     public required init(json: MeadowJSON? = nil) {
+        
+        self.graph = Graph(rings: 5, size: 3.5, iterations: 1)
         
         super.init()
         
@@ -42,7 +44,7 @@ public final class Meadow: SCNNode, SceneGraphIdentifiable, SceneGraphNode, Soil
         addChildNode(terrain)
         addChildNode(water)
         
-        geometry = floor
+        geometry = graph.geometry
         
         guard let json = json else { return }
         
@@ -77,18 +79,18 @@ extension Meadow {
         
         guard let grid = child as? SceneGraphIdentifiable else { return }
         
-        switch grid.category {
-            
-        case .terrain:
-            
-            self.waterResolver.enqueue(coordinate: child.coordinate)
-            
-        case .water:
-            
-            self.waterResolver.enqueue(coordinate: child.coordinate)
-            
-        default: break
-        }
+//        switch grid.category {
+//
+//        case .terrain:
+//
+//            self.waterResolver.enqueue(coordinate: child.coordinate)
+//
+//        case .water:
+//
+//            self.waterResolver.enqueue(coordinate: child.coordinate)
+//
+//        default: break
+//        }
     }
     
     @discardableResult public func clean() -> Bool {

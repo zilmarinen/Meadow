@@ -8,7 +8,7 @@
 
 class WaterResolver: GridResolver {
     
-    var coordinates: [Coordinate] = []
+    var identifiers: [Int] = []
     
     let terrain: Terrain
     let water: Water
@@ -19,25 +19,25 @@ class WaterResolver: GridResolver {
         self.water = water
     }
     
-    func resolve(coordinate: Coordinate) {
+    func resolve(identifier: Int) {
         
-        guard let terrainTile = terrain.find(tile: coordinate), let waterTile = water.find(tile: coordinate) else {
-            
-            water.remove(tile: coordinate)
-            
-            return
-        }
-        
-        waterTile.edges.forEach { (cardinal, waterEdge) in
-            
-            if let terrainEdge = terrainTile.find(edge: cardinal) {
-                
-                waterEdge.terrainCorners = terrainEdge.topLayer?.corners
-            }
-            else {
-                
-                waterTile.remove(edge: cardinal)
-            }
-        }
+//        guard let terrainTile = terrain.find(tile: coordinate), let waterTile = water.find(tile: coordinate) else {
+//            
+//            water.remove(tile: coordinate)
+//            
+//            return
+//        }
+//        
+//        waterTile.edges.forEach { (cardinal, waterEdge) in
+//            
+//            if let terrainEdge = terrainTile.find(edge: cardinal) {
+//                
+//                waterEdge.terrainCorners = terrainEdge.topLayer?.corners
+//            }
+//            else {
+//                
+//                waterTile.remove(edge: cardinal)
+//            }
+//        }
     }
 }

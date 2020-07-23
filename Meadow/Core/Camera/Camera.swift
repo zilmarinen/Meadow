@@ -23,7 +23,7 @@ public class Camera: SCNNode {
         let camera = SCNCamera()
         
         camera.usesOrthographicProjection = false
-        camera.fieldOfView = 20
+        camera.fieldOfView = 70
         
         node.camera = camera
         
@@ -41,11 +41,11 @@ extension Camera {
 
 extension Camera {
     
-    func dolly(to: SCNVector3, focus: SCNVector3, ordinal: Ordinal, zoom: Float, delta: TimeInterval) {
+    func dolly(to: SCNVector3, focus: SCNVector3, ordinal: Int, zoom: Float, delta: TimeInterval) {
         
     }
 
-    func focus(focus: SCNVector3, ordinal: Ordinal, zoom: Float, delta: TimeInterval) {
+    func focus(focus: SCNVector3, ordinal: Int, zoom: Float, delta: TimeInterval) {
         
         guard let camera = jig.camera else { return }
         
@@ -53,7 +53,7 @@ extension Camera {
         
         camera.orthographicScale = scale
         
-        let ordinalAngle = (ordinal.rawValue * 90)
+        let ordinalAngle = (ordinal * 90)
         
         let radius = camera.zFar / 2.0
         let yAngle = Math.radians(degrees: 35.0)
@@ -85,11 +85,11 @@ extension Camera: Updatable {
             
         case .dolly(let node):
             
-            dolly(to: node.position, focus: node.position, ordinal: .northWest, zoom: 70, delta: delta)
+            dolly(to: node.position, focus: node.position, ordinal: 0, zoom: 70, delta: delta)
             
         case .focus(let node):
             
-            focus(focus: node.position, ordinal: .northWest, zoom: 70, delta: delta)
+            focus(focus: node.position, ordinal: 0, zoom: 70, delta: delta)
         }
     }
 }

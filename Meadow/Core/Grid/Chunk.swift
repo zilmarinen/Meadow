@@ -12,13 +12,25 @@ import Pasture
 
 public class Chunk<T: Tile>: SCNNode, Hideable, SceneGraphIdentifiable, SceneGraphNode, Soilable {
     
+    public struct Slice: Equatable {
+        
+        let segment: Int
+        let radius: Int
+        
+        init(vector: Vector) {
+            
+            self.segment = World.Axis.segment(vector: vector)
+            self.radius = World.Axis.radius(vector: vector)
+        }
+    }
+    
     public weak var ancestor: SoilableParent?
     
-    public var coordinate: Coordinate { return volume.coordinate }
+    public var identifier: Int { return (slice.radius * (slice.segment + 1))}
+    
+    public var slice: Slice
     
     public var isDirty = false
-    
-    let volume: Volume
     
     var tiles: [T] = []
     
@@ -30,17 +42,15 @@ public class Chunk<T: Tile>: SCNNode, Hideable, SceneGraphIdentifiable, SceneGra
         }
     }
     
-    required init(ancestor: SoilableParent, coordinate: Coordinate) {
+    required init(ancestor: SoilableParent, slice: Slice) {
         
         self.ancestor = ancestor
         
-        self.volume = World.Axis.aligned(chunk: coordinate)
+        self.slice = slice
         
         super.init()
         
-        self.name = "Chunk [\(volume.coordinate.x), \(volume.coordinate.y), \(volume.coordinate.z)]"
-        
-        self.position = SCNVector3(coordinate: Coordinate(x: volume.coordinate.x, y: 0, z: volume.coordinate.z))
+        self.name = "Chunk [\(slice.segment), \(slice.radius)]"
     }
     
     required init?(coder: NSCoder) {
@@ -61,19 +71,29 @@ public class Chunk<T: Tile>: SCNNode, Hideable, SceneGraphIdentifiable, SceneGra
 
 extension Chunk {
     
-    func find(tile coordinate: Coordinate) -> T? {
+    func find(tile identifier: Int) -> T? {
         
         return tiles.first { tile in
             
-            return tile.volume.coordinate.adjacency(to: coordinate) == .equal
+            return tile.identifier == identifier
         }
     }
     
-    func add(tile coordinate: Coordinate) -> T {
+    func find(tile vector: Vector) -> T? {
         
-        if let tile = find(tile: coordinate) { return tile }
+        return tiles.first { tile in
+            
+            let polygon = Pasture.Polygon(vertices: tile.vectors.map { Vertex(position: $0, normal: .up) })
+            
+            return polygon.contains(vector: vector)
+        }
+    }
+    
+    func add(tile identifier: Int, joints: [GraphCache.Joint], vectors: [Vector]) -> T {
         
-        let tile = T(ancestor: self, coordinate: coordinate)
+        if let tile = find(tile: identifier) { return tile }
+        
+        let tile = T(ancestor: self, identifier: identifier, joints: joints, vectors: vectors)
         
         tiles.append(tile)
         
@@ -82,9 +102,9 @@ extension Chunk {
         return tile
     }
     
-    func remove(tile coordinate: Coordinate) {
+    func remove(tile identifier: Int) {
         
-        guard let tile = find(tile: coordinate), let index = tiles.firstIndex(of: tile) else { return }
+        guard let tile = find(tile: identifier), let index = tiles.firstIndex(of: tile) else { return }
         
         tiles.remove(at: index)
         
@@ -124,7 +144,7 @@ extension Chunk {
             node.addChildNode(SCNNode())
         }
 
-        node.childNodes.first?.geometry = SCNGeometry(wireframe: mesh)
+        //node.childNodes.first?.geometry = SCNGeometry(wireframe: mesh)
         node.childNodes.last?.geometry = SCNGeometry(normals: mesh)
         
         if let shadable = self as? Shadable {

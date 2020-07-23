@@ -12,14 +12,20 @@ public class Tile: NSObject, Soilable, Clearable, Encodable, Neighbour, Renderab
     
     private enum CodingKeys: CodingKey {
         
-        case coordinate
+        case identifier
     }
     
     public weak var ancestor: SoilableParent?
     
-    public var coordinate: Coordinate { return volume.coordinate }
+    public let identifier: Int
     
-    public var isDirty = false
+    public let joints: [Int]
+    
+    public let vectors: [Vector]
+    
+    public let centre: Vector
+    
+    public var isDirty = true
     
     public var isHidden: Bool = false {
         
@@ -33,33 +39,28 @@ public class Tile: NSObject, Soilable, Clearable, Encodable, Neighbour, Renderab
     
     var mesh: Mesh = Mesh(polygons: [])
     
-    var transform: Transform {
-        
-        let offset = World.Axis.aligned(chunk: volume.coordinate)
-        
-        let position = Vector(coordinate: volume.coordinate) - Vector(coordinate: offset.coordinate)
-        
-        return Transform(position: position, rotation: .identity, scale: .one)
-    }
+    var neighbours: [Int : Tile] = [:]
     
-    let volume: Volume
-    
-    var neighbours: [Cardinal : Tile] = [:]
-    
-    required init(ancestor: SoilableParent, coordinate: Coordinate) {
+    required init(ancestor: SoilableParent, identifier: Int, joints: [GraphCache.Joint], vectors: [Vector]) {
     
         self.ancestor = ancestor
         
-        self.volume = World.Axis.aligned(tile: coordinate)
+        self.identifier = identifier
         
-        self.name = "Tile [\(coordinate.x), \(coordinate.y), \(coordinate.z)]"
+        self.joints = joints.map { $0.i }
+        
+        self.vectors = vectors
+        
+        self.centre = vectors.reduce(Vector.zero, { $0 + $1 }) / Double(vectors.count)
+        
+        self.name = "Tile [\(identifier)]"
     }
     
     public func encode(to encoder: Encoder) throws {
         
         var container = encoder.container(keyedBy: CodingKeys.self)
         
-        try container.encode(volume.coordinate, forKey: .coordinate)
+        try container.encode(identifier, forKey: .identifier)
     }
     
     public func child(didBecomeDirty child: SoilableChild) {
@@ -78,7 +79,7 @@ public class Tile: NSObject, Soilable, Clearable, Encodable, Neighbour, Renderab
         
         guard isDirty else { return false }
         
-        mesh = render(transform: transform)
+        mesh = render(transform: .identity)
         
         isDirty = false
         
@@ -87,9 +88,11 @@ public class Tile: NSObject, Soilable, Clearable, Encodable, Neighbour, Renderab
     
     func clear() {
         
-        Cardinal.allCases.forEach { cardinal in
+        let identifiers = Array(neighbours.keys)
+        
+        identifiers.forEach { identifier in
             
-            remove(neighbour: cardinal)
+            remove(neighbour: identifier)
         }
     }
     

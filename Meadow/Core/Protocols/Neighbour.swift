@@ -10,45 +10,45 @@ protocol Neighbour: Soilable {
     
     associatedtype N: Neighbour
     
-    var neighbours: [Cardinal : N] { get set }
+    var neighbours: [Int : N] { get set }
     
-    func add(neighbour: N, cardinal: Cardinal)
-    func find(neighbour cardinal: Cardinal) -> Self?
-    func remove(neighbour cardinal: Cardinal)
+    func add(neighbour: N, identifier: Int)
+    func find(neighbour identifier: Int) -> Self?
+    func remove(neighbour identifier: Int)
 }
 
 extension Neighbour {
     
-    func add(neighbour: N, cardinal: Cardinal) {
+    func add(neighbour: N, identifier: Int) {
         
-        remove(neighbour: cardinal)
+        remove(neighbour: identifier)
         
-        neighbours.updateValue(neighbour, forKey: cardinal)
+        neighbours.updateValue(neighbour, forKey: identifier)
         
         becomeDirty()
         
-        if let this = self as? N.N, neighbour.neighbours[cardinal.opposite] == nil {
+        if let this = self as? N.N, neighbour.neighbours[identifier] == nil {
             
-            neighbour.add(neighbour: this, cardinal: cardinal.opposite)
+            neighbour.add(neighbour: this, identifier: identifier)
         }
     }
     
-    func find(neighbour cardinal: Cardinal) -> Self? {
+    func find(neighbour identifier: Int) -> Self? {
         
-        return neighbours[cardinal] as? Self
+        return neighbours[identifier] as? Self
     }
     
-    func remove(neighbour cardinal: Cardinal) {
+    func remove(neighbour identifier: Int) {
         
-        if let neighbour = find(neighbour: cardinal) {
+        if let neighbour = find(neighbour: identifier) {
             
-            neighbours.removeValue(forKey: cardinal)
+            neighbours.removeValue(forKey: identifier)
             
             becomeDirty()
             
-            if neighbour.neighbours[cardinal.opposite] != nil {
+            if neighbour.neighbours[identifier] != nil {
                 
-                neighbour.remove(neighbour: cardinal.opposite)
+                neighbour.remove(neighbour: identifier)
             }
         }
     }

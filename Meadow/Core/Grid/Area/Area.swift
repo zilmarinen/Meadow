@@ -8,9 +8,9 @@
 
 public class Area: LayeredGrid<AreaChunk, AreaTile, AreaEdge, AreaLayer> {
     
-    override init(ancestor: SoilableParent) {
+    override init(graph: Graph, ancestor: SoilableParent) {
     
-        super.init(ancestor: ancestor)
+        super.init(graph: graph, ancestor: ancestor)
         
         name = "Area"
     }

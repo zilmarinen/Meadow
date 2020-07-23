@@ -8,9 +8,9 @@
 
 import Pasture
 
-class GraphCache {
+public class GraphCache {
     
-    struct Edge: Hashable {
+    public struct Edge: Encodable, Hashable {
         
         let i: Int
         
@@ -64,6 +64,8 @@ class GraphCache {
     }
     
     struct Quad {
+        
+        let i: Int
         
         let e0: Int
         let e1: Int
@@ -196,6 +198,6 @@ extension GraphCache {
         
         let v = (vectors[e6.v0] + vectors[e7.v0] + vectors[e8.v0] + vectors[e9.v0]) / 4
         
-        return Quad(e0: e6.i, e1: e7.i, e2: e8.i, e3: e9.i, v: v)
+        return Quad(i: -1, e0: e6.i, e1: e7.i, e2: e8.i, e3: e9.i, v: v)
     }
 }

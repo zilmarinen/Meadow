@@ -8,9 +8,9 @@
 
 public class Footpath: LayeredGrid<FootpathChunk, FootpathTile, FootpathEdge, FootpathLayer> {
     
-    override init(ancestor: SoilableParent) {
-        
-        super.init(ancestor: ancestor)
+    override init(graph: Graph, ancestor: SoilableParent) {
+    
+        super.init(graph: graph, ancestor: ancestor)
         
         name = "Footpath"
     }

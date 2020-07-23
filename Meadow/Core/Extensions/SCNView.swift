@@ -11,7 +11,7 @@ import SceneKit
 
 extension SCNView {
     
-    typealias SCNViewHit = (coordinate: Coordinate, cardinal: Cardinal, ordinal: Ordinal)
+    typealias SCNViewHit = (coordinate: Vector, cardinal: GraphCache.Edge, ordinal: GraphCache.Edge)
     
     func hitTest(point: CGPoint) -> SCNViewHit? {
         
@@ -20,7 +20,8 @@ extension SCNView {
         guard let hit = hitTest(point, options: options).first else { return nil }
         
         let vector = Vector(vector: hit.worldCoordinates)
-        
-        return (coordinate: Coordinate(vector: hit.worldCoordinates), cardinal: Cardinal.closest(vector: vector), ordinal: Ordinal.closest(vector: vector))
+        //TODO: FIX ME
+        return nil
+        //return (coordinate: Vector(vector: hit.worldCoordinates), cardinal: Cardinal.closest(vector: vector), ordinal: Ordinal.closest(vector: vector))
     }
 }

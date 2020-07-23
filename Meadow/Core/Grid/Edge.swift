@@ -12,12 +12,10 @@ public class Edge<L: Layer>: NSObject, Soilable, Clearable, Encodable, SceneGrap
     
     private enum CodingKeys: CodingKey {
 
-        case cardinal
+        case identifier
     }
     
     public weak var ancestor: SoilableParent?
-    
-    public var coordinate: Coordinate
     
     public var isDirty = false
     
@@ -31,26 +29,24 @@ public class Edge<L: Layer>: NSObject, Soilable, Clearable, Encodable, SceneGrap
     
     public var name: String?
     
-    public let cardinal: Cardinal
+    public let identifier: Int
     
     var layers: [L] = []
     
-    required init(ancestor: SoilableParent, coordinate: Coordinate, cardinal: Cardinal) {
+    required init(ancestor: SoilableParent, identifier: Int) {
         
         self.ancestor = ancestor
         
-        self.coordinate = coordinate
+        self.identifier = identifier
         
-        self.cardinal = cardinal
-        
-        self.name = "Edge [\(cardinal.description)]"
+        self.name = "Edge [\(identifier)]"
     }
     
     public func encode(to encoder: Encoder) throws {
      
         var container = encoder.container(keyedBy: CodingKeys.self)
         
-        try container.encode(cardinal, forKey: .cardinal)
+        try container.encode(identifier, forKey: .identifier)
     }
     
     @discardableResult public func clean() -> Bool {
@@ -106,7 +102,7 @@ public extension Edge {
         
         if topLayer?.corners.base == World.Constants.ceiling { return nil }
         
-        let layer = L(ancestor: self, coordinate: coordinate, cardinal: cardinal)
+        let layer = L(ancestor: self, identifier: identifier)
         
         layer.lower = topLayer
         topLayer?.upper = layer

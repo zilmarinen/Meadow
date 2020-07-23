@@ -22,6 +22,7 @@ public class Graph {
     enum Constants {
         
         static let slices = 6
+        static let floor = Vector(x: 0.0, y: World.Axis.y(value: World.Constants.floor + 4), z: 0)
     }
     
     var cache = GraphCache()
@@ -68,11 +69,36 @@ public class Graph {
 
 extension Graph {
     
+    public var totalQuads: Int { return data.quads.count }
+    
+    func quad(at index: Int) -> GraphCache.Quad {
+        
+        return data.quads[index]
+    }
+    
+    func edges(for quad: GraphCache.Quad) -> [GraphCache.Edge] {
+        
+        return [quad.e0, quad.e1, quad.e2, quad.e3].map { data.edges[$0] }
+    }
+    
+    func joints(for quad: GraphCache.Quad) -> [GraphCache.Joint] {
+        
+        return edges(for: quad).map { data.joints[$0.j] }
+    }
+    
+    func vectors(for quad: GraphCache.Quad) -> [Vector] {
+        
+        return edges(for: quad).map { data.vectors[$0.v0] }
+    }
+}
+
+extension Graph {
+    
     func generate(rings: Int, size: Double = 1.0) {
         
         cache.clear()
         
-        cache.vectors.append(Vector.zero)
+        cache.vectors.append(Constants.floor)
         
         let rings = max(rings, 1)
         
@@ -114,7 +140,7 @@ extension Graph {
                 let v0 = corners[index]
                 let v1 = corners[((index + 1) % Constants.slices)]
                 
-                cache.vectors.append(v0)
+                cache.vectors.append(Constants.floor + v0)
                 
                 if ring > 0 {
                 
@@ -122,7 +148,7 @@ extension Graph {
                     
                     for division in 1..<(ring + 1) {
                         
-                        cache.vectors.append(v0.lerp(vector: v1, interpolater: step * Double(division)))
+                        cache.vectors.append(Constants.floor + v0.lerp(vector: v1, interpolater: step * Double(division)))
                     }
                 }
                 
@@ -205,7 +231,7 @@ extension Graph {
             }
         }
         
-        data.joints.removeAll { $0.i1 == -1 }
+      //  data.joints.removeAll { $0.i1 == -1 }
     }
     
     func relax(iterations: Int) {
@@ -346,7 +372,7 @@ extension Graph {
         
         let index = data.quads.count
         
-        let quad = GraphCache.Quad(e0: e0.i, e1: e1.i, e2: e2.i, e3: e3.i, v: v)
+        let quad = GraphCache.Quad(i: index, e0: e0.i, e1: e1.i, e2: e2.i, e3: e3.i, v: v)
         
         data.quads.append(quad)
         

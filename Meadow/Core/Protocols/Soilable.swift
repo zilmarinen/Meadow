@@ -8,7 +8,7 @@
 
 public protocol SoilableChild {
     
-    var coordinate: Coordinate { get }
+    var identifier: Int { get }
 }
 
 public protocol SoilableParent: class {

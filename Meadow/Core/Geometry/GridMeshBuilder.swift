@@ -10,68 +10,73 @@ import Pasture
 
 protocol GridMeshBuilder {
     
-    func numberOfPolyhedrons(for cardinal: Cardinal) -> Int
+    func numberOfPolyhedrons(for edge: Int) -> Int
     
-    func polytope(forApex cardinal: Cardinal, atIndex index: Int) -> GridMesh.Polytope?
-    func polytope(forThrone cardinal: Cardinal, atIndex index: Int) -> GridMesh.Polytope?
+    func neighbourIndices(for edge: Int) -> (i0: Int, i1: Int)
     
-    func intersection(for cardinal: Cardinal, neighbour: Cardinal) -> GridMesh.EdgeSegment?
+    func polytope(forApex edge: Int, atIndex index: Int) -> GridMesh.Polytope?
+    func polytope(forThrone edge: Int, atIndex index: Int) -> GridMesh.Polytope?
     
-    func shouldRender(apex cardinal: Cardinal, atIndex index: Int) -> Bool
-    func shouldRender(face cardinal: Cardinal, atIndex index: Int) -> Bool
+    func intersection(for edge: Int, neighbour: Int) -> GridMesh.EdgeSegment?
+    func normal(for edge: Int, neighbour: Int) -> Vector
     
-    func colorPalette(apex cardinal: Cardinal, atIndex index: Int) -> ColorPalette
-    func colorPalette(face cardinal: Cardinal, atIndex index: Int) -> ColorPalette
+    func shouldRender(apex edge: Int, atIndex index: Int) -> Bool
+    func shouldRender(face edge: Int, atIndex index: Int) -> Bool
     
-    func build(cardinal: Cardinal) -> [Pasture.Polygon]?
+    func colorPalette(apex edge: Int, atIndex index: Int) -> ColorPalette
+    func colorPalette(face edge: Int, atIndex index: Int) -> ColorPalette
     
-    func apex(for cardinal: Cardinal, polyhedron: GridMesh.Polyhedron, atIndex index: Int) -> Pasture.Polygon?
-    func edge(for cardinal: Cardinal, face: GridMesh.Face, intersection: GridMesh.EdgeSegment?, atIndex index: Int) -> [Pasture.Polygon]?
+    func build(edge: Int) -> [Pasture.Polygon]?
+    
+    func apex(for edge: Int, polyhedron: GridMesh.Polyhedron, atIndex index: Int) -> Pasture.Polygon?
+    func side(for edge: Int, face: GridMesh.Face, intersection: GridMesh.EdgeSegment?, atIndex index: Int) -> [Pasture.Polygon]?
 }
 
 extension GridMeshBuilder {
     
-    func build(cardinal: Cardinal) -> [Pasture.Polygon]? {
-        
-        let totalPolyhedrons = numberOfPolyhedrons(for: cardinal)
-        
+    func build(edge: Int) -> [Pasture.Polygon]? {
+
+        let totalPolyhedrons = numberOfPolyhedrons(for: edge)
+
         guard totalPolyhedrons > 0 else { return nil }
         
-        let (c1, c2) = cardinal.cardinals
+        let (i0, i1) = neighbourIndices(for: edge)
+
+        var intersections: [Int: GridMesh.EdgeSegment] = [:]
+
+        intersections[edge] = intersection(for: edge, neighbour: edge)
+        intersections[i0] = intersection(for: edge, neighbour: i0)
+        intersections[i1] = intersection(for: edge, neighbour: i1)
         
-        let n0 = cardinal.normal
-        let n1 = cardinal.normal(neighbour: c1)
-        let n2 = cardinal.normal(neighbour: c2)
+        var normals: [Int: Vector] = [:]
         
-        var intersections: [Cardinal: GridMesh.EdgeSegment] = [:]
-        
-        intersections[cardinal] = intersection(for: cardinal, neighbour: cardinal)
-        intersections[c1] = intersection(for: cardinal, neighbour: c1)
-        intersections[c2] = intersection(for: cardinal, neighbour: c2)
+        normals[edge] = normal(for: edge, neighbour: edge)
+        normals[i0] = normal(for: edge, neighbour: i0)
+        normals[i1] = normal(for: edge, neighbour: i1)
         
         var polygons: [Pasture.Polygon] = []
-        
+
         for index in 0..<totalPolyhedrons {
-            
-            guard let apexPolytope = polytope(forApex: cardinal, atIndex: index), let thronePolytope = polytope(forThrone: cardinal, atIndex: index) else { continue }
-            
+
+            guard let apexPolytope = polytope(forApex: edge, atIndex: index), let thronePolytope = polytope(forThrone: edge, atIndex: index) else { continue }
+
             let polyhedron = GridMesh.Polyhedron(upper: apexPolytope, lower: thronePolytope)
-            
-            if let face = apex(for: cardinal, polyhedron: polyhedron, atIndex: index) {
-                
+
+            if let face = apex(for: edge, polyhedron: polyhedron, atIndex: index) {
+
                 polygons.append(face)
             }
             
-            let faces = [(GridMesh.Face(polyhedron: polyhedron, face: .front, normal: n0), intersections[cardinal]),
-                         (GridMesh.Face(polyhedron: polyhedron, face: .right, normal: n1), intersections[c1]),
-                         (GridMesh.Face(polyhedron: polyhedron, face: .left, normal: n2), intersections[c2])]
+            let faces = [(GridMesh.Face(polyhedron: polyhedron, face: .front, normal: normals[edge]!), intersections[edge]),
+                         (GridMesh.Face(polyhedron: polyhedron, face: .right, normal: normals[i0]!), intersections[i0]),
+                         (GridMesh.Face(polyhedron: polyhedron, face: .left, normal: normals[i1]!), intersections[i1])]
             
             faces.forEach { (face, intersection) in
-                
-                polygons.append(contentsOf: edge(for: cardinal, face: face, intersection: intersection, atIndex: index) ?? [])
+
+                polygons.append(contentsOf: side(for: edge, face: face, intersection: intersection, atIndex: index) ?? [])
             }
         }
-        
+
         return polygons
     }
 }

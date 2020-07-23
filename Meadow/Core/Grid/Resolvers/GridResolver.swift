@@ -8,32 +8,29 @@
 
 protocol GridResolver: class, Updatable {
     
-    var coordinates: [Coordinate] { get set }
+    var identifiers: [Int] { get set }
     
-    func enqueue(coordinate: Coordinate)
-    func resolve(coordinate: Coordinate)
+    func enqueue(identifier: Int)
+    func resolve(identifier: Int)
 }
 
 extension GridResolver {
     
-    func enqueue(coordinate: Coordinate) {
+    func enqueue(identifier: Int) {
         
-        let other = coordinates.first { other -> Bool in
-            
-            return coordinate.x == other.x && coordinate.z == other.z
-        }
+        let other = identifiers.first { $0 == identifier }
         
         guard other == nil else { return }
         
-        coordinates.append(coordinate)
+        identifiers.append(identifier)
     }
     
     func update(delta: TimeInterval, time: TimeInterval) {
         
-        guard let coordinate = coordinates.first else { return }
+        guard let identifier = identifiers.first else { return }
         
-        coordinates.removeFirst()
+        identifiers.removeFirst()
         
-        resolve(coordinate: coordinate)
+        resolve(identifier: identifier)
     }
 }

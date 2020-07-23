@@ -35,7 +35,6 @@ struct GridMesh {
         
         var normal: Vector { return (p0.vector - p1.vector).cross(vector: p0.vector - p2.vector) }
     }
-    
 
     struct Polyhedron {
         

@@ -24,7 +24,7 @@ public enum WaterType: Int, CaseIterable, Codable {
         
         switch self {
             
-        case .saltWater: return Color(red: 0.64, green: 0.8, blue: 0.91, alpha: 0.7)
+        case .saltWater: return Color(red: 0.64, green: 0.8, blue: 0.91, alpha: 0.91)
         }
     }
     
@@ -32,7 +32,7 @@ public enum WaterType: Int, CaseIterable, Codable {
         
         switch self {
             
-        case .saltWater: return Color(red: 0.71, green: 0.87, blue: 0.98, alpha: 0.7)
+        case .saltWater: return Color(red: 0.71, green: 0.87, blue: 0.98, alpha: 0.84)
         }
     }
 }

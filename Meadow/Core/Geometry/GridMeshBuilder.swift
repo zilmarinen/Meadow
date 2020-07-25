@@ -19,6 +19,7 @@ protocol GridMeshBuilder {
     
     func intersection(for edge: Int, neighbour: Int) -> GridMesh.EdgeSegment?
     func normal(for edge: Int, neighbour: Int) -> Vector
+    func vertices(for edge: Int) -> (v0: Vector, centre: Vector, v1: Vector)
     
     func shouldRender(apex edge: Int, atIndex index: Int) -> Bool
     func shouldRender(face edge: Int, atIndex index: Int) -> Bool

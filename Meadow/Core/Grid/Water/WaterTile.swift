@@ -19,20 +19,15 @@ public class WaterTile: LayeredTile<WaterEdge, WaterLayer> {
 
     override func polytope(forThrone edge: Int, atIndex index: Int) -> GridMesh.Polytope? {
 
-        guard let tileEdge = find(edge: edge), let edgeIndex = joints.firstIndex(of: edge) else { return nil }
-
-        let c0 = vectors[edgeIndex]
-        let c1 = vectors[(edgeIndex + 1) % vectors.count]
-
-        let v0 = c0
-        let v1 = centre
-        let v2 = c1
+        guard let tileEdge = find(edge: edge) else { return nil }
+        
+        let (v0, centre, v1) = vertices(for: edge)
 
         let corners = tileEdge.terrainCorners ?? LayerCorners(left: -1, right: -1, center: -1)
 
         let p0 = GridMesh.Elevation(elevation: corners.left.elevation, vector: v0)
-        let p1 = GridMesh.Elevation(elevation: corners.centre.elevation, vector: v1)
-        let p2 = GridMesh.Elevation(elevation: corners.right.elevation, vector: v2)
+        let p1 = GridMesh.Elevation(elevation: corners.centre.elevation, vector: centre)
+        let p2 = GridMesh.Elevation(elevation: corners.right.elevation, vector: v1)
 
         return GridMesh.Polytope(p0: p0, p1: p1, p2: p2)
     }
@@ -53,15 +48,15 @@ public class WaterTile: LayeredTile<WaterEdge, WaterLayer> {
 
     override func apex(for edge: Int, polyhedron: GridMesh.Polyhedron, atIndex index: Int) -> Pasture.Polygon? {
 
-        guard shouldRender(apex: edge, atIndex: index) else { return nil }
+        guard shouldRender(apex: edge, atIndex: index), let edgeIndex = joints.firstIndex(of: edge) else { return nil }
 
         let normal = polyhedron.upper.normal
 
         let color = colorPalette(apex: edge, atIndex: index)
 
-        let v0 = Vertex(position: polyhedron.upper.p0.vector - Constants.meniscus, normal: normal, color: color.primary, textureCoordinates: CGPoint.uvs[0])
+        let v0 = Vertex(position: polyhedron.upper.p0.vector - Constants.meniscus, normal: normal, color: color.primary, textureCoordinates: CGPoint.uvs[edgeIndex])
         let v1 = Vertex(position: polyhedron.upper.p1.vector - Constants.meniscus, normal: normal, color: color.primary, textureCoordinates: CGPoint.uvs.last!)
-        let v2 = Vertex(position: polyhedron.upper.p2.vector - Constants.meniscus, normal: normal, color: color.primary, textureCoordinates: CGPoint.uvs[1])
+        let v2 = Vertex(position: polyhedron.upper.p2.vector - Constants.meniscus, normal: normal, color: color.primary, textureCoordinates: CGPoint.uvs[((edgeIndex + 1) % joints.count)])
 
         return Pasture.Polygon(vertices: [v0, v1, v2])
     }

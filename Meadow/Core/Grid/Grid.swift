@@ -69,13 +69,13 @@ public class Grid<C: Chunk<T>, T: Tile>: SCNNode, Hideable, SceneGraphIdentifiab
     
     public func add(tile vector: Vector) -> T? {
         
-        guard let quad = graph?.data.quads.first, let joints = graph?.joints(for: quad).reversed(), let vectors = graph?.vectors(for: quad).reversed() else { return nil }
+        guard let quad = graph?.data.quads.first, let joints = graph?.joints(for: quad), let vectors = graph?.vectors(for: quad) else { return nil }
         
         let slice = chunkSlice(for: vector)
         
         let chunk = find(chunk: vector) ?? C(ancestor: self, slice: slice)
         
-        let tile = chunk.add(tile: quad.i, joints: Array(joints), vectors: Array(vectors))
+        let tile = chunk.add(tile: quad.i, joints: joints, vectors: vectors)
         
         addChildNode(chunk)
         
@@ -94,19 +94,19 @@ public class Grid<C: Chunk<T>, T: Tile>: SCNNode, Hideable, SceneGraphIdentifiab
     
     public func add(tile identifier: Int) -> T? {
         
-        guard let quad = graph?.quad(at: identifier), let joints = graph?.joints(for: quad).reversed(), let vectors = graph?.vectors(for: quad).reversed() else { return nil }
+        guard let quad = graph?.quad(at: identifier), let joints = graph?.joints(for: quad), let vectors = graph?.vectors(for: quad) else { return nil }
         
         let slice = chunkSlice(for: quad.v)
         
         let chunk = find(chunk: quad.v) ?? C(ancestor: self, slice: slice)
         
-        let tile = chunk.add(tile: quad.i, joints: Array(joints), vectors: Array(vectors))
+        let tile = chunk.add(tile: quad.i, joints: joints, vectors: vectors)
         
         addChildNode(chunk)
         
         for joint in joints where joint.e1 != -1 {
             
-            let identifier = (joint.e0 == tile.identifier ? joint.e1 : joint.e0)
+            let identifier = (joint.i0 == tile.identifier ? joint.i1 : joint.i0)
             
             if let neighbour = find(tile: identifier) {
                 
@@ -150,9 +150,21 @@ extension Grid {
         return tile
     }
     
+    func remove(tile identifier: Int) {
+        
+        guard let tile = find(tile: identifier), let chunk = find(chunk: tile.centre) else { return }
+        
+        chunk.remove(tile: tile.identifier)
+        
+        if chunk.tiles.count == 0 {
+            
+            chunk.removeFromParentNode()
+        }
+    }
+    
     func remove(tile vector: Vector) {
         
-         guard let chunk = find(chunk: vector), let tile = chunk.find(tile: vector) else { return }
+        guard let chunk = find(chunk: vector), let tile = chunk.find(tile: vector) else { return }
         
         chunk.remove(tile: tile.identifier)
         

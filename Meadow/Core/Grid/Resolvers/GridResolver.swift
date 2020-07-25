@@ -18,9 +18,7 @@ extension GridResolver {
     
     func enqueue(identifier: Int) {
         
-        let other = identifiers.first { $0 == identifier }
-        
-        guard other == nil else { return }
+        guard identifiers.firstIndex(of: identifier) == nil else { return }
         
         identifiers.append(identifier)
     }

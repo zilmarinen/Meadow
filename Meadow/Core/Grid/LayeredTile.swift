@@ -85,38 +85,28 @@ public class LayeredTile<E: Edge<L>, L: Layer>: Tile, GridMeshBuilder {
     
     func polytope(forApex edge: Int, atIndex index: Int) -> GridMesh.Polytope? {
 
-        guard let layer = find(edge: edge)?.find(layer: index), let edgeIndex = joints.firstIndex(of: edge) else { return nil }
+        guard let layer = find(edge: edge)?.find(layer: index) else { return nil }
         
-        let c0 = vectors[edgeIndex]
-        let c1 = vectors[(edgeIndex + 1) % vectors.count]
-
-        let v0 = c0
-        let v1 = centre
-        let v2 = c1
+        let (v0, centre, v1) = vertices(for: edge)
 
         let p0 = GridMesh.Elevation(elevation: layer.corners.left.elevation, vector: v0)
-        let p1 = GridMesh.Elevation(elevation: layer.corners.centre.elevation, vector: v1)
-        let p2 = GridMesh.Elevation(elevation: layer.corners.right.elevation, vector: v2)
+        let p1 = GridMesh.Elevation(elevation: layer.corners.centre.elevation, vector: centre)
+        let p2 = GridMesh.Elevation(elevation: layer.corners.right.elevation, vector: v1)
 
         return GridMesh.Polytope(p0: p0, p1: p1, p2: p2)
     }
 
     func polytope(forThrone edge: Int, atIndex index: Int) -> GridMesh.Polytope? {
 
-        guard let layer = find(edge: edge)?.find(layer: index), let edgeIndex = joints.firstIndex(of: edge) else { return nil }
+        guard let layer = find(edge: edge)?.find(layer: index) else { return nil }
 
-        let c0 = vectors[edgeIndex]
-        let c1 = vectors[(edgeIndex + 1) % vectors.count]
-
-        let v0 = c0
-        let v1 = centre
-        let v2 = c1
+        let (v0, centre, v1) = vertices(for: edge)
 
         let corners = layer.lower?.corners ?? LayerCorners(left: -1, right: -1, center: -1)
 
         let p0 = GridMesh.Elevation(elevation: corners.left.elevation, vector: v0)
-        let p1 = GridMesh.Elevation(elevation: corners.centre.elevation, vector: v1)
-        let p2 = GridMesh.Elevation(elevation: corners.right.elevation, vector: v2)
+        let p1 = GridMesh.Elevation(elevation: corners.centre.elevation, vector: centre)
+        let p2 = GridMesh.Elevation(elevation: corners.right.elevation, vector: v1)
 
         return GridMesh.Polytope(p0: p0, p1: p1, p2: p2)
     }
@@ -126,21 +116,21 @@ public class LayeredTile<E: Edge<L>, L: Layer>: Tile, GridMeshBuilder {
 
     func apex(for edge: Int, polyhedron: GridMesh.Polyhedron, atIndex index: Int) -> Pasture.Polygon? {
 
-        guard shouldRender(apex: edge, atIndex: index) else { return nil }
+        guard shouldRender(apex: edge, atIndex: index), let edgeIndex = joints.firstIndex(of: edge) else { return nil }
 
         let normal = polyhedron.upper.normal
 
         let color = colorPalette(apex: edge, atIndex: index)
 
-        let v0 = Vertex(position: polyhedron.upper.p0.vector, normal: normal, color: color.primary, textureCoordinates: CGPoint.uvs[0])
+        let v0 = Vertex(position: polyhedron.upper.p0.vector, normal: normal, color: color.primary, textureCoordinates: CGPoint.uvs[edgeIndex])
         let v1 = Vertex(position: polyhedron.upper.p1.vector, normal: normal, color: color.primary, textureCoordinates: CGPoint.uvs.last!)
-        let v2 = Vertex(position: polyhedron.upper.p2.vector, normal: normal, color: color.primary, textureCoordinates: CGPoint.uvs[1])
+        let v2 = Vertex(position: polyhedron.upper.p2.vector, normal: normal, color: color.primary, textureCoordinates: CGPoint.uvs[((edgeIndex + 1) % joints.count)])
 
         return Pasture.Polygon(vertices: [v0, v1, v2])
     }
 
     func side(for edge: Int, face: GridMesh.Face, intersection: GridMesh.EdgeSegment?, atIndex index: Int) -> [Pasture.Polygon]? {
-
+        
         guard shouldRender(face: edge, atIndex: index) else { return nil }
 
         guard let face = (intersection != nil ? face.clip(intersection: intersection!) : face) else { return nil }
@@ -213,26 +203,21 @@ extension LayeredTile {
         
         guard let edgeIndex = joints.firstIndex(of: edge) else { return nil }
 
-        let c0 = vectors[edgeIndex]
-        let c1 = vectors[(edgeIndex + 1) % vectors.count]
-
-        let v0 = c0
-        let v1 = centre
-        let v2 = c1
+        let (v0, centre, v1) = vertices(for: edge)
 
         if edge == neighbour {
-
-            guard let layer = find(neighbour: neighbour)?.find(edge: edge)?.topLayer else { return nil }
-
-            return GridMesh.EdgeSegment(e0: layer.corners.right.elevation, v0: v0, e1: layer.corners.left.elevation, v1: v2)
+            
+            guard let layer = find(neighbour: edge)?.find(edge: edge)?.topLayer else { return nil }
+            
+            return GridMesh.EdgeSegment(e0: layer.corners.right.elevation, v0: v0, e1: layer.corners.left.elevation, v1: v1)
         }
         
         guard let layer = find(edge: neighbour)?.topLayer, let neighbourIndex = joints.firstIndex(of: neighbour) else { return nil }
 
         let rightNeighbour = !(neighbourIndex == ((edgeIndex + 1) % joints.count))
         
-        let v3 = (rightNeighbour ? v2 : v1)
-        let v4 = (rightNeighbour ? v1 : v0)
+        let v3 = (rightNeighbour ? v1 : centre)
+        let v4 = (rightNeighbour ? centre : v0)
 
         let left = (rightNeighbour ? layer.corners.left : layer.corners.centre)
         let right = (rightNeighbour ? layer.corners.centre : layer.corners.right)
@@ -242,28 +227,28 @@ extension LayeredTile {
     
     func normal(for edge: Int, neighbour: Int) -> Vector {
         
-        guard let edgeIndex = joints.firstIndex(of: edge) else { return .zero }
-        
-        let c0 = vectors[edgeIndex]
-        let c1 = vectors[(edgeIndex + 1) % vectors.count]
-
-        let v0 = c0
-        let v1 = centre
-        let v2 = c1
+        let (v0, centre, v1) = vertices(for: edge)
         
         if edge == neighbour {
             
-            return (v0 - v2).cross(vector: (v2 + .up) - v2)
+            return (v0 - v1).cross(vector: (v1 + .up) - v1)
         }
         
-        guard let neighbourIndex = joints.firstIndex(of: neighbour) else { return .zero }
+        guard let edgeIndex = joints.firstIndex(of: edge), let neighbourIndex = joints.firstIndex(of: neighbour) else { return .zero }
 
         if (neighbourIndex == ((edgeIndex + 1) % joints.count)) {
         
-            return (v1 - v0).cross(vector: (v0 + .up) - v0)
+            return (centre - v0).cross(vector: (v0 + .up) - v0)
         }
         
-        return (v2 - v1).cross(vector: (v1 + .up) - v1)
+        return (v1 - centre).cross(vector: (centre + .up) - centre)
+    }
+    
+    func vertices(for edge: Int) -> (v0: Vector, centre: Vector, v1: Vector) {
+    
+        guard let edgeIndex = joints.firstIndex(of: edge)  else { return (.zero, .zero, .zero) }
+        
+        return (v0: vectors[((edgeIndex + 1) % joints.count)], centre: centre, v1: vectors[edgeIndex])
     }
     
     func shouldRender(apex edge: Int, atIndex index: Int) -> Bool {
@@ -276,7 +261,7 @@ extension LayeredTile {
     }
 
     func shouldRender(face edge: Int, atIndex index: Int) -> Bool {
-
+        
         guard let layers = find(edge: edge)?.layers else { return false }
 
         return !layers[index].isHidden

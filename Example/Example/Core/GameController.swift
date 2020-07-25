@@ -80,12 +80,8 @@ extension GameController {
                     if let child = child as? TerrainEdge {
                         
                         child.topLayer?.terrainType = .bedrock
-                    }
-                }
-                
-                self.scene.meadow.terrain.add(tile: index)?.children.forEach { child in
-                    
-                    if let child = child as? TerrainEdge {
+                        
+                        child.addLayer()
                         
                         child.topLayer?.terrainType = .grass
                         child.topLayer?.set(elevation: 2)

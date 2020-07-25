@@ -12,7 +12,7 @@ public final class Meadow: SCNNode, SceneGraphIdentifiable, SceneGraphNode, Soil
     
     public let graph: Graph
     
-    public var ancestor: SoilableParent?
+    public weak var ancestor: SoilableParent?
     
     public var identifier: Int = -1
     
@@ -31,7 +31,7 @@ public final class Meadow: SCNNode, SceneGraphIdentifiable, SceneGraphNode, Soil
     
     public required init(json: MeadowJSON? = nil) {
         
-        self.graph = Graph(rings: 5, size: 3.5, iterations: 1)
+        self.graph = Graph(rings: 7, size: 1.0, iterations: 1)
         
         super.init()
         
@@ -79,18 +79,18 @@ extension Meadow {
         
         guard let grid = child as? SceneGraphIdentifiable else { return }
         
-//        switch grid.category {
-//
-//        case .terrain:
-//
-//            self.waterResolver.enqueue(coordinate: child.coordinate)
-//
-//        case .water:
-//
-//            self.waterResolver.enqueue(coordinate: child.coordinate)
-//
-//        default: break
-//        }
+        switch grid.category {
+
+        case .terrain:
+            
+            self.waterResolver.enqueue(identifier: child.identifier)
+
+        case .water:
+
+            self.waterResolver.enqueue(identifier: child.identifier)
+
+        default: break
+        }
     }
     
     @discardableResult public func clean() -> Bool {

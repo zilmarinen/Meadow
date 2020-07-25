@@ -25,7 +25,7 @@ public class Tile: NSObject, Soilable, Clearable, Encodable, Neighbour, Renderab
     
     public let centre: Vector
     
-    public var isDirty = true
+    public var isDirty = false
     
     public var isHidden: Bool = false {
         

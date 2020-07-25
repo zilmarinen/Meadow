@@ -21,23 +21,24 @@ class WaterResolver: GridResolver {
     
     func resolve(identifier: Int) {
         
-//        guard let terrainTile = terrain.find(tile: coordinate), let waterTile = water.find(tile: coordinate) else {
-//            
-//            water.remove(tile: coordinate)
-//            
-//            return
-//        }
-//        
-//        waterTile.edges.forEach { (cardinal, waterEdge) in
-//            
-//            if let terrainEdge = terrainTile.find(edge: cardinal) {
-//                
-//                waterEdge.terrainCorners = terrainEdge.topLayer?.corners
-//            }
-//            else {
-//                
-//                waterTile.remove(edge: cardinal)
-//            }
-//        }
+        guard let terrainTile = terrain.find(tile: identifier), let waterTile = water.find(tile: identifier) else {
+            
+            water.remove(tile: identifier)
+            
+            return
+        }
+        
+        waterTile.edges.forEach { (identifier, waterEdge) in
+            
+            guard let terrainEdge = terrainTile.find(edge: identifier), let terrainCorners = terrainEdge.topLayer?.corners, let waterCorners = waterEdge.topLayer?.corners else {
+                
+                waterTile.remove(edge: identifier)
+                
+                return
+            }
+            
+            waterEdge.terrainCorners = terrainCorners
+            waterEdge.isHidden = terrainCorners.base >= waterCorners.peak
+        }
     }
 }

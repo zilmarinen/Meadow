@@ -145,7 +145,7 @@ extension Chunk {
         }
 
         //node.childNodes.first?.geometry = SCNGeometry(wireframe: mesh)
-        node.childNodes.last?.geometry = SCNGeometry(normals: mesh)
+        //node.childNodes.last?.geometry = SCNGeometry(normals: mesh)
         
         if let shadable = self as? Shadable {
             

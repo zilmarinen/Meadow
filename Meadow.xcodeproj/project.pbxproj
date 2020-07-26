@@ -45,6 +45,8 @@
 		185172B12463FA92006C9223 /* ShaderProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185172AF2463FA92006C9223 /* ShaderProgram.swift */; };
 		1865A77A2497A35E008F5EA3 /* SCNView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1865A7792497A35E008F5EA3 /* SCNView.swift */; };
 		1865A77B2497A387008F5EA3 /* SCNView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1865A7792497A35E008F5EA3 /* SCNView.swift */; };
+		18891C0024CDBFCF00311F1F /* FootpathType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18891BFF24CDBFCF00311F1F /* FootpathType.swift */; };
+		18891C0124CDBFCF00311F1F /* FootpathType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18891BFF24CDBFCF00311F1F /* FootpathType.swift */; };
 		18938F9D24BC3FA1006CEAE2 /* Graph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18938F9C24BC3FA1006CEAE2 /* Graph.swift */; };
 		18938F9E24BC3FA1006CEAE2 /* Graph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18938F9C24BC3FA1006CEAE2 /* Graph.swift */; };
 		189A6028246D4E3200DD68A7 /* ShaderUniform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189A6027246D4E3200DD68A7 /* ShaderUniform.swift */; platformFilter = ios; };
@@ -250,6 +252,7 @@
 		185172AF2463FA92006C9223 /* ShaderProgram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaderProgram.swift; sourceTree = "<group>"; };
 		1865A7792497A35E008F5EA3 /* SCNView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCNView.swift; sourceTree = "<group>"; };
 		1868ABAC248FC84400DB7BBD /* Meadow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Meadow.h; sourceTree = "<group>"; };
+		18891BFF24CDBFCF00311F1F /* FootpathType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FootpathType.swift; sourceTree = "<group>"; };
 		18938F9C24BC3FA1006CEAE2 /* Graph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Graph.swift; sourceTree = "<group>"; };
 		189A6027246D4E3200DD68A7 /* ShaderUniform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaderUniform.swift; sourceTree = "<group>"; };
 		189A602A246D4E5500DD68A7 /* SCNGeometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCNGeometry.swift; sourceTree = "<group>"; };
@@ -750,6 +753,7 @@
 				18EF59A623EDA8B10071DF1C /* FootpathTile.swift */,
 				18EF59A923EDA8B70071DF1C /* FootpathEdge.swift */,
 				18EF59AC23EDA8BC0071DF1C /* FootpathLayer.swift */,
+				18891BFF24CDBFCF00311F1F /* FootpathType.swift */,
 			);
 			path = Footpath;
 			sourceTree = "<group>";
@@ -1130,6 +1134,7 @@
 				185172B02463FA92006C9223 /* ShaderProgram.swift in Sources */,
 				181EDFA02451B9F90030D23C /* NPCs.swift in Sources */,
 				18EF595623ED8F3A0071DF1C /* Neighbour.swift in Sources */,
+				18891C0024CDBFCF00311F1F /* FootpathType.swift in Sources */,
 				182204F724B304E40079B4D9 /* GridMeshBuilder.swift in Sources */,
 				18EF595223ED8F3A0071DF1C /* Clearable.swift in Sources */,
 				18EF595023ED8F3A0071DF1C /* World.swift in Sources */,
@@ -1222,6 +1227,7 @@
 				185172B12463FA92006C9223 /* ShaderProgram.swift in Sources */,
 				181EDFA12451B9F90030D23C /* NPCs.swift in Sources */,
 				18EF595723ED8F3A0071DF1C /* Neighbour.swift in Sources */,
+				18891C0124CDBFCF00311F1F /* FootpathType.swift in Sources */,
 				182204F824B304E40079B4D9 /* GridMeshBuilder.swift in Sources */,
 				18EF595323ED8F3A0071DF1C /* Clearable.swift in Sources */,
 				18EF595123ED8F3A0071DF1C /* World.swift in Sources */,

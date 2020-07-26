@@ -16,6 +16,7 @@ class FootpathChunkJSON: ChunkJSON<FootpathTileJSON<FootpathEdgeJSON>> {
 
 class FootpathTileJSON<E: FootpathEdgeJSON>: TileJSON {
 
+    let edges: [E] = []
 }
 
 class FootpathEdgeJSON: EdgeJSON<FootpathLayerJSON> {
@@ -24,4 +25,5 @@ class FootpathEdgeJSON: EdgeJSON<FootpathLayerJSON> {
 
 class FootpathLayerJSON: LayerJSON {
     
+    let footpathType: FootpathType = .dirt
 }

@@ -13,6 +13,7 @@ public class Layer: NSObject, Soilable, Clearable, Encodable, Hideable, SceneGra
     private enum CodingKeys: CodingKey {
         
         case identifier
+        case corners
     }
     
     public weak var ancestor: SoilableParent?
@@ -63,6 +64,7 @@ public class Layer: NSObject, Soilable, Clearable, Encodable, Hideable, SceneGra
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         try container.encode(identifier, forKey: .identifier)
+        try container.encode(corners, forKey: .corners)
     }
     
     @discardableResult public func clean() -> Bool {

@@ -17,7 +17,6 @@ public struct World {
         public static let yStep = Double(0.25)
         
         public static let chunkSize = 5
-        public static let tileSize = 1
         
         public static let x = Plane(normal: .x, distance: 0.0)
         public static let y = Plane(normal: .y, distance: 0.0)
@@ -25,11 +24,6 @@ public struct World {
     }
     
     public enum Axis {
-        
-        public static func xz(value: Double) -> Int {
-            
-            return Int(round(value))
-        }
         
         public static func y(value: Int) -> Double {
             

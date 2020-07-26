@@ -13,6 +13,7 @@ public class Edge<L: Layer>: NSObject, Soilable, Clearable, Encodable, SceneGrap
     private enum CodingKeys: CodingKey {
 
         case identifier
+        case layers
     }
     
     public weak var ancestor: SoilableParent?
@@ -47,6 +48,7 @@ public class Edge<L: Layer>: NSObject, Soilable, Clearable, Encodable, SceneGrap
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         try container.encode(identifier, forKey: .identifier)
+        try container.encode(layers, forKey: .layers)
     }
     
     @discardableResult public func clean() -> Bool {
@@ -102,7 +104,7 @@ public extension Edge {
         
         if topLayer?.corners.base == World.Constants.ceiling { return nil }
         
-        let layer = L(ancestor: self, identifier: identifier)
+        let layer = L(ancestor: self, identifier: layers.count)
         
         layer.lower = topLayer
         topLayer?.upper = layer

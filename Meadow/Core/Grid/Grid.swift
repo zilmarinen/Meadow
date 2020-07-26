@@ -216,7 +216,6 @@ extension Grid: Encodable {
     
     enum CodingKeys: CodingKey {
         
-        case name
         case chunks
     }
     
@@ -224,7 +223,6 @@ extension Grid: Encodable {
         
         var container = encoder.container(keyedBy: CodingKeys.self)
         
-        try container.encode(name, forKey: .name)
         try container.encode(chunks, forKey: .chunks)
     }
 }

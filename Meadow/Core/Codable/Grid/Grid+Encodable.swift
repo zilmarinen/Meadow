@@ -13,19 +13,24 @@ class GridJSON<C: ChunkJSON<T>, T: TileJSON>: Decodable {
 
 class ChunkJSON<T: TileJSON>: Decodable {
     
+    let segment: Int
+    let radius: Int
     let tiles: [T]
 }
 
 class TileJSON: Decodable {
     
-    
+    let identifier: Int
 }
 
 class EdgeJSON<L: LayerJSON>: Decodable {
     
+    let identifier: Int
     let layers: [L]
 }
 
 class LayerJSON: Decodable {
 
+    let identifier: Int
+    let corners: LayerCorners
 }

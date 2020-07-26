@@ -29,20 +29,27 @@ extension Water: GridDecodable {
     
     func decode(json: WaterJSON) {
         
-//        json.chunks.forEach { chunkJSON in
-//            
-//            chunkJSON.tiles.forEach { tileJSON in
-//
-//                tileJSON.edges.forEach { edgeJSON in
-//
-//                    edgeJSON.layers.forEach { layerJSON in
-//
-//                        let layer = self.add(layer: tileJSON.coordinate, cardinal: edgeJSON.cardinal)
-//
-//                        layer?.waterType = layerJSON.waterType
-//                    }
-//                }
-//            }
-//        }
+        json.chunks.forEach { chunkJSON in
+            
+            chunkJSON.tiles.forEach { tileJSON in
+                
+                if let tile = self.add(tile: tileJSON.identifier) {
+
+                    tileJSON.edges.forEach { edgeJSON in
+                        
+                        let edge = tile.add(edge: edgeJSON.identifier)
+
+                        edgeJSON.layers.forEach { layerJSON in
+
+                            if let layer = edge.addLayer() {
+
+                                layer.waterType = layerJSON.waterType
+                                layer.corners = layerJSON.corners
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

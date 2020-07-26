@@ -8,6 +8,11 @@
 
 public class WaterLayer: Layer {
     
+    enum CodingKeys: CodingKey {
+        
+        case waterType
+    }
+    
     public override var category: SceneGraphNodeCategory { return .water }
     
     public var waterType: WaterType = .saltWater {
@@ -16,5 +21,14 @@ public class WaterLayer: Layer {
             
             becomeDirty()
         }
+    }
+    
+    public override func encode(to encoder: Encoder) throws {
+        
+        try super.encode(to: encoder)
+        
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(waterType, forKey: .waterType)
     }
 }

@@ -8,6 +8,11 @@
 
 public class TerrainLayer: Layer {
     
+    enum CodingKeys: CodingKey {
+        
+        case terrainType
+    }
+    
     public override var category: SceneGraphNodeCategory { return .terrain }
     
     public var terrainType: TerrainType = .bedrock {
@@ -16,5 +21,14 @@ public class TerrainLayer: Layer {
             
             becomeDirty()
         }
+    }
+    
+    public override func encode(to encoder: Encoder) throws {
+        
+        try super.encode(to: encoder)
+        
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(terrainType, forKey: .terrainType)
     }
 }

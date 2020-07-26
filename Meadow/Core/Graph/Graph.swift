@@ -9,7 +9,15 @@
 import Pasture
 import SceneKit
 
-public class Graph {
+public class Graph: Codable {
+    
+    enum CodingKeys: CodingKey {
+        
+        case vectors
+        case quads
+        case edges
+        case joints
+    }
     
     struct Result {
         
@@ -64,6 +72,28 @@ public class Graph {
         print("quads: \(data.quads.count)")
         
         cache.clear()
+    }
+    
+    public required init(from decoder: Decoder) throws {
+        
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        let vectors = try container.decode([Vector].self, forKey: .vectors)
+        let quads = try container.decode([GraphCache.Quad].self, forKey: .quads)
+        let edges = try container.decode([GraphCache.Edge].self, forKey: .edges)
+        let joints = try container.decode([GraphCache.Joint].self, forKey: .joints)
+        
+        self.data = Result(vectors: vectors, quads: quads, edges: edges, joints: joints)
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+    
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(data.vectors, forKey: .vectors)
+        try container.encode(data.quads, forKey: .quads)
+        try container.encode(data.edges, forKey: .edges)
+        try container.encode(data.joints, forKey: .joints)
     }
 }
 

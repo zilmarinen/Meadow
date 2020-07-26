@@ -40,4 +40,18 @@ public class FootpathTile: LayeredTile<FootpathEdge, FootpathLayer> {
 
         return GridMesh.Polytope(p0: p0, p1: p1, p2: p2)
     }
+    
+    override func colorPalette(apex edge: Int, atIndex index: Int) -> ColorPalette {
+
+        guard let layer = find(edge: edge)?.topLayer else { return .default }
+
+        return ColorPalette(primary: layer.footpathType.primaryColor, secondary: layer.footpathType.secondaryColor)
+    }
+
+    override func colorPalette(face edge: Int, atIndex index: Int) -> ColorPalette {
+
+        guard let layer = find(edge: edge)?.topLayer else { return .default }
+
+        return ColorPalette(primary: layer.footpathType.primaryColor, secondary: layer.footpathType.secondaryColor)
+    }
 }

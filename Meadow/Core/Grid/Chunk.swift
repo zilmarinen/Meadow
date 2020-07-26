@@ -180,6 +180,8 @@ extension Chunk: Encodable {
     
     enum CodingKeys: CodingKey {
         
+        case segment
+        case radius
         case tiles
     }
     
@@ -187,6 +189,8 @@ extension Chunk: Encodable {
         
         var container = encoder.container(keyedBy: CodingKeys.self)
         
+        try container.encode(slice.segment, forKey: .segment)
+        try container.encode(slice.radius, forKey: .radius)
         try container.encode(tiles, forKey: .tiles)
     }
 }

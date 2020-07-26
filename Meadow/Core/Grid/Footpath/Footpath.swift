@@ -29,6 +29,27 @@ extension Footpath: GridDecodable {
     
     func decode(json: FootpathJSON) {
         
-        //
+        json.chunks.forEach { chunkJSON in
+            
+            chunkJSON.tiles.forEach { tileJSON in
+                
+                if let tile = self.add(tile: tileJSON.identifier) {
+
+                    tileJSON.edges.forEach { edgeJSON in
+                        
+                        let edge = tile.add(edge: edgeJSON.identifier)
+
+                        edgeJSON.layers.forEach { layerJSON in
+
+                            if let layer = edge.addLayer() {
+
+                                layer.footpathType = layerJSON.footpathType
+                                layer.corners = layerJSON.corners
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

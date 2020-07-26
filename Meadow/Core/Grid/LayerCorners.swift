@@ -8,7 +8,7 @@
 
 import Pasture
 
-public class LayerCorners: Equatable {
+public class LayerCorners: Codable, Equatable {
     
     struct Constants {
         
@@ -22,7 +22,7 @@ public class LayerCorners: Equatable {
         case centre
     }
     
-    public struct Elevation: Equatable {
+    public struct Elevation: Codable, Equatable {
         
         let anchor: Anchor
         var elevation: Int

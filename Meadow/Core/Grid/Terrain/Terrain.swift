@@ -29,20 +29,34 @@ extension Terrain: GridDecodable {
     
     func decode(json: TerrainJSON) {
         
-//        json.chunks.forEach { chunkJSON in
-//            
-//            chunkJSON.tiles.forEach { tileJSON in
-//                
-//                tileJSON.edges.forEach { edgeJSON in
-//                    
-//                    edgeJSON.layers.forEach { layerJSON in
-//                        
-//                        let layer = self.add(layer: tileJSON.coordinate, cardinal: edgeJSON.cardinal)
-//                            
-//                        layer?.terrainType = layerJSON.terrainType
-//                    }
-//                }
-//            }
-//        }
+        json.chunks.forEach { chunkJSON in
+            
+            print("chunk [\(chunkJSON.segment)|\(chunkJSON.radius)] has [\(chunkJSON.tiles.count)] tiles")
+            
+            chunkJSON.tiles.forEach { tileJSON in
+                
+                print("tile [\(tileJSON.identifier)] has [\(tileJSON.edges.count)] edges")
+                
+                if let tile = self.add(tile: tileJSON.identifier) {
+                 
+                    tileJSON.edges.forEach { edgeJSON in
+                        
+                        print("edge has [\(edgeJSON.layers.count)] layers")
+                        
+                        let edge = tile.add(edge: edgeJSON.identifier)
+                        
+                        edgeJSON.layers.forEach { layerJSON in
+                                
+                            if let layer = edge.addLayer() {
+                            
+                                layer.terrainType = layerJSON.terrainType
+                                layer.corners = layerJSON.corners
+                                layer.ancestor = edge
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

@@ -29,9 +29,9 @@ public final class Meadow: SCNNode, SceneGraphIdentifiable, SceneGraphNode, Soil
     
     lazy var waterResolver: WaterResolver = { return WaterResolver(terrain: terrain, water: water) }()
     
-    public required init(json: MeadowJSON? = nil) {
+    public required init(graph: Graph, json: MeadowJSON? = nil) {
         
-        self.graph = Graph(rings: 7, size: 1.0, iterations: 1)
+        self.graph = graph
         
         super.init()
         

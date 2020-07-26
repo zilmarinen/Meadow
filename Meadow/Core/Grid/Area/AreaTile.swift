@@ -6,6 +6,8 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
+import Pasture
+
 public class AreaTile: LayeredTile<AreaEdge, AreaLayer> {
     
     enum Constants {
@@ -40,4 +42,19 @@ public class AreaTile: LayeredTile<AreaEdge, AreaLayer> {
 
         return GridMesh.Polytope(p0: p0, p1: p1, p2: p2)
     }
+    
+//    override func apex(for edge: Int, polyhedron: GridMesh.Polyhedron, atIndex index: Int) -> Pasture.Polygon? {
+//
+//        guard shouldRender(apex: edge, atIndex: index), let edgeIndex = joints.firstIndex(of: edge) else { return nil }
+//
+//        let normal = polyhedron.lower.normal
+//
+//        let color = colorPalette(apex: edge, atIndex: index)
+//
+//        let v0 = Vertex(position: polyhedron.lower.p0.vector, normal: normal, color: color.primary, textureCoordinates: CGPoint.uvs[edgeIndex])
+//        let v1 = Vertex(position: polyhedron.lower.p1.vector, normal: normal, color: color.primary, textureCoordinates: CGPoint.uvs.last!)
+//        let v2 = Vertex(position: polyhedron.lower.p2.vector, normal: normal, color: color.primary, textureCoordinates: CGPoint.uvs[((edgeIndex + 1) % joints.count)])
+//
+//        return Pasture.Polygon(vertices: [v0, v1, v2])
+//    }
 }

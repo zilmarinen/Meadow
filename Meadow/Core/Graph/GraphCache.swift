@@ -10,7 +10,7 @@ import Pasture
 
 public class GraphCache {
     
-    public struct Edge: Encodable, Hashable {
+    public struct Edge: Codable, Hashable {
         
         let i: Int
         
@@ -33,7 +33,7 @@ public class GraphCache {
         }
     }
     
-    struct Joint {
+    struct Joint: Codable {
         
         let i: Int
         
@@ -63,7 +63,7 @@ public class GraphCache {
         let e2: Int
     }
     
-    struct Quad {
+    struct Quad: Codable {
         
         let i: Int
         

@@ -14,7 +14,7 @@ public struct World {
         
         public static let ceiling = 20
         public static let floor = -ceiling
-        public static let yStep = Double(0.25)
+        public static let yStep = Double(0.125)
         
         public static let chunkSize = 5
         

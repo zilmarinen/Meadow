@@ -31,6 +31,8 @@ public class Tile: NSObject, Soilable, Clearable, Encodable, Neighbour, Renderab
         
         didSet {
             
+            guard oldValue != isHidden else { return }
+            
             becomeDirty()
         }
     }
@@ -41,7 +43,7 @@ public class Tile: NSObject, Soilable, Clearable, Encodable, Neighbour, Renderab
     
     var neighbours: [Int : Tile] = [:]
     
-    required init(ancestor: SoilableParent, identifier: Int, joints: [GraphCache.Joint], vectors: [Vector]) {
+    required init(ancestor: SoilableParent, identifier: Int, joints: [Graph.Joint], vectors: [Vector]) {
     
         self.ancestor = ancestor
         

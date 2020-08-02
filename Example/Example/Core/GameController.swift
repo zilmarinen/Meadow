@@ -32,7 +32,7 @@ class GameController: NSObject {
             fatalError("Unable to make Meadow.metallib default device program library: \(error)")
         }
         
-        let meadow = Meadow()
+        let meadow = Meadow(graph: Graph(rings: 10, size: 1.0, iterations: 1))
         
         self.sceneView = renderer
         self.scene = Scene(meadow: meadow)
@@ -71,23 +71,23 @@ extension GameController {
 //
 //            self.scene.rootNode.addChildNode(n0)
             
-            guard let totalQuads = self.scene.meadow.terrain.graph?.totalQuads else { return }
-            
-            for index in 0..<totalQuads {
-             
-                self.scene.meadow.terrain.add(tile: index)?.children.forEach { child in
-                    
-                    if let child = child as? TerrainEdge {
-                        
-                        child.topLayer?.terrainType = .bedrock
-                        
-                        child.addLayer()
-                        
-                        child.topLayer?.terrainType = .grass
-                        child.topLayer?.set(elevation: 2)
-                    }
-                }
-            }
+//            guard let totalQuads = self.scene.meadow.terrain.graph?.totalQuads else { return }
+//
+//            for index in 0..<totalQuads {
+//
+//                self.scene.meadow.terrain.add(tile: index)?.children.forEach { child in
+//
+//                    if let child = child as? TerrainEdge {
+//
+//                        child.topLayer?.terrainType = .bedrock
+//
+//                        child.addLayer()
+//
+//                        child.topLayer?.terrainType = .grass
+//                        child.topLayer?.set(elevation: 2)
+//                    }
+//                }
+//            }
         }
     }
 }

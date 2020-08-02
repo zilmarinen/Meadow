@@ -11,7 +11,19 @@ class GridJSON<C: ChunkJSON<T>, T: TileJSON>: Decodable {
     let chunks: [C]
 }
 
+class LayeredGridJSON<C: LayeredChunkJSON<T, E, L>, T: LayeredTileJSON<E, L>, E: EdgeJSON<L>, L: LayerJSON>: Decodable {
+    
+    let chunks: [C]
+}
+
 class ChunkJSON<T: TileJSON>: Decodable {
+    
+    let segment: Int
+    let radius: Int
+    let tiles: [T]
+}
+
+class LayeredChunkJSON<T: LayeredTileJSON<E, L>, E: EdgeJSON<L>, L: LayerJSON>: Decodable {
     
     let segment: Int
     let radius: Int
@@ -23,6 +35,12 @@ class TileJSON: Decodable {
     let identifier: Int
 }
 
+class LayeredTileJSON<E: EdgeJSON<L>, L: LayerJSON>: Decodable {
+ 
+    let identifier: Int
+    let edges: [E]
+}
+
 class EdgeJSON<L: LayerJSON>: Decodable {
     
     let identifier: Int
@@ -30,7 +48,21 @@ class EdgeJSON<L: LayerJSON>: Decodable {
 }
 
 class LayerJSON: Decodable {
+    
+    private enum CodingKeys: CodingKey {
+        
+        case identifier
+        case corners
+    }
 
     let identifier: Int
     let corners: LayerCorners
+    
+    required init(from decoder: Decoder) throws {
+        
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        self.identifier = try container.decode(Int.self, forKey: .identifier)
+        self.corners = try container.decode(LayerCorners.self, forKey: .corners)
+    }
 }

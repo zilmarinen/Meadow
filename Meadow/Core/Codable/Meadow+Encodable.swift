@@ -6,9 +6,12 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
+import Pasture
+
 public struct MeadowJSON: Decodable {
     
     let name: String
+    let backgroundColor: Color
     
     let area: AreaJSON
     let foliage: FoliageJSON

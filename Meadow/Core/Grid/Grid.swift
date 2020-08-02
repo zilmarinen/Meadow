@@ -26,6 +26,8 @@ public class Grid<C: Chunk<T>, T: Tile>: SCNNode, Hideable, SceneGraphIdentifiab
         
         didSet {
             
+            guard oldValue != isHidden else { return }
+            
             becomeDirty()
         }
     }
@@ -67,38 +69,13 @@ public class Grid<C: Chunk<T>, T: Tile>: SCNNode, Hideable, SceneGraphIdentifiab
     
     public var type: SceneGraphNodeType { return .grid }
     
-    public func add(tile vector: Vector) -> T? {
-        
-        guard let quad = graph?.data.quads.first, let joints = graph?.joints(for: quad), let vectors = graph?.vectors(for: quad) else { return nil }
-        
-        let slice = chunkSlice(for: vector)
-        
-        let chunk = find(chunk: vector) ?? C(ancestor: self, slice: slice)
-        
-        let tile = chunk.add(tile: quad.i, joints: joints, vectors: vectors)
-        
-        addChildNode(chunk)
-        
-        for joint in joints where joint.e1 != -1 {
-            
-            let identifier = (joint.e0 == tile.identifier ? joint.e1 : joint.e0)
-            
-            if let neighbour = find(tile: identifier) {
-                
-                tile.add(neighbour: neighbour, identifier: joint.i)
-            }
-        }
-        
-        return tile
-    }
-    
     public func add(tile identifier: Int) -> T? {
         
         guard let quad = graph?.quad(at: identifier), let joints = graph?.joints(for: quad), let vectors = graph?.vectors(for: quad) else { return nil }
         
         let slice = chunkSlice(for: quad.v)
         
-        let chunk = find(chunk: quad.v) ?? C(ancestor: self, slice: slice)
+        let chunk = find(chunk: slice) ?? C(ancestor: self, slice: slice)
         
         let tile = chunk.add(tile: quad.i, joints: joints, vectors: vectors)
         
@@ -120,9 +97,7 @@ public class Grid<C: Chunk<T>, T: Tile>: SCNNode, Hideable, SceneGraphIdentifiab
 
 extension Grid {
     
-    func find(chunk vector: Vector) -> C? {
-        
-        let slice = chunkSlice(for: vector)
+    func find(chunk slice: C.Slice) -> C? {
         
         return chunks.first { chunk in
             
@@ -130,43 +105,18 @@ extension Grid {
         }
     }
     
-    func find(tile identifier: Int) -> T? {
+    public func find(tile identifier: Int) -> T? {
         
-        for index in chunks.indices {
-            
-            if let tile = chunks[index].find(tile: identifier) {
-                
-                return tile
-            }
-        }
+        guard let quad = graph?.quad(at: identifier), let chunk = find(chunk: chunkSlice(for: quad.v)) else { return nil }
         
-        return nil
-    }
-    
-    func find(tile vector: Vector) -> T? {
-        
-        guard let chunk = find(chunk: vector), let tile = chunk.find(tile: vector) else { return nil }
-        
-        return tile
+        return chunk.find(tile: identifier)
     }
     
     func remove(tile identifier: Int) {
         
-        guard let tile = find(tile: identifier), let chunk = find(chunk: tile.centre) else { return }
+        guard let quad = graph?.quad(at: identifier), let chunk = find(chunk: chunkSlice(for: quad.v)) else { return }
         
-        chunk.remove(tile: tile.identifier)
-        
-        if chunk.tiles.count == 0 {
-            
-            chunk.removeFromParentNode()
-        }
-    }
-    
-    func remove(tile vector: Vector) {
-        
-        guard let chunk = find(chunk: vector), let tile = chunk.find(tile: vector) else { return }
-        
-        chunk.remove(tile: tile.identifier)
+        chunk.remove(tile: identifier)
         
         if chunk.tiles.count == 0 {
             

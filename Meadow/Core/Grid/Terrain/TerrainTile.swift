@@ -12,7 +12,7 @@ public class TerrainTile: LayeredTile<TerrainEdge, TerrainLayer> {
     
     enum Constants {
         
-        static let crown = Vector(x: 0.0, y: World.Constants.yStep / 2.0, z: 0.0)
+        static let crown = Vector(x: 0.0, y: World.Constants.yStep / 4.0, z: 0.0)
     }
     
     public override var category: SceneGraphNodeCategory { return .terrain }

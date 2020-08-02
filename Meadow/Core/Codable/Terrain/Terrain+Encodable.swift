@@ -6,17 +6,16 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
-class TerrainJSON: GridJSON<TerrainChunkJSON, TerrainTileJSON<TerrainEdgeJSON>> {
+class TerrainJSON: LayeredGridJSON<TerrainChunkJSON, TerrainTileJSON, TerrainEdgeJSON, TerrainLayerJSON> {
     
 }
 
-class TerrainChunkJSON: ChunkJSON<TerrainTileJSON<TerrainEdgeJSON>> {
+class TerrainChunkJSON: LayeredChunkJSON<TerrainTileJSON, TerrainEdgeJSON, TerrainLayerJSON> {
     
 }
 
-class TerrainTileJSON<E: TerrainEdgeJSON>: TileJSON {
+class TerrainTileJSON: LayeredTileJSON<TerrainEdgeJSON, TerrainLayerJSON> {
     
-    let edges: [E] = []
 }
 
 class TerrainEdgeJSON: EdgeJSON<TerrainLayerJSON> {
@@ -25,5 +24,19 @@ class TerrainEdgeJSON: EdgeJSON<TerrainLayerJSON> {
 
 class TerrainLayerJSON: LayerJSON {
     
-    let terrainType: TerrainType = .bedrock
+    enum CodingKeys: CodingKey {
+        
+        case terrainType
+    }
+    
+    let terrainType: TerrainType
+    
+    required init(from decoder: Decoder) throws {
+        
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        self.terrainType = try container.decode(TerrainType.self, forKey: .terrainType)
+        
+        try super.init(from: decoder)
+    }
 }

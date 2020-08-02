@@ -29,6 +29,21 @@ extension Area: GridDecodable {
     
     func decode(json: AreaJSON) {
         
-        //
+        json.chunks.forEach { chunkJSON in
+            
+            chunkJSON.tiles.forEach { tileJSON in
+                
+                tileJSON.edges.forEach { edgeJSON in
+                    
+                    edgeJSON.layers.forEach { layerJSON in
+                            
+                        if let layer = self.add(layer: tileJSON.identifier, edgeIdentifier: edgeJSON.identifier) {
+                                
+                            layer.corners = layerJSON.corners
+                        }
+                    }
+                }
+            }
+        }
     }
 }

@@ -15,7 +15,7 @@ public class LayerCorners: Codable, Equatable {
         static let maximumPitch = 2
     }
     
-    public enum Anchor: Int, Codable {
+    public enum Anchor: Int, Codable, Equatable {
         
         case left
         case right

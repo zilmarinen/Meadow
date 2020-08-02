@@ -19,6 +19,8 @@ public class WaterLayer: Layer {
         
         didSet {
             
+            guard oldValue != waterType else { return }
+            
             becomeDirty()
         }
     }

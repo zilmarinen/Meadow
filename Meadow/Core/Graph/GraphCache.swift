@@ -10,175 +10,173 @@ import Pasture
 
 public class GraphCache {
     
-    public struct Edge: Codable, Hashable {
+    struct Triangles {
         
-        let i: Int
+        var edges: [Graph.Edge] = []
+        var joints: [Graph.Joint] = []
+        var triangles: [Graph.Triangle] = []
+        var pairs: [Graph.Joint] = []
         
-        var j: Int = -1
+        mutating func create(edge v0: Int, v1: Int) -> Graph.Edge {
         
-        let v0: Int
-        let v1: Int
-        
-        init(i: Int, v0: Int, v1: Int, j: Int = -1) {
+            let edge = Graph.Edge(i: edges.count, v0: v0, v1: v1)
             
-            self.i = i
-            self.j = j
-            self.v0 = v0
-            self.v1 = v1
+            edges.append(edge)
+            
+            return edge
         }
         
-        func spans(v0: Int, v1: Int) -> Bool {
+        mutating func create(pair joint: Graph.Joint) -> Graph.Joint {
             
-            return (self.v0 == v0 && self.v1 == v1) || (self.v0 == v1 && self.v1 == v0)
+            let pair = Graph.Joint(i: pairs.count, e0: joint.e0, e1: joint.e1, i0: joint.i0, i1: joint.i1, v: joint.v)
+            
+            pairs.append(pair)
+            
+            return pair
         }
-    }
-    
-    struct Joint: Codable {
         
-        let i: Int
-        
-        var v: Int = -1
-        
-        let e0: Int
-        var e1: Int
-
-        let i0: Int
-        var i1: Int = -1
-        
-        init(i: Int, e0: Int, e1: Int = -1, i0: Int, i1: Int = -1, v: Int = -1) {
+        mutating func create(triangle v0: Int, v1: Int, v2: Int) {
             
-            self.i = i
-            self.v = v
-            self.e0 = e0
-            self.e1 = e1
-            self.i0 = i0
-            self.i1 = i1
+            let e0 = create(edge: v0, v1: v1)
+            let e1 = create(edge: v1, v1: v2)
+            let e2 = create(edge: v2, v1: v0)
+            
+            let index = triangles.count
+            
+            let triangle = Graph.Triangle(e0: e0.i, e1: e1.i, e2: e2.i)
+            
+            triangles.append(triangle)
+            
+            for edge in [e0, e1, e2] {
+                
+                let joint = findOrCreate(joint: edge, neighbour: index)
+                
+                joints[joint.i].i1 = (joint.i0 != index && joint.i1 == -1 ? index : joint.i1)
+                joints[joint.i].e1 = (joint.e0 != edge.i && joint.e1 == -1 ? edge.i : joint.e1)
+                
+                edges[edge.i].j = joint.i
+            }
         }
-    }
-    
-    struct Triangle {
         
-        let e0: Int
-        let e1: Int
-        let e2: Int
-    }
-    
-    struct Quad: Codable {
-        
-        let i: Int
-        
-        let e0: Int
-        let e1: Int
-        let e2: Int
-        let e3: Int
-        
-        let v: Vector
-    }
-
-    var vectors: [Vector] = []
-    var edges: [Edge] = []
-    var triangles: [Triangle] = []
-    var joints: [Joint] = []
-    var pairs: [Joint] = []
-}
-
-extension GraphCache {
-    
-    func clear() {
-        
-        vectors.removeAll()
-        edges.removeAll()
-        triangles.removeAll()
-        joints.removeAll()
-        pairs.removeAll()
-    }
-    
-    func create(triangle v0: Int, v1: Int, v2: Int) {
-        
-        let e0 = create(edge: v0, v1: v1)
-        let e1 = create(edge: v1, v1: v2)
-        let e2 = create(edge: v2, v1: v0)
-        
-        let index = triangles.count
-        
-        let triangle = Triangle(e0: e0.i, e1: e1.i, e2: e2.i)
-        
-        triangles.append(triangle)
-        
-        for edge in [e0, e1, e2] {
+        mutating func findOrCreate(joint edge: Graph.Edge, neighbour: Int) -> Graph.Joint {
             
-            let joint = findOrCreate(joint: edge, neighbour: index)
+            if let joint = find(joint: edge) {
+                
+                return joint
+            }
             
-            joints[joint.i].i1 = (joint.i0 != index && joint.i1 == -1 ? index : joint.i1)
-            joints[joint.i].e1 = (joint.e0 != edge.i && joint.e1 == -1 ? edge.i : joint.e1)
+            let joint = Graph.Joint(i: joints.count, e0: edge.i, i0: neighbour)
             
-            edges[edge.i].j = joint.i
-        }
-    }
-    
-    func create(edge v0: Int, v1: Int) -> Edge {
-    
-        let edge = Edge(i: edges.count, v0: v0, v1: v1)
-        
-        edges.append(edge)
-        
-        return edge
-    }
-    
-    func create(pair joint: Joint) -> Joint {
-        
-        let pair = Joint(i: pairs.count, e0: joint.e0, e1: joint.e1, i0: joint.i0, i1: joint.i1, v: joint.v)
-        
-        pairs.append(pair)
-        
-        return pair
-    }
-    
-    func findOrCreate(joint edge: Edge, neighbour: Int) -> Joint {
-        
-        if let joint = find(joint: edge) {
+            joints.append(joint)
             
             return joint
         }
         
-        let joint = Joint(i: joints.count, e0: edge.i, i0: neighbour)
+        func find(joint edge: Graph.Edge) -> Graph.Joint? {
+            
+            return joints.first { edges[$0.e0].spans(v0: edge.v0, v1: edge.v1) }
+        }
         
-        joints.append(joint)
+        func find(joints triangle: Int) -> [Graph.Joint] {
+            
+            let t0 = triangles[triangle]
+            
+            return joints.filter { $0.e0 == t0.e0 || $0.e0 == t0.e1 || $0.e0 == t0.e2 || $0.e1 == t0.e0 || $0.e1 == t0.e1 || $0.e1 == t0.e2}.filter { $0.e1 != -1 && $0.i0 != -1 }
+        }
         
-        return joint
+        func find(pair triangle: Int) -> Graph.Joint? {
+            
+            return pairs.first { $0.i0 == triangle || $0.i1 == triangle }
+        }
     }
     
-    func find(joint edge: Edge) -> Joint? {
+    struct Quads {
         
-        return joints.first { edges[$0.e0].spans(v0: edge.v0, v1: edge.v1) }
+        var edges: [Graph.Edge] = []
+        var joints: [Graph.Joint] = []
+        var quads: [Graph.Quad] = []
+        
+        mutating func create(edge v0: Int, v1: Int) -> Graph.Edge {
+        
+            let edge = Graph.Edge(i: edges.count, v0: v0, v1: v1)
+            
+            edges.append(edge)
+            
+            return edge
+        }
+        
+        mutating func create(quad v0: Int, v1: Int, v2: Int, v3: Int, centre: Vector) {
+            
+            let e0 = create(edge: v0, v1: v1)
+            let e1 = create(edge: v1, v1: v2)
+            let e2 = create(edge: v2, v1: v3)
+            let e3 = create(edge: v3, v1: v0)
+            
+            let index = quads.count
+            
+            let quad = Graph.Quad(i: index, e0: e0.i, e1: e1.i, e2: e2.i, e3: e3.i, v: centre)
+            
+            quads.append(quad)
+            
+            for edge in [e0, e1, e2, e3] {
+                
+                let joint = findOrCreate(joint: edge, neighbour: index)
+                
+                joints[joint.i].i1 = (joint.i0 != index && joint.i1 == -1 ? index : joint.i1)
+                joints[joint.i].e1 = (joint.e0 != edge.i && joint.e1 == -1 ? edge.i : joint.e1)
+                
+                edges[edge.i].j = joint.i
+            }
+        }
+        
+        mutating func findOrCreate(joint edge: Graph.Edge, neighbour: Int) -> Graph.Joint {
+            
+            if let joint = find(joint: edge) {
+                
+                return joint
+            }
+            
+            let joint = Graph.Joint(i: joints.count, e0: edge.i, i0: neighbour)
+            
+            joints.append(joint)
+            
+            return joint
+        }
+        
+        func find(joint edge: Graph.Edge) -> Graph.Joint? {
+            
+            return joints.first { edges[$0.e0].spans(v0: edge.v0, v1: edge.v1) }
+        }
     }
     
-    func find(joints triangle: Int) -> [Joint] {
+    var vectors: [Vector] = []
+    var triangles = Triangles()
+    var quads = Quads()
+}
+
+extension GraphCache {
+    
+    func create(quad v0: Int, v1: Int, v2: Int, v3: Int) {
+     
+        let center = (vectors[v0] + vectors[v1] + vectors[v2] + vectors[v3]) / 4
         
-        let t0 = triangles[triangle]
-        
-        return joints.filter { $0.e0 == t0.e0 || $0.e0 == t0.e1 || $0.e0 == t0.e2 || $0.e1 == t0.e0 || $0.e1 == t0.e1 || $0.e1 == t0.e2}.filter { $0.e1 != -1 && $0.i0 != -1 }
+        quads.create(quad: v0, v1: v1, v2: v2, v3: v3, centre: center)
     }
     
-    func find(pair triangle: Int) -> Joint? {
+    func quad(for pair: Graph.Joint) -> Graph.Quad {
         
-        return pairs.first { $0.i0 == triangle || $0.i1 == triangle }
-    }
-    
-    func quad(for pair: Joint) -> Quad {
+        let t0 = triangles.triangles[pair.i0]
+        let t1 = triangles.triangles[pair.i1]
         
-        let t0 = triangles[pair.i0]
-        let t1 = triangles[pair.i1]
+        let e0 = triangles.edges[t0.e0]
+        let e1 = triangles.edges[t0.e1]
+        let e2 = triangles.edges[t0.e2]
         
-        let e0 = edges[t0.e0]
-        let e1 = edges[t0.e1]
-        let e2 = edges[t0.e2]
+        let e3 = triangles.edges[t1.e0]
+        let e4 = triangles.edges[t1.e1]
+        let e5 = triangles.edges[t1.e2]
         
-        let e3 = edges[t1.e0]
-        let e4 = edges[t1.e1]
-        let e5 = edges[t1.e2]
-        
-        let diagonal = edges[pair.e0]
+        let diagonal = triangles.edges[pair.e0]
         
         let e0d = e0.spans(v0: diagonal.v0, v1: diagonal.v1)
         let e1d = e1.spans(v0: diagonal.v0, v1: diagonal.v1)
@@ -198,6 +196,62 @@ extension GraphCache {
         
         let v = (vectors[e6.v0] + vectors[e7.v0] + vectors[e8.v0] + vectors[e9.v0]) / 4
         
-        return Quad(i: -1, e0: e6.i, e1: e7.i, e2: e8.i, e3: e9.i, v: v)
+        return Graph.Quad(i: -1, e0: e6.i, e1: e7.i, e2: e8.i, e3: e9.i, v: v)
+    }
+    
+    func divide(triangle: Graph.Triangle) {
+        
+        let e0 = triangles.edges[triangle.e0]
+        let e1 = triangles.edges[triangle.e1]
+        let e2 = triangles.edges[triangle.e2]
+        
+        let j0 = triangles.joints[e0.j]
+        let j1 = triangles.joints[e1.j]
+        let j2 = triangles.joints[e2.j]
+        
+        let v0 = vectors[e0.v0]
+        let v1 = vectors[e1.v0]
+        let v2 = vectors[e2.v0]
+        
+        let v6 = (v0 + v1 + v2) / 3
+        
+        let index = vectors.count
+        
+        vectors.append(v6)
+        
+        create(quad: e0.v0, v1: j0.v, v2: index, v3: j2.v)
+        create(quad: e1.v0, v1: j1.v, v2: index, v3: j0.v)
+        create(quad: e2.v0, v1: j2.v, v2: index, v3: j1.v)
+    }
+    
+    func divide(pair: Graph.Joint) {
+        
+        let q = quad(for: pair)
+        
+        let e0 = triangles.edges[q.e0]
+        let e1 = triangles.edges[q.e1]
+        let e2 = triangles.edges[q.e2]
+        let e3 = triangles.edges[q.e3]
+        
+        let j0 = triangles.joints[e0.j]
+        let j1 = triangles.joints[e1.j]
+        let j2 = triangles.joints[e2.j]
+        let j3 = triangles.joints[e3.j]
+        
+        let v0 = vectors[e0.v0]
+        let v1 = vectors[e1.v0]
+        let v2 = vectors[e2.v0]
+        let v3 = vectors[e3.v0]
+        
+        let v8 = (v0 + v1 + v2 + v3) / 4
+        
+        let index = vectors.count
+        
+        vectors.append(v8)
+        
+        create(quad: e0.v0, v1: j0.v, v2: index, v3: j3.v)
+        create(quad: j0.v, v1: e1.v0, v2: j1.v, v3: index)
+        create(quad: index, v1: j1.v, v2: e2.v0, v3: j2.v)
+        create(quad: j3.v, v1: index, v2: j2.v, v3: e3.v0)
     }
 }

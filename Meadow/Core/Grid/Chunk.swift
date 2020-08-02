@@ -38,6 +38,8 @@ public class Chunk<T: Tile>: SCNNode, Hideable, SceneGraphIdentifiable, SceneGra
         
         didSet {
             
+            guard oldValue != isHidden else { return }
+            
             becomeDirty()
         }
     }
@@ -51,6 +53,8 @@ public class Chunk<T: Tile>: SCNNode, Hideable, SceneGraphIdentifiable, SceneGra
         super.init()
         
         self.name = "Chunk [\(slice.segment), \(slice.radius)]"
+        
+        self.categoryBitMask = category.rawValue
     }
     
     required init?(coder: NSCoder) {
@@ -89,7 +93,7 @@ extension Chunk {
         }
     }
     
-    func add(tile identifier: Int, joints: [GraphCache.Joint], vectors: [Vector]) -> T {
+    func add(tile identifier: Int, joints: [Graph.Joint], vectors: [Vector]) -> T {
         
         if let tile = find(tile: identifier) { return tile }
         
@@ -144,7 +148,7 @@ extension Chunk {
             node.addChildNode(SCNNode())
         }
 
-        //node.childNodes.first?.geometry = SCNGeometry(wireframe: mesh)
+        node.childNodes.first?.geometry = SCNGeometry(wireframe: mesh)
         //node.childNodes.last?.geometry = SCNGeometry(normals: mesh)
         
         if let shadable = self as? Shadable {

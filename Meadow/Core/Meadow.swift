@@ -7,6 +7,7 @@
 //
 
 import SceneKit
+import Pasture
 
 public final class Meadow: SCNNode, SceneGraphIdentifiable, SceneGraphNode, Soilable {
     
@@ -17,6 +18,8 @@ public final class Meadow: SCNNode, SceneGraphIdentifiable, SceneGraphNode, Soil
     public var identifier: Int = -1
     
     public var isDirty: Bool = false
+    
+    public var backgroundColor: Color = .black
     
     public static var bundle: Bundle? { return Bundle(for: Meadow.self) }
     
@@ -36,6 +39,7 @@ public final class Meadow: SCNNode, SceneGraphIdentifiable, SceneGraphNode, Soil
         super.init()
         
         self.name = json?.name ?? "Meadow"
+        self.backgroundColor = json?.backgroundColor ?? .black
         
         addChildNode(actors)
         addChildNode(area)
@@ -77,18 +81,22 @@ extension Meadow {
         
         becomeDirty()
         
-        guard let grid = child as? SceneGraphIdentifiable else { return }
+        guard let node = child as? SceneGraphIdentifiable else { return }
         
-        switch grid.category {
-
-        case .terrain:
+        switch node.type {
             
-            self.waterResolver.enqueue(identifier: child.identifier)
+        case .tile:
+            
+            switch node.category {
 
-        case .water:
+            case .terrain,
+                 .water:
 
-            self.waterResolver.enqueue(identifier: child.identifier)
+                self.waterResolver.enqueue(identifier: child.identifier)
 
+            default: break
+            }
+            
         default: break
         }
     }
@@ -129,6 +137,7 @@ extension Meadow: Encodable {
     private enum CodingKeys: CodingKey {
         
         case name
+        case backgroundColor
         
         case area
         case foliage
@@ -142,6 +151,7 @@ extension Meadow: Encodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         try container.encode(name, forKey: .name)
+        try container.encode(backgroundColor, forKey: .backgroundColor)
         try container.encode(area, forKey: .area)
         try container.encode(foliage, forKey: .foliage)
         try container.encode(footpath, forKey: .footpath)

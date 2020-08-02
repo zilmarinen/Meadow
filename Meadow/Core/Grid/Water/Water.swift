@@ -32,20 +32,15 @@ extension Water: GridDecodable {
         json.chunks.forEach { chunkJSON in
             
             chunkJSON.tiles.forEach { tileJSON in
-                
-                if let tile = self.add(tile: tileJSON.identifier) {
 
-                    tileJSON.edges.forEach { edgeJSON in
-                        
-                        let edge = tile.add(edge: edgeJSON.identifier)
+                tileJSON.edges.forEach { edgeJSON in
 
-                        edgeJSON.layers.forEach { layerJSON in
+                    edgeJSON.layers.forEach { layerJSON in
 
-                            if let layer = edge.addLayer() {
+                        if let layer = self.add(layer: tileJSON.identifier, edgeIdentifier: edgeJSON.identifier) {
 
-                                layer.waterType = layerJSON.waterType
-                                layer.corners = layerJSON.corners
-                            }
+                            layer.waterType = layerJSON.waterType
+                            layer.corners = layerJSON.corners
                         }
                     }
                 }

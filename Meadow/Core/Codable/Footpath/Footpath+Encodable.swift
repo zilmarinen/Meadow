@@ -6,17 +6,16 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
-class FootpathJSON: GridJSON<FootpathChunkJSON, FootpathTileJSON<FootpathEdgeJSON>> {
+class FootpathJSON: LayeredGridJSON<FootpathChunkJSON, FootpathTileJSON, FootpathEdgeJSON, FootpathLayerJSON> {
     
 }
 
-class FootpathChunkJSON: ChunkJSON<FootpathTileJSON<FootpathEdgeJSON>> {
+class FootpathChunkJSON: LayeredChunkJSON<FootpathTileJSON, FootpathEdgeJSON, FootpathLayerJSON> {
     
 }
 
-class FootpathTileJSON<E: FootpathEdgeJSON>: TileJSON {
+class FootpathTileJSON: LayeredTileJSON<FootpathEdgeJSON, FootpathLayerJSON> {
 
-    let edges: [E] = []
 }
 
 class FootpathEdgeJSON: EdgeJSON<FootpathLayerJSON> {
@@ -25,5 +24,19 @@ class FootpathEdgeJSON: EdgeJSON<FootpathLayerJSON> {
 
 class FootpathLayerJSON: LayerJSON {
     
-    let footpathType: FootpathType = .dirt
+    enum CodingKeys: CodingKey {
+        
+        case footpathType
+    }
+    
+    let footpathType: FootpathType
+    
+    required init(from decoder: Decoder) throws {
+        
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        self.footpathType = try container.decode(FootpathType.self, forKey: .footpathType)
+        
+        try super.init(from: decoder)
+    }
 }

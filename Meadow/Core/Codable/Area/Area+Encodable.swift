@@ -6,17 +6,16 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
-class AreaJSON: GridJSON<AreaChunkJSON, AreaTileJSON<AreaEdgeJSON>> {
+class AreaJSON: LayeredGridJSON<AreaChunkJSON, AreaTileJSON, AreaEdgeJSON, AreaLayerJSON> {
     
 }
 
-class AreaChunkJSON: ChunkJSON<AreaTileJSON<AreaEdgeJSON>> {
+class AreaChunkJSON: LayeredChunkJSON<AreaTileJSON, AreaEdgeJSON, AreaLayerJSON> {
     
 }
 
-class AreaTileJSON<E: AreaEdgeJSON>: TileJSON {
+class AreaTileJSON: LayeredTileJSON<AreaEdgeJSON, AreaLayerJSON> {
     
-    let edges: [E] = []
 }
 
 class AreaEdgeJSON: EdgeJSON<AreaLayerJSON> {

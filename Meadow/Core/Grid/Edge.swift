@@ -24,6 +24,8 @@ public class Edge<L: Layer>: NSObject, Soilable, Clearable, Encodable, SceneGrap
         
         didSet {
             
+            guard oldValue != isHidden else { return }
+            
             becomeDirty()
         }
     }

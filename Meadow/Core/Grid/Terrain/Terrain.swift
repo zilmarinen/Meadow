@@ -31,28 +31,16 @@ extension Terrain: GridDecodable {
         
         json.chunks.forEach { chunkJSON in
             
-            print("chunk [\(chunkJSON.segment)|\(chunkJSON.radius)] has [\(chunkJSON.tiles.count)] tiles")
-            
             chunkJSON.tiles.forEach { tileJSON in
                 
-                print("tile [\(tileJSON.identifier)] has [\(tileJSON.edges.count)] edges")
-                
-                if let tile = self.add(tile: tileJSON.identifier) {
-                 
-                    tileJSON.edges.forEach { edgeJSON in
-                        
-                        print("edge has [\(edgeJSON.layers.count)] layers")
-                        
-                        let edge = tile.add(edge: edgeJSON.identifier)
-                        
-                        edgeJSON.layers.forEach { layerJSON in
-                                
-                            if let layer = edge.addLayer() {
+                tileJSON.edges.forEach { edgeJSON in
+                    
+                    edgeJSON.layers.forEach { layerJSON in
                             
-                                layer.terrainType = layerJSON.terrainType
-                                layer.corners = layerJSON.corners
-                                layer.ancestor = edge
-                            }
+                        if let layer = self.add(layer: tileJSON.identifier, edgeIdentifier: edgeJSON.identifier) {
+                                
+                            layer.terrainType = layerJSON.terrainType
+                            layer.corners = layerJSON.corners
                         }
                     }
                 }

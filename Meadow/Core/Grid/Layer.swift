@@ -24,6 +24,8 @@ public class Layer: NSObject, Soilable, Clearable, Encodable, Hideable, SceneGra
         
         didSet {
             
+            guard oldValue != isHidden else { return }
+            
             becomeDirty()
         }
     }
@@ -36,6 +38,8 @@ public class Layer: NSObject, Soilable, Clearable, Encodable, Hideable, SceneGra
         
         didSet {
             
+            guard oldValue != upper else { return }
+            
             becomeDirty()
         }
     }
@@ -43,6 +47,8 @@ public class Layer: NSObject, Soilable, Clearable, Encodable, Hideable, SceneGra
     public var lower: Layer? {
         
         didSet {
+            
+            guard oldValue != lower else { return }
             
             becomeDirty()
         }

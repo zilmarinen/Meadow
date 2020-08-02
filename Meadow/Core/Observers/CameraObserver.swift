@@ -31,14 +31,11 @@ extension Camera {
         
         public func focus(vector: SCNVector3) {
             
-            switch state {
-                
-            case .focus(let node):
-             
-                node.position = vector
-                
-            default: break
-            }
+            let node = SCNNode()
+            
+            node.position = vector
+            
+            state = .focus(node: node)
         }
     }
 }

@@ -6,17 +6,16 @@
 //  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
-class WaterJSON: GridJSON<WaterChunkJSON, WaterTileJSON<WaterEdgeJSON>> {
+class WaterJSON: LayeredGridJSON<WaterChunkJSON, WaterTileJSON, WaterEdgeJSON, WaterLayerJSON> {
     
 }
 
-class WaterChunkJSON: ChunkJSON<WaterTileJSON<WaterEdgeJSON>> {
+class WaterChunkJSON: LayeredChunkJSON<WaterTileJSON, WaterEdgeJSON, WaterLayerJSON> {
     
 }
 
-class WaterTileJSON<E: WaterEdgeJSON>: TileJSON {
+class WaterTileJSON: LayeredTileJSON<WaterEdgeJSON, WaterLayerJSON> {
     
-    let edges: [E] = []
 }
 
 class WaterEdgeJSON: EdgeJSON<WaterLayerJSON> {
@@ -25,5 +24,19 @@ class WaterEdgeJSON: EdgeJSON<WaterLayerJSON> {
 
 class WaterLayerJSON: LayerJSON {
     
-    let waterType: WaterType = .saltWater
+    enum CodingKeys: CodingKey {
+        
+        case waterType
+    }
+    
+    let waterType: WaterType
+    
+    required init(from decoder: Decoder) throws {
+        
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        self.waterType = try container.decode(WaterType.self, forKey: .waterType)
+        
+        try super.init(from: decoder)
+    }
 }

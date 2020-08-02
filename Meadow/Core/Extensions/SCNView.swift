@@ -11,17 +11,25 @@ import SceneKit
 
 extension SCNView {
     
-    typealias SCNViewHit = (coordinate: Vector, cardinal: GraphCache.Edge, ordinal: GraphCache.Edge)
+    public typealias SCNViewHit = (vector: Vector, quad: Graph.Quad?, joint: Graph.Joint?, corner: Vector?)
     
-    func hitTest(point: CGPoint) -> SCNViewHit? {
+    public func hitTest(point: CGPoint, category: SceneGraphNodeCategory) -> SCNViewHit? {
         
-        let options: [SCNHitTestOption : Any] = [:]
+        let options: [SCNHitTestOption : Any] = [SCNHitTestOption.categoryBitMask : category.rawValue]
         
-        guard let hit = hitTest(point, options: options).first else { return nil }
+        guard let scene = scene as? Scene, let hit = hitTest(point, options: options).first else { return nil }
         
         let vector = Vector(vector: hit.worldCoordinates)
-        //TODO: FIX ME
-        return nil
-        //return (coordinate: Vector(vector: hit.worldCoordinates), cardinal: Cardinal.closest(vector: vector), ordinal: Ordinal.closest(vector: vector))
+        
+        if let quad = scene.meadow.graph.nearest(quad: vector) {
+            
+            let joint = scene.meadow.graph.nearest(joint: quad.i, vector: vector)
+        
+            let corner = scene.meadow.graph.nearest(corner: quad.i, vector: vector)
+            
+            return (vector: vector, quad: quad, joint: joint, corner: corner)
+        }
+
+        return (vector: vector, quad: nil, joint: nil, corner: nil)
     }
 }

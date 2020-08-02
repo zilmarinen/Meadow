@@ -23,7 +23,7 @@ public class LayeredTile<E: Edge<L>, L: Layer>: Tile, GridMeshBuilder {
         
         var container = encoder.container(keyedBy: CodingKeys.self)
         
-        try container.encode(edges, forKey: .edges)
+        try container.encode(Array(edges.values), forKey: .edges)
     }
     
     public override func child(didBecomeDirty child: SoilableChild) {
@@ -109,6 +109,13 @@ public class LayeredTile<E: Edge<L>, L: Layer>: Tile, GridMeshBuilder {
         let p2 = GridMesh.Elevation(elevation: corners.right.elevation, vector: v1)
 
         return GridMesh.Polytope(p0: p0, p1: p1, p2: p2)
+    }
+    
+    func shouldRender(face edge: Int, atIndex index: Int) -> Bool {
+        
+        guard let layers = find(edge: edge)?.layers else { return false }
+
+        return !layers[index].isHidden
     }
 
     func colorPalette(apex edge: Int, atIndex index: Int) -> ColorPalette { return .default }
@@ -258,12 +265,5 @@ extension LayeredTile {
         let layer = layers[index]
 
         return !layer.isHidden && (layer.upper == nil || layer.upper?.isHidden ?? false)
-    }
-
-    func shouldRender(face edge: Int, atIndex index: Int) -> Bool {
-        
-        guard let layers = find(edge: edge)?.layers else { return false }
-
-        return !layers[index].isHidden
     }
 }

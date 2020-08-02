@@ -33,19 +33,14 @@ extension Footpath: GridDecodable {
             
             chunkJSON.tiles.forEach { tileJSON in
                 
-                if let tile = self.add(tile: tileJSON.identifier) {
-
-                    tileJSON.edges.forEach { edgeJSON in
+                tileJSON.edges.forEach { edgeJSON in
+                    
+                    edgeJSON.layers.forEach { layerJSON in
                         
-                        let edge = tile.add(edge: edgeJSON.identifier)
+                        if let layer = self.add(layer: tileJSON.identifier, edgeIdentifier: edgeJSON.identifier) {
 
-                        edgeJSON.layers.forEach { layerJSON in
-
-                            if let layer = edge.addLayer() {
-
-                                layer.footpathType = layerJSON.footpathType
-                                layer.corners = layerJSON.corners
-                            }
+                            layer.footpathType = layerJSON.footpathType
+                            layer.corners = layerJSON.corners
                         }
                     }
                 }

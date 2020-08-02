@@ -14,16 +14,21 @@ public class Scene: SCNScene {
     
     public let camera = Camera()
     
+    public let blueprint: Blueprint
+    
     var lastUpdate: TimeInterval?
     
     public init(meadow: Meadow) {
         
         self.meadow = meadow
         
+        self.blueprint = Blueprint(graph: meadow.graph)
+        
         super.init()
         
         rootNode.addChildNode(meadow)
         rootNode.addChildNode(camera)
+        rootNode.addChildNode(blueprint)
     }
     
     required init?(coder: NSCoder) {

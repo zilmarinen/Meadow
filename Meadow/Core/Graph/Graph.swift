@@ -157,7 +157,7 @@ extension Graph {
             
             let polygon = Pasture.Polygon(vertices: vertices)
             
-            return polygon.contains(vector: vector)
+            return polygon.contains(vector: Vector(x: vector.x, y: vertices.first?.position.y ?? vector.y, z: vector.z))
         }
     }
     
@@ -232,12 +232,10 @@ extension Graph {
         var colors: [SCNVector4] = []
         
         let drawEdges = false
-        let drawJoints = true
+        let drawJoints = false
         let drawQuads = true
-        
+
         if drawEdges {
-            
-            print("drawing [\(edges.count)] edges")
         
             for edge in edges {
 
@@ -245,6 +243,9 @@ extension Graph {
                 let v1 = vectors[edge.v1]
 
                 for v2 in [v0, v1] {
+                    
+                    var v2 = v2
+                    v2.y = 0.0
 
                     if let index = vertexCache[v2] {
 
@@ -268,8 +269,6 @@ extension Graph {
         if drawJoints {
             
             let joins = joints.filter { $0.i1 != -1 }
-            
-            print("drawing [\(joins.count)] joints of [\(joints.count)]")
             
             for joint in joins {
                 
@@ -311,8 +310,6 @@ extension Graph {
         }
         
         if drawQuads {
-            
-            print("drawing [\(quads.count)] quads")
             
             for quad in quads {
                 

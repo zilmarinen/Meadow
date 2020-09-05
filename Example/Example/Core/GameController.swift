@@ -32,7 +32,13 @@ class GameController: NSObject {
             fatalError("Unable to make Meadow.metallib default device program library: \(error)")
         }
         
-        let meadow = Meadow(graph: Graph(rings: 10, size: 1.0, iterations: 1))
+        let plotter = HexGraph(rings: 7, size: 1.0)
+        
+        let resolver = LaplacianResolver(iterations: 5)
+        
+        let graph = Graph(plotter: plotter, resolver: resolver)
+        
+        let meadow = Meadow(graph: graph)
         
         self.sceneView = renderer
         self.scene = Scene(meadow: meadow)

@@ -23,7 +23,7 @@ public class Camera: SCNNode {
         let camera = SCNCamera()
         
         camera.usesOrthographicProjection = false
-        camera.fieldOfView = 7
+        camera.fieldOfView = 14
         
         node.camera = camera
         

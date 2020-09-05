@@ -40,6 +40,7 @@ public final class Meadow: SCNNode, SceneGraphIdentifiable, SceneGraphNode, Soil
         
         self.name = json?.name ?? "Meadow"
         self.backgroundColor = json?.backgroundColor ?? .black
+        self.categoryBitMask = SceneGraphNodeCategory.meadow.rawValue
         
         addChildNode(actors)
         addChildNode(area)

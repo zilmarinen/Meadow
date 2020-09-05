@@ -8,7 +8,7 @@
 
 import Pasture
 
-public class HexGraph: GraphPlotter, GraphResolver {
+public class HexGraph: GraphPlotter {
     
     enum Constants {
         

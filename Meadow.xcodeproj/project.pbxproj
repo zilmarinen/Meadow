@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1805574224D987E700EEAA60 /* LaplacianResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1805574124D987E700EEAA60 /* LaplacianResolver.swift */; };
+		1805574324D987E700EEAA60 /* LaplacianResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1805574124D987E700EEAA60 /* LaplacianResolver.swift */; };
 		1819B73A20A574F800BEE585 /* Meadow_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1819B73120A574F800BEE585 /* Meadow_iOS.framework */; };
 		1819B74120A574F800BEE585 /* Meadow_iOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 1819B73320A574F800BEE585 /* Meadow_iOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1819B75620A5752000BEE585 /* Meadow_macOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1819B74D20A5752000BEE585 /* Meadow_macOS.framework */; };
@@ -232,6 +234,7 @@
 
 /* Begin PBXFileReference section */
 		14A74BE995E1DD6F159F97B0 /* Pods-Meadow.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Meadow.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Meadow/Pods-Meadow.debug.xcconfig"; sourceTree = "<group>"; };
+		1805574124D987E700EEAA60 /* LaplacianResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaplacianResolver.swift; sourceTree = "<group>"; };
 		1819B73120A574F800BEE585 /* Meadow_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Meadow_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1819B73320A574F800BEE585 /* Meadow_iOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Meadow_iOS.h; sourceTree = "<group>"; };
 		1819B73420A574F800BEE585 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -387,6 +390,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1805573F24D987B700EEAA60 /* Plotters */ = {
+			isa = PBXGroup;
+			children = (
+				18FAD61624D44FE2009359A2 /* GraphPlotter.swift */,
+				18FAD61C24D46F46009359A2 /* HexGraph.swift */,
+			);
+			path = Plotters;
+			sourceTree = "<group>";
+		};
+		1805574024D987CF00EEAA60 /* Resolvers */ = {
+			isa = PBXGroup;
+			children = (
+				18FAD61924D46DD7009359A2 /* GraphResolver.swift */,
+				1805574124D987E700EEAA60 /* LaplacianResolver.swift */,
+			);
+			path = Resolvers;
+			sourceTree = "<group>";
+		};
 		1819B73220A574F800BEE585 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
@@ -612,11 +633,10 @@
 		18938F9B24BC3F93006CEAE2 /* Graph */ = {
 			isa = PBXGroup;
 			children = (
+				1805574024D987CF00EEAA60 /* Resolvers */,
+				1805573F24D987B700EEAA60 /* Plotters */,
 				18938F9C24BC3FA1006CEAE2 /* Graph.swift */,
 				18DAE79924C5ACAB004A6122 /* GraphCache.swift */,
-				18FAD61624D44FE2009359A2 /* GraphPlotter.swift */,
-				18FAD61924D46DD7009359A2 /* GraphResolver.swift */,
-				18FAD61C24D46F46009359A2 /* HexGraph.swift */,
 			);
 			path = Graph;
 			sourceTree = "<group>";
@@ -1185,6 +1205,7 @@
 				184E6302244DE45D00D2B6F8 /* Foliage+Encodable.swift in Sources */,
 				189A6028246D4E3200DD68A7 /* ShaderUniform.swift in Sources */,
 				183479DD245026C400E6516C /* GridDecodable.swift in Sources */,
+				1805574224D987E700EEAA60 /* LaplacianResolver.swift in Sources */,
 				18CCCA202473EC0200E0A94B /* Scene.swift in Sources */,
 				18DD6178249B514200BA114D /* LayeredTile.swift in Sources */,
 				18DAE79A24C5ACAB004A6122 /* GraphCache.swift in Sources */,
@@ -1282,6 +1303,7 @@
 				18EF598D23EDA86C0071DF1C /* WaterEdge.swift in Sources */,
 				189A6029246D4E3200DD68A7 /* ShaderUniform.swift in Sources */,
 				183479DE245026C400E6516C /* GridDecodable.swift in Sources */,
+				1805574324D987E700EEAA60 /* LaplacianResolver.swift in Sources */,
 				18CCCA212473EC0200E0A94B /* Scene.swift in Sources */,
 				18DD6179249B515D00BA114D /* LayeredTile.swift in Sources */,
 				18DAE79B24C5ACAB004A6122 /* GraphCache.swift in Sources */,

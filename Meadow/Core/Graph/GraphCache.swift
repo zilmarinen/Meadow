@@ -129,6 +129,11 @@ public class GraphCache {
             }
         }
         
+        func find(edges vector: Int) -> [Graph.Edge] {
+            
+            return edges.filter { $0.v0 == vector || $0.v1 == vector }
+        }
+        
         mutating func findOrCreate(joint edge: Graph.Edge, neighbour: Int) -> Graph.Joint {
             
             if let joint = find(joint: edge) {
@@ -147,6 +152,11 @@ public class GraphCache {
             
             return joints.first { edges[$0.e0].spans(v0: edge.v0, v1: edge.v1) }
         }
+        
+        func find(vectors vector: Int) -> [Int] {
+            
+            return Array(Set(find(edges: vector).map { ($0.v0 == vector ? $0.v1 : $0.v0) }))
+        }
     }
     
     var vectors: [Vector] = []
@@ -163,7 +173,32 @@ extension GraphCache {
         quads.create(quad: v0, v1: v1, v2: v2, v3: v3, centre: center)
     }
     
-    func quad(for pair: Graph.Joint) -> Graph.Quad {
+    func divide(triangle: Graph.Triangle) {
+        
+        let e0 = triangles.edges[triangle.e0]
+        let e1 = triangles.edges[triangle.e1]
+        let e2 = triangles.edges[triangle.e2]
+        
+        let j0 = triangles.joints[e0.j]
+        let j1 = triangles.joints[e1.j]
+        let j2 = triangles.joints[e2.j]
+        
+        let v0 = vectors[e0.v0]
+        let v1 = vectors[e1.v0]
+        let v2 = vectors[e2.v0]
+        
+        let v6 = (v0 + v1 + v2) / 3
+        
+        let index = vectors.count
+        
+        vectors.append(v6)
+        
+        create(quad: e0.v0, v1: j0.v, v2: index, v3: j2.v)
+        create(quad: e1.v0, v1: j1.v, v2: index, v3: j0.v)
+        create(quad: e2.v0, v1: j2.v, v2: index, v3: j1.v)
+    }
+    
+    func divide(pair: Graph.Joint) {
         
         let t0 = triangles.triangles[pair.i0]
         let t1 = triangles.triangles[pair.i1]
@@ -194,64 +229,15 @@ extension GraphCache {
         let e8 = (e0d ? x : z)
         let e9 = (e0d ? y : (e1s ? e2 : x))
         
-        let v = (vectors[e6.v0] + vectors[e7.v0] + vectors[e8.v0] + vectors[e9.v0]) / 4
+        let j0 = triangles.joints[e6.j]
+        let j1 = triangles.joints[e7.j]
+        let j2 = triangles.joints[e8.j]
+        let j3 = triangles.joints[e9.j]
+        let j4 = triangles.joints[diagonal.j]
         
-        return Graph.Quad(i: -1, e0: e6.i, e1: e7.i, e2: e8.i, e3: e9.i, v: v)
-    }
-    
-    func divide(triangle: Graph.Triangle) {
-        
-        let e0 = triangles.edges[triangle.e0]
-        let e1 = triangles.edges[triangle.e1]
-        let e2 = triangles.edges[triangle.e2]
-        
-        let j0 = triangles.joints[e0.j]
-        let j1 = triangles.joints[e1.j]
-        let j2 = triangles.joints[e2.j]
-        
-        let v0 = vectors[e0.v0]
-        let v1 = vectors[e1.v0]
-        let v2 = vectors[e2.v0]
-        
-        let v6 = (v0 + v1 + v2) / 3
-        
-        let index = vectors.count
-        
-        vectors.append(v6)
-        
-        create(quad: e0.v0, v1: j0.v, v2: index, v3: j2.v)
-        create(quad: e1.v0, v1: j1.v, v2: index, v3: j0.v)
-        create(quad: e2.v0, v1: j2.v, v2: index, v3: j1.v)
-    }
-    
-    func divide(pair: Graph.Joint) {
-        
-        let q = quad(for: pair)
-        
-        let e0 = triangles.edges[q.e0]
-        let e1 = triangles.edges[q.e1]
-        let e2 = triangles.edges[q.e2]
-        let e3 = triangles.edges[q.e3]
-        
-        let j0 = triangles.joints[e0.j]
-        let j1 = triangles.joints[e1.j]
-        let j2 = triangles.joints[e2.j]
-        let j3 = triangles.joints[e3.j]
-        
-        let v0 = vectors[e0.v0]
-        let v1 = vectors[e1.v0]
-        let v2 = vectors[e2.v0]
-        let v3 = vectors[e3.v0]
-        
-        let v8 = (v0 + v1 + v2 + v3) / 4
-        
-        let index = vectors.count
-        
-        vectors.append(v8)
-        
-        create(quad: e0.v0, v1: j0.v, v2: index, v3: j3.v)
-        create(quad: j0.v, v1: e1.v0, v2: j1.v, v3: index)
-        create(quad: index, v1: j1.v, v2: e2.v0, v3: j2.v)
-        create(quad: j3.v, v1: index, v2: j2.v, v3: e3.v0)
+        create(quad: e6.v0, v1: j0.v, v2: j4.v, v3: j3.v)
+        create(quad: j0.v, v1: e7.v0, v2: j1.v, v3: j4.v)
+        create(quad: j4.v, v1: j1.v, v2: e8.v0, v3: j2.v)
+        create(quad: j3.v, v1: j4.v, v2: j2.v, v3: e9.v0)
     }
 }

@@ -1,8 +1,0 @@
-{
-  "name": "Computer",
-  "type": 2,
-  "props": [
-    "Desktop",
-    "Laptop"
-  ]
-}

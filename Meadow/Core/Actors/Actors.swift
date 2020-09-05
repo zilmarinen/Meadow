@@ -2,140 +2,45 @@
 //  Actors.swift
 //  Meadow
 //
-//  Created by Zack Brown on 12/11/2018.
-//  Copyright © 2018 Script Orchard. All rights reserved.
+//  Created by Zack Brown on 23/04/2020.
+//  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
 import SceneKit
 
-public class Actors: SCNNode, SceneGraphChild, SceneGraphObserver, SceneGraphParent {
+public class Actors: SCNNode, SceneGraphIdentifiable, SceneGraphNode {
     
-    var children = Tree<Actor>()
+    var npcs: NPCs = NPCs()
     
-    public var observer: SceneGraphObserver?
+    override public init() {
     
-    var isDirty: Bool = false
-    
-    public override var isHidden: Bool {
+        super.init()
         
-        didSet {
-            
-            if isHidden != oldValue {
-                
-                becomeDirty()
-            }
-        }
+        name = "Actors"
+        
+        addChildNode(npcs)
     }
     
-    public var volume: Volume { return Volume(coordinate: Coordinate.zero, size: Size.one) }
-    
-    public override func addChildNode(_ child: SCNNode) {
+    required init?(coder: NSCoder) {
         
-        guard let child = child as? Actor else { return }
-        
-        if children.append(child) {
-            
-            super.addChildNode(child)
-            
-            becomeDirty()
-        }
+        fatalError("init(coder:) has not been implemented")
     }
+    
+    public var children: [SceneGraphNode] { return [npcs] }
+    
+    public var childCount: Int { return children.count }
+    
+    public var isLeaf: Bool { return children.isEmpty }
+    
+    public var category: SceneGraphNodeCategory { .actors }
+    
+    public var type: SceneGraphNodeType { return .grid }
 }
 
-extension Actors: SceneGraphUpdatable {
+extension Actors: Updatable {
     
-    public func update(deltaTime: TimeInterval) {
+    func update(delta: TimeInterval, time: TimeInterval) {
         
-        children.forEach { child in
-            
-            child.update(deltaTime: deltaTime)
-        }
-        
-        clean()
-    }
-}
-
-extension Actors {
-    
-    public var totalChildren: Int { return children.count }
-    
-    public func child(at index: Int) -> SceneGraphChild? {
-        
-        guard (0 ..< totalChildren).contains(index) else { return nil }
-        
-        return children[index]
-    }
-    
-    public func index(of child: SceneGraphChild) -> Int? {
-        
-        guard let child = child as? Actor else { return nil }
-        
-        return children.index(of: child)
-    }
-}
-
-extension Actors: SceneGraphSoilable {
-    
-    @discardableResult public func becomeDirty() -> Bool {
-        
-        if !isDirty {
-            
-            isDirty = true
-        }
-        
-        return isDirty
-    }
-    
-    @discardableResult public func clean() -> Bool {
-        
-        if !isDirty { return false }
-        
-        children.forEach { child in
-        
-            child.clean()
-        }
-        
-        isDirty = false
-        
-        return true
-    }
-}
-
-extension Actors {
-    
-    public func child(didBecomeDirty child: SceneGraphChild) {
-        
-        observer?.child(didBecomeDirty: child)
-    }
-}
-
-extension Actors {
-    
-    @discardableResult public func add(actor: Actor) -> Bool {
-        
-        if children.index(of: actor) == nil {
-            
-            addChildNode(actor)
-            
-            becomeDirty()
-        }
-        
-        return false
-    }
-    
-    @discardableResult public func remove(actor: Actor) -> Bool {
-        
-        if children.remove(actor) {
-            
-            actor.removeFromParentNode()
-            
-            actor.observer = nil
-            
-            becomeDirty()
-            
-            return true
-        }
-        
-        return false
+        npcs.update(delta: delta, time: time)
     }
 }

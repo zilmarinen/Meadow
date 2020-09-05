@@ -1,9 +1,0 @@
-{
-  "name": "Cabinet",
-  "type": 1,
-  "props": [
-    "Cabinet Left",
-    "Cabinet Middle",
-    "Cabinet Right"
-  ]
-}

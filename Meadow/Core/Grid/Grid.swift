@@ -2,101 +2,141 @@
 //  Grid.swift
 //  Meadow
 //
-//  Created by Zack Brown on 26/04/2018.
-//  Copyright © 2018 Script Orchard. All rights reserved.
+//  Created by Zack Brown on 07/02/2020.
+//  Copyright © 2020 Script Orchard. All rights reserved.
 //
 
+import Foundation
 import SceneKit
+import Pasture
 
-public class Grid<Chunk: GridChunk<Tile, Node>, Tile: GridTile<Node>, Node: GridNode>: SCNNode, Encodable, SceneGraphChild, SceneGraphObserver, SceneGraphParent {
+public class Grid<C: Chunk<T>, T: Tile>: SCNNode, Hideable, SceneGraphIdentifiable, SceneGraphNode, Soilable {
+
+    public weak var ancestor: SoilableParent?
     
-    var children = Tree<Chunk>()
+    public var identifier: Int = SceneGraphNodeType.grid.rawValue
     
-    public var observer: SceneGraphObserver?
+    public weak var graph: Graph?
+
+    public var isDirty = false
     
-    var isDirty: Bool = false
+    var chunks: [C] = []
     
     public override var isHidden: Bool {
         
         didSet {
             
-            if isHidden != oldValue {
-                
-                becomeDirty()
-            }
+            guard oldValue != isHidden else { return }
+            
+            becomeDirty()
         }
     }
     
-    public var volume: Volume {
+    public init(graph: Graph, ancestor: SoilableParent) {
         
-        return Volume(coordinate: Coordinate.zero, size: Size.one)
+        self.ancestor = ancestor
+        
+        self.graph = graph
+        
+        super.init()
+        
+        categoryBitMask = category.rawValue
     }
     
-    enum CodingKeys: CodingKey {
+    required init?(coder: NSCoder) {
         
-        case name
-        case children
-    }
-    
-    public func encode(to encoder: Encoder) throws {
-        
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        
-        try container.encode(self.name, forKey: .name)
-        try container.encode(self.children.children, forKey: .children)
+        fatalError("init(coder:) has not been implemented")
     }
     
     public override func addChildNode(_ child: SCNNode) {
         
-        guard let child = child as? Chunk else { return }
+        guard let chunk = child as? C, chunk.parent == nil else { return }
         
-        if children.append(child) {
+        super.addChildNode(chunk)
+        
+        chunks.append(chunk)
+        
+        becomeDirty()
+    }
+    
+    public var children: [SceneGraphNode] { return chunks }
+    
+    public var childCount: Int { return children.count }
+    
+    public var isLeaf: Bool { return children.isEmpty }
+    
+    public var category: SceneGraphNodeCategory { fatalError("Grid.category must be overridden") }
+    
+    public var type: SceneGraphNodeType { return .grid }
+    
+    public func add(tile identifier: Int) -> T? {
+        
+        guard let quad = graph?.quad(at: identifier), let joints = graph?.joints(for: quad), let vectors = graph?.vectors(for: quad) else { return nil }
+        
+        let slice = chunkSlice(for: quad.v)
+        
+        let chunk = find(chunk: slice) ?? C(ancestor: self, slice: slice)
+        
+        let tile = chunk.add(tile: quad.i, joints: joints, vectors: vectors)
+        
+        addChildNode(chunk)
+        
+        for joint in joints where joint.e1 != -1 {
             
-            super.addChildNode(child)
+            let identifier = (joint.i0 == tile.identifier ? joint.i1 : joint.i0)
             
-            becomeDirty()
+            if let neighbour = find(tile: identifier) {
+                
+                tile.add(neighbour: neighbour, identifier: joint.i)
+            }
         }
+        
+        return tile
     }
 }
 
 extension Grid {
     
-    public var totalChildren: Int { return children.count }
-    
-    public func child(at index: Int) -> SceneGraphChild? {
+    func find(chunk slice: C.Slice) -> C? {
         
-        guard (0 ..< totalChildren).contains(index) else { return nil }
-        
-        return children[index]
+        return chunks.first { chunk in
+            
+            return chunk.slice == slice
+        }
     }
     
-    public func index(of child: SceneGraphChild) -> Int? {
+    public func find(tile identifier: Int) -> T? {
         
-        guard let child = child as? Chunk else { return nil }
+        guard let quad = graph?.quad(at: identifier), let chunk = find(chunk: chunkSlice(for: quad.v)) else { return nil }
         
-        return children.index(of: child)
+        return chunk.find(tile: identifier)
+    }
+    
+    func remove(tile identifier: Int) {
+        
+        guard let quad = graph?.quad(at: identifier), let chunk = find(chunk: chunkSlice(for: quad.v)) else { return }
+        
+        chunk.remove(tile: identifier)
+        
+        if chunk.tiles.count == 0 {
+            
+            chunk.removeFromParentNode()
+        }
+    }
+    
+    func chunkSlice(for vector: Vector) -> C.Slice {
+        
+        return C.Slice(vector: vector)
     }
 }
 
-extension Grid: SceneGraphSoilable {
-    
-    @discardableResult public func becomeDirty() -> Bool {
-        
-        if !isDirty {
-            
-            isDirty = true
-            
-            observer?.child(didBecomeDirty: self)
-        }
-        
-        return isDirty
-    }
+extension Grid {
     
     @discardableResult public func clean() -> Bool {
         
-        if !isDirty { return false }
+        guard isDirty else { return false }
         
-        children.forEach { chunk in
+        chunks.forEach { chunk in
             
             chunk.clean()
         }
@@ -107,153 +147,43 @@ extension Grid: SceneGraphSoilable {
     }
 }
 
-extension Grid: SceneGraphUpdatable {
+extension Grid: Clearable {
     
-    public func update(deltaTime: TimeInterval) {
+    func clear() {
         
-        clean()
-        
-        children.forEach { chunk in
+        while(chunks.count > 0) {
             
-            chunk.update(deltaTime: deltaTime)
-        }
-    }
-}
-
-extension Grid {
-    
-    public func child(didBecomeDirty child: SceneGraphChild) {
-        
-        becomeDirty()
-        
-        observer?.child(didBecomeDirty: child)
-    }
-}
-
-extension Grid {
-    
-    func add(node volume: Volume) -> Node? {
-        
-        if volume.coordinate.y < World.floor || (volume.coordinate.y + volume.size.height) > World.ceiling {
+            let chunk = chunks.removeLast()
             
-            return nil
-        }
-        
-        if find(node: volume.coordinate) != nil {
-            
-            return nil
-        }
-        
-        let chunk = find(chunk: volume.coordinate) ?? Chunk(observer: self, volume: Chunk.fixedVolume(volume.coordinate))
-        
-        let tile = chunk.find(tile: volume.coordinate) ?? chunk.add(tile: Tile.fixedVolume(volume.coordinate))
-        
-        guard let node = tile?.add(node: volume) else { return nil }
-        
-        if chunk.parent == nil {
-            
-            addChildNode(chunk)
-            
-            chunk.categoryBitMask = categoryBitMask
-        }
-        
-        return node
-    }
-    
-    public func find(chunk coordinate: Coordinate) -> Chunk? {
-        
-        return children.first { chunk -> Bool in
-            
-            return chunk.volume.contains(coordinate: coordinate)
-        }
-    }
-    
-    public func find(tile coordinate: Coordinate) -> Tile? {
-        
-        if let chunk = find(chunk: coordinate), let tile = chunk.find(tile: coordinate) {
-            
-            return tile
-        }
-        
-        return nil
-    }
-    
-    public func find(node coordinate: Coordinate) -> Node? {
-        
-        if let tile = find(tile: coordinate), let node = tile.find(node: coordinate) {
-            
-            return node
-        }
-        
-        return nil
-    }
-    
-    @discardableResult public func remove(chunk: Chunk) -> Bool {
-        
-        if index(of: chunk) != nil {
+            chunk.clear()
             
             chunk.removeFromParentNode()
-            
-            chunk.observer = nil
-            
-            while let tile = chunk.children.first {
-                
-                chunk.remove(tile: tile)
-            }
-            
-            children.remove(chunk)
-            
-            becomeDirty()
-            
-            return true
         }
+    }
+}
+
+extension Grid: Encodable {
+    
+    enum CodingKeys: CodingKey {
         
-        return false
+        case chunks
     }
     
-    @discardableResult public func remove(tile: Tile) -> Bool {
+    public func encode(to encoder: Encoder) throws {
         
-        if let chunk = find(chunk: tile.volume.coordinate) {
-            
-            if chunk.remove(tile: tile) {
-                
-                while let node = tile.children.first {
-                    
-                    tile.remove(node: node)
-                }
-                
-                if chunk.totalChildren == 0 {
-                    
-                    remove(chunk: chunk)
-                }
-                
-                return true
-            }
-        }
+        var container = encoder.container(keyedBy: CodingKeys.self)
         
-        return false
+        try container.encode(chunks, forKey: .chunks)
     }
+}
+
+extension Grid: Updatable {
     
-    @discardableResult public func remove(node: Node) -> Bool {
+    func update(delta: TimeInterval, time: TimeInterval) {
         
-        if let tile = find(tile: node.volume.coordinate) {
+        chunks.forEach { chunk in
             
-            if tile.remove(node: node) {
-                
-                GridEdge.Edges.forEach { edge in
-                 
-                    node.remove(neighbour: edge)
-                }
-                
-                if tile.totalChildren == 0 {
-                    
-                    remove(tile: tile)
-                }
-                
-                return true
-            }
+            chunk.update(delta: delta, time: time)
         }
-        
-        return false
     }
 }

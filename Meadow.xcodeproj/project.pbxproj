@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		1805574224D987E700EEAA60 /* LaplacianResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1805574124D987E700EEAA60 /* LaplacianResolver.swift */; };
 		1805574324D987E700EEAA60 /* LaplacianResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1805574124D987E700EEAA60 /* LaplacianResolver.swift */; };
+		1814F6E825123C4D00593837 /* AreaType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1814F6E725123C4D00593837 /* AreaType.swift */; };
+		1814F6E925123C4D00593837 /* AreaType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1814F6E725123C4D00593837 /* AreaType.swift */; };
 		1819B73A20A574F800BEE585 /* Meadow_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1819B73120A574F800BEE585 /* Meadow_iOS.framework */; };
 		1819B74120A574F800BEE585 /* Meadow_iOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 1819B73320A574F800BEE585 /* Meadow_iOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1819B75620A5752000BEE585 /* Meadow_macOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1819B74D20A5752000BEE585 /* Meadow_macOS.framework */; };
@@ -45,6 +47,8 @@
 		184E6307244DE5C500D2B6F8 /* Meadow+Encodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184E62F4244DE40D00D2B6F8 /* Meadow+Encodable.swift */; };
 		185172B02463FA92006C9223 /* ShaderProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185172AF2463FA92006C9223 /* ShaderProgram.swift */; platformFilter = ios; };
 		185172B12463FA92006C9223 /* ShaderProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185172AF2463FA92006C9223 /* ShaderProgram.swift */; };
+		1857005825135BF80041A980 /* FoliageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1857005725135BF80041A980 /* FoliageType.swift */; };
+		1857005925135C360041A980 /* FoliageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1857005725135BF80041A980 /* FoliageType.swift */; };
 		1865A77A2497A35E008F5EA3 /* SCNView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1865A7792497A35E008F5EA3 /* SCNView.swift */; };
 		1865A77B2497A387008F5EA3 /* SCNView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1865A7792497A35E008F5EA3 /* SCNView.swift */; };
 		18891C0024CDBFCF00311F1F /* FootpathType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18891BFF24CDBFCF00311F1F /* FootpathType.swift */; };
@@ -235,6 +239,7 @@
 /* Begin PBXFileReference section */
 		14A74BE995E1DD6F159F97B0 /* Pods-Meadow.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Meadow.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Meadow/Pods-Meadow.debug.xcconfig"; sourceTree = "<group>"; };
 		1805574124D987E700EEAA60 /* LaplacianResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaplacianResolver.swift; sourceTree = "<group>"; };
+		1814F6E725123C4D00593837 /* AreaType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaType.swift; sourceTree = "<group>"; };
 		1819B73120A574F800BEE585 /* Meadow_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Meadow_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1819B73320A574F800BEE585 /* Meadow_iOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Meadow_iOS.h; sourceTree = "<group>"; };
 		1819B73420A574F800BEE585 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -261,6 +266,7 @@
 		184E6301244DE45D00D2B6F8 /* Foliage+Encodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Foliage+Encodable.swift"; sourceTree = "<group>"; };
 		184E6304244DE46600D2B6F8 /* Area+Encodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Area+Encodable.swift"; sourceTree = "<group>"; };
 		185172AF2463FA92006C9223 /* ShaderProgram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaderProgram.swift; sourceTree = "<group>"; };
+		1857005725135BF80041A980 /* FoliageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoliageType.swift; sourceTree = "<group>"; };
 		1865A7792497A35E008F5EA3 /* SCNView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCNView.swift; sourceTree = "<group>"; };
 		1868ABAC248FC84400DB7BBD /* Meadow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Meadow.h; sourceTree = "<group>"; };
 		18891BFF24CDBFCF00311F1F /* FootpathType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FootpathType.swift; sourceTree = "<group>"; };
@@ -785,6 +791,7 @@
 				18EF59AF23EDA8C70071DF1C /* Foliage.swift */,
 				18EF59B223EDA8CE0071DF1C /* FoliageChunk.swift */,
 				18EF59B523EDA8D70071DF1C /* FoliageTile.swift */,
+				1857005725135BF80041A980 /* FoliageType.swift */,
 			);
 			path = Foliage;
 			sourceTree = "<group>";
@@ -810,6 +817,7 @@
 				18EF597923EDA7C70071DF1C /* AreaTile.swift */,
 				18EF597C23EDA7CF0071DF1C /* AreaEdge.swift */,
 				18EF597F23EDA7DA0071DF1C /* AreaLayer.swift */,
+				1814F6E725123C4D00593837 /* AreaType.swift */,
 			);
 			path = Area;
 			sourceTree = "<group>";
@@ -1183,12 +1191,14 @@
 				18EF595223ED8F3A0071DF1C /* Clearable.swift in Sources */,
 				18EF595023ED8F3A0071DF1C /* World.swift in Sources */,
 				18FFD22124851F2E00C52A54 /* Water.metal in Sources */,
+				1857005825135BF80041A980 /* FoliageType.swift in Sources */,
 				18EF598F23EDA8720071DF1C /* WaterLayer.swift in Sources */,
 				184E62FF244DE45400D2B6F8 /* Footpath+Encodable.swift in Sources */,
 				18FFD2242485209700C52A54 /* Shadable.swift in Sources */,
 				18E0083724B84AFA00AD85C4 /* GridMesh.swift in Sources */,
 				18C0F889248913210030D633 /* SCNMaterialProperty.swift in Sources */,
 				18EF596623ED8F3A0071DF1C /* Layer.swift in Sources */,
+				1814F6E825123C4D00593837 /* AreaType.swift in Sources */,
 				18DAE79D24C5ADA2004A6122 /* Array.swift in Sources */,
 				18EF596023ED8F3A0071DF1C /* LayerCorners.swift in Sources */,
 				18B93786248D504300EE16A0 /* WaterType.swift in Sources */,
@@ -1281,12 +1291,14 @@
 				18EF595323ED8F3A0071DF1C /* Clearable.swift in Sources */,
 				18EF595123ED8F3A0071DF1C /* World.swift in Sources */,
 				18FFD22224851F2E00C52A54 /* Water.metal in Sources */,
+				1857005925135C360041A980 /* FoliageType.swift in Sources */,
 				18EF599023EDA8720071DF1C /* WaterLayer.swift in Sources */,
 				18EF596723ED8F3A0071DF1C /* Layer.swift in Sources */,
 				18FFD2252485209700C52A54 /* Shadable.swift in Sources */,
 				18E0083824B84AFA00AD85C4 /* GridMesh.swift in Sources */,
 				18C0F88A248913210030D633 /* SCNMaterialProperty.swift in Sources */,
 				18EF596123ED8F3A0071DF1C /* LayerCorners.swift in Sources */,
+				1814F6E925123C4D00593837 /* AreaType.swift in Sources */,
 				18DAE79E24C5ADA2004A6122 /* Array.swift in Sources */,
 				18EF59B123EDA8C70071DF1C /* Foliage.swift in Sources */,
 				18B93787248D504300EE16A0 /* WaterType.swift in Sources */,

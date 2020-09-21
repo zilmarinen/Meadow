@@ -34,7 +34,7 @@ public class TerrainTile: LayeredTile<TerrainEdge, TerrainLayer> {
     override func side(for edge: Int, face: GridMesh.Face, intersection: GridMesh.EdgeSegment?, atIndex index: Int) -> [Pasture.Polygon]? {
 
         guard shouldRender(face: edge, atIndex: index) else { return nil }
-
+        
         guard let face = (intersection != nil ? face.clip(intersection: intersection!) : face) else { return nil }
 
         guard face.upper.p0 != face.lower.p0 || face.upper.p1 != face.lower.p1 else { return nil }

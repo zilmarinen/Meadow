@@ -1,0 +1,142 @@
+//
+//  Terrain.swift
+//
+//  Created by Zack Brown on 02/11/2020.
+//
+
+import SceneKit
+
+class Terrain: SCNNode, Codable, SceneGraphNode, Soilable, Updatable {
+    
+    private enum CodingKeys: CodingKey {
+        
+        case name
+        case chunks
+    }
+    
+    var ancestor: SoilableParent? { return parent as? SoilableParent }
+    
+    var isDirty: Bool = false
+    
+    var chunks: [TerrainChunk] = []
+    
+    var children: [SceneGraphNode] { chunks }
+    var childCount: Int { chunks.count }
+    var isLeaf: Bool { chunks.isEmpty }
+    
+    override init() {
+        
+        super.init()
+        
+        name = "Terrain"
+    }
+    
+    required init(from decoder: Decoder) throws {
+        
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        chunks = try container.decode([TerrainChunk].self, forKey: .chunks)
+        
+        super.init()
+        
+        name = try container.decode(String.self, forKey: .name)
+        
+        chunks.forEach { chunk in
+            
+            chunk.grid = self
+            
+            addChildNode(chunk)
+        }
+    }
+    
+    required init?(coder: NSCoder) {
+        
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(name, forKey: .name)
+        try container.encode(chunks, forKey: .chunks)
+    }
+}
+
+extension Terrain {
+    
+    func add(tile coordinate: Coordinate) -> TerrainTile? {
+        
+        guard find(tile: coordinate) == nil else { return nil }
+        
+        let chunk = find(chunk: coordinate) ?? TerrainChunk(coordinate: coordinate)
+        
+        guard let tile = chunk.add(tile: coordinate) else { return nil }
+        
+        if chunk.grid == nil {
+            
+            chunk.grid = self
+            
+            addChildNode(chunk)
+        }
+        
+        Cardinal.allCases.forEach { cardinal in
+         
+            if let neighbour = find(tile: coordinate + cardinal.coordinate) {
+                
+                tile.add(neighbour: neighbour, cardinal: cardinal)
+            }
+        }
+        
+        return tile
+    }
+    
+    func find(tile coordinate: Coordinate) -> TerrainTile? {
+        
+        return find(chunk: coordinate)?.find(tile: coordinate)
+    }
+    
+    func remove(tile coordinate: Coordinate) {
+        
+        guard let chunk = find(chunk: coordinate) else { return }
+        
+        chunk.remove(tile: coordinate)
+        
+        guard chunk.tiles.isEmpty else { return }
+        
+        chunk.grid = nil
+        
+        chunk.removeFromParentNode()
+    }
+    
+    func find(chunk coordinate: Coordinate) -> TerrainChunk? {
+        
+        return chunks.first { coordinate.in(bounds: $0.coordinate, size: TerrainChunk.Constants.size) }
+    }
+}
+
+extension Terrain {
+    
+    @discardableResult func clean() -> Bool {
+        
+        guard isDirty else { return false }
+        
+        chunks.forEach { chunk in
+            
+            chunk.clean()
+        }
+        
+        return true
+    }
+}
+
+extension Terrain {
+    
+    func update(delta: TimeInterval, time: TimeInterval) {
+        
+        chunks.forEach { chunk in
+            
+            chunk.update(delta: delta, time: time)
+        }
+    }
+}

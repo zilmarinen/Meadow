@@ -14,7 +14,7 @@ enum Ordinal: Int, CaseIterable, Encodable {
 
 extension Ordinal {
     
-    private static var corners: [Vector] = [Vector(x: -0.5, y: 0.0, z: -0.5),
+    static var corners: [Vector] = [Vector(x: -0.5, y: 0.0, z: -0.5),
                                             Vector(x: 0.5, y: 0.0, z: -0.5),
                                             Vector(x: 0.5, y: 0.0, z: 0.5),
                                             Vector(x: -0.5, y: 0.0, z: 0.5),]

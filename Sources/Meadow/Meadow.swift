@@ -6,7 +6,7 @@
 
 import SceneKit
 
-class Meadow: SCNNode, Codable, SceneGraphNode, Updatable {
+public class Meadow: SCNNode, Codable, SceneGraphNode, Updatable {
     
     private enum CodingKeys: CodingKey {
         
@@ -14,11 +14,11 @@ class Meadow: SCNNode, Codable, SceneGraphNode, Updatable {
         case terrain
     }
     
-    let terrain: Terrain
+    public let terrain: Terrain
     
-    var children: [SceneGraphNode] { [terrain] }
-    var childCount: Int { children.count }
-    var isLeaf: Bool = false
+    public var children: [SceneGraphNode] { [terrain] }
+    public var childCount: Int { children.count }
+    public var isLeaf: Bool = false
     
     override init() {
         
@@ -27,7 +27,7 @@ class Meadow: SCNNode, Codable, SceneGraphNode, Updatable {
         super.init()
     }
     
-    required init(from decoder: Decoder) throws {
+    required public init(from decoder: Decoder) throws {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
@@ -43,7 +43,7 @@ class Meadow: SCNNode, Codable, SceneGraphNode, Updatable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         
         var container = encoder.container(keyedBy: CodingKeys.self)
         

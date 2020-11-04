@@ -4,7 +4,7 @@
 //  Created by Zack Brown on 03/11/2020.
 //
 
-import Foundation
+import CoreGraphics
 
 struct Vertex: Hashable {
     
@@ -24,9 +24,9 @@ struct Vertex: Hashable {
 
 extension Vertex {
     
-    func equal(to vertex: Vertex) -> Bool {
+    func isEqual(to vertex: Vertex) -> Bool {
         
-        return position.equal(to: vertex.position) && normal.equal(to: vertex.normal) && color == vertex.color && textureCoordinates.equal(to: vertex.textureCoordinates)
+        return position.isEqual(to: vertex.position) && normal.isEqual(to: vertex.normal) && color == vertex.color && textureCoordinates.isEqual(to: vertex.textureCoordinates)
     }
 }
 

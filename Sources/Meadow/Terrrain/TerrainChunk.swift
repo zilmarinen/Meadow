@@ -6,7 +6,7 @@
 
 import SceneKit
 
-class TerrainChunk: SCNNode, Codable, SceneGraphNode, Soilable, Updatable {
+class TerrainChunk: SCNNode, Codable, Hideable, SceneGraphNode, Soilable, Updatable {
     
     enum Constants {
         
@@ -39,6 +39,7 @@ class TerrainChunk: SCNNode, Codable, SceneGraphNode, Soilable, Updatable {
         super.init()
         
         name = "Chunk \(coordinate.description)"
+        position = SCNVector3(coordinate: coordinate)
     }
     
     required init(from decoder: Decoder) throws {
@@ -108,10 +109,16 @@ extension TerrainChunk {
         
         guard isDirty else { return false }
         
-        tiles.forEach { tile in
+        var polygons: [Polygon] = []
+        
+        for tile in tiles where !tile.isHidden {
             
             tile.clean()
+            
+            polygons.append(contentsOf: tile.render(position: Vector(coordinate: coordinate - tile.coordinate)))
         }
+        
+        geometry = SCNGeometry(mesh: Mesh(polygons: polygons))
         
         return true
     }
@@ -121,7 +128,7 @@ extension TerrainChunk {
     
     func update(delta: TimeInterval, time: TimeInterval) {
         
-        tiles.forEach { tile in
+        for tile in tiles where !tile.isHidden {
             
             tile.update(delta: delta, time: time)
         }

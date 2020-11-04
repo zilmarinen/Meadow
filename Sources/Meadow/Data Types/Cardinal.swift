@@ -25,21 +25,85 @@ enum Cardinal: Int, CaseIterable, Codable {
 
 extension Cardinal {
     
-    private static var Coordinates: [Coordinate] { return [
+    static var Coordinates: [Coordinate] = [
     
         .backward,
         .right,
         .forward,
         .left
-    ]}
+    ]
     
-    private static var Opposites: [Cardinal] = [
-        
+    static var Cardinals: [(Cardinal, Cardinal)] = [
+    
+        (.east, .west),
+        (.south, .north),
+        (.west, .east),
+        (.north, .south)
+    ]
+    
+    static var Opposites: [Cardinal] = [
+    
         south,
         west,
         north,
         east
     ]
+    
+    static var Ordinals: [(Ordinal, Ordinal)] = [
+    
+        (.northWest, .northEast),
+        (.northEast, .southEast),
+        (.southEast, .southWest),
+        (.southWest, .northWest)
+    ]
+    
+    static var Normals: [Vector] = [
+    
+        .backward,
+        .right,
+        .forward,
+        .left
+    ]
+    
+    static func cardinals(cardinal: Cardinal) -> (Cardinal, Cardinal) {
+        
+        return Cardinals[cardinal.rawValue]
+    }
+    
+    var cardinals: (Cardinal, Cardinal) {
+        
+        return Cardinal.cardinals(cardinal: self)
+    }
+    
+    static func opposite(cardinal: Cardinal) -> Cardinal {
+        
+        return Opposites[cardinal.rawValue]
+    }
+    
+    var opposite: Cardinal {
+        
+        return Cardinal.opposite(cardinal: self)
+    }
+    
+    static func ordinals(cardinal: Cardinal) -> (Ordinal, Ordinal) {
+        
+        return Ordinals[cardinal.rawValue]
+    }
+    
+    var ordinals: (Ordinal, Ordinal) {
+        
+        return Cardinal.ordinals(cardinal: self)
+    }
+    
+    static func normal(cardinal: Cardinal) -> Vector {
+        
+        return Normals[cardinal.rawValue]
+    }
+    
+    var normal: Vector {
+        
+        return Cardinal.normal(cardinal: self)
+    }
     
     static func coordinate(cardinal: Cardinal) -> Coordinate {
         
@@ -49,15 +113,5 @@ extension Cardinal {
     var coordinate: Coordinate {
         
         return Cardinal.coordinate(cardinal: self)
-    }
-    
-    static func opposite(cardinal: Cardinal) -> Cardinal {
-            
-        return Opposites[cardinal.rawValue]
-    }
-    
-    var opposite: Cardinal {
-        
-        return Cardinal.opposite(cardinal: self)
     }
 }

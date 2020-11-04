@@ -8,30 +8,35 @@ import Foundation
 import GLKit
 import SceneKit
 
-public struct Vector: Codable, Hashable {
+struct Vector: Codable, Hashable {
     
-    public var x: Double
-    public var y: Double
-    public var z: Double
+    var x: Double
+    var y: Double
+    var z: Double
     
-    public var description: String {
+    var description: String {
         
         return "[\(x), \(y), \(z)]"
     }
     
-    public init(x: Double, y: Double, z: Double) {
+    init(x: Double, y: Double, z: Double) {
         
         self.x = x
         self.y = y
         self.z = z
     }
     
-    public init(vector: GLKVector3) {
+    init(coordinate: Coordinate) {
+        
+        self.init(x: Double(coordinate.x), y: Double(coordinate.y), z: Double(coordinate.z))
+    }
+    
+    init(vector: GLKVector3) {
         
         self.init(x: Double(vector.x), y: Double(vector.y), z: Double(vector.z))
     }
     
-    public init(vector: SCNVector3) {
+    init(vector: SCNVector3) {
         
         self.init(x: Double(vector.x), y: Double(vector.y), z: Double(vector.z))
     }
@@ -86,7 +91,7 @@ extension Vector {
         return Vector(x: lhs.x / rhs, y: lhs.y / rhs, z: lhs.z / rhs)
     }
     
-    func equal(to vector: Vector) -> Bool {
+    func isEqual(to vector: Vector) -> Bool {
         
         return self == vector || ((abs(x - vector.x) < Math.epsilon) && (abs(y - vector.y) < Math.epsilon) && (abs(z - vector.z) < Math.epsilon))
     }
@@ -149,5 +154,161 @@ extension Vector {
         let cosine = (dot(vector: vector) / (magnitude * vector.magnitude))
         
         return acos(cosine)
+    }
+    
+    func angle(to plane: Plane) -> Double {
+            
+        let compliment = dot(vector: plane.normal) / magnitude
+        
+        return asin(compliment)
+    }
+    
+    func distance(from plane: Plane) -> Double {
+        
+        return plane.normal.dot(vector: self) - plane.distance
+    }
+    
+    func project(onto plane: Plane) -> Self {
+        
+        return self - plane.normal * distance(from: plane)
+    }
+    
+    func compare(with plane: Plane) -> Plane.Comparison {
+        
+        let d = distance(from: plane)
+        
+        return (d < -Math.epsilon ? .back : (d > Math.epsilon ? .front : .coplanar))
+    }
+}
+
+extension Array where Element == Vector {
+    
+    func convex() -> Bool {
+            
+        guard count > 3, let first = first, let last = last else { return count > 2 }
+        
+        var ab = first - last
+        
+        var normal: Vector?
+        
+        for i in 0..<count {
+            
+            let v0 = self[i]
+            let v1 = self[(i + 1) % count]
+            
+            let bc = v1 - v0
+            
+            var cross = ab.cross(vector: bc)
+            
+            let magnitude = cross.magnitude
+            
+            if magnitude > Math.epsilon {
+                
+                cross = cross / magnitude
+                
+                if let normal = normal {
+                    
+                    guard cross.dot(vector: normal) >= 0 else { return false }
+                }
+                
+                normal = normal ?? cross
+            }
+            
+            ab = bc
+        }
+        
+        return true
+    }
+    
+    func degenerate() -> Bool {
+        
+        guard let first = first, let last = last else { return false }
+        
+        var ab = first - last
+        
+        var magnitude = ab.magnitude
+        
+        guard magnitude > Math.epsilon else { return true }
+        
+        ab = ab / magnitude
+        
+        for i in 0..<count {
+            
+            let v0 = self[i]
+            let v1 = self[(i + 1) % count]
+            
+            var bc = v1 - v0
+            
+            magnitude = bc.magnitude
+            
+            bc = bc / magnitude
+            
+            guard magnitude > Math.epsilon, abs(ab.dot(vector: bc) + 1) > Math.epsilon else { return true }
+            
+            ab = bc
+        }
+        
+        return false
+    }
+    
+    func clockwise() -> Bool {
+        
+        guard count > 2 else { return false }
+        
+        var sum = 0.0
+        
+        for i in 0..<count {
+            
+            let v0 = self[i]
+            let v1 = self[(i + 1) % count]
+            
+            sum += (v1.x - v0.x) * (v1.y + v0.y)
+        }
+        
+        return sum > 0
+    }
+    
+    func normal() -> Vector {
+        
+        switch count {
+            
+        case 0, 1: return .z
+            
+        case 2:
+            
+            let ab = self.last! - self.first!
+            
+            return ab.cross(vector: .z).cross(vector: ab)
+            
+        default:
+            
+            var v0 = self.first!
+            var v1: Vector?
+            
+            var ab = v0 - self.last!
+            
+            var magnitude = 0.0
+            
+            for vector in self {
+                
+                let bc = vector - v0
+                
+                let normal = ab.cross(vector: bc)
+                
+                let squaredMagnitude = normal.squaredMagnitude
+                
+                if squaredMagnitude > magnitude {
+                    
+                    magnitude = squaredMagnitude
+                    
+                    v1 = normal / squaredMagnitude.squareRoot()
+                }
+                
+                v0 = vector
+                ab = bc
+            }
+            
+            return v1 ?? .z
+        }
     }
 }

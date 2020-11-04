@@ -6,7 +6,7 @@
 
 import SceneKit
 
-class Terrain: SCNNode, Codable, SceneGraphNode, Soilable, Updatable {
+public class Terrain: SCNNode, Codable, Hideable, SceneGraphNode, Soilable, Updatable {
     
     private enum CodingKeys: CodingKey {
         
@@ -20,9 +20,9 @@ class Terrain: SCNNode, Codable, SceneGraphNode, Soilable, Updatable {
     
     var chunks: [TerrainChunk] = []
     
-    var children: [SceneGraphNode] { chunks }
-    var childCount: Int { chunks.count }
-    var isLeaf: Bool { chunks.isEmpty }
+    public var children: [SceneGraphNode] { chunks }
+    public var childCount: Int { chunks.count }
+    public var isLeaf: Bool { chunks.isEmpty }
     
     override init() {
         
@@ -31,7 +31,7 @@ class Terrain: SCNNode, Codable, SceneGraphNode, Soilable, Updatable {
         name = "Terrain"
     }
     
-    required init(from decoder: Decoder) throws {
+    required public init(from decoder: Decoder) throws {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
@@ -54,7 +54,7 @@ class Terrain: SCNNode, Codable, SceneGraphNode, Soilable, Updatable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         
         var container = encoder.container(keyedBy: CodingKeys.self)
         

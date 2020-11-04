@@ -4,11 +4,11 @@
 //  Created by Zack Brown on 03/11/2020.
 //
 
-import Foundation
+import CoreGraphics
 
 extension CGPoint: Hashable {
     
-    public init(vector: Vector) {
+    init(vector: Vector) {
         
         self.init(x: vector.x, y: vector.y)
     }
@@ -18,11 +18,6 @@ extension CGPoint: Hashable {
         hasher.combine(x)
         hasher.combine(y)
     }
-}
-
-public extension CGPoint {
-    
-    static var uvs: [CGPoint] { return [CGPoint(x: 0.0, y: 0.0), CGPoint(x: 1.0, y: 0.0), CGPoint(x: 1.0, y: 1.0), CGPoint(x: 0.0, y: 1.0), CGPoint(x: 0.5, y: 0.5)] }
 }
 
 extension CGPoint {
@@ -52,7 +47,7 @@ extension CGPoint {
         return CGPoint(x: lhs.x / CGFloat(rhs), y: lhs.y / CGFloat(rhs))
     }
     
-    func equal(to point: CGPoint) -> Bool {
+    func isEqual(to point: CGPoint) -> Bool {
         
         return self == point || ((abs(x - point.x) < CGFloat(Math.epsilon)) && (abs(y - point.y) < CGFloat(Math.epsilon)))
     }

@@ -5,12 +5,24 @@
 //
 
 import Foundation
+import SceneKit
 
-class TerrainTile: Codable, Equatable, SceneGraphNode, Soilable, Updatable {
+class TerrainTile: Codable, Equatable, Renderable, SceneGraphNode, Soilable, Updatable {
     
     private enum CodingKeys: CodingKey {
         
         case coordinate
+        case slope
+    }
+    
+    struct Constants {
+        
+        static let slopeHeight = 1.0
+    }
+    
+    struct Slope: Codable {
+        
+        let cardinal: Cardinal
     }
     
     var ancestor: SoilableParent? { return chunk }
@@ -18,7 +30,20 @@ class TerrainTile: Codable, Equatable, SceneGraphNode, Soilable, Updatable {
     var isDirty: Bool = false
     
     weak var chunk: TerrainChunk?
-    var coordinate: Coordinate
+    var coordinate: Coordinate {
+        
+        didSet {
+            
+            guard oldValue.adjacency(to: coordinate) == .equal else {
+                
+                coordinate = oldValue
+                
+                return
+            }
+            
+            becomeDirty()
+        }
+    }
     
     var name: String? { return "Tile \(coordinate.description)" }
     
@@ -26,7 +51,17 @@ class TerrainTile: Codable, Equatable, SceneGraphNode, Soilable, Updatable {
     var childCount: Int { 0 }
     var isLeaf: Bool = true
     
-    var neighbours: [Cardinal : TerrainTile] = [:]
+    var neighbours: [Cardinal : TerrainTile] = [:] {
+        
+        didSet {
+            
+            becomeDirty()
+        }
+    }
+    
+    var isHidden: Bool = false
+    
+    var slope: Slope? = nil
     
     init(coordinate: Coordinate) {
         
@@ -38,6 +73,7 @@ class TerrainTile: Codable, Equatable, SceneGraphNode, Soilable, Updatable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         coordinate = try container.decode(Coordinate.self, forKey: .coordinate)
+        slope = try container.decode(Slope.self, forKey: .slope)
     }
     
     func encode(to encoder: Encoder) throws {
@@ -45,6 +81,7 @@ class TerrainTile: Codable, Equatable, SceneGraphNode, Soilable, Updatable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         try container.encode(coordinate, forKey: .coordinate)
+        try container.encode(slope, forKey: .slope)
     }
 }
 
@@ -109,5 +146,27 @@ extension TerrainTile {
     func update(delta: TimeInterval, time: TimeInterval) {
         
         //
+    }
+}
+
+extension TerrainTile {
+    
+    func render(position: Vector) -> [Polygon] {
+        
+        var polygons: [Polygon] = []
+        
+        var corners = Ordinal.allCases.map { position + $0.vector }
+        
+        if let slope = slope {
+            
+            let (o0, o1) = slope.cardinal.ordinals
+            
+            corners[o0.rawValue].y += Constants.slopeHeight
+            corners[o1.rawValue].y += Constants.slopeHeight
+        }
+        
+        polygons.append(Polygon(vertices: corners.map { Vertex(position: $0, normal: .zero) }))
+        
+        return polygons
     }
 }

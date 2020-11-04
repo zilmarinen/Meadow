@@ -8,30 +8,30 @@ import Foundation
 import GLKit
 import SceneKit
 
-struct Vector: Codable, Hashable {
+public struct Vector: Codable, Hashable {
     
-    var x: Double
-    var y: Double
-    var z: Double
+    public var x: Double
+    public var y: Double
+    public var z: Double
     
-    var description: String {
+    public var description: String {
         
         return "[\(x), \(y), \(z)]"
     }
     
-    init(x: Double, y: Double, z: Double) {
+    public init(x: Double, y: Double, z: Double) {
         
         self.x = x
         self.y = y
         self.z = z
     }
     
-    init(vector: GLKVector3) {
+    public init(vector: GLKVector3) {
         
         self.init(x: Double(vector.x), y: Double(vector.y), z: Double(vector.z))
     }
     
-    init(vector: SCNVector3) {
+    public init(vector: SCNVector3) {
         
         self.init(x: Double(vector.x), y: Double(vector.y), z: Double(vector.z))
     }

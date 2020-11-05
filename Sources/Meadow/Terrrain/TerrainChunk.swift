@@ -30,6 +30,7 @@ class TerrainChunk: SCNNode, Codable, Hideable, SceneGraphNode, Soilable, Updata
     var children: [SceneGraphNode] { tiles }
     public var childCount: Int { children.count }
     public var isLeaf: Bool { children.isEmpty }
+    public var category: Int { SceneGraphCategory.terrainChunk.rawValue }
     
     init(coordinate: Coordinate) {
         
@@ -40,6 +41,7 @@ class TerrainChunk: SCNNode, Codable, Hideable, SceneGraphNode, Soilable, Updata
         
         name = "Chunk \(coordinate.description)"
         position = SCNVector3(coordinate: coordinate)
+        categoryBitMask = category
     }
     
     required init(from decoder: Decoder) throws {
@@ -50,6 +52,8 @@ class TerrainChunk: SCNNode, Codable, Hideable, SceneGraphNode, Soilable, Updata
         tiles = try container.decode([TerrainTile].self, forKey: .tiles)
         
         super.init()
+        
+        categoryBitMask = category
         
         tiles.forEach { tile in
             

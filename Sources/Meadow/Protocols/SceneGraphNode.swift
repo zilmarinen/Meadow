@@ -10,6 +10,8 @@ import Foundation
     
     var name: String? { get }
     
+    var category: Int { get }
+    
     var children: [SceneGraphNode] { get }
     
     var childCount: Int { get }

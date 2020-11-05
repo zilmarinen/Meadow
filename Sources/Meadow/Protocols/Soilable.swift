@@ -4,17 +4,17 @@
 //  Created by Zack Brown on 03/11/2020.
 //
 
-protocol SoilableChild {
+public protocol SoilableChild {
     
     var ancestor: SoilableParent? { get }
 }
 
-protocol SoilableParent: class {
+public protocol SoilableParent: class {
     
     func child(didBecomeDirty child: SoilableChild)
 }
 
-protocol Soilable: SoilableChild & SoilableParent {
+public protocol Soilable: SoilableChild & SoilableParent {
     
     var isDirty: Bool { get set }
     
@@ -24,7 +24,7 @@ protocol Soilable: SoilableChild & SoilableParent {
 
 extension Soilable {
     
-    @discardableResult func becomeDirty() -> Bool {
+    @discardableResult public func becomeDirty() -> Bool {
         
         guard !isDirty else { return false }
         
@@ -35,7 +35,7 @@ extension Soilable {
         return true
     }
     
-    func child(didBecomeDirty child: SoilableChild) {
+    public func child(didBecomeDirty child: SoilableChild) {
         
         ancestor?.child(didBecomeDirty: child)
         

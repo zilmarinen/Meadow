@@ -25,9 +25,9 @@ public class TerrainTile: Codable, Equatable, Renderable, SceneGraphNode, Soilab
         let cardinal: Cardinal
     }
     
-    var ancestor: SoilableParent? { return chunk }
+    public var ancestor: SoilableParent? { return chunk }
     
-    var isDirty: Bool = false
+    public var isDirty: Bool = false
     
     weak var chunk: TerrainChunk?
     var coordinate: Coordinate {
@@ -50,6 +50,7 @@ public class TerrainTile: Codable, Equatable, Renderable, SceneGraphNode, Soilab
     public var children: [SceneGraphNode] { [] }
     public var childCount: Int { children.count }
     public var isLeaf: Bool { children.isEmpty }
+    public var category: Int { SceneGraphCategory.terrainTile.rawValue }
     
     var neighbours: [Cardinal : TerrainTile] = [:] {
         
@@ -131,7 +132,7 @@ extension TerrainTile {
 
 extension TerrainTile {
     
-    @discardableResult func clean() -> Bool {
+    @discardableResult public func clean() -> Bool {
         
         guard isDirty else { return false }
         

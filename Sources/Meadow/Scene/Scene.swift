@@ -24,6 +24,7 @@ public class Scene: SCNScene, Codable, SceneGraphNode {
     public var children: [SceneGraphNode] { [meadow] }
     public var childCount: Int { children.count }
     public var isLeaf: Bool { children.isEmpty }
+    public var category: Int { SceneGraphCategory.scene.rawValue }
     
     private var lastUpdate: TimeInterval?
     

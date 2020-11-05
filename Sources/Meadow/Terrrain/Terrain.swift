@@ -14,21 +14,23 @@ public class Terrain: SCNNode, Codable, Hideable, SceneGraphNode, Soilable, Upda
         case chunks
     }
     
-    var ancestor: SoilableParent? { return parent as? SoilableParent }
+    public var ancestor: SoilableParent? { return parent as? SoilableParent }
     
-    var isDirty: Bool = false
+    public var isDirty: Bool = false
     
     var chunks: [TerrainChunk] = []
     
     public var children: [SceneGraphNode] { chunks }
     public var childCount: Int { children.count }
     public var isLeaf: Bool { children.isEmpty }
+    public var category: Int { SceneGraphCategory.terrain.rawValue }
     
     override init() {
         
         super.init()
         
         name = "Terrain"
+        categoryBitMask = category
     }
     
     required public init(from decoder: Decoder) throws {
@@ -40,6 +42,7 @@ public class Terrain: SCNNode, Codable, Hideable, SceneGraphNode, Soilable, Upda
         super.init()
         
         name = try container.decode(String.self, forKey: .name)
+        categoryBitMask = category
         
         chunks.forEach { chunk in
             
@@ -76,6 +79,8 @@ extension Terrain {
         if chunk.grid == nil {
             
             chunk.grid = self
+            
+            chunks.append(chunk)
             
             addChildNode(chunk)
         }
@@ -117,7 +122,7 @@ extension Terrain {
 
 extension Terrain {
     
-    @discardableResult func clean() -> Bool {
+    @discardableResult public func clean() -> Bool {
         
         guard isDirty else { return false }
         

@@ -20,9 +20,9 @@ public class Scene: SCNScene, Codable {
     
     private var lastUpdate: TimeInterval?
     
-    public init(meadow: Meadow) {
+    public override init() {
         
-        self.meadow = meadow
+        self.meadow = Meadow()
         
         super.init()
         

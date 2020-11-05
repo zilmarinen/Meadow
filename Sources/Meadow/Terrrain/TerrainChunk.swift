@@ -28,8 +28,8 @@ class TerrainChunk: SCNNode, Codable, Hideable, SceneGraphNode, Soilable, Updata
     var tiles: [TerrainTile] = []
     
     var children: [SceneGraphNode] { tiles }
-    var childCount: Int { tiles.count }
-    var isLeaf: Bool { tiles.isEmpty }
+    public var childCount: Int { children.count }
+    public var isLeaf: Bool { children.isEmpty }
     
     init(coordinate: Coordinate) {
         

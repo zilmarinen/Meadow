@@ -4,11 +4,11 @@
 //  Created by Zack Brown on 02/11/2020.
 //
 
-struct Coordinate: Codable, Equatable {
+public struct Coordinate: Codable, Equatable {
     
-    let x: Int
-    let y: Int
-    let z: Int
+    public let x: Int
+    public let y: Int
+    public let z: Int
     
     var description: String {
         

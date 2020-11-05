@@ -7,7 +7,7 @@
 import Foundation
 import SceneKit
 
-class TerrainTile: Codable, Equatable, Renderable, SceneGraphNode, Soilable, Updatable {
+public class TerrainTile: Codable, Equatable, Renderable, SceneGraphNode, Soilable, Updatable {
     
     private enum CodingKeys: CodingKey {
         
@@ -45,11 +45,11 @@ class TerrainTile: Codable, Equatable, Renderable, SceneGraphNode, Soilable, Upd
         }
     }
     
-    var name: String? { return "Tile \(coordinate.description)" }
+    public var name: String? { return "Tile \(coordinate.description)" }
     
-    var children: [SceneGraphNode] { [] }
-    var childCount: Int { 0 }
-    var isLeaf: Bool = true
+    public var children: [SceneGraphNode] { [] }
+    public var childCount: Int { children.count }
+    public var isLeaf: Bool { children.isEmpty }
     
     var neighbours: [Cardinal : TerrainTile] = [:] {
         
@@ -68,7 +68,7 @@ class TerrainTile: Codable, Equatable, Renderable, SceneGraphNode, Soilable, Upd
         self.coordinate = coordinate
     }
     
-    required init(from decoder: Decoder) throws {
+    required public init(from decoder: Decoder) throws {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
@@ -76,7 +76,7 @@ class TerrainTile: Codable, Equatable, Renderable, SceneGraphNode, Soilable, Upd
         slope = try container.decode(Slope.self, forKey: .slope)
     }
     
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         
         var container = encoder.container(keyedBy: CodingKeys.self)
         
@@ -87,7 +87,7 @@ class TerrainTile: Codable, Equatable, Renderable, SceneGraphNode, Soilable, Upd
 
 extension TerrainTile {
     
-    static func == (lhs: TerrainTile, rhs: TerrainTile) -> Bool {
+    public static func == (lhs: TerrainTile, rhs: TerrainTile) -> Bool {
         
         return lhs.coordinate == rhs.coordinate
     }

@@ -18,7 +18,7 @@ public class Meadow: SCNNode, Codable, SceneGraphNode, Updatable {
     
     public var children: [SceneGraphNode] { [terrain] }
     public var childCount: Int { children.count }
-    public var isLeaf: Bool = false
+    public var isLeaf: Bool { children.isEmpty }
     
     override init() {
         

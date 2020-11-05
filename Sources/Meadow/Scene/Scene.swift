@@ -6,7 +6,7 @@
 
 import SceneKit
 
-public class Scene: SCNScene, Codable {
+public class Scene: SCNScene, Codable, SceneGraphNode {
     
     private enum CodingKeys: CodingKey {
         
@@ -17,6 +17,12 @@ public class Scene: SCNScene, Codable {
     public var backgroundColor: Color = .white
     
     public let meadow: Meadow
+    
+    public var name: String?
+    
+    public var children: [SceneGraphNode] { [meadow] }
+    public var childCount: Int { children.count }
+    public var isLeaf: Bool { children.isEmpty }
     
     private var lastUpdate: TimeInterval?
     

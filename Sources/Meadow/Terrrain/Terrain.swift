@@ -21,8 +21,8 @@ public class Terrain: SCNNode, Codable, Hideable, SceneGraphNode, Soilable, Upda
     var chunks: [TerrainChunk] = []
     
     public var children: [SceneGraphNode] { chunks }
-    public var childCount: Int { chunks.count }
-    public var isLeaf: Bool { chunks.isEmpty }
+    public var childCount: Int { children.count }
+    public var isLeaf: Bool { children.isEmpty }
     
     override init() {
         
@@ -65,7 +65,7 @@ public class Terrain: SCNNode, Codable, Hideable, SceneGraphNode, Soilable, Upda
 
 extension Terrain {
     
-    func add(tile coordinate: Coordinate) -> TerrainTile? {
+    public func add(tile coordinate: Coordinate) -> TerrainTile? {
         
         guard find(tile: coordinate) == nil else { return nil }
         
@@ -91,12 +91,12 @@ extension Terrain {
         return tile
     }
     
-    func find(tile coordinate: Coordinate) -> TerrainTile? {
+    public func find(tile coordinate: Coordinate) -> TerrainTile? {
         
         return find(chunk: coordinate)?.find(tile: coordinate)
     }
     
-    func remove(tile coordinate: Coordinate) {
+    public func remove(tile coordinate: Coordinate) {
         
         guard let chunk = find(chunk: coordinate) else { return }
         

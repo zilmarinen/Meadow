@@ -14,9 +14,16 @@ public struct Coordinate: Codable, Equatable {
         
         return "[\(x), \(y), \(z)]"
     }
+    
+    public init(x: Int, y: Int, z: Int) {
+        
+        self.x = x
+        self.y = y
+        self.z = z
+    }
 }
 
-extension Coordinate {
+public extension Coordinate {
     
     static var zero = Coordinate(x: 0, y: 0, z: 0)
     static var left = Coordinate(x: -1, y: 0, z: 0)

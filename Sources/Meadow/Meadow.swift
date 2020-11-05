@@ -25,6 +25,8 @@ public class Meadow: SCNNode, Codable, SceneGraphNode, Updatable {
         terrain = Terrain()
         
         super.init()
+        
+        name = "Meadow"
     }
     
     required public init(from decoder: Decoder) throws {

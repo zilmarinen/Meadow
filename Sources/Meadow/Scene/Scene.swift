@@ -11,6 +11,7 @@ public class Scene: SCNScene, Codable, SceneGraphNode {
     private enum CodingKeys: CodingKey {
         
         case backgroundColor
+        case name
         case meadow
     }
     
@@ -32,6 +33,8 @@ public class Scene: SCNScene, Codable, SceneGraphNode {
         
         super.init()
         
+        name = "Scene"
+        
         rootNode.addChildNode(meadow)
     }
     
@@ -40,6 +43,7 @@ public class Scene: SCNScene, Codable, SceneGraphNode {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         backgroundColor = try container.decode(Color.self, forKey: .backgroundColor)
+        name = try container.decode(String.self, forKey: .name)
         meadow = try container.decode(Meadow.self, forKey: .meadow)
         
         super.init()
@@ -55,6 +59,7 @@ public class Scene: SCNScene, Codable, SceneGraphNode {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         try container.encode(backgroundColor, forKey: .backgroundColor)
+        try container.encode(name, forKey: .name)
         try container.encode(meadow, forKey: .meadow)
     }
 }

@@ -6,13 +6,17 @@
 
 import SceneKit
 
-public class Meadow: SCNNode, Codable, SceneGraphNode, Updatable {
+public class Meadow: SCNNode, Codable, SceneGraphNode, Soilable, Updatable {
     
     private enum CodingKeys: CodingKey {
         
         case name
         case terrain
     }
+    
+    public var ancestor: SoilableParent? { return parent as? SoilableParent }
+    
+    public var isDirty: Bool = false
     
     public let terrain: Terrain
     
@@ -52,6 +56,18 @@ public class Meadow: SCNNode, Codable, SceneGraphNode, Updatable {
         
         try container.encode(name, forKey: .name)
         try container.encode(terrain, forKey: .terrain)
+    }
+}
+
+extension Meadow {
+    
+    @discardableResult public func clean() -> Bool {
+        
+        guard isDirty else { return false }
+        
+        terrain.clean()
+        
+        return true
     }
 }
 

@@ -6,7 +6,7 @@
 
 import SceneKit
 
-public class Scene: SCNScene, Codable, SceneGraphNode {
+public class Scene: SCNScene, Codable, SceneGraphNode, Soilable {
     
     private enum CodingKeys: CodingKey {
         
@@ -14,6 +14,10 @@ public class Scene: SCNScene, Codable, SceneGraphNode {
         case name
         case meadow
     }
+    
+    public var ancestor: SoilableParent? { return nil }
+    
+    public var isDirty: Bool = false
     
     public var backgroundColor: Color = .white
     
@@ -65,6 +69,18 @@ public class Scene: SCNScene, Codable, SceneGraphNode {
     }
 }
 
+extension Scene {
+    
+    @discardableResult public func clean() -> Bool {
+        
+        guard isDirty else { return false }
+        
+        meadow.clean()
+        
+        return true
+    }
+}
+
 extension Scene: SCNSceneRendererDelegate {
 
     public func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
@@ -72,6 +88,8 @@ extension Scene: SCNSceneRendererDelegate {
         let delta = time - (lastUpdate ?? time)
         
         meadow.update(delta: delta, time: time)
+        
+        clean()
         
         lastUpdate = time
     }

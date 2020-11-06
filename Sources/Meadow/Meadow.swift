@@ -32,6 +32,8 @@ public class Meadow: SCNNode, Codable, SceneGraphNode, Soilable, Updatable {
         super.init()
         
         name = "Meadow"
+        
+        addChildNode(terrain)
     }
     
     required public init(from decoder: Decoder) throws {
@@ -43,6 +45,8 @@ public class Meadow: SCNNode, Codable, SceneGraphNode, Soilable, Updatable {
         super.init()
         
         self.name = try container.decode(String.self, forKey: .name)
+        
+        addChildNode(terrain)
     }
     
     required init?(coder: NSCoder) {

@@ -79,11 +79,3 @@ extension Coordinate {
         return .adrift
     }
 }
-
-extension Coordinate {
-    
-    func `in`(bounds coordinate: Coordinate, size: Int) -> Bool {
-        
-        return x >= coordinate.x && x < (coordinate.x + size) && z >= coordinate.z && z < (coordinate.z + size)
-    }
-}

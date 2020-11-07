@@ -34,7 +34,7 @@ public class TerrainChunk: SCNNode, Codable, Hideable, SceneGraphNode, Soilable,
     
     init(coordinate: Coordinate) {
         
-        self.coordinate = coordinate
+        self.coordinate = Coordinate(x: coordinate.x - (coordinate.x % Constants.size), y: 0, z: coordinate.z - (coordinate.z % Constants.size))
         self.tiles = []
         
         super.init()
@@ -136,5 +136,13 @@ extension TerrainChunk {
             
             tile.update(delta: delta, time: time)
         }
+    }
+}
+
+extension TerrainChunk {
+    
+    func contains(coordinate other: Coordinate) -> Bool {
+        
+        return other.x >= coordinate.x && other.x < (coordinate.x + Constants.size) && other.z >= coordinate.z && other.z < (coordinate.z + Constants.size)
     }
 }

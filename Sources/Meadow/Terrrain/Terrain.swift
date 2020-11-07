@@ -116,7 +116,7 @@ extension Terrain {
     
     func find(chunk coordinate: Coordinate) -> TerrainChunk? {
         
-        return chunks.first { coordinate.in(bounds: $0.coordinate, size: TerrainChunk.Constants.size) }
+        return chunks.first { $0.contains(coordinate: coordinate) }
     }
 }
 

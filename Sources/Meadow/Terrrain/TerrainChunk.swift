@@ -21,7 +21,7 @@ public class TerrainChunk: SCNNode, Codable, Hideable, SceneGraphNode, Soilable,
     
     public var ancestor: SoilableParent? { return grid }
     
-    public var isDirty: Bool = false
+    public var isDirty: Bool = true
     
     weak var grid: Terrain?
     let coordinate: Coordinate
@@ -39,8 +39,8 @@ public class TerrainChunk: SCNNode, Codable, Hideable, SceneGraphNode, Soilable,
         
         super.init()
         
-        name = "Chunk \(coordinate.description)"
-        position = SCNVector3(coordinate: coordinate)
+        name = "Chunk \(self.coordinate.description)"
+        position = SCNVector3(coordinate: self.coordinate)
         categoryBitMask = category
     }
     
@@ -87,6 +87,8 @@ extension TerrainChunk {
         
         tile.chunk = self
         
+        becomeDirty()
+        
         return tile
     }
     
@@ -104,6 +106,8 @@ extension TerrainChunk {
         tile.chunk = nil
             
         tiles.remove(at: index)
+        
+        becomeDirty()
     }
 }
 

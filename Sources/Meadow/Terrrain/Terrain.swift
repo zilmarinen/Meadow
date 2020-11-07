@@ -16,7 +16,7 @@ public class Terrain: SCNNode, Codable, Hideable, SceneGraphNode, Soilable, Upda
     
     public var ancestor: SoilableParent? { return parent as? SoilableParent }
     
-    public var isDirty: Bool = false
+    public var isDirty: Bool = true
     
     var chunks: [TerrainChunk] = []
     
@@ -93,6 +93,8 @@ extension Terrain {
             }
         }
         
+        becomeDirty()
+        
         return tile
     }
     
@@ -112,6 +114,8 @@ extension Terrain {
         chunk.grid = nil
         
         chunk.removeFromParentNode()
+        
+        becomeDirty()
     }
     
     func find(chunk coordinate: Coordinate) -> TerrainChunk? {

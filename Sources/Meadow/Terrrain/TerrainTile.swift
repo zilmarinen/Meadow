@@ -138,6 +138,8 @@ extension TerrainTile {
         
         //
         
+        isDirty = false
+        
         return true
     }
 }

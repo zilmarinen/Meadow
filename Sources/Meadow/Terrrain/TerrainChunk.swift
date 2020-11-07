@@ -21,7 +21,7 @@ public class TerrainChunk: SCNNode, Codable, Hideable, SceneGraphNode, Soilable,
     
     public var ancestor: SoilableParent? { return grid }
     
-    public var isDirty: Bool = true
+    public var isDirty: Bool = false
     
     weak var grid: Terrain?
     let coordinate: Coordinate
@@ -127,6 +127,8 @@ extension TerrainChunk {
         }
         
         geometry = SCNGeometry(mesh: Mesh(polygons: polygons))
+        
+        isDirty = false
         
         return true
     }

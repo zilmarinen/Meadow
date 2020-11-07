@@ -16,7 +16,7 @@ public class Terrain: SCNNode, Codable, Hideable, SceneGraphNode, Soilable, Upda
     
     public var ancestor: SoilableParent? { return parent as? SoilableParent }
     
-    public var isDirty: Bool = true
+    public var isDirty: Bool = false
     
     var chunks: [TerrainChunk] = []
     
@@ -134,6 +134,8 @@ extension Terrain {
             
             chunk.clean()
         }
+        
+        isDirty = false
         
         return true
     }

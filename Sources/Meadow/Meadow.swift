@@ -71,6 +71,8 @@ extension Meadow {
         
         terrain.clean()
         
+        isDirty = false
+        
         return true
     }
 }

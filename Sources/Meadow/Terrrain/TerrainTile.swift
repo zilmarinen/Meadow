@@ -7,7 +7,7 @@
 import Foundation
 import SceneKit
 
-public class TerrainTile: Codable, Equatable, Renderable, SceneGraphNode, Soilable, Updatable {
+public class TerrainTile: NSObject, Codable, Renderable, SceneGraphNode, Soilable, Updatable {
     
     private enum CodingKeys: CodingKey {
         

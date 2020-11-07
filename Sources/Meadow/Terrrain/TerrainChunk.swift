@@ -6,7 +6,7 @@
 
 import SceneKit
 
-class TerrainChunk: SCNNode, Codable, Hideable, SceneGraphNode, Soilable, Updatable {
+public class TerrainChunk: SCNNode, Codable, Hideable, SceneGraphNode, Soilable, Updatable {
     
     enum Constants {
         
@@ -19,15 +19,15 @@ class TerrainChunk: SCNNode, Codable, Hideable, SceneGraphNode, Soilable, Updata
         case tiles
     }
     
-    var ancestor: SoilableParent? { return grid }
+    public var ancestor: SoilableParent? { return grid }
     
-    var isDirty: Bool = false
+    public var isDirty: Bool = false
     
     weak var grid: Terrain?
     let coordinate: Coordinate
     var tiles: [TerrainTile] = []
     
-    var children: [SceneGraphNode] { tiles }
+    public var children: [SceneGraphNode] { tiles }
     public var childCount: Int { children.count }
     public var isLeaf: Bool { children.isEmpty }
     public var category: Int { SceneGraphCategory.terrainChunk.rawValue }
@@ -44,7 +44,7 @@ class TerrainChunk: SCNNode, Codable, Hideable, SceneGraphNode, Soilable, Updata
         categoryBitMask = category
     }
     
-    required init(from decoder: Decoder) throws {
+    required public init(from decoder: Decoder) throws {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
@@ -66,7 +66,7 @@ class TerrainChunk: SCNNode, Codable, Hideable, SceneGraphNode, Soilable, Updata
         fatalError("init(coder:) has not been implemented")
     }
     
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         
         var container = encoder.container(keyedBy: CodingKeys.self)
         
@@ -109,7 +109,7 @@ extension TerrainChunk {
 
 extension TerrainChunk {
     
-    @discardableResult func clean() -> Bool {
+    @discardableResult public func clean() -> Bool {
         
         guard isDirty else { return false }
         

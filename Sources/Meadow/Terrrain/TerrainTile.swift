@@ -168,7 +168,9 @@ extension TerrainTile {
             corners[o1.rawValue].y += Constants.slopeHeight
         }
         
-        polygons.append(Polygon(vertices: corners.map { Vertex(position: $0, normal: .zero) }))
+        let normal = corners.normal()
+        
+        polygons.append(Polygon(vertices: corners.map { Vertex(position: $0, normal: normal) }))
         
         return polygons
     }

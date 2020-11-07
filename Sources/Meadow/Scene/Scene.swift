@@ -17,11 +17,12 @@ public class Scene: SCNScene, Codable, SceneGraphNode {
     
     public var backgroundColor: Color = .white
     
+    public let camera = Camera()
     public let meadow: Meadow
     
     public var name: String?
     
-    public var children: [SceneGraphNode] { [meadow] }
+    public var children: [SceneGraphNode] { [camera, meadow] }
     public var childCount: Int { children.count }
     public var isLeaf: Bool { children.isEmpty }
     public var category: Int { SceneGraphCategory.scene.rawValue }
@@ -36,6 +37,7 @@ public class Scene: SCNScene, Codable, SceneGraphNode {
         
         name = "Scene"
         
+        rootNode.addChildNode(camera)
         rootNode.addChildNode(meadow)
     }
     
@@ -48,6 +50,9 @@ public class Scene: SCNScene, Codable, SceneGraphNode {
         meadow = try container.decode(Meadow.self, forKey: .meadow)
         
         super.init()
+        
+        rootNode.addChildNode(camera)
+        rootNode.addChildNode(meadow)
     }
     
     required init?(coder: NSCoder) {

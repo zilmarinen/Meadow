@@ -123,7 +123,7 @@ extension TerrainChunk {
             
             tile.clean()
             
-            polygons.append(contentsOf: tile.render(position: Vector(coordinate: coordinate - tile.coordinate)))
+            polygons.append(contentsOf: tile.render(position: Vector(coordinate: tile.coordinate - coordinate)))
         }
         
         geometry = SCNGeometry(mesh: Mesh(polygons: polygons))

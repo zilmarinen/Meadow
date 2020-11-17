@@ -68,7 +68,7 @@ public class Terrain: SCNNode, Codable, Hideable, SceneGraphNode, Soilable, Upda
 
 extension Terrain {
     
-    public func add(tile coordinate: Coordinate) -> TerrainTile? {
+    public func add(tile coordinate: Coordinate, tileType: TerrainTileType = .water) -> TerrainTile? {
         
         guard find(tile: coordinate) == nil else { return nil }
         
@@ -92,6 +92,8 @@ extension Terrain {
                 tile.add(neighbour: neighbour, cardinal: cardinal)
             }
         }
+        
+        tile.set(tileType: tileType)
         
         becomeDirty()
         

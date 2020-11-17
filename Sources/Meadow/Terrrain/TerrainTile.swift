@@ -13,6 +13,7 @@ public class TerrainTile: NSObject, Codable, Renderable, SceneGraphNode, Soilabl
         
         case coordinate
         case slope
+        case tileType
     }
     
     struct Constants {
@@ -20,7 +21,7 @@ public class TerrainTile: NSObject, Codable, Renderable, SceneGraphNode, Soilabl
         static let slopeHeight = 1.0
     }
     
-    struct Slope: Codable {
+    struct Slope: Codable, Equatable {
         
         let cardinal: Cardinal
     }
@@ -62,7 +63,25 @@ public class TerrainTile: NSObject, Codable, Renderable, SceneGraphNode, Soilabl
     
     var isHidden: Bool = false
     
-    var slope: Slope? = nil
+    var slope: Slope? = nil {
+        
+        didSet {
+            
+            guard oldValue != slope else { return }
+            
+            becomeDirty()
+        }
+    }
+    
+    var tileType: TerrainTileType = .water {
+        
+        didSet {
+            
+            guard oldValue != tileType else { return }
+            
+            becomeDirty()
+        }
+    }
     
     init(coordinate: Coordinate) {
         
@@ -75,6 +94,7 @@ public class TerrainTile: NSObject, Codable, Renderable, SceneGraphNode, Soilabl
         
         coordinate = try container.decode(Coordinate.self, forKey: .coordinate)
         slope = try container.decode(Slope.self, forKey: .slope)
+        tileType = try container.decode(TerrainTileType.self, forKey: .tileType)
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -83,6 +103,7 @@ public class TerrainTile: NSObject, Codable, Renderable, SceneGraphNode, Soilabl
         
         try container.encode(coordinate, forKey: .coordinate)
         try container.encode(slope, forKey: .slope)
+        try container.encode(tileType, forKey: .tileType)
     }
 }
 
@@ -136,7 +157,7 @@ extension TerrainTile {
         
         guard isDirty else { return false }
         
-        //
+        collapse()
         
         isDirty = false
         
@@ -158,7 +179,7 @@ extension TerrainTile {
         
         var polygons: [Polygon] = []
         
-        var corners = Ordinal.allCases.map { position + $0.vector }
+        var corners = Ordinal.allCases.reversed().map { position + $0.vector }
         
         if let slope = slope {
             
@@ -170,8 +191,32 @@ extension TerrainTile {
         
         let normal = corners.normal()
         
-        polygons.append(Polygon(vertices: corners.map { Vertex(position: $0, normal: normal) }))
+        polygons.append(Polygon(vertices: corners.map { Vertex(position: $0, normal: normal, color: tileType.color) }))
         
         return polygons
+    }
+}
+
+extension TerrainTile {
+    
+    public func set(tileType: TerrainTileType) {
+        
+        for (_, neighbour) in neighbours {
+            
+            if !tileType.blends(with: neighbour.tileType) {
+                
+                return
+            }
+        }
+        
+        self.tileType = tileType
+    }
+}
+
+extension TerrainTile {
+    
+    func collapse() {
+        
+        //
     }
 }

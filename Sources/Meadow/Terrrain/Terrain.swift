@@ -6,7 +6,7 @@
 
 import SceneKit
 
-public class Terrain: SCNNode, Codable, Hideable, SceneGraphNode, Soilable, Updatable {
+public class Terrain: SCNNode, Codable, Hideable, Responder, SceneGraphNode, Soilable, Updatable {
     
     private enum CodingKeys: CodingKey {
         

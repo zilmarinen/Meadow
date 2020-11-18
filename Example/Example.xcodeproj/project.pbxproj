@@ -65,7 +65,6 @@
 			children = (
 				188808C92562BD920044D28A /* AppDelegate.swift */,
 				188808DA2562BDCC0044D28A /* Controllers */,
-				188808CF2562BD930044D28A /* Main.storyboard */,
 				188808DB2562BDD70044D28A /* Storyboards */,
 				188808DC2562BDE60044D28A /* Supporting Files */,
 			);
@@ -83,6 +82,7 @@
 		188808DB2562BDD70044D28A /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
+				188808CF2562BD930044D28A /* Main.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";

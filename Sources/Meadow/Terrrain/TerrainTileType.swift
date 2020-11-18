@@ -8,11 +8,11 @@ import Foundation
 
 public enum TerrainTileType: Int, CaseIterable, Codable {
     
-    case dirt
-    case grass
-    case sand
-    case undergrowth
-    case water
+    case dirt = 2
+    case grass = 3
+    case sand = 1
+    case undergrowth = 4
+    case water = 0
     
     var color: Color {
         

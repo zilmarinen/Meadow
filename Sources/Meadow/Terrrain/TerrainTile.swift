@@ -7,7 +7,7 @@
 import Foundation
 import SceneKit
 
-public class TerrainTile: NSObject, Codable, Renderable, SceneGraphNode, Soilable, Updatable {
+public class TerrainTile: NSObject, Codable, Renderable, Responder, SceneGraphNode, Soilable, Updatable {
     
     private enum CodingKeys: CodingKey {
         
@@ -83,6 +83,8 @@ public class TerrainTile: NSObject, Codable, Renderable, SceneGraphNode, Soilabl
         }
     }
     
+    var tile: TerrainTilesetTile? = nil
+    
     init(coordinate: Coordinate) {
         
         self.coordinate = coordinate
@@ -136,6 +138,13 @@ extension TerrainTile {
         return neighbours[cardinal]
     }
     
+    func find(neighbour ordinal: Ordinal) -> TerrainTile? {
+        
+        let (c0, c1) = ordinal.cardinals
+        
+        return find(neighbour: c0)?.find(neighbour: c1) ?? find(neighbour: c1)?.find(neighbour: c0)
+    }
+    
     func remove(neighbour cardinal: Cardinal) {
         
         guard let neighbour = neighbours[cardinal] else { return }
@@ -177,9 +186,11 @@ extension TerrainTile {
     
     func render(position: Vector) -> [Polygon] {
         
+        guard let uvs = tile?.uvs else { return [] }
+        
         var polygons: [Polygon] = []
         
-        var corners = Ordinal.allCases.reversed().map { position + $0.vector }
+        var corners = Ordinal.allCases.map { position + $0.vector }
         
         if let slope = slope {
             
@@ -191,7 +202,22 @@ extension TerrainTile {
         
         let normal = corners.normal()
         
-        polygons.append(Polygon(vertices: corners.map { Vertex(position: $0, normal: normal, color: tileType.color) }))
+        let textureCoordinates = [CGPoint(x: uvs.start.x, y: 1 - uvs.end.y),
+                                  CGPoint(x: uvs.end.x, y: 1 - uvs.end.y),
+                                  CGPoint(x: uvs.end.x, y: 1 - uvs.start.y),
+                                  CGPoint(x: uvs.start.x, y: 1 - uvs.start.y)]
+        
+        var vertices: [Vertex] = []
+        
+        for index in 0..<corners.count {
+            
+            let corner = corners[index]
+            let uv = textureCoordinates[index]
+            
+            vertices.append(Vertex(position: corner, normal: normal, color: tileType.color, textureCoordinates: uv))
+        }
+        
+        polygons.append(Polygon(vertices: vertices.reversed()))
         
         return polygons
     }
@@ -217,6 +243,49 @@ extension TerrainTile {
     
     func collapse() {
         
-        //
+        guard let tileset = season?.tileset else { return }
+        
+        var tiles = tileset.tiles(with: tileType)
+        
+        Cardinal.allCases.forEach { cardinal in
+            
+            if let neighbour = find(neighbour: cardinal) {
+                
+                if let rule = neighbour.tile?.pattern.rule(for: cardinal.opposite) {
+                    
+                    tiles = tiles.filter { $0.pattern.rule(for: cardinal).matches(rule: rule) }
+                }
+                else if neighbour.tileType != tileType {
+                    
+                    let edgeType = TerrainTileType(rawValue: max(neighbour.tileType.rawValue, tileType.rawValue))
+                    
+                    let rule = TerrainTileRule(left: edgeType, center: edgeType, right: edgeType)
+                    
+                    tiles = tiles.filter { $0.pattern.rule(for: cardinal).matches(rule: rule) }
+                }
+                else {
+                    
+                    let (o0, o1) = cardinal.ordinals
+                    
+                    let d0 = find(neighbour: o0)
+                    let d1 = find(neighbour: o1)
+                    
+                    let t0 = (d0?.tileType ?? tileType).rawValue > tileType.rawValue ? d0?.tileType : nil
+                    let t1 = (d1?.tileType ?? tileType).rawValue > tileType.rawValue ? d1?.tileType : nil
+                    
+                    let rule = TerrainTileRule(left: t1, center: nil, right: t0)
+                    
+                    tiles = tiles.filter { $0.pattern.rule(for: cardinal).matches(rule: rule) }
+                }
+            }
+            else {
+                
+                let rule = TerrainTileRule(left: tileType, center: tileType, right: tileType)
+                
+                tiles = tiles.filter { $0.pattern.rule(for: cardinal).matches(rule: rule) }
+            }
+        }
+        
+        tile = tiles.last
     }
 }

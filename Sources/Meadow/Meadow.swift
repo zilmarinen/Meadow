@@ -14,9 +14,16 @@ public class Meadow: SCNNode, Codable, SceneGraphNode, Soilable, Updatable {
         case terrain
     }
     
+    public struct World {
+        
+        let season: Season
+    }
+    
     public var ancestor: SoilableParent? { return parent as? SoilableParent }
     
     public var isDirty: Bool = false
+    
+    public var world = World(season: .spring)
     
     public let terrain: Terrain
     
@@ -83,4 +90,9 @@ extension Meadow {
         
         terrain.update(delta: delta, time: time)
     }
+}
+
+extension Meadow: Responder {
+    
+    var season: Season? { world.season }
 }

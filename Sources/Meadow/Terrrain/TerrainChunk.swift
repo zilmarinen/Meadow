@@ -6,7 +6,7 @@
 
 import SceneKit
 
-public class TerrainChunk: SCNNode, Codable, Hideable, SceneGraphNode, Soilable, Updatable {
+public class TerrainChunk: SCNNode, Codable, Hideable, Responder, SceneGraphNode, Soilable, Updatable {
     
     enum Constants {
         
@@ -117,6 +117,8 @@ extension TerrainChunk {
         
         guard isDirty else { return false }
         
+        guard let tileset = season?.tileset else { return false }
+        
         var polygons: [Polygon] = []
         
         for tile in tiles where !tile.isHidden {
@@ -127,6 +129,7 @@ extension TerrainChunk {
         }
         
         geometry = SCNGeometry(mesh: Mesh(polygons: polygons))
+        geometry?.firstMaterial?.diffuse.contents = tileset.image
         
         isDirty = false
         

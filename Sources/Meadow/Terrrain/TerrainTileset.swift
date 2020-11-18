@@ -6,12 +6,22 @@
 
 import Foundation
 
+#if os(macOS)
+
+    import AppKit
+
+#else
+
+    import UIKit
+
+#endif
+
 struct TerrainTileset {
     
     enum Constants {
         
-        static let tilesetIdentifier = "_Tileset"
-        static let tilemapIdentifier = "_Tilemap"
+        static let tilesetIdentifier = "Tileset"
+        static let tilemapIdentifier = "Tilemap"
     }
     
     let image: MDWImage
@@ -19,13 +29,19 @@ struct TerrainTileset {
     
     init?(season: Season) throws {
         
-        guard let tileset = Bundle.module.image(forResource: "\(season.description)_\(Constants.tilesetIdentifier)"), let url = Bundle.module.url(forResource: "\(season.description)_\(Constants.tilemapIdentifier)", withExtension: "json") else { return nil }
-        
-        let data = try Data(contentsOf: url)
+        guard let tileset = Bundle.module.image(forResource: "\(season.description)_\(Constants.tilesetIdentifier)"), let json = NSDataAsset(name: "\(season.description)_\(Constants.tilemapIdentifier)", bundle: .module) else { return nil }
 
         let decoder = JSONDecoder()
-
+        
         image = tileset
-        tiles = try decoder.decode([TerrainTilesetTile].self, from: data)
+        tiles = try decoder.decode([TerrainTilesetTile].self, from: json.data)
+    }
+}
+
+extension TerrainTileset {
+    
+    func tiles(with tileType: TerrainTileType) -> [TerrainTilesetTile] {
+        
+        return tiles.filter { $0.tileType == tileType }
     }
 }

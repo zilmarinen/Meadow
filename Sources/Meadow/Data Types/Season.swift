@@ -6,7 +6,7 @@
 
 import Foundation
 
-enum Season: Int, CaseIterable, Codable {
+public enum Season: Int, CaseIterable, Codable {
     
     case spring
     case summer

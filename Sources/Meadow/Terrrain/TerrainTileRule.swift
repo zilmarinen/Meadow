@@ -8,9 +8,17 @@ import Foundation
 
 struct TerrainTileRule {
     
-    let cardinal: Cardinal
+    var left: TerrainTileType?
+    var center: TerrainTileType?
+    var right: TerrainTileType?
+}
+
+extension TerrainTileRule {
     
-    let left: TerrainTileType
-    let center: TerrainTileType
-    let right: TerrainTileType
+    func matches(rule: TerrainTileRule) -> Bool {
+        
+        return (left == rule.right || left == nil || rule.right == nil) &&
+                (center == rule.center || center == nil || rule.center == nil) &&
+                (right == rule.left || right == nil || rule.left == nil)
+    }
 }

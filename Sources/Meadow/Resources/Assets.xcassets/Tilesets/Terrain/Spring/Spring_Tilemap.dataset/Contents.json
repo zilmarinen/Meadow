@@ -1,8 +1,9 @@
 {
   "data" : [
     {
-      "filename" : "Spring.json",
-      "idiom" : "universal"
+      "filename" : "Spring_Tilemap.json",
+      "idiom" : "universal",
+      "universal-type-identifier" : "public.json"
     }
   ],
   "info" : {

@@ -17,6 +17,11 @@ public class Meadow: SCNNode, Codable, SceneGraphNode, Soilable, Updatable {
     public struct World {
         
         let season: Season
+        
+        lazy var tileset: TerrainTileset? = {
+            
+            return try? TerrainTileset(season: season)
+        }()
     }
     
     public var ancestor: SoilableParent? { return parent as? SoilableParent }
@@ -94,5 +99,5 @@ extension Meadow {
 
 extension Meadow: Responder {
     
-    var season: Season? { world.season }
+    var tileset: TerrainTileset? { world.tileset }
 }

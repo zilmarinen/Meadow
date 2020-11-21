@@ -4,7 +4,7 @@
 //  Created by Zack Brown on 03/11/2020.
 //
 
-enum Ordinal: Int, CaseIterable, Encodable {
+public enum Ordinal: Int, CaseIterable, Encodable {
     
     case northWest
     case northEast
@@ -14,10 +14,10 @@ enum Ordinal: Int, CaseIterable, Encodable {
 
 extension Ordinal {
     
-    static var corners: [Vector] = [Vector(x: -0.5, y: 0.0, z: -0.5),
-                                            Vector(x: 0.5, y: 0.0, z: -0.5),
-                                            Vector(x: 0.5, y: 0.0, z: 0.5),
-                                            Vector(x: -0.5, y: 0.0, z: 0.5),]
+    static var corners: [Vector] = [((Vector.forward + Vector.left) / 2),
+                                    ((Vector.forward + Vector.right) / 2),
+                                    ((Vector.backward + Vector.right) / 2),
+                                    ((Vector.backward + Vector.left) / 2)]
     
     static var Cardinals: [(Cardinal, Cardinal)] = [
     

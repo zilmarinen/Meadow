@@ -7,7 +7,7 @@
 import Foundation
 import GameplayKit
 
-class RNG {
+class RNG: RandomNumberGenerator {
     
     let seed: UInt64
     
@@ -17,5 +17,10 @@ class RNG {
         
         self.seed = seed
         self.generator = GKMersenneTwisterRandomSource(seed: seed)
+    }
+    
+    func next() -> UInt64 {
+        
+        return UInt64(abs(generator.nextInt()))
     }
 }

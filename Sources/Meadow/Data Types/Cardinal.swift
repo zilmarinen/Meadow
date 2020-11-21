@@ -4,7 +4,7 @@
 //  Created by Zack Brown on 03/11/2020.
 //
 
-enum Cardinal: Int, CaseIterable, Codable {
+public enum Cardinal: Int, CaseIterable, Codable {
     
     case north
     case east
@@ -27,9 +27,9 @@ extension Cardinal {
     
     static var Coordinates: [Coordinate] = [
     
-        .backward,
-        .right,
         .forward,
+        .right,
+        .backward,
         .left
     ]
     
@@ -59,9 +59,9 @@ extension Cardinal {
     
     static var Normals: [Vector] = [
     
-        .backward,
-        .right,
         .forward,
+        .right,
+        .backward,
         .left
     ]
     

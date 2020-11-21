@@ -21,6 +21,14 @@ struct TerrainTilesetTile: Decodable {
         
         let start: CGPoint
         let end: CGPoint
+        
+        var uvs: [CGPoint] {
+            
+            return [CGPoint(x: start.x, y: end.y),
+                    CGPoint(x: end.x, y: end.y),
+                    CGPoint(x: end.x, y: start.y),
+                    CGPoint(x: start.x, y: start.y)]
+        }
     }
     
     var tileType: TerrainTileType

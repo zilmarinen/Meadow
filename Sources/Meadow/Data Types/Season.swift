@@ -34,9 +34,4 @@ public enum Season: Int, CaseIterable, Codable {
         case .winter: return "Wi"
         }
     }
-    
-    var tileset: TerrainTileset? {
-        
-        return try? TerrainTileset(season: self)
-    }
 }

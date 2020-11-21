@@ -10,12 +10,12 @@ protocol Responder: Soilable {
     
     var responder: Responder? { get }
     
-    var season: Season? { get }
+    var tileset: TerrainTileset? { get }
 }
 
 extension Responder {
     
     var responder: Responder? { ancestor as? Responder }
     
-    var season: Season? { responder?.season }
+    var tileset: TerrainTileset? { responder?.tileset }
 }

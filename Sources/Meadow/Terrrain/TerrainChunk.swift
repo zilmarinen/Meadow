@@ -117,7 +117,7 @@ extension TerrainChunk {
         
         guard isDirty else { return false }
         
-        guard let tileset = season?.tileset else { return false }
+        guard let tileset = tileset else { return false }
         
         var polygons: [Polygon] = []
         
@@ -125,7 +125,9 @@ extension TerrainChunk {
             
             tile.clean()
             
-            polygons.append(contentsOf: tile.render(position: Vector(coordinate: tile.coordinate - coordinate)))
+            let polys = tile.render(position: Vector(coordinate: Coordinate(x: tile.coordinate.x, y: 0, z: tile.coordinate.z) - Coordinate(x: coordinate.x, y: 0, z: coordinate.z)))
+            
+            polygons.append(contentsOf: polys)
         }
         
         geometry = SCNGeometry(mesh: Mesh(polygons: polygons))

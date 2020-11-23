@@ -24,10 +24,10 @@ struct TerrainTilesetTile: Decodable {
         
         var uvs: [CGPoint] {
             
-            return [CGPoint(x: start.x, y: end.y),
-                    CGPoint(x: end.x, y: end.y),
-                    CGPoint(x: end.x, y: start.y),
-                    CGPoint(x: start.x, y: start.y)]
+            return [CGPoint(x: end.x, y: end.y),
+                    CGPoint(x: start.x, y: end.y),
+                    CGPoint(x: start.x, y: start.y),
+                    CGPoint(x: end.x, y: start.y)]
         }
     }
     

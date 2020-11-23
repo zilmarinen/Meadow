@@ -121,6 +121,11 @@ extension TerrainChunk {
         
         var polygons: [Polygon] = []
         
+        for child in childNodes {
+            
+            child.removeFromParentNode()
+        }
+        
         for tile in tiles where !tile.isHidden {
             
             tile.clean()
@@ -128,6 +133,21 @@ extension TerrainChunk {
             let polys = tile.render(position: Vector(coordinate: Coordinate(x: tile.coordinate.x, y: 0, z: tile.coordinate.z) - Coordinate(x: coordinate.x, y: 0, z: coordinate.z)))
             
             polygons.append(contentsOf: polys)
+            
+            for cardinal in Cardinal.allCases {
+                
+                let box = SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0)
+                
+                let node = SCNNode(geometry: box)
+                
+                let vector = Vector(coordinate: Coordinate(x: tile.coordinate.x, y: 0, z: tile.coordinate.z) - Coordinate(x: coordinate.x, y: 0, z: coordinate.z))
+                
+                node.position = SCNVector3(vector: vector + (cardinal.normal * Vector(x: 0.25, y: 0.0, z: 0.25)))
+                
+                box.firstMaterial?.diffuse.contents = (tile.traversable(cardinal: cardinal) ? MDWColor.systemGreen : MDWColor.systemRed)
+                
+                addChildNode(node)
+            }
         }
         
         geometry = SCNGeometry(mesh: Mesh(polygons: polygons))

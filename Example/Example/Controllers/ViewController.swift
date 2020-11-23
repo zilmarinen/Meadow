@@ -20,13 +20,33 @@ class ViewController: NSViewController {
         let scene = Scene()
         
         scene.camera.camera?.usesOrthographicProjection = true
-        scene.camera.position = SCNVector3(x: -20, y: 20, z: -20)
+        scene.camera.position = SCNVector3(x: 0, y: 20, z: 20)
         scene.camera.look(at: scene.meadow.position)
         
         sceneView.scene = scene
         sceneView.delegate = scene
         sceneView.allowsCameraControl = true
         sceneView.isPlaying = true
+        sceneView.autoenablesDefaultLighting = true
+        /*
+        let tiles = [Coordinate(x: 0, y: 0, z: 0): TerrainTileType.sand,
+        
+                     Coordinate(x: 1, y: 0, z: 0): TerrainTileType.sand,   //west
+                     Coordinate(x: -1, y: 0, z: 0): TerrainTileType.sand,  //east
+                     Coordinate(x: 0, y: 0, z: 1): TerrainTileType.water,   //north
+                     Coordinate(x: 0, y: 0, z: -1): TerrainTileType.sand]  //south
+        
+        for (coordinate, tileType) in tiles {
+            
+            if let tile = scene.meadow.terrain.add(tile: coordinate, tileType: tileType) {
+                
+                if tile.coordinate.x == -1 {
+                    
+                    //tile.slope = .east
+                }
+            }
+        }*/
+        
         
         let width = 5
         let depth = 3
@@ -41,12 +61,12 @@ class ViewController: NSViewController {
         
         if let tile = scene.meadow.terrain.find(tile: Coordinate(x: 1, y: 0, z: 1)) {
             
-            tile.slope = .east
+            tile.slope = .west
         }
         
         if let tile = scene.meadow.terrain.find(tile: Coordinate(x: 2, y: 0, z: 1)) {
             
-            tile.slope = .east
+            tile.slope = .west
             tile.coordinate = Coordinate(x: 2, y: 1, z: 1)
         }
         
@@ -54,6 +74,12 @@ class ViewController: NSViewController {
             
             tile.coordinate = Coordinate(x: 3, y: 2, z: 1)
         }
+        
+        
+//        let box = SCNBox(width: 1.0, height: 1.0, length: 1.0, chamferRadius: 0.0)
+//        box.firstMaterial?.diffuse.contents = MDWColor.systemRed
+//        let node = SCNNode(geometry: box)
+//        scene.rootNode.addChildNode(node)
         
         /*
         let size = 20

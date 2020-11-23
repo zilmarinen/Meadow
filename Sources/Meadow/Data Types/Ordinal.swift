@@ -6,25 +6,25 @@
 
 public enum Ordinal: Int, CaseIterable, Encodable {
     
-    case northWest
     case northEast
-    case southEast
+    case northWest
     case southWest
+    case southEast
 }
 
 extension Ordinal {
     
-    static var corners: [Vector] = [((Vector.forward + Vector.left) / 2),
-                                    ((Vector.forward + Vector.right) / 2),
-                                    ((Vector.backward + Vector.right) / 2),
-                                    ((Vector.backward + Vector.left) / 2)]
+    static var corners: [Vector] = [((Cardinal.normal(cardinal: .north) + Cardinal.normal(cardinal: .east)) / 2),
+                                    ((Cardinal.normal(cardinal: .north) + Cardinal.normal(cardinal: .west)) / 2),
+                                    ((Cardinal.normal(cardinal: .south) + Cardinal.normal(cardinal: .west)) / 2),
+                                    ((Cardinal.normal(cardinal: .south) + Cardinal.normal(cardinal: .east)) / 2)]
     
     static var Cardinals: [(Cardinal, Cardinal)] = [
     
-        (.west, .north),
-        (.north, .east),
-        (.east, .south),
-        (.south, .west)
+        (.east, .north),
+        (.north, .west),
+        (.west, .south),
+        (.south, .east)
     ]
     
     static func vector(ordinal: Ordinal) -> Vector {

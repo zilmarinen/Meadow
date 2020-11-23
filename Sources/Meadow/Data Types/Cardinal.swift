@@ -28,9 +28,9 @@ extension Cardinal {
     static var Coordinates: [Coordinate] = [
     
         .forward,
-        .right,
+        .left,
         .backward,
-        .left
+        .right
     ]
     
     static var Cardinals: [(Cardinal, Cardinal)] = [
@@ -58,11 +58,11 @@ extension Cardinal {
     ]
     
     static var Normals: [Vector] = [
-    
+        
         .forward,
-        .right,
+        .left,
         .backward,
-        .left
+        .right
     ]
     
     static func cardinals(cardinal: Cardinal) -> (Cardinal, Cardinal) {

@@ -252,9 +252,9 @@ extension TerrainTile {
     
     func collapse() {
         
-        guard let tileset = tileset else { return }
+        guard let tileset = tileset, tile == nil else { return }
         
-        var rng = RNG(seed: UInt64(coordinate.x * coordinate.z))
+        var rng = RNG(seed: UInt64((coordinate.x + coordinate.y + coordinate.z) * coordinate.z))
         
         var tiles = tileset.tiles(with: tileType)
         
@@ -264,7 +264,7 @@ extension TerrainTile {
                 
                 if traversable(cardinal: cardinal) {
                     
-                    if let rule = neighbour.tile?.pattern.rule(for: cardinal.opposite) {
+                   if let rule = neighbour.tile?.pattern.rule(for: cardinal.opposite) {
                         
                         tiles = tiles.filter { $0.pattern.rule(for: cardinal).matches(rule: rule) }
                     }
@@ -283,8 +283,18 @@ extension TerrainTile {
                         let d0 = find(neighbour: o0)
                         let d1 = find(neighbour: o1)
                         
-                        let t0 = (d0?.tileType ?? tileType).rawValue > tileType.rawValue ? d0?.tileType : nil
-                        let t1 = (d1?.tileType ?? tileType).rawValue > tileType.rawValue ? d1?.tileType : nil
+                        var t0: TerrainTileType? = nil
+                        var t1: TerrainTileType? = nil
+                        
+                        if let d0 = d0 {
+                            
+                            t0 = (d0.tileType == tileType.next || d0.slope != nil || d0.coordinate.y != coordinate.y) ? d0.tileType : nil
+                        }
+                        
+                        if let d1 = d1 {
+                            
+                            t1 = (d1.tileType == tileType.next || d1.slope != nil || d1.coordinate.y != coordinate.y) ? d1.tileType : nil
+                        }
                         
                         let rule = TerrainTileRule(left: t1, center: nil, right: t0)
                         

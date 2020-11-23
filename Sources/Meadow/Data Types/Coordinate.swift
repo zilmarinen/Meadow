@@ -4,7 +4,7 @@
 //  Created by Zack Brown on 02/11/2020.
 //
 
-public struct Coordinate: Codable, Equatable {
+public struct Coordinate: Codable, Equatable, Hashable {
     
     public let x: Int
     public let y: Int
@@ -26,15 +26,20 @@ public struct Coordinate: Codable, Equatable {
 public extension Coordinate {
     
     static var zero = Coordinate(x: 0, y: 0, z: 0)
-    static var left = Coordinate(x: -1, y: 0, z: 0)
+    static var left = -right
     static var right = Coordinate(x: 1, y: 0, z: 0)
     static var forward = Coordinate(x: 0, y: 0, z: 1)
-    static var backward = Coordinate(x: 0, y: 0, z: -1)
+    static var backward = -forward
     static var up = Coordinate(x: 0, y: 1, z: 0)
-    static var down = Coordinate(x: 0, y: -1, z: 0)
+    static var down = -up
 }
 
 extension Coordinate {
+    
+    static prefix func -(rhs: Self) -> Self {
+        
+        return Coordinate(x: -rhs.x, y: -rhs.y, z: -rhs.z)
+    }
     
     static func +(lhs: Coordinate, rhs: Coordinate) -> Coordinate {
         

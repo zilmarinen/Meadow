@@ -32,6 +32,8 @@ public extension Coordinate {
     static var backward = -forward
     static var up = Coordinate(x: 0, y: 1, z: 0)
     static var down = -up
+    
+    var xz: Coordinate { Coordinate(x: x, y: 0, z: z) }
 }
 
 extension Coordinate {

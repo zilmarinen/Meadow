@@ -1,7 +1,7 @@
 //
-//  TerrainTileset.swift
-//  
-//  Created by Zack Brown on 13/11/2020.
+//  FootpathTileset.swift  
+//
+//  Created by Zack Brown on 27/11/2020.
 //
 
 import Foundation
@@ -16,16 +16,16 @@ import Foundation
 
 #endif
 
-struct TerrainTileset {
+struct FootpathTileset {
     
     enum Constants {
         
-        static let tilesetIdentifier = "Terrain_Tileset"
-        static let tilemapIdentifier = "Terrain_Tilemap"
+        static let tilesetIdentifier = "Footpath_Tileset"
+        static let tilemapIdentifier = "Footpath_Tilemap"
     }
     
     let image: MDWImage
-    let tiles: [TerrainTilesetTile]
+    let tiles: [FootpathTilesetTile]
     
     init?(season: Season) throws {
         
@@ -34,13 +34,13 @@ struct TerrainTileset {
         let decoder = JSONDecoder()
         
         image = tileset
-        tiles = try decoder.decode([TerrainTilesetTile].self, from: json.data)
+        tiles = try decoder.decode([FootpathTilesetTile].self, from: json.data)
     }
 }
 
-extension TerrainTileset {
+extension FootpathTileset {
     
-    func tiles(with tileType: TerrainTileType) -> [TerrainTilesetTile] {
+    func tiles(with tileType: FootpathTileType) -> [FootpathTilesetTile] {
         
         return tiles.filter { $0.tileType == tileType }
     }

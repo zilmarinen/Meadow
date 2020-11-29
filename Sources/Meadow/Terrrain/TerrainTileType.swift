@@ -6,7 +6,7 @@
 
 import Foundation
 
-public enum TerrainTileType: Int, CaseIterable, Codable {
+public enum TerrainTileType: Int, CaseIterable, Codable, Equatable {
     
     case dirt = 2
     case grass = 3
@@ -14,7 +14,7 @@ public enum TerrainTileType: Int, CaseIterable, Codable {
     case undergrowth = 4
     case water = 0
     
-    var next: TerrainTileType {
+    public var next: TerrainTileType {
         
         switch self {
         

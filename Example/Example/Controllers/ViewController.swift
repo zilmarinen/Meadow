@@ -28,58 +28,59 @@ class ViewController: NSViewController {
         sceneView.allowsCameraControl = true
         sceneView.isPlaying = true
         sceneView.autoenablesDefaultLighting = true
-        /*
-        let tiles = [Coordinate(x: 0, y: 0, z: 0): TerrainTileType.sand,
-        
-                     Coordinate(x: 1, y: 0, z: 0): TerrainTileType.sand,   //west
-                     Coordinate(x: -1, y: 0, z: 0): TerrainTileType.sand,  //east
-                     Coordinate(x: 0, y: 0, z: 1): TerrainTileType.water,   //north
-                     Coordinate(x: 0, y: 0, z: -1): TerrainTileType.sand]  //south
-        
-        for (coordinate, tileType) in tiles {
-            
-            if let tile = scene.meadow.terrain.add(tile: coordinate, tileType: tileType) {
-                
-                if tile.coordinate.x == -1 {
-                    
-                    //tile.slope = .east
-                }
-            }
-        }*/
         
         
-        let width = 5
-        let depth = 3
+        let width = 9
+        let depth = 9
+        
+        let band0 = 2
+        let baseType = TerrainTileType.dirt
         
         for x in 0..<width {
             
             for z in 0..<depth {
                 
-                let _ = scene.meadow.terrain.add(tile: Coordinate(x: x, y: 0, z: z), tileType: .grass)
+                var tileType = baseType.next
+                
+                if x < band0 || x >= (width - band0) || z < band0 || z >= (depth - band0) {
+                    
+                    tileType = baseType
+                }
+                
+                let _ = scene.meadow.terrain.add(tile: Coordinate(x: x, y: 0, z: z), layer: tileType)
             }
         }
         
-        if let tile = scene.meadow.terrain.find(tile: Coordinate(x: 1, y: 0, z: 1)) {
+        let x = 3
+        let z = 4
+        
+        //
+        //
+        //
+        
+        if let tile = scene.meadow.terrain.find(tile: Coordinate(x: x, y: 0, z: z)) {
             
-            tile.slope = .west
+            tile.layer.slope = .west
         }
         
-        if let tile = scene.meadow.terrain.find(tile: Coordinate(x: 2, y: 0, z: 1)) {
+        //
+        //
+        //
+        
+        if let tile = scene.meadow.terrain.find(tile: Coordinate(x: x + 1, y: 0, z: z)) {
             
-            tile.slope = .west
-            tile.coordinate = Coordinate(x: 2, y: 1, z: 1)
+            tile.coordinate = Coordinate(x: tile.coordinate.x, y: 1, z: tile.coordinate.z)
         }
         
-        if let tile = scene.meadow.terrain.find(tile: Coordinate(x: 3, y: 0, z: 1)) {
-            
-            tile.coordinate = Coordinate(x: 3, y: 2, z: 1)
-        }
+        let _ = scene.meadow.footpath.add(tile: Coordinate(x: x - 1, y: 0, z: z - 1), layer: .wood)
+        let _ = scene.meadow.footpath.add(tile: Coordinate(x: x - 1, y: 0, z: z), layer: .wood)
+        let _ = scene.meadow.footpath.add(tile: Coordinate(x: x - 1, y: 0, z: z + 1), layer: .wood)
         
-        
-//        let box = SCNBox(width: 1.0, height: 1.0, length: 1.0, chamferRadius: 0.0)
-//        box.firstMaterial?.diffuse.contents = MDWColor.systemRed
-//        let node = SCNNode(geometry: box)
-//        scene.rootNode.addChildNode(node)
+        let box = SCNBox(width: 0.20, height: 0.50, length: 0.20, chamferRadius: 0.0)
+        box.firstMaterial?.diffuse.contents = MDWColor.systemPink
+        let node = SCNNode(geometry: box)
+        node.position = SCNVector3(x: CGFloat(x + 1), y: 0.75, z: CGFloat(z))
+        scene.rootNode.addChildNode(node)
         
         /*
         let size = 20
@@ -111,7 +112,7 @@ class ViewController: NSViewController {
                     tileType = .grass
                 }
                 
-                let _ = scene.meadow.terrain.add(tile: Coordinate(x: x, y: 0, z: z), tileType: tileType)
+                let _ = scene.meadow.terrain.add(tile: Coordinate(x: x, y: 0, z: z), layer: tileType)
             }
         }*/
     }

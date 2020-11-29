@@ -10,12 +10,12 @@ protocol Responder: Soilable {
     
     var responder: Responder? { get }
     
-    var tileset: TerrainTileset? { get }
+    var world: World? { get }
 }
 
 extension Responder {
     
     var responder: Responder? { ancestor as? Responder }
     
-    var tileset: TerrainTileset? { responder?.tileset }
+    var world: World? { responder?.world }
 }

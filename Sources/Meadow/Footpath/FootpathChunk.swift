@@ -1,12 +1,12 @@
 //
-//  TerrainChunk.swift
+//  FootpathChunk.swift
 //
-//  Created by Zack Brown on 02/11/2020.
+//  Created by Zack Brown on 27/11/2020.
 //
 
 import SceneKit
 
-public class TerrainChunk: SCNNode, Codable, Hideable, Responder, SceneGraphNode, Soilable, Updatable {
+public class FootpathChunk: SCNNode, Codable, Hideable, Responder, SceneGraphNode, Soilable, Updatable {
     
     enum Constants {
         
@@ -23,14 +23,14 @@ public class TerrainChunk: SCNNode, Codable, Hideable, Responder, SceneGraphNode
     
     public var isDirty: Bool = false
     
-    weak var grid: Terrain?
+    weak var grid: Footpath?
     let coordinate: Coordinate
-    var tiles: [TerrainTile] = []
+    var tiles: [FootpathTile] = []
     
     public var children: [SceneGraphNode] { tiles }
     public var childCount: Int { children.count }
     public var isLeaf: Bool { children.isEmpty }
-    public var category: Int { SceneGraphCategory.terrainChunk.rawValue }
+    public var category: Int { SceneGraphCategory.footpathChunk.rawValue }
     
     init(coordinate: Coordinate) {
         
@@ -49,7 +49,7 @@ public class TerrainChunk: SCNNode, Codable, Hideable, Responder, SceneGraphNode
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         coordinate = try container.decode(Coordinate.self, forKey: .coordinate)
-        tiles = try container.decode([TerrainTile].self, forKey: .tiles)
+        tiles = try container.decode([FootpathTile].self, forKey: .tiles)
         
         super.init()
         
@@ -75,13 +75,13 @@ public class TerrainChunk: SCNNode, Codable, Hideable, Responder, SceneGraphNode
     }
 }
 
-extension TerrainChunk {
+extension FootpathChunk {
     
-    func add(tile coordinate: Coordinate) -> TerrainTile? {
+    func add(tile coordinate: Coordinate) -> FootpathTile? {
         
         guard find(tile: coordinate) == nil else { return nil }
         
-        let tile = TerrainTile(coordinate: coordinate)
+        let tile = FootpathTile(coordinate: coordinate)
         
         tiles.append(tile)
         
@@ -92,7 +92,7 @@ extension TerrainChunk {
         return tile
     }
     
-    func find(tile coordinate: Coordinate) -> TerrainTile? {
+    func find(tile coordinate: Coordinate) -> FootpathTile? {
         
         return tiles.first { $0.coordinate.adjacency(to: coordinate) == .equal }
     }
@@ -111,13 +111,13 @@ extension TerrainChunk {
     }
 }
 
-extension TerrainChunk {
+extension FootpathChunk {
     
     @discardableResult public func clean() -> Bool {
         
         guard isDirty else { return false }
         
-        guard let tilemap = world?.tilemaps.terrain else { return false }
+        guard let tilemap = world?.tilemaps.footpath else { return false }
         
         var polygons: [Polygon] = []
         
@@ -137,28 +137,7 @@ extension TerrainChunk {
         
         let material = SCNMaterial()
         
-        let edgeset = SCNMaterialProperty(contents: tilemap.edgeset.image)
-        let tileset = SCNMaterialProperty(contents: tilemap.tileset.image)
-        
-        material.setValue(edgeset, forKey: "edgeset")
-        material.setValue(tileset, forKey: "tileset")
-        
-        material.shaderModifiers = [.surface: """
-                                        uniform sampler2D edgeset;
-                                        uniform sampler2D tileset;
-                                        
-                                        vec3 up = vec3(0, 1, 0);
-                                        vec3 normal = ((vec4(_surface.normal, 1.0))).xyz;
-
-                                        if (dot(normal, up) < 0) {
-                                            
-                                            _surface.diffuse = texture2D(edgeset, _surface.diffuseTexcoord);
-                                        }
-                                        else {
-
-                                            _surface.diffuse = texture2D(tileset, _surface.diffuseTexcoord);
-                                        }
-                                        """]
+        material.diffuse.contents = tilemap.image
         
         mesh.materials = [material]
         
@@ -170,7 +149,7 @@ extension TerrainChunk {
     }
 }
 
-extension TerrainChunk {
+extension FootpathChunk {
     
     func update(delta: TimeInterval, time: TimeInterval) {
         
@@ -181,7 +160,7 @@ extension TerrainChunk {
     }
 }
 
-extension TerrainChunk {
+extension FootpathChunk {
     
     func contains(coordinate other: Coordinate) -> Bool {
         

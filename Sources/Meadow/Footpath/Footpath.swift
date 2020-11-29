@@ -1,12 +1,12 @@
 //
-//  Terrain.swift
+//  Footpath.swift
 //
-//  Created by Zack Brown on 02/11/2020.
+//  Created by Zack Brown on 27/11/2020.
 //
 
 import SceneKit
 
-public class Terrain: SCNNode, Codable, Hideable, Responder, SceneGraphNode, Soilable, Updatable {
+public class Footpath: SCNNode, Codable, Hideable, Responder, SceneGraphNode, Soilable, Updatable {
     
     private enum CodingKeys: CodingKey {
         
@@ -18,18 +18,18 @@ public class Terrain: SCNNode, Codable, Hideable, Responder, SceneGraphNode, Soi
     
     public var isDirty: Bool = false
     
-    var chunks: [TerrainChunk] = []
+    var chunks: [FootpathChunk] = []
     
     public var children: [SceneGraphNode] { chunks }
     public var childCount: Int { children.count }
     public var isLeaf: Bool { children.isEmpty }
-    public var category: Int { SceneGraphCategory.terrain.rawValue }
+    public var category: Int { SceneGraphCategory.footpath.rawValue }
     
     override init() {
         
         super.init()
         
-        name = "Terrain"
+        name = "Footpath"
         categoryBitMask = category
     }
     
@@ -37,7 +37,7 @@ public class Terrain: SCNNode, Codable, Hideable, Responder, SceneGraphNode, Soi
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        chunks = try container.decode([TerrainChunk].self, forKey: .chunks)
+        chunks = try container.decode([FootpathChunk].self, forKey: .chunks)
         
         super.init()
         
@@ -66,13 +66,13 @@ public class Terrain: SCNNode, Codable, Hideable, Responder, SceneGraphNode, Soi
     }
 }
 
-extension Terrain {
+extension Footpath {
     
-    public func add(tile coordinate: Coordinate, layer tileType: TerrainTileType = .water) -> TerrainTile? {
+    public func add(tile coordinate: Coordinate, layer tileType: FootpathTileType = .dirt) -> FootpathTile? {
         
         guard find(tile: coordinate) == nil else { return nil }
         
-        let chunk = find(chunk: coordinate) ?? TerrainChunk(coordinate: coordinate)
+        let chunk = find(chunk: coordinate) ?? FootpathChunk(coordinate: coordinate)
         
         guard let tile = chunk.add(tile: coordinate) else { return nil }
         
@@ -100,7 +100,7 @@ extension Terrain {
         return tile
     }
     
-    public func find(tile coordinate: Coordinate) -> TerrainTile? {
+    public func find(tile coordinate: Coordinate) -> FootpathTile? {
         
         return find(chunk: coordinate)?.find(tile: coordinate)
     }
@@ -120,13 +120,13 @@ extension Terrain {
         becomeDirty()
     }
     
-    func find(chunk coordinate: Coordinate) -> TerrainChunk? {
+    func find(chunk coordinate: Coordinate) -> FootpathChunk? {
         
         return chunks.first { $0.contains(coordinate: coordinate) }
     }
 }
 
-extension Terrain {
+extension Footpath {
     
     @discardableResult public func clean() -> Bool {
         
@@ -143,7 +143,7 @@ extension Terrain {
     }
 }
 
-extension Terrain {
+extension Footpath {
     
     func update(delta: TimeInterval, time: TimeInterval) {
         

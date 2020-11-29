@@ -1,21 +1,21 @@
 //
-//  TerrainTileRule.swift
+//  PatternRule.swift
 //  
 //  Created by Zack Brown on 13/11/2020.
 //
 
 import Foundation
 
-struct TerrainTileRule {
+struct PatternRule {
     
-    var left: TerrainTileType?
-    var center: TerrainTileType?
-    var right: TerrainTileType?
+    var left: Int?
+    var center: Int?
+    var right: Int?
 }
 
-extension TerrainTileRule {
+extension PatternRule {
     
-    func matches(rule: TerrainTileRule) -> Bool {
+    func matches(rule: PatternRule) -> Bool {
         
         return (left == rule.right || left == nil || rule.right == nil) &&
                 (center == rule.center || center == nil || rule.center == nil) &&

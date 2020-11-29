@@ -9,38 +9,38 @@ import XCTest
 
 final class TilesetTests: XCTestCase {
     
-    func testSpringTileset() {
+    func testSpringTilemap() throws {
         
-        let tileset = Season.spring.tileset
+        let tilemap = try TerrainTilemap(season: .spring)
         
-        XCTAssertNotNil(tileset)
+        XCTAssertNotNil(tilemap)
     }
     
-    func testSummerTileset() {
+    func testSummerTilemap() throws {
         
-        let tileset = Season.summer.tileset
+        let tilemap = try TerrainTilemap(season: .summer)
         
-        XCTAssertNotNil(tileset)
+        XCTAssertNotNil(tilemap)
     }
     
-    func testAutumnTileset() {
+    func testAutumnTilemap() throws {
         
-        let tileset = Season.autumn.tileset
+        let tilemap = try TerrainTilemap(season: .autumn)
         
-        XCTAssertNotNil(tileset)
+        XCTAssertNotNil(tilemap)
     }
     
-    func testWinterTileset() {
+    func testWinterTilemap() throws {
         
-        let tileset = Season.winter.tileset
+        let tilemap = try TerrainTilemap(season: .winter)
         
-        XCTAssertNotNil(tileset)
+        XCTAssertNotNil(tilemap)
     }
 
     static var allTests = [
-        ("testSpringTileset", testSpringTileset),
-        ("testSummerTileset", testSummerTileset),
-        ("testAutumnTileset", testAutumnTileset),
-        ("testWinterTileset", testWinterTileset),
+        ("testSpringTilemap", testSpringTilemap),
+        ("testSummerTilemap", testSummerTilemap),
+        ("testAutumnTilemap", testAutumnTilemap),
+        ("testWinterTilemap", testWinterTilemap),
     ]
 }

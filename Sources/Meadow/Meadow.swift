@@ -11,40 +11,34 @@ public class Meadow: SCNNode, Codable, SceneGraphNode, Soilable, Updatable {
     private enum CodingKeys: CodingKey {
         
         case name
+        case footpath
         case terrain
-    }
-    
-    public struct World {
-        
-        let season: Season
-        
-        lazy var tileset: TerrainTileset? = {
-            
-            return try? TerrainTileset(season: season)
-        }()
     }
     
     public var ancestor: SoilableParent? { return parent as? SoilableParent }
     
     public var isDirty: Bool = false
     
-    public var world = World(season: .spring)
+    public var _world = World(season: .spring)
     
+    public let footpath: Footpath
     public let terrain: Terrain
     
-    public var children: [SceneGraphNode] { [terrain] }
+    public var children: [SceneGraphNode] { [footpath, terrain] }
     public var childCount: Int { children.count }
     public var isLeaf: Bool { children.isEmpty }
     public var category: Int { SceneGraphCategory.meadow.rawValue }
     
     override init() {
         
+        footpath = Footpath()
         terrain = Terrain()
         
         super.init()
         
         name = "Meadow"
         
+        addChildNode(footpath)
         addChildNode(terrain)
     }
     
@@ -52,12 +46,14 @@ public class Meadow: SCNNode, Codable, SceneGraphNode, Soilable, Updatable {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
+        footpath = try container.decode(Footpath.self, forKey: .footpath)
         terrain = try container.decode(Terrain.self, forKey: .terrain)
         
         super.init()
         
         self.name = try container.decode(String.self, forKey: .name)
         
+        addChildNode(footpath)
         addChildNode(terrain)
     }
     
@@ -71,6 +67,7 @@ public class Meadow: SCNNode, Codable, SceneGraphNode, Soilable, Updatable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         try container.encode(name, forKey: .name)
+        try container.encode(footpath, forKey: .footpath)
         try container.encode(terrain, forKey: .terrain)
     }
 }
@@ -81,6 +78,7 @@ extension Meadow {
         
         guard isDirty else { return false }
         
+        footpath.clean()
         terrain.clean()
         
         isDirty = false
@@ -93,11 +91,12 @@ extension Meadow {
     
     func update(delta: TimeInterval, time: TimeInterval) {
         
+        footpath.update(delta: delta, time: time)
         terrain.update(delta: delta, time: time)
     }
 }
 
 extension Meadow: Responder {
     
-    var tileset: TerrainTileset? { world.tileset }
+    var world: World? { _world }
 }

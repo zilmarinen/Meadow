@@ -4,10 +4,9 @@
 //  Created by Zack Brown on 16/11/2020.
 //
 
-import CoreGraphics
 import Foundation
 
-struct TerrainTilesetTile: Decodable {
+struct TerrainTilesetTile: Decodable, Equatable {
     
     enum CodingKeys: CodingKey {
         
@@ -17,22 +16,8 @@ struct TerrainTilesetTile: Decodable {
         case uvs
     }
     
-    struct UVs: Codable {
-        
-        let start: CGPoint
-        let end: CGPoint
-        
-        var uvs: [CGPoint] {
-            
-            return [CGPoint(x: end.x, y: end.y),
-                    CGPoint(x: start.x, y: end.y),
-                    CGPoint(x: start.x, y: start.y),
-                    CGPoint(x: end.x, y: start.y)]
-        }
-    }
-    
     var tileType: TerrainTileType
-    var pattern: TerrainTilePattern
+    var pattern: Pattern
     var weighting: TerrainTileWeighting
     var uvs: UVs?
 
@@ -41,7 +26,7 @@ struct TerrainTilesetTile: Decodable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         tileType = try container.decode(TerrainTileType.self, forKey: .tileType)
-        pattern = try container.decode(TerrainTilePattern.self, forKey: .pattern)
+        pattern = try container.decode(Pattern.self, forKey: .pattern)
         weighting = try container.decode(TerrainTileWeighting.self, forKey: .weighting)
         uvs = try container.decode(UVs.self, forKey: .uvs)
     }

@@ -12,7 +12,7 @@ public struct World {
     
     let tilemaps: Tilemaps
     
-    init(season: Season) {
+    public init(season: Season) {
         
         guard let tilemaps = try? Tilemaps(season: season) else { fatalError("Unable to load tilemaps for \(season)") }
         

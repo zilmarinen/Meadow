@@ -13,7 +13,7 @@ public enum Season: Int, CaseIterable, Codable {
     case autumn
     case winter
     
-    var description: String {
+    public var description: String {
         
         switch self {
         
@@ -24,7 +24,7 @@ public enum Season: Int, CaseIterable, Codable {
         }
     }
     
-    var abbreviation: String {
+    public var abbreviation: String {
         
         switch self {
         

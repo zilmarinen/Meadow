@@ -35,10 +35,10 @@ extension Cardinal {
     
     static var Cardinals: [(Cardinal, Cardinal)] = [
     
-        (.east, .west),
-        (.south, .north),
         (.west, .east),
-        (.north, .south)
+        (.north, .south),
+        (.east, .west),
+        (.south, .north)
     ]
     
     static var Opposites: [Cardinal] = [

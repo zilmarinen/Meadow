@@ -135,7 +135,7 @@ extension TerrainTile {
         
         becomeDirty()
         
-        if neighbour.neighbours[cardinal.opposite] != nil {
+        if neighbour.neighbours[cardinal.opposite] == self {
             
             neighbour.remove(neighbour: cardinal.opposite)
         }
@@ -215,7 +215,7 @@ extension TerrainTile {
         
         polygons.append(Polygon(vertices: apexVertices))
         
-        guard let edges = world?.tilemaps.terrain.edgeset.edges(with: layer.tileType) else { return polygons }
+        guard let edges = tilemaps?.terrain.edgeset.edges(with: layer.tileType) else { return polygons }
         
         var rng = RNG(seed: UInt64(seed))
         
@@ -315,7 +315,7 @@ extension TerrainTile {
     
     func collapse() {
         
-        guard let tilemap = world?.tilemaps.terrain, layer.tilesetTile == nil else { return }
+        guard let tilemap = tilemaps?.terrain, layer.tilesetTile == nil else { return }
         
         var rng = RNG(seed: UInt64(seed))
         
@@ -338,18 +338,6 @@ extension TerrainTile {
             }
             
             //
-            //  Check neighbour pattern
-            //
-            guard neighbour.layer.tilesetTile == nil else {
-                
-                let rule = neighbour.layer.tilesetTile!.pattern.rule(for: cardinal.opposite)
-                
-                tiles = tiles.filter { $0.pattern.rule(for: cardinal).matches(rule: rule) }
-                
-                continue
-            }
-            
-            //
             //  Check edge is traversable
             //
             if !traversable(cardinal: cardinal) {
@@ -359,6 +347,20 @@ extension TerrainTile {
                 let rule = PatternRule(left: tileType, center: tileType, right: tileType)
                 
                 tiles = tiles.filter { $0.pattern.rule(for: cardinal).matches(rule: rule) }
+                
+                continue
+            }
+            
+            //
+            //  Check neighbour pattern
+            //
+            guard neighbour.layer.tilesetTile == nil else {
+                
+                let rule = neighbour.layer.tilesetTile!.pattern.rule(for: cardinal.opposite)
+                
+                tiles = tiles.filter { $0.pattern.rule(for: cardinal).matches(rule: rule) }
+                
+                continue
             }
             
             //
@@ -376,20 +378,21 @@ extension TerrainTile {
             //
             //  Check diagonal neighbours
             //
+            let (c0, c1) = cardinal.cardinals
             let (o0, o1) = cardinal.ordinals
             let (d0, d1) = (find(neighbour: o0), find(neighbour: o1))
             
             var t0: TerrainTileType? = d0?.layer.tileType == layer.tileType.next ? layer.tileType.next : nil
             var t1: TerrainTileType? = d1?.layer.tileType == layer.tileType.next ? layer.tileType.next : nil
             
-            if let diagonal = d0 {
+            if d0 != nil {
                 
-                t0 = diagonal.coordinate.y > coordinate.y || diagonal.layer.slope != neighbour.layer.slope ? layer.tileType.next : t0
+                t0 = !neighbour.traversable(cardinal: c0) ? layer.tileType.next : t0
             }
             
-            if let diagonal = d1 {
+            if d1 != nil {
                 
-                t1 = diagonal.coordinate.y > coordinate.y || diagonal.layer.slope != neighbour.layer.slope ? layer.tileType.next : t1
+                t1 = !neighbour.traversable(cardinal: c1) ? layer.tileType.next : t1
             }
             
             let rule = PatternRule(left: t1?.rawValue, center: nil, right: t0?.rawValue)

@@ -41,6 +41,6 @@ final class TilesetTests: XCTestCase {
         ("testSpringTilemap", testSpringTilemap),
         ("testSummerTilemap", testSummerTilemap),
         ("testAutumnTilemap", testAutumnTilemap),
-        ("testWinterTilemap", testWinterTilemap),
+        ("testWinterTilemap", testWinterTilemap)
     ]
 }

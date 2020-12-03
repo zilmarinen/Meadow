@@ -29,9 +29,18 @@ class ViewController: NSViewController {
         sceneView.isPlaying = true
         sceneView.autoenablesDefaultLighting = true
         
-        
+        let x = 3
+        let z = 4
         let width = 9
         let depth = 9
+        
+        let box = SCNBox(width: 0.20, height: 0.50, length: 0.20, chamferRadius: 0.0)
+        box.firstMaterial?.diffuse.contents = MDWColor.systemPink
+        let node = SCNNode(geometry: box)
+        node.position = SCNVector3(x: CGFloat(x + 1), y: 0.75, z: CGFloat(z))
+        scene.rootNode.addChildNode(node)
+        
+        scene.camera.look(at: node.position)
         
         let band0 = 2
         let baseType = TerrainTileType.dirt
@@ -51,14 +60,16 @@ class ViewController: NSViewController {
             }
         }
         
-        let x = 3
-        let z = 4
-        
         //
         //
         //
         
         if let tile = scene.meadow.terrain.find(tile: Coordinate(x: x, y: 0, z: z)) {
+            
+            tile.layer.slope = .west
+        }
+        
+        if let tile = scene.meadow.terrain.find(tile: Coordinate(x: x, y: 0, z: z + 1)) {
             
             tile.layer.slope = .west
         }
@@ -72,15 +83,58 @@ class ViewController: NSViewController {
             tile.coordinate = Coordinate(x: tile.coordinate.x, y: 1, z: tile.coordinate.z)
         }
         
+        if let tile = scene.meadow.terrain.find(tile: Coordinate(x: x + 1, y: 0, z: z + 1)) {
+            
+            tile.coordinate = Coordinate(x: tile.coordinate.x, y: 1, z: tile.coordinate.z)
+        }
+        
+        if let tile = scene.meadow.terrain.find(tile: Coordinate(x: x + 1, y: 0, z: z - 1)) {
+            
+            tile.layer.slope = .north
+        }
+        
+        //
+        //
+        //
+        
+        if let tile = scene.meadow.terrain.find(tile: Coordinate(x: x + 2, y: 0, z: z)) {
+            
+            tile.coordinate = Coordinate(x: tile.coordinate.x, y: 1, z: tile.coordinate.z)
+            tile.layer.slope = .west
+        }
+        
+        //
+        //  Footpath
+        //
+        
         let _ = scene.meadow.footpath.add(tile: Coordinate(x: x - 1, y: 0, z: z - 1), layer: .wood)
         let _ = scene.meadow.footpath.add(tile: Coordinate(x: x - 1, y: 0, z: z), layer: .wood)
         let _ = scene.meadow.footpath.add(tile: Coordinate(x: x - 1, y: 0, z: z + 1), layer: .wood)
+
+        if let path = scene.meadow.footpath.add(tile: Coordinate(x: x, y: 0, z: z), layer: .wood) {
+
+            path.layer.slope = .west
+        }
+
+        if let path = scene.meadow.footpath.add(tile: Coordinate(x: x + 1, y: 0, z: z), layer: .wood) {
+
+            path.coordinate = Coordinate(x: path.coordinate.x, y: 1, z: path.coordinate.z)
+        }
         
-        let box = SCNBox(width: 0.20, height: 0.50, length: 0.20, chamferRadius: 0.0)
-        box.firstMaterial?.diffuse.contents = MDWColor.systemPink
-        let node = SCNNode(geometry: box)
-        node.position = SCNVector3(x: CGFloat(x + 1), y: 0.75, z: CGFloat(z))
-        scene.rootNode.addChildNode(node)
+        if let path = scene.meadow.footpath.add(tile: Coordinate(x: x + 1, y: 0, z: z + 1), layer: .wood) {
+
+            path.coordinate = Coordinate(x: path.coordinate.x, y: 1, z: path.coordinate.z)
+        }
+        
+        let _ = scene.meadow.footpath.add(tile: Coordinate(x: x - 2, y: 0, z: z), layer: .wood)
+        let _ = scene.meadow.footpath.add(tile: Coordinate(x: x - 2, y: 0, z: z + 1), layer: .wood)
+        
+        let _ = scene.meadow.footpath.add(tile: Coordinate(x: x - 3, y: 0, z: z), layer: .wood)
+        
+        let _ = scene.meadow.footpath.add(tile: Coordinate(x: x - 1, y: 0, z: z + 2), layer: .wood)
+        let _ = scene.meadow.footpath.add(tile: Coordinate(x: x, y: 0, z: z + 2), layer: .wood)
+        let _ = scene.meadow.footpath.add(tile: Coordinate(x: x + 1, y: 0, z: z + 2), layer: .wood)
+        let _ = scene.meadow.footpath.add(tile: Coordinate(x: x + 2, y: 0, z: z + 2), layer: .wood)
         
         /*
         let size = 20

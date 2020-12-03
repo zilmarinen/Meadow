@@ -255,7 +255,7 @@ extension FootpathTile {
     
     func collapse() {
         
-        guard let tilemap = world?.tilemaps.footpath, layer.tilesetTile == nil else { return }
+        guard let tilemap = tilemaps?.footpath, layer.tilesetTile == nil else { return }
         
         var rng = RNG(seed: UInt64(seed))
         
@@ -264,13 +264,13 @@ extension FootpathTile {
         for cardinal in Cardinal.allCases.shuffled(using: &rng) {
             
             //
-            //  Check edge exists
+            //  Check edge exists and is traversable
             //
-            guard let neighbour = find(neighbour: cardinal) else {
+            guard let neighbour = find(neighbour: cardinal), traversable(cardinal: cardinal) else {
                 
                 let rule = PatternRule()
                 
-                tiles = tiles.filter { $0.pattern.rule(for: cardinal).matches(rule: rule) }
+                tiles = tiles.filter { $0.pattern.rule(for: cardinal).equals(rule: rule) }
                 
                 continue
             }
@@ -282,7 +282,7 @@ extension FootpathTile {
                 
                 let rule = neighbour.layer.tilesetTile!.pattern.rule(for: cardinal.opposite)
                 
-                tiles = tiles.filter { $0.pattern.rule(for: cardinal).matches(rule: rule) }
+                tiles = tiles.filter { $0.pattern.rule(for: cardinal).equals(rule: rule) }
                 
                 continue
             }
@@ -294,21 +294,23 @@ extension FootpathTile {
                 
                 let rule = PatternRule()
                 
-                tiles = tiles.filter { $0.pattern.rule(for: cardinal).matches(rule: rule) }
+                tiles = tiles.filter { $0.pattern.rule(for: cardinal).equals(rule: rule) }
             }
             
             //
             //  Check diagonal neighbours
             //
+            let (c0, c1) = cardinal.cardinals
             let (o0, o1) = cardinal.ordinals
+            let (n0, n1) = (find(neighbour: c0), find(neighbour: c1))
             let (d0, d1) = (find(neighbour: o0), find(neighbour: o1))
             
-            let t0: FootpathTileType? = d0?.layer.tileType == layer.tileType ? layer.tileType : nil
-            let t1: FootpathTileType? = d1?.layer.tileType == layer.tileType ? layer.tileType : nil
+            let t0: FootpathTileType? = n0 != nil && d0?.layer.tileType == layer.tileType ? layer.tileType : nil
+            let t1: FootpathTileType? = n1 != nil && d1?.layer.tileType == layer.tileType ? layer.tileType : nil
             
-            let rule = PatternRule(left: t1?.rawValue, center: neighbour.layer.tileType.rawValue, right: t0?.rawValue)
+            let rule = PatternRule(left: t1?.rawValue, center: layer.tileType.rawValue, right: t0?.rawValue)
             
-            tiles = tiles.filter { $0.pattern.rule(for: cardinal).matches(rule: rule) }
+            tiles = tiles.filter { $0.pattern.rule(for: cardinal).equals(rule: rule) }
         }
         
         layer.tilesetTile = tiles.randomElement(using: &rng)

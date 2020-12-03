@@ -34,7 +34,7 @@ public class TerrainChunk: SCNNode, Codable, Hideable, Responder, SceneGraphNode
     
     init(coordinate: Coordinate) {
         
-        self.coordinate = Coordinate(x: coordinate.x - (coordinate.x % Constants.size), y: 0, z: coordinate.z - (coordinate.z % Constants.size))
+        self.coordinate = Coordinate(x: coordinate.x, z: coordinate.z, size: Constants.size)
         self.tiles = []
         
         super.init()
@@ -117,14 +117,9 @@ extension TerrainChunk {
         
         guard isDirty else { return false }
         
-        guard let tilemap = world?.tilemaps.terrain else { return false }
+        guard let tilemap = tilemaps?.terrain else { return false }
         
         var polygons: [Polygon] = []
-        
-        for child in childNodes {
-            
-            child.removeFromParentNode()
-        }
         
         for tile in tiles where !tile.isHidden {
             

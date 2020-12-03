@@ -21,6 +21,13 @@ public struct Coordinate: Codable, Equatable, Hashable {
         self.y = y
         self.z = z
     }
+    
+    public init(x: Int, z: Int, size: Int) {
+        
+        self.x = Int((x >= 0 ? x : x - size) / size) * size
+        self.y = 0
+        self.z = Int((z >= 0 ? z : z - size) / size) * size
+    }
 }
 
 public extension Coordinate {

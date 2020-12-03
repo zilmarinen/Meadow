@@ -19,7 +19,7 @@ public class Meadow: SCNNode, Codable, SceneGraphNode, Soilable, Updatable {
     
     public var isDirty: Bool = false
     
-    public var _world = World(season: .spring)
+    public var world = World(season: .spring)
     
     public let footpath: Footpath
     public let terrain: Terrain
@@ -98,5 +98,5 @@ extension Meadow {
 
 extension Meadow: Responder {
     
-    var world: World? { _world }
+    var tilemaps: Tilemaps? { world.tilemaps }
 }

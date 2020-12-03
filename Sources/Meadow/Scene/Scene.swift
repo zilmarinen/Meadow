@@ -76,8 +76,10 @@ extension Scene: SCNSceneRendererDelegate {
         
         let delta = time - (lastUpdate ?? time)
         
+        camera.update(delta: delta, time: time)
         meadow.update(delta: delta, time: time)
         
+        camera.clean()
         meadow.clean()
         
         lastUpdate = time

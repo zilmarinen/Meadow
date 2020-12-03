@@ -15,6 +15,11 @@ struct PatternRule {
 
 extension PatternRule {
     
+    func equals(rule: PatternRule) -> Bool {
+        
+        return left == rule.right && center == rule.center && right == rule.left
+    }
+    
     func matches(rule: PatternRule) -> Bool {
         
         return (left == rule.right || left == nil || rule.right == nil) &&

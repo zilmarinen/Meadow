@@ -8,21 +8,6 @@ import Foundation
 
 public struct World {
     
-    struct Tilemaps {
-        
-        let footpath: FootpathTileset
-        let terrain: TerrainTilemap
-        
-        init?(season: Season) throws {
-            
-            guard let footpath = try FootpathTileset(season: season),
-                  let terrain = try TerrainTilemap(season: season) else { return nil }
-            
-            self.footpath = footpath
-            self.terrain = terrain
-        }
-    }
-    
     let season: Season
     
     let tilemaps: Tilemaps

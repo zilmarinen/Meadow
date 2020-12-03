@@ -117,14 +117,9 @@ extension FootpathChunk {
         
         guard isDirty else { return false }
         
-        guard let tilemap = world?.tilemaps.footpath else { return false }
+        guard let tilemap = tilemaps?.footpath else { return false }
         
         var polygons: [Polygon] = []
-        
-        for child in childNodes {
-            
-            child.removeFromParentNode()
-        }
         
         for tile in tiles where !tile.isHidden {
             

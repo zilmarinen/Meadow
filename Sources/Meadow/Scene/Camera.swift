@@ -6,7 +6,11 @@
 
 import SceneKit
 
-public class Camera: SCNNode, SceneGraphNode {
+public class Camera: SCNNode, SceneGraphNode, Soilable, Updatable {
+    
+    public var ancestor: SoilableParent? { return parent as? SoilableParent }
+    
+    public var isDirty: Bool = false
     
     public var children: [SceneGraphNode] { [] }
     public var childCount: Int { children.count }
@@ -24,5 +28,27 @@ public class Camera: SCNNode, SceneGraphNode {
     required init?(coder: NSCoder) {
         
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension Camera {
+    
+    @discardableResult public func clean() -> Bool {
+        
+        guard isDirty else { return false }
+        
+        //
+        
+        isDirty = false
+        
+        return true
+    }
+}
+
+extension Camera {
+    
+    func update(delta: TimeInterval, time: TimeInterval) {
+        
+        //
     }
 }

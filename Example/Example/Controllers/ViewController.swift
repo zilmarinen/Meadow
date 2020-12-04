@@ -17,7 +17,7 @@ class ViewController: NSViewController {
         
         super.viewDidLoad()
 
-        let scene = Scene()
+        let scene = Scene(season: .spring)
         
         scene.camera.camera?.usesOrthographicProjection = true
         scene.camera.position = SCNVector3(x: 0, y: 20, z: 20)

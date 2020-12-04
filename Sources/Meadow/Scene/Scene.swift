@@ -29,9 +29,9 @@ public class Scene: SCNScene, Codable, SceneGraphNode {
     
     private var lastUpdate: TimeInterval?
     
-    public override init() {
+    public init(season: Season) {
         
-        self.meadow = Meadow()
+        self.meadow = Meadow(season: season)
         
         super.init()
         

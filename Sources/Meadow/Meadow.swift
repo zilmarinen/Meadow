@@ -19,7 +19,7 @@ public class Meadow: SCNNode, Codable, SceneGraphNode, Soilable, Updatable {
     
     public var isDirty: Bool = false
     
-    public var world = World(season: .spring)
+    public var world: World
     
     public let footpath: Footpath
     public let terrain: Terrain
@@ -29,7 +29,9 @@ public class Meadow: SCNNode, Codable, SceneGraphNode, Soilable, Updatable {
     public var isLeaf: Bool { children.isEmpty }
     public var category: Int { SceneGraphCategory.meadow.rawValue }
     
-    override init() {
+    init(season: Season) {
+        
+        world = World(season: season)
         
         footpath = Footpath()
         terrain = Terrain()
@@ -45,6 +47,8 @@ public class Meadow: SCNNode, Codable, SceneGraphNode, Soilable, Updatable {
     required public init(from decoder: Decoder) throws {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        world = World(season: .spring)
         
         footpath = try container.decode(Footpath.self, forKey: .footpath)
         terrain = try container.decode(Terrain.self, forKey: .terrain)

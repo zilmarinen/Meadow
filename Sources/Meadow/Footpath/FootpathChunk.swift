@@ -21,7 +21,15 @@ public class FootpathChunk: SCNNode, Codable, Hideable, Responder, SceneGraphNod
     
     public var ancestor: SoilableParent? { return grid }
     
-    public var isDirty: Bool = false
+    public var isDirty: Bool = false {
+        
+        didSet {
+            
+            guard oldValue != isHidden else { return }
+            
+            becomeDirty()
+        }
+    }
     
     weak var grid: Footpath?
     public let coordinate: Coordinate

@@ -21,7 +21,15 @@ public class TerrainChunk: SCNNode, Codable, Hideable, Responder, SceneGraphNode
     
     public var ancestor: SoilableParent? { return grid }
     
-    public var isDirty: Bool = false
+    public var isDirty: Bool = false {
+        
+        didSet {
+            
+            guard oldValue != isHidden else { return }
+            
+            becomeDirty()
+        }
+    }
     
     weak var grid: Terrain?
     public let coordinate: Coordinate

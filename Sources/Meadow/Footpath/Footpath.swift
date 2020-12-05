@@ -16,7 +16,15 @@ public class Footpath: SCNNode, Codable, Hideable, Responder, SceneGraphNode, So
     
     public var ancestor: SoilableParent? { return parent as? SoilableParent }
     
-    public var isDirty: Bool = false
+    public var isDirty: Bool = false {
+        
+        didSet {
+            
+            guard oldValue != isHidden else { return }
+            
+            becomeDirty()
+        }
+    }
     
     var chunks: [FootpathChunk] = []
     

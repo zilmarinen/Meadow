@@ -57,7 +57,15 @@ public class TerrainTile: NSObject, Codable, Renderable, Responder, SceneGraphNo
         }
     }
     
-    public var isHidden: Bool = false
+    public var isHidden: Bool = false {
+        
+        didSet {
+            
+            guard oldValue != isHidden else { return }
+            
+            becomeDirty()
+        }
+    }
     
     public var layer: TerrainTileLayer = TerrainTileLayer(tileType: .water) {
         

@@ -24,7 +24,7 @@ public class TerrainChunk: SCNNode, Codable, Hideable, Responder, SceneGraphNode
     public var isDirty: Bool = false
     
     weak var grid: Terrain?
-    let coordinate: Coordinate
+    public let coordinate: Coordinate
     var tiles: [TerrainTile] = []
     
     public var children: [SceneGraphNode] { tiles }

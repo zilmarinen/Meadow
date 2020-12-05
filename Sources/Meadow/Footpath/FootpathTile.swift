@@ -48,7 +48,7 @@ public class FootpathTile: NSObject, Codable, Renderable, Responder, SceneGraphN
     public var isLeaf: Bool { children.isEmpty }
     public var category: Int { SceneGraphCategory.footpathTile.rawValue }
     
-    var neighbours: [Cardinal : FootpathTile] = [:] {
+    public var neighbours: [Cardinal : FootpathTile] = [:] {
         
         didSet {
             
@@ -56,7 +56,7 @@ public class FootpathTile: NSObject, Codable, Renderable, Responder, SceneGraphN
         }
     }
     
-    var isHidden: Bool = false
+    public var isHidden: Bool = false
     
     public var layer: FootpathTileLayer = FootpathTileLayer(tileType: .dirt) {
         

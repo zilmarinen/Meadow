@@ -24,7 +24,7 @@ public class FootpathChunk: SCNNode, Codable, Hideable, Responder, SceneGraphNod
     public var isDirty: Bool = false
     
     weak var grid: Footpath?
-    let coordinate: Coordinate
+    public let coordinate: Coordinate
     var tiles: [FootpathTile] = []
     
     public var children: [SceneGraphNode] { tiles }

@@ -49,7 +49,7 @@ public class TerrainTile: NSObject, Codable, Renderable, Responder, SceneGraphNo
     public var isLeaf: Bool { children.isEmpty }
     public var category: Int { SceneGraphCategory.terrainTile.rawValue }
     
-    var neighbours: [Cardinal : TerrainTile] = [:] {
+    public var neighbours: [Cardinal : TerrainTile] = [:] {
         
         didSet {
             
@@ -57,7 +57,7 @@ public class TerrainTile: NSObject, Codable, Renderable, Responder, SceneGraphNo
         }
     }
     
-    var isHidden: Bool = false
+    public var isHidden: Bool = false
     
     public var layer: TerrainTileLayer = TerrainTileLayer(tileType: .water) {
         

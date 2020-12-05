@@ -14,6 +14,18 @@ public enum TerrainTileType: Int, CaseIterable, Codable, Equatable {
     case undergrowth = 4
     case water = 0
     
+    public var description: String {
+        
+        switch self {
+        
+        case .dirt: return "Dirt"
+        case .grass: return "Grass"
+        case .sand: return "Sand"
+        case .undergrowth: return "Undergrowth"
+        case .water: return "Water"
+        }
+    }
+    
     public var next: TerrainTileType {
         
         switch self {

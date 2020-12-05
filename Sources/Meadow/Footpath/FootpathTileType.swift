@@ -8,11 +8,23 @@ import Foundation
 
 public enum FootpathTileType: Int, CaseIterable, Codable, Equatable {
     
+    case cobble
     case dirt
     case gravel
     case stone
-    case unknown
     case wood
+    
+    public var description: String {
+        
+        switch self {
+        
+        case .cobble: return "Cobble"
+        case .dirt: return "Dirt"
+        case .gravel: return "Gravel"
+        case .stone: return "Stone"
+        case .wood: return "Wood"
+        }
+    }
     
     var color: Color {
         

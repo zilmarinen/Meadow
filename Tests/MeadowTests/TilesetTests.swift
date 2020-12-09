@@ -11,28 +11,28 @@ final class TilesetTests: XCTestCase {
     
     func testSpringTilemap() throws {
         
-        let tilemap = try TerrainTilemap(season: .spring)
+        let tilemap = try Tilemaps(season: .spring)
         
         XCTAssertNotNil(tilemap)
     }
     
     func testSummerTilemap() throws {
         
-        let tilemap = try TerrainTilemap(season: .summer)
+        let tilemap = try Tilemaps(season: .summer)
         
         XCTAssertNotNil(tilemap)
     }
     
     func testAutumnTilemap() throws {
         
-        let tilemap = try TerrainTilemap(season: .autumn)
+        let tilemap = try Tilemaps(season: .autumn)
         
         XCTAssertNotNil(tilemap)
     }
     
     func testWinterTilemap() throws {
         
-        let tilemap = try TerrainTilemap(season: .winter)
+        let tilemap = try Tilemaps(season: .winter)
         
         XCTAssertNotNil(tilemap)
     }

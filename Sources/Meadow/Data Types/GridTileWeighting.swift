@@ -1,12 +1,12 @@
 //
-//  TerrainTileWeighting.swift
+//  GridTileWeighting.swift
 //
 //  Created by Zack Brown on 16/11/2020.
 //
 
 import Foundation
 
-enum TerrainTileWeighting: Int, CaseIterable, Codable {
+enum GridTileWeighting: Int, CaseIterable, Codable {
     
     case common
     case rare

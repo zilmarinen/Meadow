@@ -11,7 +11,7 @@ public enum Cardinal: Int, CaseIterable, Codable {
     case south
     case west
     
-    var description: String {
+    public var description: String {
             
         switch self {
             
@@ -113,5 +113,10 @@ extension Cardinal {
     var coordinate: Coordinate {
         
         return Cardinal.coordinate(cardinal: self)
+    }
+    
+    func rotate(rotation: Cardinal) -> Cardinal {
+        
+        return Cardinal(rawValue: (rawValue + rotation.rawValue) % 4)!
     }
 }

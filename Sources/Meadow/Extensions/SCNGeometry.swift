@@ -23,13 +23,13 @@ extension SCNGeometry {
             
             for triangle in polygon.triangulate() {
                 
-                triangle.vertices.forEach { vertex in
-                    
+                for vertex in triangle.vertices {
+                
                     if let index = vertexCache[vertex] {
                         
                         indices.append(index)
                         
-                        return
+                        continue
                     }
                     
                     let index = UInt32(vertexCache.count)

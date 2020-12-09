@@ -6,13 +6,13 @@
 
 import Foundation
 
-public class FootpathTile: NSObject, Codable, Renderable, Responder, SceneGraphNode, Soilable, Traversable, Updatable {
+public class FootpathTile: NSObject, Codable, Collapsable, Renderable, Responder, SceneGraphNode, Soilable, Traversable, Updatable {
     
     private enum CodingKeys: CodingKey {
         
         case coordinate
+        case tileType
         case slope
-        case layer
     }
     
     enum Constants {
@@ -66,15 +66,27 @@ public class FootpathTile: NSObject, Codable, Renderable, Responder, SceneGraphN
         }
     }
     
-    public var layer: FootpathTileLayer = FootpathTileLayer(tileType: .dirt) {
+    public var tileType: FootpathTileType = .dirt {
         
         didSet {
             
-            guard oldValue != layer else { return }
+            guard oldValue != tileType else { return }
             
             becomeDirty()
         }
     }
+    
+    public var slope: Cardinal? {
+        
+        didSet {
+            
+            guard oldValue != slope else { return }
+            
+            becomeDirty()
+        }
+    }
+    
+    var tilesetTile: FootpathTilesetTile? = nil
     
     init(coordinate: Coordinate) {
         
@@ -86,7 +98,8 @@ public class FootpathTile: NSObject, Codable, Renderable, Responder, SceneGraphN
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         coordinate = try container.decode(Coordinate.self, forKey: .coordinate)
-        layer = try container.decode(FootpathTileLayer.self, forKey: .layer)
+        tileType = try container.decode(FootpathTileType.self, forKey: .tileType)
+        slope = try container.decode(Cardinal.self, forKey: .slope)
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -94,7 +107,8 @@ public class FootpathTile: NSObject, Codable, Renderable, Responder, SceneGraphN
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         try container.encode(coordinate, forKey: .coordinate)
-        try container.encode(layer, forKey: .layer)
+        try container.encode(tileType, forKey: .tileType)
+        try container.encode(slope, forKey: .slope)
     }
 }
 
@@ -122,18 +136,6 @@ extension FootpathTile {
         }
     }
     
-    func find(neighbour cardinal: Cardinal) -> FootpathTile? {
-        
-        return neighbours[cardinal]
-    }
-    
-    func find(neighbour ordinal: Ordinal) -> FootpathTile? {
-        
-        let (c0, c1) = ordinal.cardinals
-        
-        return find(neighbour: c0)?.find(neighbour: c1) ?? find(neighbour: c1)?.find(neighbour: c0)
-    }
-    
     func remove(neighbour cardinal: Cardinal) {
         
         guard let neighbour = neighbours[cardinal] else { return }
@@ -155,7 +157,7 @@ extension FootpathTile {
         
         guard isDirty else { return false }
         
-        layer.tilesetTile = nil
+        tilesetTile = nil
         
         collapse()
         
@@ -177,7 +179,7 @@ extension FootpathTile {
     
     var cornerHeights: [Int] {
         
-        guard let slope = layer.slope else { return Array(repeating: coordinate.y, count: 4) }
+        guard let slope = slope else { return Array(repeating: coordinate.y, count: 4) }
         
         return Ordinal.allCases.map {
             
@@ -189,7 +191,7 @@ extension FootpathTile {
     
     func render(position: Vector) -> [Polygon] {
         
-        guard let tileUVs = layer.tilesetTile?.uvs?.uvs else { return [] }
+        guard let tileUVs = tilesetTile?.uvs?.uvs else { return [] }
         
         let corners = Ordinal.allCases.map { position + $0.vector + Vector(x: 0, y: 0.01, z: 0) }
         
@@ -198,7 +200,7 @@ extension FootpathTile {
         //
         var apexVectors = corners.map { $0 + Vector(x: 0.0, y: Constants.slopeHeight * Double(coordinate.y), z: 0.0) }
         
-        if let slope = layer.slope {
+        if let slope = slope {
             
             let (o0, o1) = slope.ordinals
             
@@ -215,7 +217,7 @@ extension FootpathTile {
             let corner = apexVectors[index]
             let textureCoordinates = tileUVs[index]
             
-            apexVertices.append(Vertex(position: corner, normal: apexNormal, color: layer.tileType.color, textureCoordinates: textureCoordinates))
+            apexVertices.append(Vertex(position: corner, normal: apexNormal, color: tileType.color, textureCoordinates: textureCoordinates))
         }
         
         return [Polygon(vertices: apexVertices)]
@@ -224,50 +226,49 @@ extension FootpathTile {
 
 extension FootpathTile {
     
+    var movementCost: Int { tileType.movementCost }
+    var walkable: Bool { true }
+    
+    func find(neighbour cardinal: Cardinal) -> Self? {
+        
+        return neighbours[cardinal] as? Self
+    }
+    
+    func find(neighbour ordinal: Ordinal) -> Self? {
+        
+        let (c0, c1) = ordinal.cardinals
+        
+        return find(neighbour: c0)?.find(neighbour: c1) ?? find(neighbour: c1)?.find(neighbour: c0)
+    }
+    
     func traversable(cardinal: Cardinal) -> Bool {
         
         guard let neighbour = find(neighbour: cardinal), abs(coordinate.y - neighbour.coordinate.y) <= 1 else { return false }
         
         if coordinate.y > neighbour.coordinate.y {
             
-            return neighbour.layer.slope == cardinal.opposite
+            return neighbour.slope == cardinal.opposite
         }
         else if coordinate.y < neighbour.coordinate.y {
             
-            return layer.slope == cardinal
+            return slope == cardinal
         }
         
-        return layer.slope == neighbour.layer.slope || ((layer.slope == nil || layer.slope == cardinal.opposite || layer.slope == neighbour.layer.slope) && (neighbour.layer.slope == nil || neighbour.layer.slope == cardinal))
+        return slope == neighbour.slope || ((slope == nil || slope == cardinal.opposite || slope == neighbour.slope) && (neighbour.slope == nil || neighbour.slope == cardinal))
     }
 }
 
 extension FootpathTile {
     
-    public func set(layer tileType: FootpathTileType) {
-        
-        for (_, neighbour) in neighbours {
-            
-            if tileType != neighbour.layer.tileType {
-                
-                return
-            }
-        }
-        
-        self.layer.tileType = tileType
-    }
-}
-
-extension FootpathTile {
-    
-    var seed: Int { ((coordinate.x + 1) * (coordinate.y + 2) * (coordinate.z * 4)) * 8 }
+    var seed: Int { ((coordinate.x + 1) * (coordinate.y + 2) * (coordinate.z + 4)) * 8 }
     
     func collapse() {
         
-        guard let tilemap = tilemaps?.footpath, layer.tilesetTile == nil else { return }
+        guard let tilemap = tilemaps?.footpath, tilesetTile == nil else { return }
         
         var rng = RNG(seed: UInt64(seed))
         
-        var tiles = tilemap.tiles(with: layer.tileType)
+        var tiles = tilemap.tiles(with: tileType)
         
         for cardinal in Cardinal.allCases.shuffled(using: &rng) {
             
@@ -286,9 +287,9 @@ extension FootpathTile {
             //
             //  Check neighbour pattern
             //
-            guard neighbour.layer.tilesetTile == nil else {
+            guard neighbour.tilesetTile == nil else {
                 
-                let rule = neighbour.layer.tilesetTile!.pattern.rule(for: cardinal.opposite)
+                let rule = neighbour.tilesetTile!.pattern.rule(for: cardinal.opposite)
                 
                 tiles = tiles.filter { $0.pattern.rule(for: cardinal).equals(rule: rule) }
                 
@@ -298,7 +299,7 @@ extension FootpathTile {
             //
             //  Check layer transition
             //
-            if neighbour.layer.tileType != layer.tileType {
+            if neighbour.tileType != tileType {
                 
                 let rule = PatternRule()
                 
@@ -313,14 +314,14 @@ extension FootpathTile {
             let (n0, n1) = (find(neighbour: c0), find(neighbour: c1))
             let (d0, d1) = (find(neighbour: o0), find(neighbour: o1))
             
-            let t0: FootpathTileType? = n0 != nil && d0?.layer.tileType == layer.tileType ? layer.tileType : nil
-            let t1: FootpathTileType? = n1 != nil && d1?.layer.tileType == layer.tileType ? layer.tileType : nil
+            let t0: FootpathTileType? = n0 != nil && d0?.tileType == tileType ? tileType : nil
+            let t1: FootpathTileType? = n1 != nil && d1?.tileType == tileType ? tileType : nil
             
-            let rule = PatternRule(left: t1?.rawValue, center: layer.tileType.rawValue, right: t0?.rawValue)
+            let rule = PatternRule(left: t1?.rawValue, center: tileType.rawValue, right: t0?.rawValue)
             
             tiles = tiles.filter { $0.pattern.rule(for: cardinal).equals(rule: rule) }
         }
         
-        layer.tilesetTile = tiles.randomElement(using: &rng)
+        tilesetTile = tiles.randomElement(using: &rng)
     }
 }

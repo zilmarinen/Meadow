@@ -10,6 +10,17 @@ public enum Ordinal: Int, CaseIterable, Encodable {
     case northWest
     case southWest
     case southEast
+    
+    public var description: String {
+            
+        switch self {
+            
+        case .northEast: return "\(Cardinal.north.description) \(Cardinal.east.description)"
+        case .northWest: return "\(Cardinal.north.description) \(Cardinal.west.description)"
+        case .southWest: return "\(Cardinal.south.description) \(Cardinal.west.description)"
+        case .southEast: return "\(Cardinal.south.description) \(Cardinal.east.description)"
+        }
+    }
 }
 
 extension Ordinal {

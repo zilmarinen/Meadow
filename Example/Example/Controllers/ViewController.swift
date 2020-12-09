@@ -31,8 +31,8 @@ class ViewController: NSViewController {
         
         let x = 3
         let z = 4
-        let width = 9
-        let depth = 9
+        let width = 10
+        let depth = 10
         
         let box = SCNBox(width: 0.20, height: 0.50, length: 0.20, chamferRadius: 0.0)
         box.firstMaterial?.diffuse.contents = MDWColor.systemPink
@@ -56,7 +56,10 @@ class ViewController: NSViewController {
                     tileType = baseType
                 }
                 
-                let _ = scene.meadow.terrain.add(tile: Coordinate(x: x, y: 0, z: z), layer: tileType)
+                _ = scene.meadow.terrain.add(tile: Coordinate(x: x, y: 0, z: z)) { tile in
+                    
+                    tile.tileType = tileType
+                }
             }
         }
         
@@ -66,12 +69,12 @@ class ViewController: NSViewController {
         
         if let tile = scene.meadow.terrain.find(tile: Coordinate(x: x, y: 0, z: z)) {
             
-            tile.layer.slope = .west
+            tile.slope = .west
         }
         
         if let tile = scene.meadow.terrain.find(tile: Coordinate(x: x, y: 0, z: z + 1)) {
             
-            tile.layer.slope = .west
+            tile.slope = .west
         }
         
         //
@@ -90,7 +93,7 @@ class ViewController: NSViewController {
         
         if let tile = scene.meadow.terrain.find(tile: Coordinate(x: x + 1, y: 0, z: z - 1)) {
             
-            tile.layer.slope = .north
+            tile.slope = .north
         }
         
         //
@@ -100,41 +103,44 @@ class ViewController: NSViewController {
         if let tile = scene.meadow.terrain.find(tile: Coordinate(x: x + 2, y: 0, z: z)) {
             
             tile.coordinate = Coordinate(x: tile.coordinate.x, y: 1, z: tile.coordinate.z)
-            tile.layer.slope = .west
+            tile.slope = .west
         }
         
         //
         //  Footpath
         //
         
-        let _ = scene.meadow.footpath.add(tile: Coordinate(x: x - 1, y: 0, z: z - 1), layer: .wood)
-        let _ = scene.meadow.footpath.add(tile: Coordinate(x: x - 1, y: 0, z: z), layer: .wood)
-        let _ = scene.meadow.footpath.add(tile: Coordinate(x: x - 1, y: 0, z: z + 1), layer: .wood)
+        let _ = scene.meadow.footpath.add(tile: Coordinate(x: x - 1, y: 0, z: z - 1)) { tile in tile.tileType = .wood}
+        let _ = scene.meadow.footpath.add(tile: Coordinate(x: x - 1, y: 0, z: z)) { tile in tile.tileType = .wood}
+        let _ = scene.meadow.footpath.add(tile: Coordinate(x: x - 1, y: 0, z: z + 1)) { tile in tile.tileType = .wood}
 
-        if let path = scene.meadow.footpath.add(tile: Coordinate(x: x, y: 0, z: z), layer: .wood) {
+        _ = scene.meadow.footpath.add(tile: Coordinate(x: x, y: 0, z: z)) { tile in
 
-            path.layer.slope = .west
+            tile.tileType = .wood
+            tile.slope = .west
         }
 
-        if let path = scene.meadow.footpath.add(tile: Coordinate(x: x + 1, y: 0, z: z), layer: .wood) {
+        _ = scene.meadow.footpath.add(tile: Coordinate(x: x + 1, y: 0, z: z)) { tile in
 
-            path.coordinate = Coordinate(x: path.coordinate.x, y: 1, z: path.coordinate.z)
+            tile.tileType = .wood
+            tile.coordinate = Coordinate(x: tile.coordinate.x, y: 1, z: tile.coordinate.z)
         }
         
-        if let path = scene.meadow.footpath.add(tile: Coordinate(x: x + 1, y: 0, z: z + 1), layer: .wood) {
+        _ = scene.meadow.footpath.add(tile: Coordinate(x: x + 1, y: 0, z: z + 1)) { tile in
 
-            path.coordinate = Coordinate(x: path.coordinate.x, y: 1, z: path.coordinate.z)
+            tile.tileType = .wood
+            tile.coordinate = Coordinate(x: tile.coordinate.x, y: 1, z: tile.coordinate.z)
         }
         
-        let _ = scene.meadow.footpath.add(tile: Coordinate(x: x - 2, y: 0, z: z), layer: .wood)
-        let _ = scene.meadow.footpath.add(tile: Coordinate(x: x - 2, y: 0, z: z + 1), layer: .wood)
+        let _ = scene.meadow.footpath.add(tile: Coordinate(x: x - 2, y: 0, z: z)) { tile in tile.tileType = .wood}
+        let _ = scene.meadow.footpath.add(tile: Coordinate(x: x - 2, y: 0, z: z + 1)) { tile in tile.tileType = .wood}
         
-        let _ = scene.meadow.footpath.add(tile: Coordinate(x: x - 3, y: 0, z: z), layer: .wood)
+        let _ = scene.meadow.footpath.add(tile: Coordinate(x: x - 3, y: 0, z: z)) { tile in tile.tileType = .wood}
         
-        let _ = scene.meadow.footpath.add(tile: Coordinate(x: x - 1, y: 0, z: z + 2), layer: .wood)
-        let _ = scene.meadow.footpath.add(tile: Coordinate(x: x, y: 0, z: z + 2), layer: .wood)
-        let _ = scene.meadow.footpath.add(tile: Coordinate(x: x + 1, y: 0, z: z + 2), layer: .wood)
-        let _ = scene.meadow.footpath.add(tile: Coordinate(x: x + 2, y: 0, z: z + 2), layer: .wood)
+        let _ = scene.meadow.footpath.add(tile: Coordinate(x: x - 1, y: 0, z: z + 2)) { tile in tile.tileType = .wood}
+        let _ = scene.meadow.footpath.add(tile: Coordinate(x: x, y: 0, z: z + 2)) { tile in tile.tileType = .wood}
+        let _ = scene.meadow.footpath.add(tile: Coordinate(x: x + 1, y: 0, z: z + 2)) { tile in tile.tileType = .wood}
+        let _ = scene.meadow.footpath.add(tile: Coordinate(x: x + 2, y: 0, z: z + 2)) { tile in tile.tileType = .wood}
         
         /*
         let size = 20

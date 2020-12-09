@@ -15,7 +15,7 @@ final class TerrainTests: XCTestCase {
         
         super.setUp()
         
-        scene = Scene()
+        scene = Scene(season: .autumn)
         
         let coordinates = [Coordinate(x: -1, y: 0, z: -1),
                            Coordinate(x: 0, y: 0, z: -1),

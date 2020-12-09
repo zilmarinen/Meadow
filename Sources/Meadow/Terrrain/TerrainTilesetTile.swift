@@ -18,7 +18,7 @@ struct TerrainTilesetTile: Decodable, Equatable {
     
     var tileType: TerrainTileType
     var pattern: Pattern
-    var weighting: TerrainTileWeighting
+    var weighting: GridTileWeighting
     var uvs: UVs?
 
     init(from decoder: Decoder) throws {
@@ -27,7 +27,7 @@ struct TerrainTilesetTile: Decodable, Equatable {
         
         tileType = try container.decode(TerrainTileType.self, forKey: .tileType)
         pattern = try container.decode(Pattern.self, forKey: .pattern)
-        weighting = try container.decode(TerrainTileWeighting.self, forKey: .weighting)
+        weighting = try container.decode(GridTileWeighting.self, forKey: .weighting)
         uvs = try container.decode(UVs.self, forKey: .uvs)
     }
 }

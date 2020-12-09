@@ -16,15 +16,7 @@ public class Terrain: SCNNode, Codable, Hideable, Responder, SceneGraphNode, Soi
     
     public var ancestor: SoilableParent? { return parent as? SoilableParent }
     
-    public var isDirty: Bool = false {
-        
-        didSet {
-            
-            guard oldValue != isHidden else { return }
-            
-            becomeDirty()
-        }
-    }
+    public var isDirty: Bool = false
     
     var chunks: [TerrainChunk] = []
     
@@ -52,7 +44,7 @@ public class Terrain: SCNNode, Codable, Hideable, Responder, SceneGraphNode, Soi
         name = try container.decode(String.self, forKey: .name)
         categoryBitMask = category
         
-        chunks.forEach { chunk in
+        for chunk in chunks {
             
             chunk.grid = self
             
@@ -76,7 +68,9 @@ public class Terrain: SCNNode, Codable, Hideable, Responder, SceneGraphNode, Soi
 
 extension Terrain {
     
-    public func add(tile coordinate: Coordinate, layer tileType: TerrainTileType = .water) -> TerrainTile? {
+    public typealias TileConfiguration = ((TerrainTile) -> Void)
+    
+    public func add(tile coordinate: Coordinate, configure: TileConfiguration? = nil) -> TerrainTile? {
         
         guard find(tile: coordinate) == nil else { return nil }
         
@@ -93,7 +87,7 @@ extension Terrain {
             addChildNode(chunk)
         }
         
-        Cardinal.allCases.forEach { cardinal in
+        for cardinal in Cardinal.allCases {
          
             if let neighbour = find(tile: coordinate + cardinal.coordinate) {
                 
@@ -101,7 +95,7 @@ extension Terrain {
             }
         }
         
-        tile.set(layer: tileType)
+        configure?(tile)
         
         becomeDirty()
         
@@ -119,9 +113,12 @@ extension Terrain {
         
         chunk.remove(tile: coordinate)
         
-        guard chunk.tiles.isEmpty else { return }
+        guard chunk.tiles.isEmpty,
+              let index = chunks.firstIndex(of: chunk) else { return }
         
         chunk.grid = nil
+        
+        chunks.remove(at: index)
         
         chunk.removeFromParentNode()
         
@@ -140,7 +137,7 @@ extension Terrain {
         
         guard isDirty else { return false }
         
-        chunks.forEach { chunk in
+        for chunk in chunks {
             
             chunk.clean()
         }
@@ -155,7 +152,7 @@ extension Terrain {
     
     func update(delta: TimeInterval, time: TimeInterval) {
         
-        chunks.forEach { chunk in
+        for chunk in chunks {
             
             chunk.update(delta: delta, time: time)
         }

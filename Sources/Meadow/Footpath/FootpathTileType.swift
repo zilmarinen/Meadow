@@ -26,14 +26,26 @@ public enum FootpathTileType: Int, CaseIterable, Codable, Equatable {
         }
     }
     
+    public var movementCost: Int {
+        
+        switch self {
+        
+        case .cobble: return 1
+        case .dirt: return 1
+        case .gravel: return 1
+        case .stone: return 1
+        case .wood: return 1
+        }
+    }
+    
     var color: Color {
         
         switch self {
         
+        case .cobble: return Color(red: 0.8, green: 0.89, blue: 0.45, alpha: 1.0)
         case .dirt: return Color(red: 0.92, green: 0.78, blue: 0.53, alpha: 1.0)
         case .gravel: return Color(red: 0.8, green: 0.78, blue: 0.53, alpha: 1.0)
         case .stone: return Color(red: 0.95, green: 0.57, blue: 0.2, alpha: 1.0)
-        case .cobble: return Color(red: 0.8, green: 0.89, blue: 0.45, alpha: 1.0)
         case .wood: return Color(red: 0.54, green: 0.8, blue: 0.8, alpha: 1.0)
         }
     }

@@ -8,11 +8,11 @@ import Foundation
 
 public enum TerrainTileType: Int, CaseIterable, Codable, Equatable {
     
-    case dirt = 2
-    case grass = 3
-    case sand = 1
-    case undergrowth = 4
-    case water = 0
+    case dirt
+    case grass
+    case sand
+    case undergrowth
+    case water
     
     public var description: String {
         
@@ -23,6 +23,18 @@ public enum TerrainTileType: Int, CaseIterable, Codable, Equatable {
         case .sand: return "Sand"
         case .undergrowth: return "Undergrowth"
         case .water: return "Water"
+        }
+    }
+    
+    public var movementCost: Int {
+        
+        switch self {
+        
+        case .dirt: return 1
+        case .grass: return 1
+        case .sand: return 1
+        case .undergrowth: return 1
+        case .water: return 1
         }
     }
     
@@ -50,7 +62,7 @@ public enum TerrainTileType: Int, CaseIterable, Codable, Equatable {
         }
     }
     
-    func blends(with tileType: TerrainTileType) -> Bool {
+    public func blends(with tileType: TerrainTileType) -> Bool {
         
         switch self {
         

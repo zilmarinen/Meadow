@@ -93,3 +93,20 @@ extension Coordinate {
         return .adrift
     }
 }
+
+extension Coordinate {
+    
+    func rotate(rotation: Cardinal) -> Coordinate {
+        
+        switch rotation {
+            
+        case .east: return Coordinate(x: (z * -1), y: y, z: x)
+            
+        case .south: return Coordinate(x: (x * -1), y: y, z: (z * -1))
+            
+        case .west: return Coordinate(x: z, y: y, z: (x * -1))
+            
+        default: return Coordinate(x: x, y: y, z: z)
+        }
+    }
+}

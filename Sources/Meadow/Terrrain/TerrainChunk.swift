@@ -21,15 +21,7 @@ public class TerrainChunk: SCNNode, Codable, Hideable, Responder, SceneGraphNode
     
     public var ancestor: SoilableParent? { return grid }
     
-    public var isDirty: Bool = false {
-        
-        didSet {
-            
-            guard oldValue != isHidden else { return }
-            
-            becomeDirty()
-        }
-    }
+    public var isDirty: Bool = false
     
     weak var grid: Terrain?
     public let coordinate: Coordinate
@@ -63,7 +55,7 @@ public class TerrainChunk: SCNNode, Codable, Hideable, Responder, SceneGraphNode
         
         categoryBitMask = category
         
-        tiles.forEach { tile in
+        for tile in tiles {
             
             tile.chunk = self
         }
@@ -129,11 +121,14 @@ extension TerrainChunk {
         
         var polygons: [Polygon] = []
         
-        for tile in tiles where !tile.isHidden {
+        for tile in tiles {
             
             tile.clean()
             
-            polygons.append(contentsOf: tile.render(position: Vector(coordinate: tile.coordinate.xz - coordinate.xz)))
+            if !tile.isHidden {
+            
+                polygons.append(contentsOf: tile.render(position: Vector(coordinate: tile.coordinate.xz - coordinate.xz)))
+            }
         }
         
         let mesh = SCNGeometry(mesh: Mesh(polygons: polygons))

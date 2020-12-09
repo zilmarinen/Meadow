@@ -21,15 +21,7 @@ public class FootpathChunk: SCNNode, Codable, Hideable, Responder, SceneGraphNod
     
     public var ancestor: SoilableParent? { return grid }
     
-    public var isDirty: Bool = false {
-        
-        didSet {
-            
-            guard oldValue != isHidden else { return }
-            
-            becomeDirty()
-        }
-    }
+    public var isDirty: Bool = false
     
     weak var grid: Footpath?
     public let coordinate: Coordinate
@@ -63,7 +55,7 @@ public class FootpathChunk: SCNNode, Codable, Hideable, Responder, SceneGraphNod
         
         categoryBitMask = category
         
-        tiles.forEach { tile in
+        for tile in tiles {
             
             tile.chunk = self
         }

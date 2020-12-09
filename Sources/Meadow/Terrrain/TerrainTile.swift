@@ -7,13 +7,13 @@
 import Foundation
 import SceneKit
 
-public class TerrainTile: NSObject, Codable, Renderable, Responder, SceneGraphNode, Soilable, Traversable, Updatable {
+public class TerrainTile: NSObject, Codable, Collapsable, Renderable, Responder, SceneGraphNode, Soilable, Traversable, Updatable {
     
     private enum CodingKeys: CodingKey {
         
         case coordinate
+        case tileType
         case slope
-        case layer
     }
     
     enum Constants {
@@ -67,15 +67,27 @@ public class TerrainTile: NSObject, Codable, Renderable, Responder, SceneGraphNo
         }
     }
     
-    public var layer: TerrainTileLayer = TerrainTileLayer(tileType: .water) {
+    public var tileType: TerrainTileType = .water {
         
         didSet {
             
-            guard oldValue != layer else { return }
+            guard oldValue != tileType else { return }
             
             becomeDirty()
         }
     }
+    
+    public var slope: Cardinal? = nil {
+        
+        didSet {
+            
+            guard oldValue != slope else { return }
+            
+            becomeDirty()
+        }
+    }
+    
+    var tilesetTile: TerrainTilesetTile? = nil
     
     init(coordinate: Coordinate) {
         
@@ -87,7 +99,8 @@ public class TerrainTile: NSObject, Codable, Renderable, Responder, SceneGraphNo
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         coordinate = try container.decode(Coordinate.self, forKey: .coordinate)
-        layer = try container.decode(TerrainTileLayer.self, forKey: .layer)
+        tileType = try container.decode(TerrainTileType.self, forKey: .tileType)
+        slope = try container.decode(Cardinal.self, forKey: .slope)
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -95,7 +108,8 @@ public class TerrainTile: NSObject, Codable, Renderable, Responder, SceneGraphNo
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         try container.encode(coordinate, forKey: .coordinate)
-        try container.encode(layer, forKey: .layer)
+        try container.encode(tileType, forKey: .tileType)
+        try container.encode(slope, forKey: .slope)
     }
 }
 
@@ -123,18 +137,6 @@ extension TerrainTile {
         }
     }
     
-    func find(neighbour cardinal: Cardinal) -> TerrainTile? {
-        
-        return neighbours[cardinal]
-    }
-    
-    func find(neighbour ordinal: Ordinal) -> TerrainTile? {
-        
-        let (c0, c1) = ordinal.cardinals
-        
-        return find(neighbour: c0)?.find(neighbour: c1) ?? find(neighbour: c1)?.find(neighbour: c0)
-    }
-    
     func remove(neighbour cardinal: Cardinal) {
         
         guard let neighbour = neighbours[cardinal] else { return }
@@ -156,7 +158,7 @@ extension TerrainTile {
         
         guard isDirty else { return false }
         
-        layer.tilesetTile = nil
+        tilesetTile = nil
         
         collapse()
         
@@ -178,7 +180,7 @@ extension TerrainTile {
     
     var cornerHeights: [Int] {
         
-        guard let slope = layer.slope else { return Array(repeating: coordinate.y, count: 4) }
+        guard let slope = slope else { return Array(repeating: coordinate.y, count: 4) }
         
         return Ordinal.allCases.map {
             
@@ -190,7 +192,7 @@ extension TerrainTile {
     
     func render(position: Vector) -> [Polygon] {
         
-        guard let tileUVs = layer.tilesetTile?.uvs?.uvs else { return [] }
+        guard let tileUVs = tilesetTile?.uvs?.uvs else { return [] }
         
         let corners = Ordinal.allCases.map { position + $0.vector }
         
@@ -201,7 +203,7 @@ extension TerrainTile {
         //
         var apexVectors = corners.map { $0 + Vector(x: 0.0, y: Constants.slopeHeight * Double(coordinate.y), z: 0.0) }
         
-        if let slope = layer.slope {
+        if let slope = slope {
             
             let (o0, o1) = slope.ordinals
             
@@ -218,12 +220,12 @@ extension TerrainTile {
             let corner = apexVectors[index]
             let textureCoordinates = tileUVs[index]
             
-            apexVertices.append(Vertex(position: corner, normal: apexNormal, color: layer.tileType.color, textureCoordinates: textureCoordinates))
+            apexVertices.append(Vertex(position: corner, normal: apexNormal, color: tileType.color, textureCoordinates: textureCoordinates))
         }
         
         polygons.append(Polygon(vertices: apexVertices))
         
-        guard let edges = tilemaps?.terrain.edgeset.edges(with: layer.tileType) else { return polygons }
+        guard let edges = tilemaps?.terrain.edgeset.edges(with: tileType) else { return polygons }
         
         var rng = RNG(seed: UInt64(seed))
         
@@ -236,13 +238,13 @@ extension TerrainTile {
             
             let (o0, o1) = cardinal.ordinals
             
-            var vertices = [Vertex(position: apexVectors[o0.rawValue], normal: cardinal.normal, color: layer.tileType.color, textureCoordinates: edgeUVs[0]),
-                            Vertex(position: apexVectors[o1.rawValue], normal: cardinal.normal, color: layer.tileType.color, textureCoordinates: edgeUVs[1])]
+            var vertices = [Vertex(position: apexVectors[o0.rawValue], normal: cardinal.normal, color: tileType.color, textureCoordinates: edgeUVs[0]),
+                            Vertex(position: apexVectors[o1.rawValue], normal: cardinal.normal, color: tileType.color, textureCoordinates: edgeUVs[1])]
             
             guard let neighbour = find(neighbour: cardinal) else {
                 
-                vertices.append(contentsOf: [Vertex(position: (corners[o1.rawValue] - Vector(x: 0, y: Constants.throneHeight, z: 0)), normal: cardinal.normal, color: layer.tileType.color, textureCoordinates: edgeUVs[2]),
-                                             Vertex(position: (corners[o0.rawValue] - Vector(x: 0, y: Constants.throneHeight, z: 0)), normal: cardinal.normal, color: layer.tileType.color, textureCoordinates: edgeUVs[3])])
+                vertices.append(contentsOf: [Vertex(position: (corners[o1.rawValue] - Vector(x: 0, y: Constants.throneHeight, z: 0)), normal: cardinal.normal, color: tileType.color, textureCoordinates: edgeUVs[2]),
+                                             Vertex(position: (corners[o0.rawValue] - Vector(x: 0, y: Constants.throneHeight, z: 0)), normal: cardinal.normal, color: tileType.color, textureCoordinates: edgeUVs[3])])
                 
                 polygons.append(Polygon(vertices: vertices))
                 
@@ -265,15 +267,15 @@ extension TerrainTile {
                 let height = (c0 == c3 ? c2 : c3)
                 let uvIndex = (c0 == c3 ? 2 : 3)
                 
-                vertices.append(Vertex(position: (corners[corner.rawValue] + Vector(x: 0.0, y: Constants.slopeHeight * Double(height), z: 0.0)), normal: cardinal.normal, color: layer.tileType.color, textureCoordinates: edgeUVs[uvIndex]))
+                vertices.append(Vertex(position: (corners[corner.rawValue] + Vector(x: 0.0, y: Constants.slopeHeight * Double(height), z: 0.0)), normal: cardinal.normal, color: tileType.color, textureCoordinates: edgeUVs[uvIndex]))
                 
                 polygons.append(Polygon(vertices: vertices))
                 
                 continue
             }
             
-            vertices.append(contentsOf: [Vertex(position: (corners[o1.rawValue] + Vector(x: 0, y: Constants.slopeHeight * Double(neighbourCorners[o3.rawValue]), z: 0)), normal: cardinal.normal, color: layer.tileType.color, textureCoordinates: edgeUVs[2]),
-                                         Vertex(position: (corners[o0.rawValue] - Vector(x: 0, y: Constants.slopeHeight * Double(neighbourCorners[o2.rawValue]), z: 0)), normal: cardinal.normal, color: layer.tileType.color, textureCoordinates: edgeUVs[3])])
+            vertices.append(contentsOf: [Vertex(position: (corners[o1.rawValue] + Vector(x: 0, y: Constants.slopeHeight * Double(neighbourCorners[o3.rawValue]), z: 0)), normal: cardinal.normal, color: tileType.color, textureCoordinates: edgeUVs[2]),
+                                         Vertex(position: (corners[o0.rawValue] - Vector(x: 0, y: Constants.slopeHeight * Double(neighbourCorners[o2.rawValue]), z: 0)), normal: cardinal.normal, color: tileType.color, textureCoordinates: edgeUVs[3])])
             
             polygons.append(Polygon(vertices: vertices))
         }
@@ -284,50 +286,49 @@ extension TerrainTile {
 
 extension TerrainTile {
     
+    var movementCost: Int { tileType.movementCost }
+    var walkable: Bool { tileType != .water }
+    
+    func find(neighbour cardinal: Cardinal) -> Self? {
+        
+        return neighbours[cardinal] as? Self
+    }
+    
+    func find(neighbour ordinal: Ordinal) -> Self? {
+        
+        let (c0, c1) = ordinal.cardinals
+        
+        return find(neighbour: c0)?.find(neighbour: c1) ?? find(neighbour: c1)?.find(neighbour: c0)
+    }
+    
     func traversable(cardinal: Cardinal) -> Bool {
         
         guard let neighbour = find(neighbour: cardinal), abs(coordinate.y - neighbour.coordinate.y) <= 1 else { return false }
         
         if coordinate.y > neighbour.coordinate.y {
             
-            return neighbour.layer.slope == cardinal.opposite
+            return neighbour.slope == cardinal.opposite
         }
         else if coordinate.y < neighbour.coordinate.y {
             
-            return layer.slope == cardinal
+            return slope == cardinal
         }
         
-        return layer.slope == neighbour.layer.slope || ((layer.slope == nil || layer.slope == cardinal.opposite || layer.slope == neighbour.layer.slope) && (neighbour.layer.slope == nil || neighbour.layer.slope == cardinal))
+        return slope == neighbour.slope || ((slope == nil || slope == cardinal.opposite || slope == neighbour.slope) && (neighbour.slope == nil || neighbour.slope == cardinal))
     }
 }
 
 extension TerrainTile {
     
-    public func set(layer tileType: TerrainTileType) {
-        
-        for (_, neighbour) in neighbours {
-            
-            if !tileType.blends(with: neighbour.layer.tileType) {
-                
-                return
-            }
-        }
-        
-        self.layer.tileType = tileType
-    }
-}
-
-extension TerrainTile {
-    
-    var seed: Int { ((coordinate.x + 1) * (coordinate.y + 2) * (coordinate.z * 4)) * 8 }
+    var seed: Int { ((coordinate.x + 1) * (coordinate.y + 2) * (coordinate.z + 4)) * 8 }
     
     func collapse() {
         
-        guard let tilemap = tilemaps?.terrain, layer.tilesetTile == nil else { return }
+        guard let tilemap = tilemaps?.terrain, tilesetTile == nil else { return }
         
         var rng = RNG(seed: UInt64(seed))
         
-        var tiles = tilemap.tileset.tiles(with: layer.tileType)
+        var tiles = tilemap.tileset.tiles(with: tileType)
         
         for cardinal in Cardinal.allCases.shuffled(using: &rng) {
             
@@ -336,9 +337,9 @@ extension TerrainTile {
             //
             guard let neighbour = find(neighbour: cardinal) else {
                 
-                let tileType = layer.tileType.rawValue
+                let ruleType = tileType.rawValue
                 
-                let rule = PatternRule(left: tileType, center: tileType, right: tileType)
+                let rule = PatternRule(left: ruleType, center: ruleType, right: ruleType)
                 
                 tiles = tiles.filter { $0.pattern.rule(for: cardinal).matches(rule: rule) }
                 
@@ -350,9 +351,9 @@ extension TerrainTile {
             //
             if !traversable(cardinal: cardinal) {
                 
-                let tileType = layer.tileType.next.rawValue
+                let ruleType = tileType.next.rawValue
                 
-                let rule = PatternRule(left: tileType, center: tileType, right: tileType)
+                let rule = PatternRule(left: ruleType, center: ruleType, right: ruleType)
                 
                 tiles = tiles.filter { $0.pattern.rule(for: cardinal).matches(rule: rule) }
                 
@@ -362,9 +363,9 @@ extension TerrainTile {
             //
             //  Check neighbour pattern
             //
-            guard neighbour.layer.tilesetTile == nil else {
+            guard neighbour.tilesetTile == nil else {
                 
-                let rule = neighbour.layer.tilesetTile!.pattern.rule(for: cardinal.opposite)
+                let rule = neighbour.tilesetTile!.pattern.rule(for: cardinal.opposite)
                 
                 tiles = tiles.filter { $0.pattern.rule(for: cardinal).matches(rule: rule) }
                 
@@ -374,11 +375,11 @@ extension TerrainTile {
             //
             //  Check layer transition
             //
-            if neighbour.layer.tileType == layer.tileType.next {
+            if neighbour.tileType == tileType.next {
                 
-                let tileType = layer.tileType.next.rawValue
+                let ruleType = tileType.next.rawValue
                 
-                let rule = PatternRule(left: tileType, center: tileType, right: tileType)
+                let rule = PatternRule(left: ruleType, center: ruleType, right: ruleType)
                 
                 tiles = tiles.filter { $0.pattern.rule(for: cardinal).matches(rule: rule) }
             }
@@ -390,17 +391,17 @@ extension TerrainTile {
             let (o0, o1) = cardinal.ordinals
             let (d0, d1) = (find(neighbour: o0), find(neighbour: o1))
             
-            var t0: TerrainTileType? = d0?.layer.tileType == layer.tileType.next ? layer.tileType.next : nil
-            var t1: TerrainTileType? = d1?.layer.tileType == layer.tileType.next ? layer.tileType.next : nil
+            var t0: TerrainTileType? = d0?.tileType == tileType.next ? tileType.next : nil
+            var t1: TerrainTileType? = d1?.tileType == tileType.next ? tileType.next : nil
             
             if d0 != nil {
                 
-                t0 = !neighbour.traversable(cardinal: c0) ? layer.tileType.next : t0
+                t0 = !neighbour.traversable(cardinal: c0) ? tileType.next : t0
             }
             
             if d1 != nil {
                 
-                t1 = !neighbour.traversable(cardinal: c1) ? layer.tileType.next : t1
+                t1 = !neighbour.traversable(cardinal: c1) ? tileType.next : t1
             }
             
             let rule = PatternRule(left: t1?.rawValue, center: nil, right: t0?.rawValue)
@@ -408,6 +409,6 @@ extension TerrainTile {
             tiles = tiles.filter { $0.pattern.rule(for: cardinal).matches(rule: rule) }
         }
         
-        layer.tilesetTile = tiles.randomElement(using: &rng)
+        tilesetTile = tiles.randomElement(using: &rng)
     }
 }

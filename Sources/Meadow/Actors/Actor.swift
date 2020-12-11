@@ -13,11 +13,9 @@ public class Actor: SCNNode, Codable, Hideable, Responder, SceneGraphNode, Soila
         
     }
     
-    public var ancestor: SoilableParent? { return grid }
+    public var ancestor: SoilableParent? { parent as? SoilableParent }
     
     public var isDirty: Bool = false
-    
-    weak var grid: Actors?
     
     public var children: [SceneGraphNode] { [] }
     public var childCount: Int { children.count }

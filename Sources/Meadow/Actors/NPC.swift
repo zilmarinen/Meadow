@@ -1,52 +1,45 @@
 //
-//  Actors.swift
+//  NPC.swift
 //
-//  Created by Zack Brown on 09/12/2020.
+//  Created by Zack Brown on 10/12/2020.
 //
 
 import SceneKit
 
-public class Actors: SCNNode, Codable, Hideable, Responder, SceneGraphNode, Soilable, Updatable {
+public class NPC: SCNNode, Codable, Hideable, Responder, SceneGraphNode, Soilable, Updatable {
     
     private enum CodingKeys: CodingKey {
         
-        case name
+        
     }
     
     public var ancestor: SoilableParent? { parent as? SoilableParent }
     
     public var isDirty: Bool = false
     
-    let hero = Hero()
-    let npcs = NPCs()
-    
-    public var children: [SceneGraphNode] { [hero, npcs] }
+    public var children: [SceneGraphNode] { [] }
     public var childCount: Int { children.count }
     public var isLeaf: Bool { children.isEmpty }
-    public var category: Int { SceneGraphCategory.actors.rawValue }
+    public var category: Int { SceneGraphCategory.npc.rawValue }
     
     override init() {
         
         super.init()
         
-        name = "Actors"
-        categoryBitMask = category
+        name = "Actor"
         
-        addChildNode(hero)
-        addChildNode(npcs)
+        categoryBitMask = category
     }
     
     required public init(from decoder: Decoder) throws {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
+        //
+        
         super.init()
         
-        name = try container.decode(String.self, forKey: .name)
         categoryBitMask = category
-        
-        addChildNode(hero)
-        addChildNode(npcs)
     }
     
     required init?(coder: NSCoder) {
@@ -58,25 +51,17 @@ public class Actors: SCNNode, Codable, Hideable, Responder, SceneGraphNode, Soil
         
         var container = encoder.container(keyedBy: CodingKeys.self)
         
-        try container.encode(name, forKey: .name)
+        //
     }
 }
 
-extension Actors {
-    
-    //add
-    //find
-    //remove
-}
-
-extension Actors {
+extension NPC {
     
     @discardableResult public func clean() -> Bool {
         
         guard isDirty else { return false }
         
-        hero.clean()
-        npcs.clean()
+        //
         
         isDirty = false
         
@@ -84,11 +69,10 @@ extension Actors {
     }
 }
 
-extension Actors {
+extension NPC {
     
     func update(delta: TimeInterval, time: TimeInterval) {
         
-        hero.update(delta: delta, time: time)
-        npcs.update(delta: delta, time: time)
+        //
     }
 }

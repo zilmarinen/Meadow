@@ -46,8 +46,6 @@ public class Portals: SCNNode, Codable, Hideable, Responder, SceneGraphNode, Soi
         
         for portal in portals {
             
-            portal.grid = self
-            
             addChildNode(portal)
         }
     }

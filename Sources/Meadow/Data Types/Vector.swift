@@ -8,7 +8,7 @@ import Foundation
 import GLKit
 import SceneKit
 
-struct Vector: Codable, Hashable {
+public struct Vector: Codable, Hashable {
     
     var x: Double
     var y: Double
@@ -19,24 +19,24 @@ struct Vector: Codable, Hashable {
         return "[\(x), \(y), \(z)]"
     }
     
-    init(x: Double, y: Double, z: Double) {
+    public init(x: Double, y: Double, z: Double) {
         
         self.x = x
         self.y = y
         self.z = z
     }
     
-    init(coordinate: Coordinate) {
+    public init(coordinate: Coordinate) {
         
         self.init(x: Double(coordinate.x), y: Double(coordinate.y), z: Double(coordinate.z))
     }
     
-    init(vector: GLKVector3) {
+    public init(vector: GLKVector3) {
         
         self.init(x: Double(vector.x), y: Double(vector.y), z: Double(vector.z))
     }
     
-    init(vector: SCNVector3) {
+    public init(vector: SCNVector3) {
         
         self.init(x: Double(vector.x), y: Double(vector.y), z: Double(vector.z))
     }

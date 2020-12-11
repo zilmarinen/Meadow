@@ -13,11 +13,9 @@ public class Portal: SCNNode, Codable, Hideable, Responder, SceneGraphNode, Soil
         
     }
     
-    public var ancestor: SoilableParent? { return grid }
+    public var ancestor: SoilableParent? { parent as? SoilableParent }
     
     public var isDirty: Bool = false
-    
-    weak var grid: Portals?
     
     public var children: [SceneGraphNode] { [] }
     public var childCount: Int { children.count }

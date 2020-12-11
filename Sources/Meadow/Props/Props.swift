@@ -46,8 +46,6 @@ public class Props: SCNNode, Codable, Hideable, Responder, SceneGraphNode, Soila
         
         for prop in props {
             
-            prop.grid = self
-            
             addChildNode(prop)
         }
     }
@@ -74,8 +72,6 @@ extension Props {
         
         let prop = Prop(footprint: footprint)
         
-        prop.grid = self
-        
         props.append(prop)
         
         addChildNode(prop)
@@ -99,8 +95,6 @@ extension Props {
         
         guard let prop = find(prop: node),
               let index = props.firstIndex(of: prop) else { return }
-        
-        prop.grid = nil
         
         props.remove(at: index)
         

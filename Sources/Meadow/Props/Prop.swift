@@ -13,11 +13,10 @@ public class Prop: SCNNode, Codable, Hideable, Responder, SceneGraphNode, Soilab
         case footprint
     }
     
-    public var ancestor: SoilableParent? { return grid }
+    public var ancestor: SoilableParent? { parent as? SoilableParent }
     
     public var isDirty: Bool = false
     
-    weak var grid: Props?
     public var coordinate: Coordinate { footprint.coordinate }
     public let footprint: Footprint
     

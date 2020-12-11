@@ -30,7 +30,7 @@ public class FootpathTile: NSObject, Codable, Collapsable, Renderable, Responder
         
         didSet {
             
-            guard oldValue.adjacency(to: coordinate) == .equal else {
+            guard coordinate.adjacency(to: oldValue) == .equal else {
                 
                 coordinate = oldValue
                 
@@ -99,7 +99,7 @@ public class FootpathTile: NSObject, Codable, Collapsable, Renderable, Responder
         
         coordinate = try container.decode(Coordinate.self, forKey: .coordinate)
         tileType = try container.decode(FootpathTileType.self, forKey: .tileType)
-        slope = try container.decode(Cardinal.self, forKey: .slope)
+        slope = try container.decodeIfPresent(Cardinal.self, forKey: .slope)
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -108,7 +108,7 @@ public class FootpathTile: NSObject, Codable, Collapsable, Renderable, Responder
         
         try container.encode(coordinate, forKey: .coordinate)
         try container.encode(tileType, forKey: .tileType)
-        try container.encode(slope, forKey: .slope)
+        try container.encodeIfPresent(slope, forKey: .slope)
     }
 }
 

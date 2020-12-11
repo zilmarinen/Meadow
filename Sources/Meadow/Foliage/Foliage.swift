@@ -46,7 +46,16 @@ public class Foliage: SCNNode, Codable, Hideable, Responder, SceneGraphNode, Soi
         
         for chunk in chunks {
             
-            chunk.grid = self
+            for tile in chunk.tiles {
+                
+                for cardinal in Cardinal.allCases {
+                 
+                    if let neighbour = find(tile: tile.coordinate + cardinal.coordinate) {
+                        
+                        tile.add(neighbour: neighbour, cardinal: cardinal)
+                    }
+                }
+            }
             
             addChildNode(chunk)
         }
@@ -78,9 +87,7 @@ extension Foliage {
         
         guard let tile = chunk.add(tile: coordinate) else { return nil }
         
-        if chunk.grid == nil {
-            
-            chunk.grid = self
+        if chunk.parent == nil {
             
             chunks.append(chunk)
             
@@ -115,8 +122,6 @@ extension Foliage {
         
         guard chunk.tiles.isEmpty,
               let index = chunks.firstIndex(of: chunk) else { return }
-        
-        chunk.grid = nil
         
         chunks.remove(at: index)
         

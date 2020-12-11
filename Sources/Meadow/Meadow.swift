@@ -67,6 +67,7 @@ public class Meadow: SCNNode, Codable, SceneGraphNode, Soilable, Updatable {
         super.init()
         
         name = "Meadow"
+        categoryBitMask = category
         
         addChildNode(actors)
         addChildNode(area)
@@ -94,6 +95,7 @@ public class Meadow: SCNNode, Codable, SceneGraphNode, Soilable, Updatable {
         super.init()
         
         self.name = try container.decode(String.self, forKey: .name)
+        categoryBitMask = category
         
         addChildNode(actors)
         addChildNode(area)
@@ -114,10 +116,11 @@ public class Meadow: SCNNode, Codable, SceneGraphNode, Soilable, Updatable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         try container.encode(name, forKey: .name)
-        try container.encode(portals, forKey: .portals)
+        try container.encode(actors, forKey: .actors)
         try container.encode(area, forKey: .area)
         try container.encode(foliage, forKey: .foliage)
         try container.encode(footpath, forKey: .footpath)
+        try container.encode(portals, forKey: .portals)
         try container.encode(props, forKey: .props)
         try container.encode(terrain, forKey: .terrain)
     }

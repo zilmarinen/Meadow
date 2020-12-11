@@ -31,7 +31,7 @@ public class AreaTile: NSObject, Codable, Collapsable, Renderable, Responder, Sc
         
         didSet {
             
-            guard oldValue.adjacency(to: coordinate) == .equal else {
+            guard coordinate.adjacency(to: oldValue) == .equal else {
                 
                 coordinate = oldValue
                 

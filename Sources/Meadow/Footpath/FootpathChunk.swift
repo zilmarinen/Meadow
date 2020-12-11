@@ -19,11 +19,10 @@ public class FootpathChunk: SCNNode, Codable, Hideable, Responder, SceneGraphNod
         case tiles
     }
     
-    public var ancestor: SoilableParent? { return grid }
+    public var ancestor: SoilableParent? { parent as? SoilableParent }
     
     public var isDirty: Bool = false
     
-    weak var grid: Footpath?
     public let coordinate: Coordinate
     var tiles: [FootpathTile] = []
     
@@ -53,6 +52,8 @@ public class FootpathChunk: SCNNode, Codable, Hideable, Responder, SceneGraphNod
         
         super.init()
         
+        name = "Chunk \(self.coordinate.description)"
+        position = SCNVector3(coordinate: self.coordinate)
         categoryBitMask = category
         
         for tile in tiles {

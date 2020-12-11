@@ -19,11 +19,10 @@ public class AreaChunk: SCNNode, Codable, Hideable, Responder, SceneGraphNode, S
         case tiles
     }
     
-    public var ancestor: SoilableParent? { return grid }
+    public var ancestor: SoilableParent? { parent as? SoilableParent }
     
     public var isDirty: Bool = false
     
-    weak var grid: Area?
     public let coordinate: Coordinate
     var tiles: [AreaTile] = []
     
@@ -53,6 +52,8 @@ public class AreaChunk: SCNNode, Codable, Hideable, Responder, SceneGraphNode, S
         
         super.init()
         
+        name = "Chunk \(self.coordinate.description)"
+        position = SCNVector3(coordinate: self.coordinate)
         categoryBitMask = category
         
         for tile in tiles {

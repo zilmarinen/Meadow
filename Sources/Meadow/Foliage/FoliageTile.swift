@@ -29,7 +29,7 @@ public class FoliageTile: NSObject, Codable, Renderable, Responder, SceneGraphNo
         
         didSet {
             
-            guard oldValue.adjacency(to: coordinate) == .equal else {
+            guard coordinate.adjacency(to: oldValue) == .equal else {
                 
                 coordinate = oldValue
                 

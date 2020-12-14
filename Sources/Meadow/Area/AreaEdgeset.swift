@@ -27,9 +27,10 @@ struct AreaEdgeset {
     let image: MDWImage
     let edges: [AreaEdgesetEdge]
     
-    init?(season: Season) throws {
+    init?() throws {
         
-        guard let tileset = Bundle.module.image(forResource: "\(season.description)_\(Constants.edgesetIdentifier)"), let json = NSDataAsset(name: "\(season.description)_\(Constants.edgemapIdentifier)", bundle: .module) else { return nil }
+        guard let tileset = Bundle.module.image(forResource: Constants.edgesetIdentifier),
+              let json = NSDataAsset(name: Constants.edgemapIdentifier, bundle: .module) else { return nil }
 
         let decoder = JSONDecoder()
         

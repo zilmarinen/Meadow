@@ -29,7 +29,8 @@ struct TerrainTileset {
     
     init?(season: Season) throws {
         
-        guard let tileset = Bundle.module.image(forResource: "\(season.description)_\(Constants.tilesetIdentifier)"), let json = NSDataAsset(name: "\(season.description)_\(Constants.tilemapIdentifier)", bundle: .module) else { return nil }
+        guard let tileset = Bundle.module.image(forResource: "\(season.description)_\(Constants.tilesetIdentifier)"),
+              let json = NSDataAsset(name: "\(season.description)_\(Constants.tilemapIdentifier)", bundle: .module) else { return nil }
 
         let decoder = JSONDecoder()
         

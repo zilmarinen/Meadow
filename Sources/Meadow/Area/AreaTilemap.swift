@@ -9,9 +9,10 @@ struct AreaTilemap {
     let edgeset: AreaEdgeset
     let tileset: AreaTileset
     
-    init?(season: Season) throws {
+    init?() throws {
         
-        guard let edgeset = try AreaEdgeset(season: season), let tileset = try AreaTileset(season: season) else { return nil }
+        guard let edgeset = try AreaEdgeset(), 
+              let tileset = try AreaTileset() else { return nil }
         
         self.edgeset = edgeset
         self.tileset = tileset

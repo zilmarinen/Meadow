@@ -12,22 +12,22 @@ struct AreaTilesetTile: Codable, Equatable {
         
         case tileType
         case pattern
-        case weighting
+        case rarity
         case uvs
     }
     
     var tileType: AreaTileType
-    var pattern: Pattern
-    var weighting: GridTileWeighting
-    var uvs: UVs?
+    var pattern: GridPattern
+    var rarity: Rarity
+    var uvs: UVs
 
     init(from decoder: Decoder) throws {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         tileType = try container.decode(AreaTileType.self, forKey: .tileType)
-        pattern = try container.decode(Pattern.self, forKey: .pattern)
-        weighting = try container.decode(GridTileWeighting.self, forKey: .weighting)
+        pattern = try container.decode(GridPattern.self, forKey: .pattern)
+        rarity = try container.decode(Rarity.self, forKey: .rarity)
         uvs = try container.decode(UVs.self, forKey: .uvs)
     }
     
@@ -37,7 +37,7 @@ struct AreaTilesetTile: Codable, Equatable {
         
         try container.encode(tileType, forKey: .tileType)
         try container.encode(pattern, forKey: .pattern)
-        try container.encodeIfPresent(uvs, forKey: .uvs)
-        try container.encode(weighting, forKey: .weighting)
+        try container.encode(uvs, forKey: .uvs)
+        try container.encode(rarity, forKey: .rarity)
     }
 }

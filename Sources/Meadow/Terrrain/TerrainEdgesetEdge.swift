@@ -15,7 +15,7 @@ struct TerrainEdgesetEdge: Decodable, Equatable {
     }
     
     var tileType: TerrainTileType
-    var uvs: UVs?
+    var uvs: UVs
 
     init(from decoder: Decoder) throws {
         

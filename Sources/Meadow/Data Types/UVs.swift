@@ -11,7 +11,7 @@ public struct UVs: Codable, Equatable {
     let start: CGPoint
     let end: CGPoint
     
-    init(start: CGPoint, end: CGPoint) {
+    public init(start: CGPoint, end: CGPoint) {
         
         self.start = start
         self.end = end

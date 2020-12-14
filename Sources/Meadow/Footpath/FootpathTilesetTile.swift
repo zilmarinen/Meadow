@@ -16,15 +16,15 @@ struct FootpathTilesetTile: Decodable, Equatable {
     }
     
     var tileType: FootpathTileType
-    var pattern: Pattern
-    var uvs: UVs?
+    var pattern: GridPattern
+    var uvs: UVs
 
     init(from decoder: Decoder) throws {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         tileType = try container.decode(FootpathTileType.self, forKey: .tileType)
-        pattern = try container.decode(Pattern.self, forKey: .pattern)
+        pattern = try container.decode(GridPattern.self, forKey: .pattern)
         uvs = try container.decode(UVs.self, forKey: .uvs)
     }
 }

@@ -26,6 +26,18 @@ public enum TerrainTileType: Int, CaseIterable, Codable, Equatable {
         }
     }
     
+    public var abbreviation: String {
+        
+        switch self {
+        
+        case .dirt: return "D"
+        case .grass: return "G"
+        case .sand: return "S"
+        case .undergrowth: return "U"
+        case .water: return "W"
+        }
+    }
+    
     public var movementCost: Int {
         
         switch self {
@@ -50,7 +62,7 @@ public enum TerrainTileType: Int, CaseIterable, Codable, Equatable {
         }
     }
     
-    var color: Color {
+    public var color: Color {
         
         switch self {
         

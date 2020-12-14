@@ -11,7 +11,8 @@ struct TerrainTilemap {
     
     init?(season: Season) throws {
         
-        guard let edgeset = try TerrainEdgeset(season: season), let tileset = try TerrainTileset(season: season) else { return nil }
+        guard let edgeset = try TerrainEdgeset(season: season),
+              let tileset = try TerrainTileset(season: season) else { return nil }
         
         self.edgeset = edgeset
         self.tileset = tileset

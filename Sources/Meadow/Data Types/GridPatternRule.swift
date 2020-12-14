@@ -1,26 +1,26 @@
 //
-//  PatternRule.swift
+//  GridPatternRule.swift
 //  
 //  Created by Zack Brown on 13/11/2020.
 //
 
 import Foundation
 
-struct PatternRule {
+struct GridPatternRule {
     
     var left: Int?
     var center: Int?
     var right: Int?
 }
 
-extension PatternRule {
+extension GridPatternRule {
     
-    func equals(rule: PatternRule) -> Bool {
+    func equals(rule: GridPatternRule) -> Bool {
         
         return left == rule.right && center == rule.center && right == rule.left
     }
     
-    func matches(rule: PatternRule) -> Bool {
+    func matches(rule: GridPatternRule) -> Bool {
         
         return (left == rule.right || left == nil || rule.right == nil) &&
                 (center == rule.center || center == nil || rule.center == nil) &&

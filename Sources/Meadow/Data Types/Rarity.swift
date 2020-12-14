@@ -1,19 +1,19 @@
 //
-//  GridTileWeighting.swift
+//  Rarity.swift
 //
 //  Created by Zack Brown on 16/11/2020.
 //
 
 import Foundation
 
-public enum GridTileWeighting: Int, CaseIterable, Codable {
+public enum Rarity: Int, CaseIterable, Codable {
     
     case common
     case rare
     case epic
     case legendary
     
-    var description: String {
+    public var description: String {
         
         switch self {
         

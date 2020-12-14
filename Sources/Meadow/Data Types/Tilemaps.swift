@@ -14,8 +14,8 @@ struct Tilemaps {
     
     init?(season: Season) throws {
         
-        guard let area = try AreaTilemap(season: season),
-              let footpath = try FootpathTileset(season: season),
+        guard let area = try AreaTilemap(),
+              let footpath = try FootpathTileset(),
               let terrain = try TerrainTilemap(season: season) else { return nil }
         
         self.area = area

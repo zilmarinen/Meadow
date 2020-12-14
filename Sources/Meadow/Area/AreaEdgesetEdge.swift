@@ -15,7 +15,7 @@ struct AreaEdgesetEdge: Decodable, Equatable {
     }
     
     var tileType: AreaTileType
-    var uvs: UVs?
+    var uvs: UVs
 
     init(from decoder: Decoder) throws {
         
@@ -25,4 +25,3 @@ struct AreaEdgesetEdge: Decodable, Equatable {
         uvs = try container.decode(UVs.self, forKey: .uvs)
     }
 }
-

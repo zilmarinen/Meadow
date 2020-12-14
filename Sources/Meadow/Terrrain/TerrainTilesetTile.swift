@@ -6,28 +6,28 @@
 
 import Foundation
 
-struct TerrainTilesetTile: Decodable, Equatable {
+struct TerrainTilesetTile: Decodable {
     
     enum CodingKeys: CodingKey {
         
         case tileType
         case pattern
-        case weighting
+        case rarity
         case uvs
     }
     
     var tileType: TerrainTileType
-    var pattern: Pattern
-    var weighting: GridTileWeighting
-    var uvs: UVs?
+    var pattern: GridPattern
+    var rarity: Rarity
+    var uvs: UVs
 
     init(from decoder: Decoder) throws {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         tileType = try container.decode(TerrainTileType.self, forKey: .tileType)
-        pattern = try container.decode(Pattern.self, forKey: .pattern)
-        weighting = try container.decode(GridTileWeighting.self, forKey: .weighting)
+        pattern = try container.decode(GridPattern.self, forKey: .pattern)
+        rarity = try container.decode(Rarity.self, forKey: .rarity)
         uvs = try container.decode(UVs.self, forKey: .uvs)
     }
 }

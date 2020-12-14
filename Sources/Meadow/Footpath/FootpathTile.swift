@@ -185,7 +185,7 @@ extension FootpathTile {
     
     func render(position: Vector) -> [Polygon] {
         
-        guard let tileUVs = tilesetTile?.uvs?.uvs else { return [] }
+        guard let tileUVs = tilesetTile?.uvs.uvs else { return [] }
         
         let corners = Ordinal.allCases.map { position + $0.vector + Vector(x: 0, y: 0.01, z: 0) }
         
@@ -271,7 +271,7 @@ extension FootpathTile {
             //
             guard let neighbour = find(neighbour: cardinal), traversable(cardinal: cardinal) else {
                 
-                let rule = PatternRule()
+                let rule = GridPatternRule()
                 
                 tiles = tiles.filter { $0.pattern.rule(for: cardinal).equals(rule: rule) }
                 
@@ -295,7 +295,7 @@ extension FootpathTile {
             //
             if neighbour.tileType != tileType {
                 
-                let rule = PatternRule()
+                let rule = GridPatternRule()
                 
                 tiles = tiles.filter { $0.pattern.rule(for: cardinal).equals(rule: rule) }
             }
@@ -311,7 +311,7 @@ extension FootpathTile {
             let t0: FootpathTileType? = n0 != nil && d0?.tileType == tileType ? tileType : nil
             let t1: FootpathTileType? = n1 != nil && d1?.tileType == tileType ? tileType : nil
             
-            let rule = PatternRule(left: t1?.rawValue, center: tileType.rawValue, right: t0?.rawValue)
+            let rule = GridPatternRule(left: t1?.rawValue, center: tileType.rawValue, right: t0?.rawValue)
             
             tiles = tiles.filter { $0.pattern.rule(for: cardinal).equals(rule: rule) }
         }

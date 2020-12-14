@@ -26,6 +26,18 @@ public enum FootpathTileType: Int, CaseIterable, Codable, Equatable {
         }
     }
     
+    public var abbreviation: String {
+            
+        switch self {
+        
+        case .cobble: return "C"
+        case .dirt: return "D"
+        case .gravel: return "G"
+        case .stone: return "S"
+        case .wood: return "W"
+        }
+    }
+
     public var movementCost: Int {
         
         switch self {
@@ -38,7 +50,7 @@ public enum FootpathTileType: Int, CaseIterable, Codable, Equatable {
         }
     }
     
-    var color: Color {
+    public var color: Color {
         
         switch self {
         

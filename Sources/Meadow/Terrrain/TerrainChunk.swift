@@ -8,11 +8,6 @@ import SceneKit
 
 public class TerrainChunk: SCNNode, Codable, Hideable, Responder, SceneGraphNode, Soilable, Updatable {
     
-    enum Constants {
-        
-        static var size = 5
-    }
-    
     private enum CodingKeys: CodingKey {
         
         case coordinate
@@ -33,7 +28,7 @@ public class TerrainChunk: SCNNode, Codable, Hideable, Responder, SceneGraphNode
     
     init(coordinate: Coordinate) {
         
-        self.coordinate = Coordinate(x: coordinate.x, z: coordinate.z, size: Constants.size)
+        self.coordinate = Coordinate(x: coordinate.x, z: coordinate.z, size: World.Constants.chunkSize)
         self.tiles = []
         
         super.init()
@@ -118,7 +113,7 @@ extension TerrainChunk {
         
         guard isDirty else { return false }
         
-        guard let tilemap = tilemaps?.terrain else { return false }
+        guard let tilemap = world?.tilemaps.terrain else { return false }
         
         var polygons: [Polygon] = []
         
@@ -184,6 +179,6 @@ extension TerrainChunk {
     
     func contains(coordinate other: Coordinate) -> Bool {
         
-        return other.x >= coordinate.x && other.x < (coordinate.x + Constants.size) && other.z >= coordinate.z && other.z < (coordinate.z + Constants.size)
+        return other.x >= coordinate.x && other.x < (coordinate.x + World.Constants.chunkSize) && other.z >= coordinate.z && other.z < (coordinate.z + World.Constants.chunkSize)
     }
 }

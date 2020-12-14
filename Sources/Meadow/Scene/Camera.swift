@@ -17,12 +17,26 @@ public class Camera: SCNNode, SceneGraphNode, Soilable, Updatable {
     public var isLeaf: Bool { children.isEmpty }
     public var category: Int { SceneGraphCategory.camera.rawValue }
     
+    lazy var jig: SCNNode = {
+        
+        let node = SCNNode()
+        
+        let camera = SCNCamera()
+        
+        camera.usesOrthographicProjection = true
+        
+        node.camera = camera
+        
+        return node
+    }()
+    
     override init() {
         
         super.init()
         
         name = "Camera"
-        camera = SCNCamera()
+        
+        addChildNode(jig)
     }
     
     required init?(coder: NSCoder) {

@@ -37,7 +37,7 @@ public class Meadow: SCNNode, Codable, SceneGraphNode, Soilable, Updatable {
     
     var _isDirty: Bool = false
     
-    public var world: World
+    public var _world: World
     
     public let actors: Actors
     public let area: Area
@@ -54,7 +54,7 @@ public class Meadow: SCNNode, Codable, SceneGraphNode, Soilable, Updatable {
     
     init(season: Season) {
         
-        world = World(season: season)
+        _world = World(season: season)
         
         actors = Actors()
         area = Area()
@@ -82,7 +82,7 @@ public class Meadow: SCNNode, Codable, SceneGraphNode, Soilable, Updatable {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        world = World(season: .spring)
+        _world = World(season: .spring)
         
         actors = try container.decode(Actors.self, forKey: .actors)
         area = try container.decode(Area.self, forKey: .area)
@@ -162,7 +162,7 @@ extension Meadow {
 
 extension Meadow: Responder {
     
-    var tilemaps: Tilemaps? { world.tilemaps }
+    var world: World? { _world }
 }
 
 extension Meadow {

@@ -6,7 +6,7 @@
 
 import Foundation
 
-enum GridTileWeighting: Int, CaseIterable, Codable {
+public enum GridTileWeighting: Int, CaseIterable, Codable {
     
     case common
     case rare

@@ -16,12 +16,6 @@ public class AreaTile: NSObject, Codable, Collapsable, Renderable, Responder, Sc
         case slope
     }
     
-    enum Constants {
-        
-        static let slopeHeight = 0.5
-        static let throneHeight = 0.5
-    }
-    
     public var ancestor: SoilableParent? { return chunk }
     
     public var isDirty: Bool = false
@@ -201,14 +195,14 @@ extension AreaTile {
         //
         //  Create tile apex
         //
-        var apexVectors = corners.map { $0 + Vector(x: 0.0, y: Constants.slopeHeight * Double(coordinate.y), z: 0.0) }
+        var apexVectors = corners.map { $0 + Vector(x: 0.0, y: World.Constants.slope * Double(coordinate.y), z: 0.0) }
         
         if let slope = slope {
             
             let (o0, o1) = slope.ordinals
             
-            apexVectors[o0.rawValue].y += Constants.slopeHeight
-            apexVectors[o1.rawValue].y += Constants.slopeHeight
+            apexVectors[o0.rawValue].y += World.Constants.slope
+            apexVectors[o1.rawValue].y += World.Constants.slope
         }
         
         let apexNormal = apexVectors.normal()
@@ -225,7 +219,7 @@ extension AreaTile {
         
         polygons.append(Polygon(vertices: apexVertices))
         
-        guard let edges = tilemaps?.area.edgeset.edges(with: tileType) else { return polygons }
+        guard let edges = world?.tilemaps.area.edgeset.edges(with: tileType) else { return polygons }
         
         var rng = RNG(seed: UInt64(seed))
         
@@ -243,8 +237,8 @@ extension AreaTile {
             
             guard let neighbour = find(neighbour: cardinal) else {
                 
-                vertices.append(contentsOf: [Vertex(position: (corners[o1.rawValue] - Vector(x: 0, y: Constants.throneHeight, z: 0)), normal: cardinal.normal, color: tileType.color, textureCoordinates: edgeUVs[2]),
-                                             Vertex(position: (corners[o0.rawValue] - Vector(x: 0, y: Constants.throneHeight, z: 0)), normal: cardinal.normal, color: tileType.color, textureCoordinates: edgeUVs[3])])
+                vertices.append(contentsOf: [Vertex(position: (corners[o1.rawValue] - Vector(x: 0, y: World.Constants.throne, z: 0)), normal: cardinal.normal, color: tileType.color, textureCoordinates: edgeUVs[2]),
+                                             Vertex(position: (corners[o0.rawValue] - Vector(x: 0, y: World.Constants.throne, z: 0)), normal: cardinal.normal, color: tileType.color, textureCoordinates: edgeUVs[3])])
                 
                 polygons.append(Polygon(vertices: vertices))
                 
@@ -267,15 +261,15 @@ extension AreaTile {
                 let height = (c0 == c3 ? c2 : c3)
                 let uvIndex = (c0 == c3 ? 2 : 3)
                 
-                vertices.append(Vertex(position: (corners[corner.rawValue] + Vector(x: 0.0, y: Constants.slopeHeight * Double(height), z: 0.0)), normal: cardinal.normal, color: tileType.color, textureCoordinates: edgeUVs[uvIndex]))
+                vertices.append(Vertex(position: (corners[corner.rawValue] + Vector(x: 0.0, y: World.Constants.slope * Double(height), z: 0.0)), normal: cardinal.normal, color: tileType.color, textureCoordinates: edgeUVs[uvIndex]))
                 
                 polygons.append(Polygon(vertices: vertices))
                 
                 continue
             }
             
-            vertices.append(contentsOf: [Vertex(position: (corners[o1.rawValue] + Vector(x: 0, y: Constants.slopeHeight * Double(neighbourCorners[o3.rawValue]), z: 0)), normal: cardinal.normal, color: tileType.color, textureCoordinates: edgeUVs[2]),
-                                         Vertex(position: (corners[o0.rawValue] - Vector(x: 0, y: Constants.slopeHeight * Double(neighbourCorners[o2.rawValue]), z: 0)), normal: cardinal.normal, color: tileType.color, textureCoordinates: edgeUVs[3])])
+            vertices.append(contentsOf: [Vertex(position: (corners[o1.rawValue] + Vector(x: 0, y: World.Constants.slope * Double(neighbourCorners[o3.rawValue]), z: 0)), normal: cardinal.normal, color: tileType.color, textureCoordinates: edgeUVs[2]),
+                                         Vertex(position: (corners[o0.rawValue] - Vector(x: 0, y: World.Constants.slope * Double(neighbourCorners[o2.rawValue]), z: 0)), normal: cardinal.normal, color: tileType.color, textureCoordinates: edgeUVs[3])])
             
             polygons.append(Polygon(vertices: vertices))
         }
@@ -324,7 +318,7 @@ extension AreaTile {
     
     func collapse() {
         
-        guard let tilemap = tilemaps?.area, tilesetTile == nil else { return }
+        guard let tilemap = world?.tilemaps.area, tilesetTile == nil else { return }
         
         var rng = RNG(seed: UInt64(seed))
         

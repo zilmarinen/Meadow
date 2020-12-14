@@ -15,12 +15,6 @@ public class FootpathTile: NSObject, Codable, Collapsable, Renderable, Responder
         case slope
     }
     
-    enum Constants {
-        
-        static let slopeHeight = 0.5
-        static let throneHeight = 0.5
-    }
-    
     public var ancestor: SoilableParent? { return chunk }
     
     public var isDirty: Bool = false
@@ -198,14 +192,14 @@ extension FootpathTile {
         //
         //  Create tile apex
         //
-        var apexVectors = corners.map { $0 + Vector(x: 0.0, y: Constants.slopeHeight * Double(coordinate.y), z: 0.0) }
+        var apexVectors = corners.map { $0 + Vector(x: 0.0, y: World.Constants.slope * Double(coordinate.y), z: 0.0) }
         
         if let slope = slope {
             
             let (o0, o1) = slope.ordinals
             
-            apexVectors[o0.rawValue].y += Constants.slopeHeight
-            apexVectors[o1.rawValue].y += Constants.slopeHeight
+            apexVectors[o0.rawValue].y += World.Constants.slope
+            apexVectors[o1.rawValue].y += World.Constants.slope
         }
         
         let apexNormal = apexVectors.normal()
@@ -264,7 +258,7 @@ extension FootpathTile {
     
     func collapse() {
         
-        guard let tilemap = tilemaps?.footpath, tilesetTile == nil else { return }
+        guard let tilemap = world?.tilemaps.footpath, tilesetTile == nil else { return }
         
         var rng = RNG(seed: UInt64(seed))
         

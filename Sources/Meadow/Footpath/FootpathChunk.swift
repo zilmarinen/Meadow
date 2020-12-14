@@ -8,11 +8,6 @@ import SceneKit
 
 public class FootpathChunk: SCNNode, Codable, Hideable, Responder, SceneGraphNode, Soilable, Updatable {
     
-    enum Constants {
-        
-        static var size = 5
-    }
-    
     private enum CodingKeys: CodingKey {
         
         case coordinate
@@ -33,7 +28,7 @@ public class FootpathChunk: SCNNode, Codable, Hideable, Responder, SceneGraphNod
     
     init(coordinate: Coordinate) {
         
-        self.coordinate = Coordinate(x: coordinate.x - (coordinate.x % Constants.size), y: 0, z: coordinate.z - (coordinate.z % Constants.size))
+        self.coordinate = Coordinate(x: coordinate.x, z: coordinate.z, size: World.Constants.chunkSize)
         self.tiles = []
         
         super.init()
@@ -118,7 +113,7 @@ extension FootpathChunk {
         
         guard isDirty else { return false }
         
-        guard let tilemap = tilemaps?.footpath else { return false }
+        guard let tilemap = world?.tilemaps.footpath else { return false }
         
         var polygons: [Polygon] = []
         
@@ -160,6 +155,6 @@ extension FootpathChunk {
     
     func contains(coordinate other: Coordinate) -> Bool {
         
-        return other.x >= coordinate.x && other.x < (coordinate.x + Constants.size) && other.z >= coordinate.z && other.z < (coordinate.z + Constants.size)
+        return other.x >= coordinate.x && other.x < (coordinate.x + World.Constants.chunkSize) && other.z >= coordinate.z && other.z < (coordinate.z + World.Constants.chunkSize)
     }
 }

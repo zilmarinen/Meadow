@@ -14,12 +14,6 @@ public class FoliageTile: NSObject, Codable, Renderable, Responder, SceneGraphNo
         case tileType
     }
     
-    enum Constants {
-        
-        static let slopeHeight = 0.5
-        static let throneHeight = 0.5
-    }
-    
     public var ancestor: SoilableParent? { return chunk }
     
     public var isDirty: Bool = false

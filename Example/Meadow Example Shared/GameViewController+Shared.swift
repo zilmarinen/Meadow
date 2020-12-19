@@ -1,27 +1,28 @@
 //
-//  ViewController.swift
-//  Example
+//  GameViewController+Shared.swift
+//  Meadow Example
 //
-//  Created by Zack Brown on 16/11/2020.
+//  Created by Zack Brown on 15/12/2020.
 //
 
-import Cocoa
 import Meadow
 import SceneKit
 
-class ViewController: NSViewController {
+extension GameViewController {
     
-    @IBOutlet weak var sceneView: SCNView!
-    
-    override func viewDidLoad() {
+    func setupScene() {
         
-        super.viewDidLoad()
-
+        guard let sceneView = view as? SCNView else { fatalError("Invalid view hierarchy") }
+        
         let scene = Scene(season: .spring)
         
-        scene.camera.camera?.usesOrthographicProjection = true
-        scene.camera.position = SCNVector3(x: 0, y: 20, z: 20)
-        scene.camera.look(at: scene.meadow.position)
+        let box = SCNBox(width: 1, height: 1, length: 1, chamferRadius: 0)
+        
+        let node = SCNNode(geometry: box)
+        
+        box.firstMaterial?.diffuse.contents = MDWColor.systemPink
+        
+        scene.rootNode.addChildNode(node)
         
         sceneView.scene = scene
         sceneView.delegate = scene
@@ -33,14 +34,6 @@ class ViewController: NSViewController {
         let z = 4
         let width = 10
         let depth = 10
-        
-        let box = SCNBox(width: 0.20, height: 0.50, length: 0.20, chamferRadius: 0.0)
-        box.firstMaterial?.diffuse.contents = MDWColor.systemPink
-        let node = SCNNode(geometry: box)
-        node.position = SCNVector3(x: CGFloat(x + 1), y: 0.75, z: CGFloat(z))
-        scene.rootNode.addChildNode(node)
-        
-        scene.camera.look(at: node.position)
         
         let band0 = 2
         let baseType = TerrainTileType.dirt

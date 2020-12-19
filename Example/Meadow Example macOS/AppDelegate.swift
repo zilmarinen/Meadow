@@ -1,15 +1,15 @@
 //
 //  AppDelegate.swift
-//  Example
+//  Meadow Example macOS
 //
-//  Created by Zack Brown on 16/11/2020.
+//  Created by Zack Brown on 15/12/2020.
 //
 
 import Cocoa
 
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
-
+    
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         
         //
@@ -18,5 +18,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationWillTerminate(_ aNotification: Notification) {
         
         //
+    }
+
+    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
+        
+        return true
     }
 }

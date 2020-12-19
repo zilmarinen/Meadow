@@ -16,7 +16,7 @@ import Foundation
 
 #endif
 
-struct TerrainTileset {
+struct TerrainTileset: Tileset {
     
     enum Constants {
         
@@ -29,13 +29,13 @@ struct TerrainTileset {
     
     init?(season: Season) throws {
         
-        guard let tileset = Bundle.module.image(forResource: "\(season.description)_\(Constants.tilesetIdentifier)"),
-              let json = NSDataAsset(name: "\(season.description)_\(Constants.tilemapIdentifier)", bundle: .module) else { return nil }
-
+        guard let tileset = TerrainTileset.tileset(named: "\(season.description)_\(Constants.tilesetIdentifier)"),
+              let tilemap = TerrainTileset.tilemap(named: "\(season.description)_\(Constants.tilemapIdentifier)") else { return nil }
+        
         let decoder = JSONDecoder()
         
         image = tileset
-        tiles = try decoder.decode([TerrainTilesetTile].self, from: json.data)
+        tiles = try decoder.decode([TerrainTilesetTile].self, from: tilemap.data)
     }
 }
 

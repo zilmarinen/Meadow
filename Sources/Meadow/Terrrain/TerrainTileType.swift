@@ -50,18 +50,6 @@ public enum TerrainTileType: Int, CaseIterable, Codable, Equatable {
         }
     }
     
-    public var next: TerrainTileType {
-        
-        switch self {
-        
-        case .dirt: return .grass
-        case .grass: return .undergrowth
-        case .sand: return .dirt
-        case .undergrowth: return .undergrowth
-        case .water: return .sand
-        }
-    }
-    
     public var color: Color {
         
         switch self {
@@ -71,6 +59,18 @@ public enum TerrainTileType: Int, CaseIterable, Codable, Equatable {
         case .sand: return Color(red: 0.95, green: 0.57, blue: 0.2, alpha: 1.0)
         case .undergrowth: return Color(red: 0.8, green: 0.89, blue: 0.45, alpha: 1.0)
         case .water: return Color(red: 0.54, green: 0.8, blue: 0.8, alpha: 1.0)
+        }
+    }
+    
+    public var next: TerrainTileType {
+        
+        switch self {
+        
+        case .dirt: return .grass
+        case .grass: return .undergrowth
+        case .sand: return .dirt
+        case .undergrowth: return .undergrowth
+        case .water: return .sand
         }
     }
     

@@ -16,7 +16,7 @@ import Foundation
 
 #endif
 
-struct FootpathTileset {
+struct FootpathTileset: Tileset {
     
     enum Constants {
         
@@ -29,13 +29,13 @@ struct FootpathTileset {
     
     init?() throws {
         
-        guard let tileset = Bundle.module.image(forResource: Constants.tilesetIdentifier),
-              let json = NSDataAsset(name: Constants.tilemapIdentifier, bundle: .module) else { return nil }
+        guard let tileset = FootpathTileset.tileset(named: Constants.tilesetIdentifier),
+              let tilemap = FootpathTileset.tilemap(named: Constants.tilemapIdentifier) else { return nil }
         
         let decoder = JSONDecoder()
         
         image = tileset
-        tiles = try decoder.decode([FootpathTilesetTile].self, from: json.data)
+        tiles = try decoder.decode([FootpathTilesetTile].self, from: tilemap.data)
     }
 }
 

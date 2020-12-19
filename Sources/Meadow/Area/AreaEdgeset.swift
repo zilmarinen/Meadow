@@ -16,7 +16,7 @@ import Foundation
 
 #endif
 
-struct AreaEdgeset {
+struct AreaEdgeset: Edgeset {
     
     enum Constants {
         
@@ -29,13 +29,13 @@ struct AreaEdgeset {
     
     init?() throws {
         
-        guard let tileset = Bundle.module.image(forResource: Constants.edgesetIdentifier),
-              let json = NSDataAsset(name: Constants.edgemapIdentifier, bundle: .module) else { return nil }
-
+        guard let tileset = AreaEdgeset.edgeset(named: Constants.edgesetIdentifier),
+              let tilemap = AreaEdgeset.edgemap(named: Constants.edgemapIdentifier) else { return nil }
+        
         let decoder = JSONDecoder()
         
         image = tileset
-        edges = try decoder.decode([AreaEdgesetEdge].self, from: json.data)
+        edges = try decoder.decode([AreaEdgesetEdge].self, from: tilemap.data)
     }
 }
 

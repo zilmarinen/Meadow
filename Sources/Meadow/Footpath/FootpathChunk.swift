@@ -113,7 +113,7 @@ extension FootpathChunk {
         
         guard isDirty else { return false }
         
-        guard let tilemap = world?.tilemaps.footpath else { return false }
+        guard let tilemap = meadow?.world.tilemaps.footpath else { return false }
         
         var polygons: [Polygon] = []
         

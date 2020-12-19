@@ -5,17 +5,22 @@
 //
 
 import Foundation
+import SceneKit
 
 protocol Responder: Soilable {
     
     var responder: Responder? { get }
     
-    var world: World? { get }
+    var meadow: Meadow? { get }
+    
+    var library: MTLLibrary? { get }
 }
 
 extension Responder {
     
     var responder: Responder? { ancestor as? Responder }
     
-    var world: World? { responder?.world }
+    var meadow: Meadow? { responder?.meadow }
+    
+    var library: MTLLibrary? { responder?.library }
 }

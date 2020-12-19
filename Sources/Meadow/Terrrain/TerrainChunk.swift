@@ -113,7 +113,7 @@ extension TerrainChunk {
         
         guard isDirty else { return false }
         
-        guard let tilemap = world?.tilemaps.terrain else { return false }
+        guard let tilemap = meadow?.world.tilemaps.terrain else { return false }
         
         var polygons: [Polygon] = []
         

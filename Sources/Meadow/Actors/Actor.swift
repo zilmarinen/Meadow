@@ -10,7 +10,6 @@ public class Actor: SCNNode, Codable, Hideable, Responder, SceneGraphNode, Soila
     
     private enum CodingKeys: CodingKey {
         
-        
     }
     
     public var ancestor: SoilableParent? { parent as? SoilableParent }

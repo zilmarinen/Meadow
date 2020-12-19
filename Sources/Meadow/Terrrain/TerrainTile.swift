@@ -220,7 +220,7 @@ extension TerrainTile {
         
         polygons.append(Polygon(vertices: apexVertices))
         
-        guard let edges = world?.tilemaps.terrain.edgeset.edges(with: tileType) else { return polygons }
+        guard let edges = meadow?.world.tilemaps.terrain.edgeset.edges(with: tileType) else { return polygons }
         
         var rng = RNG(seed: UInt64(seed))
         
@@ -319,7 +319,7 @@ extension TerrainTile {
     
     func collapse() {
         
-        guard let tilemap = world?.tilemaps.terrain, tilesetTile == nil else { return }
+        guard let tilemap = meadow?.world.tilemaps.terrain, tilesetTile == nil else { return }
         
         var rng = RNG(seed: UInt64(seed))
         

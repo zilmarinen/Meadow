@@ -258,7 +258,7 @@ extension FootpathTile {
     
     func collapse() {
         
-        guard let tilemap = world?.tilemaps.footpath, tilesetTile == nil else { return }
+        guard let tilemap = meadow?.world.tilemaps.footpath, tilesetTile == nil else { return }
         
         var rng = RNG(seed: UInt64(seed))
         

@@ -11,7 +11,7 @@ public struct World {
     public struct Constants {
         
         static let floor = 0
-        static let ceiling = 35
+        static let ceiling = 10
         static let slope = 0.5
         static let throne = 0.5
         

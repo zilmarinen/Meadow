@@ -13,6 +13,7 @@ public class Meadow: SCNNode, Codable, SceneGraphNode, Soilable, Updatable {
         case name
         case actors
         case area
+        case floor
         case foliage
         case footpath
         case portals
@@ -20,7 +21,11 @@ public class Meadow: SCNNode, Codable, SceneGraphNode, Soilable, Updatable {
         case terrain
     }
     
-    public var ancestor: SoilableParent? { return parent as? SoilableParent }
+    public static var bundle: Bundle { .module }
+    
+    public var library: MTLLibrary?
+    
+    public var ancestor: SoilableParent? { parent as? SoilableParent }
     
     public var isDirty: Bool {
         
@@ -37,10 +42,11 @@ public class Meadow: SCNNode, Codable, SceneGraphNode, Soilable, Updatable {
     
     var _isDirty: Bool = false
     
-    public var _world: World
+    public var world = World(season: .spring)
     
     public let actors: Actors
     public let area: Area
+    public let floor: Floor
     public let foliage: Foliage
     public let footpath: Footpath
     public let portals: Portals
@@ -54,10 +60,9 @@ public class Meadow: SCNNode, Codable, SceneGraphNode, Soilable, Updatable {
     
     init(season: Season) {
         
-        _world = World(season: season)
-        
         actors = Actors()
         area = Area()
+        floor = Floor()
         foliage = Foliage()
         footpath = Footpath()
         portals = Portals()
@@ -71,6 +76,7 @@ public class Meadow: SCNNode, Codable, SceneGraphNode, Soilable, Updatable {
         
         addChildNode(actors)
         addChildNode(area)
+        addChildNode(floor)
         addChildNode(foliage)
         addChildNode(footpath)
         addChildNode(portals)
@@ -82,10 +88,9 @@ public class Meadow: SCNNode, Codable, SceneGraphNode, Soilable, Updatable {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        _world = World(season: .spring)
-        
         actors = try container.decode(Actors.self, forKey: .actors)
         area = try container.decode(Area.self, forKey: .area)
+        floor = try container.decode(Floor.self, forKey: .floor)
         foliage = try container.decode(Foliage.self, forKey: .foliage)
         footpath = try container.decode(Footpath.self, forKey: .footpath)
         portals = try container.decode(Portals.self, forKey: .portals)
@@ -99,6 +104,7 @@ public class Meadow: SCNNode, Codable, SceneGraphNode, Soilable, Updatable {
         
         addChildNode(actors)
         addChildNode(area)
+        addChildNode(floor)
         addChildNode(foliage)
         addChildNode(footpath)
         addChildNode(portals)
@@ -118,6 +124,7 @@ public class Meadow: SCNNode, Codable, SceneGraphNode, Soilable, Updatable {
         try container.encode(name, forKey: .name)
         try container.encode(actors, forKey: .actors)
         try container.encode(area, forKey: .area)
+        try container.encode(floor, forKey: .floor)
         try container.encode(foliage, forKey: .foliage)
         try container.encode(footpath, forKey: .footpath)
         try container.encode(portals, forKey: .portals)
@@ -134,6 +141,7 @@ extension Meadow {
         
         actors.clean()
         area.clean()
+        floor.clean()
         foliage.clean()
         footpath.clean()
         portals.clean()
@@ -162,7 +170,7 @@ extension Meadow {
 
 extension Meadow: Responder {
     
-    var world: World? { _world }
+    var meadow: Meadow? { self }
 }
 
 extension Meadow {

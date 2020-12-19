@@ -4,7 +4,7 @@
 //  Created by Zack Brown on 03/11/2020.
 //
 
-struct Mesh: Hashable {
+public struct Mesh: Hashable {
     
     enum Faces {
         
@@ -20,7 +20,7 @@ struct Mesh: Hashable {
         return Bounds(vectors: polygons.flatMap { $0.vertices.map { $0.position } })
     }()
     
-    init(polygons: [Polygon]) {
+    public init(polygons: [Polygon]) {
         
         self.polygons = polygons
     }

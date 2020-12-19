@@ -6,14 +6,14 @@
 
 import CoreGraphics
 
-struct Vertex: Hashable {
+public struct Vertex: Hashable {
     
     let position: Vector
     let normal: Vector
     let color: Color
     let textureCoordinates: CGPoint
     
-    init(position: Vector, normal: Vector, color: Color = .black, textureCoordinates: CGPoint = .zero) {
+    public init(position: Vector, normal: Vector, color: Color = .black, textureCoordinates: CGPoint = .zero) {
         
         self.position = position.quantized()
         self.normal = normal.normalised()

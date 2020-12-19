@@ -21,10 +21,21 @@ public struct Color: Codable, Hashable {
         self.alpha = alpha
     }
     
-    public var color: MDWColor { MDWColor(red: CGFloat(red), green: CGFloat(green), blue: CGFloat(blue), alpha: CGFloat(alpha)) }
+    public var color: MDWColor {
+        
+        #if os(macOS)
+        
+            return MDWColor(calibratedRed: CGFloat(red), green: CGFloat(green), blue: CGFloat(blue), alpha: CGFloat(alpha))
+
+        #else
+
+            return MDWColor(red: CGFloat(red), green: CGFloat(green), blue: CGFloat(blue), alpha: CGFloat(alpha))
+
+        #endif
+    }
 }
 
-extension Color {
+public extension Color {
     
     static var black = Color(red: 0, green: 0, blue: 0)
     static var white = Color(red: 1, green: 1, blue: 1)

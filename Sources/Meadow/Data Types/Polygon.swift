@@ -4,7 +4,7 @@
 //  Created by Zack Brown on 03/11/2020.
 //
 
-class Polygon: Hashable {
+public class Polygon: Hashable {
     
     let vertices: [Vertex]
     
@@ -18,7 +18,7 @@ class Polygon: Hashable {
         return Plane(vectors: vertices.map { $0.position })
     }()
     
-    init(vertices: [Vertex]) {
+    public init(vertices: [Vertex]) {
         
         self.vertices = vertices
     }
@@ -26,12 +26,12 @@ class Polygon: Hashable {
 
 extension Polygon {
     
-    static func == (lhs: Polygon, rhs: Polygon) -> Bool {
+    public static func == (lhs: Polygon, rhs: Polygon) -> Bool {
         
         return lhs === rhs || (lhs.vertices == rhs.vertices && lhs.bounds == rhs.bounds && lhs.plane == rhs.plane)
     }
 
-    func hash(into hasher: inout Hasher) {
+    public func hash(into hasher: inout Hasher) {
         
         hasher.combine(vertices)
         hasher.combine(bounds)

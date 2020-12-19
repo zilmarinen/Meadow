@@ -10,9 +10,9 @@ import SceneKit
 
 public struct Vector: Codable, Hashable {
     
-    var x: Double
-    var y: Double
-    var z: Double
+    public var x: Double
+    public var y: Double
+    public var z: Double
     
     var description: String {
         
@@ -42,7 +42,7 @@ public struct Vector: Codable, Hashable {
     }
 }
 
-extension Vector {
+public extension Vector {
     
     static let x = Vector(x: 1, y: 0, z: 0)
     static let y = Vector(x: 0, y: 1, z: 0)
@@ -59,7 +59,7 @@ extension Vector {
     static var infinity = Vector(x: .infinity, y: .infinity, z: .infinity)
 }
 
-extension Vector {
+public extension Vector {
     
     static prefix func -(rhs: Self) -> Self {
         
@@ -89,6 +89,11 @@ extension Vector {
     static func /(lhs: Self, rhs: Double) -> Self {
         
         return Vector(x: lhs.x / rhs, y: lhs.y / rhs, z: lhs.z / rhs)
+    }
+    
+    static func +=(lhs: inout Self, rhs: Self) {
+        
+        lhs = lhs + rhs
     }
     
     func isEqual(to vector: Vector) -> Bool {

@@ -23,7 +23,7 @@ public enum Ordinal: Int, CaseIterable, Encodable {
     }
 }
 
-extension Ordinal {
+public extension Ordinal {
     
     static var corners: [Vector] = [((Cardinal.normal(cardinal: .north) + Cardinal.normal(cardinal: .east)) / 2),
                                     ((Cardinal.normal(cardinal: .north) + Cardinal.normal(cardinal: .west)) / 2),

@@ -6,7 +6,7 @@
 
 import SceneKit
 
-extension SCNVector3 {
+public extension SCNVector3 {
     
     init(vector: Vector) {
         

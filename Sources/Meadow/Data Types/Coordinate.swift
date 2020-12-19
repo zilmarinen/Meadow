@@ -28,6 +28,11 @@ public struct Coordinate: Codable, Equatable, Hashable {
         self.y = 0
         self.z = Int((z >= 0 ? z : z - size) / size) * size
     }
+    
+    public init(vector: Vector) {
+        
+        self.init(x: Int(vector.x), y: Int(vector.y), z: Int(vector.z))
+    }
 }
 
 public extension Coordinate {

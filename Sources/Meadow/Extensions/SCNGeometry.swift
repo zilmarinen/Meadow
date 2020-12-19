@@ -6,7 +6,7 @@
 
 import SceneKit
 
-extension SCNGeometry {
+public extension SCNGeometry {
     
     convenience init(mesh: Mesh) {
         

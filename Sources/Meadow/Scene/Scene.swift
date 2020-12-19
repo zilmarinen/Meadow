@@ -10,12 +10,9 @@ public class Scene: SCNScene, Codable, SceneGraphNode {
     
     private enum CodingKeys: CodingKey {
         
-        case backgroundColor
         case name
         case meadow
     }
-    
-    public var backgroundColor: Color = .white
     
     public let camera = Camera()
     public let meadow: Meadow
@@ -27,7 +24,7 @@ public class Scene: SCNScene, Codable, SceneGraphNode {
     public var isLeaf: Bool { children.isEmpty }
     public var category: Int { SceneGraphCategory.scene.rawValue }
     
-    private var lastUpdate: TimeInterval?
+    private(set) public var lastUpdate: TimeInterval?
     
     public init(season: Season) {
         
@@ -45,7 +42,6 @@ public class Scene: SCNScene, Codable, SceneGraphNode {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        backgroundColor = try container.decode(Color.self, forKey: .backgroundColor)
         name = try container.decode(String.self, forKey: .name)
         meadow = try container.decode(Meadow.self, forKey: .meadow)
         
@@ -64,7 +60,6 @@ public class Scene: SCNScene, Codable, SceneGraphNode {
         
         var container = encoder.container(keyedBy: CodingKeys.self)
         
-        try container.encode(backgroundColor, forKey: .backgroundColor)
         try container.encode(name, forKey: .name)
         try container.encode(meadow, forKey: .meadow)
     }

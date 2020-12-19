@@ -42,7 +42,7 @@ open class StateObserver<ObservableState: State>: StateHandler {
         if let callback = callback { subscribe(callback) }
     }
     
-    open func stateDidChange(from previousState: ObservableState?, to currentState: ObservableState)  { }
+    open func stateDidChange(from previousState: ObservableState?, to currentState: ObservableState) { }
     
     @discardableResult public func subscribe(_ callback: @escaping StateCallback) -> CallbackReference {
         

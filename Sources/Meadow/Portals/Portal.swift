@@ -10,7 +10,8 @@ public class Portal: SCNNode, Codable, Hideable, Responder, SceneGraphNode, Soil
     
     private enum CodingKeys: CodingKey {
         
-        
+        case footprint
+        case identifier
     }
     
     public var ancestor: SoilableParent? { parent as? SoilableParent }
@@ -22,7 +23,12 @@ public class Portal: SCNNode, Codable, Hideable, Responder, SceneGraphNode, Soil
     public var isLeaf: Bool { children.isEmpty }
     public var category: Int { SceneGraphCategory.portal.rawValue }
     
-    override init() {
+    public let footprint: Footprint
+    public var identifier: String = "undefined"
+    
+    init(footprint: Footprint) {
+        
+        self.footprint = footprint
         
         super.init()
         
@@ -35,7 +41,8 @@ public class Portal: SCNNode, Codable, Hideable, Responder, SceneGraphNode, Soil
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        //
+        footprint = try container.decode(Footprint.self, forKey: .footprint)
+        identifier = try container.decode(String.self, forKey: .identifier)
         
         super.init()
         
@@ -51,7 +58,8 @@ public class Portal: SCNNode, Codable, Hideable, Responder, SceneGraphNode, Soil
         
         var container = encoder.container(keyedBy: CodingKeys.self)
         
-        //
+        try container.encode(footprint, forKey: .footprint)
+        try container.encode(identifier, forKey: .identifier)
     }
 }
 
@@ -74,5 +82,13 @@ extension Portal {
     func update(delta: TimeInterval, time: TimeInterval) {
         
         //
+    }
+}
+
+extension Portal {
+    
+    func contains(node: GridNode) -> Bool {
+        
+        return footprint.intersects(node: node)
     }
 }

@@ -6,6 +6,25 @@
 
 import SceneKit
 
+extension SCNGeometry {
+    
+    func set(uniforms: [Uniform]) {
+        
+        for uniform in uniforms {
+            
+            setValue(uniform.value, forKey: uniform.key)
+        }
+    }
+    
+    func set(textures: [Texture]) {
+        
+        for texture in textures {
+            
+            setValue(texture.value, forKey: texture.key)
+        }
+    }
+}
+
 public extension SCNGeometry {
     
     convenience init(mesh: Mesh) {

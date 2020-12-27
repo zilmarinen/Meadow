@@ -16,7 +16,7 @@ public struct Vector: Codable, Hashable {
     
     var description: String {
         
-        return "[\(x), \(y), \(z)]"
+        return "[\(String(format: "%.2f", x)), \(String(format: "%.2f", y)), \(String(format: "%.2f", z))]"
     }
     
     public init(x: Double, y: Double, z: Double) {
@@ -183,6 +183,31 @@ extension Vector {
         let d = distance(from: plane)
         
         return (d < -Math.epsilon ? .back : (d > Math.epsilon ? .front : .coplanar))
+    }
+}
+
+extension Vector: Transformable {
+    
+    public func translated(by translation: Self) -> Self {
+        
+        return self + translation
+    }
+    
+    public func rotated(by rotation: Rotation) -> Self {
+        
+        let vector = GLKQuaternionRotateVector3(rotation.quaternion, GLKVector3(vector: self))
+        
+        return Vector(vector: vector)
+    }
+    
+    public func scaled(by scale: Self) -> Self {
+        
+        return Vector(x: x * scale.x, y: y * scale.y, z: z * scale.z)
+    }
+    
+    public func transformed(by transform: Transform) -> Self {
+        
+        return scaled(by: transform.scale).rotated(by: transform.rotation).translated(by: transform.position)
     }
 }
 

@@ -42,18 +42,3 @@ extension Soilable {
         becomeDirty()
     }
 }
-
-extension Soilable where Self: SceneGraphNode & Soilable {
-    
-    public func soil() {
-        
-        for child in children {
-            
-            guard let child = child as? SceneGraphNode & Soilable else { continue }
-            
-            child.soil()
-        }
-        
-        isDirty = true
-    }
-}

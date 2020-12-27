@@ -17,13 +17,13 @@ enum Math {
         return (value / epsilon).rounded() * epsilon
     }
     
-    static func radians(degrees: Float) -> Double {
+    static func radians(degrees: Double) -> Double {
         
-        return Double(GLKMathDegreesToRadians(degrees))
+        return Double(GLKMathDegreesToRadians(Float(degrees)))
     }
     
-    static func degrees(radians: Float) -> Double {
+    static func degrees(radians: Double) -> Double {
         
-        return Double(GLKMathRadiansToDegrees(radians))
+        return Double(GLKMathRadiansToDegrees(Float(radians)))
     }
 }

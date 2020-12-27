@@ -6,16 +6,44 @@
 
 import SceneKit
 
-public class Scene: SCNScene, Codable, SceneGraphNode {
-    
+public class Scene: SCNScene, Codable, Responder, SceneGraphNode, Soilable {
+
     private enum CodingKeys: CodingKey {
         
         case name
+        case camera
         case meadow
     }
     
-    public let camera = Camera()
-    public let meadow: Meadow
+    public var library: MTLLibrary? {
+        
+        didSet {
+            
+            becomeDirty()
+        }
+    }
+    
+    public var ancestor: SoilableParent? { nil }
+    
+    public var isDirty: Bool {
+        
+        get {
+            
+            children.compactMap { $0 as? Soilable }.first { $0.isDirty } != nil
+        }
+        
+        set {
+            
+            guard !isDirty, newValue else { return }
+            
+            for child in children {
+                
+                guard let child = child as? SceneGraphNode & Soilable else { continue }
+                
+                child.becomeDirty()
+            }
+        }
+    }
     
     public var name: String?
     
@@ -24,15 +52,33 @@ public class Scene: SCNScene, Codable, SceneGraphNode {
     public var isLeaf: Bool { children.isEmpty }
     public var category: Int { SceneGraphCategory.scene.rawValue }
     
+    public let camera: Camera
+    public let meadow: Meadow
+    
+    public var world: World {
+        
+        didSet {
+            
+            guard oldValue != world else { return }
+            
+            becomeDirty()
+        }
+    }
+    
     private(set) public var lastUpdate: TimeInterval?
     
     public init(season: Season) {
         
-        self.meadow = Meadow(season: season)
+        self.world = World(season: season)
+        self.camera = Camera()
+        self.meadow = Meadow()
         
         super.init()
         
         name = "Scene"
+        
+        camera.ancestor = self
+        meadow.ancestor = self
         
         rootNode.addChildNode(camera)
         rootNode.addChildNode(meadow)
@@ -43,9 +89,15 @@ public class Scene: SCNScene, Codable, SceneGraphNode {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         name = try container.decode(String.self, forKey: .name)
+        camera = try container.decode(Camera.self, forKey: .camera)
         meadow = try container.decode(Meadow.self, forKey: .meadow)
         
+        self.world = World(season: .spring)
+        
         super.init()
+        
+        camera.ancestor = self
+        meadow.ancestor = self
         
         rootNode.addChildNode(camera)
         rootNode.addChildNode(meadow)
@@ -61,7 +113,28 @@ public class Scene: SCNScene, Codable, SceneGraphNode {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         try container.encode(name, forKey: .name)
+        try container.encode(camera, forKey: .camera)
         try container.encode(meadow, forKey: .meadow)
+    }
+}
+
+extension Scene {
+    
+    var scene: Scene? { self }
+}
+
+extension Scene {
+    
+    @discardableResult public func clean() -> Bool {
+        
+        guard isDirty else { return false }
+        
+        camera.clean()
+        meadow.clean()
+        
+        isDirty = false
+        
+        return true
     }
 }
 
@@ -74,8 +147,7 @@ extension Scene: SCNSceneRendererDelegate {
         camera.update(delta: delta, time: time)
         meadow.update(delta: delta, time: time)
         
-        camera.clean()
-        meadow.clean()
+        clean()
         
         lastUpdate = time
     }

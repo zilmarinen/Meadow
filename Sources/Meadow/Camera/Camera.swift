@@ -6,11 +6,30 @@
 
 import SceneKit
 
-public class Camera: SCNNode, SceneGraphNode, Soilable, Updatable {
+public class Camera: SCNNode, Codable, Responder, SceneGraphNode, Soilable, Updatable {
     
-    public var ancestor: SoilableParent? { return parent as? SoilableParent }
+    private enum CodingKeys: CodingKey {
+     
+        case floor
+    }
     
-    public var isDirty: Bool = false
+    public var ancestor: SoilableParent?
+    
+    public var isDirty: Bool {
+        
+        get {
+            
+            floor.isDirty
+        }
+        set {
+            
+            guard !isDirty, newValue else { return }
+            
+            floor.becomeDirty()
+        }
+    }
+    
+    public let floor: Floor
     
     public var children: [SceneGraphNode] { [] }
     public var childCount: Int { children.count }
@@ -23,7 +42,8 @@ public class Camera: SCNNode, SceneGraphNode, Soilable, Updatable {
         
         let camera = SCNCamera()
         
-        camera.usesOrthographicProjection = false
+        camera.usesOrthographicProjection = true
+        camera.orthographicScale = Constants.maximumZoom
         
         node.camera = camera
         
@@ -37,16 +57,50 @@ public class Camera: SCNNode, SceneGraphNode, Soilable, Updatable {
     
     override init() {
         
+        self.floor = Floor()
+        
         super.init()
         
         name = "Camera"
+        categoryBitMask = category
         
+        addChildNode(floor)
+        addChildNode(jig)
+        
+        let box = SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0)
+        
+        box.firstMaterial?.diffuse.contents = MDWColor.systemPink
+        
+        let node = SCNNode(geometry: box)
+        
+        addChildNode(node)
+    }
+    
+    required public init(from decoder: Decoder) throws {
+        
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+     
+        floor = try container.decode(Floor.self, forKey: .floor)
+        
+        super.init()
+        
+        name = "Camera"
+        categoryBitMask = category
+        
+        addChildNode(floor)
         addChildNode(jig)
     }
     
     required init?(coder: NSCoder) {
         
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        
+        var container = encoder.container(keyedBy: CodingKeys.self)
+     
+        try container.encode(floor, forKey: .floor)
     }
 }
 
@@ -56,7 +110,7 @@ extension Camera {
         
         guard isDirty else { return false }
         
-        //
+        floor.clean()
         
         isDirty = false
         
@@ -72,30 +126,27 @@ extension Camera {
 
         case .focus(let node, let ordinal, let zoom):
             
-            let theta = Math.radians(degrees: 35)
-            let angle = Math.radians(degrees: 90) * Double(ordinal.rawValue)
-            
             let zoomScale = (Constants.maximumZoom * zoom)
             
-            let orthographicScale = Double(min(max(zoomScale, Constants.minimumZoom), Constants.maximumZoom))
+            let pitch = atan(4.0 / 3.0)
+            let yaw = Math.radians(degrees: 37 + (90.0 * Double(ordinal.rawValue)))
             
             let adjacent = Double(World.Constants.ceiling - World.Constants.floor)
-            let hypotenuse = sqrt((adjacent * adjacent) + (adjacent * adjacent))
-            let opposite = sin(theta) * hypotenuse
+            let opposite = tan(pitch) * adjacent
+            let hypotenuse = sqrt((adjacent * adjacent) + (opposite * opposite))
             
-            let x = (sin(angle + theta))
-            let y = (cos(theta) * hypotenuse)
-            let z = (cos(angle + theta))
+            let x = CGFloat(cos(yaw) * opposite)
+            let y = CGFloat(cos(pitch) * hypotenuse)
+            let z = CGFloat(sin(yaw) * opposite)
             
-            let eye = Vector(x: opposite, y: y, z: opposite)
-            
-            let quaternion = Rotation.focus(eye: eye, focus: .zero, up: .up)
+            let rotation = Rotation.yaw(radians: -yaw).quaternion
             
             self.position = node.position
             
-            jig.position = SCNVector3(vector: eye)
-            jig.rotation = SCNQuaternion(quaternion: quaternion)
-            jig.camera?.orthographicScale = orthographicScale
+            jig.position = SCNVector3(x: x, y: y, z: z)
+            jig.rotation = SCNQuaternion(quaternion: rotation)
+            jig.camera?.orthographicScale = Double(min(max(zoomScale, Constants.minimumZoom), Constants.maximumZoom))
+            jig.look(at: node.position)
         }
     }
 }

@@ -6,7 +6,7 @@
 
 import Foundation
 
-struct TerrainTilesetTile: Decodable {
+struct TerrainTilesetTile: Decodable, Equatable {
     
     enum CodingKeys: CodingKey {
         

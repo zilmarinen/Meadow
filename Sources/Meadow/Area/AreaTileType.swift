@@ -62,7 +62,7 @@ public enum AreaTileType: Int, CaseIterable, Codable, Equatable {
         }
     }
     
-    public var next: TerrainTileType {
+    public var next: AreaTileType {
         
         switch self {
         

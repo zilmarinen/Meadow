@@ -16,7 +16,25 @@ public class Props: SCNNode, Codable, Hideable, Responder, SceneGraphNode, Soila
     
     public var ancestor: SoilableParent? { return parent as? SoilableParent }
     
-    public var isDirty: Bool = false
+    public var isDirty: Bool {
+        
+        get {
+            
+            children.compactMap { $0 as? Soilable }.first { $0.isDirty } != nil
+        }
+        
+        set {
+            
+            guard !isDirty, newValue else { return }
+            
+            for child in children {
+                
+                guard let child = child as? SceneGraphNode & Soilable else { continue }
+                
+                child.becomeDirty()
+            }
+        }
+    }
     
     var props: [Prop] = []
     

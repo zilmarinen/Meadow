@@ -6,7 +6,7 @@
 
 import SceneKit
 
-public class Floor: SCNNode, Codable, Responder, SceneGraphNode, Soilable {
+public class Floor: SCNNode, Codable, Responder, SceneGraphNode, Shadable, Soilable {
     
     private enum CodingKeys: CodingKey {
         
@@ -15,11 +15,11 @@ public class Floor: SCNNode, Codable, Responder, SceneGraphNode, Soilable {
         case drawGrid
     }
     
-    struct Uniforms: ShaderUniform {
+    struct Uniforms: Uniform {
         
         let backgroundColor: vector_float4
         let gridColor: vector_float4
-        let drawGrid: Bool
+        let drawGrid: simd_bool
         
         init(backgroundColor: Color, gridColor: Color, drawGrid: Bool) {
          
@@ -37,6 +37,20 @@ public class Floor: SCNNode, Codable, Responder, SceneGraphNode, Soilable {
     public var childCount: Int { children.count }
     public var isLeaf: Bool { children.isEmpty }
     public var category: Int { SceneGraphCategory.floor.rawValue }
+    
+    var program: SCNProgram? {
+        
+        guard let library = library else { return nil }
+        
+        return SCNProgram(name: "floor", library: library)
+    }
+    
+    var uniforms: [Uniform]? {
+        
+        return [Uniforms(backgroundColor: backgroundColor, gridColor: gridColor, drawGrid: drawGrid)]
+    }
+    
+    var textures: [Texture]? { nil }
     
     public var backgroundColor: Color = Color(red: 0.07, green: 0.07, blue: 0.07) {
         
@@ -65,6 +79,8 @@ public class Floor: SCNNode, Codable, Responder, SceneGraphNode, Soilable {
     override init() {
         
         super.init()
+        
+        categoryBitMask = category
     }
     
     required public init(from decoder: Decoder) throws {
@@ -76,6 +92,8 @@ public class Floor: SCNNode, Codable, Responder, SceneGraphNode, Soilable {
         drawGrid = try container.decode(Bool.self, forKey: .drawGrid)
         
         super.init()
+        
+        categoryBitMask = category
     }
     
     required init?(coder: NSCoder) {
@@ -95,7 +113,7 @@ public class Floor: SCNNode, Codable, Responder, SceneGraphNode, Soilable {
 
 extension Floor {
     
-    public func clean() -> Bool {
+    @discardableResult public func clean() -> Bool {
         
         guard isDirty else { return false }
         
@@ -103,36 +121,23 @@ extension Floor {
         
         for ordinal in Ordinal.allCases {
             
-            vertices.append(Vertex(position: ordinal.vector * 2, normal: .up))
+            vertices.append(Vertex(position: ordinal.vector * 50, normal: .up))
         }
         
         let polygon = Polygon(vertices: vertices)
         
         let mesh = Mesh(polygons: [polygon])
         
-        let program = SCNProgram()
-                
-        program.fragmentFunctionName = "floor_fragment"
-        program.vertexFunctionName = "floor_vertex"
-        program.delegate = self
-        program.library = library
-        
-        let uniforms = Uniforms(backgroundColor: backgroundColor, gridColor: gridColor, drawGrid: drawGrid)
-        
         self.geometry = SCNGeometry(mesh: mesh)
         self.geometry?.program = program
-        self.geometry?.setValue(uniforms.value, forKey: uniforms.key)
+        
+        if let uniforms = uniforms {
+        
+            self.geometry?.set(uniforms: uniforms)
+        }
         
         isDirty = false
         
         return true
-    }
-}
-
-extension Floor: SCNProgramDelegate {
-    
-    public func program(_ program: SCNProgram, handleError error: Error) {
-        
-        print("SCNProgram error: \(error)")
     }
 }

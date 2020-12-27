@@ -11,7 +11,7 @@ protocol Responder: Soilable {
     
     var responder: Responder? { get }
     
-    var meadow: Meadow? { get }
+    var scene: Scene? { get }
     
     var library: MTLLibrary? { get }
 }
@@ -20,7 +20,7 @@ extension Responder {
     
     var responder: Responder? { ancestor as? Responder }
     
-    var meadow: Meadow? { responder?.meadow }
+    var scene: Scene? { responder?.scene }
     
     var library: MTLLibrary? { responder?.library }
 }

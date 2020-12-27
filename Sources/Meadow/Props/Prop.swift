@@ -17,13 +17,12 @@ public class Prop: SCNNode, Codable, Hideable, Responder, SceneGraphNode, Soilab
     
     public var isDirty: Bool = false
     
-    public var coordinate: Coordinate { footprint.coordinate }
-    public let footprint: Footprint
-    
     public var children: [SceneGraphNode] { [] }
     public var childCount: Int { children.count }
     public var isLeaf: Bool { children.isEmpty }
     public var category: Int { SceneGraphCategory.prop.rawValue }
+    
+    public let footprint: Footprint
     
     init(footprint: Footprint) {
         
@@ -31,8 +30,8 @@ public class Prop: SCNNode, Codable, Hideable, Responder, SceneGraphNode, Soilab
         
         super.init()
         
-        name = "Prop \(self.coordinate.description)"
-        position = SCNVector3(coordinate: self.coordinate)
+        name = "Prop \(footprint.coordinate.description)"
+        position = SCNVector3(coordinate: footprint.coordinate)
         categoryBitMask = category
     }
     

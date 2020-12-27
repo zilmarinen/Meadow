@@ -1,25 +1,25 @@
 //
-//  ShaderUniform.swift
+//  Uniform.swift
 //
 //  Created by Zack Brown on 18/12/2020.
 //
 
 import Foundation
 
-protocol ShaderUniform {
+protocol Uniform {
     
     var key: String { get }
     var value: Data { get }
 }
 
-extension ShaderUniform {
+extension Uniform {
     
     public var key: String { "uniforms" }
     
     public var value: Data {
         
-        var this = self
+        var ref = self
         
-        return Data(bytes: &this, count: MemoryLayout<Self>.stride)
+        return Data(bytes: &ref, count: MemoryLayout<Self>.stride)
     }
 }

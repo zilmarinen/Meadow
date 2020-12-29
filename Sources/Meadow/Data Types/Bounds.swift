@@ -39,9 +39,9 @@ extension Bounds {
 
 extension Bounds {
     
-    func isEqual(to bounds: Bounds) -> Bool {
+    static func == (lhs: Bounds, rhs: Bounds) -> Bool {
         
-        return minimum.isEqual(to: bounds.minimum) && maximum.isEqual(to: bounds.maximum)
+        return lhs.minimum == rhs.minimum && lhs.maximum == rhs.maximum
     }
 }
 

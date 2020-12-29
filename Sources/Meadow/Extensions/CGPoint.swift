@@ -47,9 +47,9 @@ extension CGPoint {
         return CGPoint(x: lhs.x / CGFloat(rhs), y: lhs.y / CGFloat(rhs))
     }
     
-    func isEqual(to point: CGPoint) -> Bool {
+    static func == (lhs: CGPoint, rhs: CGPoint) -> Bool {
         
-        return self == point || ((abs(x - point.x) < CGFloat(Math.epsilon)) && (abs(y - point.y) < CGFloat(Math.epsilon)))
+        return ((abs(lhs.x - rhs.x) < CGFloat(Math.epsilon)) && (abs(lhs.y - rhs.y) < CGFloat(Math.epsilon)))
     }
 }
 

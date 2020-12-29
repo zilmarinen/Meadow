@@ -24,9 +24,9 @@ public struct Vertex: Hashable {
 
 extension Vertex {
     
-    func isEqual(to vertex: Vertex) -> Bool {
+    public static func == (lhs: Vertex, rhs: Vertex) -> Bool {
         
-        return position.isEqual(to: vertex.position) && normal.isEqual(to: vertex.normal) && color == vertex.color && textureCoordinates.isEqual(to: vertex.textureCoordinates)
+        return lhs.position == rhs.position && lhs.normal == rhs.normal && lhs.color == rhs.color && lhs.textureCoordinates == rhs.textureCoordinates
     }
 }
 

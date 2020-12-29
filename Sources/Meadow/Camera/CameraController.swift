@@ -76,9 +76,14 @@ extension Camera {
             }
         }
         
-        public func focus(node: SCNNode, ordinal: Ordinal, zoom: Double) {
+        public func focus(node: SCNNode, ordinal: Ordinal? = nil, zoom: Double? = nil) {
             
-            state = .focus(node: node, ordinal: ordinal, zoom: zoom)
+            switch state {
+            
+            case .focus(_, let currentOrdinal, let currentZoom):
+                
+                state = .focus(node: node, ordinal: ordinal ?? currentOrdinal, zoom: zoom ?? currentZoom)
+            }
         }
     }
 }

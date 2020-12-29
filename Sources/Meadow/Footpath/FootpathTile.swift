@@ -142,7 +142,7 @@ public class FootpathTile: Tile {
         
         guard let tileUVs = tilesetTile?.uvs.uvs else { return [] }
         
-        let corners = Ordinal.allCases.map { position + $0.vector + Vector(x: 0, y: 0.01, z: 0) }
+        let corners = Ordinal.allCases.map { position + $0.vector + Vector(x: 0, y: Math.epsilon, z: 0) }
         
         //
         //  Create tile apex

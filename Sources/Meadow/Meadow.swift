@@ -46,6 +46,7 @@ public class Meadow: SCNNode, Codable, Responder, SceneGraphNode, Soilable, Upda
     
     public let actors: Actors
     public let area: Area
+    public let blueprint: Blueprint
     public let foliage: Foliage
     public let footpath: Footpath
     public let portals: Portals
@@ -61,6 +62,7 @@ public class Meadow: SCNNode, Codable, Responder, SceneGraphNode, Soilable, Upda
         
         actors = Actors()
         area = Area()
+        blueprint = Blueprint()
         foliage = Foliage()
         footpath = Footpath()
         portals = Portals()
@@ -72,8 +74,11 @@ public class Meadow: SCNNode, Codable, Responder, SceneGraphNode, Soilable, Upda
         name = "Meadow"
         categoryBitMask = category
         
+        blueprint.ancestor = self
+        
         addChildNode(actors)
         addChildNode(area)
+        addChildNode(blueprint)
         addChildNode(foliage)
         addChildNode(footpath)
         addChildNode(portals)
@@ -87,6 +92,7 @@ public class Meadow: SCNNode, Codable, Responder, SceneGraphNode, Soilable, Upda
         
         actors = try container.decode(Actors.self, forKey: .actors)
         area = try container.decode(Area.self, forKey: .area)
+        blueprint = Blueprint()
         foliage = try container.decode(Foliage.self, forKey: .foliage)
         footpath = try container.decode(Footpath.self, forKey: .footpath)
         portals = try container.decode(Portals.self, forKey: .portals)
@@ -98,8 +104,11 @@ public class Meadow: SCNNode, Codable, Responder, SceneGraphNode, Soilable, Upda
         self.name = try container.decode(String.self, forKey: .name)
         categoryBitMask = category
         
+        blueprint.ancestor = self
+        
         addChildNode(actors)
         addChildNode(area)
+        addChildNode(blueprint)
         addChildNode(foliage)
         addChildNode(footpath)
         addChildNode(portals)
@@ -135,6 +144,7 @@ extension Meadow {
         
         actors.clean()
         area.clean()
+        blueprint.clean()
         foliage.clean()
         footpath.clean()
         portals.clean()
@@ -222,8 +232,12 @@ extension Meadow {
                 
                 if stack[tileNode] == nil || movementCost < (cost[tileNode] ?? 0) {
                     
+                    let priority = CGFloat(abs(tileNode.coordinate.x - destination.coordinate.x) + abs(tileNode.coordinate.z - destination.coordinate.z) + (tileNode.cardinal.rawValue - destination.cardinal.rawValue))
+                    
+                    queue.enqueue(gridNode: tileNode, priority: priority)
+                    
                     stack[tileNode] = node
-                    cost[tileNode] = movementCost + node.cardinal.coordinate.x + node.cardinal.coordinate.z
+                    cost[tileNode] = movementCost
                 }
             }
         }

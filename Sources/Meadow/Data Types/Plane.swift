@@ -49,9 +49,9 @@ extension Plane {
 
 extension Plane {
     
-    func isEqual(to plane: Plane) -> Bool {
-     
-        return abs(distance - plane.distance) < Math.epsilon && normal.isEqual(to: plane.normal)
+    static func == (lhs: Plane, rhs: Plane) -> Bool {
+        
+        return abs(lhs.distance - rhs.distance) < Math.epsilon && lhs.normal == rhs.normal
     }
 }
 

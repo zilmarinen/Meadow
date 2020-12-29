@@ -96,9 +96,9 @@ public extension Vector {
         lhs = lhs + rhs
     }
     
-    func isEqual(to vector: Vector) -> Bool {
+    static func == (lhs: Vector, rhs: Vector) -> Bool {
         
-        return self == vector || ((abs(x - vector.x) < Math.epsilon) && (abs(y - vector.y) < Math.epsilon) && (abs(z - vector.z) < Math.epsilon))
+        return ((abs(lhs.x - rhs.x) < Math.epsilon) && (abs(lhs.y - rhs.y) < Math.epsilon) && (abs(lhs.z - rhs.z) < Math.epsilon))
     }
     
     static func minimum(lhs: Self, rhs: Self) -> Self {

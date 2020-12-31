@@ -36,7 +36,7 @@ public class Chunk<T: Tile>: SCNNode, Codable, Hideable, Responder, SceneGraphNo
         }
     }
     
-    public let coordinate: Coordinate
+    public let bounds: GridBounds
     var tiles: [T] = []
     
     public var children: [SceneGraphNode] { tiles }
@@ -50,13 +50,13 @@ public class Chunk<T: Tile>: SCNNode, Codable, Hideable, Responder, SceneGraphNo
     
     required init(coordinate: Coordinate) {
         
-        self.coordinate = Coordinate(x: coordinate.x, z: coordinate.z, size: World.Constants.chunkSize)
+        self.bounds = GridBounds(aligned: coordinate, size: World.Constants.chunkSize)
         self.tiles = []
         
         super.init()
         
-        name = "Chunk \(self.coordinate.description)"
-        position = SCNVector3(coordinate: self.coordinate)
+        name = "Chunk \(self.bounds.start.description)"
+        position = SCNVector3(coordinate: self.bounds.start)
         categoryBitMask = category
     }
     
@@ -64,13 +64,15 @@ public class Chunk<T: Tile>: SCNNode, Codable, Hideable, Responder, SceneGraphNo
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        coordinate = try container.decode(Coordinate.self, forKey: .coordinate)
+        let coordinate = try container.decode(Coordinate.self, forKey: .coordinate)
+        
+        bounds = GridBounds(aligned: coordinate, size: World.Constants.chunkSize)
         tiles = try container.decode([T].self, forKey: .tiles)
         
         super.init()
         
-        name = "Chunk \(self.coordinate.description)"
-        position = SCNVector3(coordinate: self.coordinate)
+        name = "Chunk \(self.bounds.start.description)"
+        position = SCNVector3(coordinate: self.bounds.start)
         categoryBitMask = category
         
         for tile in tiles {
@@ -88,7 +90,7 @@ public class Chunk<T: Tile>: SCNNode, Codable, Hideable, Responder, SceneGraphNo
         
         var container = encoder.container(keyedBy: CodingKeys.self)
         
-        try container.encode(coordinate, forKey: .coordinate)
+        try container.encode(bounds.start, forKey: .coordinate)
         try container.encode(tiles, forKey: .tiles)
     }
 }
@@ -145,7 +147,7 @@ extension Chunk {
             
             tile.clean()
             
-            polygons.append(contentsOf: tile.render(position: Vector(coordinate: tile.coordinate.xz - coordinate.xz)))
+            polygons.append(contentsOf: tile.render(position: Vector(coordinate: tile.coordinate.xz - bounds.start.xz)))
         }
         
         let mesh = Mesh(polygons: polygons)
@@ -177,13 +179,5 @@ extension Chunk {
             
             tile.update(delta: delta, time: time)
         }
-    }
-}
-
-extension Chunk {
-    
-    func contains(coordinate other: Coordinate) -> Bool {
-        
-        return other.x >= coordinate.x && other.x < (coordinate.x + World.Constants.chunkSize) && other.z >= coordinate.z && other.z < (coordinate.z + World.Constants.chunkSize)
     }
 }

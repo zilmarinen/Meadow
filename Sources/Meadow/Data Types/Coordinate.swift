@@ -22,13 +22,6 @@ public struct Coordinate: Codable, Equatable, Hashable {
         self.z = z
     }
     
-    public init(x: Int, z: Int, size: Int) {
-        
-        self.x = Int((x >= 0 ? x : x - size) / size) * size
-        self.y = 0
-        self.z = Int((z >= 0 ? z : z - size) / size) * size
-    }
-    
     public init(vector: Vector) {
         
         self.init(x: Int(vector.x), y: Int(vector.y), z: Int(vector.z))
@@ -48,7 +41,7 @@ public extension Coordinate {
     var xz: Coordinate { Coordinate(x: x, y: 0, z: z) }
 }
 
-extension Coordinate {
+public extension Coordinate {
     
     static prefix func -(rhs: Self) -> Self {
         
@@ -63,6 +56,11 @@ extension Coordinate {
     static func -(lhs: Coordinate, rhs: Coordinate) -> Coordinate {
         
         return Coordinate(x: lhs.x - rhs.x, y: lhs.y - rhs.y, z: lhs.z - rhs.z)
+    }
+    
+    static func +=(lhs: inout Self, rhs: Self) {
+        
+        lhs = lhs + rhs
     }
 }
 

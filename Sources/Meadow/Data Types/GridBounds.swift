@@ -19,6 +19,14 @@ public struct GridBounds {
         self.start = Coordinate(x: minimumX, y: start.y, z: minimumZ)
         self.end = Coordinate(x: maximumX, y: end.y, z: maximumZ)
     }
+    
+    public init(aligned coordinate: Coordinate, size: Int) {
+        
+        let x = Int((coordinate.x >= 0 ? coordinate.x : coordinate.x - (size - 1)) / size) * size
+        let z = Int((coordinate.z >= 0 ? coordinate.z : coordinate.z - (size - 1)) / size) * size
+        
+        self.init(start: Coordinate(x: x, y: 0, z: z), end: Coordinate(x: x + (size - 1), y: 0, z: z + (size - 1)))
+    }
 }
 
 extension GridBounds {
@@ -40,5 +48,13 @@ extension GridBounds {
                 block(Coordinate(x: x, y: y, z: z))
             }
         }
+    }
+}
+
+extension GridBounds {
+    
+    func contains(coordinate: Coordinate) -> Bool {
+        
+        return coordinate.x >= start.x && coordinate.x < end.x && coordinate.z >= start.z && coordinate.z < end.z
     }
 }

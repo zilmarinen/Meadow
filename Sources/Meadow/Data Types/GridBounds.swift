@@ -55,6 +55,9 @@ extension GridBounds {
     
     func contains(coordinate: Coordinate) -> Bool {
         
-        return coordinate.x >= start.x && coordinate.x < end.x && coordinate.z >= start.z && coordinate.z < end.z
+        let xRange = Range(start.x...end.x)
+        let zRange = Range(start.z...end.z)
+        
+        return xRange.contains(coordinate.x) && zRange.contains(coordinate.z)
     }
 }

@@ -29,7 +29,7 @@ public class Tile: NSObject, Codable, Collapsable, Renderable, Responder, SceneG
                 return
             }
             
-            becomeDirty()
+            invalidate(neighbours: true)
         }
     }
     
@@ -69,7 +69,7 @@ public class Tile: NSObject, Codable, Collapsable, Renderable, Responder, SceneG
             
             guard oldValue != slope else { return }
             
-            invalidate()
+            invalidate(neighbours: true)
         }
     }
     
@@ -103,7 +103,7 @@ public class Tile: NSObject, Codable, Collapsable, Renderable, Responder, SceneG
         return true
     }
     
-    func invalidate() { fatalError("Tile.invalidate() must be overridden") }
+    func invalidate(neighbours: Bool) { fatalError("Tile.invalidate() must be overridden") }
     func update(delta: TimeInterval, time: TimeInterval) { fatalError("Tile.update() must be overridden") }
     func traversable(cardinal: Cardinal) -> Bool { fatalError("Tile.traversable() must be overridden") }
     func collapse() { fatalError("Tile.collapse() must be overridden") }

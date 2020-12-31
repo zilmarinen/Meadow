@@ -10,11 +10,15 @@ public class FoliageTile: Tile {
     
     public override var category: Int { SceneGraphCategory.foliageTile.rawValue }
     
-    override func invalidate() {
+    override func invalidate(neighbours: Bool) {
         
         //
         
         becomeDirty()
+        
+        guard neighbours else { return }
+        
+        //
     }
     
     override func update(delta: TimeInterval, time: TimeInterval) {

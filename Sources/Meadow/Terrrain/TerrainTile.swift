@@ -18,31 +18,33 @@ public class TerrainTile: Tile {
             
             guard oldValue != tileType else { return }
             
-            invalidate()
-            
-            for cardinal in Cardinal.allCases {
-                
-                guard let neighbour = find(neighbour: cardinal) else { continue }
-                
-                neighbour.invalidate()
-            }
-            
-            for ordinal in Ordinal.allCases {
-                
-                guard let neighbour = find(neighbour: ordinal) else { continue }
-                
-                neighbour.invalidate()
-            }
+            invalidate(neighbours: true)
         }
     }
     
     var tilesetTile: TerrainTilesetTile?
     
-    override func invalidate() {
+    override func invalidate(neighbours: Bool) {
         
         tilesetTile = nil
         
         becomeDirty()
+        
+        guard neighbours else { return }
+    
+        for cardinal in Cardinal.allCases {
+            
+            guard let neighbour = find(neighbour: cardinal) else { continue }
+            
+            neighbour.invalidate(neighbours: false)
+        }
+        
+        for ordinal in Ordinal.allCases {
+            
+            guard let neighbour = find(neighbour: ordinal) else { continue }
+            
+            neighbour.invalidate(neighbours: false)
+        }
     }
     
     override func update(delta: TimeInterval, time: TimeInterval) {

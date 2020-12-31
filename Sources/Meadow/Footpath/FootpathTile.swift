@@ -20,20 +20,6 @@ public class FootpathTile: Tile {
             tilesetTile = nil
             
             becomeDirty()
-            
-            for cardinal in Cardinal.allCases {
-                
-                guard let neighbour = find(neighbour: cardinal) else { continue }
-                
-                neighbour.tilesetTile = nil
-            }
-            
-            for ordinal in Ordinal.allCases {
-                
-                guard let neighbour = find(neighbour: ordinal) else { continue }
-                
-                neighbour.tilesetTile = nil
-            }
         }
     }
     
@@ -47,11 +33,27 @@ public class FootpathTile: Tile {
         }
     }
     
-    override func invalidate() {
+    override func invalidate(neighbours: Bool) {
         
         tilesetTile = nil
         
         becomeDirty()
+        
+        guard neighbours else { return }
+        
+        for cardinal in Cardinal.allCases {
+            
+            guard let neighbour = find(neighbour: cardinal) else { continue }
+            
+            neighbour.invalidate(neighbours: false)
+        }
+        
+        for ordinal in Ordinal.allCases {
+            
+            guard let neighbour = find(neighbour: ordinal) else { continue }
+            
+            neighbour.invalidate(neighbours: false)
+        }
     }
     
     override func update(delta: TimeInterval, time: TimeInterval) {

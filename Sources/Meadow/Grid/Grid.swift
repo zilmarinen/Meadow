@@ -112,14 +112,10 @@ extension Grid {
             addChildNode(chunk)
         }
         
-        print("-------")
-        print("Finding neighbours for \(coordinate)")
-        
         for cardinal in Cardinal.allCases {
          
             if let neighbour = find(tile: coordinate + cardinal.coordinate) {
                 
-                print("found neighbour \(coordinate + cardinal.coordinate) along edge \(cardinal)")
                 tile.add(neighbour: neighbour, cardinal: cardinal)
             }
         }
@@ -132,6 +128,16 @@ extension Grid {
     }
     
     public func find(tile coordinate: Coordinate) -> T? {
+        
+        if coordinate.x == 0 && coordinate.z == -1 {
+            
+            let chunk = find(chunk: coordinate)
+            let tile = chunk?.find(tile: coordinate)
+            
+            print("Searching for tile in chunk")
+            print("chunk: \(chunk)")
+            print("tile: \(tile)")
+        }
         
         return find(chunk: coordinate)?.find(tile: coordinate)
     }
@@ -153,7 +159,7 @@ extension Grid {
     }
     
     func find(chunk coordinate: Coordinate) -> C? {
-        print("finding chunk for \(coordinate) -> \(chunks.first { $0.bounds.contains(coordinate: coordinate) })")
+        
         return chunks.first { $0.bounds.contains(coordinate: coordinate) }
     }
 }

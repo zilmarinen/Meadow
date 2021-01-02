@@ -15,7 +15,7 @@ public class Actors: SCNNode, Codable, Hideable, Responder, SceneGraphNode, Soil
     
     public var ancestor: SoilableParent? { parent as? SoilableParent }
     
-    public var isDirty: Bool = false
+    public var isDirty: Bool = true
     
     let hero = Hero()
     let npcs = NPCs()
@@ -64,6 +64,7 @@ public class Actors: SCNNode, Codable, Hideable, Responder, SceneGraphNode, Soil
 
 extension Actors {
     
+    //TODO
     //add
     //find
     //remove

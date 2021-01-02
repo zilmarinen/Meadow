@@ -84,9 +84,42 @@ public class Portals: SCNNode, Codable, Hideable, Responder, SceneGraphNode, Soi
 
 extension Portals {
     
-    //add
-    //find
-    //remove
+    func add(portal footprint: Footprint) -> Portal? {
+        
+        guard find(portal: footprint) == nil else { return nil }
+        
+        let portal = Portal(footprint: footprint)
+        
+        portals.append(portal)
+        
+        addChildNode(portal)
+        
+        becomeDirty()
+        
+        return portal
+    }
+    
+    func find(portal node: GridNode) -> Portal? {
+        
+        return portals.first { $0.contains(node: node) }
+    }
+    
+    func find(portal intersecting: Footprint) -> Portal? {
+        
+        return portals.first { $0.footprint.intersects(footprint: intersecting) }
+    }
+    
+    func remove(portal node: GridNode) {
+        
+        guard let portal = find(portal: node),
+              let index = portals.firstIndex(of: portal) else { return }
+        
+        portals.remove(at: index)
+        
+        portal.removeFromParentNode()
+        
+        becomeDirty()
+    }
 }
 
 extension Portals {

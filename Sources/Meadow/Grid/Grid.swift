@@ -129,16 +129,6 @@ extension Grid {
     
     public func find(tile coordinate: Coordinate) -> T? {
         
-        if coordinate.x == 0 && coordinate.z == -1 {
-            
-            let chunk = find(chunk: coordinate)
-            let tile = chunk?.find(tile: coordinate)
-            
-            print("Searching for tile in chunk")
-            print("chunk: \(chunk)")
-            print("tile: \(tile)")
-        }
-        
         return find(chunk: coordinate)?.find(tile: coordinate)
     }
     

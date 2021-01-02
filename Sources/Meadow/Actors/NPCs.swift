@@ -66,6 +66,7 @@ public class NPCs: SCNNode, Codable, Hideable, Responder, SceneGraphNode, Soilab
 
 extension NPCs {
     
+    //TODO
     //add
     //find
     //remove

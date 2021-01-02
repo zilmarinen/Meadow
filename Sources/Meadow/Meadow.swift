@@ -247,8 +247,14 @@ extension Meadow {
     
     func find(traversable node: GridNode) -> Traversable? {
         
-        guard foliage.find(tile: node.coordinate) == nil,
-              props.find(prop: node) == nil else { return nil }
+        guard foliage.find(tile: node.coordinate) == nil else { return nil }
+        
+        let interactive = (portals.find(portal: node) ?? props.find(prop: node)) as? Interactive & Traversable
+        
+        if let interactive = interactive {
+            
+            return interactive.pointsOfAccess.contains(node) ? interactive : nil
+        }
         
         return  area.find(tile: node.coordinate) ??
                 footpath.find(tile: node.coordinate) ??

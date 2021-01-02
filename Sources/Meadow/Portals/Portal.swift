@@ -6,7 +6,7 @@
 
 import SceneKit
 
-public class Portal: SCNNode, Codable, Hideable, Responder, SceneGraphNode, Soilable, Updatable {
+public class Portal: SCNNode, Codable, Hideable, Interactive, Responder, SceneGraphNode, Soilable, Updatable {
     
     private enum CodingKeys: CodingKey {
         
@@ -25,6 +25,9 @@ public class Portal: SCNNode, Codable, Hideable, Responder, SceneGraphNode, Soil
     
     public let footprint: Footprint
     public var identifier: String = "undefined"
+    
+    var pointsOfAccess: [GridNode] { footprint.nodes.map { GridNode(coordinate: $0.coordinate, cardinal: $0.cardinals.first!) } }
+    var slots: [InteractionSlot] = []
     
     init(footprint: Footprint) {
         

@@ -6,7 +6,7 @@
 
 import SceneKit
 
-public class Prop: SCNNode, Codable, Hideable, Responder, SceneGraphNode, Soilable, Updatable {
+public class Prop: SCNNode, Codable, Hideable, Interactive, Responder, SceneGraphNode, Soilable, Updatable {
     
     private enum CodingKeys: CodingKey {
         
@@ -23,6 +23,9 @@ public class Prop: SCNNode, Codable, Hideable, Responder, SceneGraphNode, Soilab
     public var category: Int { SceneGraphCategory.prop.rawValue }
     
     public let footprint: Footprint
+    
+    var pointsOfAccess: [GridNode] { footprint.nodes.map { GridNode(coordinate: $0.coordinate, cardinal: $0.cardinals.first!) } }
+    var slots: [InteractionSlot] = []
     
     init(footprint: Footprint) {
         

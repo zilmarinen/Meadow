@@ -12,7 +12,7 @@ public class TerrainTile: Tile {
     override var movementCost: Int { tileType.movementCost }
     override var walkable: Bool { tileType != .water }
     
-    public var tileType: TerrainTileType = .water {
+    public var tileType: TerrainTileType = .sand {
         
         didSet {
             

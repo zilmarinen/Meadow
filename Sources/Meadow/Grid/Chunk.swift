@@ -165,6 +165,8 @@ extension Chunk {
             self.geometry?.set(textures: textures)
         }
         
+        debug(draw: false)
+        
         isDirty = false
         
         return true
@@ -178,6 +180,60 @@ extension Chunk {
         for tile in tiles where !tile.isHidden {
             
             tile.update(delta: delta, time: time)
+        }
+    }
+}
+
+extension Chunk {
+    
+    func debug(draw traversable: Bool) {
+        
+        guard traversable else { return }
+        
+        let size = CGFloat(0.125)
+        
+        for node in childNodes {
+            
+            node.removeFromParentNode()
+        }
+        
+        for tile in tiles {
+            
+            let position = Vector(coordinate: tile.coordinate.xz - bounds.start.xz)
+            
+            let corners = Ordinal.allCases.map { position + $0.vector }
+
+            var vectors = corners.map { $0 + Vector(x: 0.0, y: World.Constants.slope * Double(tile.coordinate.y), z: 0.0) }
+            
+            if let slope = tile.slope {
+                
+                let (o0, o1) = slope.ordinals
+                
+                vectors[o0.rawValue].y += World.Constants.slope
+                vectors[o1.rawValue].y += World.Constants.slope
+            }
+            
+            let center = vectors.average()
+            
+            for cardinal in Cardinal.allCases {
+                
+                let (o0, o1) = cardinal.ordinals
+                
+                let (v0, v1) = (vectors[o0.rawValue], vectors[o1.rawValue])
+                
+                let v2 = v0.lerp(vector: v1, interpolater: 0.5)
+                let v3 = v2.lerp(vector: center, interpolater: 0.5)
+                
+                let box = SCNBox(width: size, height: size, length: size, chamferRadius: 0.0)
+                
+                box.firstMaterial?.diffuse.contents = tile.traversable(cardinal: cardinal) ? MDWColor.systemGreen : MDWColor.systemRed
+                
+                let node = SCNNode(geometry: box)
+                
+                node.position = SCNVector3(vector: v3)
+                
+                addChildNode(node)
+            }
         }
     }
 }

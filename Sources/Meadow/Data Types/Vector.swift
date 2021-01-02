@@ -213,6 +213,26 @@ extension Vector: Transformable {
 
 extension Array where Element == Vector {
     
+    func average() -> Vector {
+        
+        guard count > 0 else { return .zero }
+        
+        var x = 0.0
+        var y = 0.0
+        var z = 0.0
+        
+        for i in 0..<count {
+            
+            let vector = self[i]
+            
+            x += vector.x
+            y += vector.y
+            z += vector.z
+        }
+        
+        return Vector(x: x / Double(count), y: y / Double(count), z: z / Double(count))
+    }
+    
     func convex() -> Bool {
             
         guard count > 3, let first = first, let last = last else { return count > 2 }

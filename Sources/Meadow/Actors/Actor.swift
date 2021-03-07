@@ -21,9 +21,11 @@ public class Actor: SCNNode, Codable, Hideable, Responder, SceneGraphNode, Soila
     public var isLeaf: Bool { children.isEmpty }
     public var category: Int { SceneGraphCategory.actor.rawValue }
     
+    let skeleton = Skeleton(structure: .biped)
+    
     lazy var director: Director = {
        
-        return Director(initialState: .idle)
+        return Director(initialState: .idle(actor: self))
     }()
     
     public var node: GridNode = GridNode(coordinate: .zero, cardinal: .north)
@@ -74,13 +76,13 @@ extension Actor {
             node.removeFromParentNode()
         }
         
-        let box = SCNBox(width: 0.25, height: 0.75, length: 0.25, chamferRadius: 0.0)
+        let box = SCNBox(width: 0.125, height: 0.5, length: 0.125, chamferRadius: 0.0)
         
         box.firstMaterial?.diffuse.contents = MDWColor.systemPink
         
         let node = SCNNode(geometry: box)
         
-        node.position = SCNVector3(x: 0.0, y: (box.height / 2.0), z: 0.0)
+        node.position = SCNVector3(x: 0.0, y: MDWFloat(box.height / 2.0), z: 0.0)
         
         addChildNode(node)
         
@@ -96,29 +98,28 @@ extension Actor {
 
 extension Actor {
     
-    func update(delta: TimeInterval, time: TimeInterval) {
+    public func update(delta: TimeInterval, time: TimeInterval) {
         
         switch director.state {
         
-        case .interacting(let interactive, let slot):
+        case .interacting(_, let interactive, let slot):
             
             interactive.release(slot: slot)
             
-        case .travelling(let path, let interactive):
+        case .travelling(_, let path, let interactive):
             
             guard node != path.nodes.last else {
                 
-                guard let interactive = interactive,
-                      let slot = interactive.claim(node: node, actor: self) else {
+                guard let interactive = interactive else {
                     
                     self.director.idle()
                 
-                    return
+                    break
                 }
                 
-                self.director.interact(interactive: interactive, slot: slot)
+                self.director.interact(interactive: interactive, node: node)
                 
-                return
+                break
             }
             
             //

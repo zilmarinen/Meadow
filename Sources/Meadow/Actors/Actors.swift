@@ -87,7 +87,7 @@ extension Actors {
 
 extension Actors {
     
-    func update(delta: TimeInterval, time: TimeInterval) {
+    public func update(delta: TimeInterval, time: TimeInterval) {
         
         hero.update(delta: delta, time: time)
         npcs.update(delta: delta, time: time)

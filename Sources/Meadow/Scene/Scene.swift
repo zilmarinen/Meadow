@@ -23,6 +23,8 @@ public class Scene: SCNScene, Codable, Responder, SceneGraphNode, Soilable {
         }
     }
     
+    public weak var delegate: SceneDelegate?
+    
     public var ancestor: SoilableParent? { nil }
     
     public var isDirty: Bool {
@@ -121,6 +123,15 @@ public class Scene: SCNScene, Codable, Responder, SceneGraphNode, Soilable {
 extension Scene {
     
     var scene: Scene? { self }
+    
+    public static func named(name: String) throws -> Scene? {
+        
+        guard let asset = NSDataAsset(name: name, bundle: .main) else { return nil }
+        
+        let decoder = JSONDecoder()
+        
+        return try decoder.decode(Scene.self, from: asset.data)
+    }
 }
 
 extension Scene {
@@ -146,6 +157,8 @@ extension Scene: SCNSceneRendererDelegate {
         
         camera.update(delta: delta, time: time)
         meadow.update(delta: delta, time: time)
+        
+        delegate?.update(delta: delta, time: time)
         
         clean()
         

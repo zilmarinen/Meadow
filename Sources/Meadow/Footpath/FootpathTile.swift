@@ -8,6 +8,11 @@ import Foundation
 
 public class FootpathTile: Tile {
     
+    enum CodingKeys: CodingKey {
+        
+        case tileType
+    }
+    
     public override var category: Int { SceneGraphCategory.footpathTile.rawValue }
     override var movementCost: Int { tileType.movementCost }
     
@@ -33,30 +38,37 @@ public class FootpathTile: Tile {
         }
     }
     
+    public required init(from decoder: Decoder) throws {
+        
+        try super.init(from: decoder)
+        
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        tileType = try container.decode(FootpathTileType.self, forKey: .tileType)
+    }
+    
+    required init(coordinate: Coordinate) {
+        
+        super.init(coordinate: coordinate)
+    }
+    
+    public override func encode(to encoder: Encoder) throws {
+        
+        try super.encode(to: encoder)
+        
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(tileType, forKey: .tileType)
+    }
+    
     override func invalidate(neighbours: Bool) {
         
         tilesetTile = nil
         
-        becomeDirty()
-        
-        guard neighbours else { return }
-        
-        for cardinal in Cardinal.allCases {
-            
-            guard let neighbour = find(neighbour: cardinal) else { continue }
-            
-            neighbour.invalidate(neighbours: false)
-        }
-        
-        for ordinal in Ordinal.allCases {
-            
-            guard let neighbour = find(neighbour: ordinal) else { continue }
-            
-            neighbour.invalidate(neighbours: false)
-        }
+        super.invalidate(neighbours: neighbours)
     }
     
-    override func update(delta: TimeInterval, time: TimeInterval) {
+    public override func update(delta: TimeInterval, time: TimeInterval) {
         
         //
     }
@@ -144,7 +156,7 @@ public class FootpathTile: Tile {
         
         guard let tileUVs = tilesetTile?.uvs.uvs else { return [] }
         
-        let corners = Ordinal.allCases.map { position + $0.vector + Vector(x: 0, y: Math.epsilon, z: 0) }
+        let corners = Ordinal.allCases.map { position + $0.vector + Vector(x: 0, y: 0.01, z: 0) }
         
         //
         //  Create tile apex

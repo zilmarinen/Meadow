@@ -175,7 +175,7 @@ extension Chunk {
 
 extension Chunk {
     
-    func update(delta: TimeInterval, time: TimeInterval) {
+    public func update(delta: TimeInterval, time: TimeInterval) {
         
         for tile in tiles where !tile.isHidden {
             

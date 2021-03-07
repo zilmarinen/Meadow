@@ -10,8 +10,8 @@
         <!--Game View Controller-->
         <scene sceneID="tXr-a1-R10">
             <objects>
-                <viewController id="BV1-FR-VrT" customClass="GameViewController" customModule="Meadow_Example" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" id="3se-qz-xqx" customClass="SCNView">
+                <viewController storyboardIdentifier="example" id="BV1-FR-VrT" customClass="GameViewController" customModule="Meadow_Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" id="3se-qz-xqx" customClass="SceneView" customModule="Meadow">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="bNo-s9-wk6"/>

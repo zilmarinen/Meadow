@@ -25,7 +25,7 @@ public class Blueprint: SCNNode, Responder, SceneGraphNode, Soilable {
     public var category: Int { SceneGraphCategory.blueprint.rawValue }
     
     public lazy var controller: BlueprintController = {
-       
+        
         return BlueprintController(initialState: .empty)
     }()
     
@@ -71,6 +71,7 @@ extension Blueprint {
             
             case .empty: self.clear()
             case .area(let bounds, let blueprintType, let elevation): self.select(area: bounds, blueprintType: blueprintType, elevation: elevation)
+            case .building(let bounds, let blueprintType, let elevation): self.select(buildings: bounds, blueprintType: blueprintType, elevation: elevation)
             case .foliage(let bounds, let blueprintType, let elevation): self.select(foliage: bounds, blueprintType: blueprintType, elevation: elevation)
             case .footpath(let bounds, let blueprintType, let elevation): self.select(footpath: bounds, blueprintType: blueprintType, elevation: elevation)
             case .portal(let bounds, let blueprintType, let elevation): self.select(portal: bounds, blueprintType: blueprintType, elevation: elevation)
@@ -127,9 +128,58 @@ extension Blueprint {
         self.geometry = SCNGeometry(mesh: mesh)
     }
     
+    func select(buildings bounds: GridBounds, blueprintType: BlueprintType, elevation: Int) {
+        
+        guard let scene = scene else { return }
+        
+        print("Blueprint -> Buildings(\(bounds), \(blueprintType))")
+     
+        var polygons: [Polygon] = []
+        
+        bounds.enumerate(y: elevation) { coordinate in
+            
+            let tile = scene.meadow.terrain.find(tile: coordinate)
+            
+            let vector = Vector(coordinate: coordinate.xz)
+            
+            let corners = Ordinal.allCases.map { vector + $0.vector + Vector(x: 0, y: (Double(tile?.coordinate.y ?? 0) * World.Constants.slope) + (Math.epsilon * 2.0), z: 0) }
+            
+            let normal = corners.normal()
+            
+            let color = self.color(for: blueprintType, hasTile: tile == nil)
+            
+            var vertices: [Vertex] = []
+            
+            for index in 0..<corners.count {
+                
+                let corner = corners[index]
+                
+                vertices.append(Vertex(position: corner, normal: normal, color: color))
+            }
+            
+            polygons.append(Polygon(vertices: vertices))
+        }
+        
+        let mesh = Mesh(polygons: polygons)
+        
+        self.geometry = SCNGeometry(mesh: mesh)
+    }
+    
     func select(foliage bounds: GridBounds, blueprintType: BlueprintType, elevation: Int) {
         
+        guard let scene = scene else { return }
+        
+        let tile = scene.meadow.terrain.find(tile: bounds.start)
+        
         print("Blueprint -> Foliage(\(bounds), \(blueprintType))")
+        
+        let tree = Tree(sides: 4)
+        
+        let transform = Transform(position: Vector(x: Double(bounds.start.x), y: Double(elevation), z: Double(bounds.start.z)))
+        
+        let mesh = Mesh(polygons: tree.transformed(by: transform).polygons)
+        
+        self.geometry = SCNGeometry(mesh: mesh)
     }
     
     func select(footpath bounds: GridBounds, blueprintType: BlueprintType, elevation: Int) {
@@ -177,6 +227,8 @@ extension Blueprint {
     func select(prop bounds: GridBounds, blueprintType: BlueprintType, elevation: Int) {
         
         print("Blueprint -> Prop(\(bounds), \(blueprintType))")
+        
+        
     }
     
     func select(terrain bounds: GridBounds, blueprintType: BlueprintType, elevation: Int) {

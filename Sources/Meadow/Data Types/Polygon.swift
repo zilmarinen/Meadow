@@ -178,3 +178,57 @@ extension Polygon {
         return planes
     }
 }
+
+extension Polygon: Transformable {
+    
+    public func translated(by translation: Vector) -> Polygon {
+        
+        return Polygon(vertices: vertices.translated(by: translation))
+    }
+    
+    public func rotated(by rotation: Rotation) -> Polygon {
+        
+        return Polygon(vertices: vertices.rotated(by: rotation))
+    }
+    
+    public func scaled(by scale: Vector) -> Polygon {
+        
+        let threshold = 0.001
+        
+        var clamped = Vector.zero
+        
+        clamped.x = scale.x < 0 ? min(-threshold, scale.x) : max(threshold, scale.x)
+        clamped.y = scale.y < 0 ? min(-threshold, scale.y) : max(threshold, scale.y)
+        clamped.z = scale.z < 0 ? min(-threshold, scale.z) : max(threshold, scale.z)
+        
+        return Polygon(vertices: vertices.scaled(by: clamped))
+    }
+    
+    public func transformed(by transform: Transform) -> Polygon {
+        
+        return scaled(by: transform.scale).rotated(by: transform.rotation).translated(by: transform.position)
+    }
+}
+
+public extension Array where Element == Polygon {
+    
+    func translated(by translation: Vector) -> Self {
+        
+        return map { $0.translated(by: translation) }
+    }
+    
+    func rotated(by rotation: Rotation) -> Self {
+        
+        return map { $0.rotated(by: rotation) }
+    }
+    
+    func scaled(by scale: Vector) -> Self {
+        
+        return map { $0.scaled(by: scale) }
+    }
+    
+    func transformed(by transform: Transform) -> Self {
+        
+        return map { $0.transformed(by: transform) }
+    }
+}

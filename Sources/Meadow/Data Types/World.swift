@@ -12,9 +12,7 @@ public struct World: Equatable {
         
         public static let floor = 0
         public static let ceiling = 10
-        static let slope = 0.5
-        static let throne = 0.5
-        static let wall = (slope * 4)
+        static let slope = 0.25
         
         static let chunkSize = 5
     }

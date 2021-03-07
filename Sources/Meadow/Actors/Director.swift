@@ -8,9 +8,9 @@ extension Actor {
     
     enum ActorState: State {
         
-        case idle
-        case interacting(interactive: Interactive, slot: InteractionSlot)
-        case travelling(path: Path, interactive: Interactive?)
+        case idle(actor: Actor)
+        case interacting(actor: Actor, interactive: Interactive, slot: InteractionSlot)
+        case travelling(actor: Actor, path: Path, interactive: Interactive?)
         
         public func shouldTransition(to newState: ActorState) -> Should<ActorState> {
             
@@ -23,32 +23,43 @@ extension Actor {
         func idle() {
             
             switch state {
-            
-            case .interacting(let interactive, let slot):
-                
+
+            case .interacting(let actor, let interactive, let slot):
+
                 interactive.release(slot: slot)
+
+                state = .idle(actor: actor)
+
+            case .travelling(let actor, _, _):
                 
-                fallthrough
+                state = .idle(actor: actor)
                 
-            default:
-                
-                state = .idle
+            default: break
             }
         }
         
-        func interact(interactive: Interactive, slot: InteractionSlot) {
+        func interact(interactive: Interactive, node: GridNode) {
             
             switch state {
-            
-            case .interacting(let interactive, let slot):
-                
-                interactive.release(slot: slot)
+
+            case .interacting(let actor, let currentInteractive, let slot):
+
+                currentInteractive.release(slot: slot)
                 
                 fallthrough
                 
-            default:
+            case .travelling(let actor, _, _):
                 
-                state = .interacting(interactive: interactive, slot: slot)
+                guard let slot = interactive.claim(node: node, actor: actor) else {
+                    
+                    state = .idle(actor: actor)
+                    
+                    break
+                }
+                
+                state = .interacting(actor: actor, interactive: interactive, slot: slot)
+
+            default: break
             }
         }
     }

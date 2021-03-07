@@ -12,7 +12,7 @@ public class TerrainChunk: Chunk<TerrainTile> {
     
     override var program: SCNProgram? {
         
-        guard let library = library else { return nil }
+        guard let library = scene?.library else { return nil }
         
         return SCNProgram(name: "terrain", library: library)
     }

@@ -141,7 +141,7 @@ extension Props {
 
 extension Props {
     
-    func update(delta: TimeInterval, time: TimeInterval) {
+    public func update(delta: TimeInterval, time: TimeInterval) {
         
         for prop in props {
             

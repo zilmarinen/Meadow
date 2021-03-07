@@ -173,7 +173,7 @@ extension Grid {
 
 extension Grid {
     
-    func update(delta: TimeInterval, time: TimeInterval) {
+    public func update(delta: TimeInterval, time: TimeInterval) {
         
         for chunk in chunks {
             

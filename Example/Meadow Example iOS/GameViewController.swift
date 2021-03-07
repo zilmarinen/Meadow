@@ -11,11 +11,16 @@ import SceneKit
 
 class GameViewController: UIViewController {
 
+    lazy var coordinator: AppCoordinator = {
+        
+        return AppCoordinator(controller: self)
+    }()
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
-        setupScene()
+        coordinator.start(with: nil)
     }
 
     override var shouldAutorotate: Bool {

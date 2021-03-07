@@ -91,7 +91,7 @@ extension NPCs {
 
 extension NPCs {
     
-    func update(delta: TimeInterval, time: TimeInterval) {
+    public func update(delta: TimeInterval, time: TimeInterval) {
         
         for npc in npcs {
             

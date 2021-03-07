@@ -84,7 +84,7 @@ public class Portals: SCNNode, Codable, Hideable, Responder, SceneGraphNode, Soi
 
 extension Portals {
     
-    func add(portal footprint: Footprint) -> Portal? {
+    public func add(portal footprint: Footprint) -> Portal? {
         
         guard find(portal: footprint) == nil else { return nil }
         
@@ -109,7 +109,7 @@ extension Portals {
         return portals.first { $0.footprint.intersects(footprint: intersecting) }
     }
     
-    func remove(portal node: GridNode) {
+    public func remove(portal node: GridNode) {
         
         guard let portal = find(portal: node),
               let index = portals.firstIndex(of: portal) else { return }
@@ -141,7 +141,7 @@ extension Portals {
 
 extension Portals {
     
-    func update(delta: TimeInterval, time: TimeInterval) {
+    public func update(delta: TimeInterval, time: TimeInterval) {
         
         for portal in portals {
             

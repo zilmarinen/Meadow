@@ -8,7 +8,13 @@ public struct FootprintNode: Codable {
     
     let coordinate: Coordinate
     
-    let cardinals: [Cardinal]
+    let cardinals: [Cardinal : Bool]
+    
+    public init(coordinate: Coordinate, cardinals: [Cardinal : Bool]) {
+        
+        self.coordinate = coordinate
+        self.cardinals = cardinals
+    }
 }
 
 extension FootprintNode {
@@ -35,6 +41,6 @@ extension FootprintNode {
         
         guard coordinate == node.coordinate else { return false }
         
-        return cardinals.contains(node.cardinal)
+        return cardinals.keys.contains(node.cardinal)
     }
 }

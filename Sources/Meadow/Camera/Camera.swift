@@ -120,7 +120,7 @@ extension Camera {
 
 extension Camera {
     
-    func update(delta: TimeInterval, time: TimeInterval) {
+    public func update(delta: TimeInterval, time: TimeInterval) {
         
         switch controller.state {
 
@@ -143,7 +143,7 @@ extension Camera {
             
             self.position = node.position
             
-            jig.position = SCNVector3(x: x, y: y, z: z)
+            jig.position = SCNVector3(x: MDWFloat(x), y: MDWFloat(y), z: MDWFloat(z))
             jig.rotation = SCNQuaternion(quaternion: rotation)
             jig.camera?.orthographicScale = Double(min(max(zoomScale, Constants.minimumZoom), Constants.maximumZoom))
             jig.look(at: node.position)

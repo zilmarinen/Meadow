@@ -8,6 +8,16 @@ import Foundation
 
 public class TerrainTile: Tile {
     
+    enum Constants {
+        
+        static let throne = World.Constants.slope
+    }
+    
+    enum CodingKeys: CodingKey {
+        
+        case tileType
+    }
+    
     public override var category: Int { SceneGraphCategory.terrainTile.rawValue }
     override var movementCost: Int { tileType.movementCost }
     override var walkable: Bool { tileType != .water }
@@ -24,30 +34,37 @@ public class TerrainTile: Tile {
     
     var tilesetTile: TerrainTilesetTile?
     
+    public required init(from decoder: Decoder) throws {
+        
+        try super.init(from: decoder)
+        
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        tileType = try container.decode(TerrainTileType.self, forKey: .tileType)
+    }
+    
+    required init(coordinate: Coordinate) {
+        
+        super.init(coordinate: coordinate)
+    }
+    
+    public override func encode(to encoder: Encoder) throws {
+        
+        try super.encode(to: encoder)
+        
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(tileType, forKey: .tileType)
+    }
+    
     override func invalidate(neighbours: Bool) {
         
         tilesetTile = nil
         
-        becomeDirty()
-        
-        guard neighbours else { return }
-    
-        for cardinal in Cardinal.allCases {
-            
-            guard let neighbour = find(neighbour: cardinal) else { continue }
-            
-            neighbour.invalidate(neighbours: false)
-        }
-        
-        for ordinal in Ordinal.allCases {
-            
-            guard let neighbour = find(neighbour: ordinal) else { continue }
-            
-            neighbour.invalidate(neighbours: false)
-        }
+        super.invalidate(neighbours: neighbours)
     }
     
-    override func update(delta: TimeInterval, time: TimeInterval) {
+    public override func update(delta: TimeInterval, time: TimeInterval) {
         
         //
     }
@@ -71,8 +88,6 @@ public class TerrainTile: Tile {
     override func collapse() {
         
         guard let tilemap = scene?.world.tilemaps.terrain, tilesetTile == nil else { return }
-        
-        var rng = RNG(seed: UInt64(seed))
         
         var tiles = tilemap.tileset.tiles(with: tileType)
         
@@ -160,16 +175,11 @@ public class TerrainTile: Tile {
     
     override func render(position: Vector) -> [Polygon] {
         
-        guard let tileUVs = tilesetTile?.uvs.uvs else { return [] }
+        guard let tileUVs = tilesetTile?.uvs.uvs,
+              let edges = scene?.world.tilemaps.terrain.edgeset.edges(with: tileType) else { return [] }
         
-        let corners = Ordinal.allCases.map { position + $0.vector }
-        
-        var polygons: [Polygon] = []
-        
-        //
-        //  Create tile apex
-        //
-        var apexVectors = corners.map { $0 + Vector(x: 0.0, y: World.Constants.slope * Double(coordinate.y), z: 0.0) }
+        var throneVectors = Ordinal.allCases.map { position + $0.vector }
+        var apexVectors = throneVectors.map { $0 + Vector(x: 0.0, y: World.Constants.slope * Double(coordinate.y), z: 0.0) }
         
         if let slope = slope {
             
@@ -180,41 +190,36 @@ public class TerrainTile: Tile {
         }
         
         let apexNormal = apexVectors.normal()
+        let apexCentre = apexVectors.average()
         
-        var apexVertices: [Vertex] = []
-        
-        for index in 0..<apexVectors.count {
-            
-            let corner = apexVectors[index]
-            let textureCoordinates = tileUVs[index]
-            
-            apexVertices.append(Vertex(position: corner, normal: apexNormal, color: tileType.color, textureCoordinates: textureCoordinates))
-        }
-        
-        polygons.append(Polygon(vertices: apexVertices))
-        
-        guard let edges = scene?.world.tilemaps.terrain.edgeset.edges(with: tileType) else { return polygons }
-        
-        var rng = RNG(seed: UInt64(seed))
-        
-        //
-        //  Create tile edges
-        //
         for cardinal in Cardinal.allCases {
             
-            guard let edge = edges.randomElement(using: &rng) else { continue }
+            guard find(neighbour: cardinal) == nil else { continue }
             
             let (o0, o1) = cardinal.ordinals
             
-            var vertices = [Vertex(position: apexVectors[o0.rawValue], normal: cardinal.normal, color: tileType.color, textureCoordinates: edge.uvs.uvs[0]),
-                            Vertex(position: apexVectors[o1.rawValue], normal: cardinal.normal, color: tileType.color, textureCoordinates: edge.uvs.uvs[1])]
+            throneVectors[o0.rawValue] += cardinal.normal * World.Constants.slope
+            throneVectors[o1.rawValue] += cardinal.normal * World.Constants.slope
+        }
+        
+        var polygons: [Polygon] = []
+        
+        for cardinal in Cardinal.allCases {
+            
+            let (o0, o1) = cardinal.ordinals
+            
+            polygons.append(Polygon(vertices: [Vertex(position: apexVectors[o0.rawValue], normal: apexNormal, color: tileType.color, textureCoordinates: tileUVs[cardinal.rawValue]),
+                                               Vertex(position: apexCentre, normal: apexNormal, color: tileType.color, textureCoordinates: tileUVs.average()),
+                                               Vertex(position: apexVectors[o1.rawValue], normal: apexNormal, color: tileType.color, textureCoordinates: tileUVs[(cardinal.rawValue + 1) % 4])]))
+            
+            guard let edgeUVs = edges.randomElement(using: &rng)?.uvs.uvs else { continue }
             
             guard let neighbour = find(neighbour: cardinal) else {
                 
-                vertices.append(contentsOf: [Vertex(position: (corners[o1.rawValue] - Vector(x: 0, y: World.Constants.throne, z: 0)), normal: cardinal.normal, color: tileType.color, textureCoordinates: edge.uvs.uvs[2]),
-                                             Vertex(position: (corners[o0.rawValue] - Vector(x: 0, y: World.Constants.throne, z: 0)), normal: cardinal.normal, color: tileType.color, textureCoordinates: edge.uvs.uvs[3])])
-                
-                polygons.append(Polygon(vertices: vertices))
+                polygons.append(Polygon(vertices: [Vertex(position: apexVectors[o0.rawValue], normal: cardinal.normal, color: tileType.color, textureCoordinates: edgeUVs[0]),
+                                                   Vertex(position: apexVectors[o1.rawValue], normal: cardinal.normal, color: tileType.color, textureCoordinates: edgeUVs[1]),
+                                                   Vertex(position: (throneVectors[o1.rawValue] - Vector(x: 0, y: Constants.throne, z: 0)), normal: cardinal.normal, color: tileType.color, textureCoordinates: edgeUVs[2]),
+                                                   Vertex(position: (throneVectors[o0.rawValue] - Vector(x: 0, y: Constants.throne, z: 0)), normal: cardinal.normal, color: tileType.color, textureCoordinates: edgeUVs[3])]))
                 
                 continue
             }
@@ -224,24 +229,27 @@ public class TerrainTile: Tile {
             
             let (o2, o3) = cardinal.opposite.ordinals
             
-            let (c0, c3) = (tileCorners[o0.rawValue], min(tileCorners[o0.rawValue], neighbourCorners[o3.rawValue]))
-            let (c1, c2) = (tileCorners[o1.rawValue], min(tileCorners[o1.rawValue], neighbourCorners[o2.rawValue]))
+            let (corner0, corner3) = (tileCorners[o0.rawValue], min(tileCorners[o0.rawValue], neighbourCorners[o3.rawValue]))
+            let (corner1, corner2) = (tileCorners[o1.rawValue], min(tileCorners[o1.rawValue], neighbourCorners[o2.rawValue]))
             
-            if c0 == c3 && c1 == c2 { continue }
+            if corner0 == corner3 && corner1 == corner2 { continue }
             
-            if c0 == c3 || c1 == c2 {
+            var vertices = [Vertex(position: apexVectors[o0.rawValue], normal: cardinal.normal, color: tileType.color, textureCoordinates: edgeUVs[0]),
+                            Vertex(position: apexVectors[o1.rawValue], normal: cardinal.normal, color: tileType.color, textureCoordinates: edgeUVs[1])]
+            
+            if corner0 == corner3 || corner1 == corner2 {
                 
-                let (corner, height, uvIndex) = (c0 == c3 ? (o1, c2, 2) : (o0, c3, 3))
+                let (corner, height, uvIndex) = (corner0 == corner3 ? (o1, corner2, 2) : (o0, corner3, 3))
                 
-                vertices.append(Vertex(position: (corners[corner.rawValue] + Vector(x: 0.0, y: World.Constants.slope * Double(height), z: 0.0)), normal: cardinal.normal, color: tileType.color, textureCoordinates: edge.uvs.uvs[uvIndex]))
+                vertices.append(Vertex(position: (throneVectors[corner.rawValue] + Vector(x: 0.0, y: World.Constants.slope * Double(height), z: 0.0)), normal: cardinal.normal, color: tileType.color, textureCoordinates: edgeUVs[uvIndex]))
                 
                 polygons.append(Polygon(vertices: vertices))
                 
                 continue
             }
             
-            vertices.append(contentsOf: [Vertex(position: (corners[o1.rawValue] + Vector(x: 0, y: World.Constants.slope * Double(neighbourCorners[o3.rawValue]), z: 0)), normal: cardinal.normal, color: tileType.color, textureCoordinates: edge.uvs.uvs[2]),
-                                         Vertex(position: (corners[o0.rawValue] - Vector(x: 0, y: World.Constants.slope * Double(neighbourCorners[o2.rawValue]), z: 0)), normal: cardinal.normal, color: tileType.color, textureCoordinates: edge.uvs.uvs[3])])
+            vertices.append(contentsOf: [Vertex(position: (throneVectors[o1.rawValue] + Vector(x: 0, y: World.Constants.slope * Double(neighbourCorners[o3.rawValue]), z: 0)), normal: cardinal.normal, color: tileType.color, textureCoordinates: edgeUVs[2]),
+                                         Vertex(position: (throneVectors[o0.rawValue] - Vector(x: 0, y: World.Constants.slope * Double(neighbourCorners[o2.rawValue]), z: 0)), normal: cardinal.normal, color: tileType.color, textureCoordinates: edgeUVs[3])])
             
             polygons.append(Polygon(vertices: vertices))
         }

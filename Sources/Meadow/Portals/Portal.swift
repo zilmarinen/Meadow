@@ -26,7 +26,7 @@ public class Portal: SCNNode, Codable, Hideable, Interactive, Responder, SceneGr
     public let footprint: Footprint
     public var identifier: String = "undefined"
     
-    var pointsOfAccess: [GridNode] { footprint.nodes.map { GridNode(coordinate: $0.coordinate, cardinal: $0.cardinals.first!) } }
+    var pointsOfAccess: [GridNode] { footprint.pointsOfAccess }
     var slots: [InteractionSlot] = []
     
     init(footprint: Footprint) {
@@ -73,6 +73,41 @@ extension Portal {
         guard isDirty else { return false }
         
         //
+        //
+        //
+        
+        var polygons: [Polygon] = []
+        
+        for node in footprint.nodes {
+            
+            for (cardinal, pointOfAccess) in node.cardinals {
+                
+                let (o0, o1) = cardinal.ordinals
+                
+                let coordinate = footprint.coordinate + node.coordinate
+                
+                var vector = Vector(coordinate: coordinate.xz)
+                
+                vector.y = Math.epsilon
+                
+                let v1 = vector + o0.vector
+                let v2 = vector + o1.vector
+                
+                let color: Color = (pointOfAccess ? .green : .blue)
+                
+                polygons.append(Polygon(vertices: [Vertex(position: v1, normal: .up, color: color),
+                                                   Vertex(position: vector, normal: .up, color: color),
+                                                   Vertex(position: v2, normal: .up, color: color)]))
+            }
+        }
+        
+        let mesh = Mesh(polygons: polygons)
+        
+        self.geometry = SCNGeometry(mesh: mesh)
+        
+        //
+        //
+        //
         
         isDirty = false
         
@@ -82,7 +117,7 @@ extension Portal {
 
 extension Portal {
     
-    func update(delta: TimeInterval, time: TimeInterval) {
+    public func update(delta: TimeInterval, time: TimeInterval) {
         
         //
     }

@@ -6,6 +6,12 @@
 
 public struct GridNode: Codable, Equatable, Hashable {
     
-    let coordinate: Coordinate
-    let cardinal: Cardinal
+    public let coordinate: Coordinate
+    public let cardinal: Cardinal
+    
+    public init(coordinate: Coordinate, cardinal: Cardinal) {
+        
+        self.coordinate = coordinate
+        self.cardinal = cardinal
+    }
 }

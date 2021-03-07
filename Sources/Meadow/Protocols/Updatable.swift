@@ -6,7 +6,7 @@
 
 import Foundation
 
-protocol Updatable {
+public protocol Updatable {
     
     func update(delta: TimeInterval, time: TimeInterval)
 }

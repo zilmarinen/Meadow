@@ -4,7 +4,7 @@
 //  Created by Zack Brown on 02/01/2021.
 //
 
-struct InteractionSlot {
+struct InteractionSlot: Equatable {
     
     let node: GridNode
     

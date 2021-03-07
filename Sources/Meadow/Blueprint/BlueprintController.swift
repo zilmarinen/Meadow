@@ -19,6 +19,7 @@ extension Blueprint {
         
         case empty
         case area(bounds: GridBounds, blueprintType: BlueprintType, elevation: Int)
+        case building(bounds: GridBounds, blueprintType: BlueprintType, elevation: Int)
         case foliage(bounds: GridBounds, blueprintType: BlueprintType, elevation: Int)
         case footpath(bounds: GridBounds, blueprintType: BlueprintType, elevation: Int)
         case portal(bounds: GridBounds, blueprintType: BlueprintType, elevation: Int)
@@ -38,6 +39,17 @@ extension Blueprint {
                 switch newState {
                 
                 case .area(let newBounds, let newBlueprintType, let newElevation):
+                    
+                    return bounds == newBounds && blueprintType == newBlueprintType && elevation == newElevation ? .abort : .continue
+                
+                default: return .continue
+                }
+                
+            case .building(let bounds, let blueprintType, let elevation):
+                
+                switch newState {
+                
+                case .building(let newBounds, let newBlueprintType, let newElevation):
                     
                     return bounds == newBounds && blueprintType == newBlueprintType && elevation == newElevation ? .abort : .continue
                 
@@ -112,6 +124,11 @@ extension Blueprint {
         public func select(area bounds: GridBounds, blueprintType: BlueprintType, elevation: Int = 0) {
             
             state = .area(bounds: bounds, blueprintType: blueprintType, elevation: elevation)
+        }
+        
+        public func select(building bounds: GridBounds, blueprintType: BlueprintType, elevation: Int = 0) {
+            
+            state = .building(bounds: bounds, blueprintType: blueprintType, elevation: elevation)
         }
         
         public func select(foliage bounds: GridBounds, blueprintType: BlueprintType, elevation: Int = 0) {

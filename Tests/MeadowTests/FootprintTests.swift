@@ -11,9 +11,14 @@ final class FootprintTests: XCTestCase {
     
     func testFootprintIntersection() throws {
         
-        let nodes = [FootprintNode(coordinate: Coordinate(x: 0, y: 0, z: 0), cardinals: [.north, .east, .south, .west]),
-                     FootprintNode(coordinate: Cardinal.north.coordinate, cardinals: [.east, .south, .west]),
-                     FootprintNode(coordinate: Cardinal.east.coordinate, cardinals: [.west])]
+        let nodes = [FootprintNode(coordinate: Coordinate(x: 0, y: 0, z: 0), cardinals: [.north : false,
+                                                                                         .east : false,
+                                                                                         .south :false,
+                                                                                         .west : false]),
+                     FootprintNode(coordinate: Cardinal.north.coordinate, cardinals: [.east : false,
+                                                                                      .south : false,
+                                                                                      .west: false]),
+                     FootprintNode(coordinate: Cardinal.east.coordinate, cardinals: [.west : false])]
         
         let f0 = Footprint(coordinate: .zero, rotation: .north, nodes: nodes)
         let f1 = Footprint(coordinate: Cardinal.east.coordinate, rotation: .north, nodes: nodes)

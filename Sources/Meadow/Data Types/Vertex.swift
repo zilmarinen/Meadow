@@ -67,3 +67,26 @@ extension Vertex: Transformable {
         return scaled(by: transform.scale).rotated(by: transform.rotation).translated(by: transform.position)
     }
 }
+
+extension Array where Element == Vertex {
+    
+    public func translated(by translation: Vector) -> Self {
+        
+        return map { $0.translated(by: translation) }
+    }
+    
+    public func rotated(by rotation: Rotation) -> Self {
+        
+        return map { $0.rotated(by: rotation) }
+    }
+    
+    public func scaled(by scale: Vector) -> Self {
+        
+        return map { $0.scaled(by: scale) }
+    }
+    
+    public func transformed(by transform: Transform) -> Self {
+        
+        return map { $0.transformed(by: transform) }
+    }
+}

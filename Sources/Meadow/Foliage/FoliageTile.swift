@@ -14,22 +14,15 @@ public class FoliageTile: Tile {
         
         //
         
-        becomeDirty()
-        
-        guard neighbours else { return }
+        super.invalidate(neighbours: neighbours)
+    }
+    
+    public override func update(delta: TimeInterval, time: TimeInterval) {
         
         //
     }
     
-    override func update(delta: TimeInterval, time: TimeInterval) {
-        
-        //
-    }
-    
-    override func traversable(cardinal: Cardinal) -> Bool {
-        
-        return false
-    }
+    override func traversable(cardinal: Cardinal) -> Bool { return false }
     
     override func collapse() {
         
@@ -38,6 +31,10 @@ public class FoliageTile: Tile {
     
     override func render(position: Vector) -> [Polygon] {
         
-        return []
+        let tree = Tree(sides: 4, pointy: true)
+        
+        let transform = Transform(position: position)
+        
+        return tree.transformed(by: transform).polygons
     }
 }

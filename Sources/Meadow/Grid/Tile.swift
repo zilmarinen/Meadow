@@ -45,6 +45,11 @@ public class Tile: NSObject, Codable, Collapsable, Renderable, Responder, SceneG
     
     var seed: Int { (abs(coordinate.x + 1) * abs(coordinate.y + 2) * abs(coordinate.z + 4)) * 8 }
     
+    lazy var rng: RNG = {
+       
+        return RNG(seed: UInt64(seed))
+    }()
+    
     public var neighbours: [Cardinal : Tile] = [:] {
         
         didSet {
@@ -98,13 +103,35 @@ public class Tile: NSObject, Codable, Collapsable, Renderable, Responder, SceneG
         
         guard isDirty else { return false }
         
+        //
+        
         isDirty = false
         
         return true
     }
     
-    func invalidate(neighbours: Bool) { fatalError("Tile.invalidate() must be overridden") }
-    func update(delta: TimeInterval, time: TimeInterval) { fatalError("Tile.update() must be overridden") }
+    func invalidate(neighbours: Bool) {
+        
+        becomeDirty()
+        
+        guard neighbours else { return }
+    
+        for cardinal in Cardinal.allCases {
+            
+            guard let neighbour = find(neighbour: cardinal) else { continue }
+            
+            neighbour.invalidate(neighbours: false)
+        }
+        
+        for ordinal in Ordinal.allCases {
+            
+            guard let neighbour = find(neighbour: ordinal) else { continue }
+            
+            neighbour.invalidate(neighbours: false)
+        }
+    }
+    
+    public func update(delta: TimeInterval, time: TimeInterval) { fatalError("Tile.update() must be overridden") }
     func traversable(cardinal: Cardinal) -> Bool { fatalError("Tile.traversable() must be overridden") }
     func collapse() { fatalError("Tile.collapse() must be overridden") }
     func render(position: Vector) -> [Polygon] { fatalError("Tile.render() must be overridden") }

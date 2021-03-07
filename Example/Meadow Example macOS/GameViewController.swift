@@ -10,11 +10,16 @@ import Meadow
 import SceneKit
 
 class GameViewController: NSViewController {
-
+    
+    lazy var coordinator: AppCoordinator = {
+        
+        return AppCoordinator(controller: self)
+    }()
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
-        setupScene()
+        coordinator.start(with: nil)
     }
 }

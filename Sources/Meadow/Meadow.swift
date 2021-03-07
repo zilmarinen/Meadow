@@ -13,6 +13,7 @@ public class Meadow: SCNNode, Codable, Responder, SceneGraphNode, Soilable, Upda
         case name
         case actors
         case area
+        case buildings
         case foliage
         case footpath
         case portals
@@ -47,13 +48,14 @@ public class Meadow: SCNNode, Codable, Responder, SceneGraphNode, Soilable, Upda
     public let actors: Actors
     public let area: Area
     public let blueprint: Blueprint
+    public let buildings: Buildings
     public let foliage: Foliage
     public let footpath: Footpath
     public let portals: Portals
     public let props: Props
     public let terrain: Terrain
     
-    public var children: [SceneGraphNode] { [actors, area, foliage, footpath, portals, props, terrain] }
+    public var children: [SceneGraphNode] { [actors, area, buildings, foliage, footpath, portals, props, terrain] }
     public var childCount: Int { children.count }
     public var isLeaf: Bool { children.isEmpty }
     public var category: Int { SceneGraphCategory.meadow.rawValue }
@@ -63,6 +65,7 @@ public class Meadow: SCNNode, Codable, Responder, SceneGraphNode, Soilable, Upda
         actors = Actors()
         area = Area()
         blueprint = Blueprint()
+        buildings = Buildings()
         foliage = Foliage()
         footpath = Footpath()
         portals = Portals()
@@ -79,6 +82,7 @@ public class Meadow: SCNNode, Codable, Responder, SceneGraphNode, Soilable, Upda
         addChildNode(actors)
         addChildNode(area)
         addChildNode(blueprint)
+        addChildNode(buildings)
         addChildNode(foliage)
         addChildNode(footpath)
         addChildNode(portals)
@@ -93,6 +97,7 @@ public class Meadow: SCNNode, Codable, Responder, SceneGraphNode, Soilable, Upda
         actors = try container.decode(Actors.self, forKey: .actors)
         area = try container.decode(Area.self, forKey: .area)
         blueprint = Blueprint()
+        buildings = try container.decode(Buildings.self, forKey: .buildings)
         foliage = try container.decode(Foliage.self, forKey: .foliage)
         footpath = try container.decode(Footpath.self, forKey: .footpath)
         portals = try container.decode(Portals.self, forKey: .portals)
@@ -109,6 +114,7 @@ public class Meadow: SCNNode, Codable, Responder, SceneGraphNode, Soilable, Upda
         addChildNode(actors)
         addChildNode(area)
         addChildNode(blueprint)
+        addChildNode(buildings)
         addChildNode(foliage)
         addChildNode(footpath)
         addChildNode(portals)
@@ -128,6 +134,7 @@ public class Meadow: SCNNode, Codable, Responder, SceneGraphNode, Soilable, Upda
         try container.encode(name, forKey: .name)
         try container.encode(actors, forKey: .actors)
         try container.encode(area, forKey: .area)
+        try container.encode(buildings, forKey: .buildings)
         try container.encode(foliage, forKey: .foliage)
         try container.encode(footpath, forKey: .footpath)
         try container.encode(portals, forKey: .portals)
@@ -145,6 +152,7 @@ extension Meadow {
         actors.clean()
         area.clean()
         blueprint.clean()
+        buildings.clean()
         foliage.clean()
         footpath.clean()
         portals.clean()
@@ -159,10 +167,11 @@ extension Meadow {
 
 extension Meadow {
     
-    func update(delta: TimeInterval, time: TimeInterval) {
+    public func update(delta: TimeInterval, time: TimeInterval) {
         
         actors.update(delta: delta, time: time)
         area.update(delta: delta, time: time)
+        buildings.update(delta: delta, time: time)
         foliage.update(delta: delta, time: time)
         footpath.update(delta: delta, time: time)
         portals.update(delta: delta, time: time)

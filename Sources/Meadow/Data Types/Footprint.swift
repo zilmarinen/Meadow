@@ -12,7 +12,18 @@ public struct Footprint: Codable {
     
     let nodes: [FootprintNode]
     
-    init(coordinate: Coordinate, rotation: Cardinal, nodes: [FootprintNode]) {
+    var pointsOfAccess: [GridNode] {
+        
+        return nodes.flatMap { node in
+            
+            node.cardinals.compactMap { (cardinal, pointOfAccess) in
+                
+                return pointOfAccess ? GridNode(coordinate: coordinate + node.coordinate, cardinal: cardinal) : nil
+            }
+        }
+    }
+    
+    public init(coordinate: Coordinate, rotation: Cardinal, nodes: [FootprintNode]) {
         
         self.coordinate = coordinate
         self.rotation = rotation
@@ -20,10 +31,15 @@ public struct Footprint: Codable {
         self.nodes = nodes.map { node in
             
             let nodeCoordinate = node.coordinate.rotate(rotation: rotation)
-                        
-            let cardinals = node.cardinals.map { $0.rotate(rotation: rotation) }
             
-            return FootprintNode(coordinate: coordinate + nodeCoordinate, cardinals: cardinals)
+            var rotated: [Cardinal : Bool] = [:]
+            
+            for (cardinal, pointOfAccess) in node.cardinals {
+                
+                rotated[cardinal.rotate(rotation: rotation)] = pointOfAccess
+            }
+            
+            return FootprintNode(coordinate: coordinate + nodeCoordinate, cardinals: rotated)
         }
     }
 }

@@ -71,7 +71,7 @@ extension NPC {
 
 extension NPC {
     
-    func update(delta: TimeInterval, time: TimeInterval) {
+    public func update(delta: TimeInterval, time: TimeInterval) {
         
         //
     }

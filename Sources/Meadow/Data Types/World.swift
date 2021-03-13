@@ -6,15 +6,15 @@
 
 import Foundation
 
-public struct World: Equatable {
+public struct World {
     
     public struct Constants {
         
         public static let floor = 0
         public static let ceiling = 10
-        static let slope = 0.25
+        public static let slope = 0.25
         
-        static let chunkSize = 5
+        public static let chunkSize = 5
     }
     
     public let season: Season
@@ -27,13 +27,5 @@ public struct World: Equatable {
         
         self.season = season
         self.tilemaps = tilemaps
-    }
-}
-
-extension World {
-    
-    public static func == (lhs: World, rhs: World) -> Bool {
-        
-        return lhs.season == rhs.season
     }
 }

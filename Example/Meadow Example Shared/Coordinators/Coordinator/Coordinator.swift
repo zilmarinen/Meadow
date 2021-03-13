@@ -62,6 +62,8 @@ open class Coordinator<T>: Responder, Coordinatable {
     func start(with option: StartOption?) {}
     
     func stop(then completion: CoordinatorCompletionBlock?) {
+        
+        stopChildren()
 
         completion?()
     }

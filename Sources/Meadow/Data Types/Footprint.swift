@@ -10,37 +10,14 @@ public struct Footprint: Codable {
     
     var rotation: Cardinal
     
-    let nodes: [FootprintNode]
+    let nodes: [Coordinate]
     
-    var pointsOfAccess: [GridNode] {
-        
-        return nodes.flatMap { node in
-            
-            node.cardinals.compactMap { (cardinal, pointOfAccess) in
-                
-                return pointOfAccess ? GridNode(coordinate: coordinate + node.coordinate, cardinal: cardinal) : nil
-            }
-        }
-    }
-    
-    public init(coordinate: Coordinate, rotation: Cardinal, nodes: [FootprintNode]) {
+    public init(coordinate: Coordinate, rotation: Cardinal, nodes: [Coordinate]) {
         
         self.coordinate = coordinate
         self.rotation = rotation
         
-        self.nodes = nodes.map { node in
-            
-            let nodeCoordinate = node.coordinate.rotate(rotation: rotation)
-            
-            var rotated: [Cardinal : Bool] = [:]
-            
-            for (cardinal, pointOfAccess) in node.cardinals {
-                
-                rotated[cardinal.rotate(rotation: rotation)] = pointOfAccess
-            }
-            
-            return FootprintNode(coordinate: coordinate + nodeCoordinate, cardinals: rotated)
-        }
+        self.nodes = nodes.map { $0.rotate(rotation: rotation) }
     }
 }
 
@@ -52,7 +29,7 @@ extension Footprint {
             
             for rhs in footprint.nodes {
                 
-                if lhs.intersects(node: rhs) {
+                if lhs == rhs {
                     
                     return true
                 }
@@ -62,11 +39,11 @@ extension Footprint {
         return false
     }
     
-    func intersects(node: GridNode) -> Bool {
+    func intersects(coordinate: Coordinate) -> Bool {
         
         for lhs in nodes {
                 
-            if lhs.intersects(node: node) {
+            if lhs == coordinate {
                 
                 return true
             }

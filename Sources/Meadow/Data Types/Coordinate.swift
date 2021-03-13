@@ -66,7 +66,7 @@ public extension Coordinate {
 
 extension Coordinate {
     
-    enum Adjacency {
+    public enum Adjacency {
         
         case adjacent
         case adrift
@@ -74,7 +74,7 @@ extension Coordinate {
         case equal
     }
     
-    func adjacency(to coordinate: Coordinate) -> Adjacency {
+    public func adjacency(to coordinate: Coordinate) -> Adjacency {
         
         if coordinate.x == x && coordinate.z == z {
          

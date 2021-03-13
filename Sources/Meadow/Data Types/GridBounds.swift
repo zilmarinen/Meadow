@@ -4,6 +4,8 @@
 //  Created by Zack Brown on 28/12/2020.
 //
 
+import Foundation
+
 public struct GridBounds {
     
     public let start: Coordinate
@@ -22,8 +24,8 @@ public struct GridBounds {
     
     public init(aligned coordinate: Coordinate, size: Int) {
         
-        let x = Int((coordinate.x >= 0 ? coordinate.x : coordinate.x - (size - 1)) / size) * size
-        let z = Int((coordinate.z >= 0 ? coordinate.z : coordinate.z - (size - 1)) / size) * size
+        let x = Int(floor(Float(coordinate.x) / Float(size))) * size
+        let z = Int(floor(Float(coordinate.z) / Float(size))) * size
         
         self.init(start: Coordinate(x: x, y: 0, z: z), end: Coordinate(x: x + (size - 1), y: 0, z: z + (size - 1)))
     }
@@ -53,7 +55,7 @@ extension GridBounds {
 
 extension GridBounds {
     
-    func contains(coordinate: Coordinate) -> Bool {
+    public func contains(coordinate: Coordinate) -> Bool {
         
         let xRange = Range(start.x...end.x)
         let zRange = Range(start.z...end.z)

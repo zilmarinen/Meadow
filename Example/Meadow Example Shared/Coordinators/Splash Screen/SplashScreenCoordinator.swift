@@ -49,33 +49,8 @@ class SplashScreenCoordinator: Coordinator<Scene> {
         
         guard let view = option as? SceneView else { fatalError("Invalid start option") }
         
-        controller.delegate = self
-        controller.camera.floor.drawGrid = false
-        
         view.scene = controller
         
         print("start")
-    }
-    
-    override func stop(then completion: CoordinatorCompletionBlock?) {
-        
-        controller.delegate = nil
-        
-        super.stop(then: completion)
-    }
-}
-
-extension SplashScreenCoordinator: SceneDelegate {
-    
-    func update(delta: TimeInterval, time: TimeInterval) {
-        
-        guard timer.integrate(delta: delta) else { return }
-        
-        DispatchQueue.main.async { [weak self] in
-            
-            guard let self = self else { return }
-        
-            self.completion?()
-        }
     }
 }

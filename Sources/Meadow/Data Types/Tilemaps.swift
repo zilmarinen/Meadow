@@ -8,18 +8,12 @@ import Foundation
 
 struct Tilemaps {
     
-    let area: AreaTilemap
-    let footpath: FootpathTileset
-    let terrain: TerrainTilemap
+    let surface: SurfaceTilemap
     
     init?(season: Season) throws {
         
-        guard let area = try AreaTilemap(),
-              let footpath = try FootpathTileset(),
-              let terrain = try TerrainTilemap(season: season) else { return nil }
+        guard let surface = try SurfaceTilemap(season: season) else { return nil }
         
-        self.area = area
-        self.footpath = footpath
-        self.terrain = terrain
+        self.surface = surface
     }
 }

@@ -6,34 +6,12 @@
 
 import SceneKit
 
-public class Camera: SCNNode, Codable, Responder, SceneGraphNode, Soilable, Updatable {
-    
-    private enum CodingKeys: CodingKey {
-     
-        case floor
-    }
+public class Camera: SCNNode, Responder, Soilable, Updatable {
     
     public var ancestor: SoilableParent?
     
-    public var isDirty: Bool {
-        
-        get {
-            
-            floor.isDirty
-        }
-        set {
-            
-            guard !isDirty, newValue else { return }
-            
-            floor.becomeDirty()
-        }
-    }
+    public var isDirty: Bool = false
     
-    public let floor: Floor
-    
-    public var children: [SceneGraphNode] { [] }
-    public var childCount: Int { children.count }
-    public var isLeaf: Bool { children.isEmpty }
     public var category: Int { SceneGraphCategory.camera.rawValue }
     
     public lazy var jig: SCNNode = {
@@ -57,50 +35,17 @@ public class Camera: SCNNode, Codable, Responder, SceneGraphNode, Soilable, Upda
     
     override init() {
         
-        self.floor = Floor()
-        
         super.init()
         
         name = "Camera"
         categoryBitMask = category
         
-        addChildNode(floor)
-        addChildNode(jig)
-        
-        let box = SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0)
-        
-        box.firstMaterial?.diffuse.contents = MDWColor.systemPink
-        
-        let node = SCNNode(geometry: box)
-        
-        addChildNode(node)
-    }
-    
-    required public init(from decoder: Decoder) throws {
-        
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-     
-        floor = try container.decode(Floor.self, forKey: .floor)
-        
-        super.init()
-        
-        name = "Camera"
-        categoryBitMask = category
-        
-        addChildNode(floor)
         addChildNode(jig)
     }
     
     required init?(coder: NSCoder) {
         
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    public func encode(to encoder: Encoder) throws {
-        
-        var container = encoder.container(keyedBy: CodingKeys.self)
-     
-        try container.encode(floor, forKey: .floor)
     }
 }
 
@@ -110,7 +55,7 @@ extension Camera {
         
         guard isDirty else { return false }
         
-        floor.clean()
+        //
         
         isDirty = false
         

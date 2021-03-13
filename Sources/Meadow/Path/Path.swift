@@ -6,5 +6,5 @@
 
 struct Path {
     
-    let nodes: [GridNode]
+    let nodes: [Coordinate]
 }

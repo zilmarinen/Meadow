@@ -31,7 +31,7 @@ class AppCoordinator: Coordinator<GameViewController> {
     
     lazy var developerSplashCoordinator: SplashScreenCoordinator = {
         
-        guard let scene = try? Scene.named(name: "scene_one") else { fatalError("Unable to load developer splash scene") }
+        guard let scene = try? Scene.named(name: "developer_splash") else { fatalError("Unable to load developer splash scene") }
        
         let coordinator = SplashScreenCoordinator(controller: scene, duration: 3.5)
         

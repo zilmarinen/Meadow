@@ -4,7 +4,7 @@
 //  Created by Zack Brown on 03/11/2020.
 //
 
-struct Bounds: Hashable {
+public struct Bounds: Hashable {
     
     let minimum: Vector
     let maximum: Vector
@@ -39,7 +39,7 @@ extension Bounds {
 
 extension Bounds {
     
-    static func == (lhs: Bounds, rhs: Bounds) -> Bool {
+    public static func == (lhs: Bounds, rhs: Bounds) -> Bool {
         
         return lhs.minimum == rhs.minimum && lhs.maximum == rhs.maximum
     }
@@ -75,7 +75,7 @@ extension Bounds {
     }
 }
 
-extension Bounds {
+public extension Bounds {
     
     func union(bounds: Bounds) -> Bounds {
         

@@ -9,7 +9,7 @@ import Foundation
 
 struct PriorityQueueNode {
     
-    let gridNode: GridNode
+    let coordinate: Coordinate
     let priority: CGFloat
 }
 
@@ -21,18 +21,18 @@ class PriorityQueue {
     
     var isEmpty: Bool { queue.isEmpty }
     
-    func enqueue(gridNode: GridNode, priority: CGFloat) {
+    func enqueue(coordinate: Coordinate, priority: CGFloat) {
         
-        queue.append(PriorityQueueNode(gridNode: gridNode, priority: priority))
+        queue.append(PriorityQueueNode(coordinate: coordinate, priority: priority))
         
         isDirty = true
     }
     
-    func dequeue() -> GridNode? {
+    func dequeue() -> Coordinate? {
         
         clean()
         
-        return queue.removeFirst().gridNode
+        return queue.removeFirst().coordinate
     }
     
     @discardableResult func clean() -> Bool {

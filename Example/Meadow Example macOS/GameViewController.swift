@@ -6,7 +6,6 @@
 //
 
 import Cocoa
-import Meadow
 import SceneKit
 
 class GameViewController: NSViewController {

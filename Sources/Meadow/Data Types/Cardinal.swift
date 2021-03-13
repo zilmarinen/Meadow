@@ -80,7 +80,7 @@ extension Cardinal {
         return Opposites[cardinal.rawValue]
     }
     
-    var opposite: Cardinal {
+    public var opposite: Cardinal {
         
         return Cardinal.opposite(cardinal: self)
     }
@@ -110,7 +110,7 @@ extension Cardinal {
         return Coordinates[cardinal.rawValue]
     }
     
-    var coordinate: Coordinate {
+    public var coordinate: Coordinate {
         
         return Cardinal.coordinate(cardinal: self)
     }

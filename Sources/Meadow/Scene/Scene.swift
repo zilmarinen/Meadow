@@ -61,6 +61,8 @@ public class Scene: SCNScene, Codable, Responder, Soilable {
         
         rootNode.addChildNode(camera)
         rootNode.addChildNode(meadow)
+        
+        becomeDirty()
     }
     
     required init?(coder: NSCoder) {

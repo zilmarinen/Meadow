@@ -6,7 +6,7 @@
 
 import Foundation
 
-struct SurfaceEdgesetEdge: Decodable, Equatable {
+public struct SurfaceEdgesetEdge: Decodable, Equatable {
  
     enum CodingKeys: CodingKey {
         
@@ -17,7 +17,7 @@ struct SurfaceEdgesetEdge: Decodable, Equatable {
     var tileType: SurfaceTileType
     var uvs: UVs
 
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
         

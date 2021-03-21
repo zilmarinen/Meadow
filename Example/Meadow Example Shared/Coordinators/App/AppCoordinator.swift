@@ -1,6 +1,5 @@
 //
 //  AppCoordinator.swift
-//  Meadow Example iOS
 //
 //  Created by Zack Brown on 06/01/2021.
 //
@@ -27,13 +26,11 @@ extension AppCoordinator {
     }
 }
 
-class AppCoordinator: Coordinator<GameViewController> {
+class AppCoordinator: ViewCoordinator {
     
-    lazy var developerSplashCoordinator: SplashScreenCoordinator = {
+    lazy var developerSplashCoordinator: DeveloperSplashScreenCoordinator = {
         
-        guard let scene = try? Scene.named(name: "developer_splash") else { fatalError("Unable to load developer splash scene") }
-       
-        let coordinator = SplashScreenCoordinator(controller: scene, duration: 3.5)
+        let coordinator = DeveloperSplashScreenCoordinator(controller: controller, duration: 3.5)
         
         coordinator.parent = self
         coordinator.completion = { [weak self] in
@@ -46,11 +43,9 @@ class AppCoordinator: Coordinator<GameViewController> {
         return coordinator
     }()
     
-    lazy var applicationSplashCoordinator: SplashScreenCoordinator = {
+    lazy var applicationSplashCoordinator: ApplicationSplashScreenCoordinator = {
         
-        guard let scene = try? Scene.named(name: "application_splash") else { fatalError("Unable to load application splash scene") }
-        
-        let coordinator = SplashScreenCoordinator(controller: scene, duration: 3.5)
+        let coordinator = ApplicationSplashScreenCoordinator(controller: controller, duration: 3.5)
         
         coordinator.parent = self
         coordinator.completion = { [weak self] in
@@ -77,10 +72,17 @@ class AppCoordinator: Coordinator<GameViewController> {
         guard let device = sceneView.device else { fatalError("Invalid device library") }
         
         sceneView.library = try? device.makeDefaultLibrary(bundle: Meadow.bundle)
-        sceneView.delegate = self
-        sceneView.isPlaying = true
         
         stateMachine.subscribe(stateDidChange(from:to:))
+    }
+    
+    override func start(child coordinator: Coordinatable, with option: StartOption?) {
+        
+        guard let coordinator = coordinator as? ViewCoordinator else { return }
+        
+        coordinator.controller = controller
+        
+        super.start(child: coordinator, with: option)
     }
 }
 
@@ -92,8 +94,6 @@ extension AppCoordinator {
             
             guard let self = self else { return }
             
-            guard let view = self.controller.view as? SceneView else { fatalError("Invalid view setup") }
-            
             self.stopChildren()
             
             switch currentState {
@@ -102,7 +102,7 @@ extension AppCoordinator {
                 
                 print("stateDidChange: developer")
                 
-                self.start(child: self.developerSplashCoordinator, with: view)
+                self.start(child: self.developerSplashCoordinator, with: nil)
                 
             case .applicationSplash:
                 
@@ -114,29 +114,8 @@ extension AppCoordinator {
                 
                 print("stateDidChange: mainMenu")
                 
-                view.scene = nil
+                //view.scene = nil
             }
-        }
-    }
-}
-
-extension AppCoordinator: SCNSceneRendererDelegate {
-    
-    func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
-        
-        switch stateMachine.state {
-        
-        case .developerSplash:
-            
-            self.developerSplashCoordinator.controller.renderer(renderer, updateAtTime: time)
-            
-        case .applicationSplash:
-            
-            self.applicationSplashCoordinator.controller.renderer(renderer, updateAtTime: time)
-            
-        case .mainMenu:
-            
-            print("renderer: updateAtTime: \(time)")
         }
     }
 }

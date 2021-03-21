@@ -70,7 +70,7 @@ extension Cardinal {
         return Cardinals[cardinal.rawValue]
     }
     
-    var cardinals: (Cardinal, Cardinal) {
+    public var cardinals: (Cardinal, Cardinal) {
         
         return Cardinal.cardinals(cardinal: self)
     }
@@ -90,7 +90,7 @@ extension Cardinal {
         return Ordinals[cardinal.rawValue]
     }
     
-    var ordinals: (Ordinal, Ordinal) {
+    public var ordinals: (Ordinal, Ordinal) {
         
         return Cardinal.ordinals(cardinal: self)
     }
@@ -100,7 +100,7 @@ extension Cardinal {
         return Normals[cardinal.rawValue]
     }
     
-    var normal: Vector {
+    public var normal: Vector {
         
         return Cardinal.normal(cardinal: self)
     }

@@ -46,6 +46,8 @@ public class Surface: SCNNode, Codable, Hideable, Responder, Soilable {
             
             addChildNode(chunk)
         }
+        
+        becomeDirty()
     }
     
     required init?(coder: NSCoder) {

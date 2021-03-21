@@ -1,6 +1,5 @@
 //
-//  SplashScreenCoordinator.swift
-//  Meadow Example iOS
+//  ApplicationSplashScreenCoordinator.swift
 //
 //  Created by Zack Brown on 08/01/2021.
 //
@@ -27,13 +26,13 @@ class Timer {
     }
 }
 
-class SplashScreenCoordinator: Coordinator<Scene> {
+class ApplicationSplashScreenCoordinator: ViewCoordinator {
     
     var completion: (() -> Void)?
     
     let timer: Timer
     
-    init(controller: Scene, duration: TimeInterval) {
+    init(controller: GameViewController, duration: TimeInterval) {
         
         self.timer = Timer(duration: duration)
         
@@ -47,10 +46,10 @@ class SplashScreenCoordinator: Coordinator<Scene> {
     
     override func start(with option: StartOption?) {
         
-        guard let view = option as? SceneView else { fatalError("Invalid start option") }
+        super.start(with: option)
         
-        view.scene = controller
+        print("ApplicationSplashScreenCoordinator -> start")
         
-        print("start")
+        //
     }
 }

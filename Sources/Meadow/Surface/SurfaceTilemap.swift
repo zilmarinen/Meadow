@@ -4,10 +4,10 @@
 //  Created by Zack Brown on 26/11/2020.
 //
 
-struct SurfaceTilemap {
+public struct SurfaceTilemap {
     
-    let edgeset: SurfaceEdgeset
-    let tileset: SurfaceTileset
+    public let edgeset: SurfaceEdgeset
+    public let tileset: SurfaceTileset
     
     init?(season: Season) throws {
         

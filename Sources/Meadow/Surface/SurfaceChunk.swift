@@ -59,6 +59,8 @@ public class SurfaceChunk: SCNNode, Codable, Hideable, Responder, Shadable, Soil
             
             tile.ancestor = self
         }
+        
+        becomeDirty()
     }
     
     required init?(coder: NSCoder) {
@@ -89,8 +91,16 @@ extension SurfaceChunk {
         
         guard isDirty else { return false }
         
-        //TODO: generate mesh
-        let mesh = Mesh(polygons: [])
+        var polygons: [Polygon] = []
+        
+        for tile in tiles where !tile.isHidden {
+            
+            tile.clean()
+            
+            polygons.append(contentsOf: tile.render(position: Vector(coordinate: tile.coordinate.xz - bounds.start.xz)))
+        }
+        
+        let mesh = Mesh(polygons: polygons)
         
         self.geometry = SCNGeometry(mesh: mesh)
         self.geometry?.program = program

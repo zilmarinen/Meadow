@@ -1,6 +1,5 @@
 //
 //  GameViewController.swift
-//  Meadow Example iOS
 //
 //  Created by Zack Brown on 15/12/2020.
 //

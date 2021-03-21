@@ -30,6 +30,8 @@ public class Meadow: SCNNode, Codable, Responder, Updatable {
         super.init()
         
         addChildNode(surface)
+        
+        becomeDirty()
     }
     
     required init?(coder: NSCoder) {

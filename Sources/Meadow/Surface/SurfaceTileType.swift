@@ -6,25 +6,13 @@
 
 import Foundation
 
-public enum SurfaceTileType: Int, CaseIterable, Codable, Equatable {
+public enum SurfaceTileType: Int, CaseIterable, Codable {
     
     case dirt
     case grass
     case sand
     case undergrowth
     case water
-    
-    public var description: String {
-        
-        switch self {
-        
-        case .dirt: return "Dirt"
-        case .grass: return "Grass"
-        case .sand: return "Sand"
-        case .undergrowth: return "Undergrowth"
-        case .water: return "Water"
-        }
-    }
     
     public var movementCost: Int {
         

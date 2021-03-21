@@ -6,9 +6,9 @@
 
 import Foundation
 
-struct Tilemaps {
+public struct Tilemaps {
     
-    let surface: SurfaceTilemap
+    public let surface: SurfaceTilemap
     
     init?(season: Season) throws {
         

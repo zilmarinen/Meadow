@@ -14,12 +14,12 @@ public struct World {
         public static let ceiling = 10
         public static let slope = 0.25
         
-        public static let chunkSize = 5
+        public static let chunkSize = 10
     }
     
     public let season: Season
     
-    let tilemaps: Tilemaps
+    public let tilemaps: Tilemaps
     
     public init(season: Season) {
         

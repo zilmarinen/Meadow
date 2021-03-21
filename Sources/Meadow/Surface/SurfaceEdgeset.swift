@@ -16,7 +16,7 @@ import Foundation
 
 #endif
 
-struct SurfaceEdgeset: Edgeset {
+public struct SurfaceEdgeset: Edgeset {
     
     enum Constants {
         
@@ -24,8 +24,8 @@ struct SurfaceEdgeset: Edgeset {
         static let edgemapIdentifier = "Surface_Edgemap"
     }
     
-    let image: MDWImage
-    let edges: [SurfaceEdgesetEdge]
+    public let image: MDWImage
+    public let edges: [SurfaceEdgesetEdge]
     
     init?(season: Season) throws {
         

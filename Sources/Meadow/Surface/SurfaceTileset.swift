@@ -16,7 +16,7 @@ import Foundation
 
 #endif
 
-struct SurfaceTileset: Tileset {
+public struct SurfaceTileset: Tileset {
     
     enum Constants {
         
@@ -24,8 +24,8 @@ struct SurfaceTileset: Tileset {
         static let tilemapIdentifier = "Surface_Tilemap"
     }
     
-    let image: MDWImage
-    let tiles: [SurfaceTilesetTile]
+    public let image: MDWImage
+    public let tiles: [SurfaceTilesetTile]
     
     init?(season: Season) throws {
         
@@ -41,7 +41,7 @@ struct SurfaceTileset: Tileset {
 
 extension SurfaceTileset {
     
-    func tiles(with tileType: SurfaceTileType) -> [SurfaceTilesetTile] {
+    public func tiles(with tileType: SurfaceTileType) -> [SurfaceTilesetTile] {
         
         return tiles.filter { $0.tileType == tileType }
     }

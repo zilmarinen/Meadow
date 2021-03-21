@@ -4,32 +4,32 @@
 //  Created by Zack Brown on 07/12/2020.
 //
 
-public struct Footprint: Codable {
+public struct Footprint: Codable, Equatable {
     
-    let coordinate: Coordinate
+    public let coordinate: Coordinate
     
     var rotation: Cardinal
     
-    let nodes: [Coordinate]
+    public let nodes: [Coordinate]
     
     public init(coordinate: Coordinate, rotation: Cardinal, nodes: [Coordinate]) {
         
         self.coordinate = coordinate
         self.rotation = rotation
         
-        self.nodes = nodes.map { $0.rotate(rotation: rotation) }
+        self.nodes = nodes.map { $0.rotate(rotation: rotation) + coordinate }
     }
 }
 
 extension Footprint {
     
-    func intersects(footprint: Footprint) -> Bool {
+    public func intersects(footprint: Footprint) -> Bool {
         
         for lhs in nodes {
             
             for rhs in footprint.nodes {
                 
-                if lhs == rhs {
+                if lhs.xz == rhs.xz {
                     
                     return true
                 }
@@ -39,11 +39,11 @@ extension Footprint {
         return false
     }
     
-    func intersects(coordinate: Coordinate) -> Bool {
+    public func intersects(coordinate: Coordinate) -> Bool {
         
         for lhs in nodes {
                 
-            if lhs == coordinate {
+            if lhs.xz == coordinate.xz {
                 
                 return true
             }

@@ -12,6 +12,7 @@ public class SurfaceTile: Codable, Equatable, Renderable, Responder {
         
         case coordinate
         case tileType
+        case edgeType
     }
     
     public var ancestor: SoilableParent?
@@ -20,10 +21,11 @@ public class SurfaceTile: Codable, Equatable, Renderable, Responder {
     
     public var category: Int { SceneGraphCategory.surfaceTile.rawValue }
 
-    public let coordinate: Coordinate
-    public let tileType: SurfaceTileType
+    let coordinate: Coordinate
+    let tileType: SurfaceTileType
+    let edgeType: SurfaceEdgeType
     
-    public var neighbours: [Cardinal : SurfaceTile] = [:] {
+    var neighbours: [Cardinal : SurfaceTile] = [:] {
         
         didSet {
             
@@ -47,6 +49,9 @@ public class SurfaceTile: Codable, Equatable, Renderable, Responder {
         
         coordinate = try container.decode(Coordinate.self, forKey: .coordinate)
         tileType = try container.decode(SurfaceTileType.self, forKey: .tileType)
+        edgeType = try container.decode(SurfaceEdgeType.self, forKey: .edgeType)
+        
+        becomeDirty()
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -55,6 +60,7 @@ public class SurfaceTile: Codable, Equatable, Renderable, Responder {
         
         try container.encode(coordinate, forKey: .coordinate)
         try container.encode(tileType, forKey: .tileType)
+        try container.encode(edgeType, forKey: .edgeType)
     }
     
     @discardableResult public func clean() -> Bool {
@@ -70,8 +76,38 @@ public class SurfaceTile: Codable, Equatable, Renderable, Responder {
     
     func render(position: Vector) -> [Polygon] {
         
-        //TODO: generate mesh
-        return []
+        var vectors = Ordinal.corners.map { $0 + position }
+        
+        var cornerElevation = Array(repeating: coordinate.y, count: 4)
+        
+        for ordinal in Ordinal.allCases {
+            
+            let (c0, c1) = ordinal.cardinals
+            
+            let n0 = find(neighbour: c0)?.coordinate.y ?? coordinate.y
+            let n1 = find(neighbour: c1)?.coordinate.y ?? coordinate.y
+            let n2 = find(neighbour: ordinal)?.coordinate.y ?? coordinate.y
+            
+            let height = min(n0, n1, n2, coordinate.y)
+            
+            vectors[ordinal.rawValue].y = Double(height) * World.Constants.slope
+            
+            cornerElevation[ordinal.rawValue] = height
+        }
+        
+        let normal = vectors.normal()
+        
+        var vertices: [Vertex] = []
+        
+        for index in 0..<vectors.count {
+            
+            let vector = vectors[index]
+            let uvs = Ordinal.uvs[index]
+          
+            vertices.append(Vertex(position: vector, normal: normal, color: .green, textureCoordinates: uvs))
+        }
+        
+        return [Polygon(vertices: vertices)]
     }
 }
 

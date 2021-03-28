@@ -11,6 +11,7 @@ public class Scene: SCNScene, Codable, Responder, Soilable {
     private enum CodingKeys: CodingKey {
         
         case name
+        case backgroundColor
         case meadow
     }
     
@@ -31,16 +32,6 @@ public class Scene: SCNScene, Codable, Responder, Soilable {
     public let camera = Camera()
     public let meadow: Meadow
     
-    public var world: World {
-        
-        didSet {
-            
-            guard oldValue.season != world.season else { return }
-            
-            becomeDirty()
-        }
-    }
-    
     var scene: Scene? { self }
     
     private(set) public var lastUpdate: TimeInterval?
@@ -52,8 +43,6 @@ public class Scene: SCNScene, Codable, Responder, Soilable {
         name = try container.decode(String.self, forKey: .name)
         meadow = try container.decode(Meadow.self, forKey: .meadow)
         
-        self.world = World(season: .spring)
-        
         super.init()
         
         camera.ancestor = self
@@ -61,6 +50,8 @@ public class Scene: SCNScene, Codable, Responder, Soilable {
         
         rootNode.addChildNode(camera)
         rootNode.addChildNode(meadow)
+        
+        camera.controller.state = .focus(node: meadow.actors.hero, ordinal: .northEast, zoom: 1.0)
         
         becomeDirty()
     }

@@ -6,14 +6,6 @@
 
 import Foundation
 
-public struct SurfaceTilesetTile: Codable, Equatable {
+public class SurfaceTilesetTile: TilesetTile {
     
-    enum CodingKeys: CodingKey {
-        
-        case tileType
-        case uvs
-    }
-    
-    var tileType: SurfaceTileType
-    var uvs: UVs
 }

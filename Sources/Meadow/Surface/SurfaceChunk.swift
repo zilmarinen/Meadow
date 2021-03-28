@@ -6,117 +6,24 @@
 
 import SceneKit
 
-public class SurfaceChunk: SCNNode, Codable, Hideable, Responder, Shadable, Soilable {
+public class SurfaceChunk: Chunk<SurfaceTile> {
     
-    private enum CodingKeys: CodingKey {
-        
-        case coordinate
-        case tiles
-    }
+    public override var category: Int { SceneGraphCategory.surfaceChunk.rawValue }
     
-    public var ancestor: SoilableParent? { parent as? SoilableParent }
-    
-    public var isDirty: Bool = false
-    
-    public let bounds: GridBounds
-    var tiles: [SurfaceTile] = []
-    
-    public var category: Int { SceneGraphCategory.surfaceChunk.rawValue }
-    
-    var program: SCNProgram? {
+    override var program: SCNProgram? {
         
         guard let library = scene?.library else { return nil }
         
         return SCNProgram(name: "surface", library: library)
     }
     
-    var uniforms: [Uniform]? { nil }
+    override var uniforms: [Uniform]? { nil }
     
-    var textures: [Texture]? {
+    override var textures: [Texture]? {
         
-        guard let tilemap = scene?.world.tilemaps.surface else { return [] }
+        guard let tilemap = scene?.meadow.surface.tilemap else { return [] }
         
         return [Texture(key: "edgeset", image: tilemap.edgeset.image),
                 Texture(key: "tileset", image: tilemap.tileset.image)]
-    }
-    
-    required public init(from decoder: Decoder) throws {
-        
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        let coordinate = try container.decode(Coordinate.self, forKey: .coordinate)
-        
-        bounds = GridBounds(aligned: coordinate, size: World.Constants.chunkSize)
-        tiles = try container.decode([SurfaceTile].self, forKey: .tiles)
-        
-        super.init()
-        
-        name = "Chunk \(self.bounds.start.description)"
-        position = SCNVector3(coordinate: self.bounds.start)
-        categoryBitMask = category
-        
-        for tile in tiles {
-            
-            tile.ancestor = self
-        }
-        
-        becomeDirty()
-    }
-    
-    required init?(coder: NSCoder) {
-        
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    public func encode(to encoder: Encoder) throws {
-        
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        
-        try container.encode(bounds.start, forKey: .coordinate)
-        try container.encode(tiles, forKey: .tiles)
-    }
-}
-
-extension SurfaceChunk {
-    
-    func find(tile coordinate: Coordinate) -> SurfaceTile? {
-        
-        return tiles.first { $0.coordinate.adjacency(to: coordinate) == .equal }
-    }
-}
-
-extension SurfaceChunk {
-    
-    @discardableResult public func clean() -> Bool {
-        
-        guard isDirty else { return false }
-        
-        var polygons: [Polygon] = []
-        
-        for tile in tiles where !tile.isHidden {
-            
-            tile.clean()
-            
-            polygons.append(contentsOf: tile.render(position: Vector(coordinate: tile.coordinate.xz - bounds.start.xz)))
-        }
-        
-        let mesh = Mesh(polygons: polygons)
-        
-        self.geometry = SCNGeometry(mesh: mesh)
-        self.geometry?.program = program
-        
-        if let uniforms = uniforms {
-            
-            self.geometry?.set(uniforms: uniforms)
-        }
-        
-        if let textures = textures {
-            
-            self.geometry?.set(textures: textures)
-        }
-        
-        isDirty = false
-        
-        return true
     }
 }

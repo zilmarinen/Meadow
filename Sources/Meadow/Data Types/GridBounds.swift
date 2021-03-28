@@ -8,18 +8,15 @@ import Foundation
 
 public struct GridBounds {
     
+    public var size: CGSize { CGSize(width: abs(start.x - end.x) + 1, height: abs(start.z - end.z) + 1) }
+    
     public let start: Coordinate
     public let end: Coordinate
     
     public init(start: Coordinate, end: Coordinate) {
         
-        let minimumX = min(start.x, end.x)
-        let minimumZ = min(start.z, end.z)
-        let maximumX = max(start.x, end.x)
-        let maximumZ = max(start.z, end.z)
-        
-        self.start = Coordinate(x: minimumX, y: start.y, z: minimumZ)
-        self.end = Coordinate(x: maximumX, y: end.y, z: maximumZ)
+        self.start = Coordinate.minimum(lhs: start, rhs: end)
+        self.end = Coordinate.maximum(lhs: start, rhs: end)
     }
     
     public init(aligned coordinate: Coordinate, size: Int) {
@@ -28,6 +25,21 @@ public struct GridBounds {
         let z = Int(floor(Float(coordinate.z) / Float(size))) * size
         
         self.init(start: Coordinate(x: x, y: 0, z: z), end: Coordinate(x: x + (size - 1), y: 0, z: z + (size - 1)))
+    }
+    
+    init(nodes: [Coordinate]) {
+        
+        var minimum = Coordinate.infinity
+        var maximum = -Coordinate.infinity
+        
+        for node in nodes {
+            
+            minimum = Coordinate.minimum(lhs: minimum, rhs: node)
+            maximum = Coordinate.maximum(lhs: maximum, rhs: node)
+        }
+        
+        self.start = minimum
+        self.end = maximum
     }
 }
 

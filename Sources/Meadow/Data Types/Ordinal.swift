@@ -6,7 +6,7 @@
 
 import Foundation
 
-public enum Ordinal: Int, CaseIterable, Encodable {
+public enum Ordinal: Int, CaseIterable, Codable {
     
     case northEast
     case northWest
@@ -25,14 +25,14 @@ public enum Ordinal: Int, CaseIterable, Encodable {
     }
 }
 
-public extension Ordinal {
+extension Ordinal {
     
-    static var corners: [Vector] = [((Cardinal.normal(cardinal: .north) + Cardinal.normal(cardinal: .east)) / 2),
+    public static var corners: [Vector] = [((Cardinal.normal(cardinal: .north) + Cardinal.normal(cardinal: .east)) / 2),
                                     ((Cardinal.normal(cardinal: .north) + Cardinal.normal(cardinal: .west)) / 2),
                                     ((Cardinal.normal(cardinal: .south) + Cardinal.normal(cardinal: .west)) / 2),
                                     ((Cardinal.normal(cardinal: .south) + Cardinal.normal(cardinal: .east)) / 2)]
     
-    static var uvs: [CGPoint] = [CGPoint(x: 0.0, y: 0.0),
+    public static var uvs: [CGPoint] = [CGPoint(x: 0.0, y: 0.0),
                                  CGPoint(x: 1.0, y: 0.0),
                                  CGPoint(x: 1.0, y: 1.0),
                                  CGPoint(x: 0.0, y: 1.0)]

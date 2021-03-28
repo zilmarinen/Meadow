@@ -43,7 +43,7 @@ class DeveloperSplashScreenCoordinator: ViewCoordinator {
         let node = SKShapeNode(rectOf: CGSize(width: 1, height: 1))
         
         node.fillColor = .systemPurple
-        node.blendMode = .multiplyAlpha
+        node.blendMode = .replace
         
         let scene = SKScene(size: CGSize(width: 100, height: 100))
         

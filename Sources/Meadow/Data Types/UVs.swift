@@ -8,26 +8,23 @@ import CoreGraphics
 
 public struct UVs: Codable, Equatable {
     
-    let start: CGPoint
-    let end: CGPoint
+    public let start: CGPoint
+    public let end: CGPoint
+    
+    var uvs: [CGPoint] { [CGPoint(x: end.x, y: end.y),
+                            CGPoint(x: start.x, y: end.y),
+                            CGPoint(x: start.x, y: start.y),
+                            CGPoint(x: end.x, y: start.y)] }
     
     public init(start: CGPoint, end: CGPoint) {
         
-        self.start = start
-        self.end = end
+        self.start = CGPoint(x: Math.quantize(value: Double(start.x)), y: Math.quantize(value: Double(start.y)))
+        self.end = CGPoint(x: Math.quantize(value: Double(end.x)), y: Math.quantize(value: Double(end.y)))
     }
     
-    var uvs: [CGPoint] {
-        
-        /*return [CGPoint(x: end.x, y: end.y),
-                CGPoint(x: start.x, y: end.y),
-                CGPoint(x: start.x, y: start.y),
-                CGPoint(x: end.x, y: start.y)]*/
-        
-        return [CGPoint(x: start.x, y: end.y),
-                CGPoint(x: end.x, y: end.y),
-                CGPoint(x: end.x, y: start.y),
-                CGPoint(x: start.x, y: start.y)]
+    subscript(index: Int) -> CGPoint {
+    
+        return uvs[index]
     }
 }
 

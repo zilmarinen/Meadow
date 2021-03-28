@@ -18,13 +18,13 @@ public protocol Soilable: SoilableChild & SoilableParent {
     
     var isDirty: Bool { get set }
     
-    @discardableResult func becomeDirty() -> Bool
+    @discardableResult func becomeDirty(recursive: Bool) -> Bool
     @discardableResult func clean() -> Bool
 }
 
 extension Soilable {
     
-    @discardableResult public func becomeDirty() -> Bool {
+    @discardableResult public func becomeDirty(recursive: Bool = false) -> Bool {
         
         guard !isDirty else { return false }
         

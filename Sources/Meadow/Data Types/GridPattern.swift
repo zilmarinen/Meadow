@@ -66,7 +66,20 @@ extension GridPattern {
 
 extension GridPattern {
     
-    static var defaults: [GridPattern] {
+    public static func index(of pattern: GridPattern) -> Int {
+        
+        for index in 0..<defaults.count {
+            
+            if defaults[index] == pattern {
+                
+                return index
+            }
+        }
+        
+        return 0
+    }
+    
+    public static var defaults: [GridPattern] {
         
         [GridPattern(value: true),
          GridPattern(northWest: false),

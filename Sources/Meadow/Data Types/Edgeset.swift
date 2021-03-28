@@ -18,7 +18,7 @@ import Foundation
 
 protocol Edgeset {
     
-    associatedtype E
+    associatedtype E = TilesetTile
     
     var image: MDWImage { get }
     var edges: [E] { get }

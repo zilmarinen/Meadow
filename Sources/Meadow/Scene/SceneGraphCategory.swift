@@ -13,6 +13,7 @@ public struct SceneGraphCategory: OptionSet {
         self.rawValue = rawValue
     }
     
+    //TODO: update Grid, Chunk and Tile
     public static let camera = SceneGraphCategory(rawValue: 1 << 1)
     public static let surface = SceneGraphCategory(rawValue: 1 << 2)
     public static let surfaceChunk = SceneGraphCategory(rawValue: 1 << 3)

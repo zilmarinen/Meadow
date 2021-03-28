@@ -37,6 +37,7 @@ public extension Coordinate {
     static var backward = -forward
     static var up = Coordinate(x: 0, y: 1, z: 0)
     static var down = -up
+    static var infinity = Coordinate(x: .max, y: .max, z: .max)
     
     var xz: Coordinate { Coordinate(x: x, y: 0, z: z) }
 }
@@ -61,6 +62,16 @@ public extension Coordinate {
     static func +=(lhs: inout Self, rhs: Self) {
         
         lhs = lhs + rhs
+    }
+    
+    static func minimum(lhs: Self, rhs: Self) -> Self {
+        
+        return Coordinate(x: min(lhs.x, rhs.x), y: min(lhs.y, rhs.y), z: min(lhs.z, rhs.z))
+    }
+    
+    static func maximum(lhs: Self, rhs: Self) -> Self {
+        
+        return Coordinate(x: max(lhs.x, rhs.x), y: max(lhs.y, rhs.y), z: max(lhs.z, rhs.z))
     }
 }
 

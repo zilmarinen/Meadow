@@ -22,6 +22,8 @@ extension CGPoint: Hashable {
 
 extension CGPoint {
     
+    public static var one = CGPoint(x: 1, y: 1)
+    
     static prefix func -(rhs: CGPoint) -> CGPoint {
         
         return CGPoint(x: -rhs.x, y: -rhs.y)

@@ -6,22 +6,6 @@
 
 import Foundation
 
-public struct SurfaceEdgesetEdge: Decodable, Equatable {
+public class SurfaceEdgesetEdge: TilesetTile {
  
-    enum CodingKeys: CodingKey {
-        
-        case tileType
-        case uvs
-    }
-    
-    var tileType: SurfaceTileType
-    var uvs: UVs
-
-    public init(from decoder: Decoder) throws {
-        
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        tileType = try container.decode(SurfaceTileType.self, forKey: .tileType)
-        uvs = try container.decode(UVs.self, forKey: .uvs)
-    }
 }

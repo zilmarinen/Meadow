@@ -16,9 +16,9 @@ import Foundation
 
 #endif
 
-protocol Tileset {
+public protocol Tileset {
     
-    associatedtype T
+    associatedtype T = TilesetTile
     
     var image: MDWImage { get }
     var tiles: [T] { get }

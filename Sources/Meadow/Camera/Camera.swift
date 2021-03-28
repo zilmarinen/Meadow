@@ -20,7 +20,7 @@ public class Camera: SCNNode, Responder, Soilable, Updatable {
         
         let camera = SCNCamera()
         
-        camera.usesOrthographicProjection = true
+        camera.usesOrthographicProjection = false
         camera.orthographicScale = Constants.maximumZoom
         
         node.camera = camera

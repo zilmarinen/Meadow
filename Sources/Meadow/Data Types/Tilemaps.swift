@@ -10,9 +10,9 @@ public struct Tilemaps {
     
     public let surface: SurfaceTilemap
     
-    init?(season: Season) throws {
+    init?() throws {
         
-        guard let surface = try SurfaceTilemap(season: season) else { return nil }
+        guard let surface = try SurfaceTilemap() else { return nil }
         
         self.surface = surface
     }

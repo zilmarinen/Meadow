@@ -9,10 +9,10 @@ public struct SurfaceTilemap {
     public let edgeset: SurfaceEdgeset
     public let tileset: SurfaceTileset
     
-    init?(season: Season) throws {
+    public init?() throws {
         
-        guard let edgeset = try SurfaceEdgeset(season: season),
-              let tileset = try SurfaceTileset(season: season) else { return nil }
+        guard let edgeset = try SurfaceEdgeset(),
+              let tileset = try SurfaceTileset() else { return nil }
         
         self.edgeset = edgeset
         self.tileset = tileset

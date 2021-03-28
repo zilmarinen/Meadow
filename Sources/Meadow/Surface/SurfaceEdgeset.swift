@@ -27,10 +27,10 @@ public struct SurfaceEdgeset: Edgeset {
     public let image: MDWImage
     public let edges: [SurfaceEdgesetEdge]
     
-    init?(season: Season) throws {
+    init?() throws {
         
-        guard let tileset = SurfaceEdgeset.edgeset(named: "\(season.description)_\(Constants.edgesetIdentifier)"),
-              let tilemap = SurfaceEdgeset.edgemap(named: "\(season.description)_\(Constants.edgemapIdentifier)") else { return nil }
+        guard let tileset = SurfaceEdgeset.edgeset(named: Constants.edgesetIdentifier),
+              let tilemap = SurfaceEdgeset.edgemap(named: Constants.edgemapIdentifier) else { return nil }
         
         let decoder = JSONDecoder()
         
@@ -41,8 +41,8 @@ public struct SurfaceEdgeset: Edgeset {
 
 extension SurfaceEdgeset {
     
-    func edges(with tileType: SurfaceTileType) -> [SurfaceEdgesetEdge] {
+    func edges(with pattern: Int) -> [SurfaceEdgesetEdge] {
         
-        return edges.filter { $0.tileType == tileType }
+        return edges.filter { $0.pattern == pattern }
     }
 }

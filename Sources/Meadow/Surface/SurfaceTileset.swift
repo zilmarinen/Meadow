@@ -27,10 +27,10 @@ public struct SurfaceTileset: Tileset {
     public let image: MDWImage
     public let tiles: [SurfaceTilesetTile]
     
-    init?(season: Season) throws {
+    init?() throws {
         
-        guard let tileset = SurfaceTileset.tileset(named: "\(season.description)_\(Constants.tilesetIdentifier)"),
-              let tilemap = SurfaceTileset.tilemap(named: "\(season.description)_\(Constants.tilemapIdentifier)") else { return nil }
+        guard let tileset = SurfaceTileset.tileset(named: Constants.tilesetIdentifier),
+              let tilemap = SurfaceTileset.tilemap(named: Constants.tilemapIdentifier) else { return nil }
         
         let decoder = JSONDecoder()
         
@@ -41,8 +41,8 @@ public struct SurfaceTileset: Tileset {
 
 extension SurfaceTileset {
     
-    public func tiles(with tileType: SurfaceTileType) -> [SurfaceTilesetTile] {
+    public func tiles(with pattern: Int) -> [SurfaceTilesetTile] {
         
-        return tiles.filter { $0.tileType == tileType }
+        return tiles.filter { $0.pattern == pattern }
     }
 }

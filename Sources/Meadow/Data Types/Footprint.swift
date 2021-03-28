@@ -4,20 +4,51 @@
 //  Created by Zack Brown on 07/12/2020.
 //
 
+import Foundation
+
 public struct Footprint: Codable, Equatable {
+    
+    private enum CodingKeys: CodingKey {
+        
+        case coordinate
+        case rotation
+        case nodes
+    }
     
     public let coordinate: Coordinate
     
-    var rotation: Cardinal
+    public let rotation: Cardinal
     
     public let nodes: [Coordinate]
+    
+    public let bounds: GridBounds
     
     public init(coordinate: Coordinate, rotation: Cardinal, nodes: [Coordinate]) {
         
         self.coordinate = coordinate
         self.rotation = rotation
-        
         self.nodes = nodes.map { $0.rotate(rotation: rotation) + coordinate }
+        self.bounds = GridBounds(nodes: nodes)
+    }
+    
+    public init(from decoder: Decoder) throws {
+        
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        coordinate = try container.decode(Coordinate.self, forKey: .coordinate)
+        rotation = try container.decode(Cardinal.self, forKey: .rotation)
+        nodes = try container.decode([Coordinate].self, forKey: .nodes)
+        
+        self.bounds = GridBounds(nodes: nodes)
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(coordinate, forKey: .coordinate)
+        try container.encode(rotation, forKey: .rotation)
+        try container.encode(nodes, forKey: .nodes)
     }
 }
 
@@ -50,5 +81,13 @@ extension Footprint {
         }
         
         return false
+    }
+}
+
+extension Footprint {
+    
+    public static func == (lhs: Footprint, rhs: Footprint) -> Bool {
+        
+        return lhs.coordinate == rhs.coordinate && lhs.rotation == rhs.rotation && lhs.nodes == rhs.nodes
     }
 }

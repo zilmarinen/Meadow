@@ -8,15 +8,15 @@ import SceneKit
 
 public class Meadow: SCNNode, Codable, Responder, Updatable {
     
-    private enum CodingKeys: CodingKey {
+    private enum CodingKeys: String, CodingKey {
         
-        case actors
-        case buildings
-        case foliage
-        case footpath
-        case portals
-        case surface
-        case water
+        case actors = "a"
+        case buildings = "bu"
+        case foliage = "fol"
+        case footpath = "foo"
+        case portals = "p"
+        case surface = "s"
+        case water = "wat"
     }
     
     public static var bundle: Bundle { .module }
@@ -30,7 +30,7 @@ public class Meadow: SCNNode, Codable, Responder, Updatable {
     let foliage: Foliage
     let footpath: Footpath
     public let portals: Portals
-    let surface: Surface
+    public let surface: Surface
     let water: Water
     
     required public init(from decoder: Decoder) throws {

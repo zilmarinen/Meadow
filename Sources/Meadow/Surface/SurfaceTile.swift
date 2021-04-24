@@ -8,12 +8,12 @@ import SceneKit
 
 public class SurfaceTile: Tile {
     
-    private enum CodingKeys: CodingKey {
+    private enum CodingKeys: String, CodingKey {
         
-        case tileType
-        case edgeType
-        case edgePatterns
-        case corners
+        case tileType = "tt"
+        case edgeType = "et"
+        case edgePatterns = "ep"
+        case corners = "co"
     }
     
     public struct TileType: Codable, Equatable {
@@ -34,10 +34,16 @@ public class SurfaceTile: Tile {
     let edgeType: SurfaceEdgeType
     let edgePatterns: [Cardinal : Int]
     let corners: [Ordinal : Int]
+    let face: [Vector]
     
     var color: Color {
         
         return Color(red: Double(tileType.primary.rawValue), green: Double(tileType.secondary.rawValue), blue: 0, alpha: 1)
+    }
+    
+    var pathNode: PathNode {
+        
+        return PathNode(coordinate: coordinate, vector: face.average(), movementCost: movementCost)
     }
 
     required public init(from decoder: Decoder) throws {
@@ -47,7 +53,11 @@ public class SurfaceTile: Tile {
         tileType = try container.decode(TileType.self, forKey: .tileType)
         edgeType = try container.decode(SurfaceEdgeType.self, forKey: .edgeType)
         edgePatterns = try container.decode([Cardinal : Int].self, forKey: .edgePatterns)
-        corners = try container.decode([Ordinal : Int].self, forKey: .corners)
+        
+        let cornerHeights = try container.decode([Ordinal : Int].self, forKey: .corners)
+        
+        corners = cornerHeights
+        face = Ordinal.allCases.map { $0.vector + Vector(x: 0, y: Double(cornerHeights[$0] ?? 0) * World.Constants.slope, z: 0) }
         
         try super.init(from: decoder)
     }
@@ -66,8 +76,8 @@ public class SurfaceTile: Tile {
     
     override func render(position: Vector) -> [Polygon] {
         
-        let face = Ordinal.allCases.map { $0.vector + position + Vector(x: 0, y: Double(corners[$0] ?? 0) * World.Constants.slope, z: 0) }
-        var throne = face
+        let surface = face.map { $0 + position }
+        var throne = surface
         
         for ordinal in Ordinal.allCases {
             
@@ -84,13 +94,13 @@ public class SurfaceTile: Tile {
         
         if (equalEdges == 4 || (equalEdges == 2 && edgeType == .sloped)) {
             
-            let normal = face.normal()
+            let normal = surface.normal()
             
             var vertices: [Vertex] = []
             
-            for index in 0..<face.count {
+            for index in 0..<surface.count {
                 
-                vertices.append(Vertex(position: face[index], normal: normal, color: faceColor, textureCoordinates: tileUVs[index]))
+                vertices.append(Vertex(position: surface[index], normal: normal, color: faceColor, textureCoordinates: tileUVs[index]))
             }
             
             return [Polygon(vertices: vertices)]
@@ -112,9 +122,9 @@ public class SurfaceTile: Tile {
                 
                 guard corners[o0] == corners[o1] else { continue }
                 
-                let v0 = face[ordinal.rawValue]
-                let v1 = face[j]
-                let v2 = face[k]
+                let v0 = surface[ordinal.rawValue]
+                let v1 = surface[j]
+                let v2 = surface[k]
                 
                 let normal = [v0, v1, v2].normal()
                 
@@ -125,8 +135,8 @@ public class SurfaceTile: Tile {
             
         case .terraced:
             
-            var mantle = face
-            var apex = face
+            var mantle = surface
+            var apex = surface
             
             let floor = corners.values.min() ?? coordinate.y
             
@@ -158,8 +168,8 @@ public class SurfaceTile: Tile {
                 let v2 = v0.lerp(vector: face[o1.rawValue], interpolater: 0.5)
                 
                 let uv0 = tileUVs[ordinal.rawValue]
-                let uv1 = uv0.lerp(point: tileUVs[o0.rawValue], interpolater: 0.5)
-                let uv2 = uv0.lerp(point: tileUVs[o1.rawValue], interpolater: 0.5)
+                let uv1 = uv0.lerp(vector: tileUVs[o0.rawValue], interpolater: 0.5)
+                let uv2 = uv0.lerp(vector: tileUVs[o1.rawValue], interpolater: 0.5)
                 let uv3 = tileUVs.uvs.average()
                 
                 var normal = [v0, v1, center, v2].normal()
@@ -181,10 +191,10 @@ public class SurfaceTile: Tile {
 
                     normal = [apexCenter, v1, v3, mantleCenter].normal()
                     
-                    let uv0 = edgeUVs.start.lerp(point: CGPoint(x: edgeUVs.end.x, y: edgeUVs.start.y), interpolater: 0.5)
+                    let uv0 = edgeUVs.start.lerp(vector: Vector(x: edgeUVs.end.x, y: edgeUVs.start.y, z: 0), interpolater: 0.5)
 
-                    polygons.append(Polygon(vertices: [Vertex(position: apexCenter, normal: normal, color: color, textureCoordinates: CGPoint(x: uv0.x, y: edgeUVs.end.y)),
-                                                       Vertex(position: v1, normal: normal, color: color, textureCoordinates: CGPoint(x: edgeUVs.start.x, y: edgeUVs.end.y)),
+                    polygons.append(Polygon(vertices: [Vertex(position: apexCenter, normal: normal, color: color, textureCoordinates: Vector(x: uv0.x, y: edgeUVs.end.y, z: 0)),
+                                                       Vertex(position: v1, normal: normal, color: color, textureCoordinates: Vector(x: edgeUVs.start.x, y: edgeUVs.end.y, z: 0)),
                                                        Vertex(position: v3, normal: normal, color: color, textureCoordinates: edgeUVs.start),
                                                        Vertex(position: mantleCenter, normal: normal, color: color, textureCoordinates: uv0)]))
                 }
@@ -201,12 +211,12 @@ public class SurfaceTile: Tile {
 
                     normal = [v2, apexCenter, mantleCenter, v3].normal()
                     
-                    let uv0 = edgeUVs.start.lerp(point: CGPoint(x: edgeUVs.end.x, y: edgeUVs.start.y), interpolater: 0.5)
+                    let uv0 = edgeUVs.start.lerp(vector: Vector(x: edgeUVs.end.x, y: edgeUVs.start.y, z: 0), interpolater: 0.5)
 
                     polygons.append(Polygon(vertices: [Vertex(position: v2, normal: normal, color: color, textureCoordinates: edgeUVs.end),
-                                                       Vertex(position: apexCenter, normal: normal, color: color, textureCoordinates: CGPoint(x: uv0.x, y: edgeUVs.end.y)),
+                                                       Vertex(position: apexCenter, normal: normal, color: color, textureCoordinates: Vector(x: uv0.x, y: edgeUVs.end.y, z: 0)),
                                                        Vertex(position: mantleCenter, normal: normal, color: color, textureCoordinates: uv0),
-                                                       Vertex(position: v3, normal: normal, color: color, textureCoordinates: CGPoint(x: edgeUVs.end.x, y: edgeUVs.start.y))]))
+                                                       Vertex(position: v3, normal: normal, color: color, textureCoordinates: Vector(x: edgeUVs.end.x, y: edgeUVs.start.y, z: 0))]))
                 }
             }
         }
@@ -221,4 +231,10 @@ extension SurfaceTile {
         
         return lhs.coordinate == rhs.coordinate && lhs.pattern == rhs.pattern && lhs.tileType == rhs.tileType
     }
+}
+
+extension SurfaceTile: Traversable {
+    
+    var movementCost: Int { tileType.primary.movementCost }
+    var walkable: Bool { true }
 }

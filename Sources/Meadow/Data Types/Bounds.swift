@@ -43,6 +43,12 @@ extension Bounds {
         
         return lhs.minimum == rhs.minimum && lhs.maximum == rhs.maximum
     }
+    
+    public func hash(into hasher: inout Hasher) {
+        
+        hasher.combine(minimum)
+        hasher.combine(maximum)
+    }
 }
 
 extension Bounds {

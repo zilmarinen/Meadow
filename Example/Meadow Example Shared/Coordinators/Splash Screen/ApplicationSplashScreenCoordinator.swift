@@ -7,6 +7,7 @@
 import Foundation
 import Meadow
 import SceneKit
+import SpriteKit
 
 class Timer {
     
@@ -50,6 +51,41 @@ class ApplicationSplashScreenCoordinator: ViewCoordinator {
         
         print("ApplicationSplashScreenCoordinator -> start")
         
-        //
+        guard let view = controller.view as? SceneView else { return }
+        
+        view.scene = SCNScene()
+        view.delegate = self
+        view.isPlaying = true
+        
+        view.backgroundColor = .systemPurple
+        
+        let node = SKShapeNode(rectOf: CGSize(width: 1, height: 1))
+        
+        node.fillColor = .systemRed
+        node.blendMode = .replace
+        
+        let scene = SKScene(size: CGSize(width: 100, height: 100))
+        
+        scene.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        scene.scaleMode = .aspectFill
+        
+        scene.addChild(node)
+        
+        view.overlaySKScene = scene
+    }
+    
+    override func update(delta: TimeInterval, time: TimeInterval) {
+        
+        guard timer.integrate(delta: delta) else { return }
+        
+        DispatchQueue.main.sync { [weak self] in
+            
+            guard let self = self,
+                  let view = controller.view as? SceneView else { return }
+            
+            view.delegate = nil
+            
+            self.completion?()
+        }
     }
 }

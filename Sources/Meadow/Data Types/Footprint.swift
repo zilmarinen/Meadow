@@ -8,11 +8,11 @@ import Foundation
 
 public struct Footprint: Codable, Equatable {
     
-    private enum CodingKeys: CodingKey {
+    private enum CodingKeys: String, CodingKey {
         
-        case coordinate
-        case rotation
-        case nodes
+        case coordinate = "c"
+        case rotation = "r"
+        case nodes = "n"
     }
     
     public let coordinate: Coordinate

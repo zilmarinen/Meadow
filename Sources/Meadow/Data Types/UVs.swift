@@ -8,43 +8,22 @@ import CoreGraphics
 
 public struct UVs: Codable, Equatable {
     
-    public let start: CGPoint
-    public let end: CGPoint
+    public let start: Vector
+    public let end: Vector
     
-    var uvs: [CGPoint] { [CGPoint(x: end.x, y: end.y),
-                            CGPoint(x: start.x, y: end.y),
-                            CGPoint(x: start.x, y: start.y),
-                            CGPoint(x: end.x, y: start.y)] }
+    var uvs: [Vector] { [Vector(x: end.x, y: end.y, z: 0),
+                         Vector(x: start.x, y: end.y, z: 0),
+                         Vector(x: start.x, y: start.y, z: 0),
+                         Vector(x: end.x, y: start.y, z: 0)] }
     
-    public init(start: CGPoint, end: CGPoint) {
+    public init(start: Vector, end: Vector) {
         
-        self.start = CGPoint(x: Math.quantize(value: Double(start.x)), y: Math.quantize(value: Double(start.y)))
-        self.end = CGPoint(x: Math.quantize(value: Double(end.x)), y: Math.quantize(value: Double(end.y)))
+        self.start = Vector(x: Math.quantize(value: start.x), y: Math.quantize(value: start.y), z: Math.quantize(value: start.z))
+        self.end = Vector(x: Math.quantize(value: end.x), y: Math.quantize(value: end.y), z: Math.quantize(value: end.z))
     }
     
-    subscript(index: Int) -> CGPoint {
+    subscript(index: Int) -> Vector {
     
         return uvs[index]
-    }
-}
-
-extension Array where Element == CGPoint {
-    
-    func average() -> CGPoint {
-        
-        guard count > 0 else { return .zero }
-        
-        var x: CGFloat = 0.0
-        var y: CGFloat = 0.0
-        
-        for i in 0..<count {
-            
-            let point = self[i]
-            
-            x += point.x
-            y += point.y
-        }
-        
-        return CGPoint(x: x / CGFloat(count), y: y / CGFloat(count))
     }
 }

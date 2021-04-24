@@ -8,10 +8,10 @@ import SceneKit
 
 public class Tile: Codable, Equatable, Renderable, Responder {
     
-    private enum CodingKeys: CodingKey {
+    private enum CodingKeys: String, CodingKey {
         
-        case coordinate
-        case pattern
+        case coordinate = "c"
+        case pattern = "p"
     }
     
     public var ancestor: SoilableParent?

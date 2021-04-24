@@ -4,23 +4,48 @@
 //  Created by Zack Brown on 03/11/2020.
 //
 
-public class Polygon: Hashable {
+import Foundation
+
+public class Polygon: Codable, Hashable {
+    
+    private enum CodingKeys: String, CodingKey {
+        
+        case vertices = "v"
+    }
     
     let vertices: [Vertex]
-    
     lazy var bounds: Bounds = {
-    
+        
         return Bounds(vectors: vertices.map { $0.position })
     }()
     
     lazy var plane: Plane = {
-        
+       
         return Plane(vectors: vertices.map { $0.position })
     }()
     
     public init(vertices: [Vertex]) {
         
         self.vertices = vertices
+    }
+    
+    required public init(from decoder: Decoder) throws {
+            
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        vertices = try container.decode([Vertex].self, forKey: .vertices)
+    }
+    
+    required public init?(coder: NSCoder) {
+        
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(vertices, forKey: .vertices)
     }
 }
 
@@ -41,13 +66,8 @@ extension Polygon {
 
 extension Polygon {
     
-    func inverted() -> Polygon {
-        
-        return Polygon(vertices: vertices.reversed().map { $0.inverted() })
-    }
-    
     func contains(vector: Vector) -> Bool {
-        
+            
         guard plane.contains(vector: vector), bounds.contains(vector: vector) else { return false }
         
         var result = false
@@ -73,9 +93,6 @@ extension Polygon {
         
         return result
     }
-}
-
-extension Polygon {
     
     func triangulate() -> [Polygon] {
         
@@ -151,31 +168,6 @@ extension Polygon {
         triangles.append(Polygon(vertices: remainder))
         
         return triangles
-    }
-}
-    
-extension Polygon {
-    
-    var edges: [Plane] {
-        
-        var planes: [Plane] = []
-        
-        var v0 = vertices.last!
-        
-        for v1 in vertices {
-            
-            let ab = v1.position - v0.position
-            
-            let normal = ab.cross(vector: plane.normal).normalised()
-            
-            let plane = Plane(normal: normal, distance: normal.dot(vector: v0.position))
-            
-            planes.append(plane)
-            
-            v0 = v1
-        }
-        
-        return planes
     }
 }
 

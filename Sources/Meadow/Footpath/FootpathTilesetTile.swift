@@ -8,9 +8,9 @@ import Foundation
 
 public class FootpathTilesetTile: TilesetTile {
     
-    private enum CodingKeys: CodingKey {
+    private enum CodingKeys: String, CodingKey {
         
-        case tileType
+        case tileType = "t"
     }
     
     public let tileType: FootpathTileType

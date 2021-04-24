@@ -8,6 +8,14 @@ import CoreGraphics
 
 public struct Color: Codable, Hashable {
     
+    private enum CodingKeys: String, CodingKey {
+        
+        case red = "r"
+        case green = "g"
+        case blue = "b"
+        case alpha = "a"
+    }
+    
     public let red: Double
     public let green: Double
     public let blue: Double
@@ -20,6 +28,29 @@ public struct Color: Codable, Hashable {
         self.blue = blue
         self.alpha = alpha
     }
+    
+    public init(from decoder: Decoder) throws {
+        
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        red = try container.decode(Double.self, forKey: .red)
+        green = try container.decode(Double.self, forKey: .green)
+        blue = try container.decode(Double.self, forKey: .blue)
+        alpha = try container.decode(Double.self, forKey: .alpha)
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(red, forKey: .red)
+        try container.encode(green, forKey: .green)
+        try container.encode(blue, forKey: .blue)
+        try container.encode(alpha, forKey: .alpha)
+    }
+}
+
+extension Color {
     
     public var color: MDWColor {
         

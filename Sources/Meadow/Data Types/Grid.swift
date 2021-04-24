@@ -8,9 +8,9 @@ import SceneKit
 
 public class Grid<C: Chunk<T>, T: Tile>: SCNNode, Codable, Hideable, Responder, Soilable {
     
-    private enum CodingKeys: CodingKey {
+    private enum CodingKeys: String, CodingKey {
         
-        case chunks
+        case chunks = "c"
     }
     
     public var ancestor: SoilableParent? { return parent as? SoilableParent }

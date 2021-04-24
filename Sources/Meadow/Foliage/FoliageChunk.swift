@@ -4,44 +4,32 @@
 //  Created by Zack Brown on 27/03/2021.
 //
 
+import Foundation
 import SceneKit
 
 class FoliageChunk: NonUniformChunk {
     
-    private enum CodingKeys: CodingKey {
+    private enum CodingKeys: String, CodingKey {
         
-        case foliageType
-        case foliageSize
+        case foliageType = "t"
     }
     
-    var foliageType: FoliageType = .tree {
+    override var program: SCNProgram? { scene?.meadow.foliage.program }
+    
+    override var textures: [Texture]? {
         
-        didSet {
-            
-            if oldValue != foliageType {
-                
-                becomeDirty()
-            }
-        }
+        guard let texture = foliageType.texture else { return nil }
+        
+        return [texture]
     }
     
-    var foliageSize: FoliageSize = .small {
-        
-        didSet {
-            
-            if oldValue != foliageSize {
-                
-                becomeDirty()
-            }
-        }
-    }
+    let foliageType: FoliageType
     
     required public init(from decoder: Decoder) throws {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         foliageType = try container.decode(FoliageType.self, forKey: .foliageType)
-        foliageSize = try container.decode(FoliageSize.self, forKey: .foliageSize)
         
         try super.init(from: decoder)
     }
@@ -58,19 +46,31 @@ class FoliageChunk: NonUniformChunk {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         try container.encode(foliageType, forKey: .foliageType)
-        try container.encode(foliageSize, forKey: .foliageSize)
     }
     
     override func clean() -> Bool {
         
-        guard super.clean() else { return false }
+        guard isDirty else { return false }
         
-        switch foliageType {
+        position = SCNVector3(x: CGFloat(footprint.coordinate.x), y: CGFloat(Double(footprint.coordinate.y) * World.Constants.slope), z: CGFloat(footprint.coordinate.z))
         
-        case .bush: self.geometry?.firstMaterial?.diffuse.contents = MDWColor.systemTeal
-        case .flower: self.geometry?.firstMaterial?.diffuse.contents = MDWColor.systemOrange
-        default: self.geometry?.firstMaterial?.diffuse.contents = MDWColor.systemGreen
+        if let mesh = foliageType.model?.mesh {
+         
+            self.geometry = SCNGeometry(mesh: mesh)
+            self.geometry?.program = program
         }
+        
+        if let uniforms = uniforms {
+            
+            self.geometry?.set(uniforms: uniforms)
+        }
+        
+        if let textures = textures {
+            
+            self.geometry?.set(textures: textures)
+        }
+        
+        isDirty = false
         
         return true
     }

@@ -74,7 +74,7 @@ extension Camera {
             let zoomScale = (Constants.maximumZoom * zoom)
             
             let pitch = atan(4.0 / 3.0)
-            let yaw = Math.radians(degrees: 37 + (90.0 * Double(ordinal.rawValue)))
+            let yaw = Math.radians(degrees: 90.0 * Double(ordinal.rawValue))
             
             let adjacent = Double(World.Constants.ceiling - World.Constants.floor)
             let opposite = tan(pitch) * adjacent

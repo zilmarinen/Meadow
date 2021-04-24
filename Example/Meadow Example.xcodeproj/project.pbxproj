@@ -16,6 +16,8 @@
 		18547F7E25A60988006ADD6C /* TypeAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18547F7D25A60988006ADD6C /* TypeAliases.swift */; };
 		18547F8125A60A10006ADD6C /* TypeAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18547F7D25A60988006ADD6C /* TypeAliases.swift */; };
 		18547F8425A60F38006ADD6C /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18547F7725A60785006ADD6C /* AppCoordinator.swift */; };
+		1861A6102611D9A700D9C549 /* SceneCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1861A60F2611D9A700D9C549 /* SceneCoordinator.swift */; };
+		1861A6132611DA0300D9C549 /* SceneCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1861A60F2611D9A700D9C549 /* SceneCoordinator.swift */; };
 		1877CD7B25A5FAFF001CC663 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1877CD7A25A5FAFF001CC663 /* Coordinator.swift */; };
 		1877CD7C25A5FAFF001CC663 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1877CD7A25A5FAFF001CC663 /* Coordinator.swift */; };
 		1877CD8125A5FB2D001CC663 /* Responder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1877CD8025A5FB2D001CC663 /* Responder.swift */; };
@@ -41,6 +43,7 @@
 		181398DA25A8AE160001A2A8 /* SceneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneView.swift; sourceTree = "<group>"; };
 		18547F7725A60785006ADD6C /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		18547F7D25A60988006ADD6C /* TypeAliases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeAliases.swift; sourceTree = "<group>"; };
+		1861A60F2611D9A700D9C549 /* SceneCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneCoordinator.swift; sourceTree = "<group>"; };
 		1877CD7A25A5FAFF001CC663 /* Coordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		1877CD8025A5FB2D001CC663 /* Responder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Responder.swift; sourceTree = "<group>"; };
 		18B3D688260392A5003EF99F /* ViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewCoordinator.swift; sourceTree = "<group>"; };
@@ -96,9 +99,18 @@
 			path = App;
 			sourceTree = "<group>";
 		};
+		1861A60E2611D99C00D9C549 /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+				1861A60F2611D9A700D9C549 /* SceneCoordinator.swift */,
+			);
+			path = Scene;
+			sourceTree = "<group>";
+		};
 		1877CD7825A5FAF2001CC663 /* Coordinators */ = {
 			isa = PBXGroup;
 			children = (
+				1861A60E2611D99C00D9C549 /* Scene */,
 				18B3D68626039268003EF99F /* View */,
 				18EDDC5125A8935C007AC631 /* Splash Screen */,
 				18547F7625A6077A006ADD6C /* App */,
@@ -313,6 +325,7 @@
 				18C804462588E5B7006AF32F /* GameViewController.swift in Sources */,
 				18C804442588E5B7006AF32F /* AppDelegate.swift in Sources */,
 				18547F7E25A60988006ADD6C /* TypeAliases.swift in Sources */,
+				1861A6102611D9A700D9C549 /* SceneCoordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -330,6 +343,7 @@
 				18C804572588E5B7006AF32F /* GameViewController.swift in Sources */,
 				18C804552588E5B7006AF32F /* AppDelegate.swift in Sources */,
 				18547F8425A60F38006ADD6C /* AppCoordinator.swift in Sources */,
+				1861A6132611DA0300D9C549 /* SceneCoordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

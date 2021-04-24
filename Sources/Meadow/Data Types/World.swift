@@ -11,7 +11,7 @@ public enum World {
     public enum Constants {
         
         public static let floor = 0
-        public static let ceiling = 10
+        public static let ceiling = 20
         public static let slope = 0.25
         
         public static let chunkSize = 10

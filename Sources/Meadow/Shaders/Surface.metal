@@ -98,13 +98,13 @@ vertex Fragment surface_vertex(Vertex v [[ stage_in ]], constant NodeBuffer& scn
 
 fragment float4 surface_fragment(Fragment f [[stage_in]], texture2d<float, access::sample> tileset [[ texture(0) ]], texture2d<float, access::sample> edgeset [[ texture(1) ]]) {
 
-    constexpr sampler textureSampler(coord::normalized, filter::linear, address::repeat);
+    constexpr sampler image(coord::normalized, filter::linear, address::repeat);
     
     float denominator = dot(float3(0.0, 1.0, 0.0), f.normal);
     
     if (fabs(denominator) < epsilon) {
 
-        float4 color = float4(edgeset.sample(textureSampler, f.uv));
+        float4 color = float4(edgeset.sample(image, f.uv));
         
         float value = (color.r + color.g + color.b) / 3;
         
@@ -120,7 +120,7 @@ fragment float4 surface_fragment(Fragment f [[stage_in]], texture2d<float, acces
         return illumimate(f, color);
     }
     
-    float4 color = float4(tileset.sample(textureSampler, f.uv));
+    float4 color = float4(tileset.sample(image, f.uv));
     
     float value = (color.r + color.g + color.b) / 3;
     

@@ -13,9 +13,9 @@ public class WaterTile: Tile {
         static let surface = World.Constants.slope / 2
     }
     
-    private enum CodingKeys: CodingKey {
+    private enum CodingKeys: String, CodingKey {
         
-        case tileType
+        case tileType = "t"
     }
     
     public override var category: Int { SceneGraphCategory.surfaceTile.rawValue }

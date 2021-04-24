@@ -10,6 +10,13 @@ import SceneKit
 
 public struct Vector: Codable, Hashable {
     
+    private enum CodingKeys: String, CodingKey {
+        
+        case x
+        case y
+        case z
+    }
+    
     public var x: Double
     public var y: Double
     public var z: Double
@@ -39,6 +46,24 @@ public struct Vector: Codable, Hashable {
     public init(vector: SCNVector3) {
         
         self.init(x: Double(vector.x), y: Double(vector.y), z: Double(vector.z))
+    }
+    
+    public init(from decoder: Decoder) throws {
+        
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        x = try container.decode(Double.self, forKey: .x)
+        y = try container.decode(Double.self, forKey: .y)
+        z = try container.decode(Double.self, forKey: .z)
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(x, forKey: .x)
+        try container.encode(y, forKey: .y)
+        try container.encode(z, forKey: .z)
     }
 }
 
@@ -94,11 +119,6 @@ public extension Vector {
     static func +=(lhs: inout Self, rhs: Self) {
         
         lhs = lhs + rhs
-    }
-    
-    static func == (lhs: Vector, rhs: Vector) -> Bool {
-        
-        return ((abs(lhs.x - rhs.x) < Math.epsilon) && (abs(lhs.y - rhs.y) < Math.epsilon) && (abs(lhs.z - rhs.z) < Math.epsilon))
     }
     
     static func minimum(lhs: Self, rhs: Self) -> Self {
@@ -318,7 +338,7 @@ extension Array where Element == Vector {
         return sum > 0
     }
     
-    func normal() -> Vector {
+    public func normal() -> Vector {
         
         switch count {
             

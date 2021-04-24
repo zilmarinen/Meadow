@@ -8,9 +8,9 @@ import SceneKit
 
 public class NonUniformGrid<C: NonUniformChunk>: SCNNode, Codable, Hideable, Responder, Soilable {
     
-    private enum CodingKeys: CodingKey {
+    private enum CodingKeys: String, CodingKey {
         
-        case chunks
+        case chunks = "c"
     }
     
     public var ancestor: SoilableParent? { return parent as? SoilableParent }

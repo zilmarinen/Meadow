@@ -6,7 +6,14 @@
 
 import SceneKit
 
-public extension SCNVector3 {
+extension SCNVector3: Codable {
+    
+    private enum CodingKeys: CodingKey {
+     
+        case x
+        case y
+        case z
+    }
     
     init(vector: Vector) {
         
@@ -16,6 +23,26 @@ public extension SCNVector3 {
     init(coordinate: Coordinate) {
         
         self.init(coordinate.x, coordinate.y, coordinate.z)
+    }
+    
+    public init(from decoder: Decoder) throws {
+        
+        self.init()
+        
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        self.x = try container.decode(CGFloat.self, forKey: .x)
+        self.y = try container.decode(CGFloat.self, forKey: .y)
+        self.z = try container.decode(CGFloat.self, forKey: .z)
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(x, forKey: .x)
+        try container.encode(y, forKey: .y)
+        try container.encode(z, forKey: .z)
     }
 }
 

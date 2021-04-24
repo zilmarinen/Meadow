@@ -43,9 +43,9 @@ vertex Fragment footpath_vertex(Vertex v [[ stage_in ]], constant NodeBuffer& sc
 
 fragment float4 footpath_fragment(Fragment f [[stage_in]], texture2d<float, access::sample> tileset [[ texture(0) ]]) {
     
-    constexpr sampler textureSampler(coord::normalized, filter::linear, address::repeat);
+    constexpr sampler image(coord::normalized, filter::linear, address::repeat);
     
-    float4 sample = float4(tileset.sample(textureSampler, f.uv));
+    float4 sample = float4(tileset.sample(image, f.uv));
     
     if (sample.a <= epsilon) {
         

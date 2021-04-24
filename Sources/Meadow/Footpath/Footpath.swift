@@ -15,5 +15,12 @@ public class Footpath: Grid<FootpathChunk, FootpathTile> {
         return tilemap
     }()
     
+    lazy var program: SCNProgram? = {
+        
+        guard let library = scene?.library else { return nil }
+        
+        return SCNProgram(name: .footpath, library: library)
+    }()
+    
     public override var category: Int { SceneGraphCategory.surface.rawValue }
 }

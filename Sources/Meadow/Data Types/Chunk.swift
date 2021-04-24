@@ -8,10 +8,10 @@ import SceneKit
 
 public class Chunk<T: Tile>: SCNNode, Codable, Hideable, Responder, Shadable, Soilable {
     
-    private enum CodingKeys: CodingKey {
+    private enum CodingKeys: String, CodingKey {
         
-        case coordinate
-        case tiles
+        case coordinate = "c"
+        case tiles = "t"
     }
     
     public var ancestor: SoilableParent? { parent as? SoilableParent }

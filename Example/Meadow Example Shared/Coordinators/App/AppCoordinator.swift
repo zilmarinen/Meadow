@@ -13,7 +13,7 @@ extension AppCoordinator {
         
         case applicationSplash
         case developerSplash
-        case mainMenu
+        case scene
         
         func shouldTransition(to newState: ApplicationState) -> Should<ApplicationState> {
             
@@ -30,7 +30,7 @@ class AppCoordinator: ViewCoordinator {
     
     lazy var developerSplashCoordinator: DeveloperSplashScreenCoordinator = {
         
-        let coordinator = DeveloperSplashScreenCoordinator(controller: controller, duration: 3.5)
+        let coordinator = DeveloperSplashScreenCoordinator(controller: controller, duration: 1.0)
         
         coordinator.parent = self
         coordinator.completion = { [weak self] in
@@ -45,15 +45,24 @@ class AppCoordinator: ViewCoordinator {
     
     lazy var applicationSplashCoordinator: ApplicationSplashScreenCoordinator = {
         
-        let coordinator = ApplicationSplashScreenCoordinator(controller: controller, duration: 3.5)
+        let coordinator = ApplicationSplashScreenCoordinator(controller: controller, duration: 1.0)
         
         coordinator.parent = self
         coordinator.completion = { [weak self] in
             
             guard let self = self else { return }
             
-            self.stateMachine.state = .mainMenu
+            self.stateMachine.state = .scene
         }
+        
+        return coordinator
+    }()
+    
+    lazy var sceneCoordinator: SceneCoordinator = {
+        
+        let coordinator = SceneCoordinator(controller: controller)
+        
+        coordinator.parent = self
         
         return coordinator
     }()
@@ -100,21 +109,15 @@ extension AppCoordinator {
             
             case .developerSplash:
                 
-                print("stateDidChange: developer")
-                
                 self.start(child: self.developerSplashCoordinator, with: nil)
                 
             case .applicationSplash:
                 
-                print("stateDidChange: application")
+                self.start(child: self.applicationSplashCoordinator, with: nil)
                 
-                //self.start(child: self.applicationSplashCoordinator, with: view)
+            case .scene:
                 
-            case .mainMenu:
-                
-                print("stateDidChange: mainMenu")
-                
-                //view.scene = nil
+                self.start(child: self.sceneCoordinator, with: nil)
             }
         }
     }

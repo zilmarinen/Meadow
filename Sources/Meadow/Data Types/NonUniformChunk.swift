@@ -8,9 +8,9 @@ import SceneKit
 
 public class NonUniformChunk: SCNNode, Codable, Hideable, Responder, Shadable, Soilable {
     
-    private enum CodingKeys: CodingKey {
+    private enum CodingKeys: String, CodingKey {
         
-        case footprint
+        case footprint = "f"
     }
     
     public var ancestor: SoilableParent? { parent as? SoilableParent }
@@ -57,25 +57,7 @@ public class NonUniformChunk: SCNNode, Codable, Hideable, Responder, Shadable, S
         
         guard isDirty else { return false }
         
-        let size = footprint.bounds.size
-        
-        let x = CGFloat(footprint.coordinate.x) + ((size.width - 1) * 0.5)
-        let z = CGFloat(footprint.coordinate.z) + ((size.height - 1) * 0.5)
-        
-        position = SCNVector3(x: x, y: CGFloat(Double(footprint.coordinate.y) * World.Constants.slope) + 0.5, z: z)
-        
-        self.geometry = SCNBox(width: size.width, height: 1.0, length: size.height, chamferRadius: 0.0)
-        self.geometry?.program = program
-        
-        if let uniforms = uniforms {
-            
-            self.geometry?.set(uniforms: uniforms)
-        }
-        
-        if let textures = textures {
-            
-            self.geometry?.set(textures: textures)
-        }
+        //
         
         isDirty = false
         

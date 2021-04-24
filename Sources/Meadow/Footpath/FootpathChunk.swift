@@ -10,12 +10,7 @@ public class FootpathChunk: Chunk<FootpathTile> {
     
     public override var category: Int { SceneGraphCategory.surfaceChunk.rawValue }
     
-    override var program: SCNProgram? {
-        
-        guard let library = scene?.library else { return nil }
-        
-        return SCNProgram(name: "footpath", library: library)
-    }
+    override var program: SCNProgram? { scene?.meadow.footpath.program }
     
     override var uniforms: [Uniform]? { nil }
     

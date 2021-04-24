@@ -8,9 +8,9 @@ import SceneKit
 
 public class Actors: SCNNode, Codable, Hideable, Responder, Soilable, Updatable {
     
-    private enum CodingKeys: CodingKey {
+    private enum CodingKeys: String, CodingKey {
         
-        case npcs
+        case npcs = "n"
     }
     
     public var ancestor: SoilableParent? { return parent as? SoilableParent }

@@ -15,5 +15,12 @@ public class Surface: Grid<SurfaceChunk, SurfaceTile> {
         return tilemap
     }()
     
+    lazy var program: SCNProgram? = {
+        
+        guard let library = scene?.library else { return nil }
+        
+        return SCNProgram(name: .surface, library: library)
+    }()
+    
     public override var category: Int { SceneGraphCategory.surface.rawValue }
 }

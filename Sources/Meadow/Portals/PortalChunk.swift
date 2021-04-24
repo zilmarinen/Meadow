@@ -8,10 +8,10 @@ import SceneKit
 
 public class PortalChunk: NonUniformChunk {
     
-    private enum CodingKeys: CodingKey {
+    private enum CodingKeys: String, CodingKey {
         
-        case identifier
-        case portalType
+        case identifier = "i"
+        case portalType = "t"
     }
     
     let identifier: String

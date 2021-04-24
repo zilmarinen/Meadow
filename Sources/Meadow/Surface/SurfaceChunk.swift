@@ -10,12 +10,7 @@ public class SurfaceChunk: Chunk<SurfaceTile> {
     
     public override var category: Int { SceneGraphCategory.surfaceChunk.rawValue }
     
-    override var program: SCNProgram? {
-        
-        guard let library = scene?.library else { return nil }
-        
-        return SCNProgram(name: "surface", library: library)
-    }
+    override var program: SCNProgram? { scene?.meadow.surface.program }
     
     override var uniforms: [Uniform]? { nil }
     

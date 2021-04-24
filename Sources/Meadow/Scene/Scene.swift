@@ -6,13 +6,13 @@
 
 import SceneKit
 
-public class Scene: SCNScene, Codable, Responder, Soilable {
+open class Scene: SCNScene, Codable, Responder, Soilable {
 
-    private enum CodingKeys: CodingKey {
+    private enum CodingKeys: String, CodingKey {
         
-        case name
-        case backgroundColor
-        case meadow
+        case name = "n"
+        case backgroundColor = "c"
+        case meadow = "m"
     }
     
     public var library: MTLLibrary? {
@@ -34,7 +34,7 @@ public class Scene: SCNScene, Codable, Responder, Soilable {
     
     var scene: Scene? { self }
     
-    private(set) public var lastUpdate: TimeInterval?
+    var lastUpdate: TimeInterval?
     
     required public init(from decoder: Decoder) throws {
         
@@ -56,7 +56,7 @@ public class Scene: SCNScene, Codable, Responder, Soilable {
         becomeDirty()
     }
     
-    required init?(coder: NSCoder) {
+    required public init?(coder: NSCoder) {
         
         fatalError("init(coder:) has not been implemented")
     }

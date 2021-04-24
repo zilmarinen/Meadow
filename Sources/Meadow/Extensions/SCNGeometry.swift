@@ -60,7 +60,7 @@ public extension SCNGeometry {
                     vertices.append(SCNVector3(vector: vertex.position))
                     normals.append(SCNVector3(vector: vertex.normal))
                     colors.append(SCNVector4(color: vertex.color))
-                    textureCoordinates.append(vertex.textureCoordinates)
+                    textureCoordinates.append(CGPoint(x: vertex.textureCoordinates.x, y: vertex.textureCoordinates.y))
                 }
             }
             

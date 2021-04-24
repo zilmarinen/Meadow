@@ -4,25 +4,39 @@
 //  Created by Zack Brown on 03/11/2020.
 //
 
-public class Mesh: Hashable {
+import Foundation
+
+open class Mesh: Hashable {
     
-    enum Faces {
+    private enum CodingKeys: String, CodingKey {
         
-        case back
-        case front
-        case both
+        case polygons = "p"
     }
     
     let polygons: [Polygon]
     
-    lazy var bounds: Bounds = {
-    
-        return Bounds(vectors: polygons.flatMap { $0.vertices.map { $0.position } })
-    }()
-    
     public init(polygons: [Polygon]) {
         
         self.polygons = polygons
+    }
+    
+    required public init(from decoder: Decoder) throws {
+            
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        polygons = try container.decode([Polygon].self, forKey: .polygons)
+    }
+    
+    required public init?(coder: NSCoder) {
+        
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(polygons, forKey: .polygons)
     }
 }
 
@@ -30,21 +44,12 @@ extension Mesh {
     
     public static func == (lhs: Mesh, rhs: Mesh) -> Bool {
         
-        return lhs.polygons == rhs.polygons && lhs.bounds == rhs.bounds
+        return lhs.polygons == rhs.polygons
     }
     
     public func hash(into hasher: inout Hasher) {
         
         hasher.combine(polygons)
-        hasher.combine(bounds)
-    }
-}
-
-extension Mesh {
-    
-    func merge(mesh: Mesh) -> Mesh {
-        
-        return Mesh(polygons: polygons + mesh.polygons)
     }
 }
 

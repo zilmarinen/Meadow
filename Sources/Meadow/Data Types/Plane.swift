@@ -4,7 +4,7 @@
 //  Created by Zack Brown on 03/11/2020.
 //
 
-struct Plane: Hashable {
+public struct Plane: Comparable, Hashable {
     
     let normal: Vector
     let distance: Double
@@ -49,7 +49,27 @@ extension Plane {
 
 extension Plane {
     
-    static func == (lhs: Plane, rhs: Plane) -> Bool {
+    public static func < (lhs: Plane, rhs: Plane) -> Bool {
+     
+        return lhs.compare(with: rhs) == .front
+    }
+    
+    public static func <= (lhs: Plane, rhs: Plane) -> Bool {
+     
+        return lhs.compare(with: rhs) == Plane.Comparison.front.union(comparitor: .spanning)
+    }
+    
+    public static func > (lhs: Plane, rhs: Plane) -> Bool {
+     
+        return lhs.compare(with: rhs) == .back
+    }
+    
+    public static func >= (lhs: Plane, rhs: Plane) -> Bool {
+     
+        return lhs.compare(with: rhs) == Plane.Comparison.back.union(comparitor: .spanning)
+    }
+    
+    public static func == (lhs: Plane, rhs: Plane) -> Bool {
         
         return abs(lhs.distance - rhs.distance) < Math.epsilon && lhs.normal == rhs.normal
     }
@@ -65,6 +85,13 @@ extension Plane {
     func contains(vector: Vector) -> Bool {
         
         return abs(vector.distance(from: self)) < Math.epsilon
+    }
+    
+    func compare(with other: Plane) -> Plane.Comparison {
+            
+        guard self != other else { return .coplanar }
+        
+        return Plane.Comparison.coplanar.union(comparitor: (normal * distance).compare(with: other))
     }
 }
 

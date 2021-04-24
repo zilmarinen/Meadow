@@ -124,3 +124,11 @@ extension Coordinate {
         }
     }
 }
+
+extension Coordinate {
+    
+    public func heuristic(coordinate: Coordinate) -> Int {
+        
+        return abs(coordinate.x - x) + abs(coordinate.y - y) + abs(coordinate.z - z)
+    }
+}

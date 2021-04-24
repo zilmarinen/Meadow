@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  TilesetTile.swift
 //
 //  Created by Zack Brown on 24/03/2021.
 //
@@ -8,10 +8,10 @@ import Foundation
 
 public class TilesetTile: Codable, Equatable {
     
-    private enum CodingKeys: CodingKey {
+    private enum CodingKeys: String, CodingKey {
         
-        case pattern
-        case uvs
+        case pattern = "p"
+        case uvs = "uv"
     }
     
     public let pattern: Int

@@ -6,6 +6,10 @@
 
 import SceneKit
 
-class Buildings: NonUniformGrid<BuildingChunk> {
+class Buildings: FootprintGrid<BuildingChunk> {
     
+    func find(building coordinate: Coordinate) -> BuildingChunk? {
+        
+        return nil
+    }
 }

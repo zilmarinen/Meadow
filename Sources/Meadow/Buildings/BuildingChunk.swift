@@ -6,7 +6,7 @@
 
 import SceneKit
 
-class BuildingChunk: NonUniformChunk {
+class BuildingChunk: FootprintChunk {
     
     private enum CodingKeys: String, CodingKey {
         
@@ -42,7 +42,7 @@ class BuildingChunk: NonUniformChunk {
         
         guard isDirty else { return false }
         
-        position = SCNVector3(x: CGFloat(footprint.coordinate.x), y: CGFloat(Double(footprint.coordinate.y) * World.Constants.slope), z: CGFloat(footprint.coordinate.z))
+        position = SCNVector3(vector: coordinate.world)
         
         if let mesh = buildingType.model?.mesh {
          

@@ -12,7 +12,7 @@ open class Scene: SCNScene, Codable, Responder, Soilable {
         
         case name = "n"
         case backgroundColor = "c"
-        case meadow = "m"
+        case map = "m"
     }
     
     public var library: MTLLibrary? {
@@ -30,6 +30,7 @@ open class Scene: SCNScene, Codable, Responder, Soilable {
     public var name: String?
     
     public let camera = Camera()
+    public let hero = Hero(coordinate: .zero)
     public let meadow: Meadow
     
     var scene: Scene? { self }
@@ -41,17 +42,19 @@ open class Scene: SCNScene, Codable, Responder, Soilable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         name = try container.decode(String.self, forKey: .name)
-        meadow = try container.decode(Meadow.self, forKey: .meadow)
+        meadow = try container.decode(Meadow.self, forKey: .map)
         
         super.init()
         
         camera.ancestor = self
+        hero.ancestor = self
         meadow.ancestor = self
         
         rootNode.addChildNode(camera)
+        rootNode.addChildNode(hero)
         rootNode.addChildNode(meadow)
         
-        camera.controller.state = .focus(node: meadow.actors.hero, ordinal: .northEast, zoom: 1.0)
+        camera.controller.state = .focus(node: hero, cardinal: .east, zoom: 1.0)
         
         becomeDirty()
     }
@@ -66,7 +69,7 @@ open class Scene: SCNScene, Codable, Responder, Soilable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         try container.encode(name, forKey: .name)
-        try container.encode(meadow, forKey: .meadow)
+        try container.encode(meadow, forKey: .map)
     }
 }
 
@@ -89,6 +92,7 @@ extension Scene {
         guard isDirty else { return false }
         
         camera.clean()
+        hero.clean()
         meadow.clean()
         
         isDirty = false
@@ -104,6 +108,7 @@ extension Scene: SCNSceneRendererDelegate {
         let delta = time - (lastUpdate ?? time)
         
         camera.update(delta: delta, time: time)
+        hero.update(delta: delta, time: time)
         meadow.update(delta: delta, time: time)
         
         clean()

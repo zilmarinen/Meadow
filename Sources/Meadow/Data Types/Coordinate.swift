@@ -40,6 +40,8 @@ public extension Coordinate {
     static var infinity = Coordinate(x: .max, y: .max, z: .max)
     
     var xz: Coordinate { Coordinate(x: x, y: 0, z: z) }
+    
+    var world: Vector { Vector(x: Double(x), y: Double(y) * World.Constants.slope, z: Double(z)) }
 }
 
 public extension Coordinate {

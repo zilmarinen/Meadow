@@ -8,7 +8,7 @@ import SceneKit
 
 public class Hero: Actor {
  
-    public override func clean() -> Bool {
+    @discardableResult public override func clean() -> Bool {
         
         guard super.clean() else { return false }
         

@@ -59,12 +59,11 @@ class ApplicationSplashScreenCoordinator: ViewCoordinator {
         
         view.backgroundColor = .systemPurple
         
-        let node = SKShapeNode(rectOf: CGSize(width: 1, height: 1))
+        let node = SKSpriteNode(imageNamed: "application_splash")
         
-        node.fillColor = .systemRed
-        node.blendMode = .replace
+        node.scale(to: CGSize(width: node.size.width / 4, height: node.size.height / 4))
         
-        let scene = SKScene(size: CGSize(width: 100, height: 100))
+        let scene = SKScene(size: view.frame.size)
         
         scene.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         scene.scaleMode = .aspectFill

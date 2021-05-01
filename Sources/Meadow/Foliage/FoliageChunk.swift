@@ -7,7 +7,7 @@
 import Foundation
 import SceneKit
 
-class FoliageChunk: NonUniformChunk {
+class FoliageChunk: FootprintChunk {
     
     private enum CodingKeys: String, CodingKey {
         
@@ -52,7 +52,7 @@ class FoliageChunk: NonUniformChunk {
         
         guard isDirty else { return false }
         
-        position = SCNVector3(x: CGFloat(footprint.coordinate.x), y: CGFloat(Double(footprint.coordinate.y) * World.Constants.slope), z: CGFloat(footprint.coordinate.z))
+        position = SCNVector3(vector: coordinate.world)
         
         if let mesh = foliageType.model?.mesh {
          

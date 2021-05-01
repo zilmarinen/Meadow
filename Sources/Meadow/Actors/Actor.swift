@@ -19,7 +19,7 @@ public class Actor: SCNNode, Codable, Hideable, Responder, Shadable, Soilable, U
         return ActorController(initialState: .idle)
     }()
     
-    public var ancestor: SoilableParent? { parent as? SoilableParent }
+    public var ancestor: SoilableParent?
     
     public var isDirty: Bool = false
     
@@ -85,7 +85,7 @@ public class Actor: SCNNode, Codable, Hideable, Responder, Shadable, Soilable, U
         
         guard isDirty else { return false }
         
-        position = SCNVector3(x: CGFloat(coordinate.x), y: CGFloat(Double(coordinate.y) * World.Constants.slope) + 0.5, z: CGFloat(coordinate.z))
+        position = SCNVector3(vector: Vector(x: coordinate.world.x, y: coordinate.world.y + 0.5, z: coordinate.world.z))
         
         self.geometry = SCNBox(width: 1.0, height: 1.0, length: 1.0, chamferRadius: 0.0)
         self.geometry?.firstMaterial?.diffuse.contents = MDWColor.systemPurple
@@ -129,7 +129,28 @@ public class Actor: SCNNode, Codable, Hideable, Responder, Shadable, Soilable, U
             
             let destination = path.nodes[index + 1]
             
-            coordinate = destination.coordinate
+            let currentPosition = coordinate.world
+            let targetPosition = destination.coordinate.world
+            let deltaPosition = Vector(vector: position)
+            
+            let direction = (targetPosition - currentPosition).normalised()
+            
+            let step = direction / Double(node.movementCost)
+            
+            //print("Moving from \(coordinate) to \(destination.coordinate) : \(currentPosition) -> \(targetPosition)")
+            print("p: \(deltaPosition)")
+            //let vector = deltaPosition.lerp(vector: targetPosition, interpolater: (1 * delta) / Double(node.movementCost))
+            
+            position = SCNVector3(vector: deltaPosition + (step * delta))
+            
+            if deltaPosition.compare(with: targetPosition) {
+             
+                coordinate = destination.coordinate
+                
+                print("-------")
+                print("MOVING TO NEXT NODE")
+                print("-------")
+            }
             
         default: break
         }
@@ -160,8 +181,8 @@ extension Actor {
     func find(traversable coordinate: Coordinate) -> SurfaceTile? {
             
         guard let meadow = scene?.meadow,
-              meadow.buildings.find(chunk: coordinate) == nil,
-              meadow.foliage.find(chunk: coordinate) == nil,
+              meadow.buildings.find(building: coordinate) == nil,
+              meadow.foliage.find(foliage: coordinate) == nil,
               meadow.water.find(tile: coordinate) == nil else { return nil }
             
         return meadow.surface.find(tile: coordinate)

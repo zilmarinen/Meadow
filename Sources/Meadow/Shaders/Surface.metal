@@ -84,7 +84,16 @@ static float4 illumimate(Fragment f, float4 color) {
     float diffuseIntensity = saturate(dot(normal, float3(0, -1, 0)));
     float4 diffuseColor = float4(1, 1, 1, 1) * color * diffuseIntensity;
     
-    return float4(ambientColor.xyz + diffuseColor.xyz, 1);
+    float4 result = float4(ambientColor.xyz + diffuseColor.xyz, 1);
+    
+    float2 fractional  = abs(fract(f.frag + 0.5));
+    float2 partial = fwidth(f.frag) * 5;
+    
+    float2 point = smoothstep(-partial, partial, fractional);
+    
+    float saturation = 1.0 - saturate(point.x * point.y);
+    
+    return float4(mix(result.rgb, float3(0.0), saturation), 1.0);
 }
 
 vertex Fragment surface_vertex(Vertex v [[ stage_in ]], constant NodeBuffer& scn_node [[buffer(1)]]) {

@@ -1,42 +1,40 @@
 //
-//  NonUniformChunk.swift
+//  FootprintGrid.swift
 //
 //  Created by Zack Brown on 27/03/2021.
 //
 
 import SceneKit
 
-public class NonUniformChunk: SCNNode, Codable, Hideable, Responder, Shadable, Soilable {
+public class FootprintGrid<C: FootprintChunk>: SCNNode, Codable, Hideable, Responder, Soilable {
     
     private enum CodingKeys: String, CodingKey {
         
-        case footprint = "f"
+        case chunks = "c"
     }
     
-    public var ancestor: SoilableParent? { parent as? SoilableParent }
+    public var ancestor: SoilableParent? { return parent as? SoilableParent }
     
     public var isDirty: Bool = false
     
-    public var category: Int { SceneGraphCategory.surfaceChunk.rawValue }
+    public var category: Int { SceneGraphCategory.surface.rawValue }
     
-    public let footprint: Footprint
-    
-    var program: SCNProgram? { nil }
-    var uniforms: [Uniform]? { nil }
-    
-    var textures: [Texture]? { nil }
+    let chunks: [C]
     
     required public init(from decoder: Decoder) throws {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        footprint = try container.decode(Footprint.self, forKey: .footprint)
+        chunks = try container.decode([C].self, forKey: .chunks)
         
         super.init()
         
-        name = "Chunk \(footprint.coordinate.description)"
-        position = SCNVector3(coordinate: footprint.coordinate)
         categoryBitMask = category
+        
+        for chunk in chunks {
+            
+            addChildNode(chunk)
+        }
         
         becomeDirty()
     }
@@ -50,17 +48,24 @@ public class NonUniformChunk: SCNNode, Codable, Hideable, Responder, Shadable, S
         
         var container = encoder.container(keyedBy: CodingKeys.self)
         
-        try container.encode(footprint, forKey: .footprint)
+        try container.encode(chunks, forKey: .chunks)
     }
+}
+
+extension FootprintGrid {
     
     @discardableResult public func clean() -> Bool {
         
         guard isDirty else { return false }
         
-        //
+        for chunk in chunks {
+            
+            chunk.clean()
+        }
         
         isDirty = false
         
         return true
     }
 }
+

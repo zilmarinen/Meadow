@@ -1,40 +1,42 @@
 //
-//  NonUniformGrid.swift
+//  FootprintChunk.swift
 //
 //  Created by Zack Brown on 27/03/2021.
 //
 
 import SceneKit
 
-public class NonUniformGrid<C: NonUniformChunk>: SCNNode, Codable, Hideable, Responder, Soilable {
+public class FootprintChunk: SCNNode, Codable, Hideable, Responder, Shadable, Soilable {
     
     private enum CodingKeys: String, CodingKey {
         
-        case chunks = "c"
+        case coordinate = "c"
     }
     
-    public var ancestor: SoilableParent? { return parent as? SoilableParent }
+    public var ancestor: SoilableParent? { parent as? SoilableParent }
     
     public var isDirty: Bool = false
     
-    public var category: Int { SceneGraphCategory.surface.rawValue }
+    public var category: Int { SceneGraphCategory.surfaceChunk.rawValue }
     
-    let chunks: [C]
+    public let coordinate: Coordinate
+    
+    var program: SCNProgram? { nil }
+    var uniforms: [Uniform]? { nil }
+    
+    var textures: [Texture]? { nil }
     
     required public init(from decoder: Decoder) throws {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        chunks = try container.decode([C].self, forKey: .chunks)
+        coordinate = try container.decode(Coordinate.self, forKey: .coordinate)
         
         super.init()
         
+        name = "Chunk \(coordinate.description)"
+        position = SCNVector3(coordinate: coordinate)
         categoryBitMask = category
-        
-        for chunk in chunks {
-            
-            addChildNode(chunk)
-        }
         
         becomeDirty()
     }
@@ -48,32 +50,17 @@ public class NonUniformGrid<C: NonUniformChunk>: SCNNode, Codable, Hideable, Res
         
         var container = encoder.container(keyedBy: CodingKeys.self)
         
-        try container.encode(chunks, forKey: .chunks)
+        try container.encode(coordinate, forKey: .coordinate)
     }
-}
-
-extension NonUniformGrid {
-    
-    func find(chunk coordinate: Coordinate) -> C? {
-        
-        return chunks.first { $0.footprint.intersects(coordinate: coordinate) }
-    }
-}
-
-extension NonUniformGrid {
     
     @discardableResult public func clean() -> Bool {
         
         guard isDirty else { return false }
         
-        for chunk in chunks {
-            
-            chunk.clean()
-        }
+        //
         
         isDirty = false
         
         return true
     }
 }
-

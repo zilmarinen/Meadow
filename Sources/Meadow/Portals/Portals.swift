@@ -6,7 +6,7 @@
 
 import SceneKit
 
-public class Portals: NonUniformGrid<PortalChunk> {
+public class Portals: FootprintGrid<PortalChunk> {
     
     public func find(portal type: PortalType) -> PortalChunk? {
         

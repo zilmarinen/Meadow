@@ -6,7 +6,7 @@
 
 import SceneKit
 
-class Foliage: NonUniformGrid<FoliageChunk> {
+class Foliage: FootprintGrid<FoliageChunk> {
     
     lazy var program: SCNProgram? = {
         
@@ -14,4 +14,10 @@ class Foliage: NonUniformGrid<FoliageChunk> {
         
         return SCNProgram(name: .foliage, library: library)
     }()
+    
+    func find(foliage coordinate: Coordinate) -> FoliageChunk? {
+        
+        return nil
+        //return chunks.first { $0.footprint.intersects(coordinate: coordinate) }
+    }
 }

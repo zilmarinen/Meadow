@@ -6,7 +6,7 @@
 
 import SceneKit
 
-public class PortalChunk: NonUniformChunk {
+public class PortalChunk: FootprintChunk {
     
     private enum CodingKeys: String, CodingKey {
         
@@ -46,14 +46,14 @@ public class PortalChunk: NonUniformChunk {
         
         guard isDirty else { return false }
         
-        let size = footprint.bounds.size
+        let size = CGSize(width: 1, height: 1)
         
-        let x = CGFloat(footprint.coordinate.x) + ((size.width - 1) * 0.5)
-        let z = CGFloat(footprint.coordinate.z) + ((size.height - 1) * 0.5)
+        let x = CGFloat(coordinate.x) + ((size.width - 1) * 0.5)
+        let z = CGFloat(coordinate.z) + ((size.height - 1) * 0.5)
         
         let height: CGFloat = 0.25
         
-        position = SCNVector3(x: x, y: CGFloat(Double(footprint.coordinate.y) * World.Constants.slope) + (height / 2.0), z: z)
+        position = SCNVector3(x: x, y: CGFloat(Double(coordinate.y) * World.Constants.slope) + (height / 2.0), z: z)
         
         self.geometry = SCNBox(width: size.width, height: height, length: size.height, chamferRadius: 0.0)
         self.geometry?.firstMaterial?.diffuse.contents = MDWColor.systemYellow

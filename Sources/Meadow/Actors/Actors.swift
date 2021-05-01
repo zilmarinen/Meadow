@@ -20,7 +20,6 @@ public class Actors: SCNNode, Codable, Hideable, Responder, Soilable, Updatable 
     public var category: Int { SceneGraphCategory.surface.rawValue }
     
     let npcs: [Actor]
-    public let hero = Hero(coordinate: .zero)
     
     required public init(from decoder: Decoder) throws {
         
@@ -34,10 +33,10 @@ public class Actors: SCNNode, Codable, Hideable, Responder, Soilable, Updatable 
         
         for actor in npcs {
             
+            actor.ancestor = self
+            
             addChildNode(actor)
         }
-        
-        addChildNode(hero)
         
         becomeDirty()
     }
@@ -74,8 +73,6 @@ extension Actors {
             actor.clean()
         }
         
-        _ = hero.clean()
-        
         isDirty = false
         
         return true
@@ -90,7 +87,5 @@ extension Actors {
             
             actor.update(delta: delta, time: time)
         }
-        
-        hero.update(delta: delta, time: time)
     }
 }

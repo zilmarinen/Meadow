@@ -30,7 +30,7 @@ public class Camera: SCNNode, Responder, Soilable, Updatable {
     
     public lazy var controller: CameraController = {
        
-        return CameraController(initialState: .focus(node: SCNNode(), ordinal: .northEast, zoom: 1.0))
+        return CameraController(initialState: .focus(node: self, cardinal: .north, zoom: 1.0))
     }()
     
     override init() {
@@ -69,12 +69,12 @@ extension Camera {
         
         switch controller.state {
 
-        case .focus(let node, let ordinal, let zoom):
+        case .focus(let node, let cardinal, let zoom):
             
             let zoomScale = (Constants.maximumZoom * zoom)
             
             let pitch = atan(4.0 / 3.0)
-            let yaw = Math.radians(degrees: 90.0 * Double(ordinal.rawValue))
+            let yaw = Math.radians(degrees: 90.0 * Double(cardinal.rawValue))
             
             let adjacent = Double(World.Constants.ceiling - World.Constants.floor)
             let opposite = tan(pitch) * adjacent

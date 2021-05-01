@@ -16,7 +16,7 @@ extension Camera {
     
     public enum CameraState: State {
         
-        case focus(node: SCNNode, ordinal: Ordinal, zoom: Double)
+        case focus(node: SCNNode, cardinal: Cardinal, zoom: Double)
         
         public func shouldTransition(to newState: CameraState) -> Should<CameraState> {
             
@@ -45,11 +45,11 @@ extension Camera {
             
             switch state {
             
-            case .focus(let node, let ordinal, let zoom):
+            case .focus(let node, let cardinal, let zoom):
                 
-                let rotation = Ordinal(rawValue: (ordinal.rawValue + direction.rawValue) % 4) ?? .southEast
+                let rotation = Cardinal(rawValue: (cardinal.rawValue + direction.rawValue) % 4) ?? .north
                 
-                state = .focus(node: node, ordinal: rotation, zoom: zoom)
+                state = .focus(node: node, cardinal: rotation, zoom: zoom)
             }
         }
         
@@ -57,7 +57,7 @@ extension Camera {
             
             switch state {
             
-            case .focus(let node, let ordinal, let zoom):
+            case .focus(let node, let cardinal, let zoom):
                 
                 var zoomLevel = zoom
                 
@@ -72,17 +72,17 @@ extension Camera {
                 zoomLevel = min(1.0, zoomLevel)
                 zoomLevel = max(0.1, zoomLevel)
                 
-                state = .focus(node: node, ordinal: ordinal, zoom: zoomLevel)
+                state = .focus(node: node, cardinal: cardinal, zoom: zoomLevel)
             }
         }
         
-        public func focus(node: SCNNode, ordinal: Ordinal? = nil, zoom: Double? = nil) {
+        public func focus(node: SCNNode, cardinal: Cardinal? = nil, zoom: Double? = nil) {
             
             switch state {
             
-            case .focus(_, let currentOrdinal, let currentZoom):
+            case .focus(_, let currentCadinal, let currentZoom):
                 
-                state = .focus(node: node, ordinal: ordinal ?? currentOrdinal, zoom: zoom ?? currentZoom)
+                state = .focus(node: node, cardinal: cardinal ?? currentCadinal, zoom: zoom ?? currentZoom)
             }
         }
     }

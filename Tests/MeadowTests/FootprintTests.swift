@@ -22,7 +22,7 @@ final class FootprintTests: XCTestCase {
         
         XCTAssertTrue(f0.intersects(footprint: f1))
         XCTAssertTrue(f0.intersects(footprint: f2))
-        XCTAssertFalse(f0.intersects(footprint: f3))
+        XCTAssertTrue(f0.intersects(footprint: f3))
     }
 
     static var allTests = [

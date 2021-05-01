@@ -204,6 +204,11 @@ extension Vector {
         
         return (d < -Math.epsilon ? .back : (d > Math.epsilon ? .front : .coplanar))
     }
+    
+    func compare(with vector: Vector) -> Bool {
+    
+        return self == vector || (abs(x - vector.x) < Math.epsilon && abs(y - vector.y) < Math.epsilon && abs(z - vector.z) < Math.epsilon)
+    }
 }
 
 extension Vector: Transformable {

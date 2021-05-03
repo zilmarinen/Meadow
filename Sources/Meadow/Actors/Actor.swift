@@ -31,6 +31,8 @@ public class Actor: SCNNode, Codable, Hideable, Responder, Shadable, Soilable, U
             
             if oldValue != coordinate {
                 
+                scene?.actor(actor: self, didMoveTo: coordinate)
+                
                 becomeDirty()
             }
         }
@@ -85,8 +87,6 @@ public class Actor: SCNNode, Codable, Hideable, Responder, Shadable, Soilable, U
         
         guard isDirty else { return false }
         
-        position = SCNVector3(vector: Vector(x: coordinate.world.x, y: coordinate.world.y + 0.5, z: coordinate.world.z))
-        
         self.geometry = SCNBox(width: 1.0, height: 1.0, length: 1.0, chamferRadius: 0.0)
         self.geometry?.firstMaterial?.diffuse.contents = MDWColor.systemPurple
         self.geometry?.program = program
@@ -110,6 +110,10 @@ public class Actor: SCNNode, Codable, Hideable, Responder, Shadable, Soilable, U
         
         switch controller.state {
         
+        case .idle:
+            
+            position = SCNVector3(vector: Vector(x: coordinate.world.x, y: coordinate.world.y, z: coordinate.world.z))
+        
         case .moving(let path):
             
             guard let node = path.node(for: coordinate),
@@ -129,27 +133,17 @@ public class Actor: SCNNode, Codable, Hideable, Responder, Shadable, Soilable, U
             
             let destination = path.nodes[index + 1]
             
-            let currentPosition = coordinate.world
+            let speed = delta / Double(node.movementCost)
+            
+            let currentPosition = Vector(vector: position)
             let targetPosition = destination.coordinate.world
-            let deltaPosition = Vector(vector: position)
+            let newPosition = currentPosition.move(towards: targetPosition, distance: speed)
             
-            let direction = (targetPosition - currentPosition).normalised()
+            position = SCNVector3(vector: newPosition)
             
-            let step = direction / Double(node.movementCost)
-            
-            //print("Moving from \(coordinate) to \(destination.coordinate) : \(currentPosition) -> \(targetPosition)")
-            print("p: \(deltaPosition)")
-            //let vector = deltaPosition.lerp(vector: targetPosition, interpolater: (1 * delta) / Double(node.movementCost))
-            
-            position = SCNVector3(vector: deltaPosition + (step * delta))
-            
-            if deltaPosition.compare(with: targetPosition) {
-             
-                coordinate = destination.coordinate
+            if newPosition.compare(with: targetPosition, precision: 0.1) {
                 
-                print("-------")
-                print("MOVING TO NEXT NODE")
-                print("-------")
+                coordinate = destination.coordinate
             }
             
         default: break
@@ -163,88 +157,28 @@ extension Actor {
         
         switch currentState {
         
+        case .moving(let path):
+            
+            print("Following path: \(path)")
+        
         case .pathfinding(let destination):
+            
+            guard let scene = scene,
+                  let path = scene.path(between: coordinate, destination: destination) else { break }
             
             print("finding path between \(coordinate) and \(destination)")
             
-            guard let path = path(between: coordinate, destination: destination) else { break }
-            
             controller.state = .moving(path: path)
+            
+        case .spawn(let coordinate):
+            
+            print("Spawning at coordinate: \(coordinate)")
+            
+            self.coordinate = coordinate
+            
+            controller.state = .idle
         
         default: break
         }
-    }
-}
-
-extension Actor {
-    
-    func find(traversable coordinate: Coordinate) -> SurfaceTile? {
-            
-        guard let meadow = scene?.meadow,
-              meadow.buildings.find(building: coordinate) == nil,
-              meadow.foliage.find(foliage: coordinate) == nil,
-              meadow.water.find(tile: coordinate) == nil else { return nil }
-            
-        return meadow.surface.find(tile: coordinate)
-    }
-    
-    public func path(between origin: Coordinate, destination: Coordinate) -> Path? {
-        
-        guard let meadow = scene?.meadow,
-              let surfaceStart = meadow.surface.find(tile: origin),
-              surfaceStart.walkable,
-              let surfaceEnd = meadow.surface.find(tile: destination),
-              surfaceEnd.walkable else { return nil }
-        
-        let queue = PriorityQueue()
-                
-        var stack: [Coordinate : Coordinate] = [origin : origin]
-        var cost: [Coordinate: Int] = [origin : 0]
-        
-        queue.enqueue(coordinate: origin, priority: 0.0)
-        
-        while !queue.isEmpty {
-            
-            guard let coordinate = queue.dequeue() else { return nil }
-            
-            guard coordinate != destination else {
-                
-                guard let tile = meadow.surface.find(tile: coordinate) else { return nil }
-                
-                var nodes: [PathNode] = [tile.pathNode]
-                
-                var current = coordinate
-                
-                while current != origin {
-                    
-                    guard let node = stack[current],
-                          let tile = meadow.surface.find(tile: node) else { return nil }
-                    
-                    nodes.append(tile.pathNode)
-                    
-                    current = node
-                }
-                
-                return Path(nodes: nodes.reversed())
-            }
-            
-            for cardinal in Cardinal.allCases {
-                
-                guard let neighbour = find(traversable: coordinate + cardinal.coordinate),
-                      neighbour.walkable else { continue }
-                
-                let movementCost = neighbour.movementCost
-                
-                if stack[neighbour.coordinate] == nil || movementCost < (cost[neighbour.coordinate] ?? 0) {
-                    
-                    queue.enqueue(coordinate: neighbour.coordinate, priority: CGFloat(destination.heuristic(coordinate: neighbour.coordinate)))
-                    
-                    stack[neighbour.coordinate] = coordinate
-                    cost[neighbour.coordinate] = movementCost
-                }
-            }
-        }
-        
-        return nil
     }
 }

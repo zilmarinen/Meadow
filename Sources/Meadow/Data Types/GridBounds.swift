@@ -6,7 +6,7 @@
 
 import Foundation
 
-public struct GridBounds {
+public struct GridBounds: Equatable {
     
     public var size: CGSize { CGSize(width: abs(start.x - end.x) + 1, height: abs(start.z - end.z) + 1) }
     
@@ -45,7 +45,7 @@ public struct GridBounds {
 
 extension GridBounds {
     
-    static func == (lhs: GridBounds, rhs: GridBounds) -> Bool {
+    public static func == (lhs: GridBounds, rhs: GridBounds) -> Bool {
         
         return lhs.start == rhs.start && lhs.end == rhs.end
     }

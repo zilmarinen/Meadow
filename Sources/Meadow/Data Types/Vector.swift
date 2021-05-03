@@ -174,6 +174,15 @@ extension Vector {
         return (self + (vector - self) * interpolater).quantized()
     }
     
+    func move(towards: Self, distance: Double) -> Self {
+        
+        let direction = (towards - self)
+        
+        let delta = min(distance, direction.magnitude)
+        
+        return (self + (direction * delta)).quantized()
+    }
+    
     func angle(to vector: Self) -> Double {
         
         let cosine = (dot(vector: vector) / (magnitude * vector.magnitude))
@@ -205,9 +214,9 @@ extension Vector {
         return (d < -Math.epsilon ? .back : (d > Math.epsilon ? .front : .coplanar))
     }
     
-    func compare(with vector: Vector) -> Bool {
+    func compare(with vector: Vector, precision: Double = Math.epsilon) -> Bool {
     
-        return self == vector || (abs(x - vector.x) < Math.epsilon && abs(y - vector.y) < Math.epsilon && abs(z - vector.z) < Math.epsilon)
+        return self == vector || (abs(x - vector.x) < precision && abs(y - vector.y) < precision && abs(z - vector.z) < precision)
     }
 }
 

@@ -54,7 +54,7 @@ class FoliageChunk: FootprintChunk {
         
         position = SCNVector3(vector: coordinate.world)
         
-        if let mesh = foliageType.model?.mesh {
+        if let mesh = scene?.props.prop(foliage: foliageType).mesh {
          
             self.geometry = SCNGeometry(mesh: mesh)
             self.geometry?.program = program

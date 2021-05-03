@@ -9,7 +9,7 @@ public protocol SoilableChild {
     var ancestor: SoilableParent? { get }
 }
 
-public protocol SoilableParent: class {
+public protocol SoilableParent: AnyObject {
     
     func child(didBecomeDirty child: SoilableChild)
 }

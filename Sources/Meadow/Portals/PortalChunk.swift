@@ -10,10 +10,12 @@ public class PortalChunk: FootprintChunk {
     
     private enum CodingKeys: String, CodingKey {
         
+        case segue = "s"
         case identifier = "i"
         case portalType = "t"
     }
     
+    public let segue: PortalSegue
     let identifier: String
     let portalType: PortalType
     
@@ -21,6 +23,7 @@ public class PortalChunk: FootprintChunk {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
+        segue = try container.decode(PortalSegue.self, forKey: .segue)
         identifier = try container.decode(String.self, forKey: .identifier)
         portalType = try container.decode(PortalType.self, forKey: .portalType)
         
@@ -38,6 +41,7 @@ public class PortalChunk: FootprintChunk {
         
         var container = encoder.container(keyedBy: CodingKeys.self)
         
+        try container.encode(segue, forKey: .segue)
         try container.encode(identifier, forKey: .identifier)
         try container.encode(portalType, forKey: .portalType)
     }

@@ -20,7 +20,17 @@ public class Tile: Codable, Equatable, Renderable, Responder {
     
     public var category: Int { SceneGraphCategory.surfaceTile.rawValue }
 
-    let coordinate: Coordinate
+    var coordinate: Coordinate {
+        
+        didSet {
+            
+            if oldValue != coordinate {
+            
+                becomeDirty()
+            }
+        }
+    }
+    
     let pattern: Int
     
     public var isHidden: Bool = false {
@@ -30,6 +40,19 @@ public class Tile: Codable, Equatable, Renderable, Responder {
             guard oldValue != isHidden else { return }
             
             becomeDirty()
+        }
+    }
+    
+    var offset: Coordinate = .zero {
+        
+        didSet {
+            
+            if oldValue != offset {
+                
+                coordinate += offset
+                
+                becomeDirty()
+            }
         }
     }
 

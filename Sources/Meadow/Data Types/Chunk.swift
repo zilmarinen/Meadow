@@ -20,13 +20,40 @@ public class Chunk<T: Tile>: SCNNode, Codable, Hideable, Responder, Shadable, So
     
     public var category: Int { SceneGraphCategory.surfaceChunk.rawValue }
     
-    let bounds: GridBounds
+    var bounds: GridBounds {
+        
+        didSet {
+            
+            if oldValue != bounds {
+                
+                becomeDirty()
+            }
+        }
+    }
     let tiles: [T]
     
     var program: SCNProgram? { nil }
     var uniforms: [Uniform]? { nil }
     
     var textures: [Texture]? { nil }
+    
+    var offset: Coordinate = .zero {
+        
+        didSet {
+            
+            if oldValue != offset {
+                
+                bounds = GridBounds(start: bounds.start + offset, end: bounds.end + offset)
+                
+                for tile in tiles {
+                    
+                    tile.offset = offset
+                }
+                
+                becomeDirty()
+            }
+        }
+    }
     
     required public init(from decoder: Decoder) throws {
         
@@ -40,7 +67,6 @@ public class Chunk<T: Tile>: SCNNode, Codable, Hideable, Responder, Shadable, So
         super.init()
         
         name = "Chunk \(self.bounds.start.description)"
-        position = SCNVector3(coordinate: self.bounds.start)
         categoryBitMask = category
         
         for tile in tiles {
@@ -78,6 +104,8 @@ extension Chunk {
     @discardableResult public func clean() -> Bool {
         
         guard isDirty else { return false }
+        
+        position = SCNVector3(coordinate: bounds.start)
         
         var polygons: [Polygon] = []
         

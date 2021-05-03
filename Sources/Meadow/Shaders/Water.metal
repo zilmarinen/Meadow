@@ -8,8 +8,6 @@
 using namespace metal;
 #include <SceneKit/scn_metal>
 
-constant float epsilon = 0.0001;
-
 struct NodeBuffer {
     
     float4x4 modelViewProjectionTransform;

@@ -17,6 +17,7 @@ class Foliage: FootprintGrid<FoliageChunk> {
     
     func find(foliage coordinate: Coordinate) -> FoliageChunk? {
         
+        //TODO: Fix all find -> Chunk methods
         return nil
         //return chunks.first { $0.footprint.intersects(coordinate: coordinate) }
     }

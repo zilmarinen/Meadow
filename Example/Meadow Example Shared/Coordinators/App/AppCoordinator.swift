@@ -30,7 +30,7 @@ class AppCoordinator: ViewCoordinator {
     
     lazy var developerSplashCoordinator: DeveloperSplashScreenCoordinator = {
         
-        let coordinator = DeveloperSplashScreenCoordinator(controller: controller, duration: 3.5)
+        let coordinator = DeveloperSplashScreenCoordinator(controller: controller, duration: 0.1)
         
         coordinator.parent = self
         coordinator.completion = { [weak self] in
@@ -45,7 +45,7 @@ class AppCoordinator: ViewCoordinator {
     
     lazy var applicationSplashCoordinator: ApplicationSplashScreenCoordinator = {
         
-        let coordinator = ApplicationSplashScreenCoordinator(controller: controller, duration: 3.5)
+        let coordinator = ApplicationSplashScreenCoordinator(controller: controller, duration: 0.1)
         
         coordinator.parent = self
         coordinator.completion = { [weak self] in

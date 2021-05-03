@@ -13,6 +13,7 @@ extension Actor {
         case idle
         case moving(path: Path)
         case pathfinding(destination: Coordinate)
+        case spawn(coordinate: Coordinate)
         
         public func shouldTransition(to newState: Actor.ActorState) -> Should<Actor.ActorState> {
             
@@ -25,6 +26,11 @@ extension Actor {
         public func move(to coordinate: Coordinate) {
             
             state = .pathfinding(destination: coordinate)
+        }
+        
+        public func spawn(at coordinate: Coordinate) {
+            
+            state = .spawn(coordinate: coordinate)
         }
     }
 }

@@ -21,6 +21,22 @@ public class FootprintGrid<C: FootprintChunk>: SCNNode, Codable, Hideable, Respo
     
     let chunks: [C]
     
+    var offset: Coordinate = .zero {
+        
+        didSet {
+            
+            if oldValue != offset {
+                
+                for chunk in chunks {
+                    
+                    chunk.offset = offset
+                }
+                
+                becomeDirty()
+            }
+        }
+    }
+    
     required public init(from decoder: Decoder) throws {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)

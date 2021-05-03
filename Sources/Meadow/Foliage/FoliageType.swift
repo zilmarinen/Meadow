@@ -37,7 +37,7 @@ public enum FoliageType: Int, CaseIterable, Codable, Equatable {
     }
     
     public var model: Model? {
-        
+        print("LOADING MODEL: \(self.identifier)")
         guard let asset = NSDataAsset(name: identifier, bundle: .module) else { return nil }
     
         let decoder = JSONDecoder()

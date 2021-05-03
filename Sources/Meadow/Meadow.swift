@@ -17,6 +17,8 @@ public class Meadow: SCNNode, Codable, Responder, Updatable {
         case portals = "p"
         case surface = "s"
         case water = "wat"
+        
+        case identifier = "i"
     }
     
     public static var bundle: Bundle { .module }
@@ -25,13 +27,35 @@ public class Meadow: SCNNode, Codable, Responder, Updatable {
     
     public var isDirty: Bool = false
     
-    public let actors: Actors
+    var identifier: String = ""
+    
+    let actors: Actors
     let buildings: Buildings
     let foliage: Foliage
     let footpath: Footpath
     public let portals: Portals
-    public let surface: Surface
+    let surface: Surface
     let water: Water
+    
+    var offset: Coordinate = .zero {
+        
+        didSet {
+            
+            if oldValue != offset {
+                
+                //TODO: offset actors
+                //actors
+                buildings.offset = offset
+                foliage.offset = offset
+                footpath.offset = offset
+                portals.offset = offset
+                surface.offset = offset
+                water.offset = offset
+                
+                becomeDirty()
+            }
+        }
+    }
     
     required public init(from decoder: Decoder) throws {
         
@@ -44,6 +68,8 @@ public class Meadow: SCNNode, Codable, Responder, Updatable {
         portals = try container.decode(Portals.self, forKey: .portals)
         surface = try container.decode(Surface.self, forKey: .surface)
         water = try container.decode(Water.self, forKey: .water)
+        
+        identifier = try container.decode(String.self, forKey: .identifier)
         
         super.init()
         
@@ -74,6 +100,8 @@ public class Meadow: SCNNode, Codable, Responder, Updatable {
         try container.encode(portals, forKey: .portals)
         try container.encode(surface, forKey: .surface)
         try container.encode(water, forKey: .water)
+        
+        try container.encode(identifier, forKey: .identifier)
     }
 }
 
@@ -102,5 +130,17 @@ extension Meadow {
     public func update(delta: TimeInterval, time: TimeInterval) {
         
         actors.update(delta: delta, time: time)
+    }
+}
+
+extension Meadow {
+    
+    func find(traversable coordinate: Coordinate) -> SurfaceTile? {
+     
+        guard buildings.find(building: coordinate) == nil,
+              foliage.find(foliage: coordinate) == nil,
+              water.find(tile: coordinate) == nil else { return nil }
+            
+        return surface.find(tile: coordinate)
     }
 }

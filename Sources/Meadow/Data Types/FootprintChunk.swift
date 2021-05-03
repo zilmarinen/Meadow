@@ -19,12 +19,25 @@ public class FootprintChunk: SCNNode, Codable, Hideable, Responder, Shadable, So
     
     public var category: Int { SceneGraphCategory.surfaceChunk.rawValue }
     
-    public let coordinate: Coordinate
+    public var coordinate: Coordinate
     
     var program: SCNProgram? { nil }
     var uniforms: [Uniform]? { nil }
     
     var textures: [Texture]? { nil }
+    
+    var offset: Coordinate = .zero {
+        
+        didSet {
+            
+            if oldValue != offset {
+                
+                coordinate += offset
+                
+                becomeDirty()
+            }
+        }
+    }
     
     required public init(from decoder: Decoder) throws {
         

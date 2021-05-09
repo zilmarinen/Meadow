@@ -76,7 +76,7 @@ class AppCoordinator: ViewCoordinator {
         
         super.start(with: option)
         
-        guard let sceneView = controller.view as? SceneView else { fatalError("Invalid view hierarchy") }
+        guard let sceneView = controller.view as? ExampleView else { fatalError("Invalid view hierarchy") }
         
         guard let device = sceneView.device else { fatalError("Invalid device library") }
         

@@ -33,7 +33,7 @@ class DeveloperSplashScreenCoordinator: ViewCoordinator {
         
         print("DeveloperSplashScreenCoordinator -> start")
         
-        guard let view = controller.view as? SceneView else { return }
+        guard let view = controller.view as? ExampleView else { return }
         
         view.scene = SCNScene()
         view.delegate = self
@@ -62,7 +62,7 @@ class DeveloperSplashScreenCoordinator: ViewCoordinator {
         DispatchQueue.main.sync { [weak self] in
             
             guard let self = self,
-                  let view = controller.view as? SceneView else { return }
+                  let view = controller.view as? ExampleView else { return }
             
             view.delegate = nil
             

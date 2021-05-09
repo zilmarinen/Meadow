@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		1808C05E2588E6AA00860799 /* Meadow in Frameworks */ = {isa = PBXBuildFile; productRef = 1808C05D2588E6AA00860799 /* Meadow */; };
 		1808C0622588E70E00860799 /* Meadow in Frameworks */ = {isa = PBXBuildFile; productRef = 1808C0612588E70E00860799 /* Meadow */; };
-		181398DB25A8AE160001A2A8 /* SceneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181398DA25A8AE160001A2A8 /* SceneView.swift */; };
-		181398DC25A8AE160001A2A8 /* SceneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181398DA25A8AE160001A2A8 /* SceneView.swift */; };
 		18248F5325A8988F00B98624 /* ApplicationSplashScreenCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EDDC5225A89368007AC631 /* ApplicationSplashScreenCoordinator.swift */; };
 		18547F7825A60785006ADD6C /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18547F7725A60785006ADD6C /* AppCoordinator.swift */; };
 		18547F7E25A60988006ADD6C /* TypeAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18547F7D25A60988006ADD6C /* TypeAliases.swift */; };
@@ -35,12 +33,15 @@
 		18C8045A2588E5B7006AF32F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18C804582588E5B7006AF32F /* Main.storyboard */; };
 		18C804632588E5B7006AF32F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18C8043B2588E5B7006AF32F /* Assets.xcassets */; };
 		18C804642588E5B7006AF32F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18C8043B2588E5B7006AF32F /* Assets.xcassets */; };
+		18E8875D264527EA00D8FF7B /* ExampleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E8875C264527EA00D8FF7B /* ExampleView.swift */; };
+		18E8875E264527EA00D8FF7B /* ExampleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E8875C264527EA00D8FF7B /* ExampleView.swift */; };
+		18E8876A2645286D00D8FF7B /* MouseObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E887632645286D00D8FF7B /* MouseObserver.swift */; };
+		18E8876B2645286D00D8FF7B /* MouseObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E887632645286D00D8FF7B /* MouseObserver.swift */; };
 		18EDDC5325A89368007AC631 /* ApplicationSplashScreenCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EDDC5225A89368007AC631 /* ApplicationSplashScreenCoordinator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1808C0592588E6A200860799 /* Meadow */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Meadow; path = ..; sourceTree = "<group>"; };
-		181398DA25A8AE160001A2A8 /* SceneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneView.swift; sourceTree = "<group>"; };
 		18547F7725A60785006ADD6C /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		18547F7D25A60988006ADD6C /* TypeAliases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeAliases.swift; sourceTree = "<group>"; };
 		1861A60F2611D9A700D9C549 /* SceneCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneCoordinator.swift; sourceTree = "<group>"; };
@@ -61,6 +62,8 @@
 		18C804592588E5B7006AF32F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		18C8045B2588E5B7006AF32F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		18C8045C2588E5B7006AF32F /* Meadow_Example_macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Meadow_Example_macOS.entitlements; sourceTree = "<group>"; };
+		18E8875C264527EA00D8FF7B /* ExampleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleView.swift; sourceTree = "<group>"; };
+		18E887632645286D00D8FF7B /* MouseObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MouseObserver.swift; sourceTree = "<group>"; };
 		18EDDC5225A89368007AC631 /* ApplicationSplashScreenCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationSplashScreenCoordinator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -131,7 +134,6 @@
 			isa = PBXGroup;
 			children = (
 				1877CD8025A5FB2D001CC663 /* Responder.swift */,
-				181398DA25A8AE160001A2A8 /* SceneView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -159,6 +161,8 @@
 		18C804372588E5B6006AF32F /* Meadow Example Shared */ = {
 			isa = PBXGroup;
 			children = (
+				18E8875F2645286D00D8FF7B /* Observers */,
+				18E8875B2645277900D8FF7B /* Views */,
 				18C8043B2588E5B7006AF32F /* Assets.xcassets */,
 				1877CD7825A5FAF2001CC663 /* Coordinators */,
 				1877CD7F25A5FB25001CC663 /* Extensions */,
@@ -198,6 +202,22 @@
 				18C8045C2588E5B7006AF32F /* Meadow_Example_macOS.entitlements */,
 			);
 			path = "Meadow Example macOS";
+			sourceTree = "<group>";
+		};
+		18E8875B2645277900D8FF7B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				18E8875C264527EA00D8FF7B /* ExampleView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		18E8875F2645286D00D8FF7B /* Observers */ = {
+			isa = PBXGroup;
+			children = (
+				18E887632645286D00D8FF7B /* MouseObserver.swift */,
+			);
+			path = Observers;
 			sourceTree = "<group>";
 		};
 		18EDDC5125A8935C007AC631 /* Splash Screen */ = {
@@ -319,13 +339,14 @@
 				18547F7825A60785006ADD6C /* AppCoordinator.swift in Sources */,
 				1877CD8125A5FB2D001CC663 /* Responder.swift in Sources */,
 				1877CD7B25A5FAFF001CC663 /* Coordinator.swift in Sources */,
-				181398DB25A8AE160001A2A8 /* SceneView.swift in Sources */,
 				18B3D689260392A5003EF99F /* ViewCoordinator.swift in Sources */,
+				18E8876A2645286D00D8FF7B /* MouseObserver.swift in Sources */,
 				18EDDC5325A89368007AC631 /* ApplicationSplashScreenCoordinator.swift in Sources */,
 				18C804462588E5B7006AF32F /* GameViewController.swift in Sources */,
 				18C804442588E5B7006AF32F /* AppDelegate.swift in Sources */,
 				18547F7E25A60988006ADD6C /* TypeAliases.swift in Sources */,
 				1861A6102611D9A700D9C549 /* SceneCoordinator.swift in Sources */,
+				18E8875D264527EA00D8FF7B /* ExampleView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -337,13 +358,14 @@
 				18547F8125A60A10006ADD6C /* TypeAliases.swift in Sources */,
 				1877CD8225A5FB2D001CC663 /* Responder.swift in Sources */,
 				1877CD7C25A5FAFF001CC663 /* Coordinator.swift in Sources */,
-				181398DC25A8AE160001A2A8 /* SceneView.swift in Sources */,
 				18B3D68E26039364003EF99F /* ViewCoordinator.swift in Sources */,
+				18E8876B2645286D00D8FF7B /* MouseObserver.swift in Sources */,
 				18248F5325A8988F00B98624 /* ApplicationSplashScreenCoordinator.swift in Sources */,
 				18C804572588E5B7006AF32F /* GameViewController.swift in Sources */,
 				18C804552588E5B7006AF32F /* AppDelegate.swift in Sources */,
 				18547F8425A60F38006ADD6C /* AppCoordinator.swift in Sources */,
 				1861A6132611DA0300D9C549 /* SceneCoordinator.swift in Sources */,
+				18E8875E264527EA00D8FF7B /* ExampleView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

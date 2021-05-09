@@ -23,12 +23,27 @@ public struct Footprint: Codable, Equatable {
     
     public let bounds: GridBounds
     
-    public init(coordinate: Coordinate, rotation: Cardinal, nodes: [Coordinate]) {
+    public init(coordinate: Coordinate, rotation: Cardinal = .north, nodes: [Coordinate]) {
         
         self.coordinate = coordinate
         self.rotation = rotation
         self.nodes = nodes.map { $0.rotate(rotation: rotation) + coordinate }
         self.bounds = GridBounds(nodes: nodes)
+    }
+    
+    public init(bounds: GridBounds, rotation: Cardinal = .north) {
+        
+        var nodes: [Coordinate] = []
+        
+        for x in 0..<bounds.size.x {
+            
+            for z in 0..<bounds.size.z {
+                
+                nodes.append(Coordinate(x: -x, y: 0, z: -z))
+            }
+        }
+        
+        self.init(coordinate: bounds.start, rotation: rotation, nodes: nodes)
     }
     
     public init(from decoder: Decoder) throws {

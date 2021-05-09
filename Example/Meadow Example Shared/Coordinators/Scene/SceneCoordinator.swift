@@ -11,13 +11,15 @@ import SpriteKit
 
 class SceneCoordinator: ViewCoordinator {
     
+    var mouseObserver: UUID?
+    
     override func start(with option: StartOption?) {
         
         super.start(with: option)
         
         print("SceneCoordinator -> start")
         
-        guard let view = controller.view as? SceneView else { return }
+        guard let view = controller.view as? ExampleView else { return }
         
         if let scene = option as? Scene {
             
@@ -26,7 +28,7 @@ class SceneCoordinator: ViewCoordinator {
         }
         else {
             
-            guard let asset = NSDataAsset(name: "m0") else { fatalError("Unable to load scene") }
+            guard let asset = NSDataAsset(name: "bridges") else { fatalError("Unable to load scene") }
             
             do {
                 
@@ -37,11 +39,14 @@ class SceneCoordinator: ViewCoordinator {
                 let scene = Scene(meadow: meadow)
                 
                 view.scene = scene
-                view.delegate = self
+                view.delegate = scene
                 view.isPlaying = true
                 view.allowsCameraControl = true
                 
-                scene.hero.controller.spawn(at: Coordinate(x: 0, y: 10, z: 0))
+                if let spawn = meadow.portals.find(portal: .spawn) {
+                
+                    scene.hero.controller.spawn(at: spawn.coordinate)
+                }
             }
             catch {
                 
@@ -53,29 +58,48 @@ class SceneCoordinator: ViewCoordinator {
         view.overlaySKScene = nil
         
         view.backgroundColor = .white
+        
+        mouseObserver = view.mouseObserver.subscribe(stateDidChange(from:to:))
     }
     
-    override func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
+    override func stop(then completion: CoordinatorCompletionBlock?) {
         
-        super.renderer(renderer, updateAtTime: time)
+        if let mouseObserver = mouseObserver,
+           let view = controller.view as? ExampleView {
+            
+            view.mouseObserver.unsubscribe(mouseObserver)
+        }
         
-        DispatchQueue.main.async {
-         
-            guard let view = self.controller.view as? SceneView,
+        super.stop(then: completion)
+    }
+}
+
+extension SceneCoordinator {
+    
+    func stateDidChange(from previousState: ExampleView.MouseState?, to currentState: ExampleView.MouseState) {
+        
+        DispatchQueue.main.async { [weak self] in
+                    
+            guard let self = self,
+                  let view = self.controller.view as? ExampleView,
                   let scene = view.scene as? Scene else { return }
             
-            scene.renderer(renderer, updateAtTime: time)
+            switch currentState {
             
-            switch scene.hero.controller.state {
-            
-            case .idle:
+            case .up(let position, let clickType):
                 
-                guard let portal = scene.meadow.portals.find(portal: "m0p0") ??
-                        scene.meadow.portals.find(portal: "m2p0") ??
-                        scene.meadow.portals.find(portal: "m3p0") ??
-                        scene.meadow.portals.find(portal: "m3p0") else { return }
+                let startHit = view.hitTest(point: position.start)
                 
-                scene.hero.controller.move(to: portal.coordinate + portal.segue.direction.coordinate)
+                switch clickType {
+                
+                case .left:
+                    
+                    guard let surfaceTile = scene.find(traversable: startHit) else { return }
+                    
+                    scene.hero.controller.move(to: surfaceTile.coordinate)
+                
+                default: break
+                }
                 
             default: break
             }

@@ -6,9 +6,7 @@
 
 import Foundation
 
-public struct GridBounds: Equatable {
-    
-    public var size: CGSize { CGSize(width: abs(start.x - end.x) + 1, height: abs(start.z - end.z) + 1) }
+public struct GridBounds: Codable, Equatable {
     
     public let start: Coordinate
     public let end: Coordinate
@@ -41,6 +39,11 @@ public struct GridBounds: Equatable {
         self.start = minimum
         self.end = maximum
     }
+}
+
+extension GridBounds {
+    
+    public var size: Coordinate { Coordinate(x: abs(start.x - end.x) + 1, y: abs(start.y - end.y) + 1, z: abs(start.z - end.z) + 1) }
 }
 
 extension GridBounds {

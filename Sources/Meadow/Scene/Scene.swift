@@ -134,24 +134,6 @@ extension Scene: SCNSceneRendererDelegate {
 
 extension Scene {
     
-    func actor(actor: Actor, didMoveTo coordinate: Coordinate) {
-        
-        guard actor as? Hero != nil else { return }
-        
-        if let portal = find(seam: coordinate),
-           let portals = portal.ancestor as? Portals,
-           let parent = portals.ancestor as? Meadow,
-           parent != meadow {
-        
-            print("Actor did move to new Scene!")
-            seams[meadow.identifier] = meadow
-            
-            meadow = parent
-            
-            updateSeams()
-        }
-    }
-    
     func updateSeams() {
         
         var newSeams: [String : Meadow] = [:]
@@ -159,23 +141,22 @@ extension Scene {
         let portals = meadow.portals.find(portals: .seam)
         
         for portal in portals {
-         
+            
             do {
                 
                 guard let seam = try loadSeam(identifier: portal.segue.scene),
                       let wormhole = seam.portals.find(portal: portal.segue.identifier) else { continue }
                 
-                let offset = (portal.coordinate + portal.segue.direction.coordinate) - wormhole.coordinate
-                
-                seam.offset = offset
-                seam.ancestor = self
-                
                 if seam.parent == nil {
+                    
+                    seam.ancestor = self
                     
                     rootNode.addChildNode(seam)
                 }
                 
-                newSeams[portal.segue.scene] = seam
+                seam.offset = (portal.coordinate + portal.segue.direction.coordinate) - wormhole.coordinate
+                
+                newSeams[seam.identifier] = seam
             }
             catch {
                 
@@ -184,9 +165,9 @@ extension Scene {
         }
         
         for (identifier, seam) in seams {
-            
+
             if newSeams[identifier] == nil {
-                
+
                 seam.ancestor = nil
                 
                 seam.removeFromParentNode()
@@ -213,18 +194,18 @@ extension Scene {
 
 extension Scene {
     
-    func find(traversable coordinate: Coordinate) -> SurfaceTile? {
+    public func find(traversable coordinate: Coordinate) -> PathNode? {
         
-        if let tile = meadow.find(traversable: coordinate) {
+        if let node = meadow.find(traversable: coordinate) {
             
-            return tile
+            return node
         }
         
         for (_, seam) in seams {
          
-            if let tile = seam.find(traversable: coordinate) {
+            if let node = seam.find(traversable: coordinate) {
                 
-                return tile
+                return node
             }
         }
         
@@ -251,11 +232,6 @@ extension Scene {
     
     func path(between origin: Coordinate, destination: Coordinate) -> Path? {
         
-        guard let start = find(traversable: origin),
-              start.walkable,
-              let end = find(traversable: destination),
-              end.walkable else { return nil }
-        
         let queue = PriorityQueue()
                 
         var stack: [Coordinate : Coordinate] = [origin : origin]
@@ -271,7 +247,7 @@ extension Scene {
                 
                 guard let tile = find(traversable: coordinate) else { return nil }
                 
-                var nodes: [PathNode] = [tile.pathNode]
+                var nodes: [PathNode] = [tile]
                 
                 var current = coordinate
                 
@@ -280,7 +256,7 @@ extension Scene {
                     guard let node = stack[current],
                           let tile = find(traversable: node) else { return nil }
                     
-                    nodes.append(tile.pathNode)
+                    nodes.append(tile)
                     
                     current = node
                 }
@@ -290,8 +266,9 @@ extension Scene {
             
             for cardinal in Cardinal.allCases {
                 
-                guard let neighbour = find(traversable: coordinate + cardinal.coordinate),
-                      neighbour.walkable else { continue }
+                guard let neighbour = find(traversable: coordinate + cardinal.coordinate) else { continue }
+                
+                if neighbour.coordinate.y != coordinate.y { continue }
                 
                 let movementCost = neighbour.movementCost
                 

@@ -25,6 +25,8 @@ class FoliageChunk: FootprintChunk {
     
     let foliageType: FoliageType
     
+    var footprint: Footprint?
+    
     required public init(from decoder: Decoder) throws {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -50,15 +52,15 @@ class FoliageChunk: FootprintChunk {
     
     override func clean() -> Bool {
         
-        guard isDirty else { return false }
+        guard isDirty,
+              let prop = scene?.props.prop(foliage: foliageType) else { return false }
+        
+        footprint = Footprint(coordinate: coordinate, nodes: prop.footprint.nodes)
         
         position = SCNVector3(vector: coordinate.world)
         
-        if let mesh = scene?.props.prop(foliage: foliageType).mesh {
-         
-            self.geometry = SCNGeometry(mesh: mesh)
-            self.geometry?.program = program
-        }
+        self.geometry = SCNGeometry(mesh: prop.mesh)
+        self.geometry?.program = program
         
         if let uniforms = uniforms {
             

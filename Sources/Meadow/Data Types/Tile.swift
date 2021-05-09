@@ -20,7 +20,7 @@ public class Tile: Codable, Equatable, Renderable, Responder {
     
     public var category: Int { SceneGraphCategory.surfaceTile.rawValue }
 
-    var coordinate: Coordinate {
+    private(set) public var coordinate: Coordinate {
         
         didSet {
             

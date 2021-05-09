@@ -48,7 +48,6 @@ public class FootprintChunk: SCNNode, Codable, Hideable, Responder, Shadable, So
         super.init()
         
         name = "Chunk \(coordinate.description)"
-        position = SCNVector3(coordinate: coordinate)
         categoryBitMask = category
         
         becomeDirty()
@@ -70,7 +69,7 @@ public class FootprintChunk: SCNNode, Codable, Hideable, Responder, Shadable, So
         
         guard isDirty else { return false }
         
-        //
+        position = SCNVector3(coordinate: coordinate)
         
         isDirty = false
         

@@ -31,8 +31,6 @@ public class Actor: SCNNode, Codable, Hideable, Responder, Shadable, Soilable, U
             
             if oldValue != coordinate {
                 
-                scene?.actor(actor: self, didMoveTo: coordinate)
-                
                 becomeDirty()
             }
         }
@@ -133,7 +131,7 @@ public class Actor: SCNNode, Codable, Hideable, Responder, Shadable, Soilable, U
             
             let destination = path.nodes[index + 1]
             
-            let speed = delta / Double(node.movementCost)
+            let speed = (delta / Double(node.movementCost)) * 2
             
             let currentPosition = Vector(vector: position)
             let targetPosition = destination.coordinate.world
@@ -159,7 +157,7 @@ extension Actor {
         
         case .moving(let path):
             
-            print("Following path: \(path)")
+            print("Following path: \(path.nodes.first?.coordinate ?? .zero) -> \(path.nodes.last?.coordinate ?? .zero)")
         
         case .pathfinding(let destination):
             

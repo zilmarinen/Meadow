@@ -6,7 +6,7 @@
 
 import SceneKit
 
-public class SceneView: SCNView {
+open class SceneView: SCNView {
     
     public var library: MTLLibrary?
     
@@ -18,5 +18,17 @@ public class SceneView: SCNView {
             
             value.library = library
         }
+    }
+}
+
+extension SceneView {
+    
+    public func hitTest(point: CGPoint) -> Coordinate {
+        
+        guard let hit = self.hitTest(point, options: [SCNHitTestOption.categoryBitMask : SceneGraphCategory.surface.rawValue | SceneGraphCategory.surfaceChunk.rawValue]).first else { return .zero }
+        
+        let vector = Vector(vector: hit.worldCoordinates)
+        
+        return Coordinate(x: Int(round(vector.x)), y: Int(vector.y / World.Constants.slope), z: Int(round(vector.z)))
     }
 }

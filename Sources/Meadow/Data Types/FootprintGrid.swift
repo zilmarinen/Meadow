@@ -84,4 +84,3 @@ extension FootprintGrid {
         return true
     }
 }
-

@@ -55,7 +55,7 @@ public class PortalChunk: FootprintChunk {
         let x = CGFloat(coordinate.x) + ((size.width - 1) * 0.5)
         let z = CGFloat(coordinate.z) + ((size.height - 1) * 0.5)
         
-        let height: CGFloat = 0.25
+        let height = CGFloat(World.Constants.slope)
         
         position = SCNVector3(x: x, y: CGFloat(Double(coordinate.y) * World.Constants.slope) + (height / 2.0), z: z)
         

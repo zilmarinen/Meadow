@@ -4,19 +4,19 @@
 //  Created by Zack Brown on 19/03/2021.
 //
 
-public struct GridPattern: Codable, Equatable {
+public struct GridPattern<T: Codable & Equatable>: Codable, Equatable {
     
-    public var north: Bool
-    public var east: Bool
-    public var south: Bool
-    public var west: Bool
+    public var north: T
+    public var east: T
+    public var south: T
+    public var west: T
     
-    public var northWest: Bool
-    public var northEast: Bool
-    public var southEast: Bool
-    public var southWest: Bool
+    public var northWest: T
+    public var northEast: T
+    public var southEast: T
+    public var southWest: T
     
-    public init(value: Bool = true) {
+    public init(value: T) {
         
         north = value
         east = value
@@ -29,7 +29,88 @@ public struct GridPattern: Codable, Equatable {
         southWest = value
     }
     
-    public init(north: Bool = true,
+    public init(north: T,
+                east: T,
+                south: T,
+                west: T,
+                northWest: T,
+                northEast: T,
+                southEast: T,
+                southWest: T) {
+        
+        self.north = north
+        self.east = east
+        self.south = south
+        self.west = west
+        
+        self.northWest = northWest
+        self.northEast = northEast
+        self.southEast = southEast
+        self.southWest = southWest
+    }
+    
+    public mutating func set(value: T, cardinal: Cardinal) {
+        
+        switch cardinal {
+        
+        case .north: north = value
+        case .east: east = value
+        case .south: south = value
+        case .west: west = value
+        }
+    }
+    
+    public mutating func set(value: T, ordinal: Ordinal) {
+        
+        switch ordinal {
+        
+        case .northEast: northEast = value
+        case .northWest: northWest = value
+        case .southWest: southWest = value
+        case .southEast: southEast = value
+        }
+    }
+    
+    public func value(for cardinal: Cardinal) -> T {
+        
+        switch cardinal {
+        
+        case .north: return north
+        case .east: return east
+        case .south: return south
+        case .west: return west
+        }
+    }
+    
+    public func value(for ordinal: Ordinal) -> T {
+        
+        switch ordinal {
+        
+        case .northEast: return northEast
+        case .northWest: return northWest
+        case .southWest: return southWest
+        case .southEast: return southEast
+        }
+    }
+}
+
+extension GridPattern {
+    
+    func rule(for cardinal: Cardinal) -> GridPatternRule<T> {
+        
+        switch cardinal {
+        
+        case .north: return GridPatternRule(left: northWest, center: north, right: northEast)
+        case .east: return GridPatternRule(left: northEast, center: east, right: southEast)
+        case .south: return GridPatternRule(left: southEast, center: south, right: southWest)
+        case .west: return GridPatternRule(left: southWest, center: west, right: northWest)
+        }
+    }
+}
+
+extension GridPattern where T == Bool {
+    
+    init(north: Bool = true,
                 east: Bool = true,
                 south: Bool = true,
                 west: Bool = true,
@@ -48,35 +129,10 @@ public struct GridPattern: Codable, Equatable {
         self.southEast = southEast
         self.southWest = southWest
     }
-}
-
-extension GridPattern {
-    
-    func rule(for cardinal: Cardinal) -> GridPatternRule {
-        
-        switch cardinal {
-        
-        case .north: return GridPatternRule(left: northWest, center: north, right: northEast)
-        case .east: return GridPatternRule(left: northEast, center: east, right: southEast)
-        case .south: return GridPatternRule(left: southEast, center: south, right: southWest)
-        case .west: return GridPatternRule(left: southWest, center: west, right: northWest)
-        }
-    }
-}
-
-extension GridPattern {
     
     public static func index(of pattern: GridPattern) -> Int {
         
-        for index in 0..<defaults.count {
-            
-            if defaults[index] == pattern {
-                
-                return index
-            }
-        }
-        
-        return 0
+        return defaults.firstIndex(of: pattern) ?? 0
     }
     
     public static var defaults: [GridPattern] {

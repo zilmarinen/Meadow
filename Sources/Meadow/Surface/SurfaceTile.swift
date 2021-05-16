@@ -13,7 +13,7 @@ public class SurfaceTile: Tile {
         case tileType = "tt"
         case edgeType = "et"
         case edgePatterns = "ep"
-        case corners = "co"
+        case volumes = "v"
     }
     
     public struct TileType: Codable, Equatable {
@@ -33,8 +33,7 @@ public class SurfaceTile: Tile {
     let tileType: TileType
     let edgeType: SurfaceEdgeType
     let edgePatterns: [Cardinal : Int]
-    let corners: [Ordinal : Int]
-    let face: [Vector]
+    let volumes: [Ordinal : TileVolume]
     
     var color: Color {
         
@@ -43,7 +42,7 @@ public class SurfaceTile: Tile {
     
     var pathNode: PathNode {
         
-        return PathNode(coordinate: coordinate, vector: face.average(), movementCost: movementCost)
+        return PathNode(coordinate: coordinate, vector: .zero, movementCost: movementCost)
     }
 
     required public init(from decoder: Decoder) throws {
@@ -53,11 +52,7 @@ public class SurfaceTile: Tile {
         tileType = try container.decode(TileType.self, forKey: .tileType)
         edgeType = try container.decode(SurfaceEdgeType.self, forKey: .edgeType)
         edgePatterns = try container.decode([Cardinal : Int].self, forKey: .edgePatterns)
-        
-        let cornerHeights = try container.decode([Ordinal : Int].self, forKey: .corners)
-        
-        corners = cornerHeights
-        face = Ordinal.allCases.map { $0.vector + Vector(x: 0, y: Double(cornerHeights[$0] ?? 0) * World.Constants.slope, z: 0) }
+        volumes = try container.decode([Ordinal : TileVolume].self, forKey: .volumes)
         
         try super.init(from: decoder)
     }
@@ -71,153 +66,77 @@ public class SurfaceTile: Tile {
         try container.encode(tileType, forKey: .tileType)
         try container.encode(edgeType, forKey: .edgeType)
         try container.encode(edgePatterns, forKey: .edgePatterns)
-        try container.encode(corners, forKey: .corners)
+        try container.encode(volumes, forKey: .volumes)
     }
     
     override func render(position: Vector) -> [Polygon] {
         
-        let surface = face.map { $0 + position }
-        var throne = surface
-        
-        for ordinal in Ordinal.allCases {
-            
-            throne[ordinal.rawValue].y = Double(World.Constants.floor - 1) * World.Constants.slope
-        }
-        
-        let equalEdges = corners.filter { $0.value == coordinate.y }.count
-        
-        let tile = scene?.meadow.surface.tilemap.tileset.tiles(with: pattern).randomElement()
-        
-        let tileUVs = tile?.uvs ?? UVs(start: .zero, end: .one)
-        
-        let faceColor = color
-        
-        if (equalEdges == 4 || (equalEdges == 2 && edgeType == .sloped)) {
-            
-            let normal = surface.normal()
-            
-            var vertices: [Vertex] = []
-            
-            for index in 0..<surface.count {
-                
-                vertices.append(Vertex(position: surface[index], normal: normal, color: faceColor, textureCoordinates: tileUVs[index]))
-            }
-            
-            return [Polygon(vertices: vertices)]
-        }
+        let tile = scene?.meadow.surface.tilemap.tileset.tiles(with: apexPattern).randomElement()
         
         var polygons: [Polygon] = []
         
-        switch edgeType {
-        
-        case .sloped:
+        for ordinal in Ordinal.allCases {
             
-            for ordinal in Ordinal.allCases {
+            guard let volume = volumes[ordinal] else { continue }
+            
+            let offset = ordinal.coordinate.world * ((World.Constants.volumeSize) / 2.0)
+            
+            let upperFace = TileVolume.apex.map { $0 + offset + position }
+            let lowerFace = TileVolume.throne.map { $0 + offset + position }
+            
+            var apex: [Vector] = []
+            
+            for index in volume.apex.corners.indices {
                 
-                let j = (ordinal.rawValue + 1) % 4
-                let k = (ordinal.rawValue - 1 + 4) % 4
-                
-                guard let o0 = Ordinal(rawValue: j),
-                      let o1 = Ordinal(rawValue: k) else { continue }
-                
-                guard corners[o0] == corners[o1] else { continue }
-                
-                let v0 = surface[ordinal.rawValue]
-                let v1 = surface[j]
-                let v2 = surface[k]
-                
-                let normal = [v0, v1, v2].normal()
-                
-                polygons.append(Polygon(vertices: [Vertex(position: v0, normal: normal, color: faceColor, textureCoordinates: tileUVs[ordinal.rawValue]),
-                                                   Vertex(position: v1, normal: normal, color: faceColor, textureCoordinates: tileUVs[j]),
-                                                   Vertex(position: v2, normal: normal, color: faceColor, textureCoordinates: tileUVs[k])]))
+                apex.append(lowerFace[index].lerp(vector: upperFace[index], interpolater: volume.apex.corners[index]))
             }
             
-        case .terraced:
+            let normal = -apex.normal()
+            let apexUVs = (tile?.uvs ?? UVs(start: .zero, end: .one)).slice(ordinal: ordinal)
             
-            var mantle = surface
-            var apex = surface
+            var vertices: [Vertex] = []
             
-            let floor = corners.values.min() ?? coordinate.y
-            
-            for ordinal in Ordinal.allCases {
+            for index in apex.indices.reversed() {
                 
-                mantle[ordinal.rawValue].y = Double(floor) * World.Constants.slope
-                apex[ordinal.rawValue].y = Double(coordinate.y) * World.Constants.slope
+                vertices.append(Vertex(position: apex[index], normal: normal, color: color, textureCoordinates: apexUVs[index]))
             }
             
-            let mantleCenter = mantle.average()
-            let apexCenter = apex.average()
+            polygons.append(Polygon(vertices: vertices))
             
-            for ordinal in Ordinal.allCases {
+            guard !volume.edges.isEmpty else { continue }
+            
+            for (cardinal, edges) in volume.edges {
                 
-                let j = (ordinal.rawValue + 1) % 4
-                let k = (ordinal.rawValue - 1 + 4) % 4
+                guard let edgePattern = edgePatterns[cardinal] else { continue }
                 
-                guard let o0 = Ordinal(rawValue: j),
-                      let o1 = Ordinal(rawValue: k),
-                      let height = corners[ordinal] else { continue }
+                let (o0, o1) = cardinal.ordinals
                 
-                let (c0, c1) = ordinal.cardinals
+                let edge = scene?.meadow.surface.tilemap.edgeset.edges(with: edgePattern).randomElement()
                 
-                let face = (height == coordinate.y ? apex : mantle)
-                let center = (height == coordinate.y ? apexCenter : mantleCenter)
+                let edgeUVs = (edge?.uvs ?? UVs(start: .zero, end: .one)).slice(cardinal: ((ordinal.rawValue == cardinal.rawValue || ordinal.rawValue == ((cardinal.rawValue + 4) - 1) % 4) ? .west : .east))
                 
-                let v0 = face[ordinal.rawValue]
-                let v1 = v0.lerp(vector: face[o0.rawValue], interpolater: 0.5)
-                let v2 = v0.lerp(vector: face[o1.rawValue], interpolater: 0.5)
+                var face: [Vector] = [apex[o0.rawValue], apex[o1.rawValue]]
                 
-                let uv0 = tileUVs[ordinal.rawValue]
-                let uv1 = uv0.lerp(vector: tileUVs[o0.rawValue], interpolater: 0.5)
-                let uv2 = uv0.lerp(vector: tileUVs[o1.rawValue], interpolater: 0.5)
-                let uv3 = tileUVs.uvs.average()
-                
-                var normal = [v0, v1, center, v2].normal()
-                
-                polygons.append(Polygon(vertices: [Vertex(position: v0, normal: normal, color: faceColor, textureCoordinates: uv0),
-                                                   Vertex(position: v1, normal: normal, color: faceColor, textureCoordinates: uv1),
-                                                   Vertex(position: center, normal: normal, color: faceColor, textureCoordinates: uv3),
-                                                   Vertex(position: v2, normal: normal, color: faceColor, textureCoordinates: uv2)]))
-                
-                if let corner = corners[o0],
-                   height > corner,
-                   let edgePattern = edgePatterns[c0] {
-
-                    let edge = scene?.meadow.surface.tilemap.edgeset.edges(with: edgePattern).randomElement()
-
-                    let edgeUVs = edge?.uvs ?? UVs(start: .zero, end: .one)
-
-                    let v3 = mantle[ordinal.rawValue].lerp(vector: mantle[o0.rawValue], interpolater: 0.5)
-
-                    normal = [apexCenter, v1, v3, mantleCenter].normal()
+                if let height = edges[o1] {
                     
-                    let uv0 = edgeUVs.start.lerp(vector: Vector(x: edgeUVs.end.x, y: edgeUVs.start.y, z: 0), interpolater: 0.5)
-
-                    polygons.append(Polygon(vertices: [Vertex(position: apexCenter, normal: normal, color: color, textureCoordinates: Vector(x: uv0.x, y: edgeUVs.end.y, z: 0)),
-                                                       Vertex(position: v1, normal: normal, color: color, textureCoordinates: Vector(x: edgeUVs.start.x, y: edgeUVs.end.y, z: 0)),
-                                                       Vertex(position: v3, normal: normal, color: color, textureCoordinates: edgeUVs.start),
-                                                       Vertex(position: mantleCenter, normal: normal, color: color, textureCoordinates: uv0)]))
+                    face.append(lowerFace[o1.rawValue].lerp(vector: upperFace[o1.rawValue], interpolater: height))
                 }
                 
-                if let corner = corners[o1],
-                   height > corner,
-                   let edgePattern = edgePatterns[c1] {
-
-                    let edge = scene?.meadow.surface.tilemap.edgeset.edges(with: edgePattern).randomElement()
-
-                    let edgeUVs = edge?.uvs ?? UVs(start: .zero, end: .one)
-
-                    let v3 = mantle[ordinal.rawValue].lerp(vector: mantle[o1.rawValue], interpolater: 0.5)
-
-                    normal = [v2, apexCenter, mantleCenter, v3].normal()
+                if let height = edges[o0] {
                     
-                    let uv0 = edgeUVs.start.lerp(vector: Vector(x: edgeUVs.end.x, y: edgeUVs.start.y, z: 0), interpolater: 0.5)
-
-                    polygons.append(Polygon(vertices: [Vertex(position: v2, normal: normal, color: color, textureCoordinates: edgeUVs.end),
-                                                       Vertex(position: apexCenter, normal: normal, color: color, textureCoordinates: Vector(x: uv0.x, y: edgeUVs.end.y, z: 0)),
-                                                       Vertex(position: mantleCenter, normal: normal, color: color, textureCoordinates: uv0),
-                                                       Vertex(position: v3, normal: normal, color: color, textureCoordinates: Vector(x: edgeUVs.end.x, y: edgeUVs.start.y, z: 0))]))
+                    face.append(lowerFace[o0.rawValue].lerp(vector: upperFace[o0.rawValue], interpolater: height))
                 }
+                
+                let normal = cardinal.normal
+                
+                var vertices: [Vertex] = []
+                
+                for index in face.indices {
+                    
+                    vertices.append(Vertex(position: face[index], normal: normal, color: color, textureCoordinates: edgeUVs[index]))
+                }
+                
+                polygons.append(Polygon(vertices: vertices))
             }
         }
         
@@ -229,7 +148,7 @@ extension SurfaceTile {
     
     public static func == (lhs: SurfaceTile, rhs: SurfaceTile) -> Bool {
         
-        return lhs.coordinate == rhs.coordinate && lhs.pattern == rhs.pattern && lhs.tileType == rhs.tileType
+        return lhs.coordinate == rhs.coordinate && lhs.apexPattern == rhs.apexPattern && lhs.tileType == rhs.tileType
     }
 }
 

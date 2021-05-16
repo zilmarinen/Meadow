@@ -28,9 +28,9 @@ public struct Vector: Codable, Hashable {
     
     public init(x: Double, y: Double, z: Double) {
         
-        self.x = x
-        self.y = y
-        self.z = z
+        self.x = Math.quantize(value: x)
+        self.y = Math.quantize(value: y)
+        self.z = Math.quantize(value: z)
     }
     
     public init(coordinate: Coordinate) {
@@ -75,12 +75,9 @@ public extension Vector {
     
     static let zero = Vector(x: 0, y: 0, z: 0)
     static let one = Vector(x: 1, y: 1, z: 1)
-    static var left = -right
     static var right =  Vector(x: 1, y: 0, z: 0)
-    static var forward = Vector(x: 0, y: 0, z: 1)
-    static var backward = -forward
     static var up = Vector(x: 0, y: 1, z: 0)
-    static var down = -up
+    static var forward = Vector(x: 0, y: 0, z: -1)
     static var infinity = Vector(x: .infinity, y: .infinity, z: .infinity)
 }
 

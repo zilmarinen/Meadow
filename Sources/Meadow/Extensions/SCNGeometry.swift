@@ -133,7 +133,7 @@ public extension SCNGeometry {
             for vertex in polygon.vertices {
                 
                 let v0 = SCNVector3(vector: vertex.position)
-                let v1 = SCNVector3(vector: vertex.position + vertex.normal)
+                let v1 = SCNVector3(vector: vertex.position + (vertex.normal / 2.0))
                 
                 let index = UInt32(meshIndices.count)
                 

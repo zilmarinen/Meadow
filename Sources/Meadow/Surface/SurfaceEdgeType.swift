@@ -7,5 +7,6 @@
 public enum SurfaceEdgeType: Int, CaseIterable, Codable {
     
     case sloped
+    case stairs
     case terraced
 }

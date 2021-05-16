@@ -126,7 +126,7 @@ fragment float4 surface_fragment(Fragment f [[stage_in]], texture2d<float, acces
             color = edgeColorLookup(f.color.g);
         }
         
-        return illumimate(f, color);
+        return color;
     }
     
     float4 color = float4(tileset.sample(image, f.uv));

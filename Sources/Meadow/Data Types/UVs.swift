@@ -11,19 +11,48 @@ public struct UVs: Codable, Equatable {
     public let start: Vector
     public let end: Vector
     
-    var uvs: [Vector] { [Vector(x: end.x, y: end.y, z: 0),
-                         Vector(x: start.x, y: end.y, z: 0),
-                         Vector(x: start.x, y: start.y, z: 0),
-                         Vector(x: end.x, y: start.y, z: 0)] }
+    var uvs: [Vector] { [start,
+                         Vector(x: end.x, y: start.y, z: 0),
+                         end,
+                         Vector(x: start.x, y: end.y, z: 0)] }
     
     public init(start: Vector, end: Vector) {
         
-        self.start = Vector(x: Math.quantize(value: start.x), y: Math.quantize(value: start.y), z: Math.quantize(value: start.z))
-        self.end = Vector(x: Math.quantize(value: end.x), y: Math.quantize(value: end.y), z: Math.quantize(value: end.z))
+        self.start = Vector.minimum(lhs: start, rhs: end)
+        self.end = Vector.maximum(lhs: start, rhs: end)
     }
     
     subscript(index: Int) -> Vector {
     
         return uvs[index]
+    }
+}
+
+extension UVs {
+    
+    func slice(cardinal: Cardinal) -> UVs {
+        
+        let center = start.lerp(vector: end, interpolater: 0.5)
+        
+        switch cardinal {
+        
+        case .north: return UVs(start: start, end: Vector(x: end.x, y: center.y, z: 0))
+        case .east: return UVs(start: Vector(x: center.x, y: start.y, z: 0), end: end)
+        case .south: return UVs(start: Vector(x: start.x, y: center.y, z: 0), end: end)
+        case .west: return UVs(start: start, end: Vector(x: center.x, y: end.y, z: 0))
+        }
+    }
+    
+    func slice(ordinal: Ordinal) -> UVs {
+        
+        let center = start.lerp(vector: end, interpolater: 0.5)
+        
+        switch ordinal {
+        
+        case .northWest: return UVs(start: start, end: center)
+        case .northEast: return UVs(start: Vector(x: center.x, y: start.y, z: 0), end: Vector(x: end.x, y: center.y, z: 0))
+        case .southEast: return UVs(start: center, end: end)
+        case .southWest: return UVs(start: Vector(x: start.x, y: center.y, z: 0), end: Vector(x: center.x, y: end.y, z: 0))
+        }
     }
 }

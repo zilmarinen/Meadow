@@ -49,22 +49,22 @@ public class FootpathTile: Tile {
         
         guard let surfaceTile = scene?.meadow.surface.find(tile: coordinate) else { return [] }
         
-        let face = Ordinal.allCases.map { $0.vector + position + Vector(x: 0, y: Double(surfaceTile.corners[$0] ?? 0) * World.Constants.slope, z: 0) }
+        //let face = Ordinal.allCases.map { $0.vector + position + Vector(x: 0, y: Double(surfaceTile.corners[$0] ?? 0) * World.Constants.slope, z: 0) }
         
-        let tile = scene?.meadow.footpath.tilemap.tileset.tiles(with: pattern, tileType: tileType).randomElement()
+        let tile = scene?.meadow.footpath.tilemap.tileset.tiles(with: apexPattern, tileType: tileType).randomElement()
         
         let tileUVs = tile?.uvs ?? UVs(start: .zero, end: .one)
             
-        let normal = face.normal()
+        //let normal = face.normal()
         
         let faceColor = color
         
         var vertices: [Vertex] = []
         
-        for index in 0..<face.count {
-            
-            vertices.append(Vertex(position: face[index], normal: normal, color: faceColor, textureCoordinates: tileUVs[index]))
-        }
+//        for index in 0..<face.count {
+//
+//            //vertices.append(Vertex(position: face[index], normal: normal, color: faceColor, textureCoordinates: tileUVs[index]))
+//        }
         
         return [Polygon(vertices: vertices)]
     }
@@ -74,6 +74,6 @@ extension FootpathTile {
     
     public static func == (lhs: FootpathTile, rhs: FootpathTile) -> Bool {
         
-        return lhs.coordinate == rhs.coordinate && lhs.pattern == rhs.pattern && lhs.tileType == rhs.tileType
+        return lhs.coordinate == rhs.coordinate && lhs.apexPattern == rhs.apexPattern && lhs.tileType == rhs.tileType
     }
 }

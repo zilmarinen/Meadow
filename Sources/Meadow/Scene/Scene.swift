@@ -75,6 +75,18 @@ open class Scene: SCNScene, Codable, Responder, Soilable {
         camera.controller.state = .focus(node: hero, cardinal: .east, zoom: 1.0)
         
         becomeDirty()
+        
+        let forward = SCNNode(geometry: SCNBox(width: 1, height: 1, length: 1, chamferRadius: 0))
+        let right = SCNNode(geometry: SCNBox(width: 1, height: 1, length: 1, chamferRadius: 0))
+        
+        forward.geometry?.firstMaterial?.diffuse.contents = MDWColor.systemPurple
+        right.geometry?.firstMaterial?.diffuse.contents = MDWColor.systemRed
+        
+        forward.position = SCNVector3(vector: .forward * 2)
+        right.position = SCNVector3(vector: .right * 2)
+        
+        rootNode.addChildNode(forward)
+        rootNode.addChildNode(right)
     }
     
     required public init?(coder: NSCoder) {

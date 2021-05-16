@@ -70,6 +70,6 @@ extension WaterTile {
     
     public static func == (lhs: WaterTile, rhs: WaterTile) -> Bool {
         
-        return lhs.coordinate == rhs.coordinate && lhs.pattern == rhs.pattern && lhs.tileType == rhs.tileType
+        return lhs.coordinate == rhs.coordinate && lhs.apexPattern == rhs.apexPattern && lhs.tileType == rhs.tileType
     }
 }

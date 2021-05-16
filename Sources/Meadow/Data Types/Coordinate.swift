@@ -31,12 +31,9 @@ public struct Coordinate: Codable, Equatable, Hashable {
 public extension Coordinate {
     
     static var zero = Coordinate(x: 0, y: 0, z: 0)
-    static var left = -right
     static var right = Coordinate(x: 1, y: 0, z: 0)
-    static var forward = Coordinate(x: 0, y: 0, z: 1)
-    static var backward = -forward
     static var up = Coordinate(x: 0, y: 1, z: 0)
-    static var down = -up
+    static var forward = Coordinate(x: 0, y: 0, z: -1)
     static var infinity = Coordinate(x: .max, y: .max, z: .max)
     
     var xz: Coordinate { Coordinate(x: x, y: 0, z: z) }

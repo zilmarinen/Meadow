@@ -8,5 +8,7 @@ public struct PathNode: Equatable {
     
     public let coordinate: Coordinate
     public let vector: Vector
-    public let movementCost: Int
+    public let movementCost: Double
+    public let sloped: Bool
+    public let cardinals: [Cardinal]
 }

@@ -134,7 +134,7 @@ public class Actor: SCNNode, Codable, Hideable, Responder, Shadable, Soilable, U
             let speed = (delta / Double(node.movementCost)) * 2
             
             let currentPosition = Vector(vector: position)
-            let targetPosition = destination.coordinate.world
+            let targetPosition = destination.vector
             let newPosition = currentPosition.move(towards: targetPosition, distance: speed)
             
             position = SCNVector3(vector: newPosition)
@@ -157,7 +157,7 @@ extension Actor {
         
         case .moving(let path):
             
-            print("Following path: \(path.nodes.first?.coordinate ?? .zero) -> \(path.nodes.last?.coordinate ?? .zero)")
+            print("Following path[\(path.nodes.count)]: \(path.nodes.first?.coordinate ?? .zero) -> \(path.nodes.last?.coordinate ?? .zero)")
         
         case .pathfinding(let destination):
             

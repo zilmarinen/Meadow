@@ -28,7 +28,7 @@ class SceneCoordinator: ViewCoordinator {
         }
         else {
             
-            guard let asset = NSDataAsset(name: "bridges") else { fatalError("Unable to load scene") }
+            guard let asset = NSDataAsset(name: "pathfinding") else { fatalError("Unable to load scene") }
             
             do {
                 

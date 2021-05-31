@@ -52,14 +52,12 @@ class FoliageChunk: FootprintChunk {
     
     override func clean() -> Bool {
         
-        guard isDirty,
+        guard super.clean(),
               let prop = scene?.props.prop(foliage: foliageType) else { return false }
         
         footprint = Footprint(coordinate: coordinate, nodes: prop.footprint.nodes)
         
-        position = SCNVector3(vector: coordinate.world)
-        
-        self.geometry = SCNGeometry(mesh: prop.mesh)
+        self.geometry = SCNGeometry(mesh: prop.mesh.translated(by: Vector(x: 0, y: Double(coordinate.y) * World.Constants.slope, z: 0)))
         self.geometry?.program = program
         
         if let uniforms = uniforms {

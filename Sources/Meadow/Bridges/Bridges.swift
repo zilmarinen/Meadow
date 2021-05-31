@@ -8,6 +8,8 @@ import SceneKit
 
 public class Bridges: FootprintGrid<BridgeChunk> {
     
+    public override var category: Int { SceneGraphCategory.bridges.rawValue }
+    
     public func find(bridge coordinate: Coordinate) -> BridgeChunk? {
         
         return chunks.first { $0.footprint.intersects(coordinate: coordinate) }

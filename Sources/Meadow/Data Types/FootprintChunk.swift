@@ -69,7 +69,7 @@ public class FootprintChunk: SCNNode, Codable, Hideable, Responder, Shadable, So
         
         guard isDirty else { return false }
         
-        position = SCNVector3(coordinate: coordinate)
+        position = SCNVector3(vector: coordinate.xz.world)
         
         isDirty = false
         

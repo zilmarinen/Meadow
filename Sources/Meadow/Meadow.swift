@@ -10,17 +10,19 @@ public class Meadow: SCNNode, Codable, Responder, Updatable {
     
     private enum CodingKeys: String, CodingKey {
         
-        case actors = "a"
-        case bridges = "br"
-        case buildings = "bu"
-        case foliage = "fol"
-        case footpath = "foo"
-        case portals = "p"
-        case surface = "s"
-        case water = "wat"
+        case actors
+        case bridges
+        case buildings
+        case foliage
+        case footpath
+        case portals
+        case stairs
+        case surface
+        case walls
+        case water
         
-        case name = "n"
-        case identifier = "i"
+        case name
+        case identifier
     }
     
     public static var bundle: Bundle { .module }
@@ -37,6 +39,7 @@ public class Meadow: SCNNode, Codable, Responder, Updatable {
     let foliage: Foliage
     let footpath: Footpath
     public let portals: Portals
+    let stairs: Stairs
     let surface: Surface
     let water: Water
     
@@ -53,6 +56,7 @@ public class Meadow: SCNNode, Codable, Responder, Updatable {
                 foliage.offset = offset
                 footpath.offset = offset
                 portals.offset = offset
+                stairs.offset = offset
                 surface.offset = offset
                 water.offset = offset
                 
@@ -71,6 +75,7 @@ public class Meadow: SCNNode, Codable, Responder, Updatable {
         foliage = try container.decode(Foliage.self, forKey: .foliage)
         footpath = try container.decode(Footpath.self, forKey: .footpath)
         portals = try container.decode(Portals.self, forKey: .portals)
+        stairs = try container.decode(Stairs.self, forKey: .stairs)
         surface = try container.decode(Surface.self, forKey: .surface)
         water = try container.decode(Water.self, forKey: .water)
         
@@ -85,6 +90,7 @@ public class Meadow: SCNNode, Codable, Responder, Updatable {
         addChildNode(foliage)
         addChildNode(footpath)
         addChildNode(portals)
+        addChildNode(stairs)
         addChildNode(surface)
         addChildNode(water)
         
@@ -106,6 +112,7 @@ public class Meadow: SCNNode, Codable, Responder, Updatable {
         try container.encode(foliage, forKey: .foliage)
         try container.encode(footpath, forKey: .footpath)
         try container.encode(portals, forKey: .portals)
+        try container.encode(stairs, forKey: .stairs)
         try container.encode(surface, forKey: .surface)
         try container.encode(water, forKey: .water)
         
@@ -126,6 +133,7 @@ extension Meadow {
         foliage.clean()
         footpath.clean()
         portals.clean()
+        stairs.clean()
         surface.clean()
         water.clean()
         
@@ -151,15 +159,21 @@ extension Meadow {
               foliage.find(foliage: coordinate) == nil,
               water.find(tile: coordinate) == nil else { return nil }
         
-        if let bridge = bridges.find(bridge: coordinate) {
+        if let bridge = bridges.find(bridge: coordinate),
+           bridge.coordinate.y == coordinate.y {
             
-            return PathNode(coordinate: coordinate, vector: coordinate.world, movementCost: 0)
+            return bridge.pathNode(for: coordinate)
+        }
+        
+        if let stairs = stairs.find(stairs: coordinate) {
+            
+            return stairs.pathNode(for: coordinate)
         }
         
         if let surface = surface.find(tile: coordinate),
            surface.walkable {
             
-            return surface.pathNode
+            return surface.pathNode(for: coordinate)
         }
             
         return nil

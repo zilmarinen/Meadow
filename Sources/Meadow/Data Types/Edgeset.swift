@@ -28,15 +28,7 @@ extension Edgeset {
     
     static func edgeset(named: String) -> MDWImage? {
         
-        #if os(macOS)
-        
-        return Bundle.module.image(forResource: named)
-        
-        #else
-        
-        return MDWImage(named: named, in: .module, with: nil)
-        
-        #endif
+        return MDWImage.asset(named: named)
     }
     
     static func edgemap(named: String) -> NSDataAsset? {

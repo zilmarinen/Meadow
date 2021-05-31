@@ -4,6 +4,8 @@
 //  Created by Zack Brown on 02/11/2020.
 //
 
+import Foundation
+
 public struct Coordinate: Codable, Equatable, Hashable {
     
     public let x: Int
@@ -126,8 +128,8 @@ extension Coordinate {
 
 extension Coordinate {
     
-    public func heuristic(coordinate: Coordinate) -> Int {
+    public func heuristic(coordinate: Coordinate) -> Double {
         
-        return abs(coordinate.x - x) + abs(coordinate.y - y) + abs(coordinate.z - z)
+        return sqrt(pow(Double(x - coordinate.x), 2) + pow(Double(y - coordinate.y), 2) + pow(Double(z - coordinate.z), 2))
     }
 }

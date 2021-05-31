@@ -39,11 +39,6 @@ public class SurfaceTile: Tile {
         
         return Color(red: Double(tileType.primary.rawValue), green: Double(tileType.secondary.rawValue), blue: 0, alpha: 1)
     }
-    
-    var pathNode: PathNode {
-        
-        return PathNode(coordinate: coordinate, vector: .zero, movementCost: movementCost)
-    }
 
     required public init(from decoder: Decoder) throws {
         
@@ -79,10 +74,12 @@ public class SurfaceTile: Tile {
             
             guard let volume = volumes[ordinal] else { continue }
             
-            let offset = ordinal.coordinate.world * ((World.Constants.volumeSize) / 2.0)
+            let size = World.Constants.volumeSize / 2.0
             
-            let upperFace = TileVolume.apex.map { $0 + offset + position }
-            let lowerFace = TileVolume.throne.map { $0 + offset + position }
+            let offset = ordinal.coordinate.world * size
+            
+            let upperFace = TileVolume.face(position: position + offset, size: size, elevation: World.Constants.ceiling)
+            let lowerFace = TileVolume.face(position: position + offset, size: size, elevation: 0)
             
             var apex: [Vector] = []
             
@@ -154,6 +151,37 @@ extension SurfaceTile {
 
 extension SurfaceTile: Traversable {
     
-    var movementCost: Int { tileType.primary.movementCost }
-    var walkable: Bool { true }
+    var movementCost: Double { tileType.primary.movementCost }
+    var walkable: Bool {
+        
+        switch edgeType {
+        
+        case .cutaway:
+            
+            return true
+        
+        case .sloped:
+            
+            let apex = volumes.apex()
+            
+            guard let min = apex.min(),
+                  let max = apex.max() else { return false }
+            
+            return max - min <= World.Constants.step
+            
+        case .terraced:
+            
+            let apex = volumes.apex()
+            
+            guard let min = apex.min(),
+                  let max = apex.max() else { return false }
+            
+            return max == min
+        }
+    }
+    
+    func pathNode(for coordinate: Coordinate) -> PathNode {
+        
+        return PathNode(coordinate: self.coordinate, vector: coordinate.world, movementCost: movementCost, sloped: edgeType == .sloped, cardinals: Cardinal.allCases)
+    }
 }

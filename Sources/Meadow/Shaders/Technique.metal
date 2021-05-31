@@ -1,12 +1,12 @@
 //
-//  Building.metal
+//  Technique.metal
 //
-//  Created by Zack Brown on 26/03/2021.
+//  Created by Zack Brown on 28/05/2021.
 //
 
 #include "Meadow.metal"
 
-vertex Fragment building_vertex(Vertex v [[ stage_in ]], constant NodeTransforms& scn_node [[buffer(1)]]) {
+vertex Fragment technique_vertex(Vertex v [[ stage_in ]], constant NodeTransforms& scn_node [[buffer(1)]]) {
     
     return {    .position = scn_node.modelViewProjectionTransform * float4(v.position, 1.0),
                 .normal = normalize(matrix3(scn_node.normalTransform) * v.normal),
@@ -14,7 +14,7 @@ vertex Fragment building_vertex(Vertex v [[ stage_in ]], constant NodeTransforms
                 .uv = v.uv };
 }
 
-fragment float4 building_fragment(Fragment f [[stage_in]]) {
+fragment float4 technique_fragment(Fragment f [[stage_in]]) {
     
     return f.color;
 }

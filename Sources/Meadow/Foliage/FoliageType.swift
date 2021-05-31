@@ -37,7 +37,7 @@ public enum FoliageType: Int, CaseIterable, Codable, Equatable {
     }
     
     public var model: Model? {
-        print("LOADING MODEL: \(self.identifier)")
+        
         guard let asset = NSDataAsset(name: identifier, bundle: .module) else { return nil }
     
         let decoder = JSONDecoder()
@@ -47,15 +47,7 @@ public enum FoliageType: Int, CaseIterable, Codable, Equatable {
     
     var texture: Texture? {
         
-        #if os(macOS)
-        
-        guard let image = Bundle.module.image(forResource: "uvs") else { return nil }
-        
-        #else
-        
-        guard let image = MDWImage(named: "uvs", in: .module, with: nil) else { return nil }
-        
-        #endif
+        guard let image = MDWImage.asset(named: "uvs") else { return nil }
         
         return Texture(key: "foliage", image: image)
     }

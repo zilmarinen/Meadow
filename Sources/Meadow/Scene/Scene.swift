@@ -28,8 +28,10 @@ open class Scene: SCNScene, Codable, Responder, Soilable {
     public let camera = Camera()
     public let hero = Hero(coordinate: .zero)
     private(set) public var meadow: Meadow
-    var seams: [String : Meadow] = [:]
     let props = Props()
+    let sun = Sun()
+    
+    var seams: [String : Meadow] = [:]
     
     var scene: Scene? { self }
     
@@ -44,10 +46,12 @@ open class Scene: SCNScene, Codable, Responder, Soilable {
         camera.ancestor = self
         hero.ancestor = self
         meadow.ancestor = self
+        sun.ancestor = self
         
         rootNode.addChildNode(camera)
         rootNode.addChildNode(hero)
         rootNode.addChildNode(meadow)
+        rootNode.addChildNode(sun)
         
         camera.controller.state = .focus(node: hero, cardinal: .east, zoom: 1.0)
         
@@ -67,26 +71,16 @@ open class Scene: SCNScene, Codable, Responder, Soilable {
         camera.ancestor = self
         hero.ancestor = self
         meadow.ancestor = self
+        sun.ancestor = self
         
         rootNode.addChildNode(camera)
         rootNode.addChildNode(hero)
         rootNode.addChildNode(meadow)
+        rootNode.addChildNode(sun)
         
         camera.controller.state = .focus(node: hero, cardinal: .east, zoom: 1.0)
         
         becomeDirty()
-        
-        let forward = SCNNode(geometry: SCNBox(width: 1, height: 1, length: 1, chamferRadius: 0))
-        let right = SCNNode(geometry: SCNBox(width: 1, height: 1, length: 1, chamferRadius: 0))
-        
-        forward.geometry?.firstMaterial?.diffuse.contents = MDWColor.systemPurple
-        right.geometry?.firstMaterial?.diffuse.contents = MDWColor.systemRed
-        
-        forward.position = SCNVector3(vector: .forward * 2)
-        right.position = SCNVector3(vector: .right * 2)
-        
-        rootNode.addChildNode(forward)
-        rootNode.addChildNode(right)
     }
     
     required public init?(coder: NSCoder) {
@@ -111,6 +105,7 @@ extension Scene {
         camera.clean()
         hero.clean()
         meadow.clean()
+        sun.clean()
         
         for (_, seam) in seams {
             
@@ -132,6 +127,7 @@ extension Scene: SCNSceneRendererDelegate {
         camera.update(delta: delta, time: time)
         hero.update(delta: delta, time: time)
         meadow.update(delta: delta, time: time)
+        sun.update(delta: delta, time: time)
         
         for (_, seam) in seams {
             
@@ -224,72 +220,44 @@ extension Scene {
         return nil
     }
     
-    func find(seam coordinate: Coordinate) -> PortalChunk? {
-        
-        if let portal = meadow.portals.find(portal: coordinate) {
-            
-            return portal
-        }
-        
-        for (_, seam) in seams {
-         
-            if let portal = seam.portals.find(portal: coordinate) {
-                
-                return portal
-            }
-        }
-        
-        return nil
-    }
-    
     func path(between origin: Coordinate, destination: Coordinate) -> Path? {
         
-        let queue = PriorityQueue()
-                
-        var stack: [Coordinate : Coordinate] = [origin : origin]
-        var cost: [Coordinate: Int] = [origin : 0]
+        guard let end = find(traversable: destination),
+              find(traversable: origin) != nil else { return nil }
         
-        queue.enqueue(coordinate: origin, priority: 0.0)
+        let queue = PriorityQueue<PathNode>()
+        
+        var stack: [Coordinate : PathNode] = [destination : end]
+        var cost: [Coordinate: Double] = [destination : 0]
+        
+        queue.enqueue(value: end, priority: 0.0)
         
         while !queue.isEmpty {
             
-            guard let coordinate = queue.dequeue() else { return nil }
+            guard let node = queue.dequeue() else { return nil }
             
-            guard coordinate != destination else {
+            guard node.value.coordinate != origin else {
                 
-                guard let tile = find(traversable: coordinate) else { return nil }
+                guard let nodes = stack.path(between: destination, destination: origin) else { return nil }
                 
-                var nodes: [PathNode] = [tile]
-                
-                var current = coordinate
-                
-                while current != origin {
-                    
-                    guard let node = stack[current],
-                          let tile = find(traversable: node) else { return nil }
-                    
-                    nodes.append(tile)
-                    
-                    current = node
-                }
-                
-                return Path(nodes: nodes.reversed())
+                return Path(nodes: ([node.value] + nodes))
             }
             
-            for cardinal in Cardinal.allCases {
+            for cardinal in node.value.cardinals {
                 
-                guard let neighbour = find(traversable: coordinate + cardinal.coordinate) else { continue }
+                guard let neighbour = find(traversable: node.value.coordinate + cardinal.coordinate),
+                      neighbour.cardinals.contains(cardinal.opposite) else { continue }
                 
-                if neighbour.coordinate.y != coordinate.y { continue }
+                let incline = abs(node.value.coordinate.y - neighbour.coordinate.y)
                 
-                let movementCost = neighbour.movementCost
+                guard incline == 0 || (incline <= World.Constants.step && (node.value.sloped || neighbour.sloped)) else { continue }
                 
-                if stack[neighbour.coordinate] == nil || movementCost < (cost[neighbour.coordinate] ?? 0) {
+                if stack[neighbour.coordinate] == nil || neighbour.movementCost < (cost[neighbour.coordinate] ?? Double.greatestFiniteMagnitude) {
                     
-                    queue.enqueue(coordinate: neighbour.coordinate, priority: CGFloat(destination.heuristic(coordinate: neighbour.coordinate)))
+                    queue.enqueue(value: neighbour, priority: Double(origin.heuristic(coordinate: neighbour.coordinate)))
                     
-                    stack[neighbour.coordinate] = coordinate
-                    cost[neighbour.coordinate] = movementCost
+                    stack[neighbour.coordinate] = node.value
+                    cost[neighbour.coordinate] = neighbour.movementCost
                 }
             }
         }

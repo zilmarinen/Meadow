@@ -7,32 +7,38 @@
 import CoreGraphics
 import Foundation
 
-struct PriorityQueueNode {
+class PriorityQueueNode<V> {
     
-    let coordinate: Coordinate
-    let priority: CGFloat
+    let priority: Double
+    let value: V
+    
+    required init(value: V, priority: Double) {
+        
+        self.value = value
+        self.priority = priority
+    }
 }
 
-class PriorityQueue {
+class PriorityQueue<V> {
     
-    var queue: [PriorityQueueNode] = []
+    var queue: [PriorityQueueNode<V>] = []
     
     var isDirty: Bool = false
     
     var isEmpty: Bool { queue.isEmpty }
     
-    func enqueue(coordinate: Coordinate, priority: CGFloat) {
+    func enqueue(value: V, priority: Double) {
         
-        queue.append(PriorityQueueNode(coordinate: coordinate, priority: priority))
+        queue.append(PriorityQueueNode<V>(value: value, priority: priority))
         
         isDirty = true
     }
     
-    func dequeue() -> Coordinate? {
+    func dequeue() -> PriorityQueueNode<V>? {
         
         clean()
         
-        return queue.removeFirst().coordinate
+        return queue.removeFirst()
     }
     
     @discardableResult func clean() -> Bool {

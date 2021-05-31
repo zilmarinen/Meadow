@@ -22,7 +22,8 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "Meadow",
-            dependencies: []),
+            dependencies: [],
+            resources: [.process("Shaders/Technique.plist")]),
         .testTarget(
             name: "MeadowTests",
             dependencies: ["Meadow"]),

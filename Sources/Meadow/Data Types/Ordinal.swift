@@ -32,14 +32,6 @@ extension Ordinal {
                                  CGPoint(x: 1.0, y: 1.0),
                                  CGPoint(x: 0.0, y: 1.0)]
     
-    static var Corners: [Vector] = [
-    
-        (.forward + -.right) / 2.0,
-        (.forward + .right) / 2.0,
-        (-.forward + .right) / 2.0,
-        (-.forward + -.right) / 2.0
-    ]
-    
     static var Coordinates: [Coordinate] = [
     
         .forward + -.right,
@@ -71,16 +63,6 @@ extension Ordinal {
         (.northEast, .southWest),
         (.southEast, .northWest)
     ]
-    
-    static func vector(ordinal: Ordinal) -> Vector {
-        
-        return Corners[ordinal.rawValue]
-    }
-    
-    public var vector: Vector {
-        
-        return Ordinal.vector(ordinal: self)
-    }
     
     static func cardinals(ordinal: Ordinal) -> (Cardinal, Cardinal) {
         

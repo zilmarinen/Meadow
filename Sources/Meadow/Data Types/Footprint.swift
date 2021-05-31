@@ -39,7 +39,7 @@ public struct Footprint: Codable, Equatable {
             
             for z in 0..<bounds.size.z {
                 
-                nodes.append(Coordinate(x: -x, y: 0, z: -z))
+                nodes.append(Coordinate(x: x, y: 0, z: z))
             }
         }
         
@@ -71,14 +71,11 @@ extension Footprint {
     
     public func intersects(footprint: Footprint) -> Bool {
         
-        for lhs in nodes {
+        for node in footprint.nodes {
             
-            for rhs in footprint.nodes {
+            if intersects(coordinate: node) {
                 
-                if lhs.xz == rhs.xz {
-                    
-                    return true
-                }
+                return true
             }
         }
         

@@ -23,7 +23,7 @@ public class Camera: SCNNode, Responder, Soilable, Updatable {
         camera.usesOrthographicProjection = false
         camera.orthographicScale = Constants.maximumZoom
         
-        //node.camera = camera
+        node.camera = camera
         
         return node
     }()

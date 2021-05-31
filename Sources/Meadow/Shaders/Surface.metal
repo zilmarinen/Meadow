@@ -4,143 +4,55 @@
 //  Created by Zack Brown on 17/12/2020.
 //
 
-#include <metal_stdlib>
-using namespace metal;
-#include <SceneKit/scn_metal>
+#include "Meadow.metal"
 
-constant float epsilon = 0.0001;
-
-struct NodeBuffer {
+struct SurfaceFragment {
     
-    float4x4 modelViewProjectionTransform;
-};
-
-struct Vertex {
-    
-    float3 position [[ attribute(SCNVertexSemanticPosition) ]];
-    float3 normal [[ attribute(SCNVertexSemanticNormal) ]];
-    float4 color [[ attribute(SCNVertexSemanticColor) ]];
-    float2 uv [[ attribute(SCNVertexSemanticTexcoord0) ]];
-};
-
-struct Fragment {
-    
+    //clip
     float4 position [[position]];
     float3 normal;
+    
+    //view
+    float3 camera;
+    
+    //model
+    float3 modelNormal;
     float4 color;
     float2 uv;
-    float2 frag;
 };
 
-static float4 tileColorLookup(int value) {
-    
-    if (value == 0) {
-        
-        return float4(0.81, 0.68, 0.51, 1);
-    }
-    else if (value == 1) {
-        
-        return float4(0.85, 0.85, 0.69, 1);
-    }
-    else if (value == 2) {
-        
-        return float4(0.96, 0.84, 0.52, 1);
-    }
-    else if (value == 3) {
-        
-        return float4(0.30, 0.55, 0.48, 1);
-    }
-    else if (value == 4) {
-        
-        return float4(0.81, 0.90, 0.94, 1);
-    }
-    
-    return float4(1, 1, 1, 1);
-}
-
-static float4 edgeColorLookup(int value) {
-    
-    if (value == 0 || value == 1 || value == 3) {
-        
-        return float4(0.75, 0.62, 0.45, 1);
-    }
-    else if (value == 2) {
-        
-        return float4(0.90, 0.78, 0.46, 1);
-    }
-    else if (value == 4) {
-        
-        return float4(0.75, 0.84, 0.88, 1);
-    }
-    
-    return float4(1, 1, 1, 1);
-}
-
-static float4 illumimate(Fragment f, float4 color) {
-    
-    float4 ambientColor = float4(1, 1, 1, 1) * color;
-     
-    float3 normal = normalize(f.normal);
-    float diffuseIntensity = saturate(dot(normal, float3(0, -1, 0)));
-    float4 diffuseColor = float4(1, 1, 1, 1) * color * diffuseIntensity;
-    
-    float4 result = float4(ambientColor.xyz + diffuseColor.xyz, 1);
-    
-    float2 fractional  = abs(fract(f.frag + 0.5));
-    float2 partial = fwidth(f.frag) * 5;
-    
-    float2 point = smoothstep(-partial, partial, fractional);
-    
-    float saturation = 1.0 - saturate(point.x * point.y);
-    
-    return float4(mix(result.rgb, float3(0.0), saturation), 1.0);
-}
-
-vertex Fragment surface_vertex(Vertex v [[ stage_in ]], constant NodeBuffer& scn_node [[buffer(1)]]) {
+vertex SurfaceFragment surface_vertex(Vertex v [[ stage_in ]],
+                                      constant SceneTransforms& scn_frame [[buffer(0)]],
+                                      constant NodeTransforms& scn_node [[buffer(1)]]) {
     
     return {    .position = scn_node.modelViewProjectionTransform * float4(v.position, 1.0),
-                .normal = v.normal,
+                .normal = (scn_node.normalTransform * float4(v.normal, 0.0)).xyz,
+                .camera = -(scn_node.modelViewTransform * float4(v.position, 1.0)).xyz,
+                .modelNormal = v.normal,
                 .color = v.color,
-                .uv = v.uv,
-                .frag = v.position.xz };
+                .uv = v.uv };
 }
 
-fragment float4 surface_fragment(Fragment f [[stage_in]], texture2d<float, access::sample> tileset [[ texture(0) ]], texture2d<float, access::sample> edgeset [[ texture(1) ]]) {
-
-    constexpr sampler image(coord::normalized, filter::linear, address::repeat);
+fragment float4 surface_fragment(SurfaceFragment f [[stage_in]], texture2d<float,
+                                 access::sample> tileset [[ texture(0) ]], texture2d<float,
+                                 access::sample> edgeset [[ texture(1) ]]) {
     
-    float denominator = dot(float3(0.0, 1.0, 0.0), f.normal);
+    float denominator = dot(up, f.modelNormal);
+    
+    float4 color = float4(0);
     
     if (fabs(denominator) < epsilon) {
 
-        float4 color = float4(edgeset.sample(image, f.uv));
+        color = sample(edgeset, f.uv);
         
-        float value = (color.r + color.g + color.b) / 3;
+        color = edgeColorLookup(twizzle(color, f.color));
+    }
+    else {
         
-        if (value >= 0.1 && value <= 0.5) {
-            
-            color = edgeColorLookup(f.color.r);
-        }
-        else if (value > 0.5 && value <= 0.9) {
-            
-            color = edgeColorLookup(f.color.g);
-        }
-        
-        return color;
+        color = sample(tileset, f.uv);
+    
+        color = tileColorLookup(twizzle(color, f.color));
     }
     
-    float4 color = float4(tileset.sample(image, f.uv));
-    
-    float value = (color.r + color.g + color.b) / 3;
-    
-    if (value >= 0.1 && value <= 0.5) {
-        
-        color = tileColorLookup(f.color.r);
-    }
-    else if (value > 0.5 && value <= 0.9) {
-        
-        color = tileColorLookup(f.color.g);
-    }
-    
-    return illumimate(f, color);
+    return color;
 }

@@ -6,16 +6,6 @@
 
 import Foundation
 
-#if os(macOS)
-
-    import AppKit
-
-#else
-
-    import UIKit
-
-#endif
-
 public struct SurfaceEdgeset: Edgeset {
     
     enum Constants {

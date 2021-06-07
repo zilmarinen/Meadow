@@ -8,6 +8,8 @@ import SceneKit
 
 class Foliage: FootprintGrid<FoliageChunk> {
     
+    public override var category: Int { SceneGraphCategory.foliage.rawValue }
+    
     lazy var program: SCNProgram? = {
         
         guard let library = scene?.library else { return nil }
@@ -17,6 +19,6 @@ class Foliage: FootprintGrid<FoliageChunk> {
     
     func find(foliage coordinate: Coordinate) -> FoliageChunk? {
         
-        return chunks.first { $0.footprint?.intersects(coordinate: coordinate) ?? false }
+        return chunks.first { $0.footprint.intersects(coordinate: coordinate) }
     }
 }

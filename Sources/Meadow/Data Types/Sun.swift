@@ -16,6 +16,8 @@ class Sun: SCNNode, Responder, Soilable, Updatable {
     
     public var source = SCNLight()
     
+    let color = Color(red: 0.964, green: 0.933, blue: 0.78)
+    
     override init() {
         
         super.init()
@@ -25,7 +27,7 @@ class Sun: SCNNode, Responder, Soilable, Updatable {
         light = source
         
         source.type = .omni
-        source.color = Color(red: 1.0, green: 0.96, blue: 0.71).color
+        source.color = color.color
     }
     
     required init?(coder: NSCoder) {
@@ -52,6 +54,6 @@ extension Sun {
     
     public func update(delta: TimeInterval, time: TimeInterval) {
         
-        position = SCNVector3(vector: Coordinate(x: 0, y: World.Constants.ceiling, z: 0).world)
+        position = SCNVector3(vector: Coordinate(x: 0, y: World.Constants.ceiling, z: World.Constants.ceiling).world)
     }
 }

@@ -16,6 +16,7 @@ public class Meadow: SCNNode, Codable, Responder, Updatable {
         case foliage
         case footpath
         case portals
+        case seams
         case stairs
         case surface
         case walls
@@ -39,6 +40,7 @@ public class Meadow: SCNNode, Codable, Responder, Updatable {
     let foliage: Foliage
     let footpath: Footpath
     public let portals: Portals
+    public let seams: Seams
     let stairs: Stairs
     let surface: Surface
     let water: Water
@@ -56,6 +58,7 @@ public class Meadow: SCNNode, Codable, Responder, Updatable {
                 foliage.offset = offset
                 footpath.offset = offset
                 portals.offset = offset
+                seams.offset = offset
                 stairs.offset = offset
                 surface.offset = offset
                 water.offset = offset
@@ -64,6 +67,8 @@ public class Meadow: SCNNode, Codable, Responder, Updatable {
             }
         }
     }
+    
+    var map: Meadow? { self }
     
     required public init(from decoder: Decoder) throws {
         
@@ -75,6 +80,7 @@ public class Meadow: SCNNode, Codable, Responder, Updatable {
         foliage = try container.decode(Foliage.self, forKey: .foliage)
         footpath = try container.decode(Footpath.self, forKey: .footpath)
         portals = try container.decode(Portals.self, forKey: .portals)
+        seams = try container.decode(Seams.self, forKey: .seams)
         stairs = try container.decode(Stairs.self, forKey: .stairs)
         surface = try container.decode(Surface.self, forKey: .surface)
         water = try container.decode(Water.self, forKey: .water)
@@ -90,6 +96,7 @@ public class Meadow: SCNNode, Codable, Responder, Updatable {
         addChildNode(foliage)
         addChildNode(footpath)
         addChildNode(portals)
+        addChildNode(seams)
         addChildNode(stairs)
         addChildNode(surface)
         addChildNode(water)
@@ -112,6 +119,7 @@ public class Meadow: SCNNode, Codable, Responder, Updatable {
         try container.encode(foliage, forKey: .foliage)
         try container.encode(footpath, forKey: .footpath)
         try container.encode(portals, forKey: .portals)
+        try container.encode(seams, forKey: .seams)
         try container.encode(stairs, forKey: .stairs)
         try container.encode(surface, forKey: .surface)
         try container.encode(water, forKey: .water)
@@ -133,6 +141,7 @@ extension Meadow {
         foliage.clean()
         footpath.clean()
         portals.clean()
+        seams.clean()
         stairs.clean()
         surface.clean()
         water.clean()
@@ -153,7 +162,7 @@ extension Meadow {
 
 extension Meadow {
     
-    public func find(traversable coordinate: Coordinate) -> PathNode? {
+    public func find(traversable coordinate: Coordinate) -> TraversableNode? {
      
         guard buildings.find(building: coordinate) == nil,
               foliage.find(foliage: coordinate) == nil,
@@ -162,18 +171,18 @@ extension Meadow {
         if let bridge = bridges.find(bridge: coordinate),
            bridge.coordinate.y == coordinate.y {
             
-            return bridge.pathNode(for: coordinate)
+            return bridge.traversableNode(for: coordinate)
         }
         
         if let stairs = stairs.find(stairs: coordinate) {
             
-            return stairs.pathNode(for: coordinate)
+            return stairs.traversableNode(for: coordinate)
         }
         
         if let surface = surface.find(tile: coordinate),
            surface.walkable {
             
-            return surface.pathNode(for: coordinate)
+            return surface.traversableNode(for: coordinate)
         }
             
         return nil

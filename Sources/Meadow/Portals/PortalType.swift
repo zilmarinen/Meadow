@@ -8,7 +8,6 @@ import Foundation
 
 public enum PortalType: Int, CaseIterable, Codable {
     
-    case door
-    case seam
+    case portal
     case spawn
 }

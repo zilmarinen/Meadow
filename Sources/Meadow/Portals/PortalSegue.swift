@@ -4,7 +4,7 @@
 //  Created by Zack Brown on 02/05/2021.
 //
 
-public struct PortalSegue: Codable {
+public struct PortalSegue: Codable, Equatable {
     
     private enum CodingKeys: String, CodingKey {
         

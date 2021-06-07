@@ -14,6 +14,15 @@ class FoliageChunk: FootprintChunk {
         case foliageType = "t"
     }
     
+    override var category: Int { SceneGraphCategory.foliageChunk.rawValue }
+    
+    override var footprint: Footprint {
+        
+        guard let prop = scene?.props.prop(foliage: foliageType) else { fatalError("Unable to load footprint for \(self)") }
+        
+        return prop.footprint
+    }
+    
     override var program: SCNProgram? { scene?.meadow.foliage.program }
     
     override var textures: [Texture]? {
@@ -24,8 +33,6 @@ class FoliageChunk: FootprintChunk {
     }
     
     let foliageType: FoliageType
-    
-    var footprint: Footprint?
     
     required public init(from decoder: Decoder) throws {
         
@@ -54,8 +61,6 @@ class FoliageChunk: FootprintChunk {
         
         guard super.clean(),
               let prop = scene?.props.prop(foliage: foliageType) else { return false }
-        
-        footprint = Footprint(coordinate: coordinate, nodes: prop.footprint.nodes)
         
         self.geometry = SCNGeometry(mesh: prop.mesh.translated(by: Vector(x: 0, y: Double(coordinate.y) * World.Constants.slope, z: 0)))
         self.geometry?.program = program

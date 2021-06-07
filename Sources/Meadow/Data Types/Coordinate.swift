@@ -111,6 +111,19 @@ extension Coordinate {
 
 extension Coordinate {
     
+    func direction(to coordinate: Coordinate) -> Cardinal {
+        
+        guard x == coordinate.x else {
+            
+            return z > coordinate.z ? .north : .south
+        }
+        
+        return x > coordinate.x ? .east : .west
+    }
+}
+
+extension Coordinate {
+    
     func rotate(rotation: Cardinal) -> Coordinate {
         
         switch rotation {

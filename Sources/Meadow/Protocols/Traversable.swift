@@ -9,5 +9,5 @@ protocol Traversable {
     var movementCost: Double { get }
     var walkable: Bool { get }
     
-    func pathNode(for coordinate: Coordinate) -> PathNode
+    func traversableNode(for coordinate: Coordinate) -> TraversableNode
 }

@@ -6,15 +6,19 @@
 
 #include "Meadow.metal"
 
-vertex Fragment foliage_vertex(Vertex v [[ stage_in ]], constant NodeTransforms& scn_node [[buffer(1)]]) {
+vertex Fragment foliage_vertex(Vertex v [[ stage_in ]],
+                               constant SceneTransforms& scn_frame [[ buffer(0) ]],
+                               constant NodeTransforms& scn_node [[ buffer(1) ]]) {
     
-    return {    .position = scn_node.modelViewProjectionTransform * float4(v.position, 1.0),
-                .normal = normalize(matrix3(scn_node.normalTransform) * v.normal),
+    return {    .fragmentPosition = scn_node.modelViewProjectionTransform * float4(v.position, 1.f),
+                .position = v.position,
+                .normal = v.normal,
                 .color = v.color,
                 .uv = v.uv };
 }
 
-fragment float4 foliage_fragment(Fragment f [[stage_in]], texture2d<float, access::sample> foliage [[ texture(0) ]]) {
+fragment float4 foliage_fragment(Fragment f [[stage_in]],
+                                 texture2d<float, access::sample> foliage [[ texture(0) ]]) {
     
     constexpr sampler image(coord::normalized, filter::linear, address::repeat);
     

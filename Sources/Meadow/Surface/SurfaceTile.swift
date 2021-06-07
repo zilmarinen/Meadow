@@ -12,6 +12,7 @@ public class SurfaceTile: Tile {
         
         case tileType = "tt"
         case edgeType = "et"
+        case apexPattern = "ap"
         case edgePatterns = "ep"
         case volumes = "v"
     }
@@ -32,6 +33,7 @@ public class SurfaceTile: Tile {
 
     let tileType: TileType
     let edgeType: SurfaceEdgeType
+    let apexPattern: Int
     let edgePatterns: [Cardinal : Int]
     let volumes: [Ordinal : TileVolume]
     
@@ -46,6 +48,7 @@ public class SurfaceTile: Tile {
         
         tileType = try container.decode(TileType.self, forKey: .tileType)
         edgeType = try container.decode(SurfaceEdgeType.self, forKey: .edgeType)
+        apexPattern = try container.decode(Int.self, forKey: .apexPattern)
         edgePatterns = try container.decode([Cardinal : Int].self, forKey: .edgePatterns)
         volumes = try container.decode([Ordinal : TileVolume].self, forKey: .volumes)
         
@@ -60,6 +63,7 @@ public class SurfaceTile: Tile {
         
         try container.encode(tileType, forKey: .tileType)
         try container.encode(edgeType, forKey: .edgeType)
+        try container.encode(apexPattern, forKey: .apexPattern)
         try container.encode(edgePatterns, forKey: .edgePatterns)
         try container.encode(volumes, forKey: .volumes)
     }
@@ -180,8 +184,8 @@ extension SurfaceTile: Traversable {
         }
     }
     
-    func pathNode(for coordinate: Coordinate) -> PathNode {
+    func traversableNode(for coordinate: Coordinate) -> TraversableNode {
         
-        return PathNode(coordinate: self.coordinate, vector: coordinate.world, movementCost: movementCost, sloped: edgeType == .sloped, cardinals: Cardinal.allCases)
+        return TraversableNode(coordinate: self.coordinate, vector: coordinate.world, movementCost: movementCost, sloped: edgeType == .sloped, cardinals: Cardinal.allCases)
     }
 }

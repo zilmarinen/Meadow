@@ -33,9 +33,9 @@ open class Scene: SCNScene, Codable, Responder, Soilable {
     
     var seams: [String : Meadow] = [:]
     
-    var scene: Scene? { self }
-    
     var lastUpdate: TimeInterval?
+    
+    var scene: Scene? { self }
     
     public init(meadow: Meadow) {
         
@@ -142,33 +142,31 @@ extension Scene: SCNSceneRendererDelegate {
 
 extension Scene {
     
-    func updateSeams() {
+    public func updateSeams() {
         
         var newSeams: [String : Meadow] = [:]
         
-        let portals = meadow.portals.find(portals: .seam)
-        
-        for portal in portals {
+        for seam in meadow.seams.tiles {
             
             do {
                 
-                guard let seam = try loadSeam(identifier: portal.segue.scene),
-                      let wormhole = seam.portals.find(portal: portal.segue.identifier) else { continue }
+                guard let adjacentMap = try loadMap(identifier: seam.segue.scene),
+                      let stitch = adjacentMap.seams.find(seam: seam.segue.identifier) else { continue }
                 
-                if seam.parent == nil {
+                if adjacentMap.parent == nil {
                     
-                    seam.ancestor = self
+                    adjacentMap.ancestor = self
                     
-                    rootNode.addChildNode(seam)
+                    rootNode.addChildNode(adjacentMap)
                 }
                 
-                seam.offset = (portal.coordinate + portal.segue.direction.coordinate) - wormhole.coordinate
+                adjacentMap.offset = (seam.coordinate + seam.segue.direction.coordinate) - stitch.coordinate
                 
-                newSeams[seam.identifier] = seam
+                newSeams[adjacentMap.identifier] = adjacentMap
             }
             catch {
                 
-                fatalError("Unable to load seam for portal: \(portal) - error: \(error)")
+                fatalError("Unable to load seam: \(seam) - error: \(error)")
             }
         }
         
@@ -185,7 +183,7 @@ extension Scene {
         seams = newSeams
     }
     
-    func loadSeam(identifier: String) throws -> Meadow? {
+    func loadMap(identifier: String) throws -> Meadow? {
         
         guard let asset = NSDataAsset(name: identifier, bundle: .main) else { return nil }
         
@@ -202,7 +200,7 @@ extension Scene {
 
 extension Scene {
     
-    public func find(traversable coordinate: Coordinate) -> PathNode? {
+    public func find(traversable coordinate: Coordinate) -> TraversableNode? {
         
         if let node = meadow.find(traversable: coordinate) {
             
@@ -225,9 +223,9 @@ extension Scene {
         guard let end = find(traversable: destination),
               find(traversable: origin) != nil else { return nil }
         
-        let queue = PriorityQueue<PathNode>()
+        let queue = PriorityQueue<TraversableNode>()
         
-        var stack: [Coordinate : PathNode] = [destination : end]
+        var stack: [Coordinate : TraversableNode] = [destination : end]
         var cost: [Coordinate: Double] = [destination : 0]
         
         queue.enqueue(value: end, priority: 0.0)
@@ -238,9 +236,12 @@ extension Scene {
             
             guard node.value.coordinate != origin else {
                 
-                guard let nodes = stack.path(between: destination, destination: origin) else { return nil }
+                guard let nodes = stack.path(between: destination, destination: origin),
+                      let pathNode = nodes.first else { return nil }
                 
-                return Path(nodes: ([node.value] + nodes))
+                let startNode = PathNode(coordinate: node.value.coordinate, vector: node.value.vector, direction: node.value.coordinate.direction(to: pathNode.coordinate), movementCost: node.value.movementCost, sloped: node.value.sloped)
+                
+                return Path(nodes: ([startNode] + nodes))
             }
             
             for cardinal in node.value.cardinals {

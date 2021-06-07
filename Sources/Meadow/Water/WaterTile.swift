@@ -11,12 +11,14 @@ public class WaterTile: Tile {
     private enum CodingKeys: String, CodingKey {
         
         case tileType = "t"
+        case apexPattern = "ap"
         case volume = "v"
     }
     
     public override var category: Int { SceneGraphCategory.surfaceTile.rawValue }
 
     let tileType: WaterTileType
+    let apexPattern: Int
     let volume: TileVolume
     
     var color: Color {
@@ -29,6 +31,7 @@ public class WaterTile: Tile {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         tileType = try container.decode(WaterTileType.self, forKey: .tileType)
+        apexPattern = try container.decode(Int.self, forKey: .apexPattern)
         volume = try container.decode(TileVolume.self, forKey: .volume)
         
         try super.init(from: decoder)
@@ -41,6 +44,7 @@ public class WaterTile: Tile {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         try container.encode(tileType, forKey: .tileType)
+        try container.encode(apexPattern, forKey: .apexPattern)
         try container.encode(volume, forKey: .volume)
     }
     

@@ -8,19 +8,16 @@ import SceneKit
 
 public class FootpathTile: Tile {
     
-    enum Constants {
-        
-        static let surface = 0.001
-    }
-    
     private enum CodingKeys: String, CodingKey {
         
         case tileType = "t"
+        case pattern = "p"
     }
     
     public override var category: Int { SceneGraphCategory.surfaceTile.rawValue }
 
     let tileType: FootpathTileType
+    let pattern: Int
     
     var color: Color {
         
@@ -32,6 +29,7 @@ public class FootpathTile: Tile {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         tileType = try container.decode(FootpathTileType.self, forKey: .tileType)
+        pattern = try container.decode(Int.self, forKey: .pattern)
         
         try super.init(from: decoder)
     }
@@ -43,6 +41,7 @@ public class FootpathTile: Tile {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         try container.encode(tileType, forKey: .tileType)
+        try container.encode(pattern, forKey: .pattern)
     }
     
     override func render(position: Vector) -> [Polygon] {
@@ -51,7 +50,7 @@ public class FootpathTile: Tile {
         
         //let face = Ordinal.allCases.map { $0.vector + position + Vector(x: 0, y: Double(surfaceTile.corners[$0] ?? 0) * World.Constants.slope, z: 0) }
         
-        let tile = scene?.meadow.footpath.tilemap.tileset.tiles(with: apexPattern, tileType: tileType).randomElement()
+        let tile = scene?.meadow.footpath.tilemap.tileset.tiles(with: pattern, tileType: tileType).randomElement()
         
         let tileUVs = tile?.uvs ?? UVs(start: .zero, end: .one)
             
@@ -74,6 +73,6 @@ extension FootpathTile {
     
     public static func == (lhs: FootpathTile, rhs: FootpathTile) -> Bool {
         
-        return lhs.coordinate == rhs.coordinate && lhs.apexPattern == rhs.apexPattern && lhs.tileType == rhs.tileType
+        return lhs.coordinate == rhs.coordinate && lhs.pattern == rhs.pattern && lhs.tileType == rhs.tileType
     }
 }

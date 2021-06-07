@@ -19,7 +19,7 @@ open class SceneView: SCNView {
     }
     
     public override var scene: SCNScene? {
-        
+    
         willSet {
             
             guard let value = newValue as? Scene else { return }

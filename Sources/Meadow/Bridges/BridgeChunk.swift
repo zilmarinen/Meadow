@@ -10,21 +10,28 @@ public class BridgeChunk: FootprintChunk {
     
     private enum CodingKeys: String, CodingKey {
         
-        case footprint = "f"
-        case direction = "d"
+        case width = "w"
+        case height = "h"
     }
     
     public override var category: Int { SceneGraphCategory.bridgeChunk.rawValue }
     
-    let footprint: Footprint
-    let direction: Cardinal
+    public override var footprint: Footprint {
+        
+        let bounds = GridBounds(start: coordinate, end: coordinate + Coordinate(x: width - 1, y: 0, z: height - 1))
+        
+        return Footprint(bounds: bounds)
+    }
+    
+    public var width: Int = 0
+    public var height: Int = 0
     
     required public init(from decoder: Decoder) throws {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        footprint = try container.decode(Footprint.self, forKey: .footprint)
-        direction = try container.decode(Cardinal.self, forKey: .direction)
+        width = try container.decode(Int.self, forKey: .width)
+        height = try container.decode(Int.self, forKey: .height)
         
         try super.init(from: decoder)
     }
@@ -40,8 +47,8 @@ public class BridgeChunk: FootprintChunk {
         
         var container = encoder.container(keyedBy: CodingKeys.self)
         
-        try container.encode(footprint, forKey: .footprint)
-        try container.encode(direction, forKey: .direction)
+        try container.encode(width, forKey: .width)
+        try container.encode(height, forKey: .height)
     }
     
     public override func clean() -> Bool {
@@ -52,7 +59,7 @@ public class BridgeChunk: FootprintChunk {
         
         for node in footprint.nodes {
             
-            let offset = (node.xz - footprint.bounds.start.xz).world + Vector(x: 0, y: 0.001, z: 0)
+            let offset = (node.xz - coordinate.xz).world + Vector(x: 0, y: 0.001, z: 0)
             
             let upperFace = TileVolume.face(position: offset, size: World.Constants.volumeSize, elevation: World.Constants.ceiling)
             let lowerFace = TileVolume.face(position: offset, size: World.Constants.volumeSize, elevation: 0)
@@ -89,7 +96,7 @@ extension BridgeChunk: Traversable {
     var movementCost: Double { 1 }
     var walkable: Bool { true }
     
-    func pathNode(for coordinate: Coordinate) -> PathNode {
+    func traversableNode(for coordinate: Coordinate) -> TraversableNode {
         
         var cardinals = [direction, direction.opposite]
         
@@ -103,6 +110,6 @@ extension BridgeChunk: Traversable {
             }
         }
         
-        return PathNode(coordinate: coordinate, vector: coordinate.world, movementCost: movementCost, sloped: false, cardinals: cardinals)
+        return TraversableNode(coordinate: coordinate, vector: coordinate.world, movementCost: movementCost, sloped: false, cardinals: cardinals)
     }
 }

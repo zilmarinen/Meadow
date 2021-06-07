@@ -16,4 +16,3 @@ public class WaterChunk: Chunk<WaterTile> {
     
     override var textures: [Texture]? { nil }
 }
-

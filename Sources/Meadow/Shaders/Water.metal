@@ -6,17 +6,35 @@
 
 #include "Meadow.metal"
 
-vertex Fragment water_vertex(Vertex v [[ stage_in ]], constant NodeTransforms& scn_node [[buffer(1)]]) {
+vertex Fragment water_vertex(Vertex v [[ stage_in ]],
+                             constant SceneTransforms& scn_frame [[ buffer(0) ]],
+                             constant NodeTransforms& scn_node [[ buffer(1) ]]) {
     
-    return {    .position = scn_node.modelViewProjectionTransform * float4(v.position, 1.0),
-                .normal = normalize(matrix3(scn_node.normalTransform) * v.normal),
+    float3 position = v.position;
+    
+    position.y += sin(scn_frame.sinTime);
+    
+    return {    .fragmentPosition = scn_node.modelViewProjectionTransform * float4(position, 1.f),
+                .position = v.position,
+                .normal = v.normal,
                 .color = v.color,
                 .uv = v.uv };
 }
 
-fragment float4 water_fragment(Fragment f [[stage_in]]) {
+fragment float4 water_fragment(Fragment f [[stage_in]],
+                               constant SceneTransforms& scn_frame [[ buffer(0) ]],
+                               constant NodeTransforms& scn_node [[ buffer(1) ]],
+                               constant Light* scn_lights [[ buffer(2) ]]) {
     
-    float alpha = 0.7;
+    float alpha = 1.0;
     
-    return float4(0.84 * alpha, 0.92 * alpha, 0.89 * alpha, alpha);
+    Surface surface;
+    
+    surface.view = normalize(-f.position);
+    surface.position = f.position;
+    surface.normal = normalize(f.normal),
+    surface.uv = f.uv;
+    surface.ambient = float4(0.84 * alpha, 0.92 * alpha, 0.89 * alpha, alpha);
+    
+    return illuminate(surface, scn_lights[0]);
 }

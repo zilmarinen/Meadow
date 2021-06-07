@@ -6,11 +6,12 @@
 
 import SceneKit
 
-public class FootprintChunk: SCNNode, Codable, Hideable, Responder, Shadable, Soilable {
+public class FootprintChunk: SCNNode, Codable, FootprintDataSource, Hideable, Responder, Shadable, Soilable {
     
     private enum CodingKeys: String, CodingKey {
         
-        case coordinate = "c"
+        case coordinate = "co"
+        case direction = "d"
     }
     
     public var ancestor: SoilableParent? { parent as? SoilableParent }
@@ -19,7 +20,10 @@ public class FootprintChunk: SCNNode, Codable, Hideable, Responder, Shadable, So
     
     public var category: Int { SceneGraphCategory.surfaceChunk.rawValue }
     
+    public var footprint: Footprint { Footprint(coordinate: coordinate, nodes: [.zero]) }
+    
     public var coordinate: Coordinate
+    public let direction: Cardinal
     
     var program: SCNProgram? { nil }
     var uniforms: [Uniform]? { nil }
@@ -44,6 +48,7 @@ public class FootprintChunk: SCNNode, Codable, Hideable, Responder, Shadable, So
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         coordinate = try container.decode(Coordinate.self, forKey: .coordinate)
+        direction = try container.decode(Cardinal.self, forKey: .direction)
         
         super.init()
         
@@ -63,6 +68,7 @@ public class FootprintChunk: SCNNode, Codable, Hideable, Responder, Shadable, So
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         try container.encode(coordinate, forKey: .coordinate)
+        try container.encode(direction, forKey: .direction)
     }
     
     @discardableResult public func clean() -> Bool {

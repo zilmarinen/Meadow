@@ -11,7 +11,6 @@ public class Tile: Codable, Equatable, Renderable, Responder {
     private enum CodingKeys: String, CodingKey {
         
         case coordinate = "c"
-        case apexPattern = "ap"
     }
     
     public var ancestor: SoilableParent?
@@ -30,8 +29,6 @@ public class Tile: Codable, Equatable, Renderable, Responder {
             }
         }
     }
-    
-    let apexPattern: Int
     
     public var isHidden: Bool = false {
         
@@ -61,7 +58,6 @@ public class Tile: Codable, Equatable, Renderable, Responder {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         coordinate = try container.decode(Coordinate.self, forKey: .coordinate)
-        apexPattern = try container.decode(Int.self, forKey: .apexPattern)
         
         becomeDirty()
     }
@@ -71,7 +67,6 @@ public class Tile: Codable, Equatable, Renderable, Responder {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         try container.encode(coordinate, forKey: .coordinate)
-        try container.encode(apexPattern, forKey: .apexPattern)
     }
     
     @discardableResult public func clean() -> Bool {
@@ -92,6 +87,6 @@ extension Tile {
     
     public static func == (lhs: Tile, rhs: Tile) -> Bool {
         
-        return lhs.coordinate == rhs.coordinate && lhs.apexPattern == rhs.apexPattern
+        return lhs.coordinate == rhs.coordinate
     }
 }

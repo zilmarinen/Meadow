@@ -28,7 +28,7 @@ class SceneCoordinator: ViewCoordinator {
         }
         else {
             
-            guard let asset = NSDataAsset(name: "pathfinding") else { fatalError("Unable to load scene") }
+            guard let asset = NSDataAsset(name: "island_middle") else { fatalError("Unable to load scene") }
             
             do {
                 
@@ -56,8 +56,8 @@ class SceneCoordinator: ViewCoordinator {
         
         view.isPlaying = true
         view.overlaySKScene = nil
-        
-        view.backgroundColor = .white
+        view.backgroundColor = .darkGray
+        view.rendersContinuously = true
         
         mouseObserver = view.mouseObserver.subscribe(stateDidChange(from:to:))
     }
@@ -91,6 +91,10 @@ extension SceneCoordinator {
                 let startHit = view.hitTest(point: position.start)
                 
                 switch clickType {
+                
+                case .right:
+                    print("WOOT")
+                    scene.updateSeams()
                 
                 case .left:
                     

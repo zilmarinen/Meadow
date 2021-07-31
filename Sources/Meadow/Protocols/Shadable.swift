@@ -6,7 +6,7 @@
 
 import SceneKit
 
-protocol Shadable {
+public protocol Shadable {
     
     var program: SCNProgram? { get }
     

@@ -4,6 +4,7 @@
 //  Created by Zack Brown on 18/05/2021.
 //
 
+import Euclid
 import SceneKit
 
 public class StairChunk: FootprintChunk {
@@ -84,7 +85,7 @@ public class StairChunk: FootprintChunk {
         let upperFace = TileVolume.face(position: .zero, size: size, elevation: coordinate.y + elevation)
         let lowerFace = TileVolume.face(position: .zero, size: size, elevation: coordinate.y)
         
-        var polygons: [Polygon] = []
+        var polygons: [Euclid.Polygon] = []
         
         for step in 0..<steps {
             
@@ -96,8 +97,8 @@ public class StairChunk: FootprintChunk {
             
             for cardinal in Cardinal.allCases {
                 
-                apex.append(lowerFace[cardinal.rawValue].lerp(vector: upperFace[cardinal.rawValue], interpolater: j * scalar))
-                throne.append(lowerFace[cardinal.rawValue].lerp(vector: upperFace[cardinal.rawValue], interpolater: i * scalar))
+                apex.append(lowerFace[cardinal.rawValue].lerp(upperFace[cardinal.rawValue], j * scalar))
+                throne.append(lowerFace[cardinal.rawValue].lerp(upperFace[cardinal.rawValue], i * scalar))
             }
             
             let uv0 = apex[Ordinal.northWest.rawValue]
@@ -110,13 +111,13 @@ public class StairChunk: FootprintChunk {
             let lv2 = throne[Ordinal.southEast.rawValue]
             let lv3 = throne[Ordinal.southWest.rawValue]
             
-            let uc0 = uv3.lerp(vector: uv0, interpolater: j * scalar)
-            let uc1 = uv2.lerp(vector: uv1, interpolater: j * scalar)
-            let uc2 = uv2.lerp(vector: uv1, interpolater: i * scalar)
-            let uc3 = uv3.lerp(vector: uv0, interpolater: i * scalar)
+            let uc0 = uv3.lerp(uv0, j * scalar)
+            let uc1 = uv2.lerp(uv1, j * scalar)
+            let uc2 = uv2.lerp(uv1, i * scalar)
+            let uc3 = uv3.lerp(uv0, i * scalar)
             
-            let lc0 = lv3.lerp(vector: lv0, interpolater: i * scalar)
-            let lc1 = lv2.lerp(vector: lv1, interpolater: i * scalar)
+            let lc0 = lv3.lerp(lv0, i * scalar)
+            let lc1 = lv2.lerp(lv1, i * scalar)
             
             let faces = [[uc0, uc1, uc2, uc3],
                          [uc3, uc2, lc1, lc0]]
@@ -129,22 +130,24 @@ public class StairChunk: FootprintChunk {
                 
                 for index in face.indices.reversed() {
                     
-                    vertices.append(Vertex(position: face[index], normal: normal, color: Color(red: 0.35, green: 0.35, blue: 0.35)))
+                    vertices.append(Vertex(face[index], normal))
                 }
                 
-                polygons.append(Polygon(vertices: vertices))
+                guard let polygon = Polygon(vertices) else { continue }
+                
+                polygons.append(polygon)
             }
         }
         
-        let radians = Math.radians(degrees: -90.0 * Double(direction.rawValue))
-
-        let yaw = Rotation.yaw(radians: radians)
+        let radians = Angle(radians: Math.radians(degrees: 90.0 * Double(direction.rawValue)))
+        
+        let yaw = Rotation(yaw: radians)
 
         let offset = Vector(x: (Double(footprint.bounds.size.x) / 2.0) - World.Constants.volumeSize, y: 0, z: (Double(footprint.bounds.size.z) / 2.0) - World.Constants.volumeSize)
         
-        let transform = Transform(position: offset, rotation: yaw)
+        let transform = Transform(offset: offset, rotation: yaw)
         
-        self.geometry = SCNGeometry(mesh: Mesh(polygons: polygons).transformed(by: transform))
+        self.geometry = SCNGeometry(Mesh(polygons).transformed(by: transform))
         
         return true
     }

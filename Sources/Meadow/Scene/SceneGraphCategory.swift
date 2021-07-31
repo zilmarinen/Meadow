@@ -13,6 +13,9 @@ public struct SceneGraphCategory: OptionSet {
         self.rawValue = rawValue
     }
     
+    public static let buildings = SceneGraphCategory(rawValue: 1 << 15)
+    public static let buildingChunk = SceneGraphCategory(rawValue: 1 << 16)
+    
     public static let bridges = SceneGraphCategory(rawValue: 1 << 1)
     public static let bridgeChunk = SceneGraphCategory(rawValue: 1 << 2)
     

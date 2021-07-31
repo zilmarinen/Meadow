@@ -52,6 +52,13 @@ struct Fragment {
     float2 uv;
 };
 
+struct Buffer {
+    
+    float4 color  [[ color(0) ]];
+    float4 position  [[ color(1) ]];
+    float4 normal  [[ color(2) ]];
+};
+
 struct Surface {
   
     float3 view;
@@ -331,6 +338,55 @@ inline float3x3 mat3(float4x4 mat4) {
      _output.color = min(_output.color, float4(160.));
 
      return _output;
+ }
+ 
+ */
+
+
+
+/*
+ 
+ extension Pathfinder {
+     
+     public func path(between origin: PathNode.PathLocus, destination: PathNode.PathLocus) -> Path? {
+         
+         guard let startNode = pathNode(at: origin), let endNode = pathNode(at: destination) else { return nil }
+         
+         let queue = PriorityQueue<PathNode>()
+         
+         var closed: [PathNode: PathNode?] = [startNode : nil]
+         
+         var cost: [PathNode: Int] = [startNode : 0]
+         
+         queue.push(node: startNode)
+         
+         while !queue.isEmpty {
+             
+             let pathNode = queue.pop()
+             
+             //
+             
+             guard let pathNodeCost = cost[pathNode], let neighbours = neighbours(at: pathNode.locus) else { continue }
+             
+             neighbours.forEach { neighbour in
+                 
+                 let neighbourNodeCost = pathNodeCost + neighbour.movementCost
+                 
+                 if !closed.keys.contains(neighbour) && (cost[neighbour] == nil || (neighbourNodeCost < (cost[neighbour] ?? 0))) {
+                     
+                     cost[neighbour] = neighbourNodeCost
+                     
+                     neighbour.priority = neighbourNodeCost + heuristic(between: neighbour.locus.coordinate, destination: destination.coordinate)
+                     
+                     queue.push(node: neighbour)
+                     
+                     closed[neighbour] = pathNode
+                 }
+             }
+         }
+      
+         return nil
+     }
  }
  
  */

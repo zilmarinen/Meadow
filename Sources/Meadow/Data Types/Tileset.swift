@@ -28,7 +28,7 @@ extension Tileset {
     
     static func tileset(named: String) -> MDWImage? {
         
-        return MDWImage.asset(named: named)
+        return MDWImage.asset(named: named, in: .module)
     }
     
     static func tilemap(named: String) -> NSDataAsset? {

@@ -11,16 +11,14 @@ vertex Fragment surface_vertex(Vertex v [[ stage_in ]],
                                constant NodeTransforms& scn_node [[ buffer(1) ]]) {
     
     return {    .fragmentPosition = scn_node.modelViewProjectionTransform * float4(v.position, 1.f),
-                .position = v.position,
-                .normal = v.normal,
-                .color = v.color,
+                .position = (scn_node.modelViewTransform * float4(v.position, 1.f)).xyz,
+                .normal = normalize(v.normal),
                 .uv = v.uv };
 }
 
-fragment float4 surface_fragment(Fragment f [[stage_in]],
+fragment Buffer surface_fragment(Fragment f [[stage_in]],
                                  constant SceneTransforms& scn_frame [[ buffer(0) ]],
                                  constant NodeTransforms& scn_node [[ buffer(1) ]],
-                                 constant Light* scn_lights [[ buffer(2) ]],
                                  texture2d<float, access::sample> tileset [[ texture(0) ]],
                                  texture2d<float, access::sample> edgeset [[ texture(1) ]]) {
     
@@ -41,13 +39,11 @@ fragment float4 surface_fragment(Fragment f [[stage_in]],
         color = tileColorLookup(twizzle(color, f.color));
     }
     
-    Surface surface;
+    Buffer buffer;
     
-    surface.view = normalize(-f.position);
-    surface.position = f.position;
-    surface.normal = normalize(f.normal),
-    surface.uv = f.uv;
-    surface.ambient = color;
+    buffer.position = f.fragmentPosition;
+    buffer.color = color;
+    buffer.normal = float4(f.normal, 0.f);
     
-    return illuminate(surface, scn_lights[0]);
+    return buffer;
 }

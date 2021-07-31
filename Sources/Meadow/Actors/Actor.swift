@@ -4,6 +4,7 @@
 //  Created by Zack Brown on 28/03/2021.
 //
 
+import Euclid
 import Foundation
 import SceneKit
 
@@ -31,15 +32,64 @@ public class Actor: SCNNode, Codable, Hideable, Responder, Shadable, Soilable, U
             
             if oldValue != coordinate {
                 
+                scene?.actor(actor: self, didMoveTo: coordinate)
+                
                 becomeDirty()
             }
         }
     }
     
-    var program: SCNProgram? { nil }
-    var uniforms: [Uniform]? { nil }
+    public var direction: Cardinal = .north {
+        
+        didSet {
+            
+            if oldValue != direction {
+                print("setting direction: \(direction.description)")
+                becomeDirty()
+            }
+        }
+    }
     
-    var textures: [Texture]? { nil }
+    public var program: SCNProgram? { nil }
+    public var uniforms: [Uniform]? { nil }
+    public var textures: [Texture]? { nil }
+    
+    lazy var model: SCNNode = {
+       
+        let node = SCNNode()
+        
+        let head = SCNNode()
+        let torso = SCNNode()
+        let legs = SCNNode()
+        
+        head.geometry = SCNBox(width: 0.2, height: 0.2, length: 0.2, chamferRadius: 0.0)
+        torso.geometry = SCNBox(width: 0.4, height: 0.4, length: 0.25, chamferRadius: 0.0)
+        legs.geometry = SCNBox(width: 0.2, height: 0.4, length: 0.2, chamferRadius: 0.0)
+        
+        head.position = SCNVector3(x: 0.0, y: 0.9, z: 0.0)
+        torso.position = SCNVector3(x: 0.0, y: 0.6, z: 0.0)
+        legs.position = SCNVector3(x: 0.0, y: 0.2, z: 0.0)
+        
+        head.geometry?.firstMaterial?.diffuse.contents = MDWColor.systemPink
+        torso.geometry?.firstMaterial?.diffuse.contents = MDWColor.systemPurple
+        legs.geometry?.firstMaterial?.diffuse.contents = MDWColor.systemBlue
+        
+        node.addChildNode(head)
+        node.addChildNode(torso)
+        node.addChildNode(legs)
+        
+        let guide = SCNNode()
+        
+        guide.geometry = SCNBox(width: 0.2, height: 0.2, length: 0.2, chamferRadius: 0.0)
+        
+        guide.position = SCNVector3(x: 0, y: 0.1, z: -0.5)
+        
+        guide.geometry?.firstMaterial?.diffuse.contents = MDWColor.systemRed
+        
+        node.addChildNode(guide)
+        
+        return node
+    }()
     
     required init(coordinate: Coordinate) {
         
@@ -85,19 +135,26 @@ public class Actor: SCNNode, Codable, Hideable, Responder, Shadable, Soilable, U
         
         guard isDirty else { return false }
         
-        self.geometry = SCNBox(width: 1.0, height: 1.0, length: 1.0, chamferRadius: 0.0)
-        self.geometry?.firstMaterial?.diffuse.contents = MDWColor.systemPurple
-        self.geometry?.program = program
-        
-        if let uniforms = uniforms {
+        if model.parent == nil {
             
-            self.geometry?.set(uniforms: uniforms)
+            addChildNode(model)
         }
         
-        if let textures = textures {
-            
-            self.geometry?.set(textures: textures)
-        }
+        model.rotation = SCNQuaternion(Rotation(yaw: Angle(radians: Math.radians(degrees: Double(90 * direction.rawValue)))))
+        
+//        self.geometry = SCNBox(width: 1.0, height: 1.0, length: 1.0, chamferRadius: 0.0)
+//        self.geometry?.firstMaterial?.diffuse.contents = MDWColor.systemPurple
+//        self.geometry?.program = program
+//
+//        if let uniforms = uniforms {
+//
+//            self.geometry?.set(uniforms: uniforms)
+//        }
+//
+//        if let textures = textures {
+//
+//            self.geometry?.set(textures: textures)
+//        }
         
         isDirty = false
         
@@ -110,38 +167,41 @@ public class Actor: SCNNode, Codable, Hideable, Responder, Shadable, Soilable, U
         
         case .idle:
             
-            position = SCNVector3(vector: Vector(x: coordinate.world.x, y: coordinate.world.y, z: coordinate.world.z))
-        
-        case .moving(let path):
+            position = SCNVector3(Vector(x: coordinate.world.x, y: coordinate.world.y, z: coordinate.world.z))
             
-            guard let node = path.node(for: coordinate),
-                  let index = path.nodes.firstIndex(of: node) else {
+        case .traversing(let path, let current, let destination):
+            
+            guard let index = path.nodes.firstIndex(of: current),
+                  index < (path.nodes.count - 1) else {
                 
                 self.controller.state = .idle
                 
                 return
             }
             
-            guard index < (path.nodes.count - 1) else {
-                
-                self.controller.state = .idle
-                
-                return
-            }
+            let next = path.nodes[index + 1]
             
-            let destination = path.nodes[index + 1]
-            
-            let speed = (delta / Double(node.movementCost)) * 2
+            let speed = (delta / Double(current.movementCost)) * 2
             
             let currentPosition = Vector(vector: position)
-            let targetPosition = destination.vector
+            let targetPosition = next.vector
             let newPosition = currentPosition.move(towards: targetPosition, distance: speed)
             
-            position = SCNVector3(vector: newPosition)
+            position = SCNVector3(newPosition)
+            direction = next.direction
             
             if newPosition.compare(with: targetPosition, precision: 0.1) {
                 
-                coordinate = destination.coordinate
+                coordinate = next.coordinate
+                
+                guard next != destination else {
+                    
+                    self.controller.state = .idle
+                    
+                    return
+                }
+                
+                self.controller.state = .traversing(path: path, current: next, destination: destination)
             }
             
         default: break
@@ -155,18 +215,20 @@ extension Actor {
         
         switch currentState {
         
-        case .moving(let path):
-            
-            print("Following path[\(path.nodes.count)]: \(path.nodes.first?.coordinate ?? .zero) -> \(path.nodes.last?.coordinate ?? .zero)")
+//        case .traversing(let path, let current, _):
+//
+//            print("Following path[\(path.nodes.count)]:\n\(path.nodes.first?.coordinate ?? .zero) -> \(path.nodes.last?.coordinate ?? .zero)\n\(current.coordinate) -> \(current.direction.description)")
         
         case .pathfinding(let destination):
             
             guard let scene = scene,
-                  let path = scene.path(between: coordinate, destination: destination) else { break }
+                  let path = scene.path(between: coordinate, destination: destination),
+                  let start = path.nodes.first,
+                  let end = path.nodes.last else { break }
             
             print("finding path between \(coordinate) and \(destination)")
             
-            controller.state = .moving(path: path)
+            controller.state = .traversing(path: path, current: start, destination: end)
             
         case .spawn(let coordinate):
             

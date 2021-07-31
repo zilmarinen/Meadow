@@ -4,6 +4,7 @@
 //  Created by Zack Brown on 23/12/2020.
 //
 
+import Euclid
 import SceneKit
 
 public class SurfaceTile: Tile {
@@ -68,11 +69,11 @@ public class SurfaceTile: Tile {
         try container.encode(volumes, forKey: .volumes)
     }
     
-    override func render(position: Vector) -> [Polygon] {
+    override func render(position: Vector) -> [Euclid.Polygon] {
         
         let tile = scene?.meadow.surface.tilemap.tileset.tiles(with: apexPattern).randomElement()
         
-        var polygons: [Polygon] = []
+        var polygons: [Euclid.Polygon] = []
         
         for ordinal in Ordinal.allCases {
             
@@ -89,7 +90,7 @@ public class SurfaceTile: Tile {
             
             for index in volume.apex.corners.indices {
                 
-                apex.append(lowerFace[index].lerp(vector: upperFace[index], interpolater: volume.apex.corners[index]))
+                apex.append(lowerFace[index].lerp(upperFace[index], volume.apex.corners[index]))
             }
             
             let normal = -apex.normal()
@@ -99,10 +100,12 @@ public class SurfaceTile: Tile {
             
             for index in apex.indices.reversed() {
                 
-                vertices.append(Vertex(position: apex[index], normal: normal, color: color, textureCoordinates: apexUVs[index]))
+                vertices.append(Vertex(apex[index], normal, apexUVs[index]))
             }
             
-            polygons.append(Polygon(vertices: vertices))
+            guard let polygon = Polygon(vertices) else { continue }
+            
+            polygons.append(polygon)
             
             guard !volume.edges.isEmpty else { continue }
             
@@ -120,12 +123,12 @@ public class SurfaceTile: Tile {
                 
                 if let height = edges[o1] {
                     
-                    face.append(lowerFace[o1.rawValue].lerp(vector: upperFace[o1.rawValue], interpolater: height))
+                    face.append(lowerFace[o1.rawValue].lerp(upperFace[o1.rawValue], height))
                 }
                 
                 if let height = edges[o0] {
                     
-                    face.append(lowerFace[o0.rawValue].lerp(vector: upperFace[o0.rawValue], interpolater: height))
+                    face.append(lowerFace[o0.rawValue].lerp(upperFace[o0.rawValue], height))
                 }
                 
                 let normal = cardinal.normal
@@ -134,10 +137,12 @@ public class SurfaceTile: Tile {
                 
                 for index in face.indices {
                     
-                    vertices.append(Vertex(position: face[index], normal: normal, color: color, textureCoordinates: edgeUVs[index]))
+                    vertices.append(Vertex(face[index], normal, edgeUVs[index]))
                 }
                 
-                polygons.append(Polygon(vertices: vertices))
+                guard let polygon = Polygon(vertices) else { continue }
+                
+                polygons.append(polygon)
             }
         }
         

@@ -4,6 +4,7 @@
 //  Created by Zack Brown on 26/03/2021.
 //
 
+import Euclid
 import SceneKit
 
 public class WaterTile: Tile {
@@ -48,9 +49,9 @@ public class WaterTile: Tile {
         try container.encode(volume, forKey: .volume)
     }
     
-    override func render(position: Vector) -> [Polygon] {
+    override func render(position: Vector) -> [Euclid.Polygon] {
         
-        var polygons: [Polygon] = []
+        var polygons: [Euclid.Polygon] = []
         
         let upperFace = TileVolume.face(position: position, size: World.Constants.volumeSize, elevation: World.Constants.ceiling)
         let lowerFace = TileVolume.face(position: position, size: World.Constants.volumeSize, elevation: 0)
@@ -59,7 +60,7 @@ public class WaterTile: Tile {
         
         for index in volume.apex.corners.indices {
             
-            apex.append(lowerFace[index].lerp(vector: upperFace[index], interpolater: volume.apex.corners[index]))
+            apex.append(lowerFace[index].lerp(upperFace[index], volume.apex.corners[index]))
         }
         
         let normal = -apex.normal()
@@ -68,10 +69,12 @@ public class WaterTile: Tile {
         
         for index in apex.indices.reversed() {
             
-            vertices.append(Vertex(position: apex[index], normal: normal, color: color))
+            vertices.append(Vertex(apex[index], normal))
         }
         
-        polygons.append(Polygon(vertices: vertices))
+        guard let polygon = Polygon(vertices) else { return [] }
+        
+        polygons.append(polygon)
         
         guard !volume.edges.isEmpty else { return polygons }
         
@@ -83,12 +86,12 @@ public class WaterTile: Tile {
             
             if let height = edges[o1] {
                 
-                face.append(lowerFace[o1.rawValue].lerp(vector: upperFace[o1.rawValue], interpolater: height))
+                face.append(lowerFace[o1.rawValue].lerp(upperFace[o1.rawValue], height))
             }
             
             if let height = edges[o0] {
                 
-                face.append(lowerFace[o0.rawValue].lerp(vector: upperFace[o0.rawValue], interpolater: height))
+                face.append(lowerFace[o0.rawValue].lerp(upperFace[o0.rawValue], height))
             }
             
             let normal = cardinal.normal
@@ -97,10 +100,12 @@ public class WaterTile: Tile {
             
             for index in face.indices {
                 
-                vertices.append(Vertex(position: face[index], normal: normal, color: color))
+                vertices.append(Vertex(face[index], normal))
             }
             
-            polygons.append(Polygon(vertices: vertices))
+            guard let polygon = Polygon(vertices) else { continue }
+            
+            polygons.append(polygon)
         }
         
         return polygons

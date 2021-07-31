@@ -6,12 +6,12 @@
 
 import SceneKit
 
-struct Texture {
+public struct Texture {
     
     var key: String
     var value: SCNMaterialProperty
     
-    init(key: String, image: MDWImage) {
+    public init(key: String, image: MDWImage) {
         
         self.key = key
         self.value = SCNMaterialProperty(contents: image)

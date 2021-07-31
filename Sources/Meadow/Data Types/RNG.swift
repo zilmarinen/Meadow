@@ -5,22 +5,24 @@
 //
 
 import Foundation
-import GameplayKit
 
-class RNG: RandomNumberGenerator {
+public var rng = RNG(seed: 1337)
+
+public struct RNG: RandomNumberGenerator {
     
-    let seed: UInt64
+    var seed: UInt64
     
-    let generator: GKMersenneTwisterRandomSource
-    
-    init(seed: UInt64) {
+    public init(seed: UInt64) {
         
         self.seed = seed
-        self.generator = GKMersenneTwisterRandomSource(seed: seed)
     }
     
-    func next() -> UInt64 {
+    mutating public func next() -> UInt64 {
         
-        return UInt64(abs(generator.nextInt()))
+        seed &+= 0xA0761D6478BD642F
+        
+        let result = seed.multipliedFullWidth(by: seed ^ 0xE7037ED1A0B428DB)
+        
+        return result.high ^ result.low
     }
 }

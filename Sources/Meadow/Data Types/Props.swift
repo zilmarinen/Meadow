@@ -8,23 +8,39 @@ import Foundation
 
 public class Props {
     
-    var props: [String : Model]
+    var buildings: [String : Model]
+    var foliage: [String : Model]
     
     public init() {
         
-        props = [:]
+        buildings = [:]
+        foliage = [:]
     }
     
-    public func prop(foliage: FoliageType) -> Model {
+    public func prop(prop: BuildingType) -> Model {
         
-        if let model = props[foliage.identifier] {
+        if let model = buildings[prop.identifier] {
             
             return model
         }
         
-        guard let model = foliage.model else { fatalError("Error loading model for prop: \(foliage)") }
+        guard let model = prop.model else { fatalError("Error loading model for prop: \(prop)") }
         
-        props[foliage.identifier] = model
+        buildings[prop.identifier] = model
+        
+        return model
+    }
+    
+    public func prop(prop: FoliageType) -> Model {
+        
+        if let model = foliage[prop.identifier] {
+            
+            return model
+        }
+        
+        guard let model = prop.model else { fatalError("Error loading model for prop: \(prop)") }
+        
+        foliage[prop.identifier] = model
         
         return model
     }

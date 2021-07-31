@@ -4,6 +4,7 @@
 //  Created by Zack Brown on 11/05/2021.
 //
 
+import Euclid
 import Foundation
 
 public struct TileVolume: Codable {

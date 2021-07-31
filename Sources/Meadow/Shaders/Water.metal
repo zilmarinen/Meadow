@@ -28,13 +28,5 @@ fragment float4 water_fragment(Fragment f [[stage_in]],
     
     float alpha = 1.0;
     
-    Surface surface;
-    
-    surface.view = normalize(-f.position);
-    surface.position = f.position;
-    surface.normal = normalize(f.normal),
-    surface.uv = f.uv;
-    surface.ambient = float4(0.84 * alpha, 0.92 * alpha, 0.89 * alpha, alpha);
-    
-    return illuminate(surface, scn_lights[0]);
+    return float4(0.84 * alpha, 0.92 * alpha, 0.89 * alpha, alpha);
 }

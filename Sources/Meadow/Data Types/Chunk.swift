@@ -4,6 +4,7 @@
 //  Created by Zack Brown on 25/03/2021.
 //
 
+import Euclid
 import SceneKit
 
 public class Chunk<T: Tile>: SCNNode, Codable, Hideable, Responder, Shadable, Soilable {
@@ -32,10 +33,9 @@ public class Chunk<T: Tile>: SCNNode, Codable, Hideable, Responder, Shadable, So
     }
     let tiles: [T]
     
-    var program: SCNProgram? { nil }
-    var uniforms: [Uniform]? { nil }
-    
-    var textures: [Texture]? { nil }
+    public var program: SCNProgram? { nil }
+    public var uniforms: [Uniform]? { nil }
+    public var textures: [Texture]? { nil }
     
     var offset: Coordinate = .zero {
         
@@ -43,7 +43,7 @@ public class Chunk<T: Tile>: SCNNode, Codable, Hideable, Responder, Shadable, So
             
             if oldValue != offset {
                 
-                bounds = GridBounds(start: bounds.start + offset, end: bounds.end + offset)
+                bounds = GridBounds(start: (bounds.start - oldValue) + offset, end: (bounds.end - oldValue) + offset)
                 
                 for tile in tiles {
                     
@@ -103,11 +103,18 @@ extension Chunk {
     
     @discardableResult public func clean() -> Bool {
         
-        guard isDirty else { return false }
+        guard isDirty,
+              let hero = scene?.hero else { return false }
+        
+        let center = Vector(x: Double(bounds.start.x + bounds.end.x) / 2.0, y: 0, z: Double(bounds.start.z + bounds.end.z) / 2.0)
+        
+        let vector = Vector(x: abs(Double(hero.coordinate.x) - center.x), y: 0, z: abs(Double(hero.coordinate.z) - center.z))
+        
+        guard vector.length < 35 else { return false }
         
         position = SCNVector3(coordinate: bounds.start)
         
-        var polygons: [Polygon] = []
+        var polygons: [Euclid.Polygon] = []
         
         for tile in tiles where !tile.isHidden {
             
@@ -116,9 +123,9 @@ extension Chunk {
             polygons.append(contentsOf: tile.render(position: Vector(coordinate: tile.coordinate.xz - bounds.start.xz)))
         }
         
-        let mesh = Mesh(polygons: polygons)
+        let mesh = Mesh(polygons)
         
-        self.geometry = SCNGeometry(mesh: mesh)
+        self.geometry = SCNGeometry(mesh)
         self.geometry?.program = program
         
         if let uniforms = uniforms {

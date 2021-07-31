@@ -6,11 +6,11 @@
 
 import SceneKit
 
-class Foliage: FootprintGrid<FoliageChunk> {
+public class Foliage: FootprintGrid<FoliageChunk> {
     
     public override var category: Int { SceneGraphCategory.foliage.rawValue }
     
-    lazy var program: SCNProgram? = {
+    public lazy var program: SCNProgram? = {
         
         guard let library = scene?.library else { return nil }
         

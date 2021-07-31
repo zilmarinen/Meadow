@@ -7,7 +7,7 @@
 import Foundation
 import SceneKit
 
-protocol Responder: Soilable {
+public protocol Responder: Soilable {
     
     var responder: Responder? { get }
     
@@ -15,7 +15,7 @@ protocol Responder: Soilable {
     var map: Meadow? { get }
 }
 
-extension Responder {
+public extension Responder {
     
     var responder: Responder? { ancestor as? Responder }
     

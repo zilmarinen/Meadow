@@ -6,7 +6,12 @@
 
 import SceneKit
 
-open class Scene: SCNScene, Codable, Responder, Soilable {
+protocol SceneDelegate {
+    
+    func actor(actor: Actor, didMoveTo coordinate: Coordinate)
+}
+
+open class Scene: SCNScene, Codable, Responder, SceneDelegate, Soilable {
 
     private enum CodingKeys: String, CodingKey {
         
@@ -35,7 +40,7 @@ open class Scene: SCNScene, Codable, Responder, Soilable {
     
     var lastUpdate: TimeInterval?
     
-    var scene: Scene? { self }
+    public var scene: Scene? { self }
     
     public init(meadow: Meadow) {
         
@@ -100,7 +105,8 @@ extension Scene {
     
     @discardableResult public func clean() -> Bool {
         
-        guard isDirty else { return false }
+        //TODO: fix dirty scene for loading chunks
+        //guard isDirty else { return false }
         
         camera.clean()
         hero.clean()
@@ -112,7 +118,7 @@ extension Scene {
             seam.clean()
         }
         
-        isDirty = false
+        //isDirty = false
         
         return true
     }
@@ -144,9 +150,9 @@ extension Scene {
     
     public func updateSeams() {
         
-        var newSeams: [String : Meadow] = [:]
-        
         for seam in meadow.seams.tiles {
+            
+            guard seams[seam.segue.scene] == nil else { continue }
             
             do {
                 
@@ -160,9 +166,9 @@ extension Scene {
                     rootNode.addChildNode(adjacentMap)
                 }
                 
-                adjacentMap.offset = (seam.coordinate + seam.segue.direction.coordinate) - stitch.coordinate
+                adjacentMap.offset = ((seam.coordinate + seam.segue.direction.coordinate) - stitch.coordinate)
                 
-                newSeams[adjacentMap.identifier] = adjacentMap
+                seams[adjacentMap.identifier] = adjacentMap
             }
             catch {
                 
@@ -170,31 +176,30 @@ extension Scene {
             }
         }
         
-        for (identifier, seam) in seams {
+        let scenes = meadow.seams.tiles.map { $0.segue.scene }
+        
+        let detached = seams.filter { !scenes.contains($0.key) }
+        
+        for (_, seam) in detached {
 
-            if newSeams[identifier] == nil {
-
-                seam.ancestor = nil
-                
-                seam.removeFromParentNode()
-            }
+            seam.ancestor = nil
+            
+            seam.removeFromParentNode()
         }
         
-        seams = newSeams
+        seams = seams.filter { scenes.contains($0.key) }
     }
     
     func loadMap(identifier: String) throws -> Meadow? {
-        
-        guard let asset = NSDataAsset(name: identifier, bundle: .main) else { return nil }
         
         if let seam = seams[identifier] {
             
             return seam
         }
         
-        let decoder = JSONDecoder()
+        guard let asset = NSDataAsset(name: identifier, bundle: .main) else { return nil }
         
-        return try decoder.decode(Meadow.self, from: asset.data)
+        return try JSONDecoder().decode(Meadow.self, from: asset.data)
     }
 }
 
@@ -202,14 +207,11 @@ extension Scene {
     
     public func find(traversable coordinate: Coordinate) -> TraversableNode? {
         
-        if let node = meadow.find(traversable: coordinate) {
-            
-            return node
-        }
+        let maps = [meadow] + Array(seams.values)
         
-        for (_, seam) in seams {
-         
-            if let node = seam.find(traversable: coordinate) {
+        for map in maps {
+            
+            if let node = map.find(traversable: coordinate) {
                 
                 return node
             }
@@ -247,22 +249,58 @@ extension Scene {
             for cardinal in node.value.cardinals {
                 
                 guard let neighbour = find(traversable: node.value.coordinate + cardinal.coordinate),
-                      neighbour.cardinals.contains(cardinal.opposite) else { continue }
+                      let currentCost = cost[node.value.coordinate],
+                      node.value.traversable(node: neighbour, along: cardinal) else { continue }
                 
-                let incline = abs(node.value.coordinate.y - neighbour.coordinate.y)
+                let nodeCost = currentCost + neighbour.movementCost
                 
-                guard incline == 0 || (incline <= World.Constants.step && (node.value.sloped || neighbour.sloped)) else { continue }
-                
-                if stack[neighbour.coordinate] == nil || neighbour.movementCost < (cost[neighbour.coordinate] ?? Double.greatestFiniteMagnitude) {
+                if stack[neighbour.coordinate] == nil || nodeCost < currentCost {
                     
-                    queue.enqueue(value: neighbour, priority: Double(origin.heuristic(coordinate: neighbour.coordinate)))
+                    queue.enqueue(value: neighbour, priority: currentCost + Double(origin.heuristic(coordinate: neighbour.coordinate)))
                     
                     stack[neighbour.coordinate] = node.value
-                    cost[neighbour.coordinate] = neighbour.movementCost
+                    cost[neighbour.coordinate] = nodeCost
                 }
             }
         }
         
         return nil
+    }
+}
+
+extension Scene {
+    
+    public func find(map coordinate: Coordinate) -> Meadow? {
+        
+        let maps = [meadow] + Array(seams.values)
+        
+        for map in maps {
+            
+            if map.find(traversable: coordinate) != nil {
+                
+                return map
+            }
+        }
+        
+        return nil
+    }
+    
+    func actor(actor: Actor, didMoveTo coordinate: Coordinate) {
+        
+        guard actor == hero,
+              let map = find(map: coordinate) else { return }
+        
+        if meadow.identifier != map.identifier {
+            
+            print("Moving from \(meadow.identifier) to \(map.identifier)")
+            
+            seams[meadow.identifier] = meadow
+            
+            seams.removeValue(forKey: map.identifier)
+            
+            meadow = map
+            
+            updateSeams()
+        }
     }
 }

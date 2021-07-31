@@ -10,9 +10,9 @@ public class WaterChunk: Chunk<WaterTile> {
     
     public override var category: Int { SceneGraphCategory.surfaceChunk.rawValue }
     
-    override var program: SCNProgram? { scene?.meadow.water.program }
+    public override var program: SCNProgram? { scene?.meadow.water.program }
     
-    override var uniforms: [Uniform]? { nil }
+    public override var uniforms: [Uniform]? { nil }
     
-    override var textures: [Texture]? { nil }
+    public override var textures: [Texture]? { nil }
 }

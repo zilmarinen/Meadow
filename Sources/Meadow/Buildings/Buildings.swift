@@ -6,10 +6,20 @@
 
 import SceneKit
 
-class Buildings: FootprintGrid<BuildingChunk> {
+public class Buildings: FootprintGrid<BuildingChunk> {
+    
+    public override var category: Int { SceneGraphCategory.buildings.rawValue }
+    
+    public lazy var program: SCNProgram? = {
+        
+        guard let library = scene?.library else { return nil }
+        
+        return SCNProgram(name: .building, library: library)
+    }()
     
     func find(building coordinate: Coordinate) -> BuildingChunk? {
         
+        //TODO: implement search
         return nil
     }
 }

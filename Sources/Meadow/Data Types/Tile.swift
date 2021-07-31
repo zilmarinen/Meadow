@@ -4,6 +4,7 @@
 //  Created by Zack Brown on 25/03/2021.
 //
 
+import Euclid
 import SceneKit
 
 public class Tile: Codable, Equatable, Renderable, Responder {
@@ -46,7 +47,7 @@ public class Tile: Codable, Equatable, Renderable, Responder {
             
             if oldValue != offset {
                 
-                coordinate += offset
+                coordinate = (coordinate - oldValue) + offset
                 
                 becomeDirty()
             }
@@ -80,7 +81,7 @@ public class Tile: Codable, Equatable, Renderable, Responder {
         return true
     }
     
-    func render(position: Vector) -> [Polygon] { return [] }
+    func render(position: Vector) -> [Euclid.Polygon] { return [] }
 }
 
 extension Tile {

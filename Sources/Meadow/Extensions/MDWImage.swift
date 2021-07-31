@@ -16,17 +16,17 @@ import Foundation
 
 #endif
 
-extension MDWImage {
+public extension MDWImage {
     
-    static func asset(named: String) -> MDWImage? {
+    static func asset(named: String, in bundle: Bundle) -> MDWImage? {
         
         #if os(macOS)
         
-        return Bundle.module.image(forResource: named)
+        return bundle.image(forResource: named)
         
         #else
         
-        return MDWImage(named: named, in: .module, with: nil)
+        return MDWImage(named: named, in: bundle, with: nil)
         
         #endif
     }

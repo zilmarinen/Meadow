@@ -92,7 +92,7 @@ extension Grid {
             chunk.clean()
         }
         
-        isDirty = false
+        isDirty = chunks.map { $0.isDirty }.contains(true)
         
         return true
     }

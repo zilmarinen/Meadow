@@ -17,8 +17,6 @@ class SceneCoordinator: ViewCoordinator {
         
         super.start(with: option)
         
-        print("SceneCoordinator -> start")
-        
         guard let view = controller.view as? ExampleView else { return }
         
         if let scene = option as? Scene {
@@ -93,8 +91,10 @@ extension SceneCoordinator {
                 switch clickType {
                 
                 case .right:
-                    print("WOOT")
-                    scene.updateSeams()
+                    
+                    guard let surfaceTile = scene.find(traversable: startHit) else { return }
+                    
+                    scene.hero.controller.spawn(at: surfaceTile.coordinate)
                 
                 case .left:
                     

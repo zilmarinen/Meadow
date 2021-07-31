@@ -6,14 +6,32 @@
 
 import SceneKit
 
-class BuildingChunk: FootprintChunk {
+public class BuildingChunk: FootprintChunk {
     
     private enum CodingKeys: String, CodingKey {
         
         case buildingType = "t"
     }
     
+    public override var category: Int { SceneGraphCategory.buildingChunk.rawValue }
+    
+    public override var footprint: Footprint {
+        
+        guard let prop = scene?.props.prop(prop: buildingType) else { fatalError("Unable to load footprint for \(self)") }
+        
+        return prop.footprint
+    }
+    
+    public override var program: SCNProgram? { scene?.meadow.buildings.program }
+    
     let buildingType: BuildingType
+    
+    public override var textures: [Texture]? {
+        
+        guard let texture = buildingType.texture else { return nil }
+        
+        return [texture]
+    }
     
     required public init(from decoder: Decoder) throws {
         
@@ -38,15 +56,15 @@ class BuildingChunk: FootprintChunk {
         try container.encode(buildingType, forKey: .buildingType)
     }
     
-    override func clean() -> Bool {
+    public override func clean() -> Bool {
         
         guard isDirty else { return false }
         
-        position = SCNVector3(vector: coordinate.world)
+        position = SCNVector3(coordinate.world)
         
         if let mesh = buildingType.model?.mesh {
          
-            self.geometry = SCNGeometry(mesh: mesh)
+            self.geometry = SCNGeometry(mesh)
             self.geometry?.program = program
         }
         

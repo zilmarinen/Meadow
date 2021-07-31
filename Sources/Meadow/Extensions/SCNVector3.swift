@@ -4,6 +4,7 @@
 //  Created by Zack Brown on 03/11/2020.
 //
 
+import Euclid
 import SceneKit
 
 extension SCNVector3: Codable {
@@ -13,11 +14,6 @@ extension SCNVector3: Codable {
         case x
         case y
         case z
-    }
-    
-    init(vector: Vector) {
-        
-        self.init(vector.x, vector.y, vector.z)
     }
     
     init(coordinate: Coordinate) {

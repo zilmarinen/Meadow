@@ -19,12 +19,14 @@ import Foundation
 public enum BuildingType: Int, CaseIterable, Codable, Equatable {
     
     case house
+    case home
     
     var identifier: String {
         
         switch self {
         
         case .house: return "house"
+        case .home: return "home"
         }
     }
     
@@ -35,5 +37,12 @@ public enum BuildingType: Int, CaseIterable, Codable, Equatable {
         let decoder = JSONDecoder()
         
         return try? decoder.decode(Model.self, from: asset.data)
+    }
+    
+    var texture: Texture? {
+        
+        guard let image = MDWImage.asset(named: "uvs", in: .module) else { return nil }
+        
+        return Texture(key: "building", image: image)
     }
 }

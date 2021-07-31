@@ -4,7 +4,9 @@
 //  Created by Zack Brown on 03/11/2020.
 //
 
-public enum Cardinal: Int, CaseIterable, Codable {
+import Euclid
+
+public enum Cardinal: Int, CaseIterable, Codable, Identifiable {
     
     case north
     case east
@@ -21,6 +23,8 @@ public enum Cardinal: Int, CaseIterable, Codable {
         case .west: return "West"
         }
     }
+    
+    public var id: String { description }
 }
 
 extension Cardinal {

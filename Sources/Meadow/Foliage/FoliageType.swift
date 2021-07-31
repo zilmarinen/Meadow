@@ -23,6 +23,7 @@ public enum FoliageType: Int, CaseIterable, Codable, Equatable {
     case treeSmall
     case treeMedium
     case treeLarge
+    case palmTree
     
     var identifier: String {
         
@@ -33,6 +34,7 @@ public enum FoliageType: Int, CaseIterable, Codable, Equatable {
         case .treeSmall: return "tree_small"
         case .treeMedium: return "tree_medium"
         case .treeLarge: return "tree_large"
+        case .palmTree: return "palm_tree"
         }
     }
     
@@ -47,7 +49,7 @@ public enum FoliageType: Int, CaseIterable, Codable, Equatable {
     
     var texture: Texture? {
         
-        guard let image = MDWImage.asset(named: "uvs") else { return nil }
+        guard let image = MDWImage.asset(named: "uvs", in: .module) else { return nil }
         
         return Texture(key: "foliage", image: image)
     }

@@ -4,6 +4,7 @@
 //  Created by Zack Brown on 08/05/2021.
 //
 
+import Euclid
 import SceneKit
 
 public class BridgeChunk: FootprintChunk {
@@ -55,7 +56,7 @@ public class BridgeChunk: FootprintChunk {
         
         guard super.clean() else { return false }
         
-        var polygons: [Polygon] = []
+        var polygons: [Euclid.Polygon] = []
         
         for node in footprint.nodes {
             
@@ -70,7 +71,7 @@ public class BridgeChunk: FootprintChunk {
             
             for cardinal in Cardinal.allCases {
                 
-                apex.append(lowerFace[cardinal.rawValue].lerp(vector: upperFace[cardinal.rawValue], interpolater: elevation))
+                apex.append(lowerFace[cardinal.rawValue].lerp(upperFace[cardinal.rawValue], elevation))
             }
             
             let normal = -apex.normal()
@@ -79,13 +80,15 @@ public class BridgeChunk: FootprintChunk {
             
             for index in apex.indices.reversed() {
                 
-                vertices.append(Vertex(position: apex[index], normal: normal, color: Color(red: 0.14, green: 0.14, blue: 0.14)))
+                vertices.append(Vertex(apex[index], normal))
             }
             
-            polygons.append(Polygon(vertices: vertices))
+            guard let polygon = Polygon(vertices) else { continue }
+            
+            polygons.append(polygon)
         }
         
-        self.geometry = SCNGeometry(mesh: Mesh(polygons: polygons))
+        self.geometry = SCNGeometry(Mesh(polygons))
         
         return true
     }

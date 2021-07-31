@@ -4,6 +4,8 @@
 //  Created by Zack Brown on 08/04/2021.
 //
 
+import Euclid
+
 public struct Model: Codable {
     
     private enum CodingKeys: String, CodingKey {
@@ -18,7 +20,7 @@ public struct Model: Codable {
     init(footprint: Footprint, polygons: [Polygon]) {
         
         self.footprint = footprint
-        self.mesh = Mesh(polygons: polygons)
+        self.mesh = Mesh(polygons)
     }
     
     public init(from decoder: Decoder) throws {
@@ -28,7 +30,7 @@ public struct Model: Codable {
         let polygons = try container.decode([Polygon].self, forKey: .polygons)
         
         footprint = try container.decode(Footprint.self, forKey: .footprint)
-        mesh = Mesh(polygons: polygons)
+        mesh = Mesh(polygons)
     }
    
     public func encode(to encoder: Encoder) throws {

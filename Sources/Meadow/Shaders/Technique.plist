@@ -10,9 +10,11 @@
 			<dict>
 				<key>clear</key>
 				<true/>
+				<key>clearColor</key>
+				<string>0.35 0.35 0.35 1.0</string>
 			</dict>
 			<key>draw</key>
-			<string>DRAW_SCENE</string>
+			<string>DRAW_QUAD</string>
 			<key>program</key>
 			<string>doesntexist</string>
 			<key>metalVertexShader</key>
@@ -20,7 +22,10 @@
 			<key>metalFragmentShader</key>
 			<string>technique_fragment</string>
 			<key>inputs</key>
-			<dict/>
+			<dict>
+				<key>colorBuffer</key>
+				<string>COLOR</string>
+			</dict>
 			<key>outputs</key>
 			<dict>
 				<key>color</key>
@@ -34,6 +39,11 @@
 	</array>
 	<key>symbols</key>
 	<dict/>
+	<key>vertexSymbol</key>
+	<dict>
+		<key>semantic</key>
+		<string>vertex</string>
+	</dict>
 	<key>targets</key>
 	<dict>
 		<key>MASK</key>

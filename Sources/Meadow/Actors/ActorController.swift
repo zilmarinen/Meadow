@@ -11,7 +11,7 @@ extension Actor {
     public enum ActorState: State {
         
         case idle
-        case moving(path: Path)
+        case traversing(path: Path, current: PathNode, destination: PathNode)
         case pathfinding(destination: Coordinate)
         case spawn(coordinate: Coordinate)
         

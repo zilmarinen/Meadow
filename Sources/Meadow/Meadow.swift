@@ -34,16 +34,16 @@ public class Meadow: SCNNode, Codable, Responder, Updatable {
     
     var identifier: String = ""
     
-    let actors: Actors
-    let bridges: Bridges
-    let buildings: Buildings
-    let foliage: Foliage
-    let footpath: Footpath
+    public let actors: Actors
+    public let bridges: Bridges
+    public let buildings: Buildings
+    public let foliage: Foliage
+    public let footpath: Footpath
     public let portals: Portals
     public let seams: Seams
-    let stairs: Stairs
-    let surface: Surface
-    let water: Water
+    public let stairs: Stairs
+    public let surface: Surface
+    public let water: Water
     
     var offset: Coordinate = .zero {
         
@@ -68,7 +68,7 @@ public class Meadow: SCNNode, Codable, Responder, Updatable {
         }
     }
     
-    var map: Meadow? { self }
+    public var map: Meadow? { self }
     
     required public init(from decoder: Decoder) throws {
         
@@ -133,8 +133,6 @@ extension Meadow {
     
     @discardableResult public func clean() -> Bool {
         
-        guard isDirty else { return false }
-        
         actors.clean()
         bridges.clean()
         buildings.clean()
@@ -145,8 +143,6 @@ extension Meadow {
         stairs.clean()
         surface.clean()
         water.clean()
-        
-        isDirty = false
         
         return true
     }
@@ -166,7 +162,7 @@ extension Meadow {
      
         guard buildings.find(building: coordinate) == nil,
               foliage.find(foliage: coordinate) == nil,
-              water.find(tile: coordinate) == nil else { return nil }
+              water.find(tile: coordinate)?.coordinate.y ?? 0 < coordinate.y else { return nil }
         
         if let bridge = bridges.find(bridge: coordinate),
            bridge.coordinate.y == coordinate.y {

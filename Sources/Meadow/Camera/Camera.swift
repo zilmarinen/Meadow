@@ -4,6 +4,7 @@
 //  Created by Zack Brown on 07/11/2020.
 //
 
+import Euclid
 import SceneKit
 
 public class Camera: SCNNode, Responder, Soilable, Updatable {
@@ -84,12 +85,12 @@ extension Camera {
             let y = CGFloat(cos(pitch) * hypotenuse)
             let z = CGFloat(sin(yaw) * opposite)
             
-            let rotation = Rotation.yaw(radians: -yaw).quaternion
+            let rotation = Rotation(yaw: Angle(radians: -yaw))
             
             self.position = node.position
             
             jig.position = SCNVector3(x: MDWFloat(x), y: MDWFloat(y), z: MDWFloat(z))
-            jig.rotation = SCNQuaternion(quaternion: rotation)
+            jig.rotation = SCNQuaternion(rotation)
             jig.camera?.orthographicScale = Double(min(max(zoomScale, Constants.minimumZoom), Constants.maximumZoom))
             jig.look(at: node.position)
         }

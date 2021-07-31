@@ -54,6 +54,6 @@ extension Sun {
     
     public func update(delta: TimeInterval, time: TimeInterval) {
         
-        position = SCNVector3(vector: Coordinate(x: 0, y: World.Constants.ceiling, z: World.Constants.ceiling).world)
+        position = SCNVector3(Coordinate(x: 0, y: World.Constants.ceiling, z: World.Constants.ceiling).world)
     }
 }

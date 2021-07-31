@@ -6,18 +6,18 @@
 
 #include "Meadow.metal"
 
-vertex Fragment technique_vertex(Vertex v [[ stage_in ]],
-                                 constant SceneTransforms& scn_frame [[ buffer(0) ]],
-                                 constant NodeTransforms& scn_node [[ buffer(1) ]]) {
+struct TechniqueVertex {
+    
+    float3 position [[ attribute(SCNVertexSemanticPosition) ]];
+};
 
-    return {    .fragmentPosition = scn_node.modelViewProjectionTransform * float4(v.position, 1.f),
-                .position = v.position,
-                .normal = v.normal,
-                .color = v.color,
-                .uv = v.uv };
+vertex Fragment technique_vertex(TechniqueVertex v [[ stage_in ]]) {
+    
+    return {.position = v.position };
 }
 
-fragment float4 technique_fragment(Fragment f [[stage_in]]) {
-    
-    return f.color;
+fragment float4 technique_fragment(Fragment f [[stage_in]],
+                                   texture2d<float, access::sample> colorBuffer [[ texture(0) ]]) {
+    return float4(1.f, 0.f, 0.f, 1.f);
+    return sample(colorBuffer, f.fragmentPosition.xy);
 }

@@ -22,3 +22,5 @@
     public typealias MDWImage = UIImage
 
 #endif
+
+public typealias MDWScene = Scene

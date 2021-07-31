@@ -4,28 +4,29 @@
 //  Created by Zack Brown on 27/03/2021.
 //
 
+import Euclid
 import Foundation
 import SceneKit
 
-class FoliageChunk: FootprintChunk {
+public class FoliageChunk: FootprintChunk {
     
     private enum CodingKeys: String, CodingKey {
         
         case foliageType = "t"
     }
     
-    override var category: Int { SceneGraphCategory.foliageChunk.rawValue }
+    public override var category: Int { SceneGraphCategory.foliageChunk.rawValue }
     
-    override var footprint: Footprint {
+    public override var footprint: Footprint {
         
-        guard let prop = scene?.props.prop(foliage: foliageType) else { fatalError("Unable to load footprint for \(self)") }
+        guard let prop = scene?.props.prop(prop: foliageType) else { fatalError("Unable to load footprint for \(self)") }
         
         return prop.footprint
     }
     
-    override var program: SCNProgram? { scene?.meadow.foliage.program }
+    public override var program: SCNProgram? { scene?.meadow.foliage.program }
     
-    override var textures: [Texture]? {
+    public override var textures: [Texture]? {
         
         guard let texture = foliageType.texture else { return nil }
         
@@ -57,12 +58,12 @@ class FoliageChunk: FootprintChunk {
         try container.encode(foliageType, forKey: .foliageType)
     }
     
-    override func clean() -> Bool {
+    public override func clean() -> Bool {
         
         guard super.clean(),
-              let prop = scene?.props.prop(foliage: foliageType) else { return false }
+              let prop = scene?.props.prop(prop: foliageType) else { return false }
         
-        self.geometry = SCNGeometry(mesh: prop.mesh.translated(by: Vector(x: 0, y: Double(coordinate.y) * World.Constants.slope, z: 0)))
+        self.geometry = SCNGeometry(prop.mesh.translated(by: Vector(x: 0, y: Double(coordinate.y) * World.Constants.slope, z: 0)))
         self.geometry?.program = program
         
         if let uniforms = uniforms {

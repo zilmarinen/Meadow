@@ -10,11 +10,11 @@ public class SurfaceChunk: Chunk<SurfaceTile> {
     
     public override var category: Int { SceneGraphCategory.surfaceChunk.rawValue }
     
-    override var program: SCNProgram? { scene?.meadow.surface.program }
+    public override var program: SCNProgram? { scene?.meadow.surface.program }
     
-    override var uniforms: [Uniform]? { nil }
+    public override var uniforms: [Uniform]? { nil }
     
-    override var textures: [Texture]? {
+    public override var textures: [Texture]? {
         
         guard let tilemap = scene?.meadow.surface.tilemap else { return [] }
         

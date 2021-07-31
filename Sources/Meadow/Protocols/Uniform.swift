@@ -6,7 +6,7 @@
 
 import Foundation
 
-protocol Uniform {
+public protocol Uniform {
     
     var key: String { get }
     var value: Data { get }

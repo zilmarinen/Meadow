@@ -4,6 +4,7 @@
 //  Created by Zack Brown on 26/11/2020.
 //
 
+import Euclid
 import CoreGraphics
 
 public struct UVs: Codable, Equatable {
@@ -32,7 +33,7 @@ extension UVs {
     
     func slice(cardinal: Cardinal) -> UVs {
         
-        let center = start.lerp(vector: end, interpolater: 0.5)
+        let center = start.lerp(end, 0.5)
         
         switch cardinal {
         
@@ -45,7 +46,7 @@ extension UVs {
     
     func slice(ordinal: Ordinal) -> UVs {
         
-        let center = start.lerp(vector: end, interpolater: 0.5)
+        let center = start.lerp(end, 0.5)
         
         switch ordinal {
         

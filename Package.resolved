@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Euclid",
+        "repositoryURL": "https://github.com/nicklockwood/Euclid.git",
+        "state": {
+          "branch": null,
+          "revision": "2accfd5ed005ee5ef4812ab2ea630bbb9d76286e",
+          "version": "0.5.2"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

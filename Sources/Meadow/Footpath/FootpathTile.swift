@@ -4,6 +4,7 @@
 //  Created by Zack Brown on 25/03/2021.
 //
 
+import Euclid
 import SceneKit
 
 public class FootpathTile: Tile {
@@ -44,7 +45,7 @@ public class FootpathTile: Tile {
         try container.encode(pattern, forKey: .pattern)
     }
     
-    override func render(position: Vector) -> [Polygon] {
+    override func render(position: Vector) -> [Euclid.Polygon] {
         
         guard let surfaceTile = scene?.meadow.surface.find(tile: coordinate) else { return [] }
         
@@ -65,7 +66,9 @@ public class FootpathTile: Tile {
 //            //vertices.append(Vertex(position: face[index], normal: normal, color: faceColor, textureCoordinates: tileUVs[index]))
 //        }
         
-        return [Polygon(vertices: vertices)]
+        guard let polygon = Polygon(vertices) else { return [] }
+        
+        return [polygon]
     }
 }
 

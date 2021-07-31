@@ -22,13 +22,22 @@ public class FootprintChunk: SCNNode, Codable, FootprintDataSource, Hideable, Re
     
     public var footprint: Footprint { Footprint(coordinate: coordinate, nodes: [.zero]) }
     
-    public var coordinate: Coordinate
+    private(set) public var coordinate: Coordinate {
+        
+        didSet {
+            
+            if oldValue != coordinate {
+            
+                becomeDirty()
+            }
+        }
+    }
+    
     public let direction: Cardinal
     
-    var program: SCNProgram? { nil }
-    var uniforms: [Uniform]? { nil }
-    
-    var textures: [Texture]? { nil }
+    public var program: SCNProgram? { nil }
+    public var uniforms: [Uniform]? { nil }
+    public var textures: [Texture]? { nil }
     
     var offset: Coordinate = .zero {
         
@@ -36,7 +45,7 @@ public class FootprintChunk: SCNNode, Codable, FootprintDataSource, Hideable, Re
             
             if oldValue != offset {
                 
-                coordinate += offset
+                coordinate = (coordinate - oldValue) + offset
                 
                 becomeDirty()
             }
@@ -75,7 +84,7 @@ public class FootprintChunk: SCNNode, Codable, FootprintDataSource, Hideable, Re
         
         guard isDirty else { return false }
         
-        position = SCNVector3(vector: coordinate.xz.world)
+        position = SCNVector3(coordinate.xz.world)
         
         isDirty = false
         

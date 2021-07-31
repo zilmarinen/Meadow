@@ -32,7 +32,7 @@ extension Ordinal {
                                  CGPoint(x: 1.0, y: 1.0),
                                  CGPoint(x: 0.0, y: 1.0)]
     
-    static var Coordinates: [Coordinate] = [
+    public static var Coordinates: [Coordinate] = [
     
         .forward + -.right,
         .forward + .right,
@@ -102,5 +102,15 @@ extension Ordinal {
     public var coordinate: Coordinate {
         
         return Ordinal.coordinate(ordinal: self)
+    }
+    
+    public var next: Ordinal {
+        
+        return Ordinal(rawValue: (rawValue + 1) % 4)!
+    }
+    
+    public var previous: Ordinal {
+        
+        return Ordinal(rawValue: (rawValue - 1 + 4) % 4)!
     }
 }

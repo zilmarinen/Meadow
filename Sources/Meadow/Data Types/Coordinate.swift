@@ -4,6 +4,7 @@
 //  Created by Zack Brown on 02/11/2020.
 //
 
+import Euclid
 import Foundation
 
 public struct Coordinate: Codable, Equatable, Hashable {
@@ -113,12 +114,12 @@ extension Coordinate {
     
     func direction(to coordinate: Coordinate) -> Cardinal {
         
-        guard x == coordinate.x else {
+        if x == coordinate.x {
             
             return z > coordinate.z ? .north : .south
         }
         
-        return x > coordinate.x ? .east : .west
+        return x > coordinate.x ? .west : .east
     }
 }
 

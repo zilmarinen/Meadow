@@ -12,7 +12,7 @@ public struct UVs: Codable, Equatable {
     public let start: Vector
     public let end: Vector
     
-    var uvs: [Vector] { [start,
+    public var uvs: [Vector] { [start,
                          Vector(x: end.x, y: start.y, z: 0),
                          end,
                          Vector(x: start.x, y: end.y, z: 0)] }

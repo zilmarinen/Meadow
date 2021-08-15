@@ -36,4 +36,8 @@ public struct SceneGraphCategory: OptionSet {
     public static let surface = SceneGraphCategory(rawValue: 1 << 12)
     public static let surfaceChunk = SceneGraphCategory(rawValue: 1 << 13)
     public static let surfaceTile = SceneGraphCategory(rawValue: 1 << 14)
+    
+    public static let walls = SceneGraphCategory(rawValue: 1 << 17)
+    public static let wallChunk = SceneGraphCategory(rawValue: 1 << 18)
+    public static let wallTile = SceneGraphCategory(rawValue: 1 << 19)
 }

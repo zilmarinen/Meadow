@@ -4,6 +4,7 @@
 //  Created by Zack Brown on 27/03/2021.
 //
 
+import Euclid
 import SceneKit
 
 public class BuildingChunk: FootprintChunk {
@@ -14,13 +15,6 @@ public class BuildingChunk: FootprintChunk {
     }
     
     public override var category: Int { SceneGraphCategory.buildingChunk.rawValue }
-    
-    public override var footprint: Footprint {
-        
-        guard let prop = scene?.props.prop(prop: buildingType) else { fatalError("Unable to load footprint for \(self)") }
-        
-        return prop.footprint
-    }
     
     public override var program: SCNProgram? { scene?.meadow.buildings.program }
     
@@ -58,15 +52,11 @@ public class BuildingChunk: FootprintChunk {
     
     public override func clean() -> Bool {
         
-        guard isDirty else { return false }
+        guard super.clean(),
+              let prop = scene?.props.prop(prop: buildingType) else { return false }
         
-        position = SCNVector3(coordinate.world)
-        
-        if let mesh = buildingType.model?.mesh {
-         
-            self.geometry = SCNGeometry(mesh)
-            self.geometry?.program = program
-        }
+        self.geometry = SCNGeometry(prop.mesh.rotated(by: Rotation(yaw: Angle(degrees: 90.0 * Double(direction.rawValue)))))
+        self.geometry?.program = program
         
         if let uniforms = uniforms {
             

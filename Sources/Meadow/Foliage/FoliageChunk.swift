@@ -17,13 +17,6 @@ public class FoliageChunk: FootprintChunk {
     
     public override var category: Int { SceneGraphCategory.foliageChunk.rawValue }
     
-    public override var footprint: Footprint {
-        
-        guard let prop = scene?.props.prop(prop: foliageType) else { fatalError("Unable to load footprint for \(self)") }
-        
-        return prop.footprint
-    }
-    
     public override var program: SCNProgram? { scene?.meadow.foliage.program }
     
     public override var textures: [Texture]? {

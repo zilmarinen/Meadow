@@ -30,15 +30,6 @@ public enum BuildingType: Int, CaseIterable, Codable, Equatable {
         }
     }
     
-    public var model: Model? {
-        
-        guard let asset = NSDataAsset(name: identifier, bundle: .module) else { return nil }
-    
-        let decoder = JSONDecoder()
-        
-        return try? decoder.decode(Model.self, from: asset.data)
-    }
-    
     var texture: Texture? {
         
         guard let image = MDWImage.asset(named: "uvs", in: .module) else { return nil }

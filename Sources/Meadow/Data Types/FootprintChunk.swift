@@ -84,7 +84,7 @@ public class FootprintChunk: SCNNode, Codable, FootprintDataSource, Hideable, Re
         
         guard isDirty else { return false }
         
-        position = SCNVector3(coordinate.xz.world)
+        position = SCNVector3(coordinate.world)
         
         isDirty = false
         

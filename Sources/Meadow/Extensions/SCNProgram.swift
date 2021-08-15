@@ -13,8 +13,10 @@ extension SCNProgram {
         case building
         case foliage
         case footpath
+        case stairs
         case surface
         case water
+        case walls
     }
     
     convenience init(name: Name, library: MTLLibrary) {

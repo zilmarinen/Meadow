@@ -43,6 +43,7 @@ public class Meadow: SCNNode, Codable, Responder, Updatable {
     public let seams: Seams
     public let stairs: Stairs
     public let surface: Surface
+    public let walls: Walls
     public let water: Water
     
     var offset: Coordinate = .zero {
@@ -61,6 +62,7 @@ public class Meadow: SCNNode, Codable, Responder, Updatable {
                 seams.offset = offset
                 stairs.offset = offset
                 surface.offset = offset
+                walls.offset = offset
                 water.offset = offset
                 
                 becomeDirty()
@@ -83,6 +85,7 @@ public class Meadow: SCNNode, Codable, Responder, Updatable {
         seams = try container.decode(Seams.self, forKey: .seams)
         stairs = try container.decode(Stairs.self, forKey: .stairs)
         surface = try container.decode(Surface.self, forKey: .surface)
+        walls = try container.decode(Walls.self, forKey: .walls)
         water = try container.decode(Water.self, forKey: .water)
         
         super.init()
@@ -99,6 +102,7 @@ public class Meadow: SCNNode, Codable, Responder, Updatable {
         addChildNode(seams)
         addChildNode(stairs)
         addChildNode(surface)
+        addChildNode(walls)
         addChildNode(water)
         
         becomeDirty()
@@ -122,6 +126,7 @@ public class Meadow: SCNNode, Codable, Responder, Updatable {
         try container.encode(seams, forKey: .seams)
         try container.encode(stairs, forKey: .stairs)
         try container.encode(surface, forKey: .surface)
+        try container.encode(walls, forKey: .walls)
         try container.encode(water, forKey: .water)
         
         try container.encode(name, forKey: .name)
@@ -142,6 +147,7 @@ extension Meadow {
         seams.clean()
         stairs.clean()
         surface.clean()
+        walls.clean()
         water.clean()
         
         return true

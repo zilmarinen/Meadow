@@ -1,12 +1,12 @@
 //
-//  Foliage.metal
+//  Walls.metal
 //
-//  Created by Zack Brown on 09/04/2021.
+//  Created by Zack Brown on 10/08/2021.
 //
 
 #include "Meadow.metal"
 
-vertex Fragment foliage_vertex(Vertex v [[ stage_in ]],
+vertex Fragment walls_vertex(Vertex v [[ stage_in ]],
                                constant SceneTransforms& scn_frame [[ buffer(0) ]],
                                constant NodeTransforms& scn_node [[ buffer(1) ]]) {
     
@@ -16,12 +16,12 @@ vertex Fragment foliage_vertex(Vertex v [[ stage_in ]],
                 .uv = v.uv };
 }
 
-fragment float4 foliage_fragment(Fragment f [[stage_in]],
+fragment float4 walls_fragment(Fragment f [[stage_in]],
                                  texture2d<float, access::sample> foliage [[ texture(0) ]]) {
     
     constexpr sampler image(coord::normalized, filter::linear, address::repeat);
     
-    return float4(foliage.sample(image, f.uv));
+    //return float4(foliage.sample(image, f.uv));
     
     Surface surface;
     

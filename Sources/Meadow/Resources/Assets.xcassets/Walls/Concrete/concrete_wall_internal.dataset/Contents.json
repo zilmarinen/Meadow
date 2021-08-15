@@ -1,0 +1,12 @@
+{
+  "data" : [
+    {
+      "filename" : "concrete_wall_internal.model",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

@@ -63,13 +63,9 @@ extension Controller {
 
             do {
 
-                let meadow = try JSONDecoder().decode(Meadow.self, from: asset.data)
+                let map = try JSONDecoder().decode(Map.self, from: asset.data)
 
-                self.scene = MDWScene(meadow: meadow)
-
-                let device = MTLCreateSystemDefaultDevice()
-
-                scene?.library = try device?.makeDefaultLibrary(bundle: Meadow.bundle)
+                self.scene = MDWScene(map: map)
 
                 state = .scene
             }

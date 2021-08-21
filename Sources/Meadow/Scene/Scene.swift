@@ -8,7 +8,7 @@ import SceneKit
 
 protocol SceneDelegate {
     
-    func actor(actor: Actor, didMoveTo coordinate: Coordinate)
+    //
 }
 
 open class Scene: SCNScene, Codable, Responder, SceneDelegate, Soilable, Updatable {
@@ -32,31 +32,36 @@ open class Scene: SCNScene, Codable, Responder, SceneDelegate, Soilable, Updatab
     
     public let camera = Camera()
     public let protagonist = Protagonist(coordinate: .zero)
-    private(set) public var meadow: Meadow
-    let props = Props()
-    let sun = Sun()
     
-    var seams: [String : Meadow] = [:]
+    let sun = Sun()
+    let props = Props()
+    
+    private(set) public var map: Map
+    var maps: [String : Map] = [:]
     
     var lastUpdate: TimeInterval?
     
     public var scene: Scene? { self }
     
-    public init(meadow: Meadow) {
+    public init(map: Map? = nil) {
         
-        self.meadow = meadow
+        self.map = map ?? Map()
         
         super.init()
         
         camera.ancestor = self
         protagonist.ancestor = self
-        meadow.ancestor = self
+        self.map.ancestor = self
         sun.ancestor = self
         
         rootNode.addChildNode(camera)
         rootNode.addChildNode(protagonist)
-        rootNode.addChildNode(meadow)
+        rootNode.addChildNode(self.map)
         rootNode.addChildNode(sun)
+        
+        let device = MTLCreateSystemDefaultDevice()
+
+        library = try? device?.makeDefaultLibrary(bundle: Map.bundle)
         
         camera.controller.state = .focus(node: protagonist, cardinal: .east, zoom: 0.5)
         
@@ -69,18 +74,18 @@ open class Scene: SCNScene, Codable, Responder, SceneDelegate, Soilable, Updatab
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        meadow = try container.decode(Meadow.self, forKey: .map)
+        map = try container.decode(Map.self, forKey: .map)
         
         super.init()
         
         camera.ancestor = self
         protagonist.ancestor = self
-        meadow.ancestor = self
+        map.ancestor = self
         sun.ancestor = self
         
         rootNode.addChildNode(camera)
         rootNode.addChildNode(protagonist)
-        rootNode.addChildNode(meadow)
+        rootNode.addChildNode(map)
         rootNode.addChildNode(sun)
         
         camera.controller.state = .focus(node: protagonist, cardinal: .east, zoom: 0.5)
@@ -97,7 +102,7 @@ open class Scene: SCNScene, Codable, Responder, SceneDelegate, Soilable, Updatab
         
         var container = encoder.container(keyedBy: CodingKeys.self)
         
-        try container.encode(meadow, forKey: .map)
+        try container.encode(map, forKey: .map)
     }
 }
 
@@ -110,12 +115,12 @@ extension Scene {
         
         camera.clean()
         protagonist.clean()
-        meadow.clean()
+        map.clean()
         sun.clean()
         
-        for (_, seam) in seams {
+        for (_, adjacent) in maps {
             
-            seam.clean()
+            adjacent.clean()
         }
         
         //isDirty = false
@@ -130,12 +135,12 @@ extension Scene {
         
         camera.update(delta: delta, time: time)
         protagonist.update(delta: delta, time: time)
-        meadow.update(delta: delta, time: time)
+        map.update(delta: delta, time: time)
         sun.update(delta: delta, time: time)
         
-        for (_, seam) in seams {
+        for (_, adjacent) in maps {
             
-            seam.update(delta: delta, time: time)
+            adjacent.update(delta: delta, time: time)
         }
         
         clean()
@@ -156,81 +161,11 @@ extension Scene: SCNSceneRendererDelegate {
 
 extension Scene {
     
-    public func updateSeams() {
-        
-        for seam in meadow.seams.tiles {
-            
-            guard seams[seam.segue.scene] == nil else { continue }
-            
-            do {
-                
-                guard let adjacentMap = try load(map: seam.segue.scene),
-                      let stitch = adjacentMap.seams.find(seam: seam.segue.identifier) else { continue }
-                
-                if adjacentMap.parent == nil {
-                    
-                    adjacentMap.ancestor = self
-                    
-                    rootNode.addChildNode(adjacentMap)
-                }
-                
-                adjacentMap.offset = ((seam.coordinate + seam.segue.direction.coordinate) - stitch.coordinate)
-                
-                seams[adjacentMap.identifier] = adjacentMap
-            }
-            catch {
-                
-                fatalError("Unable to load seam: \(seam) - error: \(error)")
-            }
-        }
-        
-        let scenes = meadow.seams.tiles.map { $0.segue.scene }
-        
-        let detached = seams.filter { !scenes.contains($0.key) }
-        
-        for (_, seam) in detached {
-
-            seam.ancestor = nil
-            seam.removeFromParentNode()
-        }
-        
-        seams = seams.filter { scenes.contains($0.key) }
-    }
-    
-    func load(map identifier: String) throws -> Meadow? {
-        
-        if let seam = seams[identifier] {
-            
-            return seam
-        }
-        
-        return try Meadow.map(named: identifier)
-    }
-    
-    public func load(map meadow: Meadow) {
-        
-        self.meadow.ancestor = nil
-        
-        self.meadow = meadow
-        self.meadow.ancestor = self
-        
-        rootNode.addChildNode(meadow)
-        
-        for (_, seam) in seams {
-            
-            seam.ancestor = nil
-            seam.removeFromParentNode()
-        }
-    }
-}
-
-extension Scene {
-    
     public func find(traversable coordinate: Coordinate) -> TraversableNode? {
         
-        let maps = [meadow] + Array(seams.values)
+        let allMaps = [map] + Array(maps.values)
         
-        for map in maps {
+        for map in allMaps {
             
             if let node = map.find(traversable: coordinate) {
                 
@@ -291,37 +226,94 @@ extension Scene {
 
 extension Scene {
     
-    public func find(map coordinate: Coordinate) -> Meadow? {
+    func clear() {
         
-        let maps = [meadow] + Array(seams.values)
+        self.map.ancestor = nil
+        self.map.removeFromParentNode()
         
-        for map in maps {
+        for (_, adjacent) in maps {
             
-            if map.find(traversable: coordinate) != nil {
+            adjacent.ancestor = nil
+            adjacent.removeFromParentNode()
+        }
+    }
+    
+    func load(map identifier: String) throws -> Map? {
+        
+        if let adjacent = maps[identifier] {
+            
+            return adjacent
+        }
+        
+        return try Map.map(named: identifier)
+    }
+    
+    public func load(map: Map) {
+        
+        clear()
+        
+        self.map = map
+        self.map.ancestor = self
+        
+        rootNode.addChildNode(map)
+    }
+}
+
+extension Scene {
+    
+    public func updateSeams() {
+        
+        for seam in map.seams.tiles {
+            
+            guard maps[seam.segue.scene] == nil else { continue }
+            
+            do {
                 
-                return map
+                guard let adjacentMap = try load(map: seam.segue.scene),
+                      let stitch = adjacentMap.seams.find(seam: seam.segue.identifier) else { continue }
+                
+                if adjacentMap.parent == nil {
+                    
+                    adjacentMap.ancestor = self
+                    
+                    rootNode.addChildNode(adjacentMap)
+                }
+                
+                adjacentMap.offset = ((seam.coordinate + seam.segue.direction.coordinate) - stitch.coordinate)
+                
+                maps[adjacentMap.identifier] = adjacentMap
+            }
+            catch {
+                
+                fatalError("Unable to load seam: \(seam) - error: \(error)")
+            }
+        }
+        
+        let scenes = map.seams.tiles.map { $0.segue.scene }
+        
+        let detached = maps.filter { !scenes.contains($0.key) }
+        
+        for (_, adjacent) in detached {
+
+            adjacent.ancestor = nil
+            adjacent.removeFromParentNode()
+        }
+        
+        maps = maps.filter { scenes.contains($0.key) }
+    }
+    
+    public func find(map coordinate: Coordinate) -> Map? {
+        
+        let allMaps = [map] + Array(maps.values)
+        
+        for adjacent in allMaps {
+            
+            if adjacent.find(traversable: coordinate) != nil {
+                
+                return adjacent
             }
         }
         
         return nil
-    }
-    
-    func actor(actor: Actor, didMoveTo coordinate: Coordinate) {
-        
-        guard actor == protagonist,
-              let map = find(map: coordinate) else { return }
-        
-        if meadow.identifier != map.identifier {
-            
-            print("Moving from \(meadow.identifier) to \(map.identifier)")
-            
-            seams[meadow.identifier] = meadow
-            
-            seams.removeValue(forKey: map.identifier)
-            
-            meadow = map
-            
-            updateSeams()
-        }
     }
 }

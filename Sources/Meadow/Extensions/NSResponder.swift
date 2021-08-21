@@ -12,7 +12,7 @@ public protocol Responder: Soilable {
     var responder: Responder? { get }
     
     var scene: Scene? { get }
-    var map: Meadow? { get }
+    var map: Map? { get }
 }
 
 public extension Responder {
@@ -20,5 +20,5 @@ public extension Responder {
     var responder: Responder? { ancestor as? Responder }
     
     var scene: Scene? { responder?.scene }
-    var map: Meadow? { responder?.map }
+    var map: Map? { responder?.map }
 }

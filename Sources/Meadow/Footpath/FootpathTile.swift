@@ -47,7 +47,7 @@ public class FootpathTile: Tile {
     
     override func render(position: Vector) -> [Euclid.Polygon] {
         
-        guard let surfaceTile = scene?.meadow.surface.find(tile: coordinate) else { return [] }
+        guard let surfaceTile = scene?.map.surface.find(tile: coordinate) else { return [] }
         
         let size = World.Constants.volumeSize / 2.0
         
@@ -67,7 +67,7 @@ public class FootpathTile: Tile {
             face.append(corner)
         }
         
-        let tile = scene?.meadow.footpath.tilemap.tileset.tiles(with: pattern, tileType: tileType).randomElement()
+        let tile = scene?.map.footpath.tilemap.tileset.tiles(with: pattern, tileType: tileType).randomElement()
         
         let tileUVs = tile?.uvs ?? UVs(start: .zero, end: .one)
                     

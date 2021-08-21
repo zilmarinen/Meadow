@@ -1,12 +1,12 @@
 //
-//  Meadow.swift
+//  Map.swift
 //
 //  Created by Zack Brown on 02/11/2020.
 //
 
 import SceneKit
 
-public class Meadow: SCNNode, Codable, Responder, Updatable {
+public class Map: SCNNode, Codable, Responder, Updatable {
     
     private enum CodingKeys: String, CodingKey {
         
@@ -70,13 +70,13 @@ public class Meadow: SCNNode, Codable, Responder, Updatable {
         }
     }
     
-    public var map: Meadow? { self }
+    public var map: Map? { self }
     
-    public static func map(named identifier: String) throws -> Meadow? {
+    public static func map(named identifier: String) throws -> Map? {
         
         guard let asset = NSDataAsset(name: identifier, bundle: .main) else { return nil }
         
-        return try JSONDecoder().decode(Meadow.self, from: asset.data)
+        return try JSONDecoder().decode(Map.self, from: asset.data)
     }
     
     public override init() {
@@ -175,7 +175,7 @@ public class Meadow: SCNNode, Codable, Responder, Updatable {
     }
 }
 
-extension Meadow {
+extension Map {
     
     @discardableResult public func clean() -> Bool {
         
@@ -195,7 +195,7 @@ extension Meadow {
     }
 }
 
-extension Meadow {
+extension Map {
     
     public func update(delta: TimeInterval, time: TimeInterval) {
         
@@ -203,7 +203,7 @@ extension Meadow {
     }
 }
 
-extension Meadow {
+extension Map {
     
     public func find(traversable coordinate: Coordinate) -> TraversableNode? {
      

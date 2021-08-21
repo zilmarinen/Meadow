@@ -11,7 +11,7 @@ public class BridgeChunk: Chunk<BridgeTile> {
     
     public override var category: Int { SceneGraphCategory.bridgeChunk.rawValue }
     
-    public override var program: SCNProgram? { scene?.meadow.bridges.program }
+    public override var program: SCNProgram? { scene?.map.bridges.program }
     
     public override var uniforms: [Uniform]? { nil }
     

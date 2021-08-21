@@ -17,7 +17,7 @@ public class StairChunk: FootprintChunk {
     
     public override var category: Int { SceneGraphCategory.stairChunk.rawValue }
     
-    public override var program: SCNProgram? { scene?.meadow.stairs.program }
+    public override var program: SCNProgram? { scene?.map.stairs.program }
     
     var tileType: StairType
     var material: StairMaterial

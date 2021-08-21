@@ -10,7 +10,7 @@ public class WallChunk: Chunk<WallTile> {
     
     public override var category: Int { SceneGraphCategory.wallChunk.rawValue }
     
-    public override var program: SCNProgram? { scene?.meadow.walls.program }
+    public override var program: SCNProgram? { scene?.map.walls.program }
     
     public override var uniforms: [Uniform]? { nil }
     

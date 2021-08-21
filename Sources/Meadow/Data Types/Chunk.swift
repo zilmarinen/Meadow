@@ -31,6 +31,7 @@ public class Chunk<T: Tile>: SCNNode, Codable, Hideable, Responder, Shadable, So
             }
         }
     }
+    
     let tiles: [T]
     
     public var program: SCNProgram? { nil }

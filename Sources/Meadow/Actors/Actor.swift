@@ -32,8 +32,6 @@ public class Actor: SCNNode, Codable, Hideable, Responder, Shadable, Soilable, U
             
             if oldValue != coordinate {
                 
-                scene?.actor(actor: self, didMoveTo: coordinate)
-                
                 becomeDirty()
             }
         }
@@ -44,7 +42,7 @@ public class Actor: SCNNode, Codable, Hideable, Responder, Shadable, Soilable, U
         didSet {
             
             if oldValue != direction {
-                print("setting direction: \(direction.description)")
+                
                 becomeDirty()
             }
         }

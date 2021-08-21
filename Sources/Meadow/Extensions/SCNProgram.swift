@@ -10,6 +10,7 @@ extension SCNProgram {
     
     enum Name: String {
         
+        case bridges
         case building
         case foliage
         case footpath

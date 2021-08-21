@@ -52,12 +52,12 @@ public class PortalChunk: FootprintChunk {
         
         let size = CGSize(width: 1, height: 1)
         
-        let x = CGFloat(coordinate.x) + ((size.width - 1) * 0.5)
-        let z = CGFloat(coordinate.z) + ((size.height - 1) * 0.5)
+        let x = MDWFloat(coordinate.x) + MDWFloat((size.width - 1) * 0.5)
+        let z = MDWFloat(coordinate.z) + MDWFloat((size.height - 1) * 0.5)
         
         let height = CGFloat(World.Constants.slope)
         
-        position = SCNVector3(x: x, y: CGFloat(Double(coordinate.y) * World.Constants.slope) + (height / 2.0), z: z)
+        position = SCNVector3(x: x, y: MDWFloat(Double(coordinate.y) * World.Constants.slope) + (MDWFloat(height) / 2.0), z: z)
         
         self.geometry = SCNBox(width: size.width, height: height, length: size.height, chamferRadius: 0.0)
         self.geometry?.firstMaterial?.diffuse.contents = MDWColor.systemYellow

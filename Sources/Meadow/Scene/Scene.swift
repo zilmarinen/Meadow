@@ -11,7 +11,7 @@ protocol SceneDelegate {
     func actor(actor: Actor, didMoveTo coordinate: Coordinate)
 }
 
-open class Scene: SCNScene, Codable, Responder, SceneDelegate, Soilable {
+open class Scene: SCNScene, Codable, Responder, SceneDelegate, Soilable, Updatable {
 
     private enum CodingKeys: String, CodingKey {
         
@@ -31,7 +31,7 @@ open class Scene: SCNScene, Codable, Responder, SceneDelegate, Soilable {
     public var isDirty: Bool = false
     
     public let camera = Camera()
-    public let hero = Hero(coordinate: .zero)
+    public let protagonist = Protagonist(coordinate: .zero)
     private(set) public var meadow: Meadow
     let props = Props()
     let sun = Sun()
@@ -49,16 +49,16 @@ open class Scene: SCNScene, Codable, Responder, SceneDelegate, Soilable {
         super.init()
         
         camera.ancestor = self
-        hero.ancestor = self
+        protagonist.ancestor = self
         meadow.ancestor = self
         sun.ancestor = self
         
         rootNode.addChildNode(camera)
-        rootNode.addChildNode(hero)
+        rootNode.addChildNode(protagonist)
         rootNode.addChildNode(meadow)
         rootNode.addChildNode(sun)
         
-        camera.controller.state = .focus(node: hero, cardinal: .east, zoom: 1.0)
+        camera.controller.state = .focus(node: protagonist, cardinal: .east, zoom: 0.5)
         
         updateSeams()
         
@@ -74,16 +74,16 @@ open class Scene: SCNScene, Codable, Responder, SceneDelegate, Soilable {
         super.init()
         
         camera.ancestor = self
-        hero.ancestor = self
+        protagonist.ancestor = self
         meadow.ancestor = self
         sun.ancestor = self
         
         rootNode.addChildNode(camera)
-        rootNode.addChildNode(hero)
+        rootNode.addChildNode(protagonist)
         rootNode.addChildNode(meadow)
         rootNode.addChildNode(sun)
         
-        camera.controller.state = .focus(node: hero, cardinal: .east, zoom: 1.0)
+        camera.controller.state = .focus(node: protagonist, cardinal: .east, zoom: 0.5)
         
         becomeDirty()
     }
@@ -109,7 +109,7 @@ extension Scene {
         //guard isDirty else { return false }
         
         camera.clean()
-        hero.clean()
+        protagonist.clean()
         meadow.clean()
         sun.clean()
         
@@ -124,14 +124,12 @@ extension Scene {
     }
 }
 
-extension Scene: SCNSceneRendererDelegate {
-
-    public func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
-        
-        let delta = time - (lastUpdate ?? time)
+extension Scene {
+    
+    public func update(delta: TimeInterval, time: TimeInterval) {
         
         camera.update(delta: delta, time: time)
-        hero.update(delta: delta, time: time)
+        protagonist.update(delta: delta, time: time)
         meadow.update(delta: delta, time: time)
         sun.update(delta: delta, time: time)
         
@@ -141,6 +139,16 @@ extension Scene: SCNSceneRendererDelegate {
         }
         
         clean()
+    }
+}
+
+extension Scene: SCNSceneRendererDelegate {
+
+    public func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
+        
+        let delta = time - (lastUpdate ?? time)
+        
+        update(delta: delta, time: time)
         
         lastUpdate = time
     }
@@ -156,7 +164,7 @@ extension Scene {
             
             do {
                 
-                guard let adjacentMap = try loadMap(identifier: seam.segue.scene),
+                guard let adjacentMap = try load(map: seam.segue.scene),
                       let stitch = adjacentMap.seams.find(seam: seam.segue.identifier) else { continue }
                 
                 if adjacentMap.parent == nil {
@@ -183,23 +191,36 @@ extension Scene {
         for (_, seam) in detached {
 
             seam.ancestor = nil
-            
             seam.removeFromParentNode()
         }
         
         seams = seams.filter { scenes.contains($0.key) }
     }
     
-    func loadMap(identifier: String) throws -> Meadow? {
+    func load(map identifier: String) throws -> Meadow? {
         
         if let seam = seams[identifier] {
             
             return seam
         }
         
-        guard let asset = NSDataAsset(name: identifier, bundle: .main) else { return nil }
+        return try Meadow.map(named: identifier)
+    }
+    
+    public func load(map meadow: Meadow) {
         
-        return try JSONDecoder().decode(Meadow.self, from: asset.data)
+        self.meadow.ancestor = nil
+        
+        self.meadow = meadow
+        self.meadow.ancestor = self
+        
+        rootNode.addChildNode(meadow)
+        
+        for (_, seam) in seams {
+            
+            seam.ancestor = nil
+            seam.removeFromParentNode()
+        }
     }
 }
 
@@ -287,7 +308,7 @@ extension Scene {
     
     func actor(actor: Actor, didMoveTo coordinate: Coordinate) {
         
-        guard actor == hero,
+        guard actor == protagonist,
               let map = find(map: coordinate) else { return }
         
         if meadow.identifier != map.identifier {

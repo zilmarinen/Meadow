@@ -27,9 +27,9 @@ extension SCNVector3: Codable {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        self.x = try container.decode(CGFloat.self, forKey: .x)
-        self.y = try container.decode(CGFloat.self, forKey: .y)
-        self.z = try container.decode(CGFloat.self, forKey: .z)
+        self.x = try container.decode(MDWFloat.self, forKey: .x)
+        self.y = try container.decode(MDWFloat.self, forKey: .y)
+        self.z = try container.decode(MDWFloat.self, forKey: .z)
     }
     
     public func encode(to encoder: Encoder) throws {

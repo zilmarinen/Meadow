@@ -18,6 +18,7 @@ import Foundation
 
 public class Props {
     
+    var bridges: [String : Model]
     var buildings: [String : Model]
     var foliage: [String : Model]
     var stairs: [String : Model]
@@ -25,6 +26,7 @@ public class Props {
     
     public init() {
         
+        bridges = [:]
         buildings = [:]
         foliage = [:]
         stairs = [:]
@@ -43,30 +45,46 @@ public class Props {
 
 extension Props {
     
-    public func prop(prop: BuildingType) -> Model {
+    public func prop(bridge tileType: BridgeTileType, material: BridgeMaterial, pattern: WallPattern) -> Model {
         
-        if let model = buildings[prop.identifier] {
+        let identifier = material.prop(tileType: tileType, pattern: pattern)
+        
+        if let model = walls[identifier] {
             
             return model
         }
         
-        guard let model = load(prop: prop.identifier) else { fatalError("Error loading model for prop: \(prop)") }
+        guard let model = load(prop: identifier) else { fatalError("Error loading model for prop: \(identifier)") }
         
-        buildings[prop.identifier] = model
+        bridges[identifier] = model
         
         return model
     }
     
-    public func prop(prop: FoliageType) -> Model {
+    public func prop(building buildingType: BuildingType) -> Model {
         
-        if let model = foliage[prop.identifier] {
+        if let model = buildings[buildingType.id] {
             
             return model
         }
         
-        guard let model = load(prop: prop.identifier) else { fatalError("Error loading model for prop: \(prop)") }
+        guard let model = load(prop: buildingType.id) else { fatalError("Error loading model for prop: \(buildingType)") }
         
-        foliage[prop.identifier] = model
+        buildings[buildingType.id] = model
+        
+        return model
+    }
+    
+    public func prop(foliage foliageType: FoliageType) -> Model {
+        
+        if let model = foliage[foliageType.id] {
+            
+            return model
+        }
+        
+        guard let model = load(prop: foliageType.id) else { fatalError("Error loading model for prop: \(foliageType)") }
+        
+        foliage[foliageType.id] = model
         
         return model
     }

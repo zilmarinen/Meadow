@@ -6,7 +6,7 @@
 
 import SceneKit
 
-public class Hero: Actor {
+public class Protagonist: Actor {
  
     @discardableResult public override func clean() -> Bool {
         

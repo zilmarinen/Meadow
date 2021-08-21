@@ -1,12 +1,12 @@
 //
-//  Walls.metal
+//  Bridges.metal
 //
-//  Created by Zack Brown on 10/08/2021.
+//  Created by Zack Brown on 16/08/2021.
 //
 
 #include "Meadow.metal"
 
-vertex Fragment walls_vertex(Vertex v [[ stage_in ]],
+vertex Fragment bridges_vertex(Vertex v [[ stage_in ]],
                                constant SceneTransforms& scn_frame [[ buffer(0) ]],
                                constant NodeTransforms& scn_node [[ buffer(1) ]]) {
     
@@ -16,12 +16,12 @@ vertex Fragment walls_vertex(Vertex v [[ stage_in ]],
                 .uv = v.uv };
 }
 
-fragment float4 walls_fragment(Fragment f [[stage_in]],
-                                 texture2d<float, access::sample> wall [[ texture(0) ]]) {
+fragment float4 bridges_fragment(Fragment f [[stage_in]],
+                                 texture2d<float, access::sample> bridge [[ texture(0) ]]) {
     
     constexpr sampler image(coord::normalized, filter::linear, address::repeat);
     
-    return float4(wall.sample(image, f.uv));
+    return float4(bridge.sample(image, f.uv));
     
     Surface surface;
     

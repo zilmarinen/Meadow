@@ -32,9 +32,9 @@ public enum WallTileMaterial: Int, CaseIterable, Codable, Equatable, Identifiabl
             switch tileType {
             
             case .corner: return prop
-            case .edge(let left):
+            case .edge(let lhs):
                 
-                return prop + (external ? "_external" + (left ? "_left" : "_right") : "_internal")
+                return prop + (external ? "_external" + (lhs ? "_left" : "_right") : "_internal")
                 
             default:
                 

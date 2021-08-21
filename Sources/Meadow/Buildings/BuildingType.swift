@@ -16,23 +16,35 @@ import Foundation
 
 #endif
 
-public enum BuildingType: Int, CaseIterable, Codable, Equatable {
+public enum BuildingType: Int, CaseIterable, Codable, Equatable, Identifiable {
     
-    case house
-    case home
+    case bernina_f
+    case bernina_i
+    case bernina_l
+    case bernina_n
+    case bernina_t
+    case bernina_u
+    case bernina_y
+    case bernina_z
     
-    var identifier: String {
+    public var id: String {
         
         switch self {
         
-        case .house: return "house"
-        case .home: return "home"
+        case .bernina_f: return "bernina_f"
+        case .bernina_i: return "bernina_i"
+        case .bernina_l: return "bernina_l"
+        case .bernina_n: return "bernina_n"
+        case .bernina_t: return "bernina_t"
+        case .bernina_u: return "bernina_u"
+        case .bernina_y: return "bernina_y"
+        case .bernina_z: return "bernina_z"
         }
     }
     
     var texture: Texture? {
         
-        guard let image = MDWImage.asset(named: "uvs", in: .module) else { return nil }
+        guard let image = MDWImage.asset(named: "building_bernina", in: .module) else { return nil }
         
         return Texture(key: "building", image: image)
     }

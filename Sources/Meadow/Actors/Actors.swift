@@ -21,6 +21,15 @@ public class Actors: SCNNode, Codable, Hideable, Responder, Soilable, Updatable 
     
     let npcs: [Actor]
     
+    override init() {
+        
+        npcs = []
+        
+        super.init()
+        
+        categoryBitMask = category
+    }
+    
     required public init(from decoder: Decoder) throws {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)

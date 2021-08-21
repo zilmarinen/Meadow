@@ -6,12 +6,14 @@
 
 import SceneKit
 
-public class Bridges: FootprintGrid<BridgeChunk> {
+public class Bridges: Grid<BridgeChunk, BridgeTile> {
+    
+    lazy var program: SCNProgram? = {
+        
+        guard let library = scene?.library else { return nil }
+        
+        return SCNProgram(name: .bridges, library: library)
+    }()
     
     public override var category: Int { SceneGraphCategory.bridges.rawValue }
-    
-    public func find(bridge coordinate: Coordinate) -> BridgeChunk? {
-        
-        return chunks.first { $0.footprint.intersects(coordinate: coordinate) }
-    }
 }

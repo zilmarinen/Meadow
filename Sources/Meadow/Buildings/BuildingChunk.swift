@@ -53,7 +53,7 @@ public class BuildingChunk: FootprintChunk {
     public override func clean() -> Bool {
         
         guard super.clean(),
-              let prop = scene?.props.prop(prop: buildingType) else { return false }
+              let prop = scene?.props.prop(building: buildingType) else { return false }
         
         self.geometry = SCNGeometry(prop.mesh.rotated(by: Rotation(yaw: Angle(degrees: 90.0 * Double(direction.rawValue)))))
         self.geometry?.program = program

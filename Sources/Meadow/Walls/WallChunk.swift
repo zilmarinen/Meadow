@@ -14,5 +14,10 @@ public class WallChunk: Chunk<WallTile> {
     
     public override var uniforms: [Uniform]? { nil }
     
-    public override var textures: [Texture]? { nil }
+    public override var textures: [Texture]? {
+        
+        guard let image = MDWImage.asset(named: "walls", in: .module) else { return nil }
+        
+        return [Texture(key: "wall", image: image)]
+    }
 }

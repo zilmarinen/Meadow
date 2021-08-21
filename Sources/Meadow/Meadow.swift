@@ -72,6 +72,47 @@ public class Meadow: SCNNode, Codable, Responder, Updatable {
     
     public var map: Meadow? { self }
     
+    public static func map(named identifier: String) throws -> Meadow? {
+        
+        guard let asset = NSDataAsset(name: identifier, bundle: .main) else { return nil }
+        
+        return try JSONDecoder().decode(Meadow.self, from: asset.data)
+    }
+    
+    public override init() {
+        
+        actors = Actors()
+        bridges = Bridges()
+        buildings = Buildings()
+        foliage = Foliage()
+        footpath = Footpath()
+        portals = Portals()
+        seams = Seams()
+        stairs = Stairs()
+        surface = Surface()
+        walls = Walls()
+        water = Water()
+        
+        super.init()
+        
+        name = "Meadow"
+        identifier = "meadow"
+        
+        addChildNode(actors)
+        addChildNode(bridges)
+        addChildNode(buildings)
+        addChildNode(foliage)
+        addChildNode(footpath)
+        addChildNode(portals)
+        addChildNode(seams)
+        addChildNode(stairs)
+        addChildNode(surface)
+        addChildNode(walls)
+        addChildNode(water)
+        
+        becomeDirty()
+    }
+    
     required public init(from decoder: Decoder) throws {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -91,7 +132,7 @@ public class Meadow: SCNNode, Codable, Responder, Updatable {
         super.init()
         
         name = try container.decode(String.self, forKey: .name)
-        identifier  = try container.decode(String.self, forKey: .identifier)
+        identifier = try container.decode(String.self, forKey: .identifier)
         
         addChildNode(actors)
         addChildNode(bridges)
@@ -170,8 +211,9 @@ extension Meadow {
               foliage.find(foliage: coordinate) == nil,
               water.find(tile: coordinate)?.coordinate.y ?? 0 < coordinate.y else { return nil }
         
-        if let bridge = bridges.find(bridge: coordinate),
-           bridge.coordinate.y == coordinate.y {
+        if let bridge = bridges.find(tile: coordinate),
+           bridge.coordinate.y == coordinate.y,
+           bridge.tileType == .path {
             
             return bridge.traversableNode(for: coordinate)
         }

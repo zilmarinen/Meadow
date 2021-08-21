@@ -37,6 +37,15 @@ public class FootprintGrid<C: FootprintChunk>: SCNNode, Codable, Hideable, Respo
         }
     }
     
+    override init() {
+        
+        chunks = []
+        
+        super.init()
+        
+        categoryBitMask = category
+    }
+    
     required public init(from decoder: Decoder) throws {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)

@@ -16,31 +16,25 @@ import Foundation
 
 #endif
 
-public enum FoliageType: Int, CaseIterable, Codable, Equatable {
+public enum FoliageType: Int, CaseIterable, Codable, Equatable, Identifiable {
     
-    case bush
-    case flower
-    case treeSmall
-    case treeMedium
-    case treeLarge
-    case palmTree
+    case palm
+    case pine
+    case spruce
     
-    var identifier: String {
+    public var id: String {
         
         switch self {
         
-        case .bush: return "bush"
-        case .flower: return "flower"
-        case .treeSmall: return "tree_small"
-        case .treeMedium: return "tree_medium"
-        case .treeLarge: return "tree_large"
-        case .palmTree: return "palm_tree"
+        case .palm: return "palm_tree"
+        case .pine: return "pine_tree"
+        case .spruce: return "spruce_tree"
         }
     }
     
     var texture: Texture? {
         
-        guard let image = MDWImage.asset(named: "uvs", in: .module) else { return nil }
+        guard let image = MDWImage.asset(named: "foliage_" + id, in: .module) else { return nil }
         
         return Texture(key: "foliage", image: image)
     }

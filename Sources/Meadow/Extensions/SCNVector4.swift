@@ -27,10 +27,10 @@ extension SCNVector4: Codable {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        self.w = try container.decode(CGFloat.self, forKey: .w)
-        self.x = try container.decode(CGFloat.self, forKey: .x)
-        self.y = try container.decode(CGFloat.self, forKey: .y)
-        self.z = try container.decode(CGFloat.self, forKey: .z)
+        self.w = try container.decode(MDWFloat.self, forKey: .w)
+        self.x = try container.decode(MDWFloat.self, forKey: .x)
+        self.y = try container.decode(MDWFloat.self, forKey: .y)
+        self.z = try container.decode(MDWFloat.self, forKey: .z)
     }
     
     public func encode(to encoder: Encoder) throws {

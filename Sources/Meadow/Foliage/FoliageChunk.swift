@@ -54,9 +54,11 @@ public class FoliageChunk: FootprintChunk {
     public override func clean() -> Bool {
         
         guard super.clean(),
-              let prop = scene?.props.prop(prop: foliageType) else { return false }
+              let prop = scene?.props.prop(foliage: foliageType) else { return false }
         
-        self.geometry = SCNGeometry(prop.mesh.translated(by: Vector(x: 0, y: Double(coordinate.y) * World.Constants.slope, z: 0)))
+        let rotation = Rotation(yaw: Angle(radians: (Double.pi / 2.0) * Double(direction.rawValue)))
+        
+        self.geometry = SCNGeometry(prop.mesh.rotated(by: rotation))
         self.geometry?.program = program
         
         if let uniforms = uniforms {

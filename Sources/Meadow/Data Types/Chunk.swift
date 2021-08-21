@@ -103,14 +103,7 @@ extension Chunk {
     
     @discardableResult public func clean() -> Bool {
         
-        guard isDirty,
-              let hero = scene?.hero else { return false }
-        
-        let center = Vector(x: Double(bounds.start.x + bounds.end.x) / 2.0, y: 0, z: Double(bounds.start.z + bounds.end.z) / 2.0)
-        
-        let vector = Vector(x: abs(Double(hero.coordinate.x) - center.x), y: 0, z: abs(Double(hero.coordinate.z) - center.z))
-        
-        guard vector.length < 35 else { return false }
+        guard isDirty else { return false }
         
         position = SCNVector3(coordinate: bounds.start)
         

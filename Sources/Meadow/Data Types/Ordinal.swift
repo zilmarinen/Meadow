@@ -4,6 +4,7 @@
 //  Created by Zack Brown on 03/11/2020.
 //
 
+import CoreGraphics
 import Foundation
 
 public enum Ordinal: Int, CaseIterable, Codable {

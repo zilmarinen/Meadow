@@ -16,7 +16,7 @@ public class Tile: Codable, Equatable, Renderable, Responder {
     
     public var ancestor: SoilableParent?
     
-    public var isDirty: Bool = false
+    public var isDirty: Bool = true
     
     public var category: Int { SceneGraphCategory.surfaceTile.rawValue }
 
@@ -48,8 +48,6 @@ public class Tile: Codable, Equatable, Renderable, Responder {
             if oldValue != offset {
                 
                 coordinate = (coordinate - oldValue) + offset
-                
-                becomeDirty()
             }
         }
     }
@@ -59,8 +57,6 @@ public class Tile: Codable, Equatable, Renderable, Responder {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         coordinate = try container.decode(Coordinate.self, forKey: .coordinate)
-        
-        becomeDirty()
     }
     
     public func encode(to encoder: Encoder) throws {

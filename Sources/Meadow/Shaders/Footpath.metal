@@ -13,7 +13,7 @@ vertex Fragment footpath_vertex(Vertex v [[ stage_in ]],
     return {    .fragmentPosition = scn_node.modelViewProjectionTransform * float4(v.position, 1.f),
                 .position = v.position,
                 .normal = v.normal,
-                .color = v.color,
+                //.color = v.color,
                 .uv = v.uv };
 }
 

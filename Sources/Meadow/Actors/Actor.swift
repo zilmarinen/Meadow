@@ -60,29 +60,24 @@ public class Actor: SCNNode, Codable, Hideable, Responder, Shadable, Soilable, U
         
         let head = SCNNode()
         let torso = SCNNode()
-        let legs = SCNNode()
         
         head.geometry = SCNBox(width: 0.2, height: 0.2, length: 0.2, chamferRadius: 0.0)
-        torso.geometry = SCNBox(width: 0.4, height: 0.4, length: 0.25, chamferRadius: 0.0)
-        legs.geometry = SCNBox(width: 0.2, height: 0.4, length: 0.2, chamferRadius: 0.0)
+        torso.geometry = SCNBox(width: 0.2, height: 0.5, length: 0.2, chamferRadius: 0.0)
         
-        head.position = SCNVector3(x: 0.0, y: 0.9, z: 0.0)
-        torso.position = SCNVector3(x: 0.0, y: 0.6, z: 0.0)
-        legs.position = SCNVector3(x: 0.0, y: 0.2, z: 0.0)
+        head.position = SCNVector3(x: 0.0, y: 0.6, z: 0.0)
+        torso.position = SCNVector3(x: 0.0, y: 0.25, z: 0.0)
         
-        head.geometry?.firstMaterial?.diffuse.contents = MDWColor.systemPink
-        torso.geometry?.firstMaterial?.diffuse.contents = MDWColor.systemPurple
-        legs.geometry?.firstMaterial?.diffuse.contents = MDWColor.systemBlue
+        head.geometry?.firstMaterial?.diffuse.contents = MDWColor.white
+        torso.geometry?.firstMaterial?.diffuse.contents = MDWColor.black
         
         node.addChildNode(head)
         node.addChildNode(torso)
-        node.addChildNode(legs)
         
         let guide = SCNNode()
         
-        guide.geometry = SCNBox(width: 0.2, height: 0.2, length: 0.2, chamferRadius: 0.0)
+        guide.geometry = SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0.0)
         
-        guide.position = SCNVector3(x: 0, y: 0.1, z: -0.5)
+        guide.position = SCNVector3(x: 0, y: 0.05, z: -0.5)
         
         guide.geometry?.firstMaterial?.diffuse.contents = MDWColor.systemRed
         

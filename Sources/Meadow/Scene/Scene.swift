@@ -28,7 +28,11 @@ open class Scene: SCNScene, Codable, Responder, SceneDelegate, Soilable, Updatab
     
     public var ancestor: SoilableParent? { nil }
     
-    public var isDirty: Bool = false
+    public var isDirty: Bool {
+        
+        get { camera.isDirty || protagonist.isDirty || map.isDirty || sun.isDirty }
+        set {}
+    }
     
     public let camera = Camera()
     public let protagonist = Protagonist(coordinate: .zero)
@@ -50,20 +54,18 @@ open class Scene: SCNScene, Codable, Responder, SceneDelegate, Soilable, Updatab
         super.init()
         
         camera.ancestor = self
-        protagonist.ancestor = self
         self.map.ancestor = self
         sun.ancestor = self
+        
+        protagonist.ancestor = self
+        protagonist.isHidden = true
         
         rootNode.addChildNode(camera)
         rootNode.addChildNode(protagonist)
         rootNode.addChildNode(self.map)
         rootNode.addChildNode(sun)
         
-        let device = MTLCreateSystemDefaultDevice()
-
-        library = try? device?.makeDefaultLibrary(bundle: Map.bundle)
-        
-        camera.controller.state = .focus(node: protagonist, cardinal: .east, zoom: 0.5)
+        camera.controller.state = .focus(node: protagonist, cardinal: .north, zoom: Camera.Constants.maximumZoom)
         
         updateSeams()
         
@@ -79,16 +81,18 @@ open class Scene: SCNScene, Codable, Responder, SceneDelegate, Soilable, Updatab
         super.init()
         
         camera.ancestor = self
-        protagonist.ancestor = self
         map.ancestor = self
         sun.ancestor = self
+        
+        protagonist.ancestor = self
+        protagonist.isHidden = true
         
         rootNode.addChildNode(camera)
         rootNode.addChildNode(protagonist)
         rootNode.addChildNode(map)
         rootNode.addChildNode(sun)
         
-        camera.controller.state = .focus(node: protagonist, cardinal: .east, zoom: 0.5)
+        camera.controller.state = .focus(node: protagonist, cardinal: .north, zoom: Camera.Constants.maximumZoom)
         
         becomeDirty()
     }
@@ -110,8 +114,7 @@ extension Scene {
     
     @discardableResult public func clean() -> Bool {
         
-        //TODO: fix dirty scene for loading chunks
-        //guard isDirty else { return false }
+        guard isDirty else { return false }
         
         camera.clean()
         protagonist.clean()
@@ -122,8 +125,6 @@ extension Scene {
             
             adjacent.clean()
         }
-        
-        //isDirty = false
         
         return true
     }
@@ -248,12 +249,14 @@ extension Scene {
         return try Map.map(named: identifier)
     }
     
-    public func load(map: Map) {
+    public func load(map: Map, progress: Loadable.LoadingProgress) {
         
         clear()
         
         self.map = map
         self.map.ancestor = self
+        
+        map.load(progress: progress)
         
         rootNode.addChildNode(map)
     }

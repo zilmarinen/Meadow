@@ -8,9 +8,9 @@ import SceneKit
 
 public class WallChunk: Chunk<WallTile> {
     
-    public override var category: Int { SceneGraphCategory.wallChunk.rawValue }
+    public override var category: SceneGraphCategory { .wallChunk }
     
-    public override var program: SCNProgram? { scene?.map.walls.program }
+    public override var program: SCNProgram? { map?.walls.program }
     
     public override var uniforms: [Uniform]? { nil }
     
@@ -18,6 +18,6 @@ public class WallChunk: Chunk<WallTile> {
         
         guard let image = MDWImage.asset(named: "walls", in: .module) else { return nil }
         
-        return [Texture(key: "wall", image: image)]
+        return [Texture(key: "image", image: image)]
     }
 }

@@ -22,5 +22,5 @@ public class Surface: Grid<SurfaceChunk, SurfaceTile> {
         return SCNProgram(name: .surface, library: library)
     }()
     
-    public override var category: Int { SceneGraphCategory.surface.rawValue }
+    public override var category: SceneGraphCategory { .surface }
 }

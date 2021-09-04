@@ -17,15 +17,12 @@ vertex Fragment bridges_vertex(Vertex v [[ stage_in ]],
 }
 
 fragment float4 bridges_fragment(Fragment f [[stage_in]],
-                                 texture2d<float, access::sample> bridge [[ texture(0) ]]) {
-    
-    constexpr sampler image(coord::normalized, filter::linear, address::repeat);
-    
-    return float4(bridge.sample(image, f.uv));
-    
+                                 texture2d<float, access::sample> image [[ texture(0) ]],
+                                 constant Light* scn_lights [[ buffer(2) ]]) {
     Surface surface;
     
     surface.normal = f.normal;
+    surface.ambient = sample(image, f.uv);
     
-    return debug(surface, 2);
+    return illuminate(surface, scn_lights[0]);
 }

@@ -15,5 +15,5 @@ public class Bridges: Grid<BridgeChunk, BridgeTile> {
         return SCNProgram(name: .bridges, library: library)
     }()
     
-    public override var category: Int { SceneGraphCategory.bridges.rawValue }
+    public override var category: SceneGraphCategory { .bridges }
 }

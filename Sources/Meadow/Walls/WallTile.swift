@@ -17,7 +17,7 @@ public class WallTile: Tile {
         case external = "e"
     }
     
-    public override var category: Int { SceneGraphCategory.wallTile.rawValue }
+    public override var category: SceneGraphCategory { .wallTile }
 
     let tileType: WallTileType
     let material: WallTileMaterial

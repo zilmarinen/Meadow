@@ -16,7 +16,7 @@ public class WaterTile: Tile {
         case volume = "v"
     }
     
-    public override var category: Int { SceneGraphCategory.surfaceTile.rawValue }
+    public override var category: SceneGraphCategory { .surfaceTile }
 
     let tileType: WaterTileType
     let apexPattern: Int

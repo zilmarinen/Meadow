@@ -19,5 +19,5 @@ public class Water: Grid<WaterChunk, WaterTile> {
         return program
     }()
     
-    public override var category: Int { SceneGraphCategory.surface.rawValue }
+    public override var category: SceneGraphCategory { .surface }
 }

@@ -18,7 +18,7 @@ public class FootprintChunk: SCNNode, Codable, FootprintDataSource, Hideable, Re
     
     public var isDirty: Bool = false
     
-    public var category: Int { SceneGraphCategory.surfaceChunk.rawValue }
+    public var category: SceneGraphCategory { .surfaceChunk }
     
     public var footprint: Footprint { Footprint(coordinate: coordinate, nodes: [.zero]) }
     
@@ -62,7 +62,7 @@ public class FootprintChunk: SCNNode, Codable, FootprintDataSource, Hideable, Re
         super.init()
         
         name = "Chunk \(coordinate.description)"
-        categoryBitMask = category
+        categoryBitMask = category.rawValue
         
         becomeDirty()
     }

@@ -8,7 +8,7 @@ import SceneKit
 
 public class Seams: Grid<SeamChunk, SeamTile> {
     
-    public override var category: Int { SceneGraphCategory.seams.rawValue }
+    public override var category: SceneGraphCategory { .seams }
     
     public var tiles: [SeamTile] { chunks.flatMap { $0.tiles } }
     

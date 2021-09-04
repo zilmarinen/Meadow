@@ -8,16 +8,16 @@ import SceneKit
 
 public class FootpathChunk: Chunk<FootpathTile> {
     
-    public override var category: Int { SceneGraphCategory.surfaceChunk.rawValue }
+    public override var category: SceneGraphCategory { .surfaceChunk }
     
-    public override var program: SCNProgram? { scene?.map.footpath.program }
+    public override var program: SCNProgram? { map?.footpath.program }
     
     public override var uniforms: [Uniform]? { nil }
     
     public override var textures: [Texture]? {
         
-        guard let tilemap = scene?.map.footpath.tilemap else { return [] }
+        guard let tilemap = map?.footpath.tilemap else { return [] }
         
-        return [Texture(key: "tileset", image: tilemap.tileset.image)]
+        return [Texture(key: "image", image: tilemap.tileset.image)]
     }
 }

@@ -10,8 +10,8 @@ extension Camera {
     
     enum Constants {
         
-        static let maximumZoom = 14.0
-        static let minimumZoom = 0.2
+        static let maximumZoom = 7.0
+        static let minimumZoom = 1.0
     }
     
     public enum CameraState: State {
@@ -63,14 +63,17 @@ extension Camera {
                 
                 switch direction {
                 
-                case .in(let delta),
-                     .out(let delta):
+                case .in(let delta):
+                    
+                    zoomLevel -= delta
+                    
+                case .out(let delta):
                     
                     zoomLevel += delta
                 }
                 
-                zoomLevel = min(1.0, zoomLevel)
-                zoomLevel = max(0.1, zoomLevel)
+                zoomLevel = min(Constants.maximumZoom, zoomLevel)
+                zoomLevel = max(Constants.minimumZoom, zoomLevel)
                 
                 state = .focus(node: node, cardinal: cardinal, zoom: zoomLevel)
             }

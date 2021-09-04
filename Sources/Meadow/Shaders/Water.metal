@@ -17,7 +17,7 @@ vertex Fragment water_vertex(Vertex v [[ stage_in ]],
     return {    .fragmentPosition = scn_node.modelViewProjectionTransform * float4(position, 1.f),
                 .position = v.position,
                 .normal = v.normal,
-                .color = v.color,
+                //.color = v.color,
                 .uv = v.uv };
 }
 
@@ -28,5 +28,10 @@ fragment float4 water_fragment(Fragment f [[stage_in]],
     
     float alpha = 1.0;
     
-    return float4(0.84 * alpha, 0.92 * alpha, 0.89 * alpha, alpha);
+    Surface surface;
+     
+    surface.normal = f.normal;
+    surface.ambient = float4(0.84 * alpha, 0.92 * alpha, 0.89 * alpha, alpha);
+    
+    return illuminate(surface, scn_lights[0]);
 }

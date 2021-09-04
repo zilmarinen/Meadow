@@ -14,9 +14,9 @@ public class BuildingChunk: FootprintChunk {
         case buildingType = "t"
     }
     
-    public override var category: Int { SceneGraphCategory.buildingChunk.rawValue }
+    public override var category: SceneGraphCategory { .buildingChunk }
     
-    public override var program: SCNProgram? { scene?.map.buildings.program }
+    public override var program: SCNProgram? { map?.buildings.program }
     
     let buildingType: BuildingType
     

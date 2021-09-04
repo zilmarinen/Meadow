@@ -4,7 +4,7 @@
 //  Created by Zack Brown on 05/11/2020.
 //
 
-public struct SceneGraphCategory: OptionSet {
+public struct SceneGraphCategory: OptionSet, Codable, Hashable {
     
     public let rawValue: Int
     

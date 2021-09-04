@@ -36,6 +36,6 @@ public enum FoliageType: Int, CaseIterable, Codable, Equatable, Identifiable {
         
         guard let image = MDWImage.asset(named: "foliage_" + id, in: .module) else { return nil }
         
-        return Texture(key: "foliage", image: image)
+        return Texture(key: "image", image: image)
     }
 }

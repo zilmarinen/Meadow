@@ -9,9 +9,9 @@ import SceneKit
 
 public class BridgeChunk: Chunk<BridgeTile> {
     
-    public override var category: Int { SceneGraphCategory.bridgeChunk.rawValue }
+    public override var category: SceneGraphCategory { .bridgeChunk }
     
-    public override var program: SCNProgram? { scene?.map.bridges.program }
+    public override var program: SCNProgram? { map?.bridges.program }
     
     public override var uniforms: [Uniform]? { nil }
     
@@ -19,6 +19,6 @@ public class BridgeChunk: Chunk<BridgeTile> {
         
         guard let image = MDWImage.asset(named: "bridges", in: .module) else { return nil }
         
-        return [Texture(key: "bridge", image: image)]
+        return [Texture(key: "image", image: image)]
     }
 }

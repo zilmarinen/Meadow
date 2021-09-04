@@ -16,7 +16,7 @@ public class BridgeTile: Tile {
         case material = "m"
     }
     
-    public override var category: Int { SceneGraphCategory.surfaceTile.rawValue }
+    public override var category: SceneGraphCategory { .surfaceTile }
 
     let tileType: BridgeTileType
     let pattern: WallPattern

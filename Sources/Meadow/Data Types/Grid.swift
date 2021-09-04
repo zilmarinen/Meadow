@@ -17,7 +17,7 @@ public class Grid<C: Chunk<T>, T: Tile>: SCNNode, Codable, Hideable, Responder, 
     
     public var isDirty: Bool = false
     
-    public var category: Int { SceneGraphCategory.surface.rawValue }
+    public var category: SceneGraphCategory { .surface }
     
     let chunks: [C]
     
@@ -43,7 +43,7 @@ public class Grid<C: Chunk<T>, T: Tile>: SCNNode, Codable, Hideable, Responder, 
         
         super.init()
         
-        categoryBitMask = category
+        categoryBitMask = category.rawValue
     }
     
     required public init(from decoder: Decoder) throws {
@@ -54,7 +54,7 @@ public class Grid<C: Chunk<T>, T: Tile>: SCNNode, Codable, Hideable, Responder, 
         
         super.init()
         
-        categoryBitMask = category
+        categoryBitMask = category.rawValue
         
         for chunk in chunks {
             
@@ -105,4 +105,25 @@ extension Grid {
         
         return true
     }
+}
+
+extension Grid: Loadable {
+    
+    public func load(progress: LoadingProgress) {
+        
+        for chunk in chunks {
+            
+            chunk.load() { (value, _) in
+                
+                progress(value, category)
+            }
+        }
+    }
+}
+
+public protocol Loadable {
+    
+    typealias LoadingProgress = ((Float, SceneGraphCategory) -> Void)
+    
+    func load(progress: LoadingProgress)
 }

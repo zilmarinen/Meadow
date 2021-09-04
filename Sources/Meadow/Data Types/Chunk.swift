@@ -19,7 +19,7 @@ public class Chunk<T: Tile>: SCNNode, Codable, Hideable, Responder, Shadable, So
     
     public var isDirty: Bool = false
     
-    public var category: Int { SceneGraphCategory.surfaceChunk.rawValue }
+    public var category: SceneGraphCategory { .surfaceChunk }
     
     var bounds: GridBounds {
         
@@ -68,7 +68,7 @@ public class Chunk<T: Tile>: SCNNode, Codable, Hideable, Responder, Shadable, So
         super.init()
         
         name = "Chunk \(self.bounds.start.description)"
-        categoryBitMask = category
+        categoryBitMask = category.rawValue
         
         for tile in tiles {
             
@@ -108,32 +108,73 @@ extension Chunk {
         
         position = SCNVector3(coordinate: bounds.start)
         
-        var polygons: [Euclid.Polygon] = []
-        
-        for tile in tiles where !tile.isHidden {
+        DispatchQueue.global(qos: .background).async { [weak self] in
             
-            tile.clean()
+            guard let self = self else { return }
+         
+            var polygons: [Euclid.Polygon] = []
             
-            polygons.append(contentsOf: tile.render(position: Vector(coordinate: tile.coordinate.xz - bounds.start.xz)))
-        }
-        
-        let mesh = Mesh(polygons)
-        
-        self.geometry = SCNGeometry(mesh)
-        self.geometry?.program = program
-        
-        if let uniforms = uniforms {
+            for tile in self.tiles where !tile.isHidden {
+                
+                tile.clean()
+                
+                polygons.append(contentsOf: tile.render(position: Vector(coordinate: tile.coordinate.xz - self.bounds.start.xz)))
+            }
             
-            self.geometry?.set(uniforms: uniforms)
-        }
-        
-        if let textures = textures {
+            let mesh = Mesh(polygons)
             
-            self.geometry?.set(textures: textures)
+            self.geometry = SCNGeometry(mesh)
+            self.geometry?.program = self.program
+            
+            if let uniforms = self.uniforms {
+                
+                self.geometry?.set(uniforms: uniforms)
+            }
+            
+            if let textures = self.textures {
+                
+                self.geometry?.set(textures: textures)
+            }
         }
         
         isDirty = false
         
         return true
+    }
+}
+
+extension Chunk: Loadable {
+    
+    public func load(progress: LoadingProgress) {
+        
+        let stride = (1.0 / Float(tiles.count))
+        
+        position = SCNVector3(coordinate: bounds.start)
+         
+        var polygons: [Euclid.Polygon] = []
+        
+        for index in tiles.indices {
+            
+            let tile = tiles[index]
+            
+            polygons.append(contentsOf: tile.render(position: Vector(coordinate: tile.coordinate.xz - self.bounds.start.xz)))
+            
+            progress(stride * Float(index), category)
+        }
+        
+        let mesh = Mesh(polygons)
+        
+        self.geometry = SCNGeometry(mesh)
+        self.geometry?.program = self.program
+        
+        if let uniforms = self.uniforms {
+            
+            self.geometry?.set(uniforms: uniforms)
+        }
+        
+        if let textures = self.textures {
+            
+            self.geometry?.set(textures: textures)
+        }
     }
 }

@@ -9,7 +9,7 @@ import SceneKit
 
 public class Stairs: FootprintGrid<StairChunk> {
     
-    public override var category: Int { SceneGraphCategory.stairs.rawValue }
+    public override var category: SceneGraphCategory { .stairs }
     
     public lazy var program: SCNProgram? = {
         

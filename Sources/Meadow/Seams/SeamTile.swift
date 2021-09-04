@@ -14,7 +14,7 @@ public class SeamTile: Tile {
         case identifier = "i"
     }
     
-    public override var category: Int { SceneGraphCategory.seamTile.rawValue }
+    public override var category: SceneGraphCategory { .seamTile }
 
     public let segue: PortalSegue
     let identifier: String

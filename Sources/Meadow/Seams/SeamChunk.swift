@@ -8,5 +8,5 @@ import SceneKit
 
 public class SeamChunk: Chunk<SeamTile> {
     
-    public override var category: Int { SceneGraphCategory.seamChunk.rawValue }
+    public override var category: SceneGraphCategory { .seamChunk }
 }

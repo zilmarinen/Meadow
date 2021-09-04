@@ -10,13 +10,13 @@ import SwiftUI
 @main
 struct ExampleApp: App {
     
-    @ObservedObject var controller = Controller()
+    @ObservedObject var controller = AppController()
     
     var body: some Scene {
         
         WindowGroup {
             
-            ContentView(controller: controller)
+            AppView(controller: controller)
         }
     }
 }

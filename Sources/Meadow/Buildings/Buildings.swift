@@ -8,7 +8,7 @@ import SceneKit
 
 public class Buildings: FootprintGrid<BuildingChunk> {
     
-    public override var category: Int { SceneGraphCategory.buildings.rawValue }
+    public override var category: SceneGraphCategory { .buildings }
     
     public lazy var program: SCNProgram? = {
         

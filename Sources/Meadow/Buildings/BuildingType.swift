@@ -46,6 +46,6 @@ public enum BuildingType: Int, CaseIterable, Codable, Equatable, Identifiable {
         
         guard let image = MDWImage.asset(named: "building_bernina", in: .module) else { return nil }
         
-        return Texture(key: "building", image: image)
+        return Texture(key: "image", image: image)
     }
 }

@@ -15,5 +15,5 @@ public class Walls: Grid<WallChunk, WallTile> {
         return SCNProgram(name: .walls, library: library)
     }()
     
-    public override var category: Int { SceneGraphCategory.walls.rawValue }
+    public override var category: SceneGraphCategory { .walls }
 }

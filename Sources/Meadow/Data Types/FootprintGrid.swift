@@ -17,7 +17,7 @@ public class FootprintGrid<C: FootprintChunk>: SCNNode, Codable, Hideable, Respo
     
     public var isDirty: Bool = false
     
-    public var category: Int { SceneGraphCategory.surface.rawValue }
+    public var category: SceneGraphCategory { .surface }
     
     let chunks: [C]
     
@@ -43,7 +43,7 @@ public class FootprintGrid<C: FootprintChunk>: SCNNode, Codable, Hideable, Respo
         
         super.init()
         
-        categoryBitMask = category
+        categoryBitMask = category.rawValue
     }
     
     required public init(from decoder: Decoder) throws {
@@ -54,7 +54,7 @@ public class FootprintGrid<C: FootprintChunk>: SCNNode, Codable, Hideable, Respo
         
         super.init()
         
-        categoryBitMask = category
+        categoryBitMask = category.rawValue
         
         for chunk in chunks {
             
@@ -91,5 +91,13 @@ extension FootprintGrid {
         isDirty = false
         
         return true
+    }
+}
+
+extension FootprintGrid: Loadable {
+    
+    public func load(progress: LoadingProgress) {
+     
+        //
     }
 }

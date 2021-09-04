@@ -14,7 +14,7 @@ constant float epsilon = 0.0001;
 constant float3 up = float3(0, 1, 0);
 constant float3 luma = float3(0.299f, 0.587f, 0.114f);
 
-constexpr sampler image(coord::normalized, filter::linear, address::repeat);
+constexpr sampler options(coord::normalized, filter::linear, address::repeat);
 
 struct SceneTransforms {
     
@@ -107,7 +107,7 @@ inline float4 grayscale(float4 color, float alpha) {
 
 inline float4 sample(texture2d<float, access::sample> texture, float2 uv) {
     
-    return float4(texture.sample(image, uv));
+    return float4(texture.sample(options, uv));
 }
 
 

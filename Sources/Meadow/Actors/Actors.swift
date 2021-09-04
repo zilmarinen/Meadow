@@ -17,7 +17,7 @@ public class Actors: SCNNode, Codable, Hideable, Responder, Soilable, Updatable 
     
     public var isDirty: Bool = false
     
-    public var category: Int { SceneGraphCategory.surface.rawValue }
+    public var category: SceneGraphCategory { .surface }
     
     let npcs: [Actor]
     
@@ -27,7 +27,7 @@ public class Actors: SCNNode, Codable, Hideable, Responder, Soilable, Updatable 
         
         super.init()
         
-        categoryBitMask = category
+        categoryBitMask = category.rawValue
     }
     
     required public init(from decoder: Decoder) throws {
@@ -38,7 +38,7 @@ public class Actors: SCNNode, Codable, Hideable, Responder, Soilable, Updatable 
         
         super.init()
         
-        categoryBitMask = category
+        categoryBitMask = category.rawValue
         
         for actor in npcs {
             
@@ -85,6 +85,14 @@ extension Actors {
         isDirty = false
         
         return true
+    }
+}
+
+extension Actors: Loadable {
+    
+    public func load(progress: LoadingProgress) {
+        
+        //
     }
 }
 

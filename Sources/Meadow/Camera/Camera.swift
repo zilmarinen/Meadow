@@ -13,7 +13,7 @@ public class Camera: SCNNode, Responder, Soilable, Updatable {
     
     public var isDirty: Bool = false
     
-    public var category: Int { SceneGraphCategory.camera.rawValue }
+    public var category: SceneGraphCategory { .camera }
     
     public lazy var jig: SCNNode = {
         
@@ -21,8 +21,11 @@ public class Camera: SCNNode, Responder, Soilable, Updatable {
         
         let camera = SCNCamera()
         
-        camera.usesOrthographicProjection = false
+        camera.usesOrthographicProjection = true
         camera.orthographicScale = Constants.maximumZoom
+        camera.zNear = 1
+        camera.zFar = 200
+        camera.fieldOfView = 70
         
         node.camera = camera
         
@@ -39,7 +42,7 @@ public class Camera: SCNNode, Responder, Soilable, Updatable {
         super.init()
         
         name = "Camera"
-        categoryBitMask = category
+        categoryBitMask = category.rawValue
         
         addChildNode(jig)
     }
@@ -72,26 +75,20 @@ extension Camera {
 
         case .focus(let node, let cardinal, let zoom):
             
-            let zoomScale = (Constants.maximumZoom * zoom)
+            let zoom = min(max(Constants.minimumZoom, zoom), Constants.maximumZoom)
             
-            let pitch = atan(4.0 / 3.0)
-            let yaw = Math.radians(degrees: 90.0 * Double(cardinal.rawValue))
+            let angle = Angle(radians: (.pi / 2.0) * Double(cardinal.rawValue) + (.pi / 8.0))
             
-            let adjacent = Double(World.Constants.ceiling - World.Constants.floor)
-            let opposite = tan(pitch) * adjacent
-            let hypotenuse = sqrt((adjacent * adjacent) + (opposite * opposite))
+            let radius = 10.0 * zoom
             
-            let x = CGFloat(cos(yaw) * opposite)
-            let y = CGFloat(cos(pitch) * hypotenuse)
-            let z = CGFloat(sin(yaw) * opposite)
+            var vector = Math.plot(radians: angle.radians, radius: radius)
             
-            let rotation = Rotation(yaw: Angle(radians: -yaw))
+            vector.y = radius
             
             self.position = node.position
             
-            jig.position = SCNVector3(x: MDWFloat(x), y: MDWFloat(y), z: MDWFloat(z))
-            jig.rotation = SCNQuaternion(rotation)
-            jig.camera?.orthographicScale = Double(min(max(zoomScale, Constants.minimumZoom), Constants.maximumZoom))
+            jig.position = SCNVector3(vector)
+            jig.camera?.orthographicScale = zoom
             jig.look(at: node.position)
         }
     }

@@ -24,7 +24,7 @@ public class Actor: SCNNode, Codable, Hideable, Responder, Shadable, Soilable, U
     
     public var isDirty: Bool = false
     
-    public var category: Int { SceneGraphCategory.surfaceChunk.rawValue }
+    public var category: SceneGraphCategory { .surfaceChunk }
     
     public var coordinate: Coordinate {
         
@@ -48,6 +48,17 @@ public class Actor: SCNNode, Codable, Hideable, Responder, Shadable, Soilable, U
         }
     }
     
+    public var appearance: ActorAppearance = .default {
+        
+        didSet {
+            
+            if oldValue != appearance {
+                
+                becomeDirty()
+            }
+        }
+    }
+    
     public var program: SCNProgram? { nil }
     public var uniforms: [Uniform]? { nil }
     public var textures: [Texture]? { nil }
@@ -65,8 +76,8 @@ public class Actor: SCNNode, Codable, Hideable, Responder, Shadable, Soilable, U
         head.position = SCNVector3(x: 0.0, y: 0.6, z: 0.0)
         torso.position = SCNVector3(x: 0.0, y: 0.25, z: 0.0)
         
-        head.geometry?.firstMaterial?.diffuse.contents = MDWColor.white
-        torso.geometry?.firstMaterial?.diffuse.contents = MDWColor.black
+        head.geometry?.firstMaterial?.diffuse.contents = appearance.colors.hair.color
+        torso.geometry?.firstMaterial?.diffuse.contents = appearance.colors.torso.color
         
         node.addChildNode(head)
         node.addChildNode(torso)
@@ -105,7 +116,7 @@ public class Actor: SCNNode, Codable, Hideable, Responder, Shadable, Soilable, U
         
         name = "Chunk \(coordinate.description)"
         position = SCNVector3(coordinate: coordinate)
-        categoryBitMask = category
+        categoryBitMask = category.rawValue
         
         controller.subscribe(stateDidChange(from:to:))
         

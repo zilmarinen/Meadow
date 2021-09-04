@@ -179,6 +179,8 @@ extension Map {
     
     @discardableResult public func clean() -> Bool {
         
+        //guard isDirty else { return false }
+        
         actors.clean()
         bridges.clean()
         buildings.clean()
@@ -191,7 +193,39 @@ extension Map {
         walls.clean()
         water.clean()
         
+        isDirty = false
+        
         return true
+    }
+}
+
+extension Map: Loadable {
+    
+    public func load(progress: LoadingProgress) {
+        
+        let nodes: [Loadable] = [actors,
+                                 bridges,
+                                 buildings,
+                                 foliage,
+                                 footpath,
+                                 portals,
+                                 seams,
+                                 stairs,
+                                 surface,
+                                 walls,
+                                 water]
+        
+        let stride = (1.0 / Float(nodes.count))
+        
+        for index in nodes.indices {
+            
+            nodes[index].load() { (_, category) in
+                
+                progress(stride * Float(index), category)
+            }
+        }
+        
+        progress(1.0, .surface)
     }
 }
 

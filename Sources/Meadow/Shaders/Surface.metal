@@ -20,29 +20,30 @@ fragment Buffer surface_fragment(Fragment f [[stage_in]],
                                  constant SceneTransforms& scn_frame [[ buffer(0) ]],
                                  constant NodeTransforms& scn_node [[ buffer(1) ]],
                                  texture2d<float, access::sample> tileset [[ texture(0) ]],
-                                 texture2d<float, access::sample> edgeset [[ texture(1) ]]) {
+                                 texture2d<float, access::sample> edgeset [[ texture(1) ]],
+                                 constant Light* scn_lights [[ buffer(2) ]]) {
     
-    float denominator = dot(up, f.normal);
+    Surface surface;
     
-    float4 color = float4(0);
+    surface.normal = f.normal;
+    
+    if (fabs(dot(up, f.normal)) < epsilon) {
 
-    if (fabs(denominator) < epsilon) {
+        surface.ambient = sample(edgeset, f.uv);
 
-        color = sample(edgeset, f.uv);
-
-        color = edgeColorLookup(twizzle(color, f.color));
+        surface.ambient = edgeColorLookup(twizzle(surface.ambient, f.color));
     }
     else {
 
-        color = sample(tileset, f.uv);
+        surface.ambient = sample(tileset, f.uv);
 
-        color = tileColorLookup(twizzle(color, f.color));
+        surface.ambient = tileColorLookup(twizzle(surface.ambient, f.color));
     }
     
     Buffer buffer;
     
     buffer.position = f.fragmentPosition;
-    buffer.color = color;
+    buffer.color = illuminate(surface, scn_lights[0]);
     buffer.normal = float4(f.normal, 0.f);
     
     return buffer;

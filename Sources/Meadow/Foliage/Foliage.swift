@@ -8,7 +8,7 @@ import SceneKit
 
 public class Foliage: FootprintGrid<FoliageChunk> {
     
-    public override var category: Int { SceneGraphCategory.foliage.rawValue }
+    public override var category: SceneGraphCategory { .foliage }
     
     public lazy var program: SCNProgram? = {
         

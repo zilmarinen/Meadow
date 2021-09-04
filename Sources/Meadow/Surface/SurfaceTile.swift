@@ -30,7 +30,7 @@ public class SurfaceTile: Tile {
         }
     }
     
-    public override var category: Int { SceneGraphCategory.surfaceTile.rawValue }
+    public override var category: SceneGraphCategory { .surfaceTile }
 
     let tileType: TileType
     let edgeType: SurfaceEdgeType
@@ -71,7 +71,7 @@ public class SurfaceTile: Tile {
     
     override func render(position: Vector) -> [Euclid.Polygon] {
         
-        let tile = scene?.map.surface.tilemap.tileset.tiles(with: apexPattern).randomElement()
+        let tile = map?.surface.tilemap.tileset.tiles(with: apexPattern).randomElement()
         
         var polygons: [Euclid.Polygon] = []
         
@@ -115,7 +115,7 @@ public class SurfaceTile: Tile {
                 
                 let (o0, o1) = cardinal.ordinals
                 
-                let edge = scene?.map.surface.tilemap.edgeset.edges(with: edgePattern).randomElement()
+                let edge = map?.surface.tilemap.edgeset.edges(with: edgePattern).randomElement()
                 
                 let edgeUVs = (edge?.uvs ?? UVs(start: .zero, end: .one)).slice(cardinal: ((ordinal.rawValue == cardinal.rawValue || ordinal.rawValue == ((cardinal.rawValue + 4) - 1) % 4) ? .west : .east))
                 

@@ -15,9 +15,9 @@ public class FoliageChunk: FootprintChunk {
         case foliageType = "t"
     }
     
-    public override var category: Int { SceneGraphCategory.foliageChunk.rawValue }
+    public override var category: SceneGraphCategory { .foliageChunk }
     
-    public override var program: SCNProgram? { scene?.map.foliage.program }
+    public override var program: SCNProgram? { map?.foliage.program }
     
     public override var textures: [Texture]? {
         

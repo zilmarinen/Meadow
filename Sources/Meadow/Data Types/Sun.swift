@@ -12,7 +12,7 @@ class Sun: SCNNode, Responder, Soilable, Updatable {
     
     public var isDirty: Bool = false
     
-    public var category: Int { SceneGraphCategory.sun.rawValue }
+    public var category: SceneGraphCategory { .sun }
     
     public var source = SCNLight()
     
@@ -23,7 +23,7 @@ class Sun: SCNNode, Responder, Soilable, Updatable {
         super.init()
         
         name = "Sun"
-        categoryBitMask = category
+        categoryBitMask = category.rawValue
         light = source
         
         source.type = .omni

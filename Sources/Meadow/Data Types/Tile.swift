@@ -18,7 +18,7 @@ public class Tile: Codable, Equatable, Renderable, Responder {
     
     public var isDirty: Bool = true
     
-    public var category: Int { SceneGraphCategory.surfaceTile.rawValue }
+    public var category: SceneGraphCategory { .surfaceTile }
 
     private(set) public var coordinate: Coordinate {
         

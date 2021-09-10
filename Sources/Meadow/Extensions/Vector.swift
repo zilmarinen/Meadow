@@ -28,8 +28,6 @@ extension Vector {
 
 public extension Vector {
     
-    static let zero = Vector(x: 0, y: 0, z: 0)
-    static let one = Vector(x: 1, y: 1, z: 1)
     static var right =  Vector(x: 1, y: 0, z: 0)
     static var up = Vector(x: 0, y: 1, z: 0)
     static var forward = Vector(x: 0, y: 0, z: -1)

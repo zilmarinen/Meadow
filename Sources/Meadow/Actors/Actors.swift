@@ -54,13 +54,6 @@ public class Actors: SCNNode, Codable, Hideable, Responder, Soilable, Updatable 
         
         fatalError("init(coder:) has not been implemented")
     }
-    
-    public func encode(to encoder: Encoder) throws {
-        
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        
-        try container.encode(npcs, forKey: .npcs)
-    }
 }
 
 extension Actors {
@@ -85,14 +78,6 @@ extension Actors {
         isDirty = false
         
         return true
-    }
-}
-
-extension Actors: Loadable {
-    
-    public func load(progress: LoadingProgress) {
-        
-        //
     }
 }
 

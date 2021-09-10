@@ -22,5 +22,5 @@ public class Footpath: Grid<FootpathChunk, FootpathTile> {
         return SCNProgram(name: .footpath, library: library)
     }()
     
-    public override var category: SceneGraphCategory { .surface }
+    public override var category: SceneGraphCategory { .footpath }
 }

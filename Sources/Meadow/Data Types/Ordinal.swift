@@ -4,34 +4,54 @@
 //  Created by Zack Brown on 03/11/2020.
 //
 
-import CoreGraphics
+import Euclid
 import Foundation
 
-public enum Ordinal: Int, CaseIterable, Codable {
+public struct Ordinal: OptionSet, CaseIterable, Codable, Hashable, Identifiable {
     
-    case northWest
-    case northEast
-    case southEast
-    case southWest
+    public static let northWest = Ordinal(rawValue: 1 << 0)
+    public static let northEast = Ordinal(rawValue: 1 << 1)
+    public static let southEast = Ordinal(rawValue: 1 << 2)
+    public static let southWest = Ordinal(rawValue: 1 << 3)
+    
+    public static var allCases: [Ordinal] = [.northWest,
+                                             .northEast,
+                                             .southEast,
+                                             .southWest]
+    
+    public let rawValue: Int
+    
+    public init(rawValue: Int) {
+        
+        self.rawValue = rawValue
+    }
+    
+    public var id: String { description }
     
     public var description: String {
-            
+        
         switch self {
             
-        case .northWest: return "\(Cardinal.north.description) \(Cardinal.west.description)"
-        case .northEast: return "\(Cardinal.north.description) \(Cardinal.east.description)"
-        case .southEast: return "\(Cardinal.south.description) \(Cardinal.east.description)"
-        case .southWest: return "\(Cardinal.south.description) \(Cardinal.west.description)"
+        case .northWest: return "North West"
+        case .northEast: return "North East"
+        case .southEast: return "South East"
+        default: return "South West"
+        }
+    }
+    
+    public var corner: Int {
+        
+        switch self {
+            
+        case .northWest: return 0
+        case .northEast: return 1
+        case .southEast: return 2
+        default: return 3
         }
     }
 }
 
 extension Ordinal {
-    
-    public static var uvs: [CGPoint] = [CGPoint(x: 0.0, y: 0.0),
-                                 CGPoint(x: 1.0, y: 0.0),
-                                 CGPoint(x: 1.0, y: 1.0),
-                                 CGPoint(x: 0.0, y: 1.0)]
     
     public static var Coordinates: [Coordinate] = [
     
@@ -65,53 +85,19 @@ extension Ordinal {
         (.southEast, .northWest)
     ]
     
-    static func cardinals(ordinal: Ordinal) -> (Cardinal, Cardinal) {
-        
-        return Cardinals[ordinal.rawValue]
-    }
+    static func cardinals(ordinal: Ordinal) -> (Cardinal, Cardinal) { Cardinals[ordinal.corner] }
     
-    public var cardinals: (Cardinal, Cardinal) {
-        
-        return Ordinal.cardinals(ordinal: self)
-    }
+    public var cardinals: (Cardinal, Cardinal) { Ordinal.cardinals(ordinal: self) }
     
-    static func opposite(ordinal: Ordinal) -> Ordinal {
-        
-        return Opposites[ordinal.rawValue]
-    }
+    static func opposite(ordinal: Ordinal) -> Ordinal { Opposites[ordinal.corner] }
     
-    public var opposite: Ordinal {
-        
-        return Ordinal.opposite(ordinal: self)
-    }
+    public var opposite: Ordinal { Ordinal.opposite(ordinal: self) }
     
-    static func ordinals(ordinal: Ordinal) -> (Ordinal, Ordinal) {
-        
-        return Ordinals[ordinal.rawValue]
-    }
+    static func ordinals(ordinal: Ordinal) -> (Ordinal, Ordinal) { Ordinals[ordinal.corner] }
     
-    public var ordinals: (Ordinal, Ordinal) {
-        
-        return Ordinal.ordinals(ordinal: self)
-    }
+    public var ordinals: (Ordinal, Ordinal) { Ordinal.ordinals(ordinal: self) }
     
-    static func coordinate(ordinal: Ordinal) -> Coordinate {
-        
-        return Coordinates[ordinal.rawValue]
-    }
+    static func coordinate(ordinal: Ordinal) -> Coordinate { Coordinates[ordinal.corner] }
     
-    public var coordinate: Coordinate {
-        
-        return Ordinal.coordinate(ordinal: self)
-    }
-    
-    public var next: Ordinal {
-        
-        return Ordinal(rawValue: (rawValue + 1) % 4)!
-    }
-    
-    public var previous: Ordinal {
-        
-        return Ordinal(rawValue: (rawValue - 1 + 4) % 4)!
-    }
+    public var coordinate: Coordinate { Ordinal.coordinate(ordinal: self) }
 }

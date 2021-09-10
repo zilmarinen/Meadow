@@ -20,7 +20,7 @@ struct AppView: View {
             
             let tap = TapGesture().onEnded {
                 
-                controller.handle(input: tapLocation)
+                //controller.handle(input: tapLocation)
             }
                         
             let drag = DragGesture(minimumDistance: 0, coordinateSpace: .global) .onChanged { value in
@@ -35,11 +35,7 @@ struct AppView: View {
                       delegate: controller)
                 .gesture(drag)
             
-            switch controller.state {
-                
-            case .splash(let controller): SplashView(controller: controller)
-            case .game(let controller): GameView(controller: controller)
-            }
+            ExampleView(model: controller.viewModel)
         }
     }
 }

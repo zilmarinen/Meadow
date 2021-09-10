@@ -76,8 +76,8 @@ public class Actor: SCNNode, Codable, Hideable, Responder, Shadable, Soilable, U
         head.position = SCNVector3(x: 0.0, y: 0.6, z: 0.0)
         torso.position = SCNVector3(x: 0.0, y: 0.25, z: 0.0)
         
-        head.geometry?.firstMaterial?.diffuse.contents = appearance.colors.hair.color
-        torso.geometry?.firstMaterial?.diffuse.contents = appearance.colors.torso.color
+        head.geometry?.firstMaterial?.diffuse.contents = appearance.colors.hair.osColor
+        torso.geometry?.firstMaterial?.diffuse.contents = appearance.colors.torso.osColor
         
         node.addChildNode(head)
         node.addChildNode(torso)
@@ -126,13 +126,6 @@ public class Actor: SCNNode, Codable, Hideable, Responder, Shadable, Soilable, U
     required init?(coder: NSCoder) {
         
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    public func encode(to encoder: Encoder) throws {
-        
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        
-        try container.encode(coordinate, forKey: .coordinate)
     }
     
     @discardableResult public func clean() -> Bool {

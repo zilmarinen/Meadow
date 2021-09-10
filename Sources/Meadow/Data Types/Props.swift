@@ -45,7 +45,7 @@ public class Props {
 
 extension Props {
     
-    public func prop(bridge tileType: BridgeTileType, material: BridgeMaterial, pattern: WallPattern) -> Model {
+    public func prop(bridge tileType: BridgeTileType, material: BridgeMaterial, pattern: Cardinal) -> Model {
         
         let identifier = material.prop(tileType: tileType, pattern: pattern)
         
@@ -105,7 +105,7 @@ extension Props {
         return model
     }
     
-    public func prop(wall tileType: WallTileType, material: WallTileMaterial, pattern: WallPattern, external: Bool) -> Model {
+    public func prop(wall tileType: WallTileType, material: WallTileMaterial, pattern: Cardinal, external: Bool) -> Model {
         
         let identifier = material.prop(tileType: tileType, pattern: pattern, external: external)
         

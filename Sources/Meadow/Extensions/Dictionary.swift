@@ -6,14 +6,6 @@
 
 import Foundation
 
-public extension Dictionary where Key == Ordinal, Value == TileVolume {
-    
-    func apex() -> [Int] {
-        
-        return Ordinal.allCases.compactMap { Int(Double(World.Constants.ceiling) * self[$0]!.apex.corners[$0.rawValue]) }
-    }
-}
-
 extension Dictionary where Key == Coordinate, Value == TraversableNode {
     
     func path(between origin: Coordinate, destination: Coordinate) -> [PathNode]? {

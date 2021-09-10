@@ -4,6 +4,7 @@
 //  Created by Zack Brown on 03/11/2020.
 //
 
+import Euclid
 import SceneKit
 
 public extension SCNGeometry {

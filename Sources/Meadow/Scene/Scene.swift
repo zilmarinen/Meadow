@@ -11,7 +11,7 @@ protocol SceneDelegate {
     //
 }
 
-open class Scene: SCNScene, Codable, Responder, SceneDelegate, Soilable, Updatable {
+open class Scene: SCNScene, Decodable, Responder, SceneDelegate, Soilable, Updatable {
 
     private enum CodingKeys: String, CodingKey {
         
@@ -100,13 +100,6 @@ open class Scene: SCNScene, Codable, Responder, SceneDelegate, Soilable, Updatab
     required public init?(coder: NSCoder) {
         
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    public func encode(to encoder: Encoder) throws {
-        
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        
-        try container.encode(map, forKey: .map)
     }
 }
 
@@ -249,14 +242,12 @@ extension Scene {
         return try Map.map(named: identifier)
     }
     
-    public func load(map: Map, progress: Loadable.LoadingProgress) {
+    public func load(map: Map) {
         
         clear()
         
         self.map = map
         self.map.ancestor = self
-        
-        map.load(progress: progress)
         
         rootNode.addChildNode(map)
     }

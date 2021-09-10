@@ -56,15 +56,6 @@ public struct Footprint: Codable, Equatable {
         
         self.bounds = GridBounds(nodes: nodes)
     }
-
-    public func encode(to encoder: Encoder) throws {
-        
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        
-        try container.encode(coordinate, forKey: .coordinate)
-        try container.encode(rotation, forKey: .rotation)
-        try container.encode(nodes, forKey: .nodes)
-    }
 }
 
 extension Footprint {

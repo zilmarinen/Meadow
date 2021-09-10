@@ -35,17 +35,6 @@ public class PortalChunk: FootprintChunk {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public override func encode(to encoder: Encoder) throws {
-        
-        try super.encode(to: encoder)
-        
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        
-        try container.encode(segue, forKey: .segue)
-        try container.encode(identifier, forKey: .identifier)
-        try container.encode(portalType, forKey: .portalType)
-    }
-    
     public override func clean() -> Bool {
         
         guard isDirty else { return false }

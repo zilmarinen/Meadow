@@ -21,4 +21,34 @@ public class BridgeChunk: Chunk<BridgeTile> {
         
         return [Texture(key: "image", image: image)]
     }
+    
+    public override func clean() -> Bool {
+        
+        guard isDirty else { return false }
+        
+        var mesh = Mesh([])
+        
+        for tile in tiles {
+            
+            guard let prop = scene?.props.prop(bridge: tile.tileType, material: tile.material, pattern: tile.pattern) else { continue }
+            
+            var invert = false
+            
+            switch tile.tileType {
+    
+            case .corner(let lhs): invert = tile.pattern.count != 2 && lhs
+            default: break
+            }
+            
+            let rotation = Rotation(yaw: Angle(radians: (Double.pi / 2.0) * Double(tile.pattern.edge + (invert ? 2 : 0))))
+    
+            let transform = Transform(offset: Vector(x: Double(tile.coordinate.x - bounds.start.x), y: Double(tile.coordinate.y) * World.Constants.slope, z: Double(tile.coordinate.z - bounds.start.z)), rotation: rotation)
+    
+            mesh = mesh.merge(prop.mesh.transformed(by: transform))
+        }
+        
+        geometry = SCNGeometry(mesh)
+        
+        return super.clean()
+    }
 }

@@ -4,6 +4,8 @@
 //  Created by Zack Brown on 27/08/2021.
 //
 
+import Euclid
+
 public struct ActorAppearance: Codable, Hashable {
     
     static let `default` = ActorAppearance(colors: .default)

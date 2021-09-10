@@ -13,16 +13,21 @@ public struct SceneGraphCategory: OptionSet, Codable, Hashable {
         self.rawValue = rawValue
     }
     
-    public static let buildings = SceneGraphCategory(rawValue: 1 << 15)
-    public static let buildingChunk = SceneGraphCategory(rawValue: 1 << 16)
-    
     public static let bridges = SceneGraphCategory(rawValue: 1 << 1)
     public static let bridgeChunk = SceneGraphCategory(rawValue: 1 << 2)
+    public static let bridgeTile = SceneGraphCategory(rawValue: 1 << 26)
+    
+    public static let buildings = SceneGraphCategory(rawValue: 1 << 15)
+    public static let buildingChunk = SceneGraphCategory(rawValue: 1 << 16)
     
     public static let camera = SceneGraphCategory(rawValue: 1 << 3)
     
     public static let foliage = SceneGraphCategory(rawValue: 1 << 4)
     public static let foliageChunk = SceneGraphCategory(rawValue: 1 << 5)
+    
+    public static let footpath = SceneGraphCategory(rawValue: 1 << 23)
+    public static let footpathChunk = SceneGraphCategory(rawValue: 1 << 24)
+    public static let footpathTile = SceneGraphCategory(rawValue: 1 << 25)
     
     public static let seams = SceneGraphCategory(rawValue: 1 << 6)
     public static let seamChunk = SceneGraphCategory(rawValue: 1 << 7)
@@ -40,4 +45,8 @@ public struct SceneGraphCategory: OptionSet, Codable, Hashable {
     public static let walls = SceneGraphCategory(rawValue: 1 << 17)
     public static let wallChunk = SceneGraphCategory(rawValue: 1 << 18)
     public static let wallTile = SceneGraphCategory(rawValue: 1 << 19)
+    
+    public static let water = SceneGraphCategory(rawValue: 1 << 20)
+    public static let waterChunk = SceneGraphCategory(rawValue: 1 << 21)
+    public static let waterTile = SceneGraphCategory(rawValue: 1 << 22)
 }

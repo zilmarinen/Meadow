@@ -4,6 +4,7 @@
 //  Created by Zack Brown on 03/11/2020.
 //
 
+import Euclid
 import SceneKit
 
 extension SCNVector4: Codable {
@@ -18,7 +19,7 @@ extension SCNVector4: Codable {
     
     public init(color: Color) {
         
-        self.init(color.red, color.green, color.blue, color.alpha)
+        self.init(color.r, color.g, color.b, color.a)
     }
     
     public init(from decoder: Decoder) throws {

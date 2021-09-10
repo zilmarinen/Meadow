@@ -21,7 +21,7 @@ public enum WallTileMaterial: Int, CaseIterable, Codable, Equatable, Identifiabl
         }
     }
     
-    func prop(tileType: WallTileType, pattern: WallPattern, external: Bool) -> String {
+    func prop(tileType: WallTileType, pattern: Cardinal, external: Bool) -> String {
         
         switch self {
         
@@ -47,7 +47,7 @@ public enum WallTileMaterial: Int, CaseIterable, Codable, Equatable, Identifiabl
             
             switch tileType {
                 
-            case .corner: return prop + "_\(pattern.edges)"
+            case .corner: return prop + "_\(pattern.count)"
             default: return prop
             }
         }

@@ -11,11 +11,10 @@ import SwiftUI
 
 class AppController: NSObject, ObservableObject, Updatable {
     
-    enum State {
+    lazy var viewModel: AppViewModel = {
         
-        case splash(SplashController)
-        case game(GameController)
-    }
+        return AppViewModel(initialState: .splash(SplashController(parent: self)))
+    }()
     
     lazy var scene: MDWScene = {
         
@@ -28,20 +27,7 @@ class AppController: NSObject, ObservableObject, Updatable {
         return s
     }()
     
-    @Published private(set) var state: State
-    
     var lastUpdate: TimeInterval?
-    
-    override init() {
-        
-        let controller = SplashController()
-        
-        self.state = .splash(controller)
-        
-        super.init()
-        
-        controller.parent = self
-    }
 }
 
 extension AppController: SCNSceneRendererDelegate {
@@ -50,10 +36,7 @@ extension AppController: SCNSceneRendererDelegate {
         
         let delta = time - (lastUpdate ?? time)
         
-        DispatchQueue.main.async {
-            
-            self.update(delta: delta, time: time)
-        }
+        update(delta: delta, time: time)
         
         lastUpdate = time
     }
@@ -63,35 +46,12 @@ extension AppController {
     
     func update(delta: TimeInterval, time: TimeInterval) {
         
-        switch state {
+        switch viewModel.state {
             
         case .splash(let controller): controller.update(delta: delta, time: time)
         case .game(let controller): controller.update(delta: delta, time: time)
         }
         
         scene.update(delta: delta, time: time)
-    }
-}
-
-extension AppController {
-    
-    func handle(input tap: CGPoint) {
-        
-        print("Tap: \(tap)")
-    }
-}
-
-extension AppController {
-    
-    func loadGame() {
-        
-        DispatchQueue.main.async { [weak self] in
-            
-            guard let self = self else { return }
-            
-            let controller = GameController(parent: self, hero: Hero())
-            
-            self.state = .game(controller)
-        }
     }
 }

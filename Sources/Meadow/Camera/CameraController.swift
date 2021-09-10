@@ -47,7 +47,7 @@ extension Camera {
             
             case .focus(let node, let cardinal, let zoom):
                 
-                let rotation = Cardinal(rawValue: (cardinal.rawValue + direction.rawValue) % 4) ?? .north
+                let rotation = Cardinal(rawValue: (cardinal.edge + direction.rawValue) % 4)
                 
                 state = .focus(node: node, cardinal: rotation, zoom: zoom)
             }

@@ -7,7 +7,7 @@
 import Euclid
 import SceneKit
 
-public class Chunk<T: Tile>: SCNNode, Codable, Hideable, Responder, Shadable, Soilable {
+public class Chunk<T: Tile>: SCNNode, Decodable, Hideable, Responder, Shadable, Soilable {
     
     private enum CodingKeys: String, CodingKey {
         
@@ -50,8 +50,6 @@ public class Chunk<T: Tile>: SCNNode, Codable, Hideable, Responder, Shadable, So
                     
                     tile.offset = offset
                 }
-                
-                becomeDirty()
             }
         }
     }
@@ -83,58 +81,22 @@ public class Chunk<T: Tile>: SCNNode, Codable, Hideable, Responder, Shadable, So
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func encode(to encoder: Encoder) throws {
-        
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        
-        try container.encode(bounds.start, forKey: .coordinate)
-        try container.encode(tiles, forKey: .tiles)
-    }
-}
-
-extension Chunk {
-    
-    func find(tile coordinate: Coordinate) -> T? {
-        
-        return tiles.first { $0.coordinate.adjacency(to: coordinate) == .equal }
-    }
-}
-
-extension Chunk {
-    
     @discardableResult public func clean() -> Bool {
         
         guard isDirty else { return false }
         
         position = SCNVector3(coordinate: bounds.start)
         
-        DispatchQueue.global(qos: .background).async { [weak self] in
+        geometry?.program = program
+        
+        if let uniforms = uniforms {
             
-            guard let self = self else { return }
-         
-            var polygons: [Euclid.Polygon] = []
+            geometry?.set(uniforms: uniforms)
+        }
+        
+        if let textures = textures {
             
-            for tile in self.tiles where !tile.isHidden {
-                
-                tile.clean()
-                
-                polygons.append(contentsOf: tile.render(position: Vector(coordinate: tile.coordinate.xz - self.bounds.start.xz)))
-            }
-            
-            let mesh = Mesh(polygons)
-            
-            self.geometry = SCNGeometry(mesh)
-            self.geometry?.program = self.program
-            
-            if let uniforms = self.uniforms {
-                
-                self.geometry?.set(uniforms: uniforms)
-            }
-            
-            if let textures = self.textures {
-                
-                self.geometry?.set(textures: textures)
-            }
+            geometry?.set(textures: textures)
         }
         
         isDirty = false
@@ -143,38 +105,10 @@ extension Chunk {
     }
 }
 
-extension Chunk: Loadable {
+extension Chunk {
     
-    public func load(progress: LoadingProgress) {
+    func find(tile coordinate: Coordinate) -> T? {
         
-        let stride = (1.0 / Float(tiles.count))
-        
-        position = SCNVector3(coordinate: bounds.start)
-         
-        var polygons: [Euclid.Polygon] = []
-        
-        for index in tiles.indices {
-            
-            let tile = tiles[index]
-            
-            polygons.append(contentsOf: tile.render(position: Vector(coordinate: tile.coordinate.xz - self.bounds.start.xz)))
-            
-            progress(stride * Float(index), category)
-        }
-        
-        let mesh = Mesh(polygons)
-        
-        self.geometry = SCNGeometry(mesh)
-        self.geometry?.program = self.program
-        
-        if let uniforms = self.uniforms {
-            
-            self.geometry?.set(uniforms: uniforms)
-        }
-        
-        if let textures = self.textures {
-            
-            self.geometry?.set(textures: textures)
-        }
+        return tiles.first { $0.coordinate.adjacency(to: coordinate) == .equal }
     }
 }

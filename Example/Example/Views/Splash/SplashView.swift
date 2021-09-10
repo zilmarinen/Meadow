@@ -8,14 +8,15 @@ import SwiftUI
 
 struct SplashView: View {
     
-    @ObservedObject var controller: SplashController
+    @ObservedObject var model: SplashController.SplashViewModel
     
     var body: some View {
         
-        switch controller.state {
+        switch model.viewState {
             
         case .application: Text("Application").foregroundColor(.black)
         case .developer: Text("Developer").foregroundColor(.black)
+        default: EmptyView()
         }
     }
 }

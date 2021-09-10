@@ -12,7 +12,7 @@ open class StateObserver<ObservableState: State>: StateHandler {
     public typealias StateCallback = (_ from: ObservableState?, _ to: ObservableState) -> ()
     public typealias CallbackReference = UUID
     
-    public private(set) var stateMachine: StateMachine<ObservableState>!
+    private(set) public var stateMachine: StateMachine<ObservableState>!
     
     private var callbacks: [CallbackReference: StateCallback] = [:]
     

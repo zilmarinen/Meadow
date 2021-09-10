@@ -4,6 +4,7 @@
 //  Created by Zack Brown on 27/05/2021.
 //
 
+import Euclid
 import SceneKit
 
 class Sun: SCNNode, Responder, Soilable, Updatable {
@@ -16,7 +17,7 @@ class Sun: SCNNode, Responder, Soilable, Updatable {
     
     public var source = SCNLight()
     
-    let color = Color(red: 0.964, green: 0.933, blue: 0.78)
+    let color = Color(0.964, 0.933, 0.78)
     
     override init() {
         
@@ -27,7 +28,7 @@ class Sun: SCNNode, Responder, Soilable, Updatable {
         light = source
         
         source.type = .omni
-        source.color = color.color
+        source.color = color.osColor
     }
     
     required init?(coder: NSCoder) {

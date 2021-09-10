@@ -68,13 +68,6 @@ public class FootprintGrid<C: FootprintChunk>: SCNNode, Codable, Hideable, Respo
         
         fatalError("init(coder:) has not been implemented")
     }
-    
-    public func encode(to encoder: Encoder) throws {
-        
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        
-        try container.encode(chunks, forKey: .chunks)
-    }
 }
 
 extension FootprintGrid {
@@ -91,13 +84,5 @@ extension FootprintGrid {
         isDirty = false
         
         return true
-    }
-}
-
-extension FootprintGrid: Loadable {
-    
-    public func load(progress: LoadingProgress) {
-     
-        //
     }
 }

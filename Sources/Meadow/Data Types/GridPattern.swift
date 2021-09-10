@@ -56,7 +56,7 @@ public struct GridPattern<T: Codable & Equatable>: Codable, Equatable {
         case .north: north = value
         case .east: east = value
         case .south: south = value
-        case .west: west = value
+        default: west = value
         }
     }
     
@@ -64,10 +64,10 @@ public struct GridPattern<T: Codable & Equatable>: Codable, Equatable {
         
         switch ordinal {
         
-        case .northEast: northEast = value
         case .northWest: northWest = value
-        case .southWest: southWest = value
+        case .northEast: northEast = value
         case .southEast: southEast = value
+        default: southWest = value
         }
     }
     
@@ -78,7 +78,7 @@ public struct GridPattern<T: Codable & Equatable>: Codable, Equatable {
         case .north: return north
         case .east: return east
         case .south: return south
-        case .west: return west
+        default: return west
         }
     }
     
@@ -86,10 +86,10 @@ public struct GridPattern<T: Codable & Equatable>: Codable, Equatable {
         
         switch ordinal {
         
-        case .northEast: return northEast
         case .northWest: return northWest
-        case .southWest: return southWest
+        case .northEast: return northEast
         case .southEast: return southEast
+        default: return southWest
         }
     }
 }
@@ -103,7 +103,7 @@ extension GridPattern {
         case .north: return GridPatternRule(left: northWest, center: north, right: northEast)
         case .east: return GridPatternRule(left: northEast, center: east, right: southEast)
         case .south: return GridPatternRule(left: southEast, center: south, right: southWest)
-        case .west: return GridPatternRule(left: southWest, center: west, right: northWest)
+        default: return GridPatternRule(left: southWest, center: west, right: northWest)
         }
     }
 }

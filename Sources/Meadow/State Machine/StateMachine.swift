@@ -8,9 +8,9 @@ public class StateMachine<StateType: State>: CustomStringConvertible {
     
     public typealias Transition = (_ from: StateType?, _ to: StateType) -> Void
     
-    private var didTransition: Transition!
+    private var didTransition: Transition
     
-    private var _state: StateType! {
+    private(set) public var _state: StateType {
         
         didSet {
             

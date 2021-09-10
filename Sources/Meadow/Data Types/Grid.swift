@@ -6,7 +6,7 @@
 
 import SceneKit
 
-public class Grid<C: Chunk<T>, T: Tile>: SCNNode, Codable, Hideable, Responder, Soilable {
+public class Grid<C: Chunk<T>, T: Tile>: SCNNode, Decodable, Hideable, Responder, Soilable {
     
     private enum CodingKeys: String, CodingKey {
         
@@ -31,8 +31,6 @@ public class Grid<C: Chunk<T>, T: Tile>: SCNNode, Codable, Hideable, Responder, 
                     
                     chunk.offset = offset
                 }
-                
-                becomeDirty()
             }
         }
     }
@@ -68,13 +66,6 @@ public class Grid<C: Chunk<T>, T: Tile>: SCNNode, Codable, Hideable, Responder, 
         
         fatalError("init(coder:) has not been implemented")
     }
-    
-    public func encode(to encoder: Encoder) throws {
-        
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        
-        try container.encode(chunks, forKey: .chunks)
-    }
 }
 
 extension Grid {
@@ -105,25 +96,4 @@ extension Grid {
         
         return true
     }
-}
-
-extension Grid: Loadable {
-    
-    public func load(progress: LoadingProgress) {
-        
-        for chunk in chunks {
-            
-            chunk.load() { (value, _) in
-                
-                progress(value, category)
-            }
-        }
-    }
-}
-
-public protocol Loadable {
-    
-    typealias LoadingProgress = ((Float, SceneGraphCategory) -> Void)
-    
-    func load(progress: LoadingProgress)
 }

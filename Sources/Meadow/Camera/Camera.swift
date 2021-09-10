@@ -77,7 +77,7 @@ extension Camera {
             
             let zoom = min(max(Constants.minimumZoom, zoom), Constants.maximumZoom)
             
-            let angle = Angle(radians: (.pi / 2.0) * Double(cardinal.rawValue) + (.pi / 8.0))
+            let angle = Angle(radians: (.pi / 2.0) * Double(cardinal.edge) + (.pi / 8.0))
             
             let radius = 10.0 * zoom
             

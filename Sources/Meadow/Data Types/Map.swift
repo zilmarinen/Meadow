@@ -6,7 +6,7 @@
 
 import SceneKit
 
-public class Map: SCNNode, Codable, Responder, Updatable {
+public class Map: SCNNode, Decodable, Responder, Updatable {
     
     private enum CodingKeys: String, CodingKey {
         
@@ -153,33 +153,13 @@ public class Map: SCNNode, Codable, Responder, Updatable {
         
         fatalError("init(coder:) has not been implemented")
     }
-    
-    public func encode(to encoder: Encoder) throws {
-        
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        
-        try container.encode(actors, forKey: .actors)
-        try container.encode(bridges, forKey: .bridges)
-        try container.encode(buildings, forKey: .buildings)
-        try container.encode(foliage, forKey: .foliage)
-        try container.encode(footpath, forKey: .footpath)
-        try container.encode(portals, forKey: .portals)
-        try container.encode(seams, forKey: .seams)
-        try container.encode(stairs, forKey: .stairs)
-        try container.encode(surface, forKey: .surface)
-        try container.encode(walls, forKey: .walls)
-        try container.encode(water, forKey: .water)
-        
-        try container.encode(name, forKey: .name)
-        try container.encode(identifier, forKey: .identifier)
-    }
 }
 
 extension Map {
     
     @discardableResult public func clean() -> Bool {
         
-        //guard isDirty else { return false }
+        guard isDirty else { return false }
         
         actors.clean()
         bridges.clean()
@@ -196,36 +176,6 @@ extension Map {
         isDirty = false
         
         return true
-    }
-}
-
-extension Map: Loadable {
-    
-    public func load(progress: LoadingProgress) {
-        
-        let nodes: [Loadable] = [actors,
-                                 bridges,
-                                 buildings,
-                                 foliage,
-                                 footpath,
-                                 portals,
-                                 seams,
-                                 stairs,
-                                 surface,
-                                 walls,
-                                 water]
-        
-        let stride = (1.0 / Float(nodes.count))
-        
-        for index in nodes.indices {
-            
-            nodes[index].load() { (_, category) in
-                
-                progress(stride * Float(index), category)
-            }
-        }
-        
-        progress(1.0, .surface)
     }
 }
 

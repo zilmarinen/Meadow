@@ -6,7 +6,7 @@
 
 import SceneKit
 
-public class FootprintChunk: SCNNode, Codable, FootprintDataSource, Hideable, Responder, Shadable, Soilable {
+public class FootprintChunk: SCNNode, Codable, Hideable, Responder, Shadable, Soilable {
     
     private enum CodingKeys: String, CodingKey {
         
@@ -20,7 +20,9 @@ public class FootprintChunk: SCNNode, Codable, FootprintDataSource, Hideable, Re
     
     public var category: SceneGraphCategory { .surfaceChunk }
     
-    public var footprint: Footprint { Footprint(coordinate: coordinate, nodes: [.zero]) }
+    public var footprint: Footprint { Footprint(coordinate: coordinate, rotation: direction, nodes: prop.footprint.nodes) }
+    
+    public var prop: Model { fatalError("prop has not been implemented") }
     
     private(set) public var coordinate: Coordinate {
         
@@ -72,19 +74,23 @@ public class FootprintChunk: SCNNode, Codable, FootprintDataSource, Hideable, Re
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func encode(to encoder: Encoder) throws {
-        
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        
-        try container.encode(coordinate, forKey: .coordinate)
-        try container.encode(direction, forKey: .direction)
-    }
-    
     @discardableResult public func clean() -> Bool {
         
         guard isDirty else { return false }
         
         position = SCNVector3(coordinate.world)
+        
+        geometry?.program = program
+        
+        if let uniforms = uniforms {
+            
+            geometry?.set(uniforms: uniforms)
+        }
+        
+        if let textures = textures {
+            
+            geometry?.set(textures: textures)
+        }
         
         isDirty = false
         

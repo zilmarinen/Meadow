@@ -19,7 +19,7 @@ public enum BridgeMaterial: Int, CaseIterable, Codable, Equatable, Identifiable 
         }
     }
     
-    func prop(tileType: BridgeTileType, pattern: WallPattern) -> String {
+    func prop(tileType: BridgeTileType, pattern: Cardinal) -> String {
         
         let prop = id + "_bridge_" + tileType.id
         
@@ -27,7 +27,7 @@ public enum BridgeMaterial: Int, CaseIterable, Codable, Equatable, Identifiable 
             
         case .corner(let lhs):
             
-            if pattern.edges == 2 {
+            if pattern.count == 2 {
                 
                 return prop + "_dual"
             }

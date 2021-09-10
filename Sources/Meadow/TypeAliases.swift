@@ -10,7 +10,7 @@
     import AppKit
 
     public typealias MDWColor = NSColor
-    public typealias MDWFloat = CGFloat
+    public typealias MDWFloat = Double
     public typealias MDWImage = NSImage
 
 #else

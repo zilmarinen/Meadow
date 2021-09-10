@@ -6,6 +6,7 @@
 
 import Foundation
 import Meadow
+import SwiftUI
 
 struct Hero: Hashable {
     
@@ -14,23 +15,14 @@ struct Hero: Hashable {
 
 class GameController: ObservableObject, Updatable {
     
-    enum State {
-        
-        case initialising(Hero)
-        case loading(Map, Float, SceneGraphCategory)
-        case scene(SceneController)
-    }
-    
     weak private(set) var parent: AppController?
     
-    @Published private(set) var state: State
+    @ObservedObject var viewModel: GameViewModel
     
     init(parent: AppController, hero: Hero) {
         
         self.parent = parent
-        self.state = .initialising(hero)
-        
-        load(hero: hero)
+        self.viewModel = GameViewModel(initialState: .initialising(hero))
     }
 }
 
@@ -41,7 +33,7 @@ extension GameController {
         //
     }
 }
-
+/*
 extension GameController {
     
     func load(hero: Hero) {
@@ -59,19 +51,19 @@ extension GameController {
         
         guard let scene = parent?.scene else { return }
      
-        scene.load(map: map) { progress, category in
-            
-            DispatchQueue.main.async { [weak self] in
-            
-                guard let self = self else { return }
-            
-                self.state = .loading(map, progress, category)
-                
-                guard progress >= 1.0 else { return }
-                
-                self.show(map: map, hero: hero)
-            }
-        }
+//        scene.load(map: map) { progress, category in
+//
+//            DispatchQueue.main.async { [weak self] in
+//
+//                guard let self = self else { return }
+//
+//                self.state = .loading(map, progress, category)
+//
+//                guard progress >= 1.0 else { return }
+//
+//                self.show(map: map, hero: hero)
+//            }
+//        }
     }
     
     func show(map: Map, hero: Hero) {
@@ -93,3 +85,4 @@ extension GameController {
         }
     }
 }
+*/

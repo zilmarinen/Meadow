@@ -3,11 +3,11 @@
     "pins": [
       {
         "package": "Euclid",
-        "repositoryURL": "https://github.com/nicklockwood/Euclid.git",
+        "repositoryURL": "https://github.com/CaptainRedmuff/Euclid.git",
         "state": {
-          "branch": null,
-          "revision": "af57ca2731efe8fc0960d09e2b20275792e2b52b",
-          "version": "0.5.8"
+          "branch": "feature/vertex_color_component",
+          "revision": "d1c55c72097558e3051b4744aff9c64349de5594",
+          "version": null
         }
       }
     ]

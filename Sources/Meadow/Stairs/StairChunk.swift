@@ -17,6 +17,13 @@ public class StairChunk: FootprintChunk {
     
     public override var category: SceneGraphCategory { .stairChunk }
     
+    public override var prop: Model {
+        
+        guard let model = scene?.props.prop(stairs: tileType, material: material) else { fatalError("Error loading prop model \(tileType) -> \(material)") }
+        
+        return model
+    }
+    
     public override var program: SCNProgram? { map?.stairs.program }
     
     var tileType: StairType
@@ -37,37 +44,15 @@ public class StairChunk: FootprintChunk {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public override func encode(to encoder: Encoder) throws {
-        
-        try super.encode(to: encoder)
-        
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        
-        try container.encode(tileType, forKey: .tileType)
-        try container.encode(material, forKey: .material)
-    }
-    
     public override func clean() -> Bool {
         
-        guard super.clean(),
-              let prop = scene?.props.prop(stairs: tileType, material: material) else { return false }
+        guard isDirty else { return false }
         
-        self.geometry = SCNGeometry(prop.mesh.rotated(by: Rotation(yaw: Angle(degrees: 90.0 * Double(direction.rawValue)))))
-        self.geometry?.program = program
+        let rotation = Rotation(yaw: Angle(radians: (Double.pi / 2.0) * Double(direction.edge)))
         
-        if let uniforms = uniforms {
-            
-            self.geometry?.set(uniforms: uniforms)
-        }
+        self.geometry = SCNGeometry(prop.mesh.rotated(by: rotation))
         
-        if let textures = textures {
-            
-            self.geometry?.set(textures: textures)
-        }
-        
-        isDirty = false
-        
-        return true
+        return super.clean()
     }
 }
 
@@ -84,7 +69,7 @@ extension StairChunk: Traversable {
         
         for cardinal in [c0, c1] {
             
-            if footprint.intersects(coordinate: coordinate + cardinal.coordinate) {
+            if prop.footprint.intersects(coordinate: coordinate + cardinal.coordinate) {
                 
                 cardinals.append(cardinal)
             }

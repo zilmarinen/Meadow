@@ -31,7 +31,7 @@ public struct SurfaceEdgeset: Edgeset {
 
 extension SurfaceEdgeset {
     
-    func edges(with pattern: Int) -> [SurfaceEdgesetEdge] {
+    public func edges(with pattern: Int) -> [SurfaceEdgesetEdge] {
         
         return edges.filter { $0.pattern == pattern }
     }

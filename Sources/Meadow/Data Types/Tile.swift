@@ -7,7 +7,7 @@
 import Euclid
 import SceneKit
 
-public class Tile: Codable, Equatable, Renderable, Responder {
+public class Tile: Codable, Equatable, Responder {
     
     private enum CodingKeys: String, CodingKey {
         
@@ -20,26 +20,9 @@ public class Tile: Codable, Equatable, Renderable, Responder {
     
     public var category: SceneGraphCategory { .surfaceTile }
 
-    private(set) public var coordinate: Coordinate {
-        
-        didSet {
-            
-            if oldValue != coordinate {
-            
-                becomeDirty()
-            }
-        }
-    }
+    private(set) public var coordinate: Coordinate
     
-    public var isHidden: Bool = false {
-        
-        didSet {
-            
-            guard oldValue != isHidden else { return }
-            
-            becomeDirty()
-        }
-    }
+    public var isHidden: Bool = false
     
     var offset: Coordinate = .zero {
         
@@ -59,13 +42,6 @@ public class Tile: Codable, Equatable, Renderable, Responder {
         coordinate = try container.decode(Coordinate.self, forKey: .coordinate)
     }
     
-    public func encode(to encoder: Encoder) throws {
-        
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        
-        try container.encode(coordinate, forKey: .coordinate)
-    }
-    
     @discardableResult public func clean() -> Bool {
         
         guard isDirty else { return false }
@@ -76,8 +52,6 @@ public class Tile: Codable, Equatable, Renderable, Responder {
         
         return true
     }
-    
-    func render(position: Vector) -> [Euclid.Polygon] { return [] }
 }
 
 extension Tile {

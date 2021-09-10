@@ -17,6 +17,13 @@ public class FoliageChunk: FootprintChunk {
     
     public override var category: SceneGraphCategory { .foliageChunk }
     
+    public override var prop: Model {
+        
+        guard let model = scene?.props.prop(foliage: foliageType) else { fatalError("Error loading prop model \(foliageType)") }
+        
+        return model
+    }
+    
     public override var program: SCNProgram? { map?.foliage.program }
     
     public override var textures: [Texture]? {
@@ -42,37 +49,14 @@ public class FoliageChunk: FootprintChunk {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public override func encode(to encoder: Encoder) throws {
-        
-        try super.encode(to: encoder)
-        
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        
-        try container.encode(foliageType, forKey: .foliageType)
-    }
-    
     public override func clean() -> Bool {
         
-        guard super.clean(),
-              let prop = scene?.props.prop(foliage: foliageType) else { return false }
+        guard isDirty else { return false }
         
-        let rotation = Rotation(yaw: Angle(radians: (Double.pi / 2.0) * Double(direction.rawValue)))
+        let rotation = Rotation(yaw: Angle(radians: (Double.pi / 2.0) * Double(direction.edge)))
         
         self.geometry = SCNGeometry(prop.mesh.rotated(by: rotation))
-        self.geometry?.program = program
         
-        if let uniforms = uniforms {
-            
-            self.geometry?.set(uniforms: uniforms)
-        }
-        
-        if let textures = textures {
-            
-            self.geometry?.set(textures: textures)
-        }
-        
-        isDirty = false
-        
-        return true
+        return super.clean()
     }
 }

@@ -8,14 +8,14 @@ import SwiftUI
 
 struct GameView: View {
     
-    @ObservedObject var controller: GameController
+    @ObservedObject var model: GameController.GameViewModel
     
     var body: some View {
         
-        switch controller.state {
+        switch model.state {
             
         case .initialising(_): EmptyView()
-        case .loading(_, let progress, let category): Text("Loading \(category.rawValue): -> \(progress)").foregroundColor(.black)
+        case .loading: Text("Loading").foregroundColor(.black)
         default: EmptyView()
         }
     }

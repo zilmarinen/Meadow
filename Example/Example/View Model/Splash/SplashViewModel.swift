@@ -20,7 +20,16 @@ extension SplashController {
         }
     }
     
-    class SplashViewModel: ViewModel<ViewState> {
+    class SplashViewModel: StateObserver<ViewState> {
+        
+        weak var controller: SplashController?
+        
+        required init(controller: SplashController) {
+            
+            self.controller = controller
+            
+            super.init(initialState: .developer(.init(duration: 1)))
+        }
         
         func show(applicationSplash duration: TimeInterval) {
             
@@ -34,6 +43,11 @@ extension SplashController {
                 default: break
                 }
             }
+        }
+        
+        func complete() {
+            
+            controller?.parent?.viewModel.showHeroSelection()
         }
     }
 }

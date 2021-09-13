@@ -10,13 +10,19 @@ import SwiftUI
 @main
 struct ExampleApp: App {
     
-    @ObservedObject var controller = AppController()
+    @Environment(\.scenePhase) var scenePhase
+    
+    var controller = AppController()
     
     var body: some Scene {
         
         WindowGroup {
             
-            AppView(controller: controller)
+            AppView(controller: controller).environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
+        }
+        .onChange(of: scenePhase) { _ in
+            
+            PersistenceController.shared.save()
         }
     }
 }

@@ -11,21 +11,7 @@ import SwiftUI
 
 class AppController: NSObject, ObservableObject, Updatable {
     
-    lazy var viewModel: AppViewModel = {
-        
-        return AppViewModel(initialState: .splash(SplashController(parent: self)))
-    }()
-    
-    lazy var scene: MDWScene = {
-        
-        let s = MDWScene()
-        
-        let d = MTLCreateSystemDefaultDevice()
-        
-        s.library = try? d?.makeDefaultLibrary(bundle: Map.bundle)
-        
-        return s
-    }()
+    lazy var viewModel: AppViewModel = { return AppViewModel(controller: self) }()
     
     var lastUpdate: TimeInterval?
 }
@@ -50,8 +36,9 @@ extension AppController {
             
         case .splash(let controller): controller.update(delta: delta, time: time)
         case .game(let controller): controller.update(delta: delta, time: time)
+        default: break
         }
         
-        scene.update(delta: delta, time: time)
+        viewModel.scene.update(delta: delta, time: time)
     }
 }

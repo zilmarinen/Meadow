@@ -34,15 +34,35 @@ fragment Buffer surface_fragment(Fragment f [[stage_in]],
     
     float2 uv = float2(f.position.x, f.position.z);
     
+//    if (f.color.r > 0.f) {
+//        
+//        surface.ambient += sample(dirt, uv) * f.color.r;
+//    }
+//    
+//    if (f.color.g > 0.f) {
+//        
+//        surface.ambient += sample(sand, uv) * f.color.g;
+//    }
+//    
+//    if (f.color.b > 0.f) {
+//        
+//        surface.ambient += sample(stone, uv) * f.color.b;
+//    }
+    
+//    if (f.color.a > 0.f) {
+//
+//        surface.ambient = sample(dirt, uv) * f.color.a;
+//    }
+    
     float4 dirtSample = sample(dirt, uv);
     float4 sandSample = sample(sand, uv);
     float4 stoneSample = sample(stone, uv);
     float4 woodSample = sample(wood, uv);
     
-    surface.ambient =   (dirtSample * f.color.r) +
+    surface.ambient =   ((dirtSample * f.color.r) +
                         (sandSample * f.color.g) +
                         (stoneSample * f.color.b) +
-                        (woodSample * f.color.a);
+                        (woodSample * f.color.a)) / 4.f;
     
 //    if (fabs(dot(up, f.normal)) < epsilon) {
 //

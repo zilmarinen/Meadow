@@ -5,18 +5,27 @@
 //
 
 import SwiftUI
+import Meadow
 
 struct GameView: View {
     
-    @ObservedObject var model: GameController.GameViewModel
+    var controller: GameController
+    
+    @ObservedObject var stateMachine: StateMachine<GameController.ViewState>
+    
+    init(controller: GameController) {
+        
+        self.controller = controller
+        self.stateMachine = controller.viewModel.stateMachine
+    }
     
     var body: some View {
         
-        switch model.state {
+        switch stateMachine._state {
             
-        case .initialising(_): EmptyView()
+        case .initialising: EmptyView()
         case .loading: Text("Loading").foregroundColor(.black)
-        default: EmptyView()
+        case .scene: Text("Scene").foregroundColor(.black)
         }
     }
 }

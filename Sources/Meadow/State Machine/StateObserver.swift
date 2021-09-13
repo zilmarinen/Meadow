@@ -6,7 +6,7 @@
 
 import Foundation
 
-open class StateObserver<ObservableState: State>: StateHandler {
+open class StateObserver<ObservableState: State>: StateHandler, ObservableObject {
     
     public typealias T = ObservableState
     public typealias StateCallback = (_ from: ObservableState?, _ to: ObservableState) -> ()

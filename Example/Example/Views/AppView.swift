@@ -5,37 +5,38 @@
 //
 
 import CoreGraphics
+import Meadow
 import SceneKit
 import SwiftUI
 
 struct AppView: View {
     
-    @ObservedObject var controller: AppController
+    var controller: AppController
     
-    @State var tapLocation: CGPoint = .zero
+    @ObservedObject var stateMachine: StateMachine<AppController.ViewState>
+    
+    init(controller: AppController) {
+        
+        self.controller = controller
+        self.stateMachine = controller.viewModel.stateMachine
+    }
     
     var body: some View {
         
         ZStack {
             
-            let tap = TapGesture().onEnded {
-                
-                //controller.handle(input: tapLocation)
-            }
-                        
-            let drag = DragGesture(minimumDistance: 0, coordinateSpace: .global) .onChanged { value in
-                
-                tapLocation = value.location
-            }
-            .sequenced(before: tap)
-            
-            SceneView(scene: controller.scene,
-                      pointOfView: controller.scene.camera.jig,
+            SceneView(scene: controller.viewModel.scene,
+                      pointOfView: controller.viewModel.scene.camera.jig,
                       options: [.rendersContinuously],
                       delegate: controller)
-                .gesture(drag)
             
-            ExampleView(model: controller.viewModel)
+            switch stateMachine._state {
+                
+            case .splash(let controller): SplashView(controller: controller)
+            case .heroCreation(let controller): HeroCreationView(controller: controller)
+            case .heroSelection(let controller): HeroSelectionView(controller: controller)
+            case .game(let controller): GameView(controller: controller)
+            }
         }
     }
 }

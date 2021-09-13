@@ -11,7 +11,7 @@ extension GameController {
     
     enum ViewState: State {
         
-        case initialising(Hero)
+        case initialising
         case loading(Map)
         case scene(SceneController)
         
@@ -21,13 +21,25 @@ extension GameController {
         }
     }
     
-    class GameViewModel: ViewModel<ViewState> {
+    class GameViewModel: StateObserver<ViewState> {
         
-        override func stateDidChange(from previousState: GameController.ViewState?, to currentState: GameController.ViewState) {
+        weak var controller: GameController?
+        
+        let hero: Hero
+        
+        required init(controller: GameController, hero: Hero) {
+            
+            self.controller = controller
+            self.hero = hero
+            
+            super.init(initialState: .initialising)
+        }
+        
+        override func stateDidChange(from previousState: ViewState?, to currentState: ViewState) {
             
             switch currentState {
                 
-            case .initialising(let hero):
+            case .initialising:
                 
                 print("Loading Hero: \(hero)")
                 
@@ -37,14 +49,18 @@ extension GameController {
                 
             case .loading(let map):
                 
+                guard let parent = controller?.parent else { fatalError("Invalid model hierarchy") }
+                
                 print("Loading Map: \(map.name ?? "")")
                 
+                parent.viewModel.scene.load(map: map)
                 
+                let controller = SceneController(parent: parent)
+                
+                state = .scene(controller)
                 
             default: break
             }
         }
-        
-        
     }
 }

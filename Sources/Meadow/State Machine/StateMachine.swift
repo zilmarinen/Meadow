@@ -4,13 +4,15 @@
 //  Created by Zack Brown on 10/12/2020.
 //
 
-public class StateMachine<StateType: State>: CustomStringConvertible {
+import Combine
+
+public class StateMachine<StateType: State>: CustomStringConvertible, ObservableObject {
     
     public typealias Transition = (_ from: StateType?, _ to: StateType) -> Void
     
     private var didTransition: Transition
     
-    private(set) public var _state: StateType {
+    @Published private(set) public var _state: StateType {
         
         didSet {
             

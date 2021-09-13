@@ -8,29 +8,15 @@ import Foundation
 import Meadow
 import SwiftUI
 
-open class ViewModel<ViewState: Meadow.State>: StateObserver<ViewState>, ObservableObject {
-    
-    @Published private(set) public var viewState: ViewState?
-    
-    open override func stateDidChange(from previousState: ViewState?, to currentState: ViewState) {
-        
-        print("ViewModel->stateDidChange(\(currentState))")
-        
-        viewState = currentState
-    }
-}
-
-class SplashController: NSObject, ObservableObject, Updatable {
+class SplashController: ObservableObject, Updatable {
     
     weak var parent: AppController?
     
-    @ObservedObject var viewModel = SplashViewModel(initialState: .developer(.init(duration: 1)))
+    lazy var viewModel: SplashViewModel = { return SplashViewModel(controller: self) }()
     
-    init(parent: AppController? = nil) {
+    init(parent: AppController) {
         
         self.parent = parent
-        
-        super.init()
     }
 }
 
@@ -44,7 +30,7 @@ extension SplashController {
             
             guard timer.integrate(delta: delta) else { break }
             
-            parent?.viewModel.loadGame()
+            viewModel.complete()
             
         case .developer(let timer):
             

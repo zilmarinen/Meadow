@@ -9,19 +9,11 @@ import Meadow
 
 class SceneController: ObservableObject, Updatable {
     
-    enum State: Hashable {
-        
-        case scene(Map, Hero)
-    }
+    weak private(set) var parent: AppController?
     
-    weak private(set) var parent: GameController?
-    
-    @Published private(set) var state: State
-    
-    init(parent: GameController, map: Map, hero: Hero) {
+    init(parent: AppController) {
         
         self.parent = parent
-        self.state = .scene(map, hero)
     }
 }
 

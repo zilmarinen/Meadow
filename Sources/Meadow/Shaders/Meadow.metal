@@ -108,6 +108,16 @@ inline float4 sample(texture2d<float, access::sample> texture, float2 uv) {
     return float4(texture.sample((coord::normalized, filter::linear, address::repeat), uv));
 }
 
+inline float4 blend(float4 lhs, float a0, float4 rhs, float a1, float depth) {
+    
+    float limit = max(lhs.a + a0, rhs.a + a1) - depth;
+    
+    float c0 = max(lhs.a + a0 - limit, 0.f);
+    float c1 = max(rhs.a + a1 - limit, 0.f);
+    
+    return (lhs * c0 + rhs * c1) / (c0 + c1);
+}
+
 
 //
 //  TODO:

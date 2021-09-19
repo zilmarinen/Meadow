@@ -22,18 +22,14 @@ public class SurfaceChunk: Chunk<SurfaceTile> {
     
     public override var textures: [Texture]? {
         
-        guard let tilemap = map?.surface.tilemap,
-              let dirt = MDWImage.asset(named: "surface_dirt", in: .module),
-              let sand = MDWImage.asset(named: "surface_sand", in: .module),
-              let stone = MDWImage.asset(named: "surface_stone", in: .module),
-              let wood = MDWImage.asset(named: "surface_wood", in: .module) else { return [] }
+        guard let tilemap = map?.surface.tilemap else { return [] }
         
-        return [Texture(key: "edgeset", image: tilemap.edgeset.image),
-                Texture(key: "tileset", image: tilemap.tileset.image),
-                Texture(key: "dirt", image: dirt),
-                Texture(key: "sand", image: sand),
-                Texture(key: "stone", image: stone),
-                Texture(key: "wood", image: wood)]
+        var assets = [Texture(key: "edgeset", image: tilemap.edgeset.image),
+                        Texture(key: "tileset", image: tilemap.tileset.image)]
+        
+        assets.append(contentsOf: SurfaceTileType.allCases.compactMap { $0.texture })
+        
+        return assets
     }
     
     required public init(from decoder: Decoder) throws {

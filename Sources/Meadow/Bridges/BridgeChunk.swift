@@ -17,7 +17,7 @@ public class BridgeChunk: Chunk<BridgeTile> {
     
     public override var textures: [Texture]? {
         
-        guard let image = MDWImage.asset(named: "bridges", in: .module) else { return nil }
+        guard let image = try? MDWImage.asset(named: "bridges", in: .module) else { return nil }
         
         return [Texture(key: "image", image: image)]
     }
@@ -30,7 +30,7 @@ public class BridgeChunk: Chunk<BridgeTile> {
         
         for tile in tiles {
             
-            guard let prop = scene?.props.prop(bridge: tile.tileType, material: tile.material, pattern: tile.pattern) else { continue }
+            guard let prop = scene?.props.model(prop: tile.prop) else { continue }
             
             var invert = false
             

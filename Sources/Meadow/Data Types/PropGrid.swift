@@ -1,12 +1,12 @@
 //
-//  FootprintGrid.swift
+//  PropGrid.swift
 //
 //  Created by Zack Brown on 27/03/2021.
 //
 
 import SceneKit
 
-public class FootprintGrid<C: FootprintChunk>: SCNNode, Codable, Hideable, Responder, Soilable {
+public class PropGrid<C: PropChunk>: SCNNode, Codable, Hideable, Responder, Soilable {
     
     private enum CodingKeys: String, CodingKey {
         
@@ -70,7 +70,7 @@ public class FootprintGrid<C: FootprintChunk>: SCNNode, Codable, Hideable, Respo
     }
 }
 
-extension FootprintGrid {
+extension PropGrid {
     
     @discardableResult public func clean() -> Bool {
         
@@ -84,5 +84,15 @@ extension FootprintGrid {
         isDirty = false
         
         return true
+    }
+}
+
+extension PropGrid {
+    
+    func find(chunk coordinate: Coordinate) -> C? {
+        
+        guard let props = scene?.props else { return nil }
+        
+        return chunks.first { props.model(prop: $0.prop)?.footprint.intersects(coordinate: coordinate) ?? false }
     }
 }

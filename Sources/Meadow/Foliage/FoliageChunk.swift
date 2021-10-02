@@ -8,7 +8,7 @@ import Euclid
 import Foundation
 import SceneKit
 
-public class FoliageChunk: FootprintChunk {
+public class FoliageChunk: PropChunk {
     
     private enum CodingKeys: String, CodingKey {
         
@@ -17,12 +17,7 @@ public class FoliageChunk: FootprintChunk {
     
     public override var category: SceneGraphCategory { .foliageChunk }
     
-    public override var prop: Model {
-        
-        guard let model = scene?.props.prop(foliage: foliageType) else { fatalError("Error loading prop model \(foliageType)") }
-        
-        return model
-    }
+    public override var prop: Prop { .foliage(foliageType: foliageType) }
     
     public override var program: SCNProgram? { map?.foliage.program }
     

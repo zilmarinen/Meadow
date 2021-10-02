@@ -7,7 +7,7 @@
 import Euclid
 import SceneKit
 
-public class BuildingChunk: FootprintChunk {
+public class BuildingChunk: PropChunk {
     
     private enum CodingKeys: String, CodingKey {
         
@@ -16,16 +16,11 @@ public class BuildingChunk: FootprintChunk {
     
     public override var category: SceneGraphCategory { .buildingChunk }
     
-    public override var prop: Model {
-        
-        guard let model = scene?.props.prop(building: buildingType) else { fatalError("Error loading prop model \(buildingType)") }
-        
-        return model
-    }
+    public override var prop: Prop { .building(buildingType: buildingType) }
     
     public override var program: SCNProgram? { map?.buildings.program }
     
-    let buildingType: BuildingType
+    public let buildingType: BuildingType
     
     public override var textures: [Texture]? {
         
@@ -50,11 +45,12 @@ public class BuildingChunk: FootprintChunk {
     
     public override func clean() -> Bool {
         
-        guard isDirty else { return false }
+        guard isDirty,
+              let model = scene?.props.model(prop: prop) else { return false }
         
         let rotation = Rotation(yaw: Angle(radians: (Double.pi / 2.0) * Double(direction.edge)))
         
-        geometry = SCNGeometry(prop.mesh.rotated(by: rotation))
+        geometry = SCNGeometry(model.mesh.rotated(by: rotation))
         
         return super.clean()
     }

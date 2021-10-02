@@ -8,6 +8,8 @@ import SceneKit
 
 public class Walls: Grid<WallChunk, WallTile> {
     
+    public override var category: SceneGraphCategory { .walls }
+    
     public lazy var program: SCNProgram? = {
         
         guard let library = scene?.library else { return nil }
@@ -15,5 +17,5 @@ public class Walls: Grid<WallChunk, WallTile> {
         return SCNProgram(name: .walls, library: library)
     }()
     
-    public override var category: SceneGraphCategory { .walls }
+    var props: [Prop] { chunks.flatMap { $0.tiles.compactMap { $0.prop } } }
 }

@@ -6,7 +6,7 @@
 
 import SceneKit
 
-public class Buildings: FootprintGrid<BuildingChunk> {
+public class Buildings: PropGrid<BuildingChunk> {
     
     public override var category: SceneGraphCategory { .buildings }
     
@@ -17,9 +17,5 @@ public class Buildings: FootprintGrid<BuildingChunk> {
         return SCNProgram(name: .building, library: library)
     }()
     
-    func find(building coordinate: Coordinate) -> BuildingChunk? {
-        
-        //TODO: implement search
-        return nil
-    }
+    var props: [Prop] { chunks.compactMap { $0.prop } }
 }

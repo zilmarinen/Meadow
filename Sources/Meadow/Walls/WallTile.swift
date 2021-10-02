@@ -18,6 +18,8 @@ public class WallTile: Tile {
     }
     
     public override var category: SceneGraphCategory { .wallTile }
+    
+    var prop: Prop { .wall(tileType: tileType, material: material, pattern: pattern, external: external) }
 
     let tileType: WallTileType
     let material: WallTileMaterial

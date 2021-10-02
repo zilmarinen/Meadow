@@ -7,7 +7,7 @@
 import Euclid
 import SceneKit
 
-public class StairChunk: FootprintChunk {
+public class StairChunk: PropChunk {
     
     private enum CodingKeys: String, CodingKey {
         
@@ -17,12 +17,7 @@ public class StairChunk: FootprintChunk {
     
     public override var category: SceneGraphCategory { .stairChunk }
     
-    public override var prop: Model {
-        
-        guard let model = scene?.props.prop(stairs: tileType, material: material) else { fatalError("Error loading prop model \(tileType) -> \(material)") }
-        
-        return model
-    }
+    public override var prop: Prop { .stairs(tileType: tileType, material: material) }
     
     public override var program: SCNProgram? { map?.stairs.program }
     
@@ -46,11 +41,12 @@ public class StairChunk: FootprintChunk {
     
     public override func clean() -> Bool {
         
-        guard isDirty else { return false }
+        guard isDirty,
+              let model = scene?.props.model(prop: prop) else { return false }
         
         let rotation = Rotation(yaw: Angle(radians: (Double.pi / 2.0) * Double(direction.edge)))
         
-        self.geometry = SCNGeometry(prop.mesh.rotated(by: rotation))
+        self.geometry = SCNGeometry(model.mesh.rotated(by: rotation))
         
         return super.clean()
     }
@@ -63,13 +59,15 @@ extension StairChunk: Traversable {
     
     func traversableNode(for coordinate: Coordinate) -> TraversableNode {
         
+        let model = scene?.props.model(prop: prop)
+        
         var cardinals = [direction, direction.opposite]
         
         let (c0, c1) = direction.cardinals
         
         for cardinal in [c0, c1] {
             
-            if prop.footprint.intersects(coordinate: coordinate + cardinal.coordinate) {
+            if model?.footprint.intersects(coordinate: coordinate + cardinal.coordinate) ?? false {
                 
                 cardinals.append(cardinal)
             }

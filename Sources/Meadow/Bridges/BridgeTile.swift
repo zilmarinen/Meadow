@@ -17,6 +17,8 @@ public class BridgeTile: Tile {
     }
     
     public override var category: SceneGraphCategory { .bridgeTile }
+    
+    var prop: Prop { Prop.bridge(tileType: tileType, material: material, pattern: pattern) }
 
     let tileType: BridgeTileType
     let pattern: Cardinal

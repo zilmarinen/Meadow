@@ -7,7 +7,7 @@
 
 import SceneKit
 
-public class Stairs: FootprintGrid<StairChunk> {
+public class Stairs: PropGrid<StairChunk> {
     
     public override var category: SceneGraphCategory { .stairs }
     
@@ -17,9 +17,6 @@ public class Stairs: FootprintGrid<StairChunk> {
         
         return SCNProgram(name: .stairs, library: library)
     }()
-    
-    public func find(stairs coordinate: Coordinate) -> StairChunk? {
-        
-        return chunks.first { $0.footprint.intersects(coordinate: coordinate) }
-    }
+
+    var props: [Prop] { chunks.compactMap { $0.prop } }
 }

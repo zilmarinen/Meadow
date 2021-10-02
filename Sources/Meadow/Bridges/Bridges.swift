@@ -8,6 +8,8 @@ import SceneKit
 
 public class Bridges: Grid<BridgeChunk, BridgeTile> {
     
+    public override var category: SceneGraphCategory { .bridges }
+    
     lazy var program: SCNProgram? = {
         
         guard let library = scene?.library else { return nil }
@@ -15,5 +17,5 @@ public class Bridges: Grid<BridgeChunk, BridgeTile> {
         return SCNProgram(name: .bridges, library: library)
     }()
     
-    public override var category: SceneGraphCategory { .bridges }
+    var props: [Prop] { chunks.flatMap { $0.tiles.compactMap { $0.prop } } }
 }

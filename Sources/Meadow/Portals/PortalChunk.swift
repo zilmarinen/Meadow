@@ -6,7 +6,7 @@
 
 import SceneKit
 
-public class PortalChunk: FootprintChunk {
+public class PortalChunk: PropChunk {
     
     private enum CodingKeys: String, CodingKey {
         

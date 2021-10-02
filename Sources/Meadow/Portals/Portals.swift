@@ -6,7 +6,7 @@
 
 import SceneKit
 
-public class Portals: FootprintGrid<PortalChunk> {
+public class Portals: PropGrid<PortalChunk> {
     
     public func find(portal coordinate: Coordinate) -> PortalChunk? {
         

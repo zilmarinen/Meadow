@@ -6,7 +6,7 @@
 
 import SceneKit
 
-public class Foliage: FootprintGrid<FoliageChunk> {
+public class Foliage: PropGrid<FoliageChunk> {
     
     public override var category: SceneGraphCategory { .foliage }
     
@@ -17,8 +17,5 @@ public class Foliage: FootprintGrid<FoliageChunk> {
         return SCNProgram(name: .foliage, library: library)
     }()
     
-    func find(foliage coordinate: Coordinate) -> FoliageChunk? {
-        
-        return chunks.first { $0.footprint.intersects(coordinate: coordinate) }
-    }
+    var props: [Prop] { chunks.compactMap { $0.prop } }
 }

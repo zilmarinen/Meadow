@@ -17,7 +17,7 @@ public class WallChunk: Chunk<WallTile> {
     
     public override var textures: [Texture]? {
         
-        guard let image = MDWImage.asset(named: "walls", in: .module) else { return nil }
+        guard let image = try? MDWImage.asset(named: "walls", in: .module) else { return nil }
         
         return [Texture(key: "image", image: image)]
     }
@@ -30,7 +30,7 @@ public class WallChunk: Chunk<WallTile> {
         
         for tile in tiles {
             
-            guard let prop = scene?.props.prop(wall: tile.tileType, material: tile.material, pattern: tile.pattern, external: tile.external) else { continue }
+            guard let prop = scene?.props.model(prop: tile.prop) else { continue }
     
             let rotation = Rotation(yaw: Angle(radians: (Double.pi / 2.0) * Double(tile.pattern.edge)))
     

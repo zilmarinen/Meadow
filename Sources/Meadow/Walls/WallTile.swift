@@ -21,8 +21,8 @@ public class WallTile: Tile {
     
     var prop: Prop { .wall(tileType: tileType, material: material, pattern: pattern, external: external) }
 
-    let tileType: WallTileType
-    let material: WallTileMaterial
+    let tileType: WallType
+    let material: WallMaterial
     let pattern: Cardinal
     let external: Bool
 
@@ -30,8 +30,8 @@ public class WallTile: Tile {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        tileType = try container.decode(WallTileType.self, forKey: .tileType)
-        material = try container.decode(WallTileMaterial.self, forKey: .material)
+        tileType = try container.decode(WallType.self, forKey: .tileType)
+        material = try container.decode(WallMaterial.self, forKey: .material)
         pattern = try container.decode(Cardinal.self, forKey: .pattern)
         external = try container.decode(Bool.self, forKey: .external)
         

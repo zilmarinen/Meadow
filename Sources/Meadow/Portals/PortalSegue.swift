@@ -10,17 +10,17 @@ public struct PortalSegue: Codable, Equatable {
         
         case direction = "d"
         case identifier = "i"
-        case scene = "s"
+        case map = "m"
     }
     
     public let direction: Cardinal
-    public let scene: String
+    public let map: String
     public let identifier: String
     
-    public init(direction: Cardinal, scene: String, identifier: String) {
+    public init(direction: Cardinal, map: String, identifier: String) {
         
         self.direction = direction
-        self.scene = scene
+        self.map = map
         self.identifier = identifier
     }
     
@@ -30,7 +30,7 @@ public struct PortalSegue: Codable, Equatable {
         
         direction = try container.decode(Cardinal.self, forKey: .direction)
         identifier = try container.decode(String.self, forKey: .identifier)
-        scene = try container.decode(String.self, forKey: .scene)
+        map = try container.decode(String.self, forKey: .map)
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -39,6 +39,6 @@ public struct PortalSegue: Codable, Equatable {
         
         try container.encode(direction, forKey: .direction)
         try container.encode(identifier, forKey: .identifier)
-        try container.encode(scene, forKey: .scene)
+        try container.encode(map, forKey: .map)
     }
 }

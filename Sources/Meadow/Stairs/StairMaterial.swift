@@ -7,7 +7,7 @@
 import Foundation
 import SwiftUI
 
-public enum StairMaterial: Int, CaseIterable, Codable, Equatable, Identifiable {
+public enum StairMaterial: Int, CaseIterable, Codable, Hashable, Identifiable {
     
     case stone
     

@@ -22,9 +22,9 @@ public class FootpathChunk: Chunk<FootpathTile> {
     
     public override var textures: [Texture]? {
         
-        guard let tilemap = map?.footpath.tilemap else { return [] }
+        guard let tileset = scene?.atlas.footpath else { return nil }
         
-        return [Texture(key: "image", image: tilemap.tileset.image)]
+        return [tileset]
     }
     
     required public init(from decoder: Decoder) throws {

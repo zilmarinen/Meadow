@@ -6,8 +6,17 @@
 
 import Foundation
 
-public enum PortalType: Int, CaseIterable, Codable {
+public enum PortalType: Int, CaseIterable, Codable, Identifiable {
     
     case portal
     case spawn
+    
+    public var id: String {
+        
+        switch self {
+            
+        case .portal: return "portal"
+        case .spawn: return "spawn"
+        }
+    }
 }

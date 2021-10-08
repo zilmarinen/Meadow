@@ -11,24 +11,24 @@ public class StairChunk: PropChunk {
     
     private enum CodingKeys: String, CodingKey {
         
-        case tileType = "t"
+        case stairType = "t"
         case material = "m"
     }
     
     public override var category: SceneGraphCategory { .stairChunk }
     
-    public override var prop: Prop { .stairs(tileType: tileType, material: material) }
+    public override var prop: Prop { .stairs(stairType: stairType, material: material) }
     
     public override var program: SCNProgram? { map?.stairs.program }
     
-    var tileType: StairType
+    var stairType: StairType
     var material: StairMaterial
     
     required public init(from decoder: Decoder) throws {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        tileType = try container.decode(StairType.self, forKey: .tileType)
+        stairType = try container.decode(StairType.self, forKey: .stairType)
         material = try container.decode(StairMaterial.self, forKey: .material)
         
         try super.init(from: decoder)

@@ -21,13 +21,6 @@ public class FoliageChunk: PropChunk {
     
     public override var program: SCNProgram? { map?.foliage.program }
     
-    public override var textures: [Texture]? {
-        
-        guard let texture = foliageType.texture else { return nil }
-        
-        return [texture]
-    }
-    
     let foliageType: FoliageType
     
     required public init(from decoder: Decoder) throws {
@@ -46,11 +39,12 @@ public class FoliageChunk: PropChunk {
     
     public override func clean() -> Bool {
         
-        guard isDirty else { return false }
+        guard isDirty,
+              let model = scene?.props.model(prop: prop) else { return false }
         
         let rotation = Rotation(yaw: Angle(radians: (Double.pi / 2.0) * Double(direction.edge)))
         
-        self.geometry = SCNGeometry(prop.mesh.rotated(by: rotation))
+        self.geometry = SCNGeometry(model.mesh.rotated(by: rotation))
         
         return super.clean()
     }

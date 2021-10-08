@@ -22,14 +22,9 @@ public class SurfaceChunk: Chunk<SurfaceTile> {
     
     public override var textures: [Texture]? {
         
-        guard let tilemap = map?.surface.tilemap else { return [] }
+        guard let tileset = scene?.atlas.surface else { return nil }
         
-        var assets = [Texture(key: "edgeset", image: tilemap.edgeset.image),
-                        Texture(key: "tileset", image: tilemap.tileset.image)]
-        
-        assets.append(contentsOf: SurfaceTileType.allCases.compactMap { $0.texture })
-        
-        return assets
+        return [tileset.overlay] + tileset.materials
     }
     
     required public init(from decoder: Decoder) throws {

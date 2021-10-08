@@ -7,7 +7,7 @@
 import Foundation
 import SwiftUI
 
-public enum BridgeTileType: Codable, Equatable, Identifiable {
+public enum BridgeTileType: Codable, Hashable, Identifiable {
     
     case corner(Bool)
     case edge(Bool)

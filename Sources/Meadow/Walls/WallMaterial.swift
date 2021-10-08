@@ -1,5 +1,5 @@
 //
-//  WallTileMaterial.swift
+//  WallMaterial.swift
 //
 //  Created by Zack Brown on 12/08/2021.
 //
@@ -7,7 +7,7 @@
 import Foundation
 import SwiftUI
 
-public enum WallTileMaterial: Int, CaseIterable, Codable, Equatable, Identifiable {
+public enum WallMaterial: Int, CaseIterable, Codable, Hashable, Identifiable {
     
     case concrete
     case picket
@@ -21,13 +21,13 @@ public enum WallTileMaterial: Int, CaseIterable, Codable, Equatable, Identifiabl
         }
     }
     
-    func prop(tileType: WallTileType, pattern: Cardinal, external: Bool) -> String {
+    func propIdentifier(tileType: WallType, pattern: Cardinal, external: Bool) -> String {
         
         switch self {
         
         case .concrete:
             
-            let prop = id + "_" + tileType.identifier
+            let prop = id + "_" + tileType.id
             
             switch tileType {
             
@@ -43,7 +43,7 @@ public enum WallTileMaterial: Int, CaseIterable, Codable, Equatable, Identifiabl
             
         case .picket:
             
-            let prop = id + "_" + tileType.identifier
+            let prop = id + "_" + tileType.id
             
             switch tileType {
                 

@@ -6,36 +6,33 @@
 
 import Foundation
 
-#if os(macOS)
-
-    import AppKit
-
-#else
-
-    import UIKit
-
-#endif
-
-public enum FoliageType: Int, CaseIterable, Codable, Equatable, Identifiable {
+public enum FoliageType: CaseIterable, Codable, Hashable, Identifiable {
     
-    case palm
-    case pine
-    case spruce
+    public static var allCases: [FoliageType] = [.bush(species: .honeysuckle),
+                                                 .rock(rockType: .causeway),
+                                                 .tree(species: .spruce)]
+    
+    case bush(species: BushSpecies)
+    case rock(rockType: RockType)
+    case tree(species: TreeSpecies)
     
     public var id: String {
         
         switch self {
         
-        case .palm: return "palm_tree"
-        case .pine: return "pine_tree"
-        case .spruce: return "spruce_tree"
+        case .bush: return "bush"
+        case .rock: return "rock"
+        case .tree: return "tree"
         }
     }
     
-    var texture: Texture? {
+    var propIdentifier: String {
         
-        guard let image = MDWImage.asset(named: "foliage_" + id, in: .module) else { return nil }
+        switch self {
         
-        return Texture(key: "image", image: image)
+        case .bush(let species): return "\(species.id)_bush"
+        case .rock(let rockType): return "\(rockType.id)_rock"
+        case .tree(let species): return "\(species.id)_tree"
+        }
     }
 }

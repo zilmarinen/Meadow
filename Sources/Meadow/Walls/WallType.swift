@@ -1,16 +1,16 @@
 //
-//  WallTileType.swift
+//  WallType.swift
 //
 //  Created by Zack Brown on 09/08/2021.
 //
 
 import Foundation
 
-public enum WallTileType: CaseIterable, Codable, Equatable {
+public enum WallType: CaseIterable, Codable, Hashable, Identifiable {
     
-    public static var allCases: [WallTileType] { [.door,
-                                                  .wall,
-                                                  .window] }
+    public static var allCases: [WallType] { [.door,
+                                              .wall,
+                                              .window] }
     
     case corner
     case door
@@ -18,7 +18,7 @@ public enum WallTileType: CaseIterable, Codable, Equatable {
     case wall
     case window
     
-    var identifier: String {
+    public var id: String {
         
         switch self {
         

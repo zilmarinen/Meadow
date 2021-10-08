@@ -11,21 +11,18 @@ public class WaterTile: Tile {
     
     private enum CodingKeys: String, CodingKey {
         
-        case tileType = "t"
-        case apexPattern = "ap"
+        case material = "m"
     }
     
     public override var category: SceneGraphCategory { .waterTile }
 
-    let tileType: WaterTileType
-    let apexPattern: Int
+    let material: WaterMaterial
 
     required public init(from decoder: Decoder) throws {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        tileType = try container.decode(WaterTileType.self, forKey: .tileType)
-        apexPattern = try container.decode(Int.self, forKey: .apexPattern)
+        material = try container.decode(WaterMaterial.self, forKey: .material)
         
         try super.init(from: decoder)
     }
@@ -35,6 +32,6 @@ extension WaterTile {
     
     public static func == (lhs: WaterTile, rhs: WaterTile) -> Bool {
         
-        return lhs.coordinate == rhs.coordinate && lhs.apexPattern == rhs.apexPattern && lhs.tileType == rhs.tileType
+        return lhs.coordinate == rhs.coordinate && lhs.material == rhs.material
     }
 }

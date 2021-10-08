@@ -7,19 +7,21 @@
 import Foundation
 import SwiftUI
 
-public enum BridgeMaterial: Int, CaseIterable, Codable, Equatable, Identifiable {
+public enum BridgeMaterial: Int, CaseIterable, Codable, Hashable, Identifiable {
     
     case stone
+    case wood
     
     public var id: String {
         
         switch self {
             
         case .stone: return "stone"
+        case .wood: return "wood"
         }
     }
     
-    func prop(tileType: BridgeTileType, pattern: Cardinal) -> String {
+    func propIdentifier(tileType: BridgeTileType, pattern: Cardinal) -> String {
         
         let prop = id + "_bridge_" + tileType.id
         

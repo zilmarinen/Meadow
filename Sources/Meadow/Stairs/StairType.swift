@@ -7,7 +7,7 @@
 import Foundation
 import SwiftUI
 
-public enum StairType: Int, CaseIterable, Codable, Equatable, Identifiable {
+public enum StairType: Int, CaseIterable, Codable, Hashable, Identifiable {
     
     case sloped_1x1
     case sloped_2x1

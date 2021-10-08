@@ -8,13 +8,6 @@ import SceneKit
 
 public class Footpath: Grid<FootpathChunk, FootpathTile> {
     
-    lazy var tilemap: FootpathTilemap = {
-        
-        guard let tilemap = try? FootpathTilemap() else { fatalError("Error loading footpath tilemap") }
-        
-        return tilemap
-    }()
-    
     lazy var program: SCNProgram? = {
         
         guard let library = scene?.library else { return nil }

@@ -13,22 +13,22 @@ public class SurfaceTile: Tile {
         
         case tileType = "tt"
         case material = "m"
-        case surfaceType = "st"
+        case overlay = "o"
     }
     
     public override var category: SceneGraphCategory { .surfaceTile }
 
     let tileType: SurfaceTileType
-    let material: SurfaceMaterial?
-    let surfaceType: SurfaceType
+    let material: SurfaceMaterial
+    let overlay: SurfaceOverlay?
 
     required public init(from decoder: Decoder) throws {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         tileType = try container.decode(SurfaceTileType.self, forKey: .tileType)
-        material = try container.decodeIfPresent(SurfaceMaterial.self, forKey: .material)
-        surfaceType = try container.decode(SurfaceType.self, forKey: .surfaceType)
+        material = try container.decode(SurfaceMaterial.self, forKey: .material)
+        overlay = try container.decodeIfPresent(SurfaceOverlay.self, forKey: .overlay)
         
         try super.init(from: decoder)
     }
@@ -38,16 +38,16 @@ extension SurfaceTile {
     
     public static func == (lhs: SurfaceTile, rhs: SurfaceTile) -> Bool {
         
-        return lhs.coordinate == rhs.coordinate && lhs.tileType == rhs.tileType && lhs.material == rhs.material && lhs.surfaceType == rhs.surfaceType
+        return lhs.coordinate == rhs.coordinate && lhs.tileType == rhs.tileType && lhs.material == rhs.material && lhs.overlay == rhs.overlay
     }
 }
 
 extension SurfaceTile: Traversable {
     
-    var movementCost: Double { tileType.movementCost }
+    var movementCost: Double { overlay?.movementCost ?? material.movementCost }
     var walkable: Bool {
         
-        switch surfaceType {
+        switch tileType {
         
         case .sloped:
             
@@ -73,6 +73,6 @@ extension SurfaceTile: Traversable {
     
     func traversableNode(for coordinate: Coordinate) -> TraversableNode {
         
-        return TraversableNode(coordinate: self.coordinate, vector: coordinate.world, movementCost: movementCost, sloped: surfaceType == .sloped, cardinals: Cardinal.allCases)
+        return TraversableNode(coordinate: self.coordinate, vector: coordinate.world, movementCost: movementCost, sloped: tileType == .sloped, cardinals: Cardinal.allCases)
     }
 }

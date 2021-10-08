@@ -79,6 +79,7 @@ public class PropChunk: SCNNode, Codable, Hideable, Responder, Shadable, Soilabl
         position = SCNVector3(coordinate.world)
         
         geometry?.program = program
+        geometry?.name = prop.identifier
         
         if let uniforms = uniforms {
             
@@ -91,6 +92,12 @@ public class PropChunk: SCNNode, Codable, Hideable, Responder, Shadable, Soilabl
         }
         
         isDirty = false
+        
+        let node = SCNNode(geometry: SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0))
+        
+        node.geometry?.firstMaterial?.diffuse.contents = MDWColor.red
+        node.geometry?.program = program
+        addChildNode(node)
         
         return true
     }

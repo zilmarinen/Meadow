@@ -72,13 +72,6 @@ public class Map: SCNNode, Decodable, Responder, Updatable {
     
     public var map: Map? { self }
     
-    public static func map(named identifier: String) throws -> Map? {
-        
-        guard let asset = NSDataAsset(name: identifier, bundle: .main) else { return nil }
-        
-        return try JSONDecoder().decode(Map.self, from: asset.data)
-    }
-    
     public override init() {
         
         actors = Actors()
@@ -191,8 +184,8 @@ extension Map {
     
     public func find(traversable coordinate: Coordinate) -> TraversableNode? {
      
-        guard buildings.find(building: coordinate) == nil,
-              foliage.find(foliage: coordinate) == nil,
+        guard buildings.find(chunk: coordinate) == nil,
+              foliage.find(chunk: coordinate) == nil,
               water.find(tile: coordinate)?.coordinate.y ?? 0 < coordinate.y else { return nil }
         
         if let bridge = bridges.find(tile: coordinate),
@@ -202,7 +195,7 @@ extension Map {
             return bridge.traversableNode(for: coordinate)
         }
         
-        if let stairs = stairs.find(stairs: coordinate) {
+        if let stairs = stairs.find(chunk: coordinate) {
             
             return stairs.traversableNode(for: coordinate)
         }

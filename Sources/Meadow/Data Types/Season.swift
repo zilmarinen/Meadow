@@ -6,32 +6,21 @@
 
 import Foundation
 
-public enum Season: Int, CaseIterable, Codable {
+public enum Season: Int, CaseIterable, Codable, Identifiable {
     
     case spring
     case summer
     case autumn
     case winter
     
-    public var description: String {
+    public var id: String {
         
         switch self {
         
-        case .spring: return "Spring"
-        case .summer: return "Summer"
-        case .autumn: return "Autumn"
-        case .winter: return "Winter"
-        }
-    }
-    
-    public var abbreviation: String {
-        
-        switch self {
-        
-        case .spring: return "Sp"
-        case .summer: return "Su"
-        case .autumn: return "Au"
-        case .winter: return "Wi"
+        case .spring: return "spring"
+        case .summer: return "summer"
+        case .autumn: return "autumn"
+        case .winter: return "winter"
         }
     }
 }

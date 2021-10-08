@@ -25,6 +25,7 @@ class Sun: SCNNode, Responder, Soilable, Updatable {
         
         name = "Sun"
         categoryBitMask = category.rawValue
+        position = SCNVector3(x: 10.0, y: 10.0, z: 10.0)
         light = source
         
         source.type = .omni

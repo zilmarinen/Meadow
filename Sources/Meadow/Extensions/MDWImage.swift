@@ -18,15 +18,19 @@ import Foundation
 
 public extension MDWImage {
     
-    static func asset(named: String, in bundle: Bundle) -> MDWImage? {
+    static func asset(named: String, in bundle: Bundle) throws -> MDWImage {
         
         #if os(macOS)
         
-        return bundle.image(forResource: named)
+        guard let image = bundle.image(forResource: named) else { throw AssetError.missingAsset(named) }
+        
+        return image
         
         #else
         
-        return MDWImage(named: named, in: bundle, with: nil)
+        guard let image = MDWImage(named: named, in: bundle, with: nil) else { throw AssetError.missingAsset(named) }
+        
+        return image
         
         #endif
     }

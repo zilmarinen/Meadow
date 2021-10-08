@@ -11,12 +11,16 @@ protocol SceneDelegate {
     //
 }
 
-open class Scene: SCNScene, Decodable, Responder, SceneDelegate, Soilable, Updatable {
-
-    private enum CodingKeys: String, CodingKey {
+open class Scene: SCNScene, Responder, SceneDelegate, Soilable, Updatable {
+    
+    lazy var operationQueue: OperationQueue = {
+            
+        let queue = OperationQueue()
         
-        case map = "m"
-    }
+        queue.maxConcurrentOperationCount = 1
+        
+        return queue
+    }()
     
     public var library: MTLLibrary? {
         
@@ -30,7 +34,7 @@ open class Scene: SCNScene, Decodable, Responder, SceneDelegate, Soilable, Updat
     
     public var isDirty: Bool {
         
-        get { camera.isDirty || protagonist.isDirty || map.isDirty || sun.isDirty }
+        get { !(rootNode.childNodes as? [Soilable] ?? []).filter { $0.isDirty }.isEmpty }
         set {}
     }
     
@@ -38,45 +42,21 @@ open class Scene: SCNScene, Decodable, Responder, SceneDelegate, Soilable, Updat
     public let protagonist = Protagonist(coordinate: .zero)
     
     let sun = Sun()
-    let props = Props()
+    private(set) var props: Props
     
-    private(set) public var map: Map
-    var maps: [String : Map] = [:]
+    private(set) public var atlas: TextureAtlas
+    
+    var maps: [Map] = []
     
     var lastUpdate: TimeInterval?
     
     public var scene: Scene? { self }
     
-    public init(map: Map? = nil) {
+    public required init(map: Map, atlas: TextureAtlas, props: Props) {
         
-        self.map = map ?? Map()
-        
-        super.init()
-        
-        camera.ancestor = self
-        self.map.ancestor = self
-        sun.ancestor = self
-        
-        protagonist.ancestor = self
-        protagonist.isHidden = true
-        
-        rootNode.addChildNode(camera)
-        rootNode.addChildNode(protagonist)
-        rootNode.addChildNode(self.map)
-        rootNode.addChildNode(sun)
-        
-        camera.controller.state = .focus(node: protagonist, cardinal: .north, zoom: Camera.Constants.maximumZoom)
-        
-        updateSeams()
-        
-        becomeDirty()
-    }
-    
-    required public init(from decoder: Decoder) throws {
-        
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        map = try container.decode(Map.self, forKey: .map)
+        self.maps = [map]
+        self.atlas = atlas
+        self.props = props
         
         super.init()
         
@@ -94,7 +74,7 @@ open class Scene: SCNScene, Decodable, Responder, SceneDelegate, Soilable, Updat
         
         camera.controller.state = .focus(node: protagonist, cardinal: .north, zoom: Camera.Constants.maximumZoom)
         
-        becomeDirty()
+        updateSeams(map: map)
     }
     
     required public init?(coder: NSCoder) {
@@ -111,12 +91,11 @@ extension Scene {
         
         camera.clean()
         protagonist.clean()
-        map.clean()
         sun.clean()
         
-        for (_, adjacent) in maps {
+        for map in maps {
             
-            adjacent.clean()
+            map.clean()
         }
         
         return true
@@ -129,12 +108,11 @@ extension Scene {
         
         camera.update(delta: delta, time: time)
         protagonist.update(delta: delta, time: time)
-        map.update(delta: delta, time: time)
         sun.update(delta: delta, time: time)
         
-        for (_, adjacent) in maps {
+        for map in maps {
             
-            adjacent.update(delta: delta, time: time)
+            map.update(delta: delta, time: time)
         }
         
         clean()
@@ -155,11 +133,56 @@ extension Scene: SCNSceneRendererDelegate {
 
 extension Scene {
     
+    public func updateSeams(map: Map) {
+        
+        let operation = SeamLoadingOperation(map: map, maps: maps)
+        
+        operation.enqueue(on: operationQueue) { result in
+            
+            DispatchQueue.main.async { [weak self] in
+             
+                switch result {
+                    
+                case .failure(let error):
+                    
+                    print("Error: \(error)")
+                    
+                case .success(let seams):
+                    
+                    guard let self = self else { return }
+                    
+                    let removed = self.maps.filter { !seams.contains($0) }
+                    
+                    for seam in removed {
+                        
+                        seam.ancestor = nil
+                        seam.removeFromParentNode()
+                    }
+                    
+                    for seam in seams {
+                        
+                        if seam.parent == nil {
+                            
+                            seam.ancestor = self
+                            
+                            self.rootNode.addChildNode(seam)
+                        }
+                    }
+                    
+                    self.maps = seams
+                    
+                    self.becomeDirty()
+                }
+            }
+        }
+    }
+}
+
+extension Scene {
+    
     public func find(traversable coordinate: Coordinate) -> TraversableNode? {
         
-        let allMaps = [map] + Array(maps.values)
-        
-        for map in allMaps {
+        for map in maps {
             
             if let node = map.find(traversable: coordinate) {
                 
@@ -211,100 +234,6 @@ extension Scene {
                     stack[neighbour.coordinate] = node.value
                     cost[neighbour.coordinate] = nodeCost
                 }
-            }
-        }
-        
-        return nil
-    }
-}
-
-extension Scene {
-    
-    func clear() {
-        
-        self.map.ancestor = nil
-        self.map.removeFromParentNode()
-        
-        for (_, adjacent) in maps {
-            
-            adjacent.ancestor = nil
-            adjacent.removeFromParentNode()
-        }
-    }
-    
-    func load(map identifier: String) throws -> Map? {
-        
-        if let adjacent = maps[identifier] {
-            
-            return adjacent
-        }
-        
-        return try Map.map(named: identifier)
-    }
-    
-    public func load(map: Map) {
-        
-        clear()
-        
-        self.map = map
-        self.map.ancestor = self
-        
-        rootNode.addChildNode(map)
-    }
-}
-
-extension Scene {
-    
-    public func updateSeams() {
-        
-        for seam in map.seams.tiles {
-            
-            guard maps[seam.segue.scene] == nil else { continue }
-            
-            do {
-                
-                guard let adjacentMap = try load(map: seam.segue.scene),
-                      let stitch = adjacentMap.seams.find(seam: seam.segue.identifier) else { continue }
-                
-                if adjacentMap.parent == nil {
-                    
-                    adjacentMap.ancestor = self
-                    
-                    rootNode.addChildNode(adjacentMap)
-                }
-                
-                adjacentMap.offset = ((seam.coordinate + seam.segue.direction.coordinate) - stitch.coordinate)
-                
-                maps[adjacentMap.identifier] = adjacentMap
-            }
-            catch {
-                
-                fatalError("Unable to load seam: \(seam) - error: \(error)")
-            }
-        }
-        
-        let scenes = map.seams.tiles.map { $0.segue.scene }
-        
-        let detached = maps.filter { !scenes.contains($0.key) }
-        
-        for (_, adjacent) in detached {
-
-            adjacent.ancestor = nil
-            adjacent.removeFromParentNode()
-        }
-        
-        maps = maps.filter { scenes.contains($0.key) }
-    }
-    
-    public func find(map coordinate: Coordinate) -> Map? {
-        
-        let allMaps = [map] + Array(maps.values)
-        
-        for adjacent in allMaps {
-            
-            if adjacent.find(traversable: coordinate) != nil {
-                
-                return adjacent
             }
         }
         

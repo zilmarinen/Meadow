@@ -8,7 +8,7 @@ import SceneKit
 
 extension Actor {
     
-    public enum ActorState: State {
+    public enum ActorState: MachineState {
         
         case idle
         case traversing(path: Path, current: PathNode, destination: PathNode)

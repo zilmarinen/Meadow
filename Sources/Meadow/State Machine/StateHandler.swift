@@ -6,7 +6,7 @@
 
 public protocol StateHandler {
     
-    associatedtype T: State
+    associatedtype T: MachineState
     
     func stateDidChange(from previousState: T?, to currentState: T)
 }

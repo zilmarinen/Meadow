@@ -6,7 +6,7 @@
 
 import Combine
 
-public class StateMachine<StateType: State>: CustomStringConvertible, ObservableObject {
+public class StateMachine<StateType: MachineState>: CustomStringConvertible, ObservableObject {
     
     public typealias Transition = (_ from: StateType?, _ to: StateType) -> Void
     

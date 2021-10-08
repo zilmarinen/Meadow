@@ -14,7 +14,7 @@ extension Camera {
         static let minimumZoom = 1.0
     }
     
-    public enum CameraState: State {
+    public enum CameraState: MachineState {
         
         case focus(node: SCNNode, cardinal: Cardinal, zoom: Double)
         

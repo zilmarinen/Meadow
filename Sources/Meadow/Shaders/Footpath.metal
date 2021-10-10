@@ -18,12 +18,12 @@ vertex Fragment footpath_vertex(Vertex v [[ stage_in ]],
 }
 
 fragment float4 footpath_fragment(Fragment f [[stage_in]],
-                                  texture2d<float, access::sample> image [[ texture(0) ]],
+                                  texture2d<float, access::sample> overlay [[ texture(0) ]],
                                   constant Light* scn_lights [[ buffer(2) ]]) {
     Surface surface;
      
     surface.normal = f.normal;
-    surface.ambient = sample(image, f.uv);
+    surface.ambient = sample(overlay, f.uv);
     
     if (surface.ambient.a <= epsilon) {
         

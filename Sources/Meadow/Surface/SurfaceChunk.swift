@@ -18,8 +18,6 @@ public class SurfaceChunk: Chunk<SurfaceTile> {
     
     public override var program: SCNProgram? { map?.surface.program }
     
-    public override var uniforms: [Uniform]? { nil }
-    
     public override var textures: [Texture]? {
         
         guard let tileset = scene?.atlas.surface else { return nil }

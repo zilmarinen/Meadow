@@ -18,8 +18,6 @@ public class WaterChunk: Chunk<WaterTile> {
     
     public override var program: SCNProgram? { map?.water.program }
     
-    public override var uniforms: [Uniform]? { nil }
-    
     public override var textures: [Texture]? { nil }
     
     required public init(from decoder: Decoder) throws {

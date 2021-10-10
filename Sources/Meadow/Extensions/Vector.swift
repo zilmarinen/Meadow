@@ -100,7 +100,13 @@ extension Array where Element == Vector {
             
             let ab = self.last! - self.first!
             
-            return ab.cross(z).cross(ab)
+            let normal = ab.cross(z).cross(ab)
+            
+            let length = normal.length
+            
+            guard length > 0 else { return Vector(1, 0, 0) }
+            
+            return normal / length
             
         default:
             

@@ -18,13 +18,11 @@ public class FootpathChunk: Chunk<FootpathTile> {
     
     public override var program: SCNProgram? { map?.footpath.program }
     
-    public override var uniforms: [Uniform]? { nil }
-    
     public override var textures: [Texture]? {
         
-        guard let tileset = scene?.atlas.footpath else { return nil }
+        guard let overlay = scene?.atlas.footpath.overlay else { return nil }
         
-        return [tileset]
+        return [overlay]
     }
     
     required public init(from decoder: Decoder) throws {

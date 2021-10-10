@@ -13,10 +13,10 @@ public class BridgeChunk: Chunk<BridgeTile> {
     
     public override var program: SCNProgram? { map?.bridges.program }
     
-    public override var uniforms: [Uniform]? { nil }
-    
     public override var textures: [Texture]? {
         
+        //TODO: add textures for bridges spanning multiple chunks
+        //possibly convert this into a PropGrid?
         guard let image = try? MDWImage.asset(named: "bridges", in: .module) else { return nil }
         
         return [Texture(key: "image", image: image)]

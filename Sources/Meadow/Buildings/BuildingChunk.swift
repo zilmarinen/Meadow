@@ -21,6 +21,13 @@ public class BuildingChunk: PropChunk {
     
     public override var program: SCNProgram? { map?.buildings.program }
     
+    public override var textures: [Texture]? {
+        
+        guard let texture = scene?.atlas.buildings.texture(for: architecture) else { return nil }
+        
+        return [texture]
+    }
+    
     public let architecture: BuildingArchitecture
     public let polyomino: Polyomino
     

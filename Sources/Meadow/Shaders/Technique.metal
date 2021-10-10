@@ -19,5 +19,5 @@ vertex Fragment technique_vertex(TechniqueVertex v [[ stage_in ]]) {
 fragment float4 technique_fragment(Fragment f [[stage_in]],
                                    texture2d<float, access::sample> colorBuffer [[ texture(0) ]]) {
     return float4(1.f, 0.f, 0.f, 1.f);
-    return sample(colorBuffer, f.fragmentPosition.xy);
+    //return sample(colorBuffer, f.fragmentPosition.xy);
 }

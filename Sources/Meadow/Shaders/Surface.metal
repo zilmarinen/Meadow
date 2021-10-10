@@ -21,8 +21,7 @@ fragment Buffer surface_fragment(Fragment f [[stage_in]],
                                  constant SceneTransforms& scn_frame [[ buffer(0) ]],
                                  constant NodeTransforms& scn_node [[ buffer(1) ]],
                                  constant Light* scn_lights [[ buffer(2) ]],
-                                 texture2d<float, access::sample> tileset [[ texture(0) ]],
-                                 texture2d<float, access::sample> edgeset [[ texture(1) ]],
+                                 texture2d<float, access::sample> overlay [[ texture(0) ]],
                                  texture2d<float, access::sample> dirt [[ texture(2) ]],
                                  texture2d<float, access::sample> sand [[ texture(3) ]],
                                  texture2d<float, access::sample> stone [[ texture(4) ]],
@@ -32,32 +31,23 @@ fragment Buffer surface_fragment(Fragment f [[stage_in]],
     
     surface.normal = f.normal;
     
-    if (fabs(dot(up, f.normal)) < epsilon) {
+    float2 uv = float2(f.position.x, f.position.z);
+    
+    float4 dirtSample = sample(dirt, uv);
+    float4 sandSample = sample(sand, uv);
+    float4 stoneSample = sample(stone, uv);
+    float4 woodSample = sample(wood, uv);
+    float4 tileSample = sample(overlay, f.uv);
+    
+    float depth = 0.1;
+    
+    surface.ambient = blend(dirtSample, f.color.r, sandSample, f.color.g, depth);
+    surface.ambient = blend(surface.ambient, f.color.r + f.color.g, stoneSample, f.color.b, depth);
+    surface.ambient = blend(surface.ambient, f.color.r + f.color.g + f.color.b, woodSample, f.color.a, depth);
+    
+    if (tileSample.a > 0.f && fabs(dot(up, f.normal)) > epsilon) {
 
-        surface.ambient = sample(edgeset, f.uv);
-
-        surface.ambient = edgeColorLookup(twizzle(surface.ambient, f.color));
-    }
-    else {
-
-        float2 uv = float2(f.position.x, f.position.z);
-        
-        float4 dirtSample = sample(dirt, uv);
-        float4 sandSample = sample(sand, uv);
-        float4 stoneSample = sample(stone, uv);
-        float4 woodSample = sample(wood, uv);
-        float4 tileSample = sample(tileset, f.uv);
-        
-        float depth = 0.1;
-        
-        surface.ambient = blend(dirtSample, f.color.r, sandSample, f.color.g, depth);
-        surface.ambient = blend(surface.ambient, f.color.r + f.color.g, stoneSample, f.color.b, depth);
-        surface.ambient = blend(surface.ambient, f.color.r + f.color.g + f.color.b, woodSample, f.color.a, depth);
-        
-        if (tileSample.a > 0.f) {
-
-            surface.ambient = tileSample;// edgeColorLookup(twizzle(tileSample, f.color));
-        }
+        surface.ambient = tileSample;
     }
     
     Buffer buffer;

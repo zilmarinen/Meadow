@@ -110,92 +110,51 @@ extension GridPattern {
 
 extension GridPattern where T == Bool {
     
-    init(north: Bool = true,
-                east: Bool = true,
-                south: Bool = true,
-                west: Bool = true,
-                northWest: Bool = true,
-                northEast: Bool = true,
-                southEast: Bool = true,
-                southWest: Bool = true) {
+    init(id: Int) {
         
-        self.north = north
-        self.east = east
-        self.south = south
-        self.west = west
+        self.init(value: false)
         
-        self.northWest = northWest
-        self.northEast = northEast
-        self.southEast = southEast
-        self.southWest = southWest
+        var id = id
+        
+        for ordinal in Ordinal.allCases.reversed() {
+         
+            let value = 16 << ordinal.corner
+            
+            if id >= value {
+                
+                id -= value
+                
+                set(value: true, ordinal: ordinal)
+            }
+        }
+        
+        for cardinal in Cardinal.allCases.reversed() {
+         
+            let value = 1 << cardinal.edge
+            
+            if id >= value {
+                
+                id -= value
+                
+                set(value: true, cardinal: cardinal)
+            }
+        }
     }
     
-    public static func index(of pattern: GridPattern) -> Int {
+    public var id: Int {
         
-        return defaults.firstIndex(of: pattern) ?? 0
-    }
-    
-    public static var defaults: [GridPattern] {
+        var value = 0
         
-        [GridPattern(value: true),
-         GridPattern(northWest: false),
-         GridPattern(northEast: false),
-         GridPattern(southEast: false),
-         GridPattern(southWest: false),//5
+        for cardinal in Cardinal.allCases {
+            
+            value |= self.value(for: cardinal) ? 1 << cardinal.edge : 0
+        }
         
-         GridPattern(northWest: false, northEast: false),
-         GridPattern(northEast: false, southEast: false),
-         GridPattern(southEast: false, southWest: false),
-         GridPattern(northWest: false, southWest: false),
-         GridPattern(northWest: false, southEast: false),
-         GridPattern(northEast: false, southWest: false),//11
+        for ordinal in Ordinal.allCases {
+            
+            value |= self.value(for: ordinal) ? 16 << ordinal.corner : 0
+        }
         
-         GridPattern(northWest: false, northEast: false, southEast: false),
-         GridPattern(northEast: false, southEast: false, southWest: false),
-         GridPattern(northWest: false, southEast: false, southWest: false),
-         GridPattern(northWest: false, northEast: false, southWest: false),
-         GridPattern(northWest: false, northEast: false, southEast: false, southWest: false),//16
-        
-         GridPattern(north: false, northWest: false, northEast: false),
-         GridPattern(east: false, northEast: false, southEast: false),
-         GridPattern(south: false, southEast: false, southWest: false),
-         GridPattern(west: false, northWest: false, southWest: false),
-         GridPattern(north: false, south: false, northWest: false, northEast: false, southEast: false, southWest: false),
-         GridPattern(east: false, west: false, northWest: false, northEast: false, southEast: false, southWest: false), //22
-        
-         GridPattern(north: false, northWest: false, northEast: false, southEast: false),
-         GridPattern(north: false, northWest: false, northEast: false, southWest: false),
-         GridPattern(north: false, northWest: false, northEast: false, southEast: false, southWest: false),//25
-        
-         GridPattern(east: false, northEast: false, southEast: false, southWest: false),
-         GridPattern(east: false, northWest: false, northEast: false, southEast: false),
-         GridPattern(east: false, northWest: false, northEast: false, southEast: false, southWest: false), //28
-        
-         GridPattern(south: false, northWest: false, southEast: false, southWest: false),
-         GridPattern(south: false, northEast: false, southEast: false, southWest: false),
-         GridPattern(south: false, northWest: false, northEast: false, southEast: false, southWest: false), //31
-        
-         GridPattern(west: false, northWest: false, northEast: false, southWest: false),
-         GridPattern(west: false, northWest: false, southEast: false, southWest: false),
-         GridPattern(west: false, northWest: false, northEast: false, southEast: false, southWest: false), //34
-        
-         GridPattern(north: false, west: false, northWest: false, northEast: false, southWest: false),
-         GridPattern(north: false, west: false, northWest: false, northEast: false, southEast: false, southWest: false),//36
-        
-         GridPattern(north: false, east: false, northWest: false, northEast: false, southEast: false),
-         GridPattern(north: false, east: false, northWest: false, northEast: false, southEast: false, southWest: false),//38
-        
-         GridPattern(east: false, south: false, northEast: false, southEast: false, southWest: false),
-         GridPattern(east: false, south: false, northWest: false, northEast: false, southEast: false, southWest: false),//40
-        
-         GridPattern(south: false, west: false, northWest: false, southEast: false, southWest: false),
-         GridPattern(south: false, west: false, northWest: false, northEast: false, southEast: false, southWest: false), //42
-        
-         GridPattern(north: false, east: false, west: false, northWest: false, northEast: false, southEast: false, southWest: false),
-         GridPattern(north: false, east: false, south: false, northWest: false, northEast: false, southEast: false, southWest: false),
-         GridPattern(east: false, south: false, west: false, northWest: false, northEast: false, southEast: false, southWest: false),
-         GridPattern(north: false, south: false, west: false, northWest: false, northEast: false, southEast: false, southWest: false),
-         GridPattern(value: false)//47
-        ]
+        return value
     }
 }

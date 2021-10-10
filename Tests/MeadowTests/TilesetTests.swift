@@ -9,14 +9,14 @@ import XCTest
 
 final class TilesetTests: XCTestCase {
     
-    func testTilemaps() throws {
+    func testSurfaceTileset() throws {
         
-        let tilemap = try Tilemaps()
+        let tileset = try SurfaceTileset(season: .spring)
         
-        XCTAssertNotNil(tilemap)
+        XCTAssertNotNil(tileset)
     }
 
     static var allTests = [
-        ("testTilemaps", testTilemaps)
+        ("testSurfaceTileset", testSurfaceTileset)
     ]
 }

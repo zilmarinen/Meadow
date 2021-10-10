@@ -7,77 +7,47 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		180C21AA26D90F86009EEACF /* SceneController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180C21A926D90F86009EEACF /* SceneController.swift */; };
-		180C21AB26D90F86009EEACF /* SceneController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180C21A926D90F86009EEACF /* SceneController.swift */; };
-		18125C3F26D789F1006313F0 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18125C3E26D789F1006313F0 /* SplashView.swift */; };
-		18125C4026D789F1006313F0 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18125C3E26D789F1006313F0 /* SplashView.swift */; };
-		18125C4326D78A19006313F0 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18125C4226D78A19006313F0 /* GameView.swift */; };
-		18125C4426D78A19006313F0 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18125C4226D78A19006313F0 /* GameView.swift */; };
-		1820E3FA26D789830002CE2B /* SplashController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1820E3F926D789830002CE2B /* SplashController.swift */; };
-		1820E3FB26D789830002CE2B /* SplashController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1820E3F926D789830002CE2B /* SplashController.swift */; };
-		1820E3FD26D7898D0002CE2B /* GameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1820E3FC26D7898D0002CE2B /* GameController.swift */; };
-		1820E3FE26D7898D0002CE2B /* GameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1820E3FC26D7898D0002CE2B /* GameController.swift */; };
-		183B541F26EF2F94004C00EE /* HeroSelectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183B541E26EF2F94004C00EE /* HeroSelectionController.swift */; };
-		183B542126EF2F9C004C00EE /* HeroCreationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183B542026EF2F9C004C00EE /* HeroCreationController.swift */; };
-		183B542426EF2FF3004C00EE /* HeroCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183B542326EF2FF3004C00EE /* HeroCreationView.swift */; };
-		183B542526EF2FF7004C00EE /* HeroCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183B542326EF2FF3004C00EE /* HeroCreationView.swift */; };
-		183B542826EF3016004C00EE /* HeroSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183B542726EF3016004C00EE /* HeroSelectionView.swift */; };
-		183B542E26EF3051004C00EE /* HeroSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183B542D26EF3051004C00EE /* HeroSelectionViewModel.swift */; };
-		183B542F26EF3053004C00EE /* HeroSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183B542D26EF3051004C00EE /* HeroSelectionViewModel.swift */; };
-		183B543126EF3060004C00EE /* HeroCreationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183B543026EF3060004C00EE /* HeroCreationViewModel.swift */; };
-		183B543226EF3060004C00EE /* HeroCreationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183B543026EF3060004C00EE /* HeroCreationViewModel.swift */; };
-		183B543326EF310A004C00EE /* HeroCreationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183B542026EF2F9C004C00EE /* HeroCreationController.swift */; };
-		183B543426EF311F004C00EE /* HeroSelectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183B541E26EF2F94004C00EE /* HeroSelectionController.swift */; };
-		183B543526EF32A1004C00EE /* HeroSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183B542726EF3016004C00EE /* HeroSelectionView.swift */; };
 		183B543726EF3876004C00EE /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183B543626EF3875004C00EE /* PersistenceController.swift */; };
 		183B543826EF3876004C00EE /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183B543626EF3875004C00EE /* PersistenceController.swift */; };
 		183B543C26EF38B1004C00EE /* Example.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 183B543A26EF38B1004C00EE /* Example.xcdatamodeld */; };
 		183B543D26EF38B1004C00EE /* Example.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 183B543A26EF38B1004C00EE /* Example.xcdatamodeld */; };
-		183B544326EF3E29004C00EE /* HeroSelectionCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183B544226EF3E28004C00EE /* HeroSelectionCardView.swift */; };
-		183B544426EF3E29004C00EE /* HeroSelectionCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183B544226EF3E28004C00EE /* HeroSelectionCardView.swift */; };
-		183D733C26EB6FB5000005A1 /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183D733B26EB6FB5000005A1 /* GameViewModel.swift */; };
-		183D733D26EB6FB5000005A1 /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183D733B26EB6FB5000005A1 /* GameViewModel.swift */; };
 		1897039026CD2B7B00022591 /* Meadow in Frameworks */ = {isa = PBXBuildFile; productRef = 1897038F26CD2B7B00022591 /* Meadow */; };
 		1897039226CD2B8000022591 /* Meadow in Frameworks */ = {isa = PBXBuildFile; productRef = 1897039126CD2B8000022591 /* Meadow */; };
+		189A828D271323690022C3B1 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189A828C271323690022C3B1 /* SplashView.swift */; };
+		189A828E271323690022C3B1 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189A828C271323690022C3B1 /* SplashView.swift */; };
+		189A8290271323B30022C3B1 /* SplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189A828F271323B30022C3B1 /* SplashViewModel.swift */; };
+		189A8291271323B30022C3B1 /* SplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189A828F271323B30022C3B1 /* SplashViewModel.swift */; };
+		189A82C9271328AF0022C3B1 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189A82C8271328AF0022C3B1 /* MenuView.swift */; };
+		189A82CA271328AF0022C3B1 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189A82C8271328AF0022C3B1 /* MenuView.swift */; };
+		189A82CC27132A6C0022C3B1 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189A82CB27132A6C0022C3B1 /* GameView.swift */; };
+		189A82CD27132A6C0022C3B1 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189A82CB27132A6C0022C3B1 /* GameView.swift */; };
+		189A82CF27132A7E0022C3B1 /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189A82CE27132A7E0022C3B1 /* GameViewModel.swift */; };
+		189A82D027132A7E0022C3B1 /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189A82CE27132A7E0022C3B1 /* GameViewModel.swift */; };
 		18AE56A226CD134700D94EE1 /* ExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AE569426CD134600D94EE1 /* ExampleApp.swift */; };
 		18AE56A326CD134700D94EE1 /* ExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AE569426CD134600D94EE1 /* ExampleApp.swift */; };
 		18AE56A426CD134700D94EE1 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AE569526CD134600D94EE1 /* AppView.swift */; };
 		18AE56A526CD134700D94EE1 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AE569526CD134600D94EE1 /* AppView.swift */; };
 		18AE56A626CD134700D94EE1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18AE569626CD134700D94EE1 /* Assets.xcassets */; };
 		18AE56A726CD134700D94EE1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18AE569626CD134700D94EE1 /* Assets.xcassets */; };
-		18AE56B126CD138800D94EE1 /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AE56B026CD138800D94EE1 /* AppController.swift */; };
-		18AE56B226CD138800D94EE1 /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AE56B026CD138800D94EE1 /* AppController.swift */; };
 		18B055CA26EA581900200D83 /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B055C926EA581900200D83 /* AppViewModel.swift */; };
 		18B055CB26EA581900200D83 /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B055C926EA581900200D83 /* AppViewModel.swift */; };
-		18B055CD26EA59EC00200D83 /* SplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B055CC26EA59EC00200D83 /* SplashViewModel.swift */; };
-		18B055CE26EA59EC00200D83 /* SplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B055CC26EA59EC00200D83 /* SplashViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		180C21A926D90F86009EEACF /* SceneController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneController.swift; sourceTree = "<group>"; };
-		18125C3E26D789F1006313F0 /* SplashView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
-		18125C4226D78A19006313F0 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
-		1820E3F926D789830002CE2B /* SplashController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashController.swift; sourceTree = "<group>"; };
-		1820E3FC26D7898D0002CE2B /* GameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameController.swift; sourceTree = "<group>"; };
-		183B541E26EF2F94004C00EE /* HeroSelectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroSelectionController.swift; sourceTree = "<group>"; };
-		183B542026EF2F9C004C00EE /* HeroCreationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroCreationController.swift; sourceTree = "<group>"; };
-		183B542326EF2FF3004C00EE /* HeroCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroCreationView.swift; sourceTree = "<group>"; };
-		183B542726EF3016004C00EE /* HeroSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroSelectionView.swift; sourceTree = "<group>"; };
-		183B542D26EF3051004C00EE /* HeroSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroSelectionViewModel.swift; sourceTree = "<group>"; };
-		183B543026EF3060004C00EE /* HeroCreationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroCreationViewModel.swift; sourceTree = "<group>"; };
 		183B543626EF3875004C00EE /* PersistenceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		183B543B26EF38B1004C00EE /* Example.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Example.xcdatamodel; sourceTree = "<group>"; };
-		183B544226EF3E28004C00EE /* HeroSelectionCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeroSelectionCardView.swift; sourceTree = "<group>"; };
-		183D733B26EB6FB5000005A1 /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
 		1897038D26CD286A00022591 /* Meadow */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Meadow; path = ..; sourceTree = "<group>"; };
+		189A828C271323690022C3B1 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
+		189A828F271323B30022C3B1 /* SplashViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewModel.swift; sourceTree = "<group>"; };
+		189A82C8271328AF0022C3B1 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
+		189A82CB27132A6C0022C3B1 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
+		189A82CE27132A7E0022C3B1 /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
 		18AE569426CD134600D94EE1 /* ExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleApp.swift; sourceTree = "<group>"; };
 		18AE569526CD134600D94EE1 /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		18AE569626CD134700D94EE1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		18AE569B26CD134700D94EE1 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18AE56A126CD134700D94EE1 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		18AE56B026CD138800D94EE1 /* AppController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
 		18B055C926EA581900200D83 /* AppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
-		18B055CC26EA59EC00200D83 /* SplashViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,111 +70,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		18125C3D26D789F1006313F0 /* Splash */ = {
-			isa = PBXGroup;
-			children = (
-				18125C3E26D789F1006313F0 /* SplashView.swift */,
-			);
-			path = Splash;
-			sourceTree = "<group>";
-		};
-		18125C4126D789F8006313F0 /* Game */ = {
-			isa = PBXGroup;
-			children = (
-				18125C4226D78A19006313F0 /* GameView.swift */,
-			);
-			path = Game;
-			sourceTree = "<group>";
-		};
-		183B541926EF2F5C004C00EE /* Splash */ = {
-			isa = PBXGroup;
-			children = (
-				1820E3F926D789830002CE2B /* SplashController.swift */,
-			);
-			path = Splash;
-			sourceTree = "<group>";
-		};
-		183B541A26EF2F6B004C00EE /* Scene */ = {
-			isa = PBXGroup;
-			children = (
-				180C21A926D90F86009EEACF /* SceneController.swift */,
-			);
-			path = Scene;
-			sourceTree = "<group>";
-		};
-		183B541B26EF2F76004C00EE /* Game */ = {
-			isa = PBXGroup;
-			children = (
-				1820E3FC26D7898D0002CE2B /* GameController.swift */,
-			);
-			path = Game;
-			sourceTree = "<group>";
-		};
-		183B541C26EF2F7F004C00EE /* Hero Selection */ = {
-			isa = PBXGroup;
-			children = (
-				183B541E26EF2F94004C00EE /* HeroSelectionController.swift */,
-			);
-			path = "Hero Selection";
-			sourceTree = "<group>";
-		};
-		183B541D26EF2F86004C00EE /* Hero Creation */ = {
-			isa = PBXGroup;
-			children = (
-				183B542026EF2F9C004C00EE /* HeroCreationController.swift */,
-			);
-			path = "Hero Creation";
-			sourceTree = "<group>";
-		};
-		183B542226EF2FE5004C00EE /* Hero Creation */ = {
-			isa = PBXGroup;
-			children = (
-				183B542326EF2FF3004C00EE /* HeroCreationView.swift */,
-			);
-			path = "Hero Creation";
-			sourceTree = "<group>";
-		};
-		183B542626EF3009004C00EE /* Hero Selection */ = {
-			isa = PBXGroup;
-			children = (
-				183B544226EF3E28004C00EE /* HeroSelectionCardView.swift */,
-				183B542726EF3016004C00EE /* HeroSelectionView.swift */,
-			);
-			path = "Hero Selection";
-			sourceTree = "<group>";
-		};
-		183B542926EF3030004C00EE /* Splash */ = {
-			isa = PBXGroup;
-			children = (
-				18B055CC26EA59EC00200D83 /* SplashViewModel.swift */,
-			);
-			path = Splash;
-			sourceTree = "<group>";
-		};
-		183B542A26EF3038004C00EE /* Game */ = {
-			isa = PBXGroup;
-			children = (
-				183D733B26EB6FB5000005A1 /* GameViewModel.swift */,
-			);
-			path = Game;
-			sourceTree = "<group>";
-		};
-		183B542B26EF303E004C00EE /* Hero Creation */ = {
-			isa = PBXGroup;
-			children = (
-				183B543026EF3060004C00EE /* HeroCreationViewModel.swift */,
-			);
-			path = "Hero Creation";
-			sourceTree = "<group>";
-		};
-		183B542C26EF3044004C00EE /* Hero Selection */ = {
-			isa = PBXGroup;
-			children = (
-				183B542D26EF3051004C00EE /* HeroSelectionViewModel.swift */,
-			);
-			path = "Hero Selection";
-			sourceTree = "<group>";
-		};
 		183B543926EF38A2004C00EE /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -256,10 +121,9 @@
 			isa = PBXGroup;
 			children = (
 				18AE569526CD134600D94EE1 /* AppView.swift */,
-				18125C4126D789F8006313F0 /* Game */,
-				183B542226EF2FE5004C00EE /* Hero Creation */,
-				183B542626EF3009004C00EE /* Hero Selection */,
-				18125C3D26D789F1006313F0 /* Splash */,
+				189A828C271323690022C3B1 /* SplashView.swift */,
+				189A82C8271328AF0022C3B1 /* MenuView.swift */,
+				189A82CB27132A6C0022C3B1 /* GameView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -268,12 +132,6 @@
 			isa = PBXGroup;
 			children = (
 				183B543626EF3875004C00EE /* PersistenceController.swift */,
-				18AE56B026CD138800D94EE1 /* AppController.swift */,
-				183B541B26EF2F76004C00EE /* Game */,
-				183B541D26EF2F86004C00EE /* Hero Creation */,
-				183B541C26EF2F7F004C00EE /* Hero Selection */,
-				183B541A26EF2F6B004C00EE /* Scene */,
-				183B541926EF2F5C004C00EE /* Splash */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -282,10 +140,8 @@
 			isa = PBXGroup;
 			children = (
 				18B055C926EA581900200D83 /* AppViewModel.swift */,
-				183B542A26EF3038004C00EE /* Game */,
-				183B542B26EF303E004C00EE /* Hero Creation */,
-				183B542C26EF3044004C00EE /* Hero Selection */,
-				183B542926EF3030004C00EE /* Splash */,
+				189A828F271323B30022C3B1 /* SplashViewModel.swift */,
+				189A82CE27132A7E0022C3B1 /* GameViewModel.swift */,
 			);
 			path = "View Model";
 			sourceTree = "<group>";
@@ -394,26 +250,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				183B542126EF2F9C004C00EE /* HeroCreationController.swift in Sources */,
-				183B542826EF3016004C00EE /* HeroSelectionView.swift in Sources */,
-				1820E3FA26D789830002CE2B /* SplashController.swift in Sources */,
-				18AE56B126CD138800D94EE1 /* AppController.swift in Sources */,
 				18B055CA26EA581900200D83 /* AppViewModel.swift in Sources */,
-				183D733C26EB6FB5000005A1 /* GameViewModel.swift in Sources */,
-				183B542E26EF3051004C00EE /* HeroSelectionViewModel.swift in Sources */,
-				180C21AA26D90F86009EEACF /* SceneController.swift in Sources */,
-				1820E3FD26D7898D0002CE2B /* GameController.swift in Sources */,
-				183B542426EF2FF3004C00EE /* HeroCreationView.swift in Sources */,
-				18B055CD26EA59EC00200D83 /* SplashViewModel.swift in Sources */,
-				183B541F26EF2F94004C00EE /* HeroSelectionController.swift in Sources */,
+				189A82CF27132A7E0022C3B1 /* GameViewModel.swift in Sources */,
+				189A82C9271328AF0022C3B1 /* MenuView.swift in Sources */,
 				183B543C26EF38B1004C00EE /* Example.xcdatamodeld in Sources */,
 				18AE56A426CD134700D94EE1 /* AppView.swift in Sources */,
+				189A8290271323B30022C3B1 /* SplashViewModel.swift in Sources */,
+				189A82CC27132A6C0022C3B1 /* GameView.swift in Sources */,
 				183B543726EF3876004C00EE /* PersistenceController.swift in Sources */,
 				18AE56A226CD134700D94EE1 /* ExampleApp.swift in Sources */,
-				183B544326EF3E29004C00EE /* HeroSelectionCardView.swift in Sources */,
-				18125C3F26D789F1006313F0 /* SplashView.swift in Sources */,
-				18125C4326D78A19006313F0 /* GameView.swift in Sources */,
-				183B543126EF3060004C00EE /* HeroCreationViewModel.swift in Sources */,
+				189A828D271323690022C3B1 /* SplashView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -421,26 +267,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1820E3FB26D789830002CE2B /* SplashController.swift in Sources */,
-				183B542F26EF3053004C00EE /* HeroSelectionViewModel.swift in Sources */,
-				183B543426EF311F004C00EE /* HeroSelectionController.swift in Sources */,
-				183B542526EF2FF7004C00EE /* HeroCreationView.swift in Sources */,
-				18AE56B226CD138800D94EE1 /* AppController.swift in Sources */,
 				18B055CB26EA581900200D83 /* AppViewModel.swift in Sources */,
-				183D733D26EB6FB5000005A1 /* GameViewModel.swift in Sources */,
-				180C21AB26D90F86009EEACF /* SceneController.swift in Sources */,
-				1820E3FE26D7898D0002CE2B /* GameController.swift in Sources */,
-				183B543226EF3060004C00EE /* HeroCreationViewModel.swift in Sources */,
-				18B055CE26EA59EC00200D83 /* SplashViewModel.swift in Sources */,
+				189A82D027132A7E0022C3B1 /* GameViewModel.swift in Sources */,
+				189A82CA271328AF0022C3B1 /* MenuView.swift in Sources */,
 				18AE56A526CD134700D94EE1 /* AppView.swift in Sources */,
 				183B543D26EF38B1004C00EE /* Example.xcdatamodeld in Sources */,
+				189A8291271323B30022C3B1 /* SplashViewModel.swift in Sources */,
+				189A82CD27132A6C0022C3B1 /* GameView.swift in Sources */,
 				18AE56A326CD134700D94EE1 /* ExampleApp.swift in Sources */,
 				183B543826EF3876004C00EE /* PersistenceController.swift in Sources */,
-				18125C4026D789F1006313F0 /* SplashView.swift in Sources */,
-				183B544426EF3E29004C00EE /* HeroSelectionCardView.swift in Sources */,
-				18125C4426D78A19006313F0 /* GameView.swift in Sources */,
-				183B543326EF310A004C00EE /* HeroCreationController.swift in Sources */,
-				183B543526EF32A1004C00EE /* HeroSelectionView.swift in Sources */,
+				189A828E271323690022C3B1 /* SplashView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -33,32 +33,20 @@ class GameViewModel: ObservableObject {
         state = .idle
         
         let atlasOperation = TextureAtlasOperation(season: .spring)
-        let mapOperation = MapLoadingOperation2(identifier: "island")
-        let propOperation = PropLoadingOperation()
+        let sceneOperation = SceneLoadingOperation(identifier: "island")
         
-        let progress = atlasOperation.passesResult(to: mapOperation).passesResult(to: propOperation).enqueueWithProgress(on: operationQueue) { result in
+        let progress = atlasOperation.passesResult(to: sceneOperation).enqueueWithProgress(on: operationQueue) { result in
             
             switch result {
                 
             case .failure(let error): fatalError("Error: \(error)")
-            case .success(let output):
+            case .success(let scene):
                 
                 DispatchQueue.main.async { [weak self] in
                     
                     guard let self = self else { return }
                     
-                    let (maps, atlas, props) = output
-                                            
-                    guard let map = maps.first else { fatalError("Invalid map") }
-                    
-                    let scene = MDWScene(map: map, atlas: atlas, props: props)
-                    
                     self.state = .rendering(scene: scene)
-                    
-                    //TODO: catch device library errrors
-                    guard let device = MTLCreateSystemDefaultDevice() else { return }
-                    
-                    scene.library = try? device.makeDefaultLibrary(bundle: Map.bundle)
                 }
             }
         }

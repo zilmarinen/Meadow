@@ -9,15 +9,17 @@ import PeakOperation
 
 class SeamLoadingOperation: ConcurrentOperation, ProducesResult {
     
-    public var output: Result<[Map], Error> = Result { throw ResultError.noResult }
+    public var output: Result<([Map], Props), Error> = Result { throw ResultError.noResult }
     
     private let map: Map
-    private let maps: [Map]
+    private let mapCache: [Map]
+    private let propCache: Props
     
-    init(map: Map, maps: [Map]) {
+    init(map: Map, mapCache: [Map], propCache: Props) {
         
         self.map = map
-        self.maps = maps
+        self.mapCache = mapCache
+        self.propCache = propCache
         
         super.init()
     }
@@ -26,36 +28,28 @@ class SeamLoadingOperation: ConcurrentOperation, ProducesResult {
         
         let group = DispatchGroup()
         
-        var results: [Map] = [map]
+        var results: (maps: [Map], props: Props) = ([map], Props())
         var errors: [PortalSegue] = []
         
         for seam in map.seams.tiles {
             
-            let map = maps.first { $0.identifier == seam.segue.map }
-            
-            if let map = map {
-                
-                results.append(map)
-                
-                continue
-            }
-            
-            let loadingOperation = MapLoadingOperation(identifier: seam.segue.map)
+            let mapOperation = MapLoadingOperation(identifier: seam.segue.map, cache: mapCache)
+            let propOperation = PropLoadingOperation(cache: propCache)
             let stitchingOperation = SeamStitchingOperation(seam: seam)
             
             group.enter()
             
-            loadingOperation.passesResult(to: stitchingOperation).enqueue(on: internalQueue) { result in
+            mapOperation.passesResult(to: propOperation).passesResult(to: stitchingOperation).enqueue(on: internalQueue) { result in
                 
                 switch result {
                     
-                case .failure:
+                case .failure: errors.append(seam.segue)
+                case .success(let result):
                     
-                    errors.append(seam.segue)
+                    let (map, props) = result
                     
-                case .success(let map):
-                    
-                    results.append(map)
+                    results.maps.append(map)
+                    results.props.merge(cache: props)
                 }
                 
                 group.leave()

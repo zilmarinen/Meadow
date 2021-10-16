@@ -16,3 +16,8 @@ enum SeamStitchingError: Error {
     case droppedStitches([PortalSegue])
     case missingSeam(PortalSegue)
 }
+
+enum SceneMergingError: Error {
+    
+    case missingProp(String)
+}

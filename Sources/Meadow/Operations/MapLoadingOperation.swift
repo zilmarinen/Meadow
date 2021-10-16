@@ -22,10 +22,12 @@ class MapLoadingOperation: ConcurrentOperation, ProducesResult {
     public var output: Result<Map, Error> = Result { throw ResultError.noResult }
     
     private let identifier: String
+    private let cache: [Map]
     
-    init(identifier: String) {
+    init(identifier: String, cache: [Map] = []) {
         
         self.identifier = identifier
+        self.cache = cache
         
         super.init()
     }
@@ -34,48 +36,18 @@ class MapLoadingOperation: ConcurrentOperation, ProducesResult {
         
         do {
             
+            if let map = cache.first(where: { $0.identifier == identifier }) {
+                
+                output = .success(map)
+                
+                return finish()
+            }
+            
             let asset = try NSDataAsset.asset(named: identifier, in: .main)
             
             let map = try JSONDecoder().decode(Map.self, from: asset.data)
             
             output = .success(map)
-            
-        }
-        catch {
-        
-            output = .failure(error)
-        }
-        
-        finish()
-    }
-}
-
-public class MapLoadingOperation2: ConcurrentOperation, ConsumesResult, ProducesResult {
-    
-    public var input: Result<TextureAtlas, Error> = Result { throw ResultError.noResult }
-    public var output: Result<([Map], TextureAtlas), Error> = Result { throw ResultError.noResult }
-    
-    private let identifier: String
-    
-    public init(identifier: String) {
-        
-        self.identifier = identifier
-        
-        super.init()
-    }
-    
-    public override func execute() {
-        
-        do {
-            
-            let atlas = try input.get()
-            
-            let asset = try NSDataAsset.asset(named: identifier, in: .main)
-            
-            let map = try JSONDecoder().decode(Map.self, from: asset.data)
-            
-            output = .success(([map], atlas))
-            
         }
         catch {
         

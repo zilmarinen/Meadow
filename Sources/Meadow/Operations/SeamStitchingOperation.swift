@@ -9,8 +9,8 @@ import PeakOperation
 
 class SeamStitchingOperation: ConcurrentOperation, ConsumesResult, ProducesResult {
     
-    public var input: Result<Map, Error> = Result { throw ResultError.noResult }
-    public var output: Result<Map, Error> = Result { throw ResultError.noResult }
+    public var input: Result<(Map, Props), Error> = Result { throw ResultError.noResult }
+    public var output: Result<(Map, Props), Error> = Result { throw ResultError.noResult }
     
     private let seam: SeamTile
     
@@ -25,13 +25,13 @@ class SeamStitchingOperation: ConcurrentOperation, ConsumesResult, ProducesResul
         
         do {
             
-            let map = try input.get()
+            let (map, props) = try input.get()
             
             guard let stitch = map.seams.find(seam: seam.segue.identifier) else { throw SeamStitchingError.missingSeam(seam.segue) }
             
             map.offset = ((seam.coordinate + seam.segue.direction.coordinate) - stitch.coordinate)
             
-            output = .success(map)
+            output = .success((map, props))
         }
         catch {
             

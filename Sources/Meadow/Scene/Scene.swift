@@ -61,11 +61,9 @@ open class Scene: SCNScene, Responder, SceneDelegate, Soilable, Updatable {
         super.init()
         
         camera.ancestor = self
+        protagonist.ancestor = self
         map.ancestor = self
         sun.ancestor = self
-        
-        protagonist.ancestor = self
-        protagonist.isHidden = true
         
         rootNode.addChildNode(camera)
         rootNode.addChildNode(protagonist)
@@ -135,41 +133,37 @@ extension Scene {
     
     public func updateSeams(map: Map) {
         
-        let operation = SeamLoadingOperation(map: map, maps: maps)
+        let loadingOperation = SeamLoadingOperation(map: map, mapCache: maps, propCache: props)
+        let mergingOperation = SceneMergingOperation(map: map, mapCache: maps, propCache: props)
         
-        operation.enqueue(on: operationQueue) { result in
+        loadingOperation.passesResult(to: mergingOperation).enqueue(on: operationQueue) { result in
             
             DispatchQueue.main.async { [weak self] in
              
+                guard let self = self else { return }
+                
                 switch result {
                     
                 case .failure(let error):
                     
-                    print("Error: \(error)")
+                    print("Error updating seams: \(error)")
                     
-                case .success(let seams):
+                case .success(let result):
                     
-                    guard let self = self else { return }
+                    let (mergedMaps, mergedProps) = result
                     
-                    let removed = self.maps.filter { !seams.contains($0) }
-                    
-                    for seam in removed {
-                        
-                        seam.ancestor = nil
-                        seam.removeFromParentNode()
-                    }
-                    
-                    for seam in seams {
-                        
-                        if seam.parent == nil {
-                            
-                            seam.ancestor = self
-                            
-                            self.rootNode.addChildNode(seam)
+                    for map in mergedMaps {
+
+                        if map.parent == nil {
+
+                            map.ancestor = self
+
+                            self.rootNode.addChildNode(map)
                         }
                     }
                     
-                    self.maps = seams
+                    self.maps = mergedMaps
+                    self.props = mergedProps
                     
                     self.becomeDirty()
                 }

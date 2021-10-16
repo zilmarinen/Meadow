@@ -9,14 +9,14 @@ import PeakOperation
 
 public class PropLoadingOperation: ConcurrentOperation, ConsumesResult, ProducesResult {
     
-    public var input: Result<([Map], TextureAtlas), Error> = Result { throw ResultError.noResult }
-    public var output: Result<([Map], TextureAtlas, Props), Error> = Result { throw ResultError.noResult }
+    public var input: Result<Map, Error> = Result { throw ResultError.noResult }
+    public var output: Result<(Map, Props), Error> = Result { throw ResultError.noResult }
     
-    private let props: Props?
+    private let cache: Props?
     
-    public init(props: Props? = nil) {
+    public init(cache: Props? = nil) {
         
-        self.props = props
+        self.cache = cache
         
         super.init()
     }
@@ -25,31 +25,25 @@ public class PropLoadingOperation: ConcurrentOperation, ConsumesResult, Produces
         
         do {
             
-            let (maps, atlas) = try input.get()
+            let map = try input.get()
             
-            let result = Props()
+            let props = Props()
             
-            let bridges = Array(Set(maps.flatMap { $0.bridges.props }))
-            let buildings = Array(Set(maps.flatMap { $0.buildings.props }))
-            let foliage = Array(Set(maps.flatMap { $0.foliage.props }))
-            let stairs = Array(Set(maps.flatMap { $0.stairs.props }))
-            let walls = Array(Set(maps.flatMap { $0.walls.props }))
-            
-            for prop in bridges + buildings + foliage + stairs + walls {
+            for prop in map.props {
                 
-                if let model = props?.model(prop: prop) {
+                if let model = cache?.model(prop: prop) {
                     
-                    result.cache(prop: prop, model: model)
+                    props.cache(prop: prop, model: model)
                     
                     continue
                 }
                 
                 let model = try prop.load()
                 
-                result.cache(prop: prop, model: model)
+                props.cache(prop: prop, model: model)
             }
             
-            output = .success((maps, atlas, result))
+            output = .success((map, props))
         }
         catch {
             

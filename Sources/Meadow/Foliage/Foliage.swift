@@ -17,5 +17,5 @@ public class Foliage: PropGrid<FoliageChunk> {
         return SCNProgram(name: .foliage, library: library)
     }()
     
-    var props: [Prop] { chunks.compactMap { $0.prop } }
+    var props: [Prop] { Array(Set(chunks.compactMap { $0.prop })) }
 }

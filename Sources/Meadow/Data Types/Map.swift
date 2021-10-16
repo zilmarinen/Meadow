@@ -72,6 +72,8 @@ public class Map: SCNNode, Decodable, Responder, Updatable {
     
     public var map: Map? { self }
     
+    public var props: [Prop] { bridges.props + buildings.props + foliage.props + stairs.props + walls.props }
+    
     public override init() {
         
         actors = Actors()

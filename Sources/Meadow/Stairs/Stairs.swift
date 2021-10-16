@@ -18,5 +18,5 @@ public class Stairs: PropGrid<StairChunk> {
         return SCNProgram(name: .stairs, library: library)
     }()
 
-    var props: [Prop] { chunks.compactMap { $0.prop } }
+    var props: [Prop] { Array(Set(chunks.compactMap { $0.prop })) }
 }

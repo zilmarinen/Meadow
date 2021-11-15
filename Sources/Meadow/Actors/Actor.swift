@@ -37,7 +37,7 @@ public class Actor: SCNNode, Codable, Hideable, Responder, Shadable, Soilable, U
         }
     }
     
-    public var direction: Cardinal = .north {
+    public var direction: Direction = Cardinal.north.direction {
         
         didSet {
             
@@ -114,7 +114,7 @@ public class Actor: SCNNode, Codable, Hideable, Responder, Shadable, Soilable, U
         
         super.init()
         
-        name = "Chunk \(coordinate.description)"
+        name = "Chunk \(coordinate.id)"
         position = SCNVector3(coordinate: coordinate)
         categoryBitMask = category.rawValue
         
@@ -137,7 +137,7 @@ public class Actor: SCNNode, Codable, Hideable, Responder, Shadable, Soilable, U
             addChildNode(model)
         }
         
-        model.rotation = SCNQuaternion(Rotation(yaw: Angle(radians: Math.radians(degrees: Double(90 * direction.rawValue)))))
+        //model.rotation = SCNQuaternion(Rotation(yaw: Angle(radians: Math.radians(degrees: Double(90 * direction.rawValue)))))
         
 //        self.geometry = SCNBox(width: 1.0, height: 1.0, length: 1.0, chamferRadius: 0.0)
 //        self.geometry?.firstMaterial?.diffuse.contents = MDWColor.systemPurple
@@ -164,7 +164,7 @@ public class Actor: SCNNode, Codable, Hideable, Responder, Shadable, Soilable, U
         
         case .idle:
             
-            position = SCNVector3(Vector(x: coordinate.world.x, y: coordinate.world.y, z: coordinate.world.z))
+            position = SCNVector3(coordinate.position)
             
         case .traversing(let path, let current, let destination):
             
@@ -180,8 +180,8 @@ public class Actor: SCNNode, Codable, Hideable, Responder, Shadable, Soilable, U
             
             let speed = (delta / Double(current.movementCost)) * 2
             
-            let currentPosition = Vector(vector: position)
-            let targetPosition = next.vector
+            let currentPosition = Position(position)
+            let targetPosition = next.position
             let newPosition = currentPosition.move(towards: targetPosition, distance: speed)
             
             position = SCNVector3(newPosition)

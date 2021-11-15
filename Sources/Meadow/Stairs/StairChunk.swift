@@ -73,6 +73,6 @@ extension StairChunk: Traversable {
             }
         }
         
-        return TraversableNode(coordinate: Coordinate(x: coordinate.x, y: self.coordinate.y, z: coordinate.z), vector: coordinate.world, movementCost: movementCost, sloped: true, cardinals: cardinals)
+        return TraversableNode(coordinate: Coordinate(x: coordinate.x, y: self.coordinate.y, z: coordinate.z), position: coordinate.position, movementCost: movementCost, sloped: true, cardinals: cardinals)
     }
 }

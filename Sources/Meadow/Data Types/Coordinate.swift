@@ -7,16 +7,17 @@
 import Euclid
 import Foundation
 
-public struct Coordinate: Codable, Equatable, Hashable {
+public struct Coordinate: Codable, Equatable, Hashable, Identifiable {
     
     public let x: Int
     public let y: Int
     public let z: Int
     
-    var description: String {
-        
-        return "[\(x), \(y), \(z)]"
-    }
+    public var id: String { "[\(x), \(y), \(z)]" }
+    
+    var position: Position { Position(x: Double(x), y: Double(y) * World.Constants.slope, z: Double(z)) }
+    
+    public var xz: Coordinate { Coordinate(x: x, y: 0, z: z) }
     
     public init(x: Int, y: Int, z: Int) {
         
@@ -25,9 +26,9 @@ public struct Coordinate: Codable, Equatable, Hashable {
         self.z = z
     }
     
-    public init(vector: Vector) {
+    public init(position: Position) {
         
-        self.init(x: Int(vector.x), y: Int(vector.y), z: Int(vector.z))
+        self.init(x: Int(position.x), y: Int(position.y), z: Int(position.z))
     }
 }
 
@@ -38,10 +39,6 @@ public extension Coordinate {
     static var up = Coordinate(x: 0, y: 1, z: 0)
     static var forward = Coordinate(x: 0, y: 0, z: -1)
     static var infinity = Coordinate(x: .max, y: .max, z: .max)
-    
-    var xz: Coordinate { Coordinate(x: x, y: 0, z: z) }
-    
-    var world: Vector { Vector(x: Double(x), y: Double(y) * World.Constants.slope, z: Double(z)) }
 }
 
 public extension Coordinate {
@@ -112,14 +109,14 @@ extension Coordinate {
 
 extension Coordinate {
     
-    func direction(to coordinate: Coordinate) -> Cardinal {
+    func direction(to coordinate: Coordinate) -> Direction {
         
         if x == coordinate.x {
             
-            return z > coordinate.z ? .north : .south
+            return z > coordinate.z ? Cardinal.north.direction : Cardinal.south.direction
         }
         
-        return x > coordinate.x ? .west : .east
+        return x > coordinate.x ? Cardinal.west.direction : Cardinal.east.direction
     }
 }
 

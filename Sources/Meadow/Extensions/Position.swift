@@ -1,5 +1,5 @@
 //
-//  Vector.swift
+//  Position.swift
 //
 //  Created by Zack Brown on 03/11/2020.
 //
@@ -8,7 +8,7 @@ import Euclid
 import Foundation
 import SceneKit
 
-extension Vector {
+extension Position {
     
     public init(x: Double, y: Double, z: Double) {
         
@@ -26,49 +26,41 @@ extension Vector {
     }
 }
 
-public extension Vector {
-    
-    static var right =  Vector(x: 1, y: 0, z: 0)
-    static var up = Vector(x: 0, y: 1, z: 0)
-    static var forward = Vector(x: 0, y: 0, z: -1)
-    static var infinity = Vector(x: .infinity, y: .infinity, z: .infinity)
-}
-
-public extension Vector {
+public extension Position {
     
     static func minimum(lhs: Self, rhs: Self) -> Self {
 
-        return Vector(x: min(lhs.x, rhs.x), y: min(lhs.y, rhs.y), z: min(lhs.z, rhs.z))
+        return Position(x: Swift.min(lhs.x, rhs.x), y: Swift.min(lhs.y, rhs.y), z: Swift.min(lhs.z, rhs.z))
     }
 
     static func maximum(lhs: Self, rhs: Self) -> Self {
 
-        return Vector(x: max(lhs.x, rhs.x), y: max(lhs.y, rhs.y), z: max(lhs.z, rhs.z))
+        return Position(x: Swift.max(lhs.x, rhs.x), y: Swift.max(lhs.y, rhs.y), z: Swift.max(lhs.z, rhs.z))
     }
 
-    static func absolute(vector: Vector) -> Vector {
+    static func absolute(vector: Vector) -> Position {
 
-        return Vector(x: abs(vector.x), y: abs(vector.y), z: abs(vector.z))
+        return Position(x: abs(vector.x), y: abs(vector.y), z: abs(vector.z))
     }
     
-    func compare(with vector: Vector, precision: Double = Math.epsilon) -> Bool {
+    func compare(with vector: Position, precision: Double = Math.epsilon) -> Bool {
         
         return self == vector || (abs(x - vector.x) < precision && abs(y - vector.y) < precision && abs(z - vector.z) < precision)
     }
     
     func move(towards: Self, distance: Double) -> Self {
         
-        let direction = (towards - self).normalized()
+        let direction = (towards - self).direction
         
-        let delta = min(distance, direction.length)
+        let delta = Swift.min(distance, direction.norm)
         
         return (self + (direction * delta)).quantized()
     }
 }
 
-extension Array where Element == Vector {
+extension Array where Element == Position {
     
-    func average() -> Vector {
+    func average() -> Direction {
         
         guard count > 0 else { return .zero }
         
@@ -85,12 +77,12 @@ extension Array where Element == Vector {
             z += vector.z
         }
         
-        return Vector(x: x / Double(count), y: y / Double(count), z: z / Double(count))
+        return Direction(x: x / Double(count), y: y / Double(count), z: z / Double(count))
     }
     
-    public func normal() -> Vector {
+    public func normal() -> Direction {
         
-        let z = Vector(x: 0, y: 0, z: 1)
+        let z = Direction(x: 0, y: 0, z: 1)
         
         switch count {
             
@@ -102,16 +94,16 @@ extension Array where Element == Vector {
             
             let normal = ab.cross(z).cross(ab)
             
-            let length = normal.length
+            let length = normal.norm
             
-            guard length > 0 else { return Vector(1, 0, 0) }
+            guard length > 0 else { return Direction(1, 0, 0) }
             
-            return normal / length
+            return (normal / length).direction
             
         default:
             
             var v0 = self.first!
-            var v1: Vector?
+            var v1: Distance?
             
             var ab = v0 - self.last!
             
@@ -123,7 +115,7 @@ extension Array where Element == Vector {
                 
                 let normal = ab.cross(bc)
                 
-                let squaredMagnitude = normal.lengthSquared
+                let squaredMagnitude = normal.norm
                 
                 if squaredMagnitude > magnitude {
                     
@@ -136,7 +128,7 @@ extension Array where Element == Vector {
                 ab = bc
             }
             
-            return v1 ?? z
+            return v1?.direction ?? z
         }
     }
 }

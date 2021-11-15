@@ -34,7 +34,7 @@ public class WallChunk: Chunk<WallTile> {
     
             let rotation = Rotation(yaw: Angle(radians: (Double.pi / 2.0) * Double(tile.pattern.edge)))
     
-            let transform = Transform(offset: Vector(x: Double(tile.coordinate.x - bounds.start.x), y: Double(tile.coordinate.y) * World.Constants.slope, z: Double(tile.coordinate.z - bounds.start.z)), rotation: rotation)
+            let transform = Transform(offset: Distance(x: Double(tile.coordinate.x - bounds.start.x), y: Double(tile.coordinate.y) * World.Constants.slope, z: Double(tile.coordinate.z - bounds.start.z)), rotation: rotation)
     
             mesh = mesh.merge(prop.mesh.transformed(by: transform))
         }

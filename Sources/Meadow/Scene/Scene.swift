@@ -208,7 +208,7 @@ extension Scene {
                 guard let nodes = stack.path(between: destination, destination: origin),
                       let pathNode = nodes.first else { return nil }
                 
-                let startNode = PathNode(coordinate: node.value.coordinate, vector: node.value.vector, direction: node.value.coordinate.direction(to: pathNode.coordinate), movementCost: node.value.movementCost, sloped: node.value.sloped)
+                let startNode = PathNode(coordinate: node.value.coordinate, position: node.value.position, direction: node.value.coordinate.direction(to: pathNode.coordinate), movementCost: node.value.movementCost, sloped: node.value.sloped)
                 
                 return Path(nodes: ([startNode] + nodes))
             }

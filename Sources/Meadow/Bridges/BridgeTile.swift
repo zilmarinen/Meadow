@@ -53,6 +53,6 @@ extension BridgeTile: Traversable {
         
         //TODO: fix traversable bridge tiles
         
-        return TraversableNode(coordinate: coordinate, vector: coordinate.world, movementCost: movementCost, sloped: false, cardinals: [.north])
+        return TraversableNode(coordinate: coordinate, position: coordinate.position, movementCost: movementCost, sloped: false, cardinals: [.north])
     }
 }

@@ -65,7 +65,7 @@ public class Chunk<T: Tile>: SCNNode, Decodable, Hideable, Responder, Shadable, 
         
         super.init()
         
-        name = "Chunk \(self.bounds.start.description)"
+        name = "Chunk \(self.bounds.start.id)"
         categoryBitMask = category.rawValue
         
         for tile in tiles {

@@ -61,7 +61,7 @@ public class PropChunk: SCNNode, Codable, Hideable, Responder, Shadable, Soilabl
         
         super.init()
         
-        name = "Chunk \(coordinate.description)"
+        name = "Chunk \(coordinate.id)"
         categoryBitMask = category.rawValue
         
         becomeDirty()
@@ -76,7 +76,7 @@ public class PropChunk: SCNNode, Codable, Hideable, Responder, Shadable, Soilabl
         
         guard isDirty else { return false }
         
-        position = SCNVector3(coordinate.world)
+        position = SCNVector3(coordinate.position)
         
         geometry?.program = program
         geometry?.name = prop.identifier

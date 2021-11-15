@@ -25,16 +25,25 @@ public struct Cardinal: OptionSet, CaseIterable, Codable, Hashable, Identifiable
         self.rawValue = rawValue
     }
     
-    public var id: String { description }
+    public var id: String {
     
-    public var description: String {
-        
         switch self {
             
         case .north: return "North"
         case .east: return "East"
         case .south: return "South"
         default: return "West"
+        }
+    }
+    
+    public var direction: Direction {
+        
+        switch self {
+            
+        case .east: return .x
+        case .south: return .z
+        case .west: return -.x
+        default: return -.z
         }
     }
     
@@ -113,31 +122,11 @@ extension Cardinal {
         (.southWest, .northWest)
     ]
     
-    static var Normals: [Vector] = [
-        
-        .forward,
-        .right,
-        -.forward,
-        -.right
-    ]
+    public var cardinals: (Cardinal, Cardinal) { Self.Cardinals[self.edge] }
     
-    static func cardinals(cardinal: Cardinal) -> (Cardinal, Cardinal) { Cardinals[cardinal.edge] }
+    public var opposite: Cardinal { Self.Opposites[self.edge] }
     
-    public var cardinals: (Cardinal, Cardinal) { Cardinal.cardinals(cardinal: self) }
+    public var ordinals: (Ordinal, Ordinal) { Self.Ordinals[self.edge] }
     
-    static func opposite(cardinal: Cardinal) -> Cardinal { Opposites[cardinal.edge] }
-    
-    public var opposite: Cardinal { Cardinal.opposite(cardinal: self) }
-    
-    static func ordinals(cardinal: Cardinal) -> (Ordinal, Ordinal) { Ordinals[cardinal.edge] }
-    
-    public var ordinals: (Ordinal, Ordinal) { Cardinal.ordinals(cardinal: self) }
-    
-    static func normal(cardinal: Cardinal) -> Vector { Normals[cardinal.edge] }
-    
-    public var normal: Vector { Cardinal.normal(cardinal: self) }
-    
-    static func coordinate(cardinal: Cardinal) -> Coordinate { Coordinates[cardinal.edge] }
-    
-    public var coordinate: Coordinate { Cardinal.coordinate(cardinal: self) }
+    public var coordinate: Coordinate { Self.Coordinates[self.edge] }
 }

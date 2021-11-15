@@ -26,9 +26,7 @@ public struct Ordinal: OptionSet, CaseIterable, Codable, Hashable, Identifiable 
         self.rawValue = rawValue
     }
     
-    public var id: String { description }
-    
-    public var description: String {
+    public var id: String {
         
         switch self {
             
@@ -36,6 +34,17 @@ public struct Ordinal: OptionSet, CaseIterable, Codable, Hashable, Identifiable 
         case .northEast: return "North East"
         case .southEast: return "South East"
         default: return "South West"
+        }
+    }
+    
+    public var direction: Direction {
+        
+        switch self {
+            
+        case .northEast: return Direction.mean(.x, -.z)
+        case .southEast: return Direction.mean(.x, .z)
+        case .southWest: return Direction.mean(-.x, .z)
+        default: return Direction.mean(-.x, -.z)
         }
     }
     
@@ -85,19 +94,16 @@ extension Ordinal {
         (.southEast, .northWest)
     ]
     
-    static func cardinals(ordinal: Ordinal) -> (Cardinal, Cardinal) { Cardinals[ordinal.corner] }
+    public var cardinals: (Cardinal, Cardinal) { Self.Cardinals[self.corner] }
     
-    public var cardinals: (Cardinal, Cardinal) { Ordinal.cardinals(ordinal: self) }
+    public var opposite: Ordinal { Self.Opposites[self.corner] }
     
-    static func opposite(ordinal: Ordinal) -> Ordinal { Opposites[ordinal.corner] }
+    public var ordinals: (Ordinal, Ordinal) { Self.Ordinals[self.corner] }
     
-    public var opposite: Ordinal { Ordinal.opposite(ordinal: self) }
+    public var coordinate: Coordinate { Self.Coordinates[self.corner] }
     
-    static func ordinals(ordinal: Ordinal) -> (Ordinal, Ordinal) { Ordinals[ordinal.corner] }
-    
-    public var ordinals: (Ordinal, Ordinal) { Ordinal.ordinals(ordinal: self) }
-    
-    static func coordinate(ordinal: Ordinal) -> Coordinate { Coordinates[ordinal.corner] }
-    
-    public var coordinate: Coordinate { Ordinal.coordinate(ordinal: self) }
+    public static let corners: [Position] = [Position(x: -World.Constants.volumeSize, y: 0, z: -World.Constants.volumeSize),
+                                             Position(x: World.Constants.volumeSize, y: 0, z: -World.Constants.volumeSize),
+                                             Position(x: World.Constants.volumeSize, y: 0, z: World.Constants.volumeSize),
+                                             Position(x: -World.Constants.volumeSize, y: 0, z: World.Constants.volumeSize)]
 }

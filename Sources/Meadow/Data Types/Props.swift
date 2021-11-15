@@ -97,11 +97,11 @@ public class Props {
     
     func merge(cache: Props) {
         
-        bridges.merge(cache.bridges, uniquingKeysWith: { (lhs, _) in lhs } )
-        buildings.merge(cache.buildings, uniquingKeysWith: { (lhs, _) in lhs } )
-        foliage.merge(cache.foliage, uniquingKeysWith: { (lhs, _) in lhs } )
-        portals.merge(cache.portals, uniquingKeysWith: { (lhs, _) in lhs } )
-        stairs.merge(cache.stairs, uniquingKeysWith: { (lhs, _) in lhs } )
-        walls.merge(cache.walls, uniquingKeysWith: { (lhs, _) in lhs } )
+        bridges.merge(cache.bridges, uniquingKeysWith: { (lhs, _) in lhs })
+        buildings.merge(cache.buildings, uniquingKeysWith: { (lhs, _) in lhs })
+        foliage.merge(cache.foliage, uniquingKeysWith: { (lhs, _) in lhs })
+        portals.merge(cache.portals, uniquingKeysWith: { (lhs, _) in lhs })
+        stairs.merge(cache.stairs, uniquingKeysWith: { (lhs, _) in lhs })
+        walls.merge(cache.walls, uniquingKeysWith: { (lhs, _) in lhs })
     }
 }

@@ -81,13 +81,13 @@ extension Camera {
             
             let radius = 10.0 * zoom
             
-            var vector = Math.plot(radians: angle.radians, radius: radius)
+            let plot = Math.plot(radians: angle.radians, radius: radius)
             
-            vector.y = radius
+            let vector = SCNVector3(x: plot.x, y: radius, z: plot.z)
             
             self.position = node.position
             
-            jig.position = SCNVector3(vector)
+            jig.position = vector
             jig.camera?.orthographicScale = zoom
             jig.look(at: node.position)
         }

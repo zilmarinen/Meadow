@@ -9,8 +9,8 @@ import Euclid
 public struct PathNode: Equatable {
     
     public let coordinate: Coordinate
-    public let vector: Vector
-    public let direction: Cardinal
+    public let position: Position
+    public let direction: Direction
     public let movementCost: Double
     public let sloped: Bool
 }

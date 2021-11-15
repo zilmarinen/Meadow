@@ -6,14 +6,14 @@
 
 import Foundation
 
-public enum Rarity: Int, CaseIterable, Codable {
+public enum Rarity: Int, CaseIterable, Codable, Identifiable {
     
     case common
     case rare
     case epic
     case legendary
     
-    public var description: String {
+    public var id: String {
         
         switch self {
         

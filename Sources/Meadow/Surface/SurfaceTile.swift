@@ -73,6 +73,6 @@ extension SurfaceTile: Traversable {
     
     func traversableNode(for coordinate: Coordinate) -> TraversableNode {
         
-        return TraversableNode(coordinate: self.coordinate, vector: coordinate.world, movementCost: movementCost, sloped: tileType == .sloped, cardinals: Cardinal.allCases)
+        return TraversableNode(coordinate: self.coordinate, position: coordinate.position, movementCost: movementCost, sloped: tileType == .sloped, cardinals: Cardinal.allCases)
     }
 }

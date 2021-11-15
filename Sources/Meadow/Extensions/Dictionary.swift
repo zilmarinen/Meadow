@@ -14,7 +14,7 @@ extension Dictionary where Key == Coordinate, Value == TraversableNode {
               let next = self[end.coordinate],
               self[origin] != nil else { return nil }
         
-        var nodes: [PathNode] = [PathNode(coordinate: end.coordinate, vector: end.vector, direction: end.coordinate.direction(to: next.coordinate), movementCost: end.movementCost, sloped: end.sloped)]
+        var nodes: [PathNode] = [PathNode(coordinate: end.coordinate, position: end.position, direction: end.coordinate.direction(to: next.coordinate), movementCost: end.movementCost, sloped: end.sloped)]
         
         var node = end
         
@@ -22,7 +22,7 @@ extension Dictionary where Key == Coordinate, Value == TraversableNode {
             
             guard let next = self[node.coordinate] else { return nil }
             
-            nodes.append(PathNode(coordinate: next.coordinate, vector: next.vector, direction: node.coordinate.direction(to: next.coordinate), movementCost: next.movementCost, sloped: next.sloped))
+            nodes.append(PathNode(coordinate: next.coordinate, position: next.position, direction: node.coordinate.direction(to: next.coordinate), movementCost: next.movementCost, sloped: next.sloped))
             
             node = next
         }

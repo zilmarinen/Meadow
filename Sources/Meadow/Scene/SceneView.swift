@@ -44,7 +44,7 @@ extension SceneView {
         
         guard let hit = self.hitTest(point, options: options).first else { return .zero }
         
-        let vector = Vector(vector: hit.worldCoordinates)
+        let vector = Vector(hit.worldCoordinates)
         
         return Coordinate(x: Int(round(vector.x)), y: Int(vector.y / World.Constants.slope), z: Int(round(vector.z)))
     }

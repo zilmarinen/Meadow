@@ -27,7 +27,7 @@ public enum SurfaceMaterial: Int, CaseIterable, Codable, Identifiable {
         case .dirt: return "dirt"
         case .sand: return "sand"
         case .stone: return "stone"
-        case .undergrowth: return "wood"
+        case .undergrowth: return "undergrowth"
         }
     }
 

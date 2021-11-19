@@ -72,7 +72,7 @@ public class Map: SCNNode, Decodable, Responder, Updatable {
     
     public var map: Map? { self }
     
-    public var props: [Prop] { bridges.props + buildings.props + foliage.props + stairs.props + walls.props }
+    public var props: [Prop] { buildings.props + foliage.props + stairs.props }
     
     public override init() {
         
@@ -191,8 +191,7 @@ extension Map {
               water.find(tile: coordinate)?.coordinate.y ?? 0 < coordinate.y else { return nil }
         
         if let bridge = bridges.find(tile: coordinate),
-           bridge.coordinate.y == coordinate.y,
-           bridge.tileType == .path {
+           bridge.coordinate.y == coordinate.y {
             
             return bridge.traversableNode(for: coordinate)
         }

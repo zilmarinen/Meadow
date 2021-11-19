@@ -20,24 +20,4 @@ public enum BridgeMaterial: Int, CaseIterable, Codable, Hashable, Identifiable {
         case .wood: return "wood"
         }
     }
-    
-    func propIdentifier(tileType: BridgeTileType, pattern: Cardinal) -> String {
-        
-        let prop = id + "_bridge_" + tileType.id
-        
-        switch tileType {
-            
-        case .corner(let lhs):
-            
-            if pattern.count == 2 {
-                
-                return prop + "_dual"
-            }
-            
-            return prop + (lhs ? "_left" : "_right")
-            
-        case .edge(let lhs): return prop + (lhs ? "_left" : "_right")
-        default: return prop
-        }
-    }
 }

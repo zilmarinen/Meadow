@@ -16,6 +16,4 @@ public class Bridges: Grid<BridgeChunk, BridgeTile> {
         
         return SCNProgram(name: .bridges, library: library)
     }()
-    
-    var props: [Prop] { Array(Set(chunks.flatMap { $0.tiles.compactMap { $0.prop } })) }
 }

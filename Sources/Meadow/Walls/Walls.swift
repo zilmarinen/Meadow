@@ -16,6 +16,4 @@ public class Walls: Grid<WallChunk, WallTile> {
         
         return SCNProgram(name: .walls, library: library)
     }()
-    
-    var props: [Prop] { Array(Set(chunks.flatMap { $0.tiles.compactMap { $0.prop } })) }
 }

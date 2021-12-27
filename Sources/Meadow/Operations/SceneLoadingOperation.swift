@@ -8,9 +8,8 @@ import Foundation
 import PeakOperation
 import SceneKit
 
-public class SceneLoadingOperation: ConcurrentOperation, ConsumesResult, ProducesResult {
+public class SceneLoadingOperation: ConcurrentOperation, ProducesResult {
     
-    public var input: Result<TextureAtlas, Error> = Result { throw ResultError.noResult }
     public var output: Result<MDWScene, Error> = Result { throw ResultError.noResult }
     
     let identifier: String
@@ -26,11 +25,9 @@ public class SceneLoadingOperation: ConcurrentOperation, ConsumesResult, Produce
         
         do {
             
-            guard let device = MTLCreateSystemDefaultDevice() else { return }
+            guard let device = MTLCreateSystemDefaultDevice() else { throw SceneLoadingError.invalidDevice }
             
             let library = try device.makeDefaultLibrary(bundle: Map.bundle)
-            
-            let atlas = try input.get()
             
             let mapOperation = MapLoadingOperation(identifier: identifier)
             let propOperation = PropLoadingOperation()
@@ -50,7 +47,7 @@ public class SceneLoadingOperation: ConcurrentOperation, ConsumesResult, Produce
                     
                     let (map, props) = value
                     
-                    let scene = MDWScene(map: map, atlas: atlas, props: props)
+                    let scene = MDWScene(map: map, props: props)
                     
                     scene.library = library
                     

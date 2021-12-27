@@ -32,10 +32,9 @@ class GameViewModel: ObservableObject {
         
         state = .idle
         
-        let atlasOperation = TextureAtlasOperation(season: .spring)
         let sceneOperation = SceneLoadingOperation(identifier: "island")
         
-        let progress = atlasOperation.passesResult(to: sceneOperation).enqueueWithProgress(on: operationQueue) { result in
+        let progress = sceneOperation.enqueueWithProgress(on: operationQueue) { result in
             
             switch result {
                 

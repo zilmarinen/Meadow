@@ -6,18 +6,23 @@
 
 import Foundation
 
-enum AssetError: Error {
+public enum AssetError: Error {
 
     case missingAsset(String)
 }
 
-enum SeamStitchingError: Error {
+public enum SceneLoadingError: Error {
+    
+    case invalidDevice
+}
+
+public enum SeamStitchingError: Error {
     
     case droppedStitches([PortalSegue])
     case missingSeam(PortalSegue)
 }
 
-enum SceneMergingError: Error {
+public enum SceneMergingError: Error {
     
     case missingProp(String)
 }

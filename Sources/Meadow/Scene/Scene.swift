@@ -44,18 +44,15 @@ open class Scene: SCNScene, Responder, SceneDelegate, Soilable, Updatable {
     let sun = Sun()
     private(set) var props: Props
     
-    private(set) public var atlas: TextureAtlas
-    
     var maps: [Map] = []
     
     var lastUpdate: TimeInterval?
     
     public var scene: Scene? { self }
     
-    public required init(map: Map, atlas: TextureAtlas, props: Props) {
+    public required init(map: Map, props: Props) {
         
         self.maps = [map]
-        self.atlas = atlas
         self.props = props
         
         super.init()

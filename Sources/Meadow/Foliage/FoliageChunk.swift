@@ -21,13 +21,6 @@ public class FoliageChunk: PropChunk {
     
     public override var program: SCNProgram? { map?.foliage.program }
     
-    public override var textures: [Texture]? {
-        
-        guard let texture = scene?.atlas.foliage.texture(for: foliageType)  else { return nil }
-        
-        return [texture]
-    }
-    
     let foliageType: FoliageType
     
     required public init(from decoder: Decoder) throws {

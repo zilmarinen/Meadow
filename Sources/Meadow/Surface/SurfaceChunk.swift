@@ -18,13 +18,6 @@ public class SurfaceChunk: Chunk<SurfaceTile> {
     
     public override var program: SCNProgram? { map?.surface.program }
     
-    public override var textures: [Texture]? {
-        
-        guard let tileset = scene?.atlas.surface else { return nil }
-        
-        return [tileset.overlay] + tileset.materials
-    }
-    
     required public init(from decoder: Decoder) throws {
         
         try super.init(from: decoder)

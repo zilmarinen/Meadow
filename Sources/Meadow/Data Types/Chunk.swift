@@ -87,7 +87,7 @@ public class Chunk<T: Tile>: SCNNode, Decodable, Hideable, Responder, Shadable, 
         
         position = SCNVector3(coordinate: bounds.start)
         
-        geometry?.program = program
+        //geometry?.program = program
         
         if let uniforms = uniforms {
             

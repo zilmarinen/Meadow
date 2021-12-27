@@ -6,18 +6,18 @@
 
 import Foundation
 
-public enum SurfaceMaterial: Int, CaseIterable, Codable, Identifiable {
+public enum SurfaceMaterial: Int, CaseIterable, Codable, Equatable, Identifiable {
     
     public static let solids: [SurfaceMaterial] = [.dirt,
-                                            .sand,
-                                            .stone,
-                                            .undergrowth]
+                                                   .sand,
+                                                   .stone,
+                                                   .undergrowth]
     
     case air
-    case dirt
     case sand
-    case stone
+    case dirt
     case undergrowth
+    case stone
     
     public var id: String {
         
@@ -36,10 +36,7 @@ public enum SurfaceMaterial: Int, CaseIterable, Codable, Identifiable {
         switch self {
         
         case .air: return 0
-        case .dirt: return 1
-        case .sand: return 1
-        case .stone: return 1
-        case .undergrowth: return 1
+        default: return 1
         }
     }
 }

@@ -109,6 +109,8 @@ extension Coordinate {
 
 extension Coordinate {
     
+    public var distance: Distance { Distance(x: Double(x), y: Double(y), z: Double(z)) }
+    
     func direction(to coordinate: Coordinate) -> Direction {
         
         if x == coordinate.x {

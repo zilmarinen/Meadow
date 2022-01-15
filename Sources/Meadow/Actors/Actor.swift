@@ -37,7 +37,7 @@ public class Actor: SCNNode, Codable, Hideable, Responder, Shadable, Soilable, U
         }
     }
     
-    public var direction: Direction = Cardinal.north.direction {
+    public var direction: Vector = Cardinal.north.direction {
         
         didSet {
             
@@ -180,7 +180,7 @@ public class Actor: SCNNode, Codable, Hideable, Responder, Shadable, Soilable, U
             
             let speed = (delta / Double(current.movementCost)) * 2
             
-            let currentPosition = Position(position)
+            let currentPosition = Vector(position)
             let targetPosition = next.position
             let newPosition = currentPosition.move(towards: targetPosition, distance: speed)
             

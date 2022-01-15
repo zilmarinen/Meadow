@@ -36,14 +36,14 @@ public struct Cardinal: OptionSet, CaseIterable, Codable, Hashable, Identifiable
         }
     }
     
-    public var direction: Direction {
+    public var direction: Vector {
         
         switch self {
             
-        case .east: return .x
-        case .south: return .z
-        case .west: return -.x
-        default: return -.z
+        case .east: return Vector(x: 1, y: 0, z: 0)
+        case .south: return Vector(x: 0, y: 0, z: 1)
+        case .west: return Vector(x: -1, y: 0, z: 0)
+        default: return Vector(x: 0, y: 0, z: -1)
         }
     }
     

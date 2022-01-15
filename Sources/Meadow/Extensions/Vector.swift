@@ -1,5 +1,5 @@
 //
-//  Position.swift
+//  Vector.swift
 //
 //  Created by Zack Brown on 03/11/2020.
 //
@@ -8,7 +8,7 @@ import Euclid
 import Foundation
 import SceneKit
 
-extension Position {
+extension Vector {
     
     public init(x: Double, y: Double, z: Double) {
         
@@ -26,41 +26,29 @@ extension Position {
     }
 }
 
-public extension Position {
+public extension Vector {
     
-    static func minimum(lhs: Self, rhs: Self) -> Self {
+    static func minimum(lhs: Self, rhs: Self) -> Self { Vector(x: Swift.min(lhs.x, rhs.x), y: Swift.min(lhs.y, rhs.y), z: Swift.min(lhs.z, rhs.z)) }
 
-        return Position(x: Swift.min(lhs.x, rhs.x), y: Swift.min(lhs.y, rhs.y), z: Swift.min(lhs.z, rhs.z))
-    }
+    static func maximum(lhs: Self, rhs: Self) -> Self { Vector(x: Swift.max(lhs.x, rhs.x), y: Swift.max(lhs.y, rhs.y), z: Swift.max(lhs.z, rhs.z)) }
 
-    static func maximum(lhs: Self, rhs: Self) -> Self {
-
-        return Position(x: Swift.max(lhs.x, rhs.x), y: Swift.max(lhs.y, rhs.y), z: Swift.max(lhs.z, rhs.z))
-    }
-
-    static func absolute(vector: Vector) -> Position {
-
-        return Position(x: abs(vector.x), y: abs(vector.y), z: abs(vector.z))
-    }
+    static func absolute(vector: Vector) -> Vector { Vector(x: abs(vector.x), y: abs(vector.y), z: abs(vector.z)) }
     
-    func compare(with vector: Position, precision: Double = Math.epsilon) -> Bool {
-        
-        return self == vector || (abs(x - vector.x) < precision && abs(y - vector.y) < precision && abs(z - vector.z) < precision)
-    }
+    func compare(with vector: Vector, precision: Double = Math.epsilon) -> Bool { self == vector || (abs(x - vector.x) < precision && abs(y - vector.y) < precision && abs(z - vector.z) < precision) }
     
     func move(towards: Self, distance: Double) -> Self {
         
-        let direction = (towards - self).direction
-        
-        let delta = Swift.min(distance, direction.norm)
+        let direction = (towards - self).normalized()
+                
+        let delta = min(distance, direction.length)
         
         return (self + (direction * delta)).quantized()
     }
 }
 
-extension Array where Element == Position {
+extension Array where Element == Vector {
     
-    func average() -> Direction {
+    func average() -> Vector {
         
         guard count > 0 else { return .zero }
         
@@ -77,12 +65,12 @@ extension Array where Element == Position {
             z += vector.z
         }
         
-        return Direction(x: x / Double(count), y: y / Double(count), z: z / Double(count))
+        return Vector(x: x / Double(count), y: y / Double(count), z: z / Double(count))
     }
     
-    public func normal() -> Direction {
+    public func normal() -> Vector {
         
-        let z = Direction(x: 0, y: 0, z: 1)
+        let z = Vector(x: 0, y: 0, z: 1)
         
         switch count {
             
@@ -94,16 +82,16 @@ extension Array where Element == Position {
             
             let normal = ab.cross(z).cross(ab)
             
-            let length = normal.norm
+            let length = normal.length
             
-            guard length > 0 else { return Direction(1, 0, 0) }
+            guard length > 0 else { return Vector(1, 0, 0) }
             
-            return (normal / length).direction
+            return (normal / length)
             
         default:
             
             var v0 = self.first!
-            var v1: Distance?
+            var v1: Vector?
             
             var ab = v0 - self.last!
             
@@ -115,7 +103,7 @@ extension Array where Element == Position {
                 
                 let normal = ab.cross(bc)
                 
-                let squaredMagnitude = normal.norm
+                let squaredMagnitude = normal.lengthSquared
                 
                 if squaredMagnitude > magnitude {
                     
@@ -128,7 +116,7 @@ extension Array where Element == Position {
                 ab = bc
             }
             
-            return v1?.direction ?? z
+            return v1 ?? z
         }
     }
 }

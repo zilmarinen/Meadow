@@ -15,7 +15,7 @@ public struct Coordinate: Codable, Equatable, Hashable, Identifiable {
     
     public var id: String { "[\(x), \(y), \(z)]" }
     
-    var position: Position { Position(x: Double(x), y: Double(y) * World.Constants.slope, z: Double(z)) }
+    var position: Vector { Vector(x: Double(x), y: Double(y) * World.Constants.slope, z: Double(z)) }
     
     public var xz: Coordinate { Coordinate(x: x, y: 0, z: z) }
     
@@ -26,7 +26,7 @@ public struct Coordinate: Codable, Equatable, Hashable, Identifiable {
         self.z = z
     }
     
-    public init(position: Position) {
+    public init(position: Vector) {
         
         self.init(x: Int(position.x), y: Int(position.y), z: Int(position.z))
     }
@@ -109,9 +109,9 @@ extension Coordinate {
 
 extension Coordinate {
     
-    public var distance: Distance { Distance(x: Double(x), y: Double(y), z: Double(z)) }
+    public var distance: Vector { Vector(x: Double(x), y: Double(y), z: Double(z)) }
     
-    func direction(to coordinate: Coordinate) -> Direction {
+    func direction(to coordinate: Coordinate) -> Vector {
         
         if x == coordinate.x {
             

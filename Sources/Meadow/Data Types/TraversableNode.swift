@@ -9,7 +9,7 @@ import Euclid
 public struct TraversableNode: Equatable {
     
     public let coordinate: Coordinate
-    public let position: Position
+    public let position: Vector
     public let movementCost: Double
     public let sloped: Bool
     public let cardinals: [Cardinal]

@@ -37,14 +37,14 @@ public struct Ordinal: OptionSet, CaseIterable, Codable, Hashable, Identifiable 
         }
     }
     
-    public var direction: Direction {
+    public var direction: Vector {
         
         switch self {
             
-        case .northEast: return Direction.mean(.x, -.z)
-        case .southEast: return Direction.mean(.x, .z)
-        case .southWest: return Direction.mean(-.x, .z)
-        default: return Direction.mean(-.x, -.z)
+        case .northEast: return Vector(x: 1, y: 0, z: -1)
+        case .southEast: return Vector(x: 1, y: 0, z: 1)
+        case .southWest: return Vector(x: -1, y: 0, z: 1)
+        default: return Vector(x: -1, y: 0, z: -1)
         }
     }
     
@@ -102,8 +102,8 @@ extension Ordinal {
     
     public var coordinate: Coordinate { Self.Coordinates[self.corner] }
     
-    public static let corners: [Position] = [Position(x: -World.Constants.volumeSize, y: 0, z: -World.Constants.volumeSize),
-                                             Position(x: World.Constants.volumeSize, y: 0, z: -World.Constants.volumeSize),
-                                             Position(x: World.Constants.volumeSize, y: 0, z: World.Constants.volumeSize),
-                                             Position(x: -World.Constants.volumeSize, y: 0, z: World.Constants.volumeSize)]
+    public static let corners: [Vector] = [Vector(x: -World.Constants.volumeSize, y: 0, z: -World.Constants.volumeSize),
+                                           Vector(x: World.Constants.volumeSize, y: 0, z: -World.Constants.volumeSize),
+                                           Vector(x: World.Constants.volumeSize, y: 0, z: World.Constants.volumeSize),
+                                           Vector(x: -World.Constants.volumeSize, y: 0, z: World.Constants.volumeSize)]
 }

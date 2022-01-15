@@ -18,7 +18,7 @@ public enum Math {
         return min(max(value, minimum), maximum)
     }
 
-    func curve(start: Position, end: Position, control: Position, interpolator: Double) -> Position {
+    func curve(start: Vector, end: Vector, control: Vector, interpolator: Double) -> Vector {
         
         let ab = start.lerp(control, interpolator)
         let bc = control.lerp(end, interpolator)
@@ -36,9 +36,9 @@ public enum Math {
         return start + (abs(end - start) * interpolator)
     }
     
-    public static func plot(radians: Double, radius: Double) -> Position {
+    public static func plot(radians: Double, radius: Double) -> Vector {
         
-        return Position(x: sin(radians) * radius, y: 0, z: cos(radians) * radius)
+        return Vector(x: sin(radians) * radius, y: 0, z: cos(radians) * radius)
     }
 }
 
